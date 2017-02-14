@@ -1,9 +1,8 @@
 enablePlugins(ScalaJSPlugin)
 
-organization := "me.shadaj"
-name := "simple-react"
+organization in ThisBuild := "me.shadaj"
 
-version := "0.1.0-SNAPSHOT"
+version in ThisBuild := "0.1.0-SNAPSHOT"
 
 scalaVersion in ThisBuild := "2.12.1"
 

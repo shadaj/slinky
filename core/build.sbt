@@ -1,16 +1,8 @@
 enablePlugins(ScalaJSPlugin)
 
-organization := "me.shadaj"
-
 name := "simple-react"
 
-version := "0.1.0-SNAPSHOT"
-
-scalaVersion := "2.12.1"
-
 jsDependencies += RuntimeDOM
-
-jsEnv := PhantomJSEnv().value
 
 libraryDependencies ++= {
   Seq(
@@ -22,5 +14,5 @@ libraryDependencies ++= {
 
 resolvers += "WebJars" at "https://dl.bintray.com/webjars/maven/"
 
-jsDependencies += "org.webjars.bower" % "react" % "15.2.0" / "react-with-addons.js" minified "react-with-addons.min.js" commonJSName "React"
-jsDependencies += "org.webjars.bower" % "react" % "15.2.0" / "react-dom.js" minified "react-dom.min.js" dependsOn "react-with-addons.js" commonJSName "ReactDOM"
+jsDependencies += "org.webjars.bower" % "react" % "15.4.1" / "react-with-addons.js" minified "react-with-addons.min.js" commonJSName "React"
+jsDependencies += "org.webjars.bower" % "react" % "15.4.1" / "react-dom.js" minified "react-dom.min.js" dependsOn "react-with-addons.js" commonJSName "ReactDOM"
