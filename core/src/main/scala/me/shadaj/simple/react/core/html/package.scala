@@ -8,8 +8,10 @@ import scala.scalajs.js.JSConverters._
 
 import scala.scalajs.js
 
-package object html extends mixin {
-  implicit def stringToInstance(s: String): ComponentInstance = s.asInstanceOf[ComponentInstance]
+package object html extends attrs with tags with tagsApplied {
+  implicit def stringToMod[O <: AppliedAttribute](s: String): HtmlComponentMod[O] = {
+    ChildMod(s.asInstanceOf[ComponentInstance])
+  }
 
   implicit def seqToMod[T, C <% Iterable[T], O <: AppliedAttribute](s: C)(implicit cv: T => HtmlComponentMod[O]): HtmlComponentMod[O] = {
     SeqMod(s.toSeq.map(cv))

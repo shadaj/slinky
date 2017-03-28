@@ -3,12 +3,24 @@ package me.shadaj.simple.react.generator
 import java.io.{File, PrintWriter}
 
 object Generator extends App {
-  new File("core/src/gen/scala/me/shadaj/simple/react/core/html").mkdirs()
-  val target = new File("core/src/gen/scala/me/shadaj/simple/react/core/html/gen.scala")
+  new File("core/target/scala-2.12/src_managed/main/me/shadaj/simple/react/core/html").mkdirs()
 
-  if (!target.exists()) {
-    val output = new PrintWriter(target)
-    output.println(SimpleReactGenerator.generateGen)
-    output.close()
+  val tagsApplied = new File("core/target/scala-2.12/src_managed/main/me/shadaj/simple/react/core/html/tagsApplied.scala")
+  val tags = new File("core/target/scala-2.12/src_managed/main/me/shadaj/simple/react/core/html/tags.scala")
+  val attrs = new File("core/target/scala-2.12/src_managed/main/me/shadaj/simple/react/core/html/attrs.scala")
+  if (!tagsApplied.exists() || !tags.exists() || !attrs.exists()) {
+    val gen = SimpleReactGenerator.generateGen
+
+    val tagsAppliedOut = new PrintWriter(tagsApplied)
+    val tagsOut = new PrintWriter(tags)
+    val attrsOut = new PrintWriter(attrs)
+
+    tagsAppliedOut.println(gen._1)
+    tagsOut.println(gen._2)
+    attrsOut.println(gen._3)
+
+    tagsAppliedOut.close()
+    tagsOut.close()
+    attrsOut.close()
   }
 }

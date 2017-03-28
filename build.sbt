@@ -10,13 +10,21 @@ lazy val generator = project
 
 lazy val core = project.settings(
   sourceGenerators in Compile += Def.task {
-    val dir = baseDirectory.value
-    val fileToWrite = dir / "src" / "gen" / "scala" / "me/shadaj/simple/react/core/html" / "gen.scala"
+    val folder = (sourceManaged in Compile).value / "me/shadaj/simple/react/core/html"
 
     (run in Compile in generator).toTask("").value
 
-    Seq(fileToWrite)
-  }.taskValue
+    Seq(
+      folder / "tagsApplied.scala",
+      folder / "tags.scala",
+      folder / "attrs.scala"
+    )
+  }.taskValue,
+  mappings in (Compile, packageSrc) ++= {
+    val base  = (sourceManaged  in Compile).value
+    val files = (managedSources in Compile).value
+    files.map { f => (f, f.relativeTo(base).get.getPath) }
+  }
 )
 
 lazy val example = project.dependsOn(core)

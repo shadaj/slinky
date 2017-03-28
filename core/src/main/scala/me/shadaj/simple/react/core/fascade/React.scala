@@ -1,9 +1,10 @@
 package me.shadaj.simple.react.core.fascade
 
 import scala.scalajs.js
-import scala.scalajs.js.annotation.JSName
+import scala.scalajs.js.annotation.{JSImport, JSName}
 
 @js.native
+@JSImport("react", JSImport.Namespace)
 object React extends js.Object {
   type IDK = Any
 

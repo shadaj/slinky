@@ -112,13 +112,13 @@ object SimpleReactGenerator {
                |video
                |wbr""".stripMargin.split('\n')
 
-  def generateGen: String = {
+  def generateGen = {
     var tagsScala = List.empty[String]
     var tagsAppliedScala = List.empty[String]
 
     var attributeInstances = List.empty[((String, String), String)]
 
-    var attributeAppliedConversions = Set.empty[String]
+//    var attributeAppliedConversions = Set.empty[String]
 
     val keywords = Set("var", "for", "object", "val", "type")
 
@@ -138,10 +138,13 @@ object SimpleReactGenerator {
         s"""/**
            | * $summary
            | */
-           |val ${tagVariableName} = new HtmlComponent[${t}AttributeApplied]("$t")""".stripMargin
+           |val $tagVariableName = new HtmlComponent[${t}AttributeApplied]("$t")""".stripMargin
 
       tagsAppliedScala = tagsAppliedScala :+
-        s"""case class ${t}AttributeApplied(name: String, value: js.Any) extends AppliedAttribute""".stripMargin
+        s"""case class ${t}AttributeApplied(name: String, value: js.Any) extends AppliedAttribute
+           |object ${t}AttributeApplied {""".stripMargin
+
+      var attributeConversions = Set.empty[String]
 
       attributes.foreach { case (a, d) =>
         val attributeName = if (keywords.contains(a.name)) {
@@ -151,40 +154,48 @@ object SimpleReactGenerator {
         val doc = (t, d.replace("\n", " ").replace("*", "&#47;"))
 
         val attributeInstance =
-          s"""object ${attributeName} extends Attr[${a.valueType}, ${a.name}Pair]("${a.name}") {
+          s"""object $attributeName extends Attr[${a.valueType}, ${a.name}Pair]("${a.name}") {
              |def :=(v: ${a.valueType}): ${a.name}Pair = new ${a.name}Pair(v)
              |}"""
         val attributePairInstance = s"""class ${a.name}Pair(value: ${a.valueType}) extends AttrPair[${a.valueType}]("${a.name}", value)"""
 
-        if (!attributeInstances.contains(attributeInstance)) {
-          attributeInstances = attributeInstances :+ (doc, attributeInstance + "\n" + attributePairInstance)
-        }
+        attributeInstances = attributeInstances :+ (doc, attributeInstance + "\n" + attributePairInstance)
 
-        attributeAppliedConversions = attributeAppliedConversions + s"""implicit def ${a.name}PairTo${t}Applied(pair: ${a.name}Pair): ${t}AttributeApplied = ${t}AttributeApplied(pair.name, pair.value)"""
+        attributeConversions = attributeConversions + s"""implicit def ${a.name}PairTo${t}Applied(pair: ${a.name}Pair): ${t}AttributeApplied = ${t}AttributeApplied(pair.name, pair.value)"""
       }
+
+      tagsAppliedScala = tagsAppliedScala :+ attributeConversions.mkString("\n")
+
+      tagsAppliedScala = tagsAppliedScala :+ "}"
     }
 
     val attributeInstancesLines = attributeInstances.groupBy(_._2).map { case (instance, types) =>
       val docs = types.map(_._1).groupBy(_._2)
       s"""/**
-         | ${docs.map(t => "* " + t._2.map(_._1).mkString(", ") + " - " + t._1).mkString("\n")}
+         | ${docs.map(t => "* " + t._2.map(_._1).mkString(", ") + " - " + t._1).mkString("\n*\n")}
          | */
          |$instance"""
     }
 
-    s"""package me.shadaj.simple.react.core.html
-       |import scala.language.implicitConversions
-       |import scala.scalajs.js
-       |${tagsAppliedScala.mkString("\n")}
-       |trait tags {
-       |  ${tagsScala.mkString("\n")}
-       |}
-       |trait attrs {
-       |${attributeInstancesLines.mkString("\n")}
-       |}
-       |trait mixin extends tags with attrs {
-       |${attributeAppliedConversions.mkString("\n")}
-       |}
-     """.stripMargin
+    (
+      s"""package me.shadaj.simple.react.core.html
+         |import scala.language.implicitConversions
+         |import scala.scalajs.js
+         |trait tagsApplied {
+         |${tagsAppliedScala.mkString("\n")}
+         |}""".stripMargin,
+      s"""package me.shadaj.simple.react.core.html
+         |import scala.language.implicitConversions
+         |import scala.scalajs.js
+         |trait tags {
+         |${tagsScala.mkString("\n")}
+         |}""".stripMargin,
+      s"""package me.shadaj.simple.react.core.html
+         |import scala.language.implicitConversions
+         |import scala.scalajs.js
+         |trait attrs {
+         |${attributeInstancesLines.mkString("\n")}
+         |}""".stripMargin
+    )
   }
 }

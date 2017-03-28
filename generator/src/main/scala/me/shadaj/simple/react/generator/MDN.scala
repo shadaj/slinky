@@ -83,12 +83,16 @@ object MDN {
       .filter(_.tagName == "dl")
       .flatMap(_.children)
 
-    extraAttributes ::: attributesSection.grouped(2).map { i =>
+    extraAttributes ::: attributesSection.grouped(2).flatMap { i =>
       val attr = i.head
       val docs = i.last
 
       val attrString = attr.head >> text("code")
-      HTMLToJSMapping.convert(attrString) -> docs.innerHtml
+      if (extraAttributes.exists(_._1.name.toLowerCase == attrString)) {
+        None
+      } else {
+        Some(HTMLToJSMapping.convert(attrString) -> docs.innerHtml)
+      }
     }.toList
   }
 
@@ -98,29 +102,26 @@ object MDN {
     val summary = article.children.find(c => c.tagName == "p" && c.innerHtml.nonEmpty).get.innerHtml
 
     val attributesSection = article.children.toList
-      .dropWhile(!_.attrs.get("id").contains("Attributes"))
-      .takeWhile(e => e.attrs.get("id").isEmpty || e.attr("id") == "Attributes")
-      .drop(2)
+      .dropWhile(!_.attrs.get("id").contains("Attributes")).tail
+      .takeWhile(e => e.tagName != "h2")
+      .filter(_.tagName == "dl")
 
-    val attributes = attributesSection.filter(_.tagName == "dl").flatMap { dl =>
+    val attributes = attributesSection.flatMap { dl =>
       val children = dl.children.toList
-
-      var shouldBeDt = true
-      val filteredChildren = children.filter { e =>
-        val good = (shouldBeDt && e.tagName == "dt") || (!shouldBeDt && e.tagName == "dd")
-        if (good) {
-          shouldBeDt = !shouldBeDt
+      val attrsAndDocs = children.foldLeft(Seq.empty[(String, String)]) { (acc, cur) =>
+        if (cur.tagName == "dt") {
+          acc :+ (cur >> text("code"), "")
+        } else {
+          acc.init :+ acc.last.copy(_2 = acc.last._2 + "\n" + cur.innerHtml)
         }
-
-        good
       }
 
-      filteredChildren.grouped(2).map { i =>
-        val attr = i.head
-        val docs = i.last
-
-        val attrString = attr.head >> text("code")
-        HTMLToJSMapping.convert(attrString) -> docs.innerHtml
+      attrsAndDocs.flatMap { case (attr, doc) =>
+        if (extraAttributes.exists(_._1.name.toLowerCase == attr)) {
+          None
+        } else {
+          Some(HTMLToJSMapping.convert(attr) -> doc)
+        }
       }.toList
     } ++ globalAttributes
 
