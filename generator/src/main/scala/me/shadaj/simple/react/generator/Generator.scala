@@ -11,9 +11,9 @@ object Generator extends App {
   if (!tagsApplied.exists() || !tags.exists() || !attrs.exists()) {
     val gen = SimpleReactGenerator.generateGen
 
-    val tagsAppliedOut = new PrintWriter(tagsApplied)
-    val tagsOut = new PrintWriter(tags)
-    val attrsOut = new PrintWriter(attrs)
+    val tagsAppliedOut = new PrintWriter(tagsApplied, "UTF-8")
+    val tagsOut = new PrintWriter(tags, "UTF-8")
+    val attrsOut = new PrintWriter(attrs, "UTF-8")
 
     tagsAppliedOut.println(gen._1)
     tagsOut.println(gen._2)
