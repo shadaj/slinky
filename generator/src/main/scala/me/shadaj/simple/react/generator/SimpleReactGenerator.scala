@@ -171,8 +171,14 @@ object SimpleReactGenerator {
 
     val attributeInstancesLines = attributeInstances.groupBy(_._2).map { case (instance, types) =>
       val docs = types.map(_._1).groupBy(_._2)
+      val docsText = if (docs.size == 1) {
+        docs.map(t => "* " + t._1).mkString("\n* <h2></h2>\n")
+      } else {
+        docs.map(t => "* " + t._2.map(_._1).mkString(", ") + " - " + t._1).mkString("\n* <h2></h2>\n")
+      }
+
       s"""/**
-         | ${docs.map(t => "* " + t._2.map(_._1).mkString(", ") + " - " + t._1).mkString("\n*\n")}
+         | $docsText
          | */
          |$instance"""
     }

@@ -16,7 +16,7 @@ object Main extends JSApp {
 
     @ScalaJSDefined
     class Def(jsProps: js.Object) extends Definition(jsProps) {
-      def initialState = props.name
+      def initialState: String = props.name
 
       override def componentDidMount(): Unit = {
         println("mounted!")
