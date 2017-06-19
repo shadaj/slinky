@@ -22,9 +22,12 @@ object Main extends JSApp {
         println("mounted!")
       }
 
+      override def shouldComponentUpdate(nextProps: Props, nextState: String): Boolean = {
+        props != nextProps || state != nextState
+      }
+
       override def componentDidUpdate(prevProps: Props, prevState: String): Unit = {
-        println("raw: " + raw(prevProps).value)
-        println("updated!")
+        println("raw in componentDidUpdate: " + raw(prevProps).value)
       }
 
       def render(): ComponentInstance = {

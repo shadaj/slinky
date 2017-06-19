@@ -15,14 +15,14 @@ abstract class Component {
 
   type Def <: Definition
 
-  private def valueObject[T](value: T): js.Object = {
+  @inline private def valueObject[T](value: T): js.Object = {
     js.Dynamic.literal(
       "__wrapped" -> true,
       "value" -> value.asInstanceOf[js.Any]
     )
   }
 
-  private def extractValue[T](obj: js.Object): T = {
+  @inline private def extractValue[T](obj: js.Object): T = {
     val ret = obj.asInstanceOf[js.Dynamic].value.asInstanceOf[T]
 
     if (ret.isInstanceOf[WithRaw]) {
@@ -43,17 +43,17 @@ abstract class Component {
     this.asInstanceOf[PrivateComponentClass].stateR = valueObject(initialState)
 
     @JSName("props_scala")
-    final def props: Props = {
+    @inline final def props: Props = {
       extractValue[Props](this.asInstanceOf[PrivateComponentClass].propsR)
     }
 
     @JSName("state_scala")
-    final def state: State = {
+    @inline final def state: State = {
       extractValue[State](this.asInstanceOf[PrivateComponentClass].stateR)
     }
 
     @JSName("setState_scala")
-    final def setState(s: State): Unit = {
+    @inline final def setState(s: State): Unit = {
       this.asInstanceOf[PrivateComponentClass].setStateR(valueObject(s))
     }
 
@@ -66,8 +66,9 @@ abstract class Component {
     {
       val orig = this.asInstanceOf[js.Dynamic].componentWillReceiveProps.asInstanceOf[js.Function1[Props, Unit]]
       this.asInstanceOf[js.Dynamic].componentWillReceiveProps = (props: js.Dynamic) => {
-        orig(
-          props.value.asInstanceOf[Props]
+        orig.call(
+          this,
+          props.value
         )
       }
     }
@@ -77,9 +78,10 @@ abstract class Component {
     {
       val orig = this.asInstanceOf[js.Dynamic].shouldComponentUpdate.asInstanceOf[js.Function2[Props, State, Boolean]]
       this.asInstanceOf[js.Dynamic].shouldComponentUpdate = (nextProps: js.Object, nextState: js.Object) => {
-        orig(
-          extractValue[Props](nextProps),
-          extractValue[State](nextState)
+        orig.call(
+          this,
+          extractValue[Props](nextProps).asInstanceOf[js.Any],
+          extractValue[State](nextState).asInstanceOf[js.Any]
         )
       }
     }
@@ -89,9 +91,10 @@ abstract class Component {
     {
       val orig = this.asInstanceOf[js.Dynamic].componentWillUpdate.asInstanceOf[js.Function2[Props, State, Unit]]
       this.asInstanceOf[js.Dynamic].componentWillUpdate = (nextProps: js.Object, nextState: js.Object) => {
-        orig(
-          extractValue[Props](nextProps),
-          extractValue[State](nextState)
+        orig.call(
+          this,
+          extractValue[Props](nextProps).asInstanceOf[js.Any],
+          extractValue[State](nextState).asInstanceOf[js.Any]
         )
       }
     }
@@ -101,9 +104,10 @@ abstract class Component {
     {
       val orig = this.asInstanceOf[js.Dynamic].componentDidUpdate.asInstanceOf[js.Function2[Props, State, Unit]]
       this.asInstanceOf[js.Dynamic].componentDidUpdate = (prevProps: js.Object, prevState: js.Object) => {
-        orig(
-          extractValue[Props](prevProps),
-          extractValue[State](prevState)
+        orig.call(
+          this,
+          extractValue[Props](prevProps).asInstanceOf[js.Any],
+          extractValue[State](prevState).asInstanceOf[js.Any]
         )
       }
     }
