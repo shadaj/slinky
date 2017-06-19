@@ -1,9 +1,8 @@
 package me.shadaj.simple.react.example
 
-import me.shadaj.simple.react.core.Component
+import me.shadaj.simple.react.core.{Component, WithRaw}
 import me.shadaj.simple.react.core.fascade.{ComponentInstance, ReactDOM}
 import me.shadaj.simple.react.core.html._
-
 import org.scalajs.dom.{Event, document, html}
 
 import scala.scalajs.js
@@ -12,18 +11,19 @@ import scala.scalajs.js.annotation.ScalaJSDefined
 
 object Main extends JSApp {
   object Foo extends Component {
-    case class Props(name: String)
+    case class Props(name: String) extends WithRaw
     type State = String
 
     @ScalaJSDefined
     class Def(jsProps: js.Object) extends Definition(jsProps) {
       def initialState = props.name
 
-      override def didMount(): Unit = {
+      override def componentDidMount(): Unit = {
         println("mounted!")
       }
 
-      override def didUpdate(prevProps: Props, prevState: String): Unit = {
+      override def componentDidUpdate(prevProps: Props, prevState: String): Unit = {
+        println("raw: " + raw(prevProps).value)
         println("updated!")
       }
 

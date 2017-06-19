@@ -13,6 +13,3 @@ libraryDependencies ++= {
 }
 
 resolvers += "WebJars" at "https://dl.bintray.com/webjars/maven/"
-
-jsDependencies += "org.webjars.bower" % "react" % "15.4.1" / "react-with-addons.js" minified "react-with-addons.min.js" commonJSName "React"
-jsDependencies += "org.webjars.bower" % "react" % "15.4.1" / "react-dom.js" minified "react-dom.min.js" dependsOn "react-with-addons.js" commonJSName "ReactDOM"

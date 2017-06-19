@@ -6,34 +6,30 @@ import scala.scalajs.js.annotation.{JSImport, JSName}
 @js.native
 @JSImport("react", JSImport.Namespace)
 object React extends js.Object {
-  type IDK = Any
-
-  def createElement(htmlName: String, properties: js.Any, contents: ComponentInstance*): ComponentInstance = js.native
-  def createElement(component: IDK,   properties: js.Any, contents: ComponentInstance*): ComponentInstance = js.native
+  def createElement(htmlName: String,      properties: Any, contents: ComponentInstance*): ComponentInstance = js.native
+  def createElement(component: js.Dynamic, properties: Any, contents: ComponentInstance*): ComponentInstance = js.native
 
   @js.native
-  class Component(jsProps: js.Object) extends js.Object {
-    @JSName("props")
-    private[core] var propsR: js.Dynamic = js.native
-
-    @JSName("state")
-    private[core] var stateR: js.Dynamic = js.native
-
-    @JSName("refs")
-    private[core] val refsR: IDK = js.native
-
-    @JSName("context")
-    private[core] val contextR: IDK = js.native
-
-    @JSName("setState")
-    private[core] def setStateR(newState: js.Dynamic): Unit = js.native
-  }
+  class Component(jsProps: Any) extends js.Object
 }
 
 @js.native
-trait ComponentInstance extends js.Object {
+trait PrivateComponentClass extends js.Object {
+  @JSName("props")
+  var propsR: js.Object = js.native
 
+  @JSName("state")
+  var stateR: js.Object = js.native
+
+  @JSName("refs")
+  val refsR: js.Dynamic = js.native
+
+  @JSName("context")
+  val contextR: js.Dynamic = js.native
+
+  @JSName("setState")
+  def setStateR(newState: js.Object): Unit = js.native
 }
 
 @js.native
-trait ComponentConstructor extends js.Object
+trait ComponentInstance extends js.Object
