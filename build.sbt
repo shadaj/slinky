@@ -27,4 +27,6 @@ lazy val core = project.settings(
   }
 )
 
-lazy val example = project.dependsOn(core)
+lazy val scalajsReactInterop = project.dependsOn(core)
+
+lazy val example = project.dependsOn(core, scalajsReactInterop)
