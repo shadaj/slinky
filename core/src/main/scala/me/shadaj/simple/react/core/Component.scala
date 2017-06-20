@@ -6,7 +6,11 @@ import scala.scalajs.js
 import scala.scalajs.js.ConstructorTag
 import scala.scalajs.js.annotation.{JSName, ScalaJSDefined}
 
-trait WithRaw
+trait WithRaw {
+  def raw: js.Dynamic = {
+    this.asInstanceOf[js.Dynamic].__raw_ref
+  }
+}
 
 abstract class Component {
   type Props
@@ -30,10 +34,6 @@ abstract class Component {
     }
 
     ret
-  }
-
-  def raw[T](value: WithRaw): js.Dynamic = {
-    value.asInstanceOf[js.Dynamic].__raw_ref
   }
 
   @ScalaJSDefined

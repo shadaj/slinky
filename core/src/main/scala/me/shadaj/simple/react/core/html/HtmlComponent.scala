@@ -51,11 +51,7 @@ case class HtmlComponent[A <: AppliedAttribute](name: String,
 }
 
 object HtmlComponent {
-  def create(name: String, props: js.Dictionary[js.Any]): ComponentInstance = {
-    React.createElement(name, props)
-  }
-
-  def create(name: String, props: js.Dictionary[js.Any], contents: Seq[ComponentInstance]): ComponentInstance = {
+  def create(name: String, props: js.Dictionary[js.Any], contents: Seq[ComponentInstance] = Seq.empty): ComponentInstance = {
     React.createElement(name, props, contents: _*)
   }
 }

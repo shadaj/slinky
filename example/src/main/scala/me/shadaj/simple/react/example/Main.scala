@@ -38,7 +38,7 @@ object Main extends JSApp {
       }
 
       override def componentDidUpdate(prevProps: Props, prevState: String): Unit = {
-        println("raw in componentDidUpdate: " + raw(prevProps).value)
+        println("raw in componentDidUpdate: " + prevProps.raw.value)
       }
 
       def render(): ComponentInstance = {
