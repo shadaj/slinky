@@ -2,13 +2,10 @@ package me.shadaj.simple.react.example
 
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.html_<^._
-
 import me.shadaj.simple.react.core.{Component, WithRaw}
 import me.shadaj.simple.react.core.fascade.{ComponentInstance, ReactDOM}
 import me.shadaj.simple.react.core.html._
-
 import me.shadaj.simple.react.scalajsreact.Converters._
-
 import org.scalajs.dom.{Event, document, html}
 
 import scala.scalajs.js
@@ -18,7 +15,12 @@ import scala.scalajs.js.annotation.ScalaJSDefined
 object Main extends JSApp {
   val Hello =
     ScalaComponent.builder[String]("Hello")
-      .render_P(name => <.div("This is a component from scalajs-react being used in ", name))
+      .render_P(name => <.div(
+        "This is a component from scalajs-react being used in ", name,
+        div(
+          "and this is from simple-react inside the scalajs-react component!"
+        )
+      ))
       .build
 
   object Foo extends Component {
@@ -67,8 +69,8 @@ object Main extends JSApp {
             ),
             value := state
           ),
-          <.h2(s"this was rendered by scalajs-react! $state"),
           div(className := "foo")(props.name),
+          <.h2(s"this was rendered by scalajs-react!"),
           maybeChild,
           (1 to state.size).map(n => div(s"$n - $state")),
           Hello("simple-react")
