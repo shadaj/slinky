@@ -19,42 +19,28 @@ abstract class Component {
 
   type Def <: Definition
 
-  @inline private def valueObject[T](value: T): js.Object = {
-    js.Dynamic.literal(
-      "__wrapped" -> true,
-      "value" -> value.asInstanceOf[js.Any]
-    )
-  }
-
-  @inline private def extractValue[T](obj: js.Object): T = {
-    val ret = obj.asInstanceOf[js.Dynamic].value.asInstanceOf[T]
-
-    if (ret.isInstanceOf[WithRaw]) {
-      ret.asInstanceOf[js.Dynamic].__raw_ref = obj
-    }
-
-    ret
-  }
-
   @ScalaJSDefined
-  abstract class Definition(jsProps: Any) extends React.Component(jsProps) {
+  abstract class Definition(jsProps: Any)(implicit propsReader: Reader[Props],
+                                          propsWriter: Writer[Props],
+                                          stateReader: Reader[State],
+                                          stateWriter: Writer[State]) extends React.Component(jsProps) {
     def initialState: State
 
-    this.asInstanceOf[PrivateComponentClass].stateR = valueObject(initialState)
+    this.asInstanceOf[PrivateComponentClass].stateR = stateWriter.write(initialState, true)
 
     @JSName("props_scala")
     @inline final def props: Props = {
-      extractValue[Props](this.asInstanceOf[PrivateComponentClass].propsR)
+      propsReader.read(this.asInstanceOf[PrivateComponentClass].propsR, true)
     }
 
     @JSName("state_scala")
     @inline final def state: State = {
-      extractValue[State](this.asInstanceOf[PrivateComponentClass].stateR)
+      stateReader.read(this.asInstanceOf[PrivateComponentClass].stateR, true)
     }
 
     @JSName("setState_scala")
     @inline final def setState(s: State): Unit = {
-      this.asInstanceOf[PrivateComponentClass].setStateR(valueObject(s))
+      this.asInstanceOf[PrivateComponentClass].setStateR(stateWriter.write(s, true))
     }
 
     def componentWillMount(): Unit = {}
@@ -65,10 +51,10 @@ abstract class Component {
 
     {
       val orig = this.asInstanceOf[js.Dynamic].componentWillReceiveProps.asInstanceOf[js.Function1[Props, Unit]]
-      this.asInstanceOf[js.Dynamic].componentWillReceiveProps = (props: js.Dynamic) => {
+      this.asInstanceOf[js.Dynamic].componentWillReceiveProps = (props: js.Object) => {
         orig.call(
           this,
-          props.value
+          propsReader.read(props, true).asInstanceOf[js.Any]
         )
       }
     }
@@ -80,8 +66,8 @@ abstract class Component {
       this.asInstanceOf[js.Dynamic].shouldComponentUpdate = (nextProps: js.Object, nextState: js.Object) => {
         orig.call(
           this,
-          extractValue[Props](nextProps).asInstanceOf[js.Any],
-          extractValue[State](nextState).asInstanceOf[js.Any]
+          propsReader.read(nextProps, true).asInstanceOf[js.Any],
+          stateReader.read(nextState, true).asInstanceOf[js.Any]
         )
       }
     }
@@ -93,8 +79,8 @@ abstract class Component {
       this.asInstanceOf[js.Dynamic].componentWillUpdate = (nextProps: js.Object, nextState: js.Object) => {
         orig.call(
           this,
-          extractValue[Props](nextProps).asInstanceOf[js.Any],
-          extractValue[State](nextState).asInstanceOf[js.Any]
+          propsReader.read(nextProps, true).asInstanceOf[js.Any],
+          stateReader.read(nextState, true).asInstanceOf[js.Any]
         )
       }
     }
@@ -106,8 +92,8 @@ abstract class Component {
       this.asInstanceOf[js.Dynamic].componentDidUpdate = (prevProps: js.Object, prevState: js.Object) => {
         orig.call(
           this,
-          extractValue[Props](prevProps).asInstanceOf[js.Any],
-          extractValue[State](prevState).asInstanceOf[js.Any]
+          propsReader.read(prevProps, true).asInstanceOf[js.Any],
+          stateReader.read(prevState, true).asInstanceOf[js.Any]
         )
       }
     }
@@ -118,12 +104,12 @@ abstract class Component {
     def render(): ComponentInstance
   }
 
-  def apply(p: Props)(implicit constructorTag: ConstructorTag[Def]): ComponentInstance = {
+  def apply(p: Props)(implicit constructorTag: ConstructorTag[Def], propsWriter: Writer[Props]): ComponentInstance = {
     val component = constructorTag.constructor
     component.displayName = getClass.getSimpleName
 
-    val propsObj = valueObject(p)
+    val propsObj = propsWriter.write(p, true)
 
-    React.createElement(component, propsObj)
+    React.createElement(component.asInstanceOf[js.Object], propsObj)
   }
 }

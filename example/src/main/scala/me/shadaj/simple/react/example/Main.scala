@@ -2,9 +2,10 @@ package me.shadaj.simple.react.example
 
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.html_<^._
-import me.shadaj.simple.react.core.{Component, WithRaw}
+import me.shadaj.simple.react.core.{Component, Reader, WithRaw, Writer}
 import me.shadaj.simple.react.core.fascade.{ComponentInstance, ReactDOM}
 import me.shadaj.simple.react.core.html._
+import me.shadaj.simple.react.example.Main.Foo.Props
 import me.shadaj.simple.react.scalajsreact.Converters._
 import org.scalajs.dom.{Event, document, html}
 
@@ -24,7 +25,7 @@ object Main extends JSApp {
       .build
 
   object Foo extends Component {
-    case class Props(name: String) extends WithRaw
+    case class Props(name: String)
     type State = String
 
     @ScalaJSDefined
@@ -40,7 +41,7 @@ object Main extends JSApp {
       }
 
       override def componentDidUpdate(prevProps: Props, prevState: String): Unit = {
-        println("raw in componentDidUpdate: " + prevProps.raw.value)
+        println("componentDidUpdate: " + prevProps)
       }
 
       def render(): ComponentInstance = {
