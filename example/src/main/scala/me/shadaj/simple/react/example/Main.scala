@@ -25,7 +25,7 @@ object Main extends JSApp {
       .build
 
   object Foo extends Component {
-    case class Props(name: String, bar: Option[String])
+    case class Props(name: String, bar: Seq[String])
     type State = String
 
     @ScalaJSDefined
@@ -47,7 +47,7 @@ object Main extends JSApp {
       def render(): ComponentInstance = {
        val maybeChild = if (props.name == "parent foo") {
          Some(div(key := "I have a key!")(
-           Foo(Foo.Props("child foo", None)),
+           Foo(Foo.Props("child foo", Seq.empty)),
            "here's a string rendered by the parent!"
          ))
        } else None
@@ -84,6 +84,6 @@ object Main extends JSApp {
     val container = document.createElement("div")
     document.body.appendChild(container)
 
-    ReactDOM.render(Foo(Foo.Props("parent foo", Some("lolz"))), container)
+    ReactDOM.render(Foo(Foo.Props("parent foo", Seq("lolz"))), container)
   }
 }

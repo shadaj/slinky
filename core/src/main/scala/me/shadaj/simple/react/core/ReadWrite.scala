@@ -6,6 +6,8 @@ import scala.scalajs.js
 import shapeless._
 import shapeless.labelled.{FieldType, field}
 
+import scala.collection.generic.CanBuildFrom
+
 trait Reader[P] {
   def read(o: js.Object, root: Boolean = false): P
 }
@@ -49,6 +51,22 @@ object Reader {
     } else {
       Some(reader.read(value))
     }
+  }
+
+  implicit def collectionReader[T, Col[_]](implicit reader: Reader[T],
+                                           cbf: CanBuildFrom[Nothing, T, Col[T]]): Reader[Col[T]] = (s, root) => {
+    println(s)
+    val value = (if (root) {
+      s.asInstanceOf[js.Dynamic].value
+    } else {
+      s
+    }).asInstanceOf[js.Array[js.Object]]
+
+    val read = value.map(o => reader.read(o))
+
+    println(read)
+
+    read.to[Col]
   }
 
   implicit val hnilReader: Reader[HNil] = (s, root) => HNil
@@ -105,6 +123,18 @@ object Writer {
       }.getOrElse(js.Dynamic.literal())
     } else {
       s.map(v => writer.write(v)).getOrElse(js.undefined.asInstanceOf[js.Object])
+    }
+  }
+
+  implicit def collectionWriter[T, C[_]](implicit writer: Writer[T],
+                                         cbf: CanBuildFrom[C[T], T, Seq[T]],
+                                         ev: C[T] <:< Iterable[T]): Writer[C[T]] = (s, root) => {
+    val arr = js.Array(s.to[Seq](cbf).map(v => writer.write(v)): _*)
+
+    if (root) {
+      js.Dynamic.literal("value" -> arr)
+    } else {
+      arr.asInstanceOf[js.Object]
     }
   }
 
