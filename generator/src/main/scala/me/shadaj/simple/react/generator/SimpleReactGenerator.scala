@@ -155,11 +155,19 @@ object SimpleReactGenerator {
 
         val attributeInstance =
           s"""object $attributeName extends Attr[${a.valueType}, ${a.name}Pair]("${a.name}") {
-             |def :=(v: ${a.valueType}): ${a.name}Pair = new ${a.name}Pair(v)
+             |def :=(v: ${a.valueType}): ${a.name}Pair = new ${a.name}Pair(name, v)
              |}"""
-        val attributePairInstance = s"""class ${a.name}Pair(value: ${a.valueType}) extends AttrPair[${a.valueType}]("${a.name}", value)"""
+        val attributePairInstance = s"""class ${a.name}Pair(attr: String, value: ${a.valueType}) extends AttrPair[${a.valueType}](attr, value)"""
 
         attributeInstances = attributeInstances :+ (doc, attributeInstance + "\n" + attributePairInstance)
+
+        if (attributeName == "data") {
+          val dataSpecial =
+            s"""def data(sub: String) = new Attr[${a.valueType}, ${a.name}Pair]("data-" + sub) {
+               |def :=(v: String): ${a.name}Pair = new ${a.name}Pair(name, v)
+               |}"""
+          attributeInstances = attributeInstances :+ (doc, dataSpecial)
+        }
 
         attributeConversions = attributeConversions + s"""implicit def ${a.name}PairTo${t}Applied(pair: ${a.name}Pair): ${t}AttributeApplied = ${t}AttributeApplied(pair.name, pair.value)"""
       }
