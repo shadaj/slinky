@@ -11,6 +11,8 @@ trait Reader[P] {
 }
 
 object Reader {
+  implicit def objectReader[T <: js.Object]: Reader[T] = (s, root) => s.asInstanceOf[T]
+
   implicit val stringReader: Reader[String] = (s, root) => (if (root) {
     s.asInstanceOf[js.Dynamic].value
   } else {
@@ -23,11 +25,31 @@ object Reader {
     s
   }).asInstanceOf[Int]
 
+  implicit val booleanReader: Reader[Boolean] = (s, root) => (if (root) {
+    s.asInstanceOf[js.Dynamic].value
+  } else {
+    s
+  }).asInstanceOf[Boolean]
+
   implicit val doubleReader: Reader[Double] = (s, root) => (if (root) {
     s.asInstanceOf[js.Dynamic].value
   } else {
     s
   }).asInstanceOf[Int]
+
+  implicit def optionReader[T](implicit reader: Reader[T]): Reader[Option[T]] = (s, root) => {
+    val value = if (root) {
+      s.asInstanceOf[js.Dynamic].value.asInstanceOf[js.Object]
+    } else {
+      s
+    }
+
+    if (value == js.undefined) {
+      None
+    } else {
+      Some(reader.read(value))
+    }
+  }
 
   implicit val hnilReader: Reader[HNil] = (s, root) => HNil
 
@@ -50,6 +72,8 @@ trait Writer[P] {
 }
 
 object Writer {
+  implicit def objectWriter[T <: js.Object]: Writer[T] = (s, root) => s
+
   implicit val stringWriter: Writer[String] = (s, root) => if (root) {
     js.Dynamic.literal("value" -> s)
   } else {
@@ -62,10 +86,26 @@ object Writer {
     s.asInstanceOf[js.Object]
   }
 
+  implicit val booleanReader: Writer[Boolean] = (s, root) => if (root) {
+    js.Dynamic.literal("value" -> s)
+  } else {
+    s.asInstanceOf[js.Object]
+  }
+
   implicit val doubleReader: Writer[Double] = (s, root) => if (root) {
     js.Dynamic.literal("value" -> s)
   } else {
     s.asInstanceOf[js.Object]
+  }
+
+  implicit def optionWriter[T](implicit writer: Writer[T]): Writer[Option[T]] = (s, root) => {
+    if (root) {
+      s.map { v =>
+        js.Dynamic.literal("value" -> writer.write(v))
+      }.getOrElse(js.Dynamic.literal())
+    } else {
+      s.map(v => writer.write(v)).getOrElse(js.undefined.asInstanceOf[js.Object])
+    }
   }
 
   implicit val hnilWriter: Writer[HNil] = (_, _) => js.Dynamic.literal()
