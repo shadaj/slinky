@@ -6,7 +6,7 @@ import scala.scalajs.js.annotation.{JSImport, JSName}
 @js.native
 @JSImport("react", JSImport.Namespace, "React")
 object React extends js.Object {
-  def createElement(htmlName: String,      properties: Any, contents: ComponentInstance*): ComponentInstance = js.native
+  def createElement(htmlName:  String,    properties: Any, contents: ComponentInstance*): ComponentInstance = js.native
   def createElement(component: js.Object, properties: Any, contents: ComponentInstance*): ComponentInstance = js.native
 
   @js.native

@@ -122,15 +122,15 @@ object SimpleReactGenerator {
 
     val keywords = Set("var", "for", "object", "val", "type")
 
-    // conflict with tags, outputed with _tag suffix
-    val hiddenTags = Set("data", "style", "title", "cite", "link", "form", "span", "label", "summary", "abbr")
+    // conflict with tags, outputed with _attr suffix
+    val hiddenAttrs = Set("data", "style", "title", "cite", "link", "form", "span", "label", "summary", "abbr")
 
     tags.foreach { t =>
       println(t)
 
       val (summary, attributes) = MDN.htmlElement(t)
 
-      val tagVariableName = if (hiddenTags.contains(t)) t + "_tag" else if (keywords.contains(t)) {
+      val tagVariableName = if (keywords.contains(t)) {
         "`" + t + "`"
       } else t
 
@@ -147,7 +147,7 @@ object SimpleReactGenerator {
       var attributeConversions = Set.empty[String]
 
       attributes.foreach { case (a, d) =>
-        val attributeName = if (keywords.contains(a.name)) {
+        val attributeName = if (hiddenAttrs.contains(a.name)) s"${a.name}_attr" else if (keywords.contains(a.name)) {
           "`" + a.name + "`"
         } else a.name
 
