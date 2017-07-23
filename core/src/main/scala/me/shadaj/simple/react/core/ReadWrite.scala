@@ -1,12 +1,11 @@
 package me.shadaj.simple.react.core
 
-import shapeless.PolyDefns.->
-
 import scala.scalajs.js
 import shapeless._
 import shapeless.labelled.{FieldType, field}
 
 import scala.collection.generic.CanBuildFrom
+import scala.language.implicitConversions
 
 trait Reader[P] {
   def read(o: js.Object, root: Boolean = false): P
@@ -55,7 +54,6 @@ object Reader {
 
   implicit def collectionReader[T, Col[_]](implicit reader: Reader[T],
                                            cbf: CanBuildFrom[Nothing, T, Col[T]]): Reader[Col[T]] = (s, root) => {
-    println(s)
     val value = (if (root) {
       s.asInstanceOf[js.Dynamic].value
     } else {
@@ -63,8 +61,6 @@ object Reader {
     }).asInstanceOf[js.Array[js.Object]]
 
     val read = value.map(o => reader.read(o))
-
-    println(read)
 
     read.to[Col]
   }
@@ -153,4 +149,14 @@ object Writer {
                                              ): Writer[C] = (s, root) => {
     rc.value.write(gen.to(s))
   }
+}
+
+@js.native
+trait ObjectOrWritten[T] extends js.Object
+
+object ObjectOrWritten {
+  implicit def toUndefOrObject[T, O <: js.Object](value: js.Object): js.UndefOr[ObjectOrWritten[T]] = js.UndefOr.any2undefOrA(value.asInstanceOf[ObjectOrWritten[T]])
+  implicit def fromObject[T, O <: js.Object](obj: O): ObjectOrWritten[T] = obj.asInstanceOf[ObjectOrWritten[T]]
+  implicit def toUndefOrWritten[T](value: T)(implicit writer: Writer[T]): js.UndefOr[ObjectOrWritten[T]] = js.UndefOr.any2undefOrA(writer.write(value).asInstanceOf[ObjectOrWritten[T]])
+  implicit def fromWritten[T](v: T)(implicit writer: Writer[T]): ObjectOrWritten[T] = writer.write(v).asInstanceOf[ObjectOrWritten[T]]
 }
