@@ -104,6 +104,10 @@ abstract class Component {
     def render(): ComponentInstance
   }
 
+  def componentReference(implicit constructorTag: ConstructorTag[Def]): js.Object = {
+    constructorTag.constructor.asInstanceOf[js.Object]
+  }
+
   def apply(p: Props)(implicit constructorTag: ConstructorTag[Def], propsWriter: Writer[Props]): ComponentInstance = {
     val component = constructorTag.constructor
     component.displayName = getClass.getSimpleName
