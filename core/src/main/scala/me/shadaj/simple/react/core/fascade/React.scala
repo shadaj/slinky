@@ -10,7 +10,7 @@ object React extends js.Object {
   def createElement(component: js.Object, properties: Any, contents: ComponentInstance*): ComponentInstance = js.native
 
   @js.native
-  class Component(jsProps: Any) extends js.Object
+  class Component(jsProps: js.Object) extends js.Object
 }
 
 @js.native

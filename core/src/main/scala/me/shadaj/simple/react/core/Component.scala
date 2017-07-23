@@ -20,10 +20,10 @@ abstract class Component {
   type Def <: Definition
 
   @ScalaJSDefined
-  abstract class Definition(jsProps: Any)(implicit propsReader: Reader[Props],
-                                          propsWriter: Writer[Props],
-                                          stateReader: Reader[State],
-                                          stateWriter: Writer[State]) extends React.Component(jsProps) {
+  abstract class Definition(jsProps: js.Object)(implicit propsReader: Reader[Props],
+                                                propsWriter: Writer[Props],
+                                                stateReader: Reader[State],
+                                                stateWriter: Writer[State]) extends React.Component(jsProps) {
     def initialState: State
 
     this.asInstanceOf[PrivateComponentClass].stateR = stateWriter.write(initialState, true)
