@@ -7,6 +7,12 @@ import shapeless.labelled.{FieldType, field}
 import scala.collection.generic.CanBuildFrom
 import scala.language.implicitConversions
 
+trait WithRaw {
+  def raw: js.Object with js.Dynamic= {
+    this.asInstanceOf[js.Dynamic].__raw.asInstanceOf[js.Object with js.Dynamic ]
+  }
+}
+
 trait Reader[P] {
   def read(o: js.Object, root: Boolean = false): P
 }
@@ -77,7 +83,12 @@ object Reader {
                                               gen: LabelledGeneric.Aux[C, R],
                                               rc: Lazy[Reader[R]]
                                              ): Reader[C] = (s, root) => {
-    gen.from(rc.value.read(s))
+    val out = gen.from(rc.value.read(s))
+    if (out.isInstanceOf[WithRaw]) {
+      out.asInstanceOf[js.Dynamic].__raw = s
+    }
+
+    out
   }
 }
 
