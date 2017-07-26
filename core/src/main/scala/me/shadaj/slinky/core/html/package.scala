@@ -6,14 +6,25 @@ import scala.language.implicitConversions
 import scala.scalajs.js.JSConverters._
 
 package object html extends attrs with tags with tagsApplied {
-  implicit def stringToMod[O <: AppliedAttribute](s: String): HtmlComponentMod[O] = {
-    new ChildMod(s.asInstanceOf[ComponentInstance])
+  implicit def stringToInstance(s: String): ComponentInstance = {
+    s.asInstanceOf[ComponentInstance]
   }
 
-  implicit def seqToMod[T, C, O <: AppliedAttribute](s: C)
-                                                    (implicit iev: C => Iterable[T],
-                                                     cv: T => HtmlComponentMod[O]): HtmlComponentMod[O] = {
-    new SeqMod(iev(s).map(cv))
+  implicit def seqInstanceToInstance[T](s: Iterable[T])(implicit cv: T => ComponentInstance): ComponentInstance = {
+    s.map(cv).toJSArray.asInstanceOf[ComponentInstance]
+  }
+
+  implicit def component2Instance[A <: AppliedAttribute](component: HtmlComponent[A]): ComponentInstance = {
+    HtmlComponent.create(
+      component.name,
+      component.attrs.map(m => (m.name, m.value)).toMap.toJSDictionary,
+      component.children
+    )
+  }
+
+  implicit def optionToMod[T, O <: AppliedAttribute](option: Option[T])
+                                                    (implicit cvt: T => HtmlComponentMod[O]): HtmlComponentMod[O] = {
+    new SeqMod[O](option.map(cvt))
   }
 
   implicit def instance2Mod[T, O <: AppliedAttribute](instance: T)
@@ -24,13 +35,5 @@ package object html extends attrs with tags with tagsApplied {
   implicit def attr2Mod[A <: AppliedAttribute, T](instance: T)
                                                  (implicit cvt: T => A): HtmlComponentMod[A] = {
     new AttrMod[A](cvt(instance))
-  }
-
-  implicit def component2Instance[A <: AppliedAttribute](component: HtmlComponent[A]): ComponentInstance = {
-    HtmlComponent.create(
-      component.name,
-      component.attrs.map(m => (m.name, m.value)).toMap.toJSDictionary,
-      component.children
-    )
   }
 }

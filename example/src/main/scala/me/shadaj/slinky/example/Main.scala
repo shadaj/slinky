@@ -6,6 +6,7 @@ import me.shadaj.slinky.core.{Reader, WithRaw, Writer}
 import me.shadaj.slinky.core.html._
 import me.shadaj.slinky.core.Component
 import me.shadaj.slinky.core.facade.{ComponentInstance, ReactDOM}
+import me.shadaj.slinky.scalajsreact.Converters._
 import org.scalajs.dom.{Event, document, html}
 
 import scala.scalajs.js
@@ -52,7 +53,7 @@ object Main extends JSApp {
        } else None
 
         div(
-          style := js.Dynamic.literal(
+          style_attr := js.Dynamic.literal(
             "marginLeft" -> 20
           )
         )(
@@ -64,7 +65,7 @@ object Main extends JSApp {
               setState(e.target.asInstanceOf[html.Input].value)
             }),
             className := "foo",
-            style := js.Dynamic.literal(
+            style_attr := js.Dynamic.literal(
               "color" -> (if (state.contains(" ")) "red" else "green")
             ),
             value := state
