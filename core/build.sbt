@@ -1,6 +1,6 @@
 enablePlugins(ScalaJSPlugin)
 
-name := "simple-react"
+name := "slinky"
 
 libraryDependencies ++= {
   Seq(

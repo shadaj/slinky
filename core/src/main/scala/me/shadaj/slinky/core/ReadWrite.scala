@@ -1,4 +1,4 @@
-package me.shadaj.simple.react.core
+package me.shadaj.slinky.core
 
 import scala.scalajs.js
 import shapeless._

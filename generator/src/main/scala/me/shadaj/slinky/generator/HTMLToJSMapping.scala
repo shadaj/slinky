@@ -1,4 +1,4 @@
-package me.shadaj.simple.react.generator
+package me.shadaj.slinky.generator
 
 object HTMLToJSMapping {
   case class Attr(name: String, valueType: String = "String")

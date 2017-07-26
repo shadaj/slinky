@@ -1,6 +1,6 @@
 enablePlugins(ScalaJSBundlerPlugin)
 
-name := "simple-react-example"
+name := "slinky-example"
 
 npmDependencies in Compile += "react" -> "15.6.1"
 

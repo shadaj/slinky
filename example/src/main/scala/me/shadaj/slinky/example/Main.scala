@@ -1,12 +1,11 @@
-package me.shadaj.simple.react.example
+package me.shadaj.slinky.example
 
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.html_<^._
-import me.shadaj.simple.react.core.{Component, Reader, WithRaw, Writer}
-import me.shadaj.simple.react.core.facade.{ComponentInstance, ReactDOM}
-import me.shadaj.simple.react.core.html._
-import me.shadaj.simple.react.example.Main.Foo.Props
-import me.shadaj.simple.react.scalajsreact.Converters._
+import me.shadaj.slinky.core.{Reader, WithRaw, Writer}
+import me.shadaj.slinky.core.html._
+import me.shadaj.slinky.core.Component
+import me.shadaj.slinky.core.facade.{ComponentInstance, ReactDOM}
 import org.scalajs.dom.{Event, document, html}
 
 import scala.scalajs.js

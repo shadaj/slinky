@@ -1,6 +1,6 @@
-package me.shadaj.simple.react.core
+package me.shadaj.slinky.core
 
-import me.shadaj.simple.react.core.facade.{ComponentInstance, PrivateComponentClass, React}
+import me.shadaj.slinky.core.facade.{ComponentInstance, PrivateComponentClass, React}
 
 import scala.scalajs.js
 import scala.scalajs.js.ConstructorTag
@@ -98,7 +98,7 @@ abstract class Component {
     def render(): ComponentInstance
   }
 
-  def componentReference(implicit constructorTag: ConstructorTag[Def]): js.Object = {
+  def componentConstructor(implicit constructorTag: ConstructorTag[Def]): js.Object = {
     constructorTag.constructor.asInstanceOf[js.Object]
   }
 

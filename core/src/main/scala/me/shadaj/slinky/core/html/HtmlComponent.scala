@@ -1,8 +1,9 @@
-package me.shadaj.simple.react.core.html
+package me.shadaj.slinky.core.html
 
-import me.shadaj.simple.react.core.facade.{ComponentInstance, React}
+import me.shadaj.slinky.core.facade.ComponentInstance
+import me.shadaj.slinky.core.facade.{ComponentInstance, React}
+
 import scala.language.implicitConversions
-
 import scala.scalajs.js
 
 abstract class Attr[V, P <: AttrPair[V]](val name: String) {

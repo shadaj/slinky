@@ -1,8 +1,8 @@
-package me.shadaj.simple.react.core.facade
+package me.shadaj.slinky.core.facade
 
-import scala.scalajs.js
 import org.scalajs.dom.Element
 
+import scala.scalajs.js
 import scala.scalajs.js.annotation.JSImport
 
 @js.native

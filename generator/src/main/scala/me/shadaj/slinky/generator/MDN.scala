@@ -1,4 +1,4 @@
-package me.shadaj.simple.react.generator
+package me.shadaj.slinky.generator
 
 import net.ruippeixotog.scalascraper.browser.JsoupBrowser
 import net.ruippeixotog.scalascraper.dsl.DSL.Extract._

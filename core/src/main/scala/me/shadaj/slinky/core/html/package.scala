@@ -1,9 +1,8 @@
-package me.shadaj.simple.react.core
+package me.shadaj.slinky.core
 
-import me.shadaj.simple.react.core.facade.ComponentInstance
+import me.shadaj.slinky.core.facade.ComponentInstance
 
 import scala.language.implicitConversions
-
 import scala.scalajs.js.JSConverters._
 
 package object html extends attrs with tags with tagsApplied {

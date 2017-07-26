@@ -1,6 +1,6 @@
-package me.shadaj.simple.react.generator
+package me.shadaj.slinky.generator
 
-object SimpleReactGenerator {
+object SlinkyGenerator {
   val tags = """a
                |abbr
                |address
@@ -192,19 +192,19 @@ object SimpleReactGenerator {
     }
 
     (
-      s"""package me.shadaj.simple.react.core.html
+      s"""package me.shadaj.slinky.core.html
          |import scala.language.implicitConversions
          |import scala.scalajs.js
          |trait tagsApplied {
          |${tagsAppliedScala.mkString("\n")}
          |}""".stripMargin,
-      s"""package me.shadaj.simple.react.core.html
+      s"""package me.shadaj.slinky.core.html
          |import scala.language.implicitConversions
          |import scala.scalajs.js
          |trait tags {
          |${tagsScala.mkString("\n")}
          |}""".stripMargin,
-      s"""package me.shadaj.simple.react.core.html
+      s"""package me.shadaj.slinky.core.html
          |import scala.language.implicitConversions
          |import scala.scalajs.js
          |trait attrs {

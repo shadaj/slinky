@@ -10,7 +10,7 @@ lazy val generator = project
 
 lazy val core = project.settings(
   sourceGenerators in Compile += Def.task {
-    val folder = (sourceManaged in Compile).value / "me/shadaj/simple/react/core/html"
+    val folder = (sourceManaged in Compile).value / "me/shadaj/slinky/core/html"
 
     (run in Compile in generator).toTask("").value
 
