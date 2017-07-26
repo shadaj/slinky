@@ -1,6 +1,6 @@
 package me.shadaj.simple.react.core
 
-import me.shadaj.simple.react.core.fascade.{ComponentInstance, PrivateComponentClass, React}
+import me.shadaj.simple.react.core.facade.{ComponentInstance, PrivateComponentClass, React}
 
 import scala.scalajs.js
 import scala.scalajs.js.ConstructorTag

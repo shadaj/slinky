@@ -71,6 +71,13 @@ object Reader {
     read.to[Col]
   }
 
+  implicit def functionReader[I, O](implicit iWriter: Writer[I], oReader: Reader[O]): Reader[I => O] = (s, root) => {
+    val fn = s.asInstanceOf[js.Function1[js.Object, js.Object]]
+    (i: I) => {
+      oReader.read(fn(iWriter.write(i)))
+    }
+  }
+
   implicit val hnilReader: Reader[HNil] = (s, root) => HNil
 
   implicit def hconsReader[Key <: Symbol: Witness.Aux, H: Reader, T <: HList: Reader]: Reader[FieldType[Key, H] :: T] =
@@ -145,6 +152,14 @@ object Writer {
     }
   }
 
+  implicit def functionWriter[I, O](implicit iReader: Reader[I], oWriter: Writer[O]): Writer[I => O] = (s, root) => {
+    val fn: js.Function1[js.Object, js.Object] = (i: js.Object) => {
+      oWriter.write(s(iReader.read(i)))
+    }
+
+    fn.asInstanceOf[js.Object]
+  }
+
   implicit val hnilWriter: Writer[HNil] = (_, _) => js.Dynamic.literal()
 
   implicit def hconsWriter[Key <: Symbol: Witness.Aux, H: Writer, T <: HList: Writer]: Writer[FieldType[Key, H] :: T] =
@@ -158,7 +173,11 @@ object Writer {
                                               gen: LabelledGeneric.Aux[C, R],
                                               rc: Lazy[Writer[R]]
                                              ): Writer[C] = (s, root) => {
-    rc.value.write(gen.to(s))
+    if (s.isInstanceOf[WithRaw]) {
+      s.asInstanceOf[WithRaw].raw
+    } else {
+      rc.value.write(gen.to(s))
+    }
   }
 }
 

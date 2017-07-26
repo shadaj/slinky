@@ -3,7 +3,7 @@ package me.shadaj.simple.react.scalajsreact
 import japgolly.scalajs.react.component.Generic.UnmountedRaw
 import japgolly.scalajs.react.raw.ReactNode
 import japgolly.scalajs.react.vdom.{TagOf, VdomNode}
-import me.shadaj.simple.react.core.fascade.ComponentInstance
+import me.shadaj.simple.react.core.facade.ComponentInstance
 import me.shadaj.simple.react.core.html.{AppliedAttribute, HtmlComponent}
 
 import japgolly.scalajs.react.vdom.html_<^._

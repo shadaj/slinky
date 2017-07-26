@@ -1,6 +1,6 @@
 package me.shadaj.simple.react.core
 
-import me.shadaj.simple.react.core.fascade.{ComponentInstance, React}
+import me.shadaj.simple.react.core.facade.{ComponentInstance, React}
 
 import scala.language.implicitConversions
 import scala.scalajs.js

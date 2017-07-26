@@ -1,4 +1,4 @@
-package me.shadaj.simple.react.core.fascade
+package me.shadaj.simple.react.core.facade
 
 import scala.scalajs.js
 import org.scalajs.dom.Element

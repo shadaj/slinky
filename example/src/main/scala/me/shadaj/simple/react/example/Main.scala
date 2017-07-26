@@ -3,7 +3,7 @@ package me.shadaj.simple.react.example
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.html_<^._
 import me.shadaj.simple.react.core.{Component, Reader, WithRaw, Writer}
-import me.shadaj.simple.react.core.fascade.{ComponentInstance, ReactDOM}
+import me.shadaj.simple.react.core.facade.{ComponentInstance, ReactDOM}
 import me.shadaj.simple.react.core.html._
 import me.shadaj.simple.react.example.Main.Foo.Props
 import me.shadaj.simple.react.scalajsreact.Converters._
