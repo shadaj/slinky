@@ -99,15 +99,15 @@ abstract class Component {
   }
 
   def componentConstructor(implicit constructorTag: ConstructorTag[Def]): js.Object = {
-    constructorTag.constructor.asInstanceOf[js.Object]
-  }
-
-  def apply(p: Props)(implicit constructorTag: ConstructorTag[Def], propsWriter: Writer[Props]): ComponentInstance = {
     val component = constructorTag.constructor
     component.displayName = getClass.getSimpleName
 
+    component.asInstanceOf[js.Object]
+  }
+
+  def apply(p: Props)(implicit constructorTag: ConstructorTag[Def], propsWriter: Writer[Props]): ComponentInstance = {
     val propsObj = propsWriter.write(p, true)
 
-    React.createElement(component.asInstanceOf[js.Object], propsObj)
+    React.createElement(componentConstructor, propsObj)
   }
 }
