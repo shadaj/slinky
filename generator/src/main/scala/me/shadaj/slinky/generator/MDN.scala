@@ -8,7 +8,8 @@ object MDN {
   val browser = JsoupBrowser()
 
   val extraAttributes = List(
-    HTMLToJSMapping.Attr("key", "String") -> "",
+    HTMLToJSMapping.Attr("key") -> "",
+    HTMLToJSMapping.Attr("ref", "js.Function1[org.scalajs.dom.Element, Unit]") -> "",
     HTMLToJSMapping.Attr("onAbort", "js.Function1[org.scalajs.dom.Event, Unit]") -> "",
     HTMLToJSMapping.Attr("onAutoComplete", "js.Function1[org.scalajs.dom.Event, Unit]") -> "",
     HTMLToJSMapping.Attr("onAutoCompleteError", "js.Function1[org.scalajs.dom.Event, Unit]") -> "",

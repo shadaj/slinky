@@ -105,8 +105,16 @@ abstract class Component {
     component.asInstanceOf[js.Object]
   }
 
-  def apply(p: Props)(implicit constructorTag: ConstructorTag[Def], propsWriter: Writer[Props]): ComponentInstance = {
+  def apply(p: Props, key: String = null, ref: Def => Unit = null)(implicit constructorTag: ConstructorTag[Def], propsWriter: Writer[Props]): ComponentInstance = {
     val propsObj = propsWriter.write(p, true)
+
+    if (key != null) {
+      propsObj.asInstanceOf[js.Dynamic].key = key
+    }
+
+    if (ref != null) {
+      propsObj.asInstanceOf[js.Dynamic].ref = ref: js.Function1[Def, Unit]
+    }
 
     React.createElement(componentConstructor, propsObj)
   }

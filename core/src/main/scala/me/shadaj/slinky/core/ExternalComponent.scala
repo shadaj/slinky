@@ -5,9 +5,19 @@ import me.shadaj.slinky.core.facade.{ComponentInstance, React}
 import scala.language.implicitConversions
 import scala.scalajs.js
 
-class BuildingComponent[Props](private[BuildingComponent] val e: ExternalComponent, private[BuildingComponent] val props: Props, writer: Writer[Props]) {
+class BuildingComponent[Props](e: ExternalComponent, props: Props, key: String, ref: js.Object => Unit, writer: Writer[Props]) {
   def withChildren(children: ComponentInstance*): ComponentInstance = {
-    React.createElement(e.component, writer.write(props), children: _*)
+    val written = writer.write(props)
+
+    if (key != null) {
+      written.asInstanceOf[js.Dynamic].updateDynamic("key")(key)
+    }
+
+    if (ref != null) {
+      written.asInstanceOf[js.Dynamic].updateDynamic("ref")(ref: js.Function1[js.Object, Unit])
+    }
+
+    React.createElement(e.component, written, children: _*)
   }
 }
 
@@ -22,7 +32,7 @@ trait ExternalComponent {
 
   val component: js.Object
 
-  def apply(p: Props)(implicit writer: Writer[Props]): BuildingComponent[Props] = {
-    new BuildingComponent[Props](this, p, writer)
+  def apply(p: Props, key: String = null, ref: js.Object => Unit = null)(implicit writer: Writer[Props]): BuildingComponent[Props] = {
+    new BuildingComponent[Props](this, p, key, ref, writer)
   }
 }
