@@ -5,15 +5,15 @@ import me.shadaj.simple.react.core.facade.{ComponentInstance, React}
 import scala.language.implicitConversions
 import scala.scalajs.js
 
-class BuildingComponent[Props](private[BuildingComponent] val e: ExternalComponent, private[BuildingComponent] val props: Props) {
-  def apply(children: ComponentInstance*)(implicit writer: Writer[Props]): ComponentInstance = {
+class BuildingComponent[Props](private[BuildingComponent] val e: ExternalComponent, private[BuildingComponent] val props: Props, writer: Writer[Props]) {
+  def withChildren(children: ComponentInstance*): ComponentInstance = {
     React.createElement(e.component, writer.write(props), children: _*)
   }
 }
 
 object BuildingComponent {
-  implicit def shortCut[C <: ExternalComponent, Props](bc: BuildingComponent[Props])(implicit writer: Writer[Props]): ComponentInstance = {
-    React.createElement(bc.e.component, writer.write(bc.props))
+  implicit def shortcut[Props](bc: BuildingComponent[Props]): ComponentInstance = {
+    bc.withChildren()
   }
 }
 
@@ -22,7 +22,7 @@ trait ExternalComponent {
 
   val component: js.Object
 
-  def apply(p: Props): BuildingComponent[Props] = {
-    new BuildingComponent(this, p)
+  def apply(p: Props)(implicit writer: Writer[Props]): BuildingComponent[Props] = {
+    new BuildingComponent[Props](this, p, writer)
   }
 }
