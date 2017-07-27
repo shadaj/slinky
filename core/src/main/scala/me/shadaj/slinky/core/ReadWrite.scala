@@ -5,7 +5,9 @@ import shapeless._
 import shapeless.labelled.{FieldType, field}
 
 import scala.collection.generic.CanBuildFrom
+import scala.concurrent.Future
 import scala.language.implicitConversions
+import scala.scalajs.js.JSON
 
 trait WithRaw {
   def raw: js.Object with js.Dynamic= {
@@ -75,6 +77,14 @@ object Reader {
     val fn = s.asInstanceOf[js.Function1[js.Object, js.Object]]
     (i: I) => {
       oReader.read(fn(iWriter.write(i)))
+    }
+  }
+
+  implicit def futureReader[O](implicit oReader: Reader[O]): Reader[Future[O]] = (s, root) => {
+    import scala.scalajs.js.JSConverters._
+    import scala.scalajs.concurrent.JSExecutionContext.Implicits.runNow
+    s.asInstanceOf[js.Promise[js.Object]].toFuture.map { v =>
+      oReader.read(v)
     }
   }
 
@@ -158,6 +168,12 @@ object Writer {
     }
 
     fn.asInstanceOf[js.Object]
+  }
+
+  implicit def futureWriter[O](implicit oWriter: Writer[O]): Writer[Future[O]] = (s, root) => {
+    import scala.scalajs.js.JSConverters._
+    import scala.scalajs.concurrent.JSExecutionContext.Implicits.runNow
+    s.map(v => oWriter.write(v)).toJSPromise.asInstanceOf[js.Object]
   }
 
   implicit val hnilWriter: Writer[HNil] = (_, _) => js.Dynamic.literal()
