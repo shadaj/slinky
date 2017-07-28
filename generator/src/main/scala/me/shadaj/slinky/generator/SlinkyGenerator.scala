@@ -122,9 +122,6 @@ object SlinkyGenerator {
 
     val keywords = Set("var", "for", "object", "val", "type")
 
-    // conflict with tags, outputed with _attr suffix
-    val hiddenAttrs = Set("data", "style", "title", "cite", "link", "form", "span", "label", "summary", "abbr")
-
     tags.foreach { t =>
       println(t)
 
@@ -138,7 +135,7 @@ object SlinkyGenerator {
         s"""/**
            | * $summary
            | */
-           |val $tagVariableName = new HtmlComponent[${t}AttributeApplied]("$t")""".stripMargin
+           |def $tagVariableName(mods: HtmlComponentMod[${t}AttributeApplied]*): HtmlComponent[${t}AttributeApplied] = new HtmlComponent[${t}AttributeApplied]("$t").apply(mods: _*)""".stripMargin
 
       tagsAppliedScala = tagsAppliedScala :+
         s"""case class ${t}AttributeApplied(name: String, value: js.Any) extends AppliedAttribute
@@ -147,29 +144,21 @@ object SlinkyGenerator {
       var attributeConversions = Set.empty[String]
 
       attributes.foreach { case (a, d) =>
-        val attributeName = if (hiddenAttrs.contains(a.name)) s"${a.name}_attr" else if (keywords.contains(a.name)) {
+        val attributeName = if (keywords.contains(a.name)) {
           "`" + a.name + "`"
         } else a.name
 
         val doc = (t, d.replace("\n", " ").replace("*", "&#47;"))
 
         val attributeInstance =
-          s"""object $attributeName extends Attr[${a.valueType}, ${a.name}Pair]("${a.name}") {
-             |def :=(v: ${a.valueType}): ${a.name}Pair = new ${a.name}Pair(name, v)
+          s"""object $attributeName {
+             |def :=(v: ${a.valueType}): AttrPair[${a.valueType}, $attributeName.type] = new AttrPair[${a.valueType}, $attributeName.type]("${a.name}", v)
+             |${if (attributeName == "data") "def -(sub: String) = new { def :=(v: String): AttrPair[String, data.type] = new AttrPair[String, data.type](\"data-\" + sub, v) }" else ""}
              |}"""
-        val attributePairInstance = s"""class ${a.name}Pair(attr: String, value: ${a.valueType}) extends AttrPair[${a.valueType}](attr, value)"""
 
-        attributeInstances = attributeInstances :+ (doc, attributeInstance + "\n" + attributePairInstance)
+        attributeInstances = attributeInstances :+ (doc, attributeInstance)
 
-        if (attributeName == "data") {
-          val dataSpecial =
-            s"""def data(sub: String) = new Attr[${a.valueType}, ${a.name}Pair]("data-" + sub) {
-               |def :=(v: String): ${a.name}Pair = new ${a.name}Pair(name, v)
-               |}"""
-          attributeInstances = attributeInstances :+ (doc, dataSpecial)
-        }
-
-        attributeConversions = attributeConversions + s"""implicit def ${a.name}PairTo${t}Applied(pair: ${a.name}Pair): ${t}AttributeApplied = ${t}AttributeApplied(pair.name, pair.value)"""
+        attributeConversions = attributeConversions + s"""implicit def ${a.name}PairTo${t}Applied(pair: AttrPair[${a.valueType}, $attributeName.type]): ${t}AttributeApplied = ${t}AttributeApplied(pair.name, pair.value)"""
       }
 
       tagsAppliedScala = tagsAppliedScala :+ attributeConversions.mkString("\n")
@@ -192,19 +181,22 @@ object SlinkyGenerator {
     }
 
     (
-      s"""package me.shadaj.slinky.core.html
+      s"""package me.shadaj.slinky.core.html.internal
+         |import me.shadaj.slinky.core.html.{AppliedAttribute, AttrPair}
          |import scala.language.implicitConversions
          |import scala.scalajs.js
-         |trait tagsApplied {
+         |trait tagsApplied extends attrs {
          |${tagsAppliedScala.mkString("\n")}
          |}""".stripMargin,
-      s"""package me.shadaj.slinky.core.html
+      s"""package me.shadaj.slinky.core.html.internal
+         |import me.shadaj.slinky.core.html.{HtmlComponent, HtmlComponentMod}
          |import scala.language.implicitConversions
          |import scala.scalajs.js
-         |trait tags {
+         |trait tags extends tagsApplied {
          |${tagsScala.mkString("\n")}
          |}""".stripMargin,
-      s"""package me.shadaj.slinky.core.html
+      s"""package me.shadaj.slinky.core.html.internal
+         |import me.shadaj.slinky.core.html.{AppliedAttribute, AttrPair}
          |import scala.language.implicitConversions
          |import scala.scalajs.js
          |trait attrs {

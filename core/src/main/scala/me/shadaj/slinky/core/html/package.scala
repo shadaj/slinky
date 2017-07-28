@@ -5,7 +5,7 @@ import me.shadaj.slinky.core.facade.ComponentInstance
 import scala.language.implicitConversions
 import scala.scalajs.js.JSConverters._
 
-package object html extends attrs with tags with tagsApplied {
+package object html extends internal.tags with internal.tagsApplied with internal.attrs {
   implicit def stringToInstance(s: String): ComponentInstance = {
     s.asInstanceOf[ComponentInstance]
   }

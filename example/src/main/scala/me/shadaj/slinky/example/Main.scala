@@ -46,14 +46,14 @@ object Main extends JSApp {
 
       def render(): ComponentInstance = {
        val maybeChild = if (props.name == "parent foo") {
-         Some(div(key := "I have a key!")(
+         Some(div(key := "I have a key!", data-"foo" := "bar")(
            Foo(Foo.Props("child foo", Seq.empty)),
            "here's a string rendered by the parent!"
          ))
        } else None
 
         div(
-          style_attr := js.Dynamic.literal(
+          style := js.Dynamic.literal(
             "marginLeft" -> 20
           )
         )(
@@ -65,7 +65,7 @@ object Main extends JSApp {
               setState(e.target.asInstanceOf[html.Input].value)
             }),
             className := "foo",
-            style_attr := js.Dynamic.literal(
+            style := js.Dynamic.literal(
               "color" -> (if (state.contains(" ")) "red" else "green")
             ),
             value := state

@@ -1,16 +1,11 @@
 package me.shadaj.slinky.core.html
 
-import me.shadaj.slinky.core.facade.ComponentInstance
 import me.shadaj.slinky.core.facade.{ComponentInstance, React}
 
 import scala.language.implicitConversions
 import scala.scalajs.js
 
-abstract class Attr[V, P <: AttrPair[V]](val name: String) {
-  def :=(v: V): P
-}
-
-abstract class AttrPair[V](val name: String, val value: V)
+class AttrPair[V, A](val name: String, val value: V)
 
 abstract class AppliedAttribute {
   val name: String

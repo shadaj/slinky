@@ -6,7 +6,7 @@ import scala.language.implicitConversions
 import scala.scalajs.js
 
 class BuildingComponent[Props](e: ExternalComponent, props: Props, key: String, ref: js.Object => Unit, writer: Writer[Props]) {
-  def withChildren(children: ComponentInstance*): ComponentInstance = {
+  def apply(children: ComponentInstance*): ComponentInstance = {
     val written = writer.write(props)
 
     if (key != null) {
@@ -22,8 +22,8 @@ class BuildingComponent[Props](e: ExternalComponent, props: Props, key: String, 
 }
 
 object BuildingComponent {
-  implicit def shortcut[Props](bc: BuildingComponent[Props]): ComponentInstance = {
-    bc.withChildren()
+  implicit def shortcut(bc: BuildingComponent[_]): ComponentInstance = {
+    bc()
   }
 }
 
