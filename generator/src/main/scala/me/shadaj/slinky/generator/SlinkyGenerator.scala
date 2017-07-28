@@ -135,11 +135,10 @@ object SlinkyGenerator {
         s"""/**
            | * $summary
            | */
-           |def $tagVariableName(mods: HtmlComponentMod[${t}AttributeApplied]*): HtmlComponent[${t}AttributeApplied] = new HtmlComponent[${t}AttributeApplied]("$t").apply(mods: _*)""".stripMargin
+           |def $tagVariableName(mods: HtmlComponentMod[${t}Tag.type]*): HtmlComponent[${t}Tag.type] = new HtmlComponent[${t}Tag.type]("$t").apply(mods: _*)""".stripMargin
 
       tagsAppliedScala = tagsAppliedScala :+
-        s"""case class ${t}AttributeApplied(name: String, value: js.Any) extends AppliedAttribute
-           |object ${t}AttributeApplied {""".stripMargin
+        s"""object ${t}Tag {""".stripMargin
 
       var attributeConversions = Set.empty[String]
 
@@ -152,13 +151,13 @@ object SlinkyGenerator {
 
         val attributeInstance =
           s"""object $attributeName {
-             |def :=(v: ${a.valueType}): AttrPair[${a.valueType}, $attributeName.type] = new AttrPair[${a.valueType}, $attributeName.type]("${a.name}", v)
-             |${if (attributeName == "data") "def -(sub: String) = new { def :=(v: String): AttrPair[String, data.type] = new AttrPair[String, data.type](\"data-\" + sub, v) }" else ""}
+             |def :=(v: ${a.valueType}): AttrPair[$attributeName.type] = new AttrPair[$attributeName.type]("${a.name}", v)
+             |${if (attributeName == "data") "def -(sub: String) = new { def :=(v: String): AttrPair[data.type] = new AttrPair[data.type](\"data-\" + sub, v) }" else ""}
              |}"""
 
         attributeInstances = attributeInstances :+ (doc, attributeInstance)
 
-        attributeConversions = attributeConversions + s"""implicit def ${a.name}PairTo${t}Applied(pair: AttrPair[${a.valueType}, $attributeName.type]): ${t}AttributeApplied = ${t}AttributeApplied(pair.name, pair.value)"""
+        attributeConversions = attributeConversions + s"""implicit def ${a.name}PairTo${t}Applied(pair: AttrPair[$attributeName.type]): AttrPair[${t}Tag.type] = pair.asInstanceOf[AttrPair[${t}Tag.type]]"""
       }
 
       tagsAppliedScala = tagsAppliedScala :+ attributeConversions.mkString("\n")
@@ -182,7 +181,7 @@ object SlinkyGenerator {
 
     (
       s"""package me.shadaj.slinky.core.html.internal
-         |import me.shadaj.slinky.core.html.{AppliedAttribute, AttrPair}
+         |import me.shadaj.slinky.core.html.AttrPair
          |import scala.language.implicitConversions
          |import scala.scalajs.js
          |trait tagsApplied extends attrs {
@@ -196,7 +195,7 @@ object SlinkyGenerator {
          |${tagsScala.mkString("\n")}
          |}""".stripMargin,
       s"""package me.shadaj.slinky.core.html.internal
-         |import me.shadaj.slinky.core.html.{AppliedAttribute, AttrPair}
+         |import me.shadaj.slinky.core.html.AttrPair
          |import scala.language.implicitConversions
          |import scala.scalajs.js
          |trait attrs {

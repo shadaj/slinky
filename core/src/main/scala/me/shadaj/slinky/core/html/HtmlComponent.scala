@@ -5,18 +5,13 @@ import me.shadaj.slinky.core.facade.{ComponentInstance, React}
 import scala.language.implicitConversions
 import scala.scalajs.js
 
-class AttrPair[V, A](val name: String, val value: V)
+class AttrPair[A](val name: String, val value: js.Any)
 
-abstract class AppliedAttribute {
-  val name: String
-  val value: js.Any
-}
-
-trait HtmlComponentMod[A <: AppliedAttribute] extends Any {
+trait HtmlComponentMod[A] extends Any {
   def applyTo(component: HtmlComponent[A]): HtmlComponent[A]
 }
 
-class SeqMod[A <: AppliedAttribute](val mods: Iterable[HtmlComponentMod[A]]) extends AnyVal with HtmlComponentMod[A] {
+class SeqMod[A](val mods: Iterable[HtmlComponentMod[A]]) extends AnyVal with HtmlComponentMod[A] {
   def applyTo(component: HtmlComponent[A]): HtmlComponent[A] = {
     mods.foldLeft(component) { (component, mod) =>
       mod.applyTo(component)
@@ -24,21 +19,21 @@ class SeqMod[A <: AppliedAttribute](val mods: Iterable[HtmlComponentMod[A]]) ext
   }
 }
 
-class ChildMod[A <: AppliedAttribute](val child: ComponentInstance) extends AnyVal with HtmlComponentMod[A] {
+class ChildMod[A](val child: ComponentInstance) extends AnyVal with HtmlComponentMod[A] {
   def applyTo(component: HtmlComponent[A]): HtmlComponent[A] = {
     component.copy(children = component.children :+ child)
   }
 }
 
-class AttrMod[A <: AppliedAttribute](val attr: A) extends AnyVal with HtmlComponentMod[A] {
+class AttrMod[A](val attr: AttrPair[A]) extends AnyVal with HtmlComponentMod[A] {
   def applyTo(component: HtmlComponent[A]): HtmlComponent[A] = {
     component.copy(attrs = component.attrs :+ attr)
   }
 }
 
-case class HtmlComponent[A <: AppliedAttribute](name: String,
-                                                children: Seq[ComponentInstance] = Seq.empty,
-                                                attrs: Seq[A] = Seq.empty) {
+case class HtmlComponent[A](name: String,
+                            children: Seq[ComponentInstance] = Seq.empty,
+                            attrs: Seq[AttrPair[A]] = Seq.empty) {
   def apply(newMods: HtmlComponentMod[A]*): HtmlComponent[A] = {
     newMods.foldLeft(this) { (c, mod) =>
       mod.applyTo(c)

@@ -3,6 +3,7 @@ package me.shadaj.slinky.core
 import me.shadaj.slinky.core.facade.ComponentInstance
 
 import scala.language.implicitConversions
+import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
 
 package object html extends internal.tags with internal.tagsApplied with internal.attrs {
@@ -14,7 +15,7 @@ package object html extends internal.tags with internal.tagsApplied with interna
     s.map(cv).toJSArray.asInstanceOf[ComponentInstance]
   }
 
-  implicit def component2Instance[A <: AppliedAttribute](component: HtmlComponent[A]): ComponentInstance = {
+  implicit def component2Instance[A](component: HtmlComponent[A]): ComponentInstance = {
     HtmlComponent.create(
       component.name,
       component.attrs.map(m => (m.name, m.value)).toMap.toJSDictionary,
@@ -22,18 +23,18 @@ package object html extends internal.tags with internal.tagsApplied with interna
     )
   }
 
-  implicit def optionToMod[T, O <: AppliedAttribute](option: Option[T])
-                                                    (implicit cvt: T => HtmlComponentMod[O]): HtmlComponentMod[O] = {
-    new SeqMod[O](option.map(cvt))
+  implicit def optionToMod[T, A](option: Option[T])
+                                (implicit cvt: T => HtmlComponentMod[A]): HtmlComponentMod[A] = {
+    new SeqMod[A](option.map(cvt))
   }
 
-  implicit def instance2Mod[T, O <: AppliedAttribute](instance: T)
-                                                     (implicit cvt: T => ComponentInstance): HtmlComponentMod[O] = {
+  implicit def instance2Mod[T, A](instance: T)
+                                 (implicit cvt: T => ComponentInstance): HtmlComponentMod[A] = {
     new ChildMod(cvt(instance))
   }
 
-  implicit def attr2Mod[A <: AppliedAttribute, T](instance: T)
-                                                 (implicit cvt: T => A): HtmlComponentMod[A] = {
+  implicit def attr2Mod[T, A](instance: T)
+                             (implicit cvt: T => AttrPair[A]): HtmlComponentMod[A] = {
     new AttrMod[A](cvt(instance))
   }
 }
