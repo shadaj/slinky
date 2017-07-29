@@ -20,7 +20,11 @@ trait Reader[P] {
 }
 
 object Reader {
-  implicit def objectReader[T <: js.Object]: Reader[T] = (s, root) => s.asInstanceOf[T]
+  implicit def objectReader[T <: js.Object]: Reader[T] = (s, root) => (if (root) {
+    s.asInstanceOf[js.Dynamic].value
+  } else {
+    s
+  }).asInstanceOf[T]
 
   implicit val stringReader: Reader[String] = (s, root) => (if (root) {
     s.asInstanceOf[js.Dynamic].value
@@ -44,7 +48,7 @@ object Reader {
     s.asInstanceOf[js.Dynamic].value
   } else {
     s
-  }).asInstanceOf[Int]
+  }).asInstanceOf[Double]
 
   implicit def optionReader[T](implicit reader: Reader[T]): Reader[Option[T]] = (s, root) => {
     val value = if (root) {
@@ -114,7 +118,11 @@ trait Writer[P] {
 }
 
 object Writer {
-  implicit def objectWriter[T <: js.Object]: Writer[T] = (s, root) => s
+  implicit def objectWriter[T <: js.Object]: Writer[T] = (s, root) => if (root) {
+    js.Dynamic.literal("value" -> s)
+  } else {
+    s
+  }
 
   implicit val stringWriter: Writer[String] = (s, root) => if (root) {
     js.Dynamic.literal("value" -> s)
