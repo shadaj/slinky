@@ -10,7 +10,7 @@ import scala.language.implicitConversions
 import scala.scalajs.js.JSON
 
 trait WithRaw {
-  def raw: js.Object with js.Dynamic= {
+  def raw: js.Object with js.Dynamic = {
     this.asInstanceOf[js.Dynamic].__raw.asInstanceOf[js.Object with js.Dynamic ]
   }
 }

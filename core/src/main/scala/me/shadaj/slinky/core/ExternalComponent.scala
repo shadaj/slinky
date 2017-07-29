@@ -28,14 +28,17 @@ object BuildingComponent {
   implicit def make[P]: BuildingComponent[P] => ComponentInstance = macro BuildingComponentMacros.makeImpl[P]
 }
 
+final class Maker[P: Writer] extends (BuildingComponent[P] => ComponentInstance) {
+  override def apply(v1: BuildingComponent[P]): ComponentInstance = {
+    v1()
+  }
+}
+
 object BuildingComponentMacros {
   // SUPER SKETCHY INTELLIJ HACK
   def makeImpl[P: c.WeakTypeTag](c: Context): c.Expr[BuildingComponent[P] => ComponentInstance] = {
     import c.universe._
-    val propsType = implicitly[c.WeakTypeTag[P]].tpe
-    c.Expr[BuildingComponent[P] => ComponentInstance](
-      q"(bc: BuildingComponent[$propsType]) => bc.apply()(_root_.scala.Predef.implicitly[_root_.me.shadaj.slinky.core.Writer[$propsType]])"
-    )
+    c.Expr[BuildingComponent[P] => ComponentInstance](q"new _root_.me.shadaj.slinky.core.Maker")
   }
 }
 
