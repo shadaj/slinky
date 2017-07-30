@@ -15,9 +15,7 @@ lazy val core = project.settings(
     (run in Compile in generator).toTask("").value
 
     Seq(
-      folder / "tagsApplied.scala",
-      folder / "tags.scala",
-      folder / "attrs.scala"
+      folder / "gen.scala"
     )
   }.taskValue,
   mappings in (Compile, packageSrc) ++= {

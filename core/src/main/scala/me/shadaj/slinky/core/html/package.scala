@@ -6,7 +6,7 @@ import scala.language.implicitConversions
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
 
-package object html extends internal.tags with internal.tagsApplied with internal.attrs {
+package object html extends internal.gen {
   implicit def stringToInstance(s: String): ComponentInstance = {
     s.asInstanceOf[ComponentInstance]
   }

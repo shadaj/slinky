@@ -75,7 +75,7 @@ object MDN {
     HTMLToJSMapping.Attr("onWaiting", "js.Function1[org.scalajs.dom.Event, Unit]") -> ""
   )
 
-  lazy val globalAttributes = {
+  lazy val globalAttributes: List[(HTMLToJSMapping.Attr, String)] = {
     val page = browser.get(s"https://developer.mozilla.org/en-US/docs/Web/HTML/Global_attributes")
     val article = page >> element("#wikiArticle")
     val attributesSection = article.children.toList
@@ -97,7 +97,7 @@ object MDN {
     }.toList
   }
 
-  def htmlElement(name: String) = {
+  def htmlElement(name: String): (String, List[(HTMLToJSMapping.Attr, String)]) = {
     val page = browser.get(s"https://developer.mozilla.org/en-US/docs/Web/HTML/Element/$name")
     val article = page >> element("#wikiArticle")
     val summary = article.children.find(c => c.tagName == "p" && c.innerHtml.nonEmpty).get.innerHtml
@@ -127,5 +127,36 @@ object MDN {
     } ++ globalAttributes
 
     (summary, attributes)
+  }
+
+  def extract: (Seq[Tag], Seq[Attribute]) = {
+    val allTags = Seq(
+      "a", "abbr", "address", "area", "article", "aside", "audio", "b", "base", "bdi", "bdo", "blockquote", "body",
+      "br", "button", "canvas", "caption", "cite", "code", "col", "colgroup", "command", "data", "datalist", "dd",
+      "del", "details", "dfn", "dialog", "div", "dl", "dt", "em", "embed", "fieldset", "figcaption", "figure", "footer",
+      "form", "h1", "h2", "h3", "h4", "h5", "h6", "head", "header", "hgroup", "hr", "html", "i", "iframe", "img", "input",
+      "ins", "kbd", "keygen", "label", "legend", "li", "link", "map", "mark", "menu", "meta", "meter", "nav", "noscript",
+      "object", "ol", "optgroup", "option", "output", "p", "param", "pre", "progress", "q", "rp", "rt", "ruby", "s", "samp",
+      "script", "section", "select", "small", "source", "span", "strong", "style", "sub", "summary", "sup", "table",
+      "tbody", "td", "textarea", "tfoot", "th", "thead", "time", "title", "tr", "track", "u", "ul", "var", "video", "wbr")
+
+    val tagsWithAttributes = allTags.map { n =>
+      println(n)
+      val extracted = htmlElement(n)
+      (Tag(n, extracted._1.split('\n')), extracted._2)
+    }
+
+    val attrs = tagsWithAttributes.flatMap(v => v._2.map(t => (v._1, t._1, t._2))).groupBy(_._2).map { case (attr, instances) =>
+      Attribute(
+        attr.name,
+        attr.valueType,
+        instances.map { case (tag, _, doc) =>
+          tag -> doc
+        }.groupBy(_._1).toSeq.map(_._2.head),
+        attr.name == "data"
+      )
+    }.toSeq
+
+    (tagsWithAttributes.map(_._1), attrs)
   }
 }
