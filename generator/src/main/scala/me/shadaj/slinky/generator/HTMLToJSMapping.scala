@@ -54,7 +54,7 @@ object HTMLToJSMapping {
     "high" -> Attr("high"),
     "href" -> Attr("href"),
     "hreflang" -> Attr("hrefLang"),
-    "htmlfor" -> Attr("htmlFor"),
+    "for" -> Attr("htmlFor"),
     "httpequiv" -> Attr("httpEquiv"),
     "icon" -> Attr("icon"),
     "id" -> Attr("id"),

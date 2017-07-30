@@ -10,6 +10,9 @@ object MDN {
   val extraAttributes = List(
     HTMLToJSMapping.Attr("key") -> "",
     HTMLToJSMapping.Attr("ref", "js.Function1[org.scalajs.dom.Element, Unit]") -> "",
+    HTMLToJSMapping.Attr("dangerouslySetInnerHTML", "js.Object") -> "",
+    HTMLToJSMapping.Attr("suppressContentEditableWarning", "Boolean") -> "",
+    HTMLToJSMapping.Attr("defaultChecked", "Boolean") -> "",
     HTMLToJSMapping.Attr("onAbort", "js.Function1[org.scalajs.dom.Event, Unit]") -> "",
     HTMLToJSMapping.Attr("onAutoComplete", "js.Function1[org.scalajs.dom.Event, Unit]") -> "",
     HTMLToJSMapping.Attr("onAutoCompleteError", "js.Function1[org.scalajs.dom.Event, Unit]") -> "",
