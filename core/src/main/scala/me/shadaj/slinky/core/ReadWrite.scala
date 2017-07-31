@@ -1,13 +1,13 @@
 package me.shadaj.slinky.core
 
-import scala.scalajs.js
-import shapeless._
-import shapeless.labelled.{FieldType, field}
+import magnolia.{Coderivation, Derivation}
 
+import scala.scalajs.js
 import scala.collection.generic.CanBuildFrom
+import scala.collection.immutable.ListMap
 import scala.concurrent.Future
+
 import scala.language.implicitConversions
-import scala.scalajs.js.JSON
 
 trait WithRaw {
   def raw: js.Object with js.Dynamic = {
@@ -19,12 +19,14 @@ trait Reader[P] {
   def read(o: js.Object, root: Boolean = false): P
 }
 
-object Reader {
+object Reader extends Derivation[Reader]  {
   implicit def objectReader[T <: js.Object]: Reader[T] = (s, root) => (if (root) {
     s.asInstanceOf[js.Dynamic].value
   } else {
     s
   }).asInstanceOf[T]
+
+  implicit val unitReader: Reader[Unit] = (s, root) => ()
 
   implicit val stringReader: Reader[String] = (s, root) => (if (root) {
     s.asInstanceOf[js.Dynamic].value
@@ -92,24 +94,27 @@ object Reader {
     }
   }
 
-  implicit val hnilReader: Reader[HNil] = (s, root) => HNil
+  override type Value = js.Object
 
-  implicit def hconsReader[Key <: Symbol: Witness.Aux, H: Reader, T <: HList: Reader]: Reader[FieldType[Key, H] :: T] =
-    (o, root) => {
-      val headObj = o.asInstanceOf[js.Dynamic].selectDynamic(implicitly[Witness.Aux[Key]].value.name)
-      field[Key](implicitly[Reader[H]].read(headObj.asInstanceOf[js.Object])) :: implicitly[Reader[T]].read(o)
+  override def dereference(value: js.Object, param: String): js.Object = {
+    value.asInstanceOf[js.Dynamic].selectDynamic(param).asInstanceOf[js.Object]
+  }
+
+  override def call[T](typeclass: Reader[T], value: js.Object): T = typeclass.read(value)
+
+  override def construct[T](body: js.Object => T): Reader[T] = new Reader[T] {
+    override def read(o: js.Object, root: Boolean): T = body(o)
+  }
+
+  override def combine[Supertype, Right <: Supertype](left: Reader[_ <: Supertype], right: Reader[Right]): Reader[Supertype] = {
+    new Reader[Supertype] {
+      override def read(o: js.Object, root: Boolean): Supertype = {
+        val leftRead = left.read(o)
+        val rightRead = right.read(o)
+        println(leftRead, rightRead)
+        ??? // TODO: what do we do here?
+      }
     }
-
-  implicit def caseClassReader[C, R <: HList](implicit
-                                              gen: LabelledGeneric.Aux[C, R],
-                                              rc: Lazy[Reader[R]]
-                                             ): Reader[C] = (s, root) => {
-    val out = gen.from(rc.value.read(s))
-    if (out.isInstanceOf[WithRaw]) {
-      out.asInstanceOf[js.Dynamic].__raw = s
-    }
-
-    out
   }
 }
 
@@ -117,12 +122,14 @@ trait Writer[P] {
   def write(p: P, root: Boolean = false): js.Object
 }
 
-object Writer {
+object Writer extends Coderivation[Writer] {
   implicit def objectWriter[T <: js.Object]: Writer[T] = (s, root) => if (root) {
     js.Dynamic.literal("value" -> s)
   } else {
     s
   }
+
+  implicit val unitWriter: Writer[Unit] = (s, root) => js.Dynamic.literal()
 
   implicit val stringWriter: Writer[String] = (s, root) => if (root) {
     js.Dynamic.literal("value" -> s)
@@ -184,24 +191,16 @@ object Writer {
     s.map(v => oWriter.write(v)).toJSPromise.asInstanceOf[js.Object]
   }
 
-  implicit val hnilWriter: Writer[HNil] = (_, _) => js.Dynamic.literal()
+  type Return = js.Object
+  def call[T](writer: Writer[T], value: T): Return = writer.write(value)
+  def construct[T](body: T => Return): Writer[T] = new Writer[T] {
+    override def write(p: T, root: Boolean): js.Object = body(p)
+  }
 
-  implicit def hconsWriter[Key <: Symbol: Witness.Aux, H: Writer, T <: HList: Writer]: Writer[FieldType[Key, H] :: T] =
-    (o, root) => {
-      val out = implicitly[Writer[T]].write(o.tail)
-      out.asInstanceOf[js.Dynamic].updateDynamic(implicitly[Witness.Aux[Key]].value.name)(implicitly[Writer[H]].write(o.head))
-      out
-    }
-
-  implicit def caseClassWriter[C, R <: HList](implicit
-                                              gen: LabelledGeneric.Aux[C, R],
-                                              rc: Lazy[Writer[R]]
-                                             ): Writer[C] = (s, root) => {
-    if (s.isInstanceOf[WithRaw]) {
-      s.asInstanceOf[WithRaw].raw
-    } else {
-      rc.value.write(gen.to(s))
-    }
+  def join(name: String, xs: ListMap[String, Return]): Return = {
+    val ret = js.Dynamic.literal()
+    xs.foreach(p => ret.updateDynamic(p._1)(p._2))
+    ret
   }
 }
 
