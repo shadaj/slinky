@@ -4,8 +4,7 @@ import me.shadaj.slinky.core.facade.{ComponentInstance, React}
 
 import scala.language.implicitConversions
 import scala.language.experimental.macros
-
-import scala.reflect.macros.blackbox.Context
+import scala.reflect.macros.whitebox.Context
 import scala.scalajs.js
 
 class BuildingComponent[P](e: ExternalComponent, props: P, key: String, ref: js.Object => Unit) {
@@ -38,7 +37,7 @@ object BuildingComponentMacros {
   // SUPER SKETCHY INTELLIJ HACK
   def makeImpl[P: c.WeakTypeTag](c: Context): c.Expr[BuildingComponent[P] => ComponentInstance] = {
     import c.universe._
-    c.Expr[BuildingComponent[P] => ComponentInstance](q"new _root_.me.shadaj.slinky.core.Maker")
+    c.Expr[BuildingComponent[P] => ComponentInstance](c.typecheck(q"new _root_.me.shadaj.slinky.core.Maker[${implicitly[WeakTypeTag[P]]}]"))
   }
 }
 
