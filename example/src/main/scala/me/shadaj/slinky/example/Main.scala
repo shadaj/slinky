@@ -2,9 +2,8 @@ package me.shadaj.slinky.example
 
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.html_<^._
-import me.shadaj.slinky.core.{Reader, WithRaw, Writer}
+import me.shadaj.slinky.core._
 import me.shadaj.slinky.core.html._
-import me.shadaj.slinky.core.Component
 import me.shadaj.slinky.core.facade.{ComponentInstance, ReactDOM}
 import me.shadaj.slinky.scalajsreact.Converters._
 import org.scalajs.dom.{Event, document, html}
@@ -71,9 +70,9 @@ object Main extends JSApp {
             value := state
           ),
           div(className := "foo")(props.name),
-          <.h2(s"this was rendered by scalajs-react!"),
+          <.h2(s"this was ren dered by scalajs-react!"),
           maybeChild,
-          (1 to state.size).map(n => div(s"$n - $state")),
+          (1 to state.size).map(n => div(key := n.toString)(s"$n - $state")),
           Hello("simple-react")
         )
       }
@@ -81,9 +80,14 @@ object Main extends JSApp {
   }
 
   def main(): Unit = {
-    val container = document.createElement("div")
-    document.body.appendChild(container)
+    if (js.Dynamic.global.reactContainer == js.undefined) {
+      js.Dynamic.global.reactContainer = document.createElement("div")
+      document.body.appendChild(js.Dynamic.global.reactContainer.asInstanceOf[html.Element])
+    }
 
-    ReactDOM.render(Foo(Foo.Props("parent foo", Seq("lolz"))), container)
+    ReactDOM.render(
+      Foo(Foo.Props("parent foo", Seq("lolz"))),
+      js.Dynamic.global.reactContainer.asInstanceOf[html.Element]
+    )
   }
 }
