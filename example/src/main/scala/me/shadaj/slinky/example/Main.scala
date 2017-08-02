@@ -10,7 +10,13 @@ import org.scalajs.dom.{Event, document, html}
 
 import scala.scalajs.js
 import scala.scalajs.js.JSApp
-import scala.scalajs.js.annotation.ScalaJSDefined
+import scala.scalajs.js.annotation.{JSImport, ScalaJSDefined}
+
+@JSImport("react-proxy", JSImport.Namespace)
+object ReactProxy extends js.Object {
+  def createProxy(componentConstructor: js.Object): js.Object = js.native
+  def getForceUpdate(react: js.Object): js.Function1[js.Object, Unit] = js.native
+}
 
 object Main extends JSApp {
   val Hello =
@@ -23,7 +29,7 @@ object Main extends JSApp {
       ))
       .build
 
-  object Foo extends Component {
+  object Foo extends Component with HotLoading {
     case class Props(name: String, bar: Seq[String])
     type State = String
 
@@ -70,7 +76,7 @@ object Main extends JSApp {
             value := state
           ),
           div(className := "foo")(props.name),
-          <.h2(s"this was ren dered by scalajs-react!"),
+          <.h2(s"this was rendered by scalajs-react!"),
           maybeChild,
           (1 to state.size).map(n => div(key := n.toString)(s"$n - $state")),
           Hello("simple-react")
