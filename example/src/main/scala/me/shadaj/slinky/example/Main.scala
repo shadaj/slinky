@@ -12,12 +12,6 @@ import scala.scalajs.js
 import scala.scalajs.js.JSApp
 import scala.scalajs.js.annotation.{JSImport, ScalaJSDefined}
 
-@JSImport("react-proxy", JSImport.Namespace)
-object ReactProxy extends js.Object {
-  def createProxy(componentConstructor: js.Object): js.Object = js.native
-  def getForceUpdate(react: js.Object): js.Function1[js.Object, Unit] = js.native
-}
-
 object Main extends JSApp {
   val Hello =
     ScalaComponent.builder[String]("Hello")
@@ -29,7 +23,7 @@ object Main extends JSApp {
       ))
       .build
 
-  object Foo extends Component with HotLoading {
+  object Foo extends Component {
     case class Props(name: String, bar: Seq[String])
     type State = String
 

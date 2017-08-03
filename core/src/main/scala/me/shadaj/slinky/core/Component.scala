@@ -1,8 +1,8 @@
 package me.shadaj.slinky.core
 
-import me.shadaj.slinky.core.facade.{ComponentInstance, PrivateComponentClass, React}
+import me.shadaj.slinky.core.facade.{ComponentInstance, PrivateComponentClass, React, ReactProxy}
 
-import scala.scalajs.js
+import scala.scalajs.{LinkingInfo, js}
 import scala.scalajs.js.ConstructorTag
 import scala.scalajs.js.annotation.{JSName, ScalaJSDefined}
 
@@ -98,11 +98,42 @@ abstract class Component {
     def render(): ComponentInstance
   }
 
-  def componentConstructor(implicit constructorTag: ConstructorTag[Def]): js.Object = {
+  final val enableHotLoading = ReactProxy != js.undefined && LinkingInfo.developmentMode
+  private var processedEnable = false
+
+  private def superComponentConstructor(implicit constructorTag: ConstructorTag[Def]): js.Object = {
     val component = constructorTag.constructor
     component.displayName = getClass.getSimpleName
 
     component.asInstanceOf[js.Object]
+  }
+
+  def componentConstructor(implicit constructorTag: ConstructorTag[Def]): js.Object = {
+    if (enableHotLoading) {
+      if (!processedEnable) {
+        processedEnable = true
+
+        if (enableHotLoading) {
+          if (js.Dynamic.global.proxies == js.undefined) {
+            js.Dynamic.global.proxies = js.Dynamic.literal()
+          }
+
+          if (js.Dynamic.global.proxies.selectDynamic(this.getClass.getName) == js.undefined) {
+            println("creating proxy")
+            js.Dynamic.global.proxies.updateDynamic(this.getClass.getName)(ReactProxy.createProxy(superComponentConstructor))
+          } else {
+            println("updating proxy")
+            val forceUpdate = ReactProxy.getForceUpdate(React)
+            js.Dynamic.global.proxies.selectDynamic(this.getClass.getName).update(superComponentConstructor).asInstanceOf[js.Array[js.Object]]
+              .foreach(o => forceUpdate(o))
+          }
+        }
+      }
+
+      js.Dynamic.global.proxies.selectDynamic(this.getClass.getName).get().asInstanceOf[js.Object]
+    } else {
+      superComponentConstructor
+    }
   }
 
   def apply(p: Props, key: String = null, ref: Def => Unit = null)(implicit constructorTag: ConstructorTag[Def], propsWriter: Writer[Props]): ComponentInstance = {
