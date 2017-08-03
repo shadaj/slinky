@@ -16,7 +16,17 @@ trait WithRaw {
 }
 
 trait Reader[P] {
-  def read(o: js.Object, root: Boolean = false): P
+  def read(o: js.Object, root: Boolean = false): P = {
+    val dyn = o.asInstanceOf[js.Dynamic]
+
+    if (dyn != js.undefined && dyn.__scalaRef != js.undefined) {
+      dyn.__scalaRef.asInstanceOf[P]
+    } else {
+      forceRead(o, root)
+    }
+  }
+
+  protected def forceRead(o: js.Object, root: Boolean = false): P
 }
 
 object Reader extends Derivation[Reader]  {
@@ -103,12 +113,12 @@ object Reader extends Derivation[Reader]  {
   override def call[T](typeclass: Reader[T], value: js.Object): T = typeclass.read(value)
 
   override def construct[T](body: js.Object => T): Reader[T] = new Reader[T] {
-    override def read(o: js.Object, root: Boolean): T = body(o)
+    override def forceRead(o: js.Object, root: Boolean): T = body(o)
   }
 
   override def combine[Supertype, Right <: Supertype](left: Reader[_ <: Supertype], right: Reader[Right]): Reader[Supertype] = {
     new Reader[Supertype] {
-      override def read(o: js.Object, root: Boolean): Supertype = {
+      override def forceRead(o: js.Object, root: Boolean): Supertype = {
         val leftRead = left.read(o)
         val rightRead = right.read(o)
         println(leftRead, rightRead)

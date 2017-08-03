@@ -34,7 +34,7 @@ abstract class Component {
 
     @JSName("setState_scala")
     @inline final def setState(s: State): Unit = {
-      this.asInstanceOf[PrivateComponentClass].setStateR(stateWriter.write(s, true))
+      this.asInstanceOf[PrivateComponentClass].setStateR(js.Dynamic.literal(__scalaRef = s.asInstanceOf[js.Any]))
     }
 
     def componentWillMount(): Unit = {}
@@ -106,7 +106,7 @@ abstract class Component {
   }
 
   def apply(p: Props, key: String = null, ref: Def => Unit = null)(implicit constructorTag: ConstructorTag[Def], propsWriter: Writer[Props]): ComponentInstance = {
-    val propsObj = propsWriter.write(p, true)
+    val propsObj = js.Dynamic.literal(__scalaRef = p.asInstanceOf[js.Any])
 
     if (key != null) {
       propsObj.asInstanceOf[js.Dynamic].key = key
