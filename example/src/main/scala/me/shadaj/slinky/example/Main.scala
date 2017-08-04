@@ -63,7 +63,7 @@ object Main extends JSApp {
           state,
           input(
             `type` := "foo",
-            onChange := ((e: Event) => {
+            onChange := ((e) => {
               println(e.target.asInstanceOf[html.Input].value)
               setState(e.target.asInstanceOf[html.Input].value)
             }),

@@ -25,7 +25,13 @@ object Generator extends App {
       }
 
       val attrsGen = attrs.toList.flatMap { a =>
-        val base = s"""def :=(v: ${a.attributeType}): AttrPair[$symbol.attr.type] = new AttrPair[$symbol.attr.type]("${a.attributeName}", v)"""
+        val base = if (a.attributeType == "EventHandler") {
+          s"""def :=(v: org.scalajs.dom.Event => Unit): AttrPair[$symbol.attr.type] = new AttrPair[$symbol.attr.type]("${a.attributeName}", v)
+             |def :=(v: () => Unit): AttrPair[$symbol.attr.type] = new AttrPair[$symbol.attr.type]("${a.attributeName}", v)
+           """.stripMargin
+        } else {
+          s"""def :=(v: ${a.attributeType}): AttrPair[$symbol.attr.type] = new AttrPair[$symbol.attr.type]("${a.attributeName}", v)"""
+        }
 
         if (a.withDash) {
           Seq(
