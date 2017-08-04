@@ -49,6 +49,10 @@ class ReaderWriterTest extends FunSuite {
     readWrittenSame(CaseClass(1, true))
   }
 
+  test("Read/write - sequences") {
+    readWrittenSame(List(1, 2))
+  }
+
   test("Read/write - opaque class") {
     class OpaqueClass(int: Int)
     readWrittenSame(new OpaqueClass(1), true)
