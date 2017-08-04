@@ -37,6 +37,25 @@ abstract class Component {
       this.asInstanceOf[PrivateComponentClass].setStateR(js.Dynamic.literal(__ = s.asInstanceOf[js.Any]))
     }
 
+    @JSName("setState_scala")
+    @inline final def setState(fn: (State, Props) => State): Unit = {
+      this.asInstanceOf[PrivateComponentClass].setStateR((ps: js.Object, p: js.Object) => {
+        js.Dynamic.literal(__ = fn(stateReader.read(ps), propsReader.read(p)).asInstanceOf[js.Any])
+      })
+    }
+
+    @JSName("setState_scala")
+    @inline final def setState(s: State, callback: js.Function0[Unit]): Unit = {
+      this.asInstanceOf[PrivateComponentClass].setStateR(js.Dynamic.literal(__ = s.asInstanceOf[js.Any]), callback)
+    }
+
+    @JSName("setState_scala")
+    @inline final def setState(fn: (State, Props) => State, callback: js.Function0[Unit]): Unit = {
+      this.asInstanceOf[PrivateComponentClass].setStateR((ps: js.Object, p: js.Object) => {
+        js.Dynamic.literal(__ = fn(stateReader.read(ps), propsReader.read(p)).asInstanceOf[js.Any])
+      }, callback)
+    }
+
     def componentWillMount(): Unit = {}
 
     def componentDidMount(): Unit = {}

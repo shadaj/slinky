@@ -13,7 +13,9 @@ object React extends js.Object {
   def createElement(component: js.Object, properties: Any, contents: ComponentInstance*): ComponentInstance = js.native
 
   @js.native
-  class Component(jsProps: js.Object) extends js.Object
+  class Component(jsProps: js.Object) extends js.Object {
+    def forceUpdate(callback: js.Function0[Unit]): Unit = js.native
+  }
 }
 
 @js.native
@@ -32,6 +34,15 @@ trait PrivateComponentClass extends js.Object {
 
   @JSName("setState")
   def setStateR(newState: js.Object): Unit = js.native
+
+  @JSName("setState")
+  def setStateR(fn: (js.Object, js.Object) => js.Object): Unit = js.native
+
+  @JSName("setState")
+  def setStateR(newState: js.Object, callback: js.Function0[Unit]): Unit = js.native
+
+  @JSName("setState")
+  def setStateR(fn: (js.Object, js.Object) => js.Object, callback: js.Function0[Unit]): Unit = js.native
 }
 
 @js.native
