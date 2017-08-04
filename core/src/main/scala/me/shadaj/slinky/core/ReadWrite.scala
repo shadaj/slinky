@@ -8,6 +8,9 @@ import scala.collection.immutable.ListMap
 import scala.concurrent.Future
 
 import scala.language.implicitConversions
+import scala.language.higherKinds
+
+import scala.scalajs.concurrent.JSExecutionContext.Implicits.queue
 
 trait WithRaw {
   def raw: js.Object with js.Dynamic = {
@@ -19,8 +22,8 @@ trait Reader[P] {
   def read(o: js.Object, root: Boolean = false): P = {
     val dyn = o.asInstanceOf[js.Dynamic]
 
-    if (dyn != js.undefined && dyn.__scalaRef != js.undefined) {
-      dyn.__scalaRef.asInstanceOf[P]
+    if (!js.isUndefined(dyn) && !js.isUndefined(dyn.__)) {
+      dyn.__.asInstanceOf[P]
     } else {
       forceRead(o, root)
     }
@@ -36,7 +39,7 @@ object Reader extends Derivation[Reader]  {
     s
   }).asInstanceOf[T]
 
-  implicit val unitReader: Reader[Unit] = (s, root) => ()
+  implicit val unitReader: Reader[Unit] = (_, _) => ()
 
   implicit val stringReader: Reader[String] = (s, root) => (if (root) {
     s.asInstanceOf[js.Dynamic].value
@@ -69,7 +72,7 @@ object Reader extends Derivation[Reader]  {
       s
     }
 
-    if (value == js.undefined) {
+    if (js.isUndefined(value)) {
       None
     } else {
       Some(reader.read(value))
@@ -89,16 +92,15 @@ object Reader extends Derivation[Reader]  {
     read.to[Col]
   }
 
-  implicit def functionReader[I, O](implicit iWriter: Writer[I], oReader: Reader[O]): Reader[I => O] = (s, root) => {
+  implicit def functionReader[I, O](implicit iWriter: Writer[I], oReader: Reader[O]): Reader[I => O] = (s, _) => {
     val fn = s.asInstanceOf[js.Function1[js.Object, js.Object]]
     (i: I) => {
       oReader.read(fn(iWriter.write(i)))
     }
   }
 
-  implicit def futureReader[O](implicit oReader: Reader[O]): Reader[Future[O]] = (s, root) => {
-    import scala.scalajs.js.JSConverters._
-    import scala.scalajs.concurrent.JSExecutionContext.Implicits.runNow
+  implicit def futureReader[O](implicit oReader: Reader[O]): Reader[Future[O]] = (s, _) => {
+
     s.asInstanceOf[js.Promise[js.Object]].toFuture.map { v =>
       oReader.read(v)
     }
@@ -112,18 +114,14 @@ object Reader extends Derivation[Reader]  {
 
   override def call[T](typeclass: Reader[T], value: js.Object): T = typeclass.read(value)
 
-  override def construct[T](body: js.Object => T): Reader[T] = new Reader[T] {
-    override def forceRead(o: js.Object, root: Boolean): T = body(o)
-  }
+  override def construct[T](body: js.Object => T): Reader[T] = (o: js.Object, _) => body(o)
 
   override def combine[Supertype, Right <: Supertype](left: Reader[_ <: Supertype], right: Reader[Right]): Reader[Supertype] = {
-    new Reader[Supertype] {
-      override def forceRead(o: js.Object, root: Boolean): Supertype = {
-        val leftRead = left.read(o)
-        val rightRead = right.read(o)
-        println(leftRead, rightRead)
-        ??? // TODO: what do we do here?
-      }
+    (o: js.Object, _) => {
+      val leftRead = left.read(o)
+      val rightRead = right.read(o)
+      println(leftRead, rightRead)
+      throw new Exception("Combine is not supportes")
     }
   }
 }
@@ -139,7 +137,7 @@ object Writer extends Coderivation[Writer] {
     s
   }
 
-  implicit val unitWriter: Writer[Unit] = (s, root) => js.Dynamic.literal()
+  implicit val unitWriter: Writer[Unit] = (_, _) => js.Dynamic.literal()
 
   implicit val stringWriter: Writer[String] = (s, root) => if (root) {
     js.Dynamic.literal("value" -> s)
@@ -187,7 +185,7 @@ object Writer extends Coderivation[Writer] {
     }
   }
 
-  implicit def functionWriter[I, O](implicit iReader: Reader[I], oWriter: Writer[O]): Writer[I => O] = (s, root) => {
+  implicit def functionWriter[I, O](implicit iReader: Reader[I], oWriter: Writer[O]): Writer[I => O] = (s, _) => {
     val fn: js.Function1[js.Object, js.Object] = (i: js.Object) => {
       oWriter.write(s(iReader.read(i)))
     }
@@ -195,17 +193,14 @@ object Writer extends Coderivation[Writer] {
     fn.asInstanceOf[js.Object]
   }
 
-  implicit def futureWriter[O](implicit oWriter: Writer[O]): Writer[Future[O]] = (s, root) => {
+  implicit def futureWriter[O](implicit oWriter: Writer[O]): Writer[Future[O]] = (s, _) => {
     import scala.scalajs.js.JSConverters._
-    import scala.scalajs.concurrent.JSExecutionContext.Implicits.runNow
     s.map(v => oWriter.write(v)).toJSPromise.asInstanceOf[js.Object]
   }
 
   type Return = js.Object
   def call[T](writer: Writer[T], value: T): Return = writer.write(value)
-  def construct[T](body: T => Return): Writer[T] = new Writer[T] {
-    override def write(p: T, root: Boolean): js.Object = body(p)
-  }
+  def construct[T](body: T => Return): Writer[T] = (p: T, _) => body(p)
 
   def join(name: String, xs: ListMap[String, Return]): Return = {
     val ret = js.Dynamic.literal()

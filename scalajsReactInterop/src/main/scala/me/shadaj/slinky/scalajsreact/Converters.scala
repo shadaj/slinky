@@ -4,8 +4,11 @@ import japgolly.scalajs.react.component.Generic.UnmountedRaw
 import japgolly.scalajs.react.raw.ReactNode
 import japgolly.scalajs.react.vdom.{TagOf, VdomNode}
 import japgolly.scalajs.react.vdom.html_<^._
+
 import me.shadaj.slinky.core.TagComponent
 import me.shadaj.slinky.core.facade.ComponentInstance
+
+import scala.language.implicitConversions
 
 object Converters {
   implicit def unmountedToInstance(unmounted: UnmountedRaw): ComponentInstance = {

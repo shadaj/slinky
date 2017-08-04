@@ -4,6 +4,8 @@ import scala.scalajs.js
 import scala.scalajs.js.annotation.{JSImport, JSName}
 import scala.scalajs.js.JSConverters._
 
+import scala.language.implicitConversions
+
 @js.native
 @JSImport("react", JSImport.Namespace, "React")
 object React extends js.Object {

@@ -3,8 +3,7 @@ package me.shadaj.slinky.generator
 import java.io.{File, PrintWriter}
 
 object Generator extends App {
-  new File("core/target/scala-2.12/src_managed/main/me/shadaj/slinky/core/html/internal").mkdirs()
-  val outFile = new File("core/target/scala-2.12/src_managed/main/me/shadaj/slinky/core/html/internal/gen.scala")
+  val outFile = new File(args.head)
   if (!outFile.exists()) {
     val extracted = MDN.extract
 
@@ -69,10 +68,11 @@ object Generator extends App {
 
     val out = new PrintWriter(outFile, "UTF-8")
     out.println(
-      s"""package me.shadaj.slinky.core.html
+      s"""package ${args(1)}
          |import me.shadaj.slinky.core.{AttrPair, TagComponent, TagMod}
          |import scala.scalajs.js
-         |private[html] trait gen {
+         |import scala.language.implicitConversions
+         |private[${args(1).split('.').last}] trait gen {
          |${gen.mkString("\n")}
          |}""".stripMargin)
     out.close()

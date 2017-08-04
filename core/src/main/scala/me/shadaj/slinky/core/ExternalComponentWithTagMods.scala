@@ -1,7 +1,6 @@
 package me.shadaj.slinky.core
 
 import me.shadaj.slinky.core.facade.{ComponentInstance, React}
-import me.shadaj.slinky.core.AttrMod
 
 import scala.language.implicitConversions
 import scala.language.experimental.macros
