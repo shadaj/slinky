@@ -27,13 +27,13 @@ trait Reader[P] {
   protected def forceRead(o: js.Object, root: Boolean = false): P
 }
 
-trait LowPrioReads {
-  def anyReader[T]: Reader[T] = (_, _) => {
+trait LowPriorityReads {
+  implicit def anyReader[T]: Reader[T] = (_, _) => {
     throw new Exception("Tried to read opaque Scala.js type that was not written by opaque writer")
   }
 }
 
-object Reader extends LowPrioReads {
+object Reader extends LowPriorityReads {
   implicit def objectReader[T <: js.Object]: Reader[T] = (s, root) => (if (root) {
     s.asInstanceOf[js.Dynamic].value
   } else {
@@ -47,6 +47,18 @@ object Reader extends LowPrioReads {
   } else {
     s
   }).asInstanceOf[String]
+
+  implicit val byteReader: Reader[Byte] = (s, root) => (if (root) {
+    s.asInstanceOf[js.Dynamic].value
+  } else {
+    s
+  }).asInstanceOf[Byte]
+
+  implicit val shortReader: Reader[Short] = (s, root) => (if (root) {
+    s.asInstanceOf[js.Dynamic].value
+  } else {
+    s
+  }).asInstanceOf[Short]
 
   implicit val intReader: Reader[Int] = (s, root) => (if (root) {
     s.asInstanceOf[js.Dynamic].value
@@ -139,13 +151,13 @@ trait Writer[P] {
   def write(p: P, root: Boolean = false): js.Object
 }
 
-trait LowPrioWrites {
+trait LowPriorityWrites {
   implicit def anyWriter[T]: Writer[T] = (s, _) => {
     js.Dynamic.literal(__ = s.asInstanceOf[js.Any])
   }
 }
 
-object Writer extends LowPrioWrites {
+object Writer extends LowPriorityWrites {
   implicit def objectWriter[T <: js.Object]: Writer[T] = (s, root) => if (root) {
     js.Dynamic.literal("value" -> s)
   } else {
@@ -155,6 +167,18 @@ object Writer extends LowPrioWrites {
   implicit val unitWriter: Writer[Unit] = (_, _) => js.Dynamic.literal()
 
   implicit val stringWriter: Writer[String] = (s, root) => if (root) {
+    js.Dynamic.literal("value" -> s)
+  } else {
+    s.asInstanceOf[js.Object]
+  }
+
+  implicit val byteWriter: Writer[Byte] = (s, root) => if (root) {
+    js.Dynamic.literal("value" -> s)
+  } else {
+    s.asInstanceOf[js.Object]
+  }
+
+  implicit val shortWriter: Writer[Short] = (s, root) => if (root) {
     js.Dynamic.literal("value" -> s)
   } else {
     s.asInstanceOf[js.Object]
