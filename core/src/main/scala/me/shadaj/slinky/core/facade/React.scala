@@ -2,6 +2,7 @@ package me.shadaj.slinky.core.facade
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.{JSImport, JSName}
+import scala.scalajs.js.JSConverters._
 
 @js.native
 @JSImport("react", JSImport.Namespace, "React")
@@ -33,3 +34,13 @@ trait PrivateComponentClass extends js.Object {
 
 @js.native
 trait ComponentInstance extends js.Object
+
+object ComponentInstance {
+  implicit def stringToInstance(s: String): ComponentInstance = {
+    s.asInstanceOf[ComponentInstance]
+  }
+
+  implicit def seqInstanceToInstance[T](s: Iterable[T])(implicit cv: T => ComponentInstance): ComponentInstance = {
+    s.map(cv).toJSArray.asInstanceOf[ComponentInstance]
+  }
+}

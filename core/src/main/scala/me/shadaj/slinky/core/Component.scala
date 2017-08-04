@@ -98,7 +98,7 @@ abstract class Component {
     def render(): ComponentInstance
   }
 
-  final val enableHotLoading = ReactProxy != js.undefined && LinkingInfo.developmentMode
+  final val enableHotLoading = !js.isUndefined(ReactProxy) && LinkingInfo.developmentMode
   private var processedEnable = false
 
   private def superComponentConstructor(implicit constructorTag: ConstructorTag[Def]): js.Object = {
@@ -114,11 +114,11 @@ abstract class Component {
         processedEnable = true
 
         if (enableHotLoading) {
-          if (js.Dynamic.global.proxies == js.undefined) {
+          if (js.isUndefined(js.Dynamic.global.proxies)) {
             js.Dynamic.global.proxies = js.Dynamic.literal()
           }
 
-          if (js.Dynamic.global.proxies.selectDynamic(this.getClass.getName) == js.undefined) {
+          if (js.isUndefined(js.Dynamic.global.proxies.selectDynamic(this.getClass.getName))) {
             println("creating proxy")
             js.Dynamic.global.proxies.updateDynamic(this.getClass.getName)(ReactProxy.createProxy(superComponentConstructor))
           } else {

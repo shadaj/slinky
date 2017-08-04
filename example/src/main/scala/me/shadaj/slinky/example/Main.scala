@@ -80,7 +80,7 @@ object Main extends JSApp {
   }
 
   def main(): Unit = {
-    if (js.Dynamic.global.reactContainer == js.undefined) {
+    if (js.isUndefined(js.Dynamic.global.reactContainer)) {
       js.Dynamic.global.reactContainer = document.createElement("div")
       document.body.appendChild(js.Dynamic.global.reactContainer.asInstanceOf[html.Element])
     }
