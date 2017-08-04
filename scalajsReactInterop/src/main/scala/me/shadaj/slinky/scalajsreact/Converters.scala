@@ -4,8 +4,7 @@ import japgolly.scalajs.react.component.Generic.UnmountedRaw
 import japgolly.scalajs.react.raw.ReactNode
 import japgolly.scalajs.react.vdom.{TagOf, VdomNode}
 import japgolly.scalajs.react.vdom.html_<^._
-
-import me.shadaj.slinky.core.html.HtmlComponent
+import me.shadaj.slinky.core.TagComponent
 import me.shadaj.slinky.core.facade.ComponentInstance
 
 object Converters {
@@ -21,7 +20,7 @@ object Converters {
     vdom.rawNode.asInstanceOf[ComponentInstance]
   }
 
-  implicit def htmlToVdom(component: HtmlComponent[_]): VdomNode = {
+  implicit def htmlToVdom(component: TagComponent[_]): VdomNode = {
     VdomNode((component: ComponentInstance).asInstanceOf[ReactNode])
   }
 

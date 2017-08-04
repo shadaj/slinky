@@ -22,7 +22,7 @@ object Generator extends App {
         s"""/**
            | * ${t.docLines.map(_.replace("*", "&#47;")).mkString("\n * ")}
            | */
-           |def apply(mods: HtmlComponentMod[$symbol.tag.type]*): HtmlComponent[$symbol.tag.type] = new HtmlComponent[$symbol.tag.type]("${t.tagName}").apply(mods: _*)""".stripMargin
+           |def apply(mods: TagMod[$symbol.tag.type]*): TagComponent[$symbol.tag.type] = new TagComponent[$symbol.tag.type]("${t.tagName}").apply(mods: _*)""".stripMargin
       }
 
       val attrsGen = attrs.toList.flatMap { a =>
@@ -69,10 +69,10 @@ object Generator extends App {
 
     val out = new PrintWriter(outFile, "UTF-8")
     out.println(
-      s"""package me.shadaj.slinky.core.html.internal
-         |import me.shadaj.slinky.core.html.{AttrPair, HtmlComponent, HtmlComponentMod}
+      s"""package me.shadaj.slinky.core.html
+         |import me.shadaj.slinky.core.{AttrPair, TagComponent, TagMod}
          |import scala.scalajs.js
-         |trait gen {
+         |private[html] trait gen {
          |${gen.mkString("\n")}
          |}""".stripMargin)
     out.close()
