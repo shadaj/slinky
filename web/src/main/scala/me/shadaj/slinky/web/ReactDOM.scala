@@ -1,5 +1,6 @@
-package me.shadaj.slinky.core.facade
+package me.shadaj.slinky.web
 
+import me.shadaj.slinky.core.facade.ComponentInstance
 import org.scalajs.dom.Element
 
 import scala.scalajs.js

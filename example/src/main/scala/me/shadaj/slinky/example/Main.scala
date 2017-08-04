@@ -1,11 +1,14 @@
 package me.shadaj.slinky.example
 
-import japgolly.scalajs.react._
+import japgolly.scalajs.react.ScalaComponent
 import japgolly.scalajs.react.vdom.html_<^._
+
 import me.shadaj.slinky.core._
+import me.shadaj.slinky.core.facade.ComponentInstance
+import me.shadaj.slinky.web.ReactDOM
 import me.shadaj.slinky.web.html._
-import me.shadaj.slinky.core.facade.{ComponentInstance, ReactDOM}
 import me.shadaj.slinky.scalajsreact.Converters._
+
 import org.scalajs.dom.{Event, document, html}
 
 import scala.scalajs.js

@@ -1,12 +1,13 @@
-package me.shadaj.slinky.core
+package me.shadaj.slinky.web
 
-import me.shadaj.slinky.core.facade.{ComponentInstance, ReactDOM}
-import me.shadaj.slinky.core.html._
-import org.scalatest.FunSuite
+import me.shadaj.slinky.core.Component
+import me.shadaj.slinky.core.facade.ComponentInstance
 import org.scalajs.dom.{Element, document}
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.ScalaJSDefined
+import html._
+import org.scalatest.FunSuite
 
 object TestComponent extends Component {
   type Props = Unit
