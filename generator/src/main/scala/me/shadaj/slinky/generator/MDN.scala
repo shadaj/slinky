@@ -25,7 +25,7 @@ object MDN {
     HTMLToJSMapping.Attr("onClose", "js.Function1[org.scalajs.dom.Event, Unit]") -> "",
     HTMLToJSMapping.Attr("onContextMenu", "js.Function1[org.scalajs.dom.Event, Unit]") -> "",
     HTMLToJSMapping.Attr("onCueChange", "js.Function1[org.scalajs.dom.Event, Unit]") -> "",
-    HTMLToJSMapping.Attr("onDblClick", "js.Function1[org.scalajs.dom.Event, Unit]") -> "",
+    HTMLToJSMapping.Attr("onDoubleClick", "js.Function1[org.scalajs.dom.Event, Unit]") -> "",
     HTMLToJSMapping.Attr("onDrag", "js.Function1[org.scalajs.dom.Event, Unit]") -> "",
     HTMLToJSMapping.Attr("onDragEnd", "js.Function1[org.scalajs.dom.Event, Unit]") -> "",
     HTMLToJSMapping.Attr("onDragEnter", "js.Function1[org.scalajs.dom.Event, Unit]") -> "",
