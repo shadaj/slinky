@@ -1,8 +1,8 @@
 package me.shadaj.slinky.core
 
-import me.shadaj.slinky.core.facade.{ComponentInstance, PrivateComponentClass, React, ReactProxy}
+import me.shadaj.slinky.core.facade.{ComponentInstance, PrivateComponentClass, React}
 
-import scala.scalajs.{LinkingInfo, js}
+import scala.scalajs.js
 import scala.scalajs.js.ConstructorTag
 import scala.scalajs.js.annotation.{JSName, ScalaJSDefined}
 
@@ -98,42 +98,11 @@ abstract class Component {
     def render(): ComponentInstance
   }
 
-  final val enableHotLoading = !js.isUndefined(ReactProxy) && LinkingInfo.developmentMode
-  private var processedEnable = false
-
-  private def superComponentConstructor(implicit constructorTag: ConstructorTag[Def]): js.Object = {
-    val component = constructorTag.constructor
-    component.displayName = getClass.getSimpleName
-
-    component.asInstanceOf[js.Object]
-  }
-
   def componentConstructor(implicit constructorTag: ConstructorTag[Def]): js.Object = {
-    if (enableHotLoading) {
-      if (!processedEnable) {
-        processedEnable = true
-
-        if (enableHotLoading) {
-          if (js.isUndefined(js.Dynamic.global.proxies)) {
-            js.Dynamic.global.proxies = js.Dynamic.literal()
-          }
-
-          if (js.isUndefined(js.Dynamic.global.proxies.selectDynamic(this.getClass.getName))) {
-            println("creating proxy")
-            js.Dynamic.global.proxies.updateDynamic(this.getClass.getName)(ReactProxy.createProxy(superComponentConstructor))
-          } else {
-            println("updating proxy")
-            val forceUpdate = ReactProxy.getForceUpdate(React)
-            js.Dynamic.global.proxies.selectDynamic(this.getClass.getName).update(superComponentConstructor).asInstanceOf[js.Array[js.Object]]
-              .foreach(o => forceUpdate(o))
-          }
-        }
-      }
-
-      js.Dynamic.global.proxies.selectDynamic(this.getClass.getName).get().asInstanceOf[js.Object]
-    } else {
-      superComponentConstructor
-    }
+    val constructor = constructorTag.constructor
+    constructor.displayName = getClass.getSimpleName
+    Component.componentConstructorMiddleware(
+      constructor.asInstanceOf[js.Object], this.asInstanceOf[js.Object])
   }
 
   def apply(p: Props, key: String = null, ref: Def => Unit = null)(implicit constructorTag: ConstructorTag[Def], propsWriter: Writer[Props]): ComponentInstance = {
@@ -148,5 +117,18 @@ abstract class Component {
     }
 
     React.createElement(componentConstructor, propsObj)
+  }
+}
+
+object Component {
+  private var componentConstructorMiddleware = (constructor: js.Object, componentObject: js.Object) => {
+    constructor
+  }
+
+  def insertMiddleware(w: (js.Object, js.Object) => js.Object) = {
+    val orig = componentConstructorMiddleware
+    componentConstructorMiddleware = (constructor: js.Object, componentObject: js.Object) => {
+      w(orig(constructor, componentObject), componentObject)
+    }
   }
 }

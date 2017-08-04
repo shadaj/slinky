@@ -11,6 +11,7 @@ scalacOptions in ThisBuild ++= Seq("-feature", "-deprecation")
 lazy val slinky = project.in(file(".")).aggregate(
   core,
   web,
+  hot,
   scalajsReactInterop
 ).settings(
   publish := {},
@@ -39,6 +40,8 @@ lazy val web = project.settings(
   }
 ).dependsOn(core)
 
+lazy val hot = project.dependsOn(core)
+
 lazy val scalajsReactInterop = project.dependsOn(core)
 
-lazy val example = project.dependsOn(web, scalajsReactInterop)
+lazy val example = project.dependsOn(web, hot, scalajsReactInterop)

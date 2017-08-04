@@ -7,6 +7,7 @@ import me.shadaj.slinky.core._
 import me.shadaj.slinky.core.facade.ComponentInstance
 import me.shadaj.slinky.web.ReactDOM
 import me.shadaj.slinky.web.html._
+import me.shadaj.slinky.hot
 import me.shadaj.slinky.scalajsreact.Converters._
 
 import org.scalajs.dom.{Event, document, html}
@@ -83,6 +84,7 @@ object Main extends JSApp {
   }
 
   def main(): Unit = {
+    hot.initialize()
     if (js.isUndefined(js.Dynamic.global.reactContainer)) {
       js.Dynamic.global.reactContainer = document.createElement("div")
       document.body.appendChild(js.Dynamic.global.reactContainer.asInstanceOf[html.Element])

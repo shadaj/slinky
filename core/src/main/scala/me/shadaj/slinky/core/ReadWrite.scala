@@ -1,6 +1,6 @@
 package me.shadaj.slinky.core
 
-import magnolia.{Coderivation, Derivation}
+import magnolia.{Macros, Coderivation, Derivation}
 
 import scala.scalajs.js
 import scala.collection.generic.CanBuildFrom
@@ -9,14 +9,9 @@ import scala.concurrent.Future
 
 import scala.language.implicitConversions
 import scala.language.higherKinds
+import scala.language.experimental.macros
 
 import scala.scalajs.concurrent.JSExecutionContext.Implicits.queue
-
-trait WithRaw {
-  def raw: js.Object with js.Dynamic = {
-    this.asInstanceOf[js.Dynamic].__raw.asInstanceOf[js.Object with js.Dynamic ]
-  }
-}
 
 trait Reader[P] {
   def read(o: js.Object, root: Boolean = false): P = {
@@ -32,7 +27,13 @@ trait Reader[P] {
   protected def forceRead(o: js.Object, root: Boolean = false): P
 }
 
-object Reader extends Derivation[Reader]  {
+trait LowPrioReads {
+  def anyReader[T]: Reader[T] = (_, _) => {
+    throw new Exception("Tried to read opaque Scala.js type that was not written by opaque writer")
+  }
+}
+
+object Reader extends LowPrioReads {
   implicit def objectReader[T <: js.Object]: Reader[T] = (s, root) => (if (root) {
     s.asInstanceOf[js.Dynamic].value
   } else {
@@ -64,6 +65,12 @@ object Reader extends Derivation[Reader]  {
   } else {
     s
   }).asInstanceOf[Double]
+
+  implicit val floatReader: Reader[Float] = (s, root) => (if (root) {
+    s.asInstanceOf[js.Dynamic].value
+  } else {
+    s
+  }).asInstanceOf[Float]
 
   implicit def optionReader[T](implicit reader: Reader[T]): Reader[Option[T]] = (s, root) => {
     val value = if (root) {
@@ -106,17 +113,16 @@ object Reader extends Derivation[Reader]  {
     }
   }
 
-  override type Value = js.Object
-
-  override def dereference(value: js.Object, param: String): js.Object = {
+  type Value = js.Object
+  def dereference(value: Value, param: String): Value = {
     value.asInstanceOf[js.Dynamic].selectDynamic(param).asInstanceOf[js.Object]
   }
 
-  override def call[T](typeclass: Reader[T], value: js.Object): T = typeclass.read(value)
+  def call[T](typeclass: Reader[T], value: Value): T = typeclass.read(value)
+  def construct[T](body: Value => T): Reader[T] = (o: js.Object, _) => body(o)
 
-  override def construct[T](body: js.Object => T): Reader[T] = (o: js.Object, _) => body(o)
-
-  override def combine[Supertype, Right <: Supertype](left: Reader[_ <: Supertype], right: Reader[Right]): Reader[Supertype] = {
+  def combine[Supertype, Right <: Supertype](left: Reader[_ <: Supertype],
+                                             right: Reader[Right]): Reader[Supertype] = {
     (o: js.Object, _) => {
       val leftRead = left.read(o)
       val rightRead = right.read(o)
@@ -124,13 +130,22 @@ object Reader extends Derivation[Reader]  {
       throw new Exception("Combine is not supportes")
     }
   }
+
+  implicit def generic[T]: Reader[T] = macro Macros.magnolia[T, Reader[_],
+    Derivation[Tc] forSome { type Tc[_] }]
 }
 
 trait Writer[P] {
   def write(p: P, root: Boolean = false): js.Object
 }
 
-object Writer extends Coderivation[Writer] {
+trait LowPrioWrites {
+  implicit def anyWriter[T]: Writer[T] = (s, _) => {
+    js.Dynamic.literal(__ = s.asInstanceOf[js.Any])
+  }
+}
+
+object Writer extends LowPrioWrites {
   implicit def objectWriter[T <: js.Object]: Writer[T] = (s, root) => if (root) {
     js.Dynamic.literal("value" -> s)
   } else {
@@ -145,19 +160,25 @@ object Writer extends Coderivation[Writer] {
     s.asInstanceOf[js.Object]
   }
 
-  implicit val intReader: Writer[Int] = (s, root) => if (root) {
+  implicit val intWriter: Writer[Int] = (s, root) => if (root) {
     js.Dynamic.literal("value" -> s)
   } else {
     s.asInstanceOf[js.Object]
   }
 
-  implicit val booleanReader: Writer[Boolean] = (s, root) => if (root) {
+  implicit val booleanWriter: Writer[Boolean] = (s, root) => if (root) {
     js.Dynamic.literal("value" -> s)
   } else {
     s.asInstanceOf[js.Object]
   }
 
-  implicit val doubleReader: Writer[Double] = (s, root) => if (root) {
+  implicit val doubleWriter: Writer[Double] = (s, root) => if (root) {
+    js.Dynamic.literal("value" -> s)
+  } else {
+    s.asInstanceOf[js.Object]
+  }
+
+  implicit val floatWriter: Writer[Float] = (s, root) => if (root) {
     js.Dynamic.literal("value" -> s)
   } else {
     s.asInstanceOf[js.Object]
@@ -199,14 +220,16 @@ object Writer extends Coderivation[Writer] {
   }
 
   type Return = js.Object
-  def call[T](writer: Writer[T], value: T): Return = writer.write(value)
+  def call[T](typeclass: Writer[T], value: T): Return  = typeclass.write(value)
   def construct[T](body: T => Return): Writer[T] = (p: T, _) => body(p)
-
-  def join(name: String, xs: ListMap[String, Return]): Return = {
+  def join(name: String, elements: ListMap[String, Return]): Return = {
     val ret = js.Dynamic.literal()
-    xs.foreach(p => ret.updateDynamic(p._1)(p._2))
+    elements.foreach(p => ret.updateDynamic(p._1)(p._2))
     ret
   }
+
+  implicit def generic[T]: Writer[T] = macro Macros.magnolia[T, Writer[_],
+    Coderivation[Tc] forSome { type Tc[_] }]
 }
 
 @js.native

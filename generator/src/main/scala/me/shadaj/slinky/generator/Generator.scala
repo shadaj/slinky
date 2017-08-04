@@ -30,7 +30,8 @@ object Generator extends App {
         if (a.withDash) {
           Seq(
             base,
-            s"""def -(sub: String) = new { def :=(v: ${a.attributeType}): AttrPair[$symbol.attr.type] = new AttrPair[$symbol.attr.type]("${a.attributeName}-" + sub, v) }"""
+            s"""class WithDash(val sub: String) { def :=(v: ${a.attributeType}): AttrPair[$symbol.attr.type] = new AttrPair[$symbol.attr.type]("${a.attributeName}-" + sub, v) }
+               |def -(sub: String) = new WithDash(sub)""".stripMargin
           )
         } else Seq(base)
       }
