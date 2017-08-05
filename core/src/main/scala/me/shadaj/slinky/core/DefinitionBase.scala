@@ -52,7 +52,7 @@ abstract class DefinitionBase[Props, State](jsProps: js.Object)(implicit propsRe
 
   def componentDidMount(): Unit = {}
 
-  def componentWillReceiveProps(props: Props): Unit = {}
+  def componentWillReceiveProps(nextProps: Props): Unit = {}
 
   {
     val orig = this.asInstanceOf[js.Dynamic].componentWillReceiveProps.asInstanceOf[js.Function1[Props, Unit]]
