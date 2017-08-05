@@ -31,7 +31,7 @@ final class MakerWithTagMods[P: Writer, E] extends (BuildingComponentWithTagMods
 
 object BuildingComponentWithTagModsMacros {
   // SUPER SKETCHY INTELLIJ HACK
-  def makeImpl[P: c.WeakTypeTag, E](c: Context): c.Expr[BuildingComponentWithTagMods[P, E] => ComponentInstance] = {
+  def makeImpl[P: c.WeakTypeTag, E: c.WeakTypeTag](c: Context): c.Expr[BuildingComponentWithTagMods[P, E] => ComponentInstance] = {
     import c.universe._
     c.Expr[BuildingComponentWithTagMods[P, E] => ComponentInstance](c.typecheck(q"new _root_.me.shadaj.slinky.core.MakerWithTagMods[${implicitly[WeakTypeTag[P]]}, ${implicitly[WeakTypeTag[E]]}]"))
   }
