@@ -1,8 +1,8 @@
 package me.shadaj.slinky.generator
 
-object HTMLToJSMapping {
-  case class Attr(name: String, valueType: String = "String")
+case class Attr(name: String, valueType: String = "String")
 
+object HTMLToJSMapping {
   val convert = Map(
     "accept" -> Attr("accept"),
     "acceptcharset" -> Attr("acceptCharset"),
@@ -41,6 +41,7 @@ object HTMLToJSMapping {
     "download" -> Attr("download", "Boolean"),
     "draggable" -> Attr("draggable"),
     "enctype" -> Attr("encType"),
+    "for" -> Attr("htmlFor"),
     "form" -> Attr("form"),
     "formaction" -> Attr("formAction"),
     "formenctype" -> Attr("formEncType"),
@@ -54,7 +55,6 @@ object HTMLToJSMapping {
     "high" -> Attr("high"),
     "href" -> Attr("href"),
     "hreflang" -> Attr("hrefLang"),
-    "for" -> Attr("htmlFor"),
     "httpequiv" -> Attr("httpEquiv"),
     "icon" -> Attr("icon"),
     "id" -> Attr("id"),
@@ -152,7 +152,7 @@ object HTMLToJSMapping {
     "translate" -> Attr("translate"),
     "ping" -> Attr("ping")
   ).withDefault { k =>
-    println(s"DEFAULTING: $k")
+    println(s""""$k" -> Attr("${k.replace("-", "_")}", "js.Any"),""")
     Attr(k.replace("-", "_"), "js.Any")
   }
 }

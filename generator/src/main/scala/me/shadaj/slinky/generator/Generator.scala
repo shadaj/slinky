@@ -3,9 +3,12 @@ package me.shadaj.slinky.generator
 import java.io.{File, PrintWriter}
 
 object Generator extends App {
-  val outFile = new File(args.head)
+  val providerName :: out :: pkg :: Nil = args.toList
+  val provider = Class.forName(providerName).newInstance().asInstanceOf[TagsProvider]
+
+  val outFile = new File(out)
   if (!outFile.exists()) {
-    val extracted = MDN.extract
+    val extracted = provider.extract
 
     val allSymbols = extracted._2.foldLeft(extracted._1.map(t => t.identifier -> (Some(t): Option[Tag], None: Option[Attribute])).toSet) { case (symbols, attr) =>
       symbols.find(_._1 == attr.identifier) match {
@@ -75,11 +78,11 @@ object Generator extends App {
 
     val out = new PrintWriter(outFile, "UTF-8")
     out.println(
-      s"""package ${args(1)}
+      s"""package ${pkg}
          |import me.shadaj.slinky.core.{AttrPair, TagComponent, TagMod}
          |import scala.scalajs.js
          |import scala.language.implicitConversions
-         |private[${args(1).split('.').last}] trait gen {
+         |private[${pkg.split('.').last}] trait gen {
          |${gen.mkString("\n")}
          |}""".stripMargin)
     out.close()

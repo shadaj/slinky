@@ -23,15 +23,26 @@ lazy val generator = project
 lazy val core = project
 
 lazy val web = project.settings(
-  sourceGenerators in Compile += Def.taskDyn {
-    val folder = (sourceManaged in Compile).value / "me/shadaj/slinky/web/html/internal"
-    folder.mkdirs()
+  sourceGenerators in Compile += Def.taskDyn[Seq[File]] {
+    val folderHtml = (sourceManaged in Compile).value / "me/shadaj/slinky/web/html"
+    folderHtml.mkdirs()
 
-    (run in Compile in generator).toTask(Seq((folder / "gen.scala").getAbsolutePath, "me.shadaj.slinky.web.html").mkString(" ", " ", "")).map { _ =>
+    val html = (run in Compile in generator).toTask(Seq("me.shadaj.slinky.generator.MDN", (folderHtml / "gen.scala").getAbsolutePath, "me.shadaj.slinky.web.html").mkString(" ", " ", "")).map { _ =>
       Seq(
-        folder / "gen.scala"
+        folderHtml / "gen.scala"
       )
     }
+
+    val folderSVG = (sourceManaged in Compile).value / "me/shadaj/slinky/web/svg"
+    folderSVG.mkdirs()
+
+    val svg = (run in Compile in generator).toTask(Seq("me.shadaj.slinky.generator.SVG", (folderSVG / "gen.scala").getAbsolutePath, "me.shadaj.slinky.web.svg").mkString(" ", " ", "")).map { _ =>
+      Seq(
+        folderSVG / "gen.scala"
+      )
+    }
+
+    html.zip(svg).flatMap(t => t._1.flatMap(h => t._2.map(s => h ++ s)))
   }.taskValue,
   mappings in (Compile, packageSrc) ++= {
     val base  = (sourceManaged  in Compile).value
