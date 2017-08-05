@@ -7,12 +7,12 @@ import scala.language.experimental.macros
 import scala.reflect.macros.whitebox.Context
 import scala.scalajs.js
 
-class BuildingComponentWithTagMods[P, E](e: ExternalComponentWithTagMods, props: P, mods: Seq[AttrMod[E]]) {
+class BuildingComponentWithTagMods[P, E](e: ExternalComponentWithTagMods, props: P, mods: Seq[AttrPair[E]]) {
   def apply(children: ComponentInstance*)(implicit writer: Writer[P]): ComponentInstance = {
     val written = writer.write(props)
 
     mods.foreach { m =>
-      written.asInstanceOf[js.Dynamic].updateDynamic(m.attr.name)(m.attr.value)
+      written.asInstanceOf[js.Dynamic].updateDynamic(m.name)(m.value)
     }
 
     React.createElement(e.component, written, children: _*)
@@ -43,7 +43,7 @@ abstract class ExternalComponentWithTagMods {
 
   val component: js.Object
 
-  def apply(p: Props, tagMods: AttrMod[Element]*): BuildingComponentWithTagMods[Props, Element] = {
+  def apply(p: Props, tagMods: AttrPair[Element]*): BuildingComponentWithTagMods[Props, Element] = {
     new BuildingComponentWithTagMods(this, p, tagMods)
   }
 }

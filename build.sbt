@@ -20,7 +20,7 @@ lazy val slinky = project.in(file(".")).aggregate(
 
 lazy val generator = project
 
-lazy val core: Project = project
+lazy val core = project
 
 lazy val web = project.settings(
   sourceGenerators in Compile += Def.taskDyn {
@@ -43,5 +43,7 @@ lazy val web = project.settings(
 lazy val hot = project.dependsOn(core)
 
 lazy val scalajsReactInterop = project.dependsOn(core)
+
+lazy val tests = project.dependsOn(core, web, hot, scalajsReactInterop)
 
 lazy val example = project.dependsOn(web, hot, scalajsReactInterop)

@@ -1,8 +1,8 @@
 package me.shadaj.slinky.core
 
-import scala.scalajs.js
-
 import org.scalatest.FunSuite
+
+import scala.scalajs.js
 
 import facade.ComponentInstance
 
