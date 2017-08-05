@@ -1,6 +1,6 @@
 package me.shadaj.slinky.core
 
-import me.shadaj.slinky.core.facade.ComponentInstance
+import me.shadaj.slinky.core.facade.ReactElement
 import me.shadaj.slinky.web.ReactDOM
 import org.scalajs.dom
 import org.scalatest.{Assertion, AsyncFunSuite}
@@ -27,7 +27,7 @@ object TestComponent extends Component {
       })
     }
 
-    override def render(): ComponentInstance = {
+    override def render(): ReactElement = {
       null
     }
   }

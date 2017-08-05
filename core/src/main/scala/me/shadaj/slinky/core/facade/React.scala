@@ -1,16 +1,24 @@
 package me.shadaj.slinky.core.facade
 
 import scala.scalajs.js
+import js.|
 import scala.scalajs.js.annotation.{JSImport, JSName}
 import scala.scalajs.js.JSConverters._
 
 import scala.language.implicitConversions
 
 @js.native
+trait ReactElement extends js.Object
+
+@js.native
+trait ReactInstance extends js.Object
+
+@js.native
 @JSImport("react", JSImport.Namespace, "React")
 object React extends js.Object {
-  def createElement(htmlName:  String,    properties: Any, contents: ComponentInstance*): ComponentInstance = js.native
-  def createElement(component: js.Object, properties: Any, contents: ComponentInstance*): ComponentInstance = js.native
+  def createElement(elementName: String | js.Object,
+                    properties: js.Dictionary[js.Any],
+                    contents: ReactElement*): ReactElement = js.native
 
   @js.native
   class Component(jsProps: js.Object) extends js.Object {
@@ -45,15 +53,12 @@ trait PrivateComponentClass extends js.Object {
   def setStateR(fn: js.Function2[js.Object, js.Object, js.Object], callback: js.Function0[Unit]): Unit = js.native
 }
 
-@js.native
-trait ComponentInstance extends js.Object
-
-object ComponentInstance {
-  implicit def stringToInstance(s: String): ComponentInstance = {
-    s.asInstanceOf[ComponentInstance]
+object ReactElement {
+  implicit def stringToElement(s: String): ReactElement = {
+    s.asInstanceOf[ReactElement]
   }
 
-  implicit def seqInstanceToInstance[T](s: Iterable[T])(implicit cv: T => ComponentInstance): ComponentInstance = {
-    s.map(cv).toJSArray.asInstanceOf[ComponentInstance]
+  implicit def seqElementToElement[T](s: Iterable[T])(implicit cv: T => ReactElement): ReactElement = {
+    s.map(cv).toJSArray.asInstanceOf[ReactElement]
   }
 }

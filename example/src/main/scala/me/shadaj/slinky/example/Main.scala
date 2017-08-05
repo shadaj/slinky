@@ -4,7 +4,7 @@ import japgolly.scalajs.react.ScalaComponent
 import japgolly.scalajs.react.vdom.html_<^._
 
 import me.shadaj.slinky.core._
-import me.shadaj.slinky.core.facade.ComponentInstance
+import me.shadaj.slinky.core.facade.ReactElement
 import me.shadaj.slinky.web.ReactDOM
 import me.shadaj.slinky.web.html._
 import me.shadaj.slinky.hot
@@ -47,7 +47,7 @@ object Main extends JSApp {
         println("componentDidUpdate: " + prevProps)
       }
 
-      def render(): ComponentInstance = {
+      def render(): ReactElement = {
        val maybeChild = if (props.name == "parent foo") {
          Some(div(key := "I have a key!", data-"foo" := "bar")(
            Foo(Foo.Props("child foo", Seq.empty)),

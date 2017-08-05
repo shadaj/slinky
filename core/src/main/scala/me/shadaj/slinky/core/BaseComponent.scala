@@ -1,10 +1,9 @@
 package me.shadaj.slinky.core
 
-import me.shadaj.slinky.core.facade.{ComponentInstance, PrivateComponentClass, React}
+import me.shadaj.slinky.core.facade.{ReactElement, React}
 
 import scala.scalajs.js
 import scala.scalajs.js.ConstructorTag
-import scala.scalajs.js.annotation.{JSName, ScalaJSDefined}
 
 abstract class BaseComponent {
   type Props
@@ -22,15 +21,15 @@ abstract class BaseComponent {
       constructor.asInstanceOf[js.Object], this.asInstanceOf[js.Object])
   }
 
-  def apply(p: Props, key: String = null, ref: Def => Unit = null)(implicit constructorTag: ConstructorTag[Def], propsWriter: Writer[Props]): ComponentInstance = {
-    val propsObj = js.Dynamic.literal(__ = p.asInstanceOf[js.Any])
+  def apply(p: Props, key: String = null, ref: Def => Unit = null)(implicit constructorTag: ConstructorTag[Def], propsWriter: Writer[Props]): ReactElement = {
+    val propsObj = js.Dictionary("__" -> p.asInstanceOf[js.Any])
 
     if (key != null) {
-      propsObj.asInstanceOf[js.Dynamic].key = key
+      propsObj("key") = key
     }
 
     if (ref != null) {
-      propsObj.asInstanceOf[js.Dynamic].ref = ref: js.Function1[Def, Unit]
+      propsObj("ref") = ref: js.Function1[Def, Unit]
     }
 
     React.createElement(componentConstructor, propsObj)
@@ -38,14 +37,22 @@ abstract class BaseComponent {
 }
 
 object BaseComponent {
-  private var componentConstructorMiddleware = (constructor: js.Object, componentObject: js.Object) => {
+  private var componentConstructorMiddleware = (constructor: js.Object, _: js.Object) => {
     constructor
   }
 
-  def insertMiddleware(w: (js.Object, js.Object) => js.Object) = {
+  /**
+    * Inserts a component constructor middleware function, which transforms a component constructor
+    * given the original constructor and the outer component object (for state tracking)
+    *
+    * This is used for hot-loading, which wraps the component constructor inside a proxy component
+    *
+    * @param middleware the middleware function to use
+    */
+  def insertMiddleware(middleware: (js.Object, js.Object) => js.Object): Unit = {
     val orig = componentConstructorMiddleware
     componentConstructorMiddleware = (constructor: js.Object, componentObject: js.Object) => {
-      w(orig(constructor, componentObject), componentObject)
+      middleware(orig(constructor, componentObject), componentObject)
     }
   }
 }

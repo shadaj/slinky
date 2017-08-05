@@ -1,7 +1,7 @@
 package me.shadaj.slinky.web
 
 import me.shadaj.slinky.core.Component
-import me.shadaj.slinky.core.facade.ComponentInstance
+import me.shadaj.slinky.core.facade.ReactElement
 import org.scalajs.dom.{Element, document}
 
 import scala.scalajs.js
@@ -17,7 +17,7 @@ object TestComponent extends Component {
   class Def(jsProps: js.Object) extends Definition(jsProps) {
     override def initialState: Unit = ()
 
-    override def render(): ComponentInstance = {
+    override def render(): ReactElement = {
       a()
     }
   }
@@ -35,12 +35,12 @@ class ReactDOMTest extends FunSuite {
   }
 
   test("Finds a dom node for a component") {
-    val comp: ComponentInstance = TestComponent(())
+    val comp: ReactElement = TestComponent(())
     val target = document.createElement("div")
     val instance = ReactDOM.render(
       comp,
       target
-    )
+    ).asInstanceOf[TestComponent.Def]
 
     assert(target.childNodes(0).asInstanceOf[Element] == ReactDOM.findDOMNode(instance))
   }

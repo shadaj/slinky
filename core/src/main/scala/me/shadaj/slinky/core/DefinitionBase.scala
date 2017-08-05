@@ -1,6 +1,6 @@
 package me.shadaj.slinky.core
 
-import me.shadaj.slinky.core.facade.{ComponentInstance, PrivateComponentClass, React}
+import me.shadaj.slinky.core.facade.{ReactElement, PrivateComponentClass, React}
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.{JSName, ScalaJSDefined}
@@ -106,5 +106,5 @@ abstract class DefinitionBase[Props, State](jsProps: js.Object)(implicit propsRe
   def componentWillUnmount(): Unit = {}
 
   @JSName("render")
-  def render(): ComponentInstance
+  def render(): ReactElement
 }

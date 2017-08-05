@@ -1,6 +1,6 @@
 package me.shadaj.slinky.core
 
-import me.shadaj.slinky.core.facade.{ComponentInstance, React}
+import me.shadaj.slinky.core.facade.{ReactElement, React}
 
 import scala.language.implicitConversions
 import scala.scalajs.js
@@ -19,7 +19,7 @@ object TagMod {
   }
 
   implicit def instance2Mod[T, A](instance: T)
-                                 (implicit cvt: T => ComponentInstance): TagMod[A] = {
+                                 (implicit cvt: T => ReactElement): TagMod[A] = {
     new ChildMod(cvt(instance))
   }
 
@@ -37,7 +37,7 @@ class SeqMod[A](val mods: Iterable[TagMod[A]]) extends AnyVal with TagMod[A] {
   }
 }
 
-class ChildMod[A](val child: ComponentInstance) extends AnyVal with TagMod[A] {
+class ChildMod[A](val child: ReactElement) extends AnyVal with TagMod[A] {
   def applyTo(component: TagComponent[A]): TagComponent[A] = {
     component.copy(children = component.children :+ child)
   }
@@ -50,7 +50,7 @@ class AttrMod[A](val attr: AttrPair[A]) extends AnyVal with TagMod[A] {
 }
 
 case class TagComponent[A](name: String,
-                           children: Seq[ComponentInstance] = Seq.empty,
+                           children: Seq[ReactElement] = Seq.empty,
                            attrs: Seq[AttrPair[A]] = Seq.empty) {
   def apply(newMods: TagMod[A]*): TagComponent[A] = {
     newMods.foldLeft(this) { (c, mod) =>
@@ -60,11 +60,11 @@ case class TagComponent[A](name: String,
 }
 
 object TagComponent {
-  def create(name: String, props: js.Dictionary[js.Any], contents: Seq[ComponentInstance] = Seq.empty): ComponentInstance = {
+  def create(name: String, props: js.Dictionary[js.Any], contents: Seq[ReactElement] = Seq.empty): ReactElement = {
     React.createElement(name, props, contents: _*)
   }
 
-  implicit def component2Instance[A](component: TagComponent[A]): ComponentInstance = {
+  implicit def component2Instance[A](component: TagComponent[A]): ReactElement = {
     TagComponent.create(
       component.name,
       component.attrs.map(m => (m.name, m.value)).toMap.toJSDictionary,
