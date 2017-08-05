@@ -36,13 +36,13 @@ trait PrivateComponentClass extends js.Object {
   def setStateR(newState: js.Object): Unit = js.native
 
   @JSName("setState")
-  def setStateR(fn: (js.Object, js.Object) => js.Object): Unit = js.native
+  def setStateR(fn: js.Function2[js.Object, js.Object, js.Object]): Unit = js.native
 
   @JSName("setState")
   def setStateR(newState: js.Object, callback: js.Function0[Unit]): Unit = js.native
 
   @JSName("setState")
-  def setStateR(fn: (js.Object, js.Object) => js.Object, callback: js.Function0[Unit]): Unit = js.native
+  def setStateR(fn: js.Function2[js.Object, js.Object, js.Object], callback: js.Function0[Unit]): Unit = js.native
 }
 
 @js.native

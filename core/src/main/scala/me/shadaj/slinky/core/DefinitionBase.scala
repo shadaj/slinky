@@ -32,7 +32,7 @@ abstract class DefinitionBase[Props, State](jsProps: js.Object)(implicit propsRe
   @JSName("setState_scala")
   @inline final def setState(fn: (State, Props) => State): Unit = {
     this.asInstanceOf[PrivateComponentClass].setStateR((ps: js.Object, p: js.Object) => {
-      js.Dynamic.literal(__ = fn(stateReader.read(ps), propsReader.read(p)).asInstanceOf[js.Any])
+      js.Dynamic.literal(__ = fn(stateReader.read(ps, true), propsReader.read(p, true)).asInstanceOf[js.Any])
     })
   }
 
@@ -44,7 +44,7 @@ abstract class DefinitionBase[Props, State](jsProps: js.Object)(implicit propsRe
   @JSName("setState_scala")
   @inline final def setState(fn: (State, Props) => State, callback: js.Function0[Unit]): Unit = {
     this.asInstanceOf[PrivateComponentClass].setStateR((ps: js.Object, p: js.Object) => {
-      js.Dynamic.literal(__ = fn(stateReader.read(ps), propsReader.read(p)).asInstanceOf[js.Any])
+      js.Dynamic.literal(__ = fn(stateReader.read(ps, true), propsReader.read(p, true)).asInstanceOf[js.Any])
     }, callback)
   }
 

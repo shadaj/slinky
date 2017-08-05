@@ -20,7 +20,7 @@ lazy val slinky = project.in(file(".")).aggregate(
 
 lazy val generator = project
 
-lazy val core = project
+lazy val core: Project = project
 
 lazy val web = project.settings(
   sourceGenerators in Compile += Def.taskDyn {
