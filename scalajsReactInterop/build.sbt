@@ -2,4 +2,4 @@ enablePlugins(ScalaJSPlugin)
 
 name := "slinky-scalajsreact-interop"
 
-libraryDependencies += "com.github.japgolly.scalajs-react" %%% "core" % "1.0.1"
+libraryDependencies += "com.github.japgolly.scalajs-react" %%% "core" % "1.1.0"
