@@ -2,32 +2,34 @@ package me.shadaj.slinky.core
 
 import org.scalatest.FunSuite
 
-import scala.scalajs.js
-
-import facade.ReactElement
+import me.shadaj.slinky.web.html._
 
 object ExternalSimple extends ExternalComponent {
   override type Props = Unit
-  override val component = null
+  override val component = "div"
 }
 
 object ExternalSimpleWithTagMods extends ExternalComponentWithTagMods {
   override type Props = Unit
-  override type Element = Nothing
+  override type Element = div.tag.type
 
-  override val component = null
+  override val component = "div"
 }
 
 class ExternalComponentTest extends FunSuite {
   test("Implicit macro to shortcut ExternalComponent can be invoked") {
-    assertCompiles(
-      """ExternalSimple(()): ReactElement"""
+    div(
+      ExternalSimple(())
     )
+
+    assert(true)
   }
 
   test("Implicit macro to shortcut ExternalComponentWithTagMods can be invoked") {
-    assertCompiles(
-      """ExternalSimpleWithTagMods(()): ReactElement"""
+    div(
+      ExternalSimpleWithTagMods(())
     )
+
+    assert(true)
   }
 }
