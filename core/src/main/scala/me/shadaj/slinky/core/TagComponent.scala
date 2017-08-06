@@ -6,6 +6,10 @@ import scala.language.implicitConversions
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
 
+class CustomAttribute[T](name: String) {
+  def :=(v: T) = new AttrPair[Any](name, v.asInstanceOf[js.Any])
+}
+
 class AttrPair[-A](val name: String, val value: js.Any)
 
 trait TagMod[-A] extends Any {
