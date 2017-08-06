@@ -111,7 +111,14 @@ object Reader extends LowPriorityReads {
     read.to[Col]
   }
 
-  implicit def functionReader[I, O](implicit iWriter: Writer[I], oReader: Reader[O]): Reader[I => O] = (s, _) => {
+  implicit def function0Reader[O](implicit oReader: Reader[O]): Reader[() => O] = (s, _) => {
+    val fn = s.asInstanceOf[js.Function0[js.Object]]
+    () => {
+      oReader.read(fn())
+    }
+  }
+
+  implicit def function1Reader[I, O](implicit iWriter: Writer[I], oReader: Reader[O]): Reader[I => O] = (s, _) => {
     val fn = s.asInstanceOf[js.Function1[js.Object, js.Object]]
     (i: I) => {
       oReader.read(fn(iWriter.write(i)))
@@ -230,7 +237,15 @@ object Writer extends LowPriorityWrites {
     }
   }
 
-  implicit def functionWriter[I, O](implicit iReader: Reader[I], oWriter: Writer[O]): Writer[I => O] = (s, _) => {
+  implicit def function0Writer[O](implicit oWriter: Writer[O]): Writer[() => O] = (s, _) => {
+    val fn: js.Function0[js.Object] = () => {
+      oWriter.write(s())
+    }
+
+    fn.asInstanceOf[js.Object]
+  }
+
+  implicit def function1Writer[I, O](implicit iReader: Reader[I], oWriter: Writer[O]): Writer[I => O] = (s, _) => {
     val fn: js.Function1[js.Object, js.Object] = (i: js.Object) => {
       oWriter.write(s(iReader.read(i)))
     }
