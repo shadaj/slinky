@@ -43,12 +43,7 @@ lazy val web = project.settings(
     }
 
     html.zip(svg).flatMap(t => t._1.flatMap(h => t._2.map(s => h ++ s)))
-  }.taskValue,
-  mappings in (Compile, packageSrc) ++= {
-    val base  = (sourceManaged  in Compile).value
-    val files = (managedSources in Compile).value
-    files.map { f => (f, f.relativeTo(base).get.getPath) }
-  }
+  }.taskValue
 ).dependsOn(core)
 
 lazy val hot = project.dependsOn(core)
