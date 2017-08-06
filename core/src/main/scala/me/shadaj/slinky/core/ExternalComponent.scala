@@ -52,7 +52,7 @@ abstract class ExternalComponent {
 
   val component: String | js.Object
 
-  def apply(p: Props, key: String = null, ref: js.Object => Unit = null): BuildingComponent[Props, Nothing] = {
+  def apply(p: Props, key: String = null, ref: js.Object => Unit = null): BuildingComponent[Props, Any] = {
     new BuildingComponent(component, p, key, ref, Seq.empty)
   }
 }
