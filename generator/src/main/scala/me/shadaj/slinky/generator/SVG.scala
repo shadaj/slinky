@@ -82,11 +82,11 @@ class SVG extends TagsProvider {
   def extract: (Seq[Tag], Seq[Attribute]) = {
     val allTags = supportedTags.map(t => Tag(t, Seq.empty))
 
-    val attributes = (allAttributes.map(SVGToJSMapping.convert) ++ extraAttributes.map(_._1)).flatMap { converted =>
+    val attributes = allAttributes.map(SVGToJSMapping.convert).flatMap { converted =>
       if (supportedAttributes.contains(converted.name)) {
         Some(Attribute(converted.name, converted.valueType, allTags.map(t => t -> ""), false))
       } else None
-    }
+    } ++ extraAttributes.map(e => Attribute(e._1.name, e._1.valueType, allTags.map(t => t -> ""), false))
 
     (allTags, attributes)
   }
