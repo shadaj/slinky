@@ -6,10 +6,10 @@ import scala.language.implicitConversions
 import scala.scalajs.js
 import scala.scalajs.js.JSConverters._
 
-class AttrPair[A](val name: String, val value: js.Any)
+class AttrPair[-A](val name: String, val value: js.Any)
 
-trait TagMod[A] extends Any {
-  def applyTo(component: TagComponent[A]): TagComponent[A]
+trait TagMod[-A] extends Any {
+  def applyTo[T <: A](component: TagComponent[T]): TagComponent[T]
 }
 
 object TagMod {
@@ -29,29 +29,30 @@ object TagMod {
   }
 }
 
-class SeqMod[A](val mods: Iterable[TagMod[A]]) extends AnyVal with TagMod[A] {
-  def applyTo(component: TagComponent[A]): TagComponent[A] = {
+class SeqMod[-A](val mods: Iterable[TagMod[A]]) extends AnyVal with TagMod[A] {
+  def applyTo[T <: A](component: TagComponent[T]): TagComponent[T] = {
     mods.foldLeft(component) { (component, mod) =>
       mod.applyTo(component)
     }
   }
 }
 
-class ChildMod[A](val child: ReactElement) extends AnyVal with TagMod[A] {
-  def applyTo(component: TagComponent[A]): TagComponent[A] = {
+class ChildMod[-A](val child: ReactElement) extends AnyVal with TagMod[A] {
+  def applyTo[T <: A](component: TagComponent[T]): TagComponent[T] = {
     component.copy(children = component.children :+ child)
   }
 }
 
-class AttrMod[A](val attr: AttrPair[A]) extends AnyVal with TagMod[A] {
-  def applyTo(component: TagComponent[A]): TagComponent[A] = {
+class AttrMod[-A](val attr: AttrPair[A]) extends AnyVal with TagMod[A] {
+  def applyTo[T <: A](component: TagComponent[T]): TagComponent[T] = {
     component.copy(attrs = component.attrs :+ attr)
   }
 }
 
-case class TagComponent[A](name: String,
-                           children: Seq[ReactElement] = Seq.empty,
-                           attrs: Seq[AttrPair[A]] = Seq.empty) {
+// TagComponent[div] is also a TagComponent[Any]
+case class TagComponent[+A](name: String,
+                            children: Seq[ReactElement] = Seq.empty,
+                            attrs: Seq[AttrPair[_]] = Seq.empty) {
   def apply(newMods: TagMod[A]*): TagComponent[A] = {
     newMods.foldLeft(this) { (c, mod) =>
       mod.applyTo(c)
@@ -64,7 +65,7 @@ object TagComponent {
     React.createElement(name, props, contents: _*)
   }
 
-  implicit def component2Instance[A](component: TagComponent[A]): ReactElement = {
+  implicit def component2Instance(component: TagComponent[_]): ReactElement = {
     TagComponent.create(
       component.name,
       component.attrs.map(m => (m.name, m.value)).toMap.toJSDictionary,
