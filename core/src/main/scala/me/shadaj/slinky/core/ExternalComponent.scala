@@ -43,7 +43,7 @@ object BuildingComponentMacros {
   // SUPER SKETCHY INTELLIJ HACK
   def makeImpl[P: c.WeakTypeTag, E: c.WeakTypeTag](c: Context): c.Expr[BuildingComponent[P, E] => ReactElement] = {
     import c.universe._
-    c.Expr[BuildingComponent[P, E] => ReactElement](c.typecheck(q"new _root_.me.shadaj.slinky.core.Maker[${implicitly[WeakTypeTag[P]]}]"))
+    c.Expr[BuildingComponent[P, E] => ReactElement](c.typecheck(q"new _root_.me.shadaj.slinky.core.Maker[${implicitly[WeakTypeTag[P]]}, ${implicitly[WeakTypeTag[E]]}]"))
   }
 }
 
