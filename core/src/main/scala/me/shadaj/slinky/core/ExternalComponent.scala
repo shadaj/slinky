@@ -4,8 +4,7 @@ import me.shadaj.slinky.core.facade.{React, ReactElement}
 
 import scala.language.implicitConversions
 import scala.language.experimental.macros
-import scala.reflect.macros.whitebox.Context
-
+import scala.reflect.macros.whitebox
 import scala.scalajs.js
 import scala.scalajs.js.|
 
@@ -41,7 +40,7 @@ final class Maker[P: Writer, E] extends (BuildingComponent[P, E] => ReactElement
 
 object BuildingComponentMacros {
   // SUPER SKETCHY INTELLIJ HACK
-  def makeImpl[P: c.WeakTypeTag, E: c.WeakTypeTag](c: Context): c.Expr[BuildingComponent[P, E] => ReactElement] = {
+  def makeImpl[P: c.WeakTypeTag, E: c.WeakTypeTag](c: whitebox.Context): c.Expr[BuildingComponent[P, E] => ReactElement] = {
     import c.universe._
     c.Expr[BuildingComponent[P, E] => ReactElement](c.typecheck(q"new _root_.me.shadaj.slinky.core.Maker[${implicitly[WeakTypeTag[P]]}, ${implicitly[WeakTypeTag[E]]}]"))
   }

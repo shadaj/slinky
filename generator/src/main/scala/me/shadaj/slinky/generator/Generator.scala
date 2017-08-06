@@ -24,22 +24,22 @@ object Generator extends App {
         s"""/**
            | * ${t.docLines.map(_.replace("*", "&#47;")).mkString("\n * ")}
            | */
-           |def apply(mods: TagMod[$symbol.tag.type]*): TagComponent[$symbol.tag.type] = new TagComponent[$symbol.tag.type]("${t.tagName}").apply(mods: _*)""".stripMargin
+           |def apply(mods: TagMod[tag.type]*) = new TagComponent[tag.type]("${t.tagName}").apply(mods: _*)""".stripMargin
       }
 
       val attrsGen = attrs.toList.flatMap { a =>
         val base = if (a.attributeType == "EventHandler") {
-          s"""def :=(v: org.scalajs.dom.Event => Unit): AttrPair[$symbol.attr.type] = new AttrPair[$symbol.attr.type]("${a.attributeName}", v)
-             |def :=(v: () => Unit): AttrPair[$symbol.attr.type] = new AttrPair[$symbol.attr.type]("${a.attributeName}", v)
+          s"""def :=(v: org.scalajs.dom.Event => Unit) = new AttrPair[attr.type]("${a.attributeName}", v)
+             |def :=(v: () => Unit) = new AttrPair[attr.type]("${a.attributeName}", v)
            """.stripMargin
         } else {
-          s"""def :=(v: ${a.attributeType}): AttrPair[$symbol.attr.type] = new AttrPair[$symbol.attr.type]("${a.attributeName}", v)"""
+          s"""def :=(v: ${a.attributeType}) = new AttrPair[attr.type]("${a.attributeName}", v)"""
         }
 
         if (a.withDash) {
           Seq(
             base,
-            s"""class WithDash(val sub: String) { def :=(v: ${a.attributeType}): AttrPair[$symbol.attr.type] = new AttrPair[$symbol.attr.type]("${a.attributeName}-" + sub, v) }
+            s"""class WithDash(val sub: String) { def :=(v: ${a.attributeType}) = new AttrPair[attr.type]("${a.attributeName}-" + sub, v) }
                |def -(sub: String) = new WithDash(sub)""".stripMargin
           )
         } else Seq(base)
@@ -47,7 +47,7 @@ object Generator extends App {
 
       val attrToTagImplicits = attrs.toList.flatMap { a =>
         a.compatibleTags.map { t =>
-          s"""implicit def ${a.attributeName}PairTo${t._1.tagName}Applied(pair: AttrPair[$symbol.attr.type]): AttrPair[${t._1.identifier}.tag.type] = pair.asInstanceOf[AttrPair[${t._1.identifier}.tag.type]]"""
+          s"""implicit def to${t._1.tagName}Applied(pair: AttrPair[this.type]) = pair.asInstanceOf[AttrPair[${t._1.identifier}.tag.type]]"""
         }
       }
 
