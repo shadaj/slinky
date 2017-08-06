@@ -6,8 +6,10 @@ object Generator extends App {
   val providerName :: out :: pkg :: Nil = args.toList
   val provider = Class.forName(providerName).newInstance().asInstanceOf[TagsProvider]
 
-  val outFile = new File(out)
-  if (!outFile.exists()) {
+  val outFolder = new File(out)
+  if (!outFolder.exists()) {
+    outFolder.mkdirs()
+
     val extracted = provider.extract
 
     val allSymbols = extracted._2.foldLeft(extracted._1.map(t => t.identifier -> (Some(t): Option[Tag], None: Option[Attribute])).toSet) { case (symbols, attr) =>
@@ -19,7 +21,7 @@ object Generator extends App {
       }
     }
 
-    val gen = allSymbols.map { case (symbol, (tags, attrs)) =>
+    allSymbols.foreach { case (symbol, (tags, attrs)) =>
       val tagsGen = tags.map { t =>
         s"""/**
            | * ${t.docLines.map(_.replace("*", "&#47;")).mkString("\n * ")}
@@ -47,7 +49,7 @@ object Generator extends App {
 
       val attrToTagImplicits = attrs.toList.flatMap { a =>
         a.compatibleTags.map { t =>
-          s"""implicit def to${t._1.tagName}Applied(pair: AttrPair[this.type]) = pair.asInstanceOf[AttrPair[${t._1.identifier}.tag.type]]"""
+          s"""implicit def to${t._1.tagName}Applied(pair: AttrPair[$symbol.attr.type]) = pair.asInstanceOf[AttrPair[${t._1.identifier}.tag.type]]"""
         }
       }
 
@@ -63,28 +65,29 @@ object Generator extends App {
         }
       }.getOrElse("")
 
-      s"""/**
-         | * $attrDocs
-         | */
-         |object $symbol {
-         |object tag
-         |object attr {
-         |${attrToTagImplicits.mkString("\n")}
-         |}
-         |${tagsGen.mkString("\n")}
-         |${attrsGen.mkString("\n")}
-         |}""".stripMargin
-    }
+      val out = new PrintWriter(new File(outFolder.getAbsolutePath + "/" + symbol + ".scala"))
 
-    val out = new PrintWriter(outFile, "UTF-8")
-    out.println(
-      s"""package ${pkg}
-         |import me.shadaj.slinky.core.{AttrPair, TagComponent, TagMod}
-         |import scala.scalajs.js
-         |import scala.language.implicitConversions
-         |private[${pkg.split('.').last}] trait gen {
-         |${gen.mkString("\n")}
-         |}""".stripMargin)
-    out.close()
+      out.println(
+        s"""package ${pkg}
+           |
+           |import me.shadaj.slinky.core.{AttrPair, TagComponent, TagMod}
+           |import scala.scalajs.js
+           |import scala.language.implicitConversions
+           |
+           |/**
+           | * $attrDocs
+           | */
+           |object $symbol {
+           |object tag
+           |object attr {
+           |${attrToTagImplicits.mkString("\n")}
+           |}
+           |${tagsGen.mkString("\n")}
+           |${attrsGen.mkString("\n")}
+           |}""".stripMargin
+      )
+
+      out.close()
+    }
   }
 }
