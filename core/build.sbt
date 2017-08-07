@@ -1,6 +1,6 @@
 enablePlugins(ScalaJSPlugin)
 
-name := "slinky"
+name := "slinky-core"
 
 libraryDependencies += "org.scala-lang" % "scala-reflect" % scalaVersion.value
 

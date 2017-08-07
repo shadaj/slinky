@@ -1,3 +1,5 @@
+import com.typesafe.sbt.pgp.PgpKeys.publishSigned
+
 enablePlugins(ScalaJSPlugin)
 
 organization in ThisBuild := "me.shadaj"
@@ -20,7 +22,7 @@ lazy val slinky = project.in(file(".")).aggregate(
 
 lazy val generator = project
 
-lazy val core = project
+lazy val core = project.settings(publishSettings: _*)
 
 lazy val web = project.settings(
   sourceGenerators in Compile += Def.taskDyn[Seq[File]] {
@@ -41,13 +43,54 @@ lazy val web = project.settings(
     val base  = (sourceManaged  in Compile).value
     val files = (managedSources in Compile).value
     files.map { f => (f, f.relativeTo(base).get.getPath) }
-  }
+  },
+  publishSettings
 ).dependsOn(core)
 
-lazy val hot = project.dependsOn(core)
+lazy val hot = project.dependsOn(core).settings(publishSettings: _*)
 
-lazy val scalajsReactInterop = project.dependsOn(core)
+lazy val scalajsReactInterop = project.dependsOn(core).settings(publishSettings: _*)
 
 lazy val tests = project.dependsOn(core, web, hot, scalajsReactInterop)
 
 lazy val example = project.dependsOn(web, hot, scalajsReactInterop)
+
+// Publish setup
+lazy val ciPublish = taskKey[Unit]("CI Publish")
+
+/**
+  * Convert the given command string to a release step action, preserving and      invoking remaining commands
+  * Note: This was copied from https://github.com/sbt/sbt-release/blob/663cfd426361484228a21a1244b2e6b0f7656bdf/src/main/scala/ReleasePlugin.scala#L99-L115
+  */
+def runCommandAndRemaining(command: String): State => State = { st: State =>
+  import sbt.complete.Parser
+  @annotation.tailrec
+  def runCommand(command: String, state: State): State = {
+    val nextState = Parser.parse(command, state.combinedParser) match {
+      case Right(cmd) => cmd()
+      case Left(msg) => throw sys.error(s"Invalid programmatic input:\n$msg")
+    }
+    nextState.remainingCommands.toList match {
+      case Nil => nextState
+      case head :: tail => runCommand(head, nextState.copy(remainingCommands = tail))
+    }
+  }
+  runCommand(command, st.copy(remainingCommands = Nil)).copy(remainingCommands = st.remainingCommands)
+}
+
+lazy val publishSettings = Seq(
+  ciPublish := Def.taskDyn {
+    if (isSnapshot.value && sys.env.get("TRAVIS_BRANCH").exists(_ == "master") && sys.env.get("TRAVIS_PULL_REQUEST").exists(_ == "false")) {
+      publishSigned.toTask
+    } else if (sys.env.get("TRAVIS_PULL_REQUEST").exists(_ == "false") && sys.env.get("TRAVIS_TAG").exists(_.nonEmpty) && !isSnapshot.value) {
+      publishSigned.toTask.map { _ =>
+        runCommandAndRemaining("sonatypeRelease")(state.value)
+        ()
+      }
+    } else {
+      Def.task[Unit] {
+        println("Not publishing " + name.value)
+      }
+    }
+  }.value
+)
