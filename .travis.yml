@@ -2,6 +2,7 @@ language: scala
 branches:
   only:
     - master
+    - /^v\d+\.\d+(\.\d+)?(-\S*)?$/
 install:
   - . $HOME/.nvm/nvm.sh
   - nvm install stable

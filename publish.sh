@@ -6,4 +6,4 @@ openssl aes-256-cbc -K $encrypted_6c42794c35b3_key -iv $encrypted_6c42794c35b3_i
 
 tar xvf secrets.tar
 
-sbt ciPublish
+sbt core/ciPublish web/ciPublish hot/ciPublish scalajsReactInterop/ciPublish

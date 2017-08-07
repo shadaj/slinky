@@ -35,8 +35,11 @@ import me.shadaj.slinky.web.html._
 object HelloMessage extends StatelessComponent {
   case class Props(name: String)
 
-  def render() = {
-    div(s"Hello ${props.name}")
+  @ScalaJSDefined
+  class Def(jsProps: js.Object) extends Definition(jsProps) {
+    def render() = {
+      div(s"Hello ${props.name}")
+    }
   }
 }
 ```
@@ -61,10 +64,13 @@ object HelloMessage extends Component {
   type Props = Unit // we have no props
   type State = Int // we use an Int directly for state, but we could also have used a case class
 
-  def initialState = 0
+  @ScalaJSDefined
+  class Def(jsProps: js.Object) extends Definition(jsProps) {
+    def initialState = 0
 
-  def render() = {
-    a(onClick := (() => setState(state + 1))(s"Clicks: ${state}")
+    def render() = {
+      a(onClick := (() => setState(state + 1))(s"Clicks: ${state}")
+    }
   }
 }
 ```

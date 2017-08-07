@@ -12,7 +12,7 @@ publishTo := Some(
 )
 
 pomExtra in ThisBuild :=
-  <url>https://github.com/shadaj/slinky</url>
+    <url>https://github.com/shadaj/slinky</url>
     <licenses>
       <license>
         <name>MIT</name>
@@ -21,8 +21,8 @@ pomExtra in ThisBuild :=
       </license>
     </licenses>
     <scm>
-      <url>git@github.com:shadaj/slinky.git</url>
-      <connection>scm:git:git@github.com:shadaj/slinky.git</connection>
+      <url>https://github.com/shadaj/slinky.git</url>
+      <connection>https://github.com/shadaj/slinky.git</connection>
     </scm>
     <developers>
       <developer>

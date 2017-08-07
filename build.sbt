@@ -4,7 +4,7 @@ enablePlugins(ScalaJSPlugin)
 
 organization in ThisBuild := "me.shadaj"
 
-version in ThisBuild := "0.1.0-SNAPSHOT"
+version in ThisBuild := "0.1.0"
 
 scalaVersion in ThisBuild := "2.12.3"
 
@@ -92,5 +92,5 @@ lazy val publishSettings = Seq(
         println("Not publishing " + name.value)
       }
     }
-  }.value
+  }.tag(Tags.Publish).value
 )
