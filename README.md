@@ -1,4 +1,4 @@
-<h1 align="center">slinky</h1>
+<p align="center"><img width="400" src="./logo.png"/></p>
 <p align="center"><i>Write Scala.js React apps just like you would in ES6</i></p>
 <p align="center">
   <a href="https://travis-ci.org/shadaj/slinky">
@@ -34,7 +34,7 @@ import me.shadaj.slinky.web.html._
 
 object HelloMessage extends StatelessComponent {
   case class Props(name: String)
-  
+
   def render() = {
     div(s"Hello ${props.name}")
   }
@@ -60,9 +60,9 @@ import me.shadaj.slinky.web.html._
 object HelloMessage extends Component {
   type Props = Unit // we have no props
   type State = Int // we use an Int directly for state, but we could also have used a case class
-  
+
   def initialState = 0
-  
+
   def render() = {
     a(onClick := (() => setState(state + 1))(s"Clicks: ${state}")
   }
@@ -84,7 +84,7 @@ Slinky includes additional typing for detecting use of incompatible attributes a
 import me.shadaj.slinky.web.html._
 
 div(href := "http://candivshavehrefs.com") // compile error!
-``` 
+```
 
 ## External Components
 One of Slinky's most powerful features is the ability to use external React components without any boilerplate. Setting
@@ -109,3 +109,8 @@ object React3 extends ExternalComponent {
 With Slinky's built in typeclass derivation for converting between Scala and JavaScript types,
 we can describe the properties of the external component using idiomatic Scala, using types like Option
 that will be converted into a JS representation at runtime (in this case the value for Some and undefined for None).
+
+## Credits
+Much credit goes to existing Scala.js libraries for React, such as scalajs-react and SRI, which provided a lot of inspiration for Slinky's design.
+
+Slinky logo based on https://thenounproject.com/dianatomic/uploads/?i=40452
