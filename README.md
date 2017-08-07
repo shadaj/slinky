@@ -5,8 +5,9 @@
     <img src="https://travis-ci.org/shadaj/slinky.svg?branch=master"/>
   </a>
   <a href="https://www.scala-js.org">
-    <img src="https://www.scala-js.org/assets/badges/scalajs-0.6.15.svg"/>
+    <img src="https://www.scala-js.org/assets/badges/scalajs-0.6.17.svg"/>
   </a>
+  <img src="https://img.shields.io/maven-central/v/me.shadaj/slinky-core_sjs0.6_2.12.svg"/>
   <a href="https://gitter.im/shadaj/slinky?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge">
     <img src="https://badges.gitter.im/shadaj/slinky.svg"/>
   </a>
@@ -15,10 +16,10 @@
 ## Installation
 Add the dependencies that match your application:
 ```scala
-libraryDependencies += "me.shadaj" %%% "slinky-core" % "0.1.0-SNAPSHOT" // core React functionality, no React DOM
-libraryDependencies += "me.shadaj" %%% "slinky-web" % "0.1.0-SNAPSHOT" // React DOM, HTML and SVG tags
-libraryDependencies += "me.shadaj" %%% "slinky-hot" % "0.1.0-SNAPSHOT" // Hot loading with Webpack
-libraryDependencies += "me.shadaj" %%% "slinky-scalajsreactinterop" % "0.1.0-SNAPSHOT" // Interop with japgolly/scalajs-react
+libraryDependencies += "me.shadaj" %%% "slinky-core" % "0.1.0" // core React functionality, no React DOM
+libraryDependencies += "me.shadaj" %%% "slinky-web" % "0.1.0" // React DOM, HTML and SVG tags
+libraryDependencies += "me.shadaj" %%% "slinky-hot" % "0.1.0" // Hot loading with Webpack
+libraryDependencies += "me.shadaj" %%% "slinky-scalajsreactinterop" % "0.1.0" // Interop with japgolly/scalajs-react
 ```
 
 Slinky supports loading React via either CommonJS or as a global object. If loading as a global object, make sure React is available
