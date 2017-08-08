@@ -18,18 +18,18 @@ object ExternalSimpleWithTagMods extends ExternalComponentWithTagMods {
 
 class ExternalComponentTest extends FunSuite {
   test("Implicit macro to shortcut ExternalComponent can be invoked") {
-    div(
-      ExternalSimple(())
-    )
-
-    assert(true)
+    assertCompiles("""div(ExternalSimple())""")
   }
 
   test("Implicit macro to shortcut ExternalComponentWithTagMods can be invoked") {
-    div(
-      ExternalSimpleWithTagMods(())
-    )
+    assertCompiles("""div(ExternalSimpleWithTagMods())""")
+  }
 
-    assert(true)
+  test("Can construct an external component taking Unit props with no arguments") {
+    assertCompiles("""ExternalSimple()""")
+  }
+
+  test("Can construct an external component taking Unit props and tag mods with no arguments") {
+    assertCompiles("""ExternalSimpleWithTagMods()""")
   }
 }

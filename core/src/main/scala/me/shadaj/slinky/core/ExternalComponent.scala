@@ -56,6 +56,14 @@ abstract class ExternalComponent {
   }
 }
 
+object ExternalComponent {
+  implicit class ProplessExternalComponent(val c: ExternalComponent { type Props = Unit }) {
+    def apply(key: String = null, ref: js.Object => Unit = null): BuildingComponent[c.Props, Any] = {
+      c.apply((), key, ref)
+    }
+  }
+}
+
 abstract class ExternalComponentWithTagMods {
   type Props
   type Element
@@ -63,6 +71,15 @@ abstract class ExternalComponentWithTagMods {
   val component: String | js.Object
 
   def apply(p: Props, tagMods: AttrPair[Element]*): BuildingComponent[Props, Element] = {
+    // no need to take key or ref here because those can be passed in through attributes
     new BuildingComponent(component, p, null, null, tagMods)
+  }
+}
+
+object ExternalComponentWithTagMods {
+  implicit class ProplessExternalComponentWithTagMods[C <: ExternalComponentWithTagMods { type Props = Unit }](val c: C) {
+    def apply(tagMods: AttrPair[c.Element]*): BuildingComponent[c.Props, c.Element] = {
+      c.apply((), tagMods: _*)
+    }
   }
 }
