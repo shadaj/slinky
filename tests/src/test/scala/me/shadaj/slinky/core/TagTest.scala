@@ -25,4 +25,18 @@ class TagTest extends FunSuite {
     val instance: ReactElement = a(customHref := "foo")
     assert(instance.asInstanceOf[js.Dynamic].props.href == "foo")
   }
+
+  test("Can use Boolean attribute by itself providing a value") {
+    val instance: ReactElement = input(disabled := false)
+    assert(instance.asInstanceOf[js.Dynamic].props.disabled == false)
+  }
+
+  test("Can use Boolean attribute by itself without providing value") {
+    val instance: ReactElement = input(disabled)
+    assert(instance.asInstanceOf[js.Dynamic].props.disabled == true)
+  }
+
+  test("Using a non-Boolean attribute by itself does not compiles") {
+    assertDoesNotCompile("input(href)")
+  }
 }
