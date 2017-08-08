@@ -37,6 +37,12 @@ abstract class BaseComponent {
 }
 
 object BaseComponent {
+  implicit class ProplessComponent[C <: BaseComponent { type Props = Unit }](val c: C) {
+    def apply(key: String = null, ref: c.Def => Unit = null)(implicit constructorTag: ConstructorTag[c.Def]): ReactElement = {
+      c.apply((), key, ref)(constructorTag, implicitly[Writer[Unit]])
+    }
+  }
+
   private var componentConstructorMiddleware = (constructor: js.Object, _: js.Object) => {
     constructor
   }

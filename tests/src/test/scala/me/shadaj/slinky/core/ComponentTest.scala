@@ -33,6 +33,20 @@ object TestComponent extends Component {
   }
 }
 
+object NoPropsComponent extends Component {
+  type Props = Unit
+  type State = Int
+
+  @ScalaJSDefined
+  class Def(jsProps: js.Object) extends Definition(jsProps) {
+    override def initialState: Int = 0
+
+    override def render(): ReactElement = {
+      null
+    }
+  }
+}
+
 class ComponentTest extends AsyncFunSuite {
   test("setState given function is applied") {
     val promise: Promise[Assertion] = Promise()
@@ -43,5 +57,9 @@ class ComponentTest extends AsyncFunSuite {
     )
 
     promise.future
+  }
+
+  test("Can construct a component taking Unit props with no arguments") {
+    assertCompiles("""NoPropsComponent()""")
   }
 }
