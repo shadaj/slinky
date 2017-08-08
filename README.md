@@ -70,7 +70,7 @@ object HelloMessage extends Component {
     def initialState = 0
 
     def render() = {
-      a(onClick := (() => setState(state + 1))(s"Clicks: ${state}")
+      a(onClick := (() => setState(state + 1)))(s"Clicks: ${state}")
     }
   }
 }
