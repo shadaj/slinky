@@ -16,10 +16,10 @@
 ## Installation
 Add the dependencies that match your application:
 ```scala
-libraryDependencies += "me.shadaj" %%% "slinky-core" % "0.1.0" // core React functionality, no React DOM
-libraryDependencies += "me.shadaj" %%% "slinky-web" % "0.1.0" // React DOM, HTML and SVG tags
-libraryDependencies += "me.shadaj" %%% "slinky-hot" % "0.1.0" // Hot loading with Webpack
-libraryDependencies += "me.shadaj" %%% "slinky-scalajsreactinterop" % "0.1.0" // Interop with japgolly/scalajs-react
+libraryDependencies += "me.shadaj" %%% "slinky-core" % "0.1.1" // core React functionality, no React DOM
+libraryDependencies += "me.shadaj" %%% "slinky-web" % "0.1.1" // React DOM, HTML and SVG tags
+libraryDependencies += "me.shadaj" %%% "slinky-hot" % "0.1.1" // Hot loading with Webpack
+libraryDependencies += "me.shadaj" %%% "slinky-scalajsreactinterop" % "0.1.1" // Interop with japgolly/scalajs-react
 ```
 
 Slinky supports loading React via either CommonJS or as a global object. If loading as a global object, make sure React is available

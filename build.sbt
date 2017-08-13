@@ -4,7 +4,7 @@ enablePlugins(ScalaJSPlugin)
 
 organization in ThisBuild := "me.shadaj"
 
-version in ThisBuild := "0.1.1-SNAPSHOT"
+version in ThisBuild := "0.1.1"
 
 scalaVersion in ThisBuild := "2.12.3"
 
