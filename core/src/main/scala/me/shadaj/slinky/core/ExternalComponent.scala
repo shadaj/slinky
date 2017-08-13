@@ -64,9 +64,9 @@ object ExternalComponent {
   }
 }
 
-abstract class ExternalComponentWithTagMods {
+abstract class ExternalComponentWithTagMods[E] {
   type Props
-  type Element
+  type Element = E
 
   val component: String | js.Object
 
@@ -77,7 +77,7 @@ abstract class ExternalComponentWithTagMods {
 }
 
 object ExternalComponentWithTagMods {
-  implicit class ProplessExternalComponentWithTagMods[C <: ExternalComponentWithTagMods { type Props = Unit }](val c: C) {
+  implicit class ProplessExternalComponentWithTagMods[C <: ExternalComponentWithTagMods[_] { type Props = Unit }](val c: C) {
     def apply(tagMods: AttrPair[c.Element]*): BuildingComponent[c.Props, c.Element] = {
       c.apply((), tagMods: _*)
     }
