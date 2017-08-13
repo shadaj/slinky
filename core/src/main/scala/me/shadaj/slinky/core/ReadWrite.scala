@@ -84,6 +84,20 @@ object Reader extends LowPriorityReads {
     s
   }).asInstanceOf[Float]
 
+  implicit def undefOrReader[T](implicit reader: Reader[T]): Reader[js.UndefOr[T]] = (s, root) => {
+    val value = if (root) {
+      s.asInstanceOf[js.Dynamic].value.asInstanceOf[js.Object]
+    } else {
+      s
+    }
+
+    if (js.isUndefined(value)) {
+      js.undefined
+    } else {
+      reader.read(value)
+    }
+  }
+
   implicit def optionReader[T](implicit reader: Reader[T]): Reader[Option[T]] = (s, root) => {
     val value = if (root) {
       s.asInstanceOf[js.Dynamic].value.asInstanceOf[js.Object]
@@ -213,6 +227,16 @@ object Writer extends LowPriorityWrites {
     js.Dynamic.literal("value" -> s)
   } else {
     s.asInstanceOf[js.Object]
+  }
+
+  implicit def undefOrWriter[T](implicit writer: Writer[T]): Writer[js.UndefOr[T]] = (s, root) => {
+    if (root) {
+      s.map { v =>
+        js.Dynamic.literal("value" -> writer.write(v))
+      }.getOrElse(js.Dynamic.literal())
+    } else {
+      s.map(v => writer.write(v)).getOrElse(js.undefined.asInstanceOf[js.Object])
+    }
   }
 
   implicit def optionWriter[T](implicit writer: Writer[T]): Writer[Option[T]] = (s, root) => {
