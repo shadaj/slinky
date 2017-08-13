@@ -6,13 +6,14 @@ import scala.scalajs.js
 
 class ReaderWriterTest extends FunSuite {
   private def readWrittenSame[T: Reader: Writer](v: T, isOpaque: Boolean = false) = {
+    val written = implicitly[Writer[T]].write(v)
     if (!isOpaque) {
-      assert(js.isUndefined(implicitly[Writer[T]].write(v).asInstanceOf[js.Dynamic].__))
+      assert(js.isUndefined(written) || js.isUndefined(written.asInstanceOf[js.Dynamic].__))
     } else {
-      assert(!js.isUndefined(implicitly[Writer[T]].write(v).asInstanceOf[js.Dynamic].__))
+      assert(!js.isUndefined(written.asInstanceOf[js.Dynamic].__))
     }
 
-    assert(implicitly[Reader[T]].read(implicitly[Writer[T]].write(v)) == v)
+    assert(implicitly[Reader[T]].read(written) == v)
     assert(implicitly[Reader[T]].read(implicitly[Writer[T]].write(v, true), true) == v)
   }
 
@@ -42,6 +43,13 @@ class ReaderWriterTest extends FunSuite {
 
   test("Read/write - double") {
     readWrittenSame(1D)
+  }
+
+  test("Read/write - js.UndefOr") {
+    val defined: js.UndefOr[List[Int]] = List(1)
+    readWrittenSame(defined)
+    val undefined: js.UndefOr[List[Int]] = js.undefined
+    readWrittenSame(undefined)
   }
 
   test("Read/write - case class") {
