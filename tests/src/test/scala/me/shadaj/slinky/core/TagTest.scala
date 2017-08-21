@@ -6,6 +6,8 @@ import me.shadaj.slinky.web.html._
 
 import scala.scalajs.js
 
+import org.scalajs.dom.MouseEvent
+
 class TagTest extends FunSuite {
   test("Fails compilation when an incompatible attr is provided") {
     assertDoesNotCompile("div(width := 1)")
@@ -38,5 +40,9 @@ class TagTest extends FunSuite {
 
   test("Using a non-Boolean attribute by itself does not compiles") {
     assertDoesNotCompile("input(href)")
+  }
+
+  test("Mouse events can be given a function taking a MouseEvent") {
+    assertCompiles("div(onMouseOver := ((v: MouseEvent) => {}))")
   }
 }
