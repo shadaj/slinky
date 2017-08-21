@@ -8,7 +8,9 @@ import scala.reflect.macros.whitebox
 import scala.scalajs.js
 import scala.scalajs.js.|
 
-class BuildingComponent[P, E](c: String | js.Object, props: P, key: String, ref: js.Object => Unit, mods: Seq[AttrPair[E]]) {
+case class BuildingComponent[P, E](c: String | js.Object, props: P, key: String, ref: js.Object => Unit, mods: Seq[AttrPair[E]]) {
+  def apply(tagMods: AttrPair[E]*): BuildingComponent[P, E] = copy(mods = mods ++ tagMods)
+
   def apply(children: ReactElement*)(implicit writer: Writer[P]): ReactElement = {
     val written = writer.write(props, true).asInstanceOf[js.Dictionary[js.Any]]
 
@@ -39,47 +41,24 @@ final class Maker[P: Writer, E] extends (BuildingComponent[P, E] => ReactElement
 }
 
 object BuildingComponentMacros {
-  // SUPER SKETCHY INTELLIJ HACK
-  def makeImpl[P: c.WeakTypeTag, E: c.WeakTypeTag](c: whitebox.Context): c.Expr[BuildingComponent[P, E] => ReactElement] = {
+  // SUPER SKETCHY INTELLIJ HACK: IntellJ is unable to detect implicits that take type parameters
+  def makeImpl[P: c.WeakTypeTag, E: c.WeakTypeTag](c: whitebox.Context): c.Expr[BuildingComponent[P, _] => ReactElement] = {
     import c.universe._
-    c.Expr[BuildingComponent[P, E] => ReactElement](c.typecheck(q"new _root_.me.shadaj.slinky.core.Maker[${implicitly[WeakTypeTag[P]]}, ${implicitly[WeakTypeTag[E]]}]"))
+    c.Expr[BuildingComponent[P, _] => ReactElement](c.typecheck(
+      q"(b: BuildingComponent[${implicitly[WeakTypeTag[P]]}, _]) => b(Seq.empty[_root_.me.shadaj.slinky.core.facade.ReactElement]: _*)"))
   }
 }
 
-abstract class ExternalComponent {
-  type Props
+abstract class ExternalComponent extends ExternalComponentWithAttributes[Nothing]
 
-  val component: String | js.Object
-
-  def apply(p: Props, key: String = null, ref: js.Object => Unit = null): BuildingComponent[Props, Any] = {
-    new BuildingComponent(component, p, key, ref, Seq.empty)
-  }
-}
-
-object ExternalComponent {
-  implicit class ProplessExternalComponent(val c: ExternalComponent { type Props = Unit }) {
-    def apply(key: String = null, ref: js.Object => Unit = null): BuildingComponent[c.Props, Any] = {
-      c.apply((), key, ref)
-    }
-  }
-}
-
-abstract class ExternalComponentWithTagMods[E] {
+abstract class ExternalComponentWithAttributes[E] {
   type Props
   type Element = E
 
   val component: String | js.Object
 
-  def apply(p: Props, tagMods: AttrPair[Element]*): BuildingComponent[Props, Element] = {
+  def apply(p: Props): BuildingComponent[Props, Element] = {
     // no need to take key or ref here because those can be passed in through attributes
-    new BuildingComponent(component, p, null, null, tagMods)
-  }
-}
-
-object ExternalComponentWithTagMods {
-  implicit class ProplessExternalComponentWithTagMods[C <: ExternalComponentWithTagMods[_] { type Props = Unit }](val c: C) {
-    def apply(tagMods: AttrPair[c.Element]*): BuildingComponent[c.Props, c.Element] = {
-      c.apply((), tagMods: _*)
-    }
+    new BuildingComponent(component, p, null, null, Seq.empty)
   }
 }
