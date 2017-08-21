@@ -9,7 +9,7 @@ object ExternalSimple extends ExternalComponent {
   override val component = "div"
 }
 
-object ExternalSimpleWithTagMods extends ExternalComponentWithTagMods[div.tag.type] {
+object ExternalSimpleWithAttributes extends ExternalComponentWithAttributes[div.tag.type] {
   override type Props = Unit
 
   override val component = "div"
@@ -20,15 +20,23 @@ class ExternalComponentTest extends FunSuite {
     assertCompiles("""div(ExternalSimple())""")
   }
 
-  test("Implicit macro to shortcut ExternalComponentWithTagMods can be invoked") {
-    assertCompiles("""div(ExternalSimpleWithTagMods())""")
+  test("Implicit macro to shortcut ExternalComponentWithAttributes can be invoked") {
+    assertCompiles("""div(ExternalSimpleWithAttributes())""")
   }
 
   test("Can construct an external component taking Unit props with no arguments") {
     assertCompiles("""ExternalSimple()""")
   }
 
-  test("Can construct an external component taking Unit props and tag mods with no arguments") {
-    assertCompiles("""ExternalSimpleWithTagMods(className := "hi")""")
+  test("Cannot pass in attributes to a basic external component") {
+    assertCompiles("""ExternalSimple(className := "hi")""")
+  }
+
+  test("Can construct an external component taking Unit props and attributes with no arguments") {
+    assertCompiles("""ExternalSimpleWithAttributes(className := "hi")""")
+  }
+
+  test("Can construct an external component taking Unit props and attributes with some children") {
+    assertCompiles("""ExternalSimpleWithAttributes(className := "hi")(div())""")
   }
 }
