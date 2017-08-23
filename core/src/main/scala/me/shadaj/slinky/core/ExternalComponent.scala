@@ -41,11 +41,18 @@ final class Maker[P: Writer, E] extends (BuildingComponent[P, E] => ReactElement
 }
 
 object BuildingComponentMacros {
+  class Maker[P] extends (BuildingComponent[P, _] => ReactElement) {
+    override def apply(v1: BuildingComponent[P, _]): ReactElement = {
+      v1(Seq.empty[ReactElement]: _*)
+    }
+  }
+
   // SUPER SKETCHY INTELLIJ HACK: IntellJ is unable to detect implicits that take type parameters
   def makeImpl[P: c.WeakTypeTag, E: c.WeakTypeTag](c: whitebox.Context): c.Expr[BuildingComponent[P, _] => ReactElement] = {
     import c.universe._
     c.Expr[BuildingComponent[P, _] => ReactElement](c.typecheck(
-      q"(b: BuildingComponent[${implicitly[WeakTypeTag[P]]}, _]) => b(Seq.empty[_root_.me.shadaj.slinky.core.facade.ReactElement]: _*)"))
+      q"new _root_.me.shadaj.slinky.core.BuildingComponentMacros.Maker[${implicitly[WeakTypeTag[P]]}]()"
+    ))
   }
 }
 
