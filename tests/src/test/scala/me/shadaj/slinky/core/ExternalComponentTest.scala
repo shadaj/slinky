@@ -1,21 +1,30 @@
 package me.shadaj.slinky.core
 
+import me.shadaj.slinky.core.annotations.react
 import org.scalatest.FunSuite
-
 import me.shadaj.slinky.web.html._
 
-object ExternalSimple extends ExternalComponent {
+@react object ExternalSimple extends ExternalComponent {
   override type Props = Unit
   override val component = "div"
 }
 
-object ExternalSimpleWithAttributes extends ExternalComponentWithAttributes[div.tag.type] {
+@react object ExternalSimpleWithProps extends ExternalComponent {
+  case class Props(a: Int)
+  override val component = "div"
+}
+
+@react object ExternalSimpleWithAttributes extends ExternalComponentWithAttributes[div.tag.type] {
   override type Props = Unit
 
   override val component = "div"
 }
 
 class ExternalComponentTest extends FunSuite {
+  test("Can construct an external component with generated apply") {
+    assertCompiles("""div(ExternalSimpleWithProps(a = 1))""")
+  }
+
   test("Implicit macro to shortcut ExternalComponent can be invoked") {
     assertCompiles("""div(ExternalSimple())""")
   }

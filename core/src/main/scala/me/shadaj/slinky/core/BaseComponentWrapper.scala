@@ -5,7 +5,7 @@ import me.shadaj.slinky.core.facade.{ReactElement, React}
 import scala.scalajs.js
 import scala.scalajs.js.ConstructorTag
 
-abstract class BaseComponent {
+abstract class BaseComponentWrapper {
   type Props
 
   type State
@@ -17,7 +17,7 @@ abstract class BaseComponent {
   def componentConstructor(implicit constructorTag: ConstructorTag[Def]): js.Object = {
     val constructor = constructorTag.constructor
     constructor.displayName = getClass.getSimpleName
-    BaseComponent.componentConstructorMiddleware(
+    BaseComponentWrapper.componentConstructorMiddleware(
       constructor.asInstanceOf[js.Object], this.asInstanceOf[js.Object])
   }
 
@@ -36,8 +36,8 @@ abstract class BaseComponent {
   }
 }
 
-object BaseComponent {
-  implicit class ProplessComponent[C <: BaseComponent { type Props = Unit }](val c: C) {
+object BaseComponentWrapper {
+  implicit class ProplessComponent[C <: BaseComponentWrapper { type Props = Unit }](val c: C) {
     def apply(key: String = null, ref: c.Def => Unit = null)(implicit constructorTag: ConstructorTag[c.Def]): ReactElement = {
       c.apply((), key, ref)(constructorTag, implicitly[Writer[Unit]])
     }

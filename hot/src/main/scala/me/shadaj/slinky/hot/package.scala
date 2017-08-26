@@ -1,6 +1,6 @@
 package me.shadaj.slinky
 
-import me.shadaj.slinky.core.BaseComponent
+import me.shadaj.slinky.core.BaseComponentWrapper
 import me.shadaj.slinky.core.facade.React
 
 import scala.scalajs.js
@@ -11,7 +11,7 @@ package object hot {
       js.Dynamic.global.proxies = js.Dynamic.literal()
     }
 
-    BaseComponent.insertMiddleware((constructor, component) => {
+    BaseComponentWrapper.insertMiddleware((constructor, component) => {
       if (js.isUndefined(component.asInstanceOf[js.Dynamic]._hot)) {
         component.asInstanceOf[js.Dynamic]._hot = true
 

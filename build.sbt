@@ -20,9 +20,24 @@ lazy val slinky = project.in(file(".")).aggregate(
   publishLocal := {}
 )
 
+lazy val macroAnnotationSettings = Seq(
+  // New-style macro annotations are under active development.  As a result, in
+  // this build we'll be referring to snapshot versions of both scala.meta and
+  // macro paradise.
+  resolvers += Resolver.sonatypeRepo("releases"),
+  resolvers += Resolver.bintrayRepo("scalameta", "maven"),
+  // A dependency on macro paradise 3.x is required to both write and expand
+  // new-style macros.  This is similar to how it works for old-style macro
+  // annotations and a dependency on macro paradise 2.x.
+  addCompilerPlugin("org.scalameta" % "paradise" % "3.0.0-M10" cross CrossVersion.full),
+  scalacOptions += "-Xplugin-require:macroparadise",
+  // temporary workaround for https://github.com/scalameta/paradise/issues/10
+  scalacOptions in (Compile, console) := Seq() // macroparadise plugin doesn't work in repl yet.
+)
+
 lazy val generator = project
 
-lazy val core = project.settings(publishSettings: _*)
+lazy val core = project.settings(publishSettings, macroAnnotationSettings)
 
 lazy val web = project.settings(
   sourceGenerators in Compile += Def.taskDyn[Seq[File]] {
@@ -47,13 +62,13 @@ lazy val web = project.settings(
   publishSettings
 ).dependsOn(core)
 
-lazy val hot = project.dependsOn(core).settings(publishSettings: _*)
+lazy val hot = project.settings(macroAnnotationSettings, publishSettings).dependsOn(core)
 
-lazy val scalajsReactInterop = project.dependsOn(core).settings(publishSettings: _*)
+lazy val scalajsReactInterop = project.settings(macroAnnotationSettings, publishSettings).dependsOn(core)
 
-lazy val tests = project.dependsOn(core, web, hot, scalajsReactInterop)
+lazy val tests = project.settings(macroAnnotationSettings).dependsOn(core, web, hot, scalajsReactInterop)
 
-lazy val example = project.dependsOn(web, hot, scalajsReactInterop)
+lazy val example = project.settings(macroAnnotationSettings).dependsOn(core, web, hot, scalajsReactInterop)
 
 // Publish setup
 lazy val ciPublish = taskKey[Unit]("CI Publish")

@@ -17,6 +17,8 @@
 Add the dependencies that match your application:
 ```scala
 libraryDependencies += "me.shadaj" %%% "slinky-core" % "0.1.1" // core React functionality, no React DOM
+addCompilerPlugin("org.scalameta" % "paradise" % "3.0.0-M10" cross CrossVersion.full) // required for the @react macro annotation
+
 libraryDependencies += "me.shadaj" %%% "slinky-web" % "0.1.1" // React DOM, HTML and SVG tags
 libraryDependencies += "me.shadaj" %%% "slinky-hot" % "0.1.1" // Hot loading with Webpack
 libraryDependencies += "me.shadaj" %%% "slinky-scalajsreact-interop" % "0.1.1" // Interop with japgolly/scalajs-react
@@ -30,17 +32,17 @@ Writing React code in Slinky closely mirrors the layout of React code in ES6.
 
 ### Slinky
 ```scala
-import me.shadaj.slinky.core.StatelessComponent
+import me.shadaj.slinky.core.{Component, react}
 import me.shadaj.slinky.web.html._
 
-object HelloMessage extends StatelessComponent {
+@react class HelloMessage extends Component {
   case class Props(name: String)
+  type State = Unit // this is a stateless component
+  
+  def initialState = () // no state
 
-  @ScalaJSDefined
-  class Def(jsProps: js.Object) extends Definition(jsProps) {
-    def render() = {
-      div(s"Hello ${props.name}")
-    }
+  def render() = {
+    div(s"Hello ${props.name}")
   }
 }
 ```
@@ -58,20 +60,17 @@ class HelloMessage extends React.Component {
 
 To create stateful components, specify the `State` type, provide an initial state, and use your state in `render` via the `state` variable:
 ```scala
-import me.shadaj.slinky.core.Component
+import me.shadaj.slinky.core.{Component, react}
 import me.shadaj.slinky.web.html._
 
-object HelloMessage extends Component {
+@react class HelloMessage extends Component {
   type Props = Unit // we have no props
   type State = Int // we use an Int directly for state, but we could also have used a case class
 
-  @ScalaJSDefined
-  class Def(jsProps: js.Object) extends Definition(jsProps) {
-    def initialState = 0
+  def initialState = 0
 
-    def render() = {
-      a(onClick := (() => setState(state + 1)))(s"Clicks: ${state}")
-    }
+  def render() = {
+    a(onClick := (() => setState(state + 1)))(s"Clicks: ${state}")
   }
 }
 ```
@@ -98,14 +97,14 @@ One of Slinky's most powerful features is the ability to use external React comp
 up an external component is just like creating a regular component:
 
 ```scala
-import me.shadaj.slinky.core.ExternalComponent
+import me.shadaj.slinky.core.{ExternalComponent, react}
 
 import scala.scalajs.js
 
 import org.scalajs.dom.html
 
 // external component for react-three-renderer
-object React3 extends ExternalComponent {
+@react object React3 extends ExternalComponent {
   case class Props(mainCamera: String, width: Int, height: Int,
                    onAnimate: Option[() => Unit] = None, alpha: Boolean = false)
 

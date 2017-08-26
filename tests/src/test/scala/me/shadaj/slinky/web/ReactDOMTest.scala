@@ -1,6 +1,6 @@
 package me.shadaj.slinky.web
 
-import me.shadaj.slinky.core.Component
+import me.shadaj.slinky.core.ComponentWrapper
 import me.shadaj.slinky.core.facade.ReactElement
 import org.scalajs.dom.{Element, document}
 
@@ -9,7 +9,7 @@ import scala.scalajs.js.annotation.ScalaJSDefined
 import html._
 import org.scalatest.FunSuite
 
-object TestComponent extends Component {
+object TestComponent extends ComponentWrapper {
   type Props = Unit
   type State = Unit
 
