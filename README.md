@@ -117,6 +117,6 @@ we can describe the properties of the external component using idiomatic Scala, 
 that will be converted into a JS representation at runtime (in this case the value for Some and undefined for None).
 
 ## Credits
-Much credit goes to existing Scala.js libraries for React, such as scalajs-react and SRI, which provided a lot of inspiration for Slinky's design.
+Much credit goes to existing Scala.js libraries for React, such as scalajs-react and SRI, which provided a lot of inspiration for Slinky's design. Credit also goes to scala-js-preact, which provided the inspiration for the `@react` macro annotation. 
 
 Slinky logo based on https://thenounproject.com/dianatomic/uploads/?i=40452
