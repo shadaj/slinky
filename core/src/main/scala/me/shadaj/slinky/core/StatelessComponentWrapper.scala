@@ -10,7 +10,7 @@ abstract class StatelessDefinition[Props](jsProps: js.Object)
   override def initialState: Unit = ()
 }
 
-abstract class StatelessComponent extends BaseComponent {
+abstract class StatelessComponentWrapper extends BaseComponentWrapper {
   override type State = Unit
 
   override type Definition = StatelessDefinition[Props]
