@@ -8,7 +8,7 @@ import scala.reflect.macros.whitebox
 import scala.scalajs.js
 import scala.scalajs.js.|
 
-case class BuildingComponent[P, E](c: String | js.Object, props: P, key: String, ref: js.Object => Unit, mods: Seq[AttrPair[E]]) {
+case class BuildingComponent[P, E](c: String | js.Object, props: P, key: String = null, ref: js.Object => Unit = null, mods: Seq[AttrPair[E]] = Seq.empty) {
   def apply(tagMods: AttrPair[E]*): BuildingComponent[P, E] = copy(mods = mods ++ tagMods)
 
   def apply(key: String): BuildingComponent[P, E] = copy(key = key)
@@ -45,7 +45,7 @@ final class Maker[P: Writer, E] extends (BuildingComponent[P, E] => ReactElement
 }
 
 object BuildingComponentMacros {
-  class Maker[P] extends (BuildingComponent[P, _] => ReactElement) {
+  class Maker[P](implicit writer: Writer[P]) extends (BuildingComponent[P, _] => ReactElement) {
     override def apply(v1: BuildingComponent[P, _]): ReactElement = {
       v1(Seq.empty[ReactElement]: _*)
     }
@@ -55,7 +55,7 @@ object BuildingComponentMacros {
   def makeImpl[P: c.WeakTypeTag, E: c.WeakTypeTag](c: whitebox.Context): c.Expr[BuildingComponent[P, _] => ReactElement] = {
     import c.universe._
     c.Expr[BuildingComponent[P, _] => ReactElement](c.typecheck(
-      q"new _root_.me.shadaj.slinky.core.BuildingComponentMacros.Maker[${implicitly[WeakTypeTag[P]]}]()"
+      q"new _root_.me.shadaj.slinky.core.BuildingComponentMacros.Maker[${implicitly[WeakTypeTag[P]]}]"
     ))
   }
 }

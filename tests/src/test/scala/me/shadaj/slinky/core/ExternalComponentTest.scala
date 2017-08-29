@@ -1,8 +1,12 @@
 package me.shadaj.slinky.core
 
 import me.shadaj.slinky.core.annotations.react
+import me.shadaj.slinky.web.ReactDOM
 import org.scalatest.FunSuite
 import me.shadaj.slinky.web.html._
+import org.scalajs.dom
+
+import scala.scalajs.js
 
 @react object ExternalSimple extends ExternalComponent {
   override type Props = Unit
@@ -20,7 +24,21 @@ import me.shadaj.slinky.web.html._
   override val component = "div"
 }
 
+@react object ExternalDivWithProps extends ExternalComponent {
+  case class Props(id: String)
+  override val component = "div"
+}
+
 class ExternalComponentTest extends FunSuite {
+  test("Rendering an external component results in appropriate props") {
+    val rendered = ReactDOM.render(
+      ExternalDivWithProps(id = "test"),
+      dom.document.createElement("div")
+    )
+
+    assert(rendered.asInstanceOf[js.Dynamic].id == "test")
+  }
+
   test("Can construct an external component with generated apply") {
     assertCompiles("""div(ExternalSimpleWithProps(a = 1))""")
   }
