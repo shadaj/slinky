@@ -11,6 +11,10 @@ import scala.scalajs.js.|
 case class BuildingComponent[P, E](c: String | js.Object, props: P, key: String, ref: js.Object => Unit, mods: Seq[AttrPair[E]]) {
   def apply(tagMods: AttrPair[E]*): BuildingComponent[P, E] = copy(mods = mods ++ tagMods)
 
+  def apply(key: String): BuildingComponent[P, E] = copy(key = key)
+  def apply(ref: js.Object => Unit): BuildingComponent[P, E] = copy(ref = ref)
+  def apply(key: String, ref: js.Object => Unit): BuildingComponent[P, E] = copy(key = key, ref = ref)
+
   def apply(children: ReactElement*)(implicit writer: Writer[P]): ReactElement = {
     val written = writer.write(props, true).asInstanceOf[js.Dictionary[js.Any]]
 

@@ -17,11 +17,11 @@ class react extends scala.annotation.StaticAnnotation {
             val applyValues = caseClassparamss.map(ps => ps.map(p => Term.Name(p.name.value)))
             val caseClassApply = if (applyTypes.isEmpty) {
               q"""
-                 def apply[..$tparams](...$caseClassparamss): me.shadaj.slinky.core.facade.ReactElement = this.apply(${Term.Name(tname.value)}.apply(...$applyValues))
+                 def apply[..$tparams](...$caseClassparamss): me.shadaj.slinky.core.KeyAndRefAddingStage[Def] = this.apply(${Term.Name(tname.value)}.apply(...$applyValues))
                """
             } else {
               q"""
-                 def apply[..$tparams](...$caseClassparamss): me.shadaj.slinky.core.facade.ReactElement = this.apply(${Term.Name(tname.value)}.apply[..$applyTypes](...$applyValues))
+                 def apply[..$tparams](...$caseClassparamss): me.shadaj.slinky.core.KeyAndRefAddingStage[Def] = this.apply(${Term.Name(tname.value)}.apply[..$applyTypes](...$applyValues))
                """
             }
 
@@ -66,11 +66,11 @@ class react extends scala.annotation.StaticAnnotation {
             val applyValues = caseClassparamss.map(ps => ps.map(p => Term.Name(p.name.value)))
             val caseClassApply = if (applyTypes.isEmpty) {
               q"""
-                 def apply[..$tparams](...$caseClassparamss): me.shadaj.slinky.core.facade.ReactElement = this.apply(${Term.Name(tname.value)}.apply(...$applyValues))
+                 def apply[..$tparams](...$caseClassparamss): me.shadaj.slinky.core.BuildingComponent[Props, Element] = this.apply(${Term.Name(tname.value)}.apply(...$applyValues))
                """
             } else {
               q"""
-                 def apply[..$tparams](...$caseClassparamss): me.shadaj.slinky.core.facade.ReactElement = this.apply(${Term.Name(tname.value)}.apply[..$applyTypes](...$applyValues))
+                 def apply[..$tparams](...$caseClassparamss): me.shadaj.slinky.core.BuildingComponent[Props, Element] = this.apply(${Term.Name(tname.value)}.apply[..$applyTypes](...$applyValues))
                """
             }
 

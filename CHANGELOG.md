@@ -1,6 +1,7 @@
 # Changelog
 
 ## vNEXT
++ **BREAKING**: Instead of taking key and refs as additional parameters next to props, they are now taken as a curried parameter [PR #30](https://github.com/shadaj/slinky/pull/30)
 + **BREAKING**: Introduce the macro annotation `@react` to simplify component and external component creation with auto-generated companion object for a component class (or external component object). This is a major change to how applications with Slinky are written, so please see the notes at the end of the changelog [PR #29](https://github.com/shadaj/slinky/pull/29)
 + **BREAKING**: Rename `ExternalComponentWithTagMods` to `ExternalComponentWithAttributes` and take attributes as a curried parameter instead of an extra parameter after `Props` [PR #26](https://github.com/shadaj/slinky/pull/26)
 + Have mouse attributes such as `onMouseDown` take a `MouseEvent` instead of just an `Event` [PR #27](https://github.com/shadaj/slinky/pull/27)
