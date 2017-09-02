@@ -27,7 +27,58 @@ libraryDependencies += "me.shadaj" %%% "slinky-scalajsreact-interop" % "0.1.1" /
 Slinky supports loading React via either CommonJS or as a global object. If loading as a global object, make sure React is available
 as `window.React` and React DOM as `window.ReactDOM`.
 
-## Writing Components
+## Writing Components (0.1.x style)
+Writing React code in Slinky closely mirrors the layout of React code in ES6.
+
+### Slinky
+```scala
+import me.shadaj.slinky.core.StatelessComponent
+import me.shadaj.slinky.web.html._
+
+object HelloMessage extends StatelessComponent {
+  case class Props(name: String)
+
+  @ScalaJSDefined
+  class Def(jsProps: js.Object) extends Definition(jsProps) {
+    def render() = {
+      div(s"Hello ${props.name}")
+    }
+  }
+}
+```
+
+### ES6
+```js
+import React from 'react';
+
+class HelloMessage extends React.Component {
+  render() {
+    return <div>Hello {this.props.name}</div>;
+  }
+}
+```
+
+To create stateful components, specify the `State` type, provide an initial state, and use your state in `render` via the `state` variable:
+```scala
+import me.shadaj.slinky.core.Component
+import me.shadaj.slinky.web.html._
+
+object HelloMessage extends Component {
+  type Props = Unit // we have no props
+  type State = Int // we use an Int directly for state, but we could also have used a case class
+
+  @ScalaJSDefined
+  class Def(jsProps: js.Object) extends Definition(jsProps) {
+    def initialState = 0
+
+    def render() = {
+      a(onClick := (() => setState(state + 1)))(s"Clicks: ${state}")
+    }
+  }
+}
+```
+
+## Writing Components (0.2.0-SNAPSHOT style)
 Writing React code in Slinky closely mirrors the layout of React code in ES6.
 
 ### Slinky
