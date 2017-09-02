@@ -32,6 +32,18 @@ class TestComponent extends Component {
 }
 
 @react
+class TestComponentStateCaseClass extends Component {
+  type Props = Unit
+  case class State()
+
+  override def initialState: State = State()
+
+  override def render(): ReactElement = {
+    null
+  }
+}
+
+@react
 class TestComponentCaseClass extends Component {
   case class Props(a: Int)
   type State = Int

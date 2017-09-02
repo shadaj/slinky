@@ -50,8 +50,17 @@ class react extends scala.annotation.StaticAnnotation {
 
       val propsSelect = Type.Select(Term.Name(name.value), Type.Name("Props"))
       val stateSelect = Type.Select(Term.Name(name.value), Type.Name("State"))
+
+      val propsAndStateImport = Import(Seq(
+        Importer(
+          Term.Name(name.value),
+          Seq(Importee.Name(Name.Indeterminate("Props")), Importee.Name(Name.Indeterminate("State")))
+        )
+      ))
+
       (q"type Props = $propsSelect" +:
         q"type State = $stateSelect" +:
+        propsAndStateImport +:
         clazz.templ.stats.getOrElse(Nil).filterNot(s => s == propsDefinition || s == stateDefinition),
         q"import scala.scalajs.js.annotation.{ScalaJSDefined => __SJSDefined}" +: propsDefinition +: stateDefinition +: definitionClass +: applyMethods)
     }
