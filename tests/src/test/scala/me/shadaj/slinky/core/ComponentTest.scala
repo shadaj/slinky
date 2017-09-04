@@ -80,18 +80,23 @@ class ComponentTest extends AsyncFunSuite {
   }
 
   test("Can construct a component and provide key") {
-    assertCompiles("""TestComponent(_ => ())(key = "test")""")
+    val element: ReactElement = TestComponent(_ => ()).withKey("test")
+    assert(element.asInstanceOf[js.Dynamic].key.toString == "test")
   }
 
   test("Can construct a component with macro apply and provide key") {
-    assertCompiles("""TestComponentCaseClass(a = 1)(key = "test")""")
+    val element: ReactElement = TestComponentCaseClass(a = 1).withKey("test")
+    assert(element.asInstanceOf[js.Dynamic].key.toString == "test")
   }
 
   test("Can construct a component taking Unit props with no arguments") {
-    assertCompiles("""NoPropsComponent()""")
+    val element: ReactElement = NoPropsComponent()
+    assert(!js.isUndefined(element.asInstanceOf[js.Dynamic]))
   }
 
   test("Can construct a component taking Unit props with refs and key") {
-    assertCompiles("""NoPropsComponent("hi", (r: js.Object) => {})""")
+    val element: ReactElement = NoPropsComponent.withKey("hi").withRef((r: js.Object) => {})
+    assert(element.asInstanceOf[js.Dynamic].key.toString == "hi")
+    assert(!js.isUndefined(element.asInstanceOf[js.Dynamic].ref))
   }
 }
