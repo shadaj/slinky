@@ -4,29 +4,23 @@ import me.shadaj.slinky.core.facade.{React, ReactElement}
 
 import scala.scalajs.js
 import scala.scalajs.js.ConstructorTag
-
 import scala.language.implicitConversions
 
-class KeyAndRefAddingStage[D <: js.Any](props: js.Dictionary[js.Any], val c: BaseComponentWrapper) {
-  def apply(key: String)(implicit constructorTag: ConstructorTag[D]): ReactElement = apply(key, null)(constructorTag)
-  def apply(ref: js.Object => Unit)(implicit constructorTag: ConstructorTag[D]): ReactElement = apply(null, ref)(constructorTag)
-  def apply(key: String, ref: js.Object => Unit)(implicit constructorTag: ConstructorTag[D]): ReactElement = {
-    if (key != null) {
-      props("key") = key
-    }
+class KeyAndRefAddingStage[D <: js.Any](val props: js.Dictionary[js.Any], val constructor: js.Object) {
+  def withKey(key: String): KeyAndRefAddingStage[D] = {
+    props("key") = key
+    new KeyAndRefAddingStage[D](props, constructor)
+  }
 
-    if (ref != null) {
-      props("ref") = ref: js.Function1[_, Unit]
-    }
-
-    React.createElement(c.componentConstructor(constructorTag.asInstanceOf[ConstructorTag[c.Def]]), props)
+  def withRef(ref: js.Object => Unit): KeyAndRefAddingStage[D] = {
+    props("ref") = ref
+    new KeyAndRefAddingStage[D](props, constructor)
   }
 }
 
 object KeyAndRefAddingStage {
-  implicit def shortcutToElement[D <: js.Any](stage: KeyAndRefAddingStage[D])
-                                (implicit constructorTag: ConstructorTag[D]): ReactElement = {
-    stage.apply(null, null)(constructorTag)
+  implicit def build[D <: js.Any](stage: KeyAndRefAddingStage[D]): ReactElement = {
+    React.createElement(stage.constructor, stage.props)
   }
 }
 
@@ -46,15 +40,15 @@ abstract class BaseComponentWrapper {
       constructor.asInstanceOf[js.Object], this.asInstanceOf[js.Object])
   }
 
-  def apply(p: Props): KeyAndRefAddingStage[Def] = {
+  def apply(p: Props)(implicit constructorTag: ConstructorTag[Def]): KeyAndRefAddingStage[Def] = {
     val propsObj = js.Dictionary("__" -> p.asInstanceOf[js.Any])
 
-    new KeyAndRefAddingStage(propsObj, this)
+    new KeyAndRefAddingStage(propsObj, componentConstructor)
   }
 }
 
 object BaseComponentWrapper {
-  implicit def proplessKeyAndRef[C <: BaseComponentWrapper { type Props = Unit }](c: C): KeyAndRefAddingStage[c.Def] = {
+  implicit def proplessKeyAndRef[C <: BaseComponentWrapper { type Props = Unit }](c: C)(implicit constructorTag: ConstructorTag[c.Def]): KeyAndRefAddingStage[c.Def] = {
     c.apply(())
   }
 
