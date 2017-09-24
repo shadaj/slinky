@@ -1,8 +1,9 @@
 package me.shadaj.slinky.core
 
-import me.shadaj.slinky.core.facade.{ReactElement, PrivateComponentClass, React}
+import me.shadaj.slinky.core.facade.{PrivateComponentClass, React, ReactElement}
 
 import scala.scalajs.js
+import scala.scalajs.js.JSON
 import scala.scalajs.js.annotation.{JSName, ScalaJSDefined}
 
 @ScalaJSDefined
@@ -12,7 +13,11 @@ abstract class DefinitionBase[Props, State](jsProps: js.Object)(implicit propsRe
                                                                 stateWriter: Writer[State]) extends React.Component(jsProps) {
   def initialState: State
 
-  this.asInstanceOf[PrivateComponentClass].stateR = stateWriter.write(initialState, true)
+  this.asInstanceOf[PrivateComponentClass].stateR = {
+    if (BaseComponentWrapper.scalaComponentWritingEnabled) {
+      stateWriter.write(initialState, root = true)
+    } else js.Dynamic.literal(__ = initialState.asInstanceOf[js.Any])
+  }
 
   @JSName("props_scala")
   @inline final def props: Props = {
@@ -26,25 +31,39 @@ abstract class DefinitionBase[Props, State](jsProps: js.Object)(implicit propsRe
 
   @JSName("setState_scala")
   @inline final def setState(s: State): Unit = {
-    this.asInstanceOf[PrivateComponentClass].setStateR(js.Dynamic.literal(__ = s.asInstanceOf[js.Any]))
+    val stateObject = if (BaseComponentWrapper.scalaComponentWritingEnabled) {
+      stateWriter.write(s, root = true)
+    } else js.Dynamic.literal(__ = s.asInstanceOf[js.Any])
+
+    println(JSON.stringify(stateObject))
+    this.asInstanceOf[PrivateComponentClass].setStateR(stateObject)
   }
 
   @JSName("setState_scala")
   @inline final def setState(fn: (State, Props) => State): Unit = {
     this.asInstanceOf[PrivateComponentClass].setStateR((ps: js.Object, p: js.Object) => {
-      js.Dynamic.literal(__ = fn(stateReader.read(ps, true), propsReader.read(p, true)).asInstanceOf[js.Any])
+      val s = fn(stateReader.read(ps, true), propsReader.read(p, true))
+      if (BaseComponentWrapper.scalaComponentWritingEnabled) {
+        stateWriter.write(s, root = true)
+      } else js.Dynamic.literal(__ = s.asInstanceOf[js.Any])
     })
   }
 
   @JSName("setState_scala")
   @inline final def setState(s: State, callback: js.Function0[Unit]): Unit = {
-    this.asInstanceOf[PrivateComponentClass].setStateR(js.Dynamic.literal(__ = s.asInstanceOf[js.Any]), callback)
+    val stateObject = if (BaseComponentWrapper.scalaComponentWritingEnabled) {
+      stateWriter.write(s, root = true)
+    } else js.Dynamic.literal(__ = s.asInstanceOf[js.Any])
+    this.asInstanceOf[PrivateComponentClass].setStateR(stateObject, callback)
   }
 
   @JSName("setState_scala")
   @inline final def setState(fn: (State, Props) => State, callback: js.Function0[Unit]): Unit = {
     this.asInstanceOf[PrivateComponentClass].setStateR((ps: js.Object, p: js.Object) => {
-      js.Dynamic.literal(__ = fn(stateReader.read(ps, true), propsReader.read(p, true)).asInstanceOf[js.Any])
+      val s = fn(stateReader.read(ps, true), propsReader.read(p, true))
+      if (BaseComponentWrapper.scalaComponentWritingEnabled) {
+        stateWriter.write(s, root = true)
+      } else js.Dynamic.literal(__ = s.asInstanceOf[js.Any])
     }, callback)
   }
 

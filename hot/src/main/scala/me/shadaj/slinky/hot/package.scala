@@ -29,5 +29,7 @@ package object hot {
 
       js.Dynamic.global.proxies.selectDynamic(this.getClass.getName).get().asInstanceOf[js.Object]
     })
+
+    BaseComponentWrapper.enableScalaComponentWriting()
   }
 }

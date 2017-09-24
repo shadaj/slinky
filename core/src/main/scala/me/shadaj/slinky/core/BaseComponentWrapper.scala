@@ -40,8 +40,10 @@ abstract class BaseComponentWrapper {
       constructor.asInstanceOf[js.Object], this.asInstanceOf[js.Object])
   }
 
-  def apply(p: Props)(implicit constructorTag: ConstructorTag[Def]): KeyAndRefAddingStage[Def] = {
-    val propsObj = js.Dictionary("__" -> p.asInstanceOf[js.Any])
+  def apply(p: Props)(implicit propsWriter: Writer[Props], constructorTag: ConstructorTag[Def]): KeyAndRefAddingStage[Def] = {
+    val propsObj = if(BaseComponentWrapper.scalaComponentWritingEnabled) {
+      propsWriter.write(p, root = true).asInstanceOf[js.Dictionary[js.Any]]
+    } else js.Dictionary("__" -> p.asInstanceOf[js.Any])
 
     new KeyAndRefAddingStage(propsObj, componentConstructor)
   }
@@ -54,6 +56,17 @@ object BaseComponentWrapper {
 
   private var componentConstructorMiddleware = (constructor: js.Object, _: js.Object) => {
     constructor
+  }
+
+  private[core] var scalaComponentWritingEnabled = false
+
+  /**
+    * Enables writing props and state for Scala defined components. This is
+    * needed for hot loading, where data must be written to a JS object and
+    * then read when the application is reloaded.
+    */
+  def enableScalaComponentWriting(): Unit = {
+    scalaComponentWritingEnabled = true
   }
 
   /**
