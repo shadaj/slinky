@@ -32,10 +32,10 @@ Writing React code in Slinky closely mirrors the layout of React code in ES6.
 
 ### Slinky
 ```scala
-import me.shadaj.slinky.core.StatelessComponent
+import me.shadaj.slinky.core.StatelessComponentWrapper
 import me.shadaj.slinky.web.html._
 
-object HelloMessage extends StatelessComponent {
+object HelloMessage extends StatelessComponentWrapper {
   case class Props(name: String)
 
   @ScalaJSDefined
@@ -60,10 +60,10 @@ class HelloMessage extends React.Component {
 
 To create stateful components, specify the `State` type, provide an initial state, and use your state in `render` via the `state` variable:
 ```scala
-import me.shadaj.slinky.core.Component
+import me.shadaj.slinky.core.ComponentWrapper
 import me.shadaj.slinky.web.html._
 
-object HelloMessage extends Component {
+object HelloMessage extends ComponentWrapper {
   type Props = Unit // we have no props
   type State = Int // we use an Int directly for state, but we could also have used a case class
 
