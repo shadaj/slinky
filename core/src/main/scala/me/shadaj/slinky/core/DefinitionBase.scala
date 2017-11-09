@@ -35,7 +35,6 @@ abstract class DefinitionBase[Props, State](jsProps: js.Object)(implicit propsRe
       stateWriter.write(s, root = true)
     } else js.Dynamic.literal(__ = s.asInstanceOf[js.Any])
 
-    println(JSON.stringify(stateObject))
     this.asInstanceOf[PrivateComponentClass].setStateR(stateObject)
   }
 
