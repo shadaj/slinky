@@ -2,7 +2,7 @@ language: scala
 branches:
   only:
     - master
-    - /^v\d+\.\d+(\.\d+)?(-\S*)?$/
+    - /^v\d+(\.\d+)+$/
 install:
   - . $HOME/.nvm/nvm.sh
   - nvm install stable
@@ -10,7 +10,7 @@ install:
   - npm install
   - npm install jsdom
 script:
-  - 'sbt "tests/test"'
+  - sbt ++$TRAVIS_SCALA_VERSION tests/test
 after_success:
   - 'if [ "$TRAVIS_BRANCH" = "master" ] && [ "$TRAVIS_PULL_REQUEST" = "false" ]; then bash ./publish.sh; fi'
   - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ] && [ -n "$TRAVIS_TAG" ]; then bash ./publish.sh; fi'
