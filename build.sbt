@@ -69,6 +69,11 @@ inThisBuild(List(
   // These are normal sbt settings to configure for release, skip if already defined
   licenses := Seq("MIT" -> url("http://opensource.org/licenses/MIT")),
   homepage := Some(url("https://github.com/shadaj/slinky")),
+  scmInfo := Some(
+    ScmInfo(
+      url("https://github.com/shadaj/slinky"),
+      "scm:git:git@github.com:shadaj/slinky.git"
+  )),
   developers := List(Developer("shadaj", "Shadaj Laddad", "shadaj@users.noreply.github.com", url("http://shadaj.me"))),
   releaseEarlyWith := SonatypePublisher
 ))
