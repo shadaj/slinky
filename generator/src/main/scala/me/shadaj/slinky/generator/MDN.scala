@@ -4,7 +4,7 @@ import net.ruippeixotog.scalascraper.browser.JsoupBrowser
 import net.ruippeixotog.scalascraper.dsl.DSL.Extract._
 import net.ruippeixotog.scalascraper.dsl.DSL._
 
-class MDN extends TagsProvider {
+object MDN extends TagsProvider {
   val browser = JsoupBrowser()
 
   val extraAttributes = List(
@@ -118,35 +118,39 @@ class MDN extends TagsProvider {
   }
 
   def htmlElement(name: String): (String, List[(Attr, String)]) = {
-    val page = browser.get(s"https://developer.mozilla.org/en-US/docs/Web/HTML/Element/$name")
-    val article = page >> element("#wikiArticle")
-    val summary = article.children.find(c => c.tagName == "p" && c.innerHtml.nonEmpty).get.innerHtml
+    if (Set("h1", "h2", "h3", "h4", "h5", "h6").contains(name)) {
+      ("A header element", globalAttributes)
+    } else {
+      val page = browser.get(s"https://developer.mozilla.org/en-US/docs/Web/HTML/Element/$name")
+      val article = page >> element("#wikiArticle")
+      val summary = article.children.find(c => c.tagName == "p" && c.innerHtml.nonEmpty).get.innerHtml
 
-    val attributesSection = article.children.toList
-      .dropWhile(!_.attrs.get("id").contains("Attributes")).tail
-      .takeWhile(e => e.tagName != "h2")
-      .filter(_.tagName == "dl")
+      val attributesSection = article.children.toList
+        .dropWhile(!_.attrs.get("id").contains("Attributes")).tail
+        .takeWhile(e => e.tagName != "h2")
+        .filter(_.tagName == "dl")
 
-    val attributes = attributesSection.flatMap { dl =>
-      val children = dl.children.toList
-      val attrsAndDocs = children.foldLeft(Seq.empty[(String, String)]) { (acc, cur) =>
-        if (cur.tagName == "dt") {
-          acc :+ (cur >> text("code"), "")
-        } else {
-          acc.init :+ acc.last.copy(_2 = acc.last._2 + "\n" + cur.innerHtml)
+      val attributes = attributesSection.flatMap { dl =>
+        val children = dl.children.toList
+        val attrsAndDocs = children.foldLeft(Seq.empty[(String, String)]) { (acc, cur) =>
+          if (cur.tagName == "dt") {
+            acc :+ (cur >> text("code"), "")
+          } else {
+            acc.init :+ acc.last.copy(_2 = if (acc.last._2.isEmpty) cur.innerHtml else acc.last._2 + " " + cur.innerHtml)
+          }
         }
-      }
 
-      attrsAndDocs.flatMap { case (attr, doc) =>
-        if (extraAttributes.exists(_._1.name.toLowerCase == attr) || !supportedAttributes.contains(attr)) {
-          None
-        } else {
-          Some(HTMLToJSMapping.convert(attr) -> doc)
-        }
-      }.toList
-    } ++ globalAttributes
+        attrsAndDocs.flatMap { case (attr, doc) =>
+          if (extraAttributes.exists(_._1.name.toLowerCase == attr) || !supportedAttributes.contains(attr)) {
+            None
+          } else {
+            Some(HTMLToJSMapping.convert(attr) -> doc.filterNot(_ == '\n'))
+          }
+        }.toList
+      } ++ globalAttributes
 
-    (summary, attributes)
+      (summary, attributes)
+    }
   }
 
   val tags: Seq[String] =
@@ -168,12 +172,19 @@ class MDN extends TagsProvider {
 
     val attrs = tagsWithAttributes.flatMap(v => v._2.map(t => (v._1, t._1, t._2)))
       .groupBy(_._2).map { case (attr, instances) =>
+      val groupedDocs = instances.groupBy(_._3)
+
       Attribute(
         attr.name,
         attr.valueType,
-        instances.map { case (tag, _, doc) =>
-          tag -> doc
-        }.groupBy(_._1).toSeq.map(_._2.head),
+        if (groupedDocs.size == 1) {
+          List(groupedDocs.head._1)
+        } else {
+          groupedDocs.toList.map { case (doc, tagsForDoc) =>
+            s"${tagsForDoc.map(_._1.tagName).mkString(", ")} - $doc"
+          }
+        },
+        if (instances.map(_._1.tagName).distinct.size == tags.size) None else Some(instances.map(_._1.tagName)),
         attr.name == "data" || attr.name == "aria"
       )
     }.toSeq

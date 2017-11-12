@@ -40,11 +40,11 @@ lazy val web = project.settings(
     val rootFolder = (sourceManaged in Compile).value / "me/shadaj/slinky/web"
     rootFolder.mkdirs()
 
-    val html = (run in Compile in generator).toTask(Seq("me.shadaj.slinky.generator.MDN", (rootFolder / "html").getAbsolutePath, "me.shadaj.slinky.web.html").mkString(" ", " ", "")).map { _ =>
+    val html = (runMain in Compile in generator).toTask(Seq("me.shadaj.slinky.generator.Generator", "web/html.json", (rootFolder / "html").getAbsolutePath, "me.shadaj.slinky.web.html").mkString(" ", " ", "")).map { _ =>
       (rootFolder / "html" ** "*.scala").get
     }
 
-    val svg = (run in Compile in generator).toTask(Seq("me.shadaj.slinky.generator.SVG", (rootFolder / "svg").getAbsolutePath, "me.shadaj.slinky.web.svg").mkString(" ", " ", "")).map { _ =>
+    val svg = (runMain in Compile in generator).toTask(Seq("me.shadaj.slinky.generator.Generator", "web/svg.json", (rootFolder / "svg").getAbsolutePath, "me.shadaj.slinky.web.svg").mkString(" ", " ", "")).map { _ =>
       (rootFolder / "svg" ** "*.scala").get
     }
 

@@ -1,0 +1,2787 @@
+{
+  "tags" : [
+    {
+      "tagName" : "a",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "altGlyph",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "altGlyphDef",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "altGlyphItem",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "animate",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "animateColor",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "animateMotion",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "animateTransform",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "circle",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "clipPath",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "cursor",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "defs",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "desc",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "ellipse",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "feBlend",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "feColorMatrix",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "feComponentTransfer",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "feComposite",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "feConvolveMatrix",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "feDiffuseLighting",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "feDisplacementMap",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "feDistantLight",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "feFlood",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "feFuncA",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "feFuncB",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "feFuncG",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "feFuncR",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "feGaussianBlur",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "feImage",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "feMerge",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "feMergeNode",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "feMorphology",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "feOffset",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "fePointLight",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "feSpecularLighting",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "feSpotLight",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "feTile",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "feTurbulence",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "filter",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "font",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "foreignObject",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "g",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "glyph",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "glyphRef",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "hkern",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "image",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "line",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "linearGradient",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "marker",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "mask",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "metadata",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "mpath",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "path",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "pattern",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "polygon",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "polyline",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "radialGradient",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "rect",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "script",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "set",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "stop",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "style",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "svg",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "switch",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "symbol",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "text",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "textPath",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "title",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "tref",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "tspan",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "use",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "view",
+      "docLines" : [
+      ]
+    },
+    {
+      "tagName" : "vkern",
+      "docLines" : [
+      ]
+    }
+  ],
+  "attributes" : [
+    {
+      "attributeName" : "accentHeight",
+      "attributeType" : "Double",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "accumulate",
+      "attributeType" : "String",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "additive",
+      "attributeType" : "String",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "alphabetic",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "amplitude",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "arabicForm",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "ascent",
+      "attributeType" : "Double",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "attributeName",
+      "attributeType" : "String",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "attributeType",
+      "attributeType" : "String",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "azimuth",
+      "attributeType" : "Double",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "baseFrequency",
+      "attributeType" : "String",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "baseProfile",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "bbox",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "begin",
+      "attributeType" : "String",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "bias",
+      "attributeType" : "Double",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "by",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "calcMode",
+      "attributeType" : "String",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "capHeight",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "clipPathUnits",
+      "attributeType" : "String",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "contentScriptType",
+      "attributeType" : "String",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "contentStyleType",
+      "attributeType" : "String",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "cx",
+      "attributeType" : "Double",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "cy",
+      "attributeType" : "Double",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "d",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "descent",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "diffuseConstant",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "divisor",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "dur",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "dx",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "dy",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "edgeMode",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "elevation",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "end",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "exponent",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "externalResourcesRequired",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "fill",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "filterRes",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "filterUnits",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "fontFamily",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "fontSize",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "fontStretch",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "fontStyle",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "format",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "from",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "fx",
+      "attributeType" : "Double",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "fy",
+      "attributeType" : "Double",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "g1",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "g2",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "glyphName",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "glyphRef",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "gradientTransform",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "gradientUnits",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "hanging",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "height",
+      "attributeType" : "String",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "horizAdvX",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "horizOriginX",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "id",
+      "attributeType" : "String",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "ideographic",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "in",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "in2",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "intercept",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "k",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "k1",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "k2",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "k3",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "k4",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "kernelMatrix",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "kernelUnitLength",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "keyPoints",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "keySplines",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "keyTimes",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "lang",
+      "attributeType" : "String",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "lengthAdjust",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "limitingConeAngle",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "local",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "markerHeight",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "markerUnits",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "markerWidth",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "maskContentUnits",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "maskUnits",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "mathematical",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "max",
+      "attributeType" : "String",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "media",
+      "attributeType" : "String",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "method",
+      "attributeType" : "String",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "min",
+      "attributeType" : "String",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "mode",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "name",
+      "attributeType" : "String",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "numOctaves",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "offset",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "operator",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "order",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "orient",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "orientation",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "origin",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "overlinePosition",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "overlineThickness",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "panose1",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "pathLength",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "patternContentUnits",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "patternTransform",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "patternUnits",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "points",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "pointsAtX",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "pointsAtY",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "pointsAtZ",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "preserveAlpha",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "preserveAspectRatio",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "primitiveUnits",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "r",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "radius",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "refX",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "refY",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "renderingIntent",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "repeatCount",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "repeatDur",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "requiredExtensions",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "requiredFeatures",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "restart",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "result",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "rotate",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "rx",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "ry",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "scale",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "seed",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "slope",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "spacing",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "specularConstant",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "specularExponent",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "spreadMethod",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "startOffset",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "stdDeviation",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "stemh",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "stemv",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "stitchTiles",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "strikethroughPosition",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "strikethroughThickness",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "string",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "style",
+      "attributeType" : "js.Dynamic",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "surfaceScale",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "systemLanguage",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "tableValues",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "target",
+      "attributeType" : "String",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "targetX",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "targetY",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "textLength",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "title",
+      "attributeType" : "String",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "to",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "transform",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "type",
+      "attributeType" : "String",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "u1",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "u2",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "underlinePosition",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "underlineThickness",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "unicode",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "unicodeRange",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "unitsPerEm",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "vAlphabetic",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "vHanging",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "vIdeographic",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "vMathematical",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "values",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "version",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "vertAdvY",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "vertOriginX",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "vertOriginY",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "viewBox",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "viewTarget",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "width",
+      "attributeType" : "String",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "widths",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "x",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "xHeight",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "x1",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "x2",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "xChannelSelector",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "y",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "y1",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "y2",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "yChannelSelector",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "z",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "zoomAndPan",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "alignmentBaseline",
+      "attributeType" : "String",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "baselineShift",
+      "attributeType" : "String",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "clipPath",
+      "attributeType" : "String",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "clipRule",
+      "attributeType" : "String",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "clip",
+      "attributeType" : "String",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "colorInterpolationFilters",
+      "attributeType" : "String",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "colorInterpolation",
+      "attributeType" : "String",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "colorProfile",
+      "attributeType" : "String",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "colorRendering",
+      "attributeType" : "String",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "cursor",
+      "attributeType" : "String",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "direction",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "display",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "dominantBaseline",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "enableBackground",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "fillOpacity",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "fillRule",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "filter",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "floodColor",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "floodOpacity",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "fontSizeAdjust",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "fontVariant",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "fontWeight",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "glyphOrientationHorizontal",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "glyphOrientationVertical",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "imageRendering",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "kerning",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "letterSpacing",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "lightingColor",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "markerEnd",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "markerMid",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "markerStart",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "mask",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "opacity",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "overflow",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "pointerEvents",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "shapeRendering",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "stopColor",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "stopOpacity",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "strokeDasharray",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "strokeDashoffset",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "strokeLinecap",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "strokeLinejoin",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "strokeMiterlimit",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "strokeOpacity",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "strokeWidth",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "stroke",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "textAnchor",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "textDecoration",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "textRendering",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "unicodeBidi",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "visibility",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "wordSpacing",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "writingMode",
+      "attributeType" : "js.Any",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "key",
+      "attributeType" : "String",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "ref",
+      "attributeType" : "scala.Function1[org.scalajs.dom.Element, Unit]",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "dangerouslySetInnerHTML",
+      "attributeType" : "js.Object",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "suppressContentEditableWarning",
+      "attributeType" : "Boolean",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "defaultChecked",
+      "attributeType" : "Boolean",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "aria",
+      "attributeType" : "String",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onAbort",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onAutoComplete",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onAutoCompleteError",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onBlur",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onCancel",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onCanPlay",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onCanPlayThrough",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onChange",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onClick",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onClose",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onContextMenu",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onCueChange",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onDoubleClick",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onDrag",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onDragEnd",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onDragEnter",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onDragExit",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onDragLeave",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onDragOver",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onDragStart",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onDrop",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onDurationChange",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onEmptied",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onEnded",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onError",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onFocus",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onInput",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onInvalid",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onKeyDown",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onKeyPress",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onKeyUp",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onLoad",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onLoadedData",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onLoadedMetadata",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onLoadStart",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onMouseDown",
+      "attributeType" : "MouseEventHandler",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onMouseEnter",
+      "attributeType" : "MouseEventHandler",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onMouseLeave",
+      "attributeType" : "MouseEventHandler",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onMouseMove",
+      "attributeType" : "MouseEventHandler",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onMouseOut",
+      "attributeType" : "MouseEventHandler",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onMouseOver",
+      "attributeType" : "MouseEventHandler",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onMouseUp",
+      "attributeType" : "MouseEventHandler",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onMouseWheel",
+      "attributeType" : "MouseEventHandler",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onPause",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onPlay",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onPlaying",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onProgress",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onRateChange",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onReset",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onResize",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onScroll",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onSeeked",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onSeeking",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onSelect",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onShow",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onSort",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onStalled",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onSubmit",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onSuspend",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onTimeUpdate",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onToggle",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onVolumeChange",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onWaiting",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    }
+  ]
+}

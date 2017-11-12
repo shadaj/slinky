@@ -2,22 +2,26 @@ package me.shadaj.slinky.generator
 
 import java.io.{File, PrintWriter}
 
+import io.circe.generic.auto._
+import io.circe.parser._
+
+import scala.io.Source
+
 object Generator extends App {
   val providerName :: out :: pkg :: Nil = args.toList
-  val provider = Class.forName(providerName).newInstance().asInstanceOf[TagsProvider]
 
   val outFolder = new File(out)
   if (!outFolder.exists()) {
     outFolder.mkdirs()
 
-    val extracted = provider.extract
+    val extracted = decode[TagsModel](Source.fromFile(providerName).getLines().mkString("\n")).right.get
 
-    val allSymbols = extracted._2.foldLeft(extracted._1.map(t => t.identifier -> (Some(t): Option[Tag], None: Option[Attribute])).toSet) { case (symbols, attr) =>
-      symbols.find(_._1 == attr.identifier) match {
+    val allSymbols = extracted.attributes.foldLeft(extracted.tags.map(t => Utils.identifierFor(t.tagName) -> (Some(t): Option[Tag], None: Option[Attribute])).toSet) { case (symbols, attr) =>
+      symbols.find(_._1 == Utils.identifierFor(attr.attributeName)) match {
         case Some(o@(_, (tags, None))) =>
-          symbols - o + ((attr.identifier, (tags, Some(attr))))
+          symbols - o + ((Utils.identifierFor(attr.attributeName), (tags, Some(attr))))
         case None =>
-          symbols + ((attr.identifier, (None, Some(attr))))
+          symbols + ((Utils.identifierFor(attr.attributeName), (None, Some(attr))))
       }
     }
 
@@ -54,22 +58,10 @@ object Generator extends App {
       }
 
       val attrToTagImplicits = attrs.toList.flatMap { a =>
-        a.compatibleTags.map { t =>
-          s"""implicit def to${t._1.tagName}Applied(pair: AttrPair[_${symbolWithoutEscape}_attr.type]) = pair.asInstanceOf[AttrPair[${t._1.identifier}.tag.type]]"""
+        a.compatibleTags.getOrElse(extracted.tags.map(_.tagName)).map { t =>
+          s"""implicit def to${t}Applied(pair: AttrPair[_${symbolWithoutEscape}_attr.type]) = pair.asInstanceOf[AttrPair[${Utils.identifierFor(t)}.tag.type]]"""
         }
       }
-
-      val attrDocs = attrs.map { a =>
-        val grouped = a.compatibleTags.groupBy(_._2).toList
-
-        if (grouped.size == 1) {
-          grouped.head._1
-        } else {
-          grouped.map { case (doc, tags) =>
-            s"""${tags.map(_._1.tagName).mkString(", ")} - ${doc.replace("*", "&#47;")}"""
-          }.mkString("\n * <h2></h2>\n * ")
-        }
-      }.getOrElse("")
 
       val symbolExtends = if (attrs.isDefined && attrs.get.attributeType == "Boolean") {
         s"""extends AttrPair[_${symbolWithoutEscape}_attr.type]("${attrs.get.attributeName}", true)"""
@@ -85,7 +77,7 @@ object Generator extends App {
            |import scala.language.implicitConversions
            |
            |/**
-           | * $attrDocs
+           | * ${attrs.map(_.docLines.map(_.replace("*", "&#47;")).mkString("\n * ")).getOrElse("")}
            | */
            |object $symbol $symbolExtends {
            |object tag
