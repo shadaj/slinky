@@ -1,7 +1,7 @@
 package me.shadaj.slinky.generator
 
-class SVG extends TagsProvider {
-  val extraAttributes = (new MDN).extraAttributes
+object SVG extends TagsProvider {
+  val extraAttributes = MDN.extraAttributes
   
   val allAttributes =
     """accent-height accumulate additive alphabetic amplitude arabic-form ascent attributeName
@@ -77,16 +77,16 @@ class SVG extends TagsProvider {
       |writingMode x x1 x2 xChannelSelector xHeight xlinkActuate xlinkArcrole
       |xlinkHref xlinkRole xlinkShow xlinkTitle xlinkType xmlns xmlnsXlink xmlBase
       |xmlLang xmlSpace y y1 y2 yChannelSelector z zoomAndPan"""
-      .stripMargin.split('\n').flatMap(_.split(' ')).toSet ++ (new MDN).supportedAttributes
+      .stripMargin.split('\n').flatMap(_.split(' ')).toSet ++ MDN.supportedAttributes
 
   def extract: (Seq[Tag], Seq[Attribute]) = {
     val allTags = supportedTags.map(t => Tag(t, Seq.empty))
 
     val attributes = allAttributes.map(SVGToJSMapping.convert).flatMap { converted =>
       if (supportedAttributes.contains(converted.name)) {
-        Some(Attribute(converted.name, converted.valueType, allTags.map(t => t -> ""), false))
+        Some(Attribute(converted.name, converted.valueType, Seq.empty, None, false))
       } else None
-    } ++ extraAttributes.map(e => Attribute(e._1.name, e._1.valueType, allTags.map(t => t -> ""), false))
+    } ++ extraAttributes.map(e => Attribute(e._1.name, e._1.valueType, Seq.empty, None, false))
 
     (allTags, attributes)
   }
