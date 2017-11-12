@@ -1,4 +1,4 @@
-enablePlugins(ScalaJSPlugin)
+enablePlugins(ScalaJSPlugin, ReleaseEarlyPlugin)
 
 organization in ThisBuild := "me.shadaj"
 
@@ -13,7 +13,8 @@ lazy val slinky = project.in(file(".")).aggregate(
   scalajsReactInterop
 ).settings(
   publish := {},
-  publishLocal := {}
+  publishLocal := {},
+  releaseEarly := {}
 )
 
 lazy val macroAnnotationSettings = Seq(
@@ -65,7 +66,7 @@ lazy val tests = project.settings(macroAnnotationSettings).dependsOn(core, web, 
 
 lazy val example = project.settings(macroAnnotationSettings).dependsOn(core, web, hot, scalajsReactInterop)
 
-inThisBuild(List(
+inScope(Scope.GlobalScope)(List(
   // These are normal sbt settings to configure for release, skip if already defined
   licenses := Seq("MIT" -> url("http://opensource.org/licenses/MIT")),
   homepage := Some(url("https://github.com/shadaj/slinky")),
