@@ -5,16 +5,16 @@ import org.scalatest.FunSuite
 import scala.scalajs.js
 
 class ReaderWriterTest extends FunSuite {
-  private def readWrittenSame[T: Reader: Writer](v: T, isOpaque: Boolean = false) = {
-    val written = implicitly[Writer[T]].write(v)
+  private def readWrittenSame[T](v: T, isOpaque: Boolean = false)(implicit reader: Reader[T], writer: Writer[T]) = {
+    val written = writer.write(v)
     if (!isOpaque) {
       assert(js.isUndefined(written) || js.isUndefined(written.asInstanceOf[js.Dynamic].__))
     } else {
       assert(!js.isUndefined(written.asInstanceOf[js.Dynamic].__))
     }
 
-    assert(implicitly[Reader[T]].read(written) == v)
-    assert(implicitly[Reader[T]].read(implicitly[Writer[T]].write(v, true), true) == v)
+    assert(reader.read(written) == v)
+    assert(reader.read(writer.write(v, true), true) == v)
   }
 
   test("Read/write - byte") {
@@ -30,11 +30,11 @@ class ReaderWriterTest extends FunSuite {
   }
 
   test("Read/write - char") {
-    readWrittenSame('a', true)
+    readWrittenSame('a')
   }
 
   test("Read/write - long") {
-    readWrittenSame(1L, true)
+    readWrittenSame(1L)
   }
 
   test("Read/write - float") {
@@ -55,6 +55,17 @@ class ReaderWriterTest extends FunSuite {
   test("Read/write - case class") {
     case class CaseClass(int: Int, boolean: Boolean)
     readWrittenSame(CaseClass(1, true))
+  }
+
+  test("Read/write - sealed trait with case objects") {
+    sealed trait MySealedTrait
+    case class SubTypeA(int: Int) extends MySealedTrait
+    case class SubTypeB(boolean: Boolean) extends MySealedTrait
+    case object SubTypeC extends MySealedTrait
+
+    readWrittenSame[MySealedTrait](SubTypeA(-1))
+    readWrittenSame[MySealedTrait](SubTypeB(true))
+    readWrittenSame[MySealedTrait](SubTypeC)
   }
 
   test("Read/write - sequences") {

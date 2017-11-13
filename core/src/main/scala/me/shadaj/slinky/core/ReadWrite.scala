@@ -1,17 +1,14 @@
 package me.shadaj.slinky.core
 
-import magnolia.{Macros, Coderivation, Derivation}
-
 import scala.scalajs.js
 import scala.collection.generic.CanBuildFrom
-import scala.collection.immutable.ListMap
 import scala.concurrent.Future
-
 import scala.language.implicitConversions
 import scala.language.higherKinds
 import scala.language.experimental.macros
-
 import scala.scalajs.concurrent.JSExecutionContext.Implicits.queue
+
+import magnolia._
 
 trait Reader[P] {
   def read(o: js.Object, root: Boolean = false): P = {
@@ -27,13 +24,7 @@ trait Reader[P] {
   protected def forceRead(o: js.Object, root: Boolean = false): P
 }
 
-trait LowPriorityReads {
-  implicit def anyReader[T]: Reader[T] = (_, _) => {
-    throw new Exception("Tried to read opaque Scala.js type that was not written by opaque writer")
-  }
-}
-
-object Reader extends LowPriorityReads {
+object Reader {
   implicit def objectReader[T <: js.Object]: Reader[T] = (s, root) => (if (root) {
     s.asInstanceOf[js.Dynamic].value
   } else {
@@ -47,6 +38,12 @@ object Reader extends LowPriorityReads {
   } else {
     s
   }).asInstanceOf[String]
+
+  implicit val charReader: Reader[Char] = (s, root) => (if (root) {
+    s.asInstanceOf[js.Dynamic].value
+  } else {
+    s
+  }).asInstanceOf[String].head
 
   implicit val byteReader: Reader[Byte] = (s, root) => (if (root) {
     s.asInstanceOf[js.Dynamic].value
@@ -65,6 +62,12 @@ object Reader extends LowPriorityReads {
   } else {
     s
   }).asInstanceOf[Int]
+
+  implicit val longReader: Reader[Long] = (s, root) => (if (root) {
+    s.asInstanceOf[js.Dynamic].value
+  } else {
+    s
+  }).asInstanceOf[String].toLong
 
   implicit val booleanReader: Reader[Boolean] = (s, root) => (if (root) {
     s.asInstanceOf[js.Dynamic].value
@@ -146,39 +149,41 @@ object Reader extends LowPriorityReads {
     }
   }
 
-  type Value = js.Object
-  def dereference(value: Value, param: String): Value = {
-    value.asInstanceOf[js.Dynamic].selectDynamic(param).asInstanceOf[js.Object]
-  }
+  type Typeclass[T] = Reader[T]
 
-  def call[T](typeclass: Reader[T], value: Value): T = typeclass.read(value)
-  def construct[T](body: Value => T): Reader[T] = (o: js.Object, _) => body(o)
-
-  def combine[Supertype, Right <: Supertype](left: Reader[_ <: Supertype],
-                                             right: Reader[Right]): Reader[Supertype] = {
-    (o: js.Object, _) => {
-      val leftRead = left.read(o)
-      val rightRead = right.read(o)
-      println(leftRead, rightRead)
-      throw new Exception("Combine is not supportes")
+  def combine[T](ctx: CaseClass[Typeclass, T]): Typeclass[T] = (o: js.Object, root) => {
+    if (ctx.isValueClass) {
+      ctx.construct { param =>
+        param.typeclass.read(o, root)
+      }
+    } else {
+      ctx.construct { param =>
+        param.typeclass.read(o.asInstanceOf[js.Dynamic].selectDynamic(param.label).asInstanceOf[js.Object])
+      }
     }
   }
 
-  implicit def generic[T]: Reader[T] = macro Macros.magnolia[T, Reader[_],
-    Derivation[Tc] forSome { type Tc[_] }]
+  def dispatch[T](ctx: SealedTrait[Typeclass, T]): Typeclass[T] = (o: js.Object, _) => {
+    val typeString = o.asInstanceOf[js.Dynamic]._type.asInstanceOf[String]
+    ctx.subtypes.find(_.label == typeString).get.typeclass.read(o, true)
+  }
+
+  def fallback[T]: Reader[T] = (v, _) => {
+    if (js.isUndefined(v.asInstanceOf[js.Dynamic].__)) {
+      throw new Exception("Tried to read opaque Scala.js type that was not written by opaque writer")
+    } else {
+      v.asInstanceOf[js.Dynamic].__.asInstanceOf[T]
+    }
+  }
+
+  implicit def generic[T]: Typeclass[T] = macro Magnolia.gen[T]
 }
 
 trait Writer[P] {
   def write(p: P, root: Boolean = false): js.Object
 }
 
-trait LowPriorityWrites {
-  implicit def anyWriter[T]: Writer[T] = (s, _) => {
-    js.Dynamic.literal(__ = s.asInstanceOf[js.Any])
-  }
-}
-
-object Writer extends LowPriorityWrites {
+object Writer {
   implicit def objectWriter[T <: js.Object]: Writer[T] = (s, root) => if (root) {
     js.Dynamic.literal("value" -> s)
   } else {
@@ -191,6 +196,12 @@ object Writer extends LowPriorityWrites {
     js.Dynamic.literal("value" -> s)
   } else {
     s.asInstanceOf[js.Object]
+  }
+
+  implicit val charWriter: Writer[Char] = (s, root) => if (root) {
+    js.Dynamic.literal("value" -> s.toString)
+  } else {
+    s.toString.asInstanceOf[js.Object]
   }
 
   implicit val byteWriter: Writer[Byte] = (s, root) => if (root) {
@@ -209,6 +220,12 @@ object Writer extends LowPriorityWrites {
     js.Dynamic.literal("value" -> s)
   } else {
     s.asInstanceOf[js.Object]
+  }
+
+  implicit val longWriter: Writer[Long] = (s, root) => if (root) {
+    js.Dynamic.literal("value" -> s.toString)
+  } else {
+    s.toString.asInstanceOf[js.Object]
   }
 
   implicit val booleanWriter: Writer[Boolean] = (s, root) => if (root) {
@@ -282,17 +299,39 @@ object Writer extends LowPriorityWrites {
     s.map(v => oWriter.write(v)).toJSPromise.asInstanceOf[js.Object]
   }
 
-  type Return = js.Object
-  def call[T](typeclass: Writer[T], value: T): Return  = typeclass.write(value)
-  def construct[T](body: T => Return): Writer[T] = (p: T, _) => body(p)
-  def join(name: String, elements: ListMap[String, Return]): Return = {
-    val ret = js.Dynamic.literal()
-    elements.foreach(p => ret.updateDynamic(p._1)(p._2))
-    ret
+  type Typeclass[T] = Writer[T]
+
+  def combine[T](ctx: CaseClass[Typeclass, T]): Typeclass[T] = (value: T, root) => {
+    if (ctx.isValueClass) {
+      val param = ctx.parameters.head
+      param.typeclass.write(param.dereference(value), root)
+    } else if (ctx.isObject) {
+      js.Dynamic.literal("_type" -> ctx.typeName)
+    } else {
+      val ret = js.Dynamic.literal()
+      ctx.parameters.foreach { param =>
+        ret.updateDynamic(param.label)(param.typeclass.write(param.dereference(value)))
+      }
+
+      ret
+    }
   }
 
-  implicit def generic[T]: Writer[T] = macro Macros.magnolia[T, Writer[_],
-    Coderivation[Tc] forSome { type Tc[_] }]
+  def dispatch[T](ctx: SealedTrait[Typeclass, T]): Typeclass[T] = (value: T, _) => {
+    ctx.dispatch(value) { sub =>
+      val ret = sub.typeclass.write(sub.cast(value), root = true)
+
+      ret.asInstanceOf[js.Dynamic].updateDynamic("_type")(sub.label)
+
+      ret
+    }
+  }
+
+  def fallback[T]: Writer[T] = (s, _) => {
+    js.Dynamic.literal(__ = s.asInstanceOf[js.Any])
+  }
+
+  implicit def generic[T]: Typeclass[T] = macro Magnolia.gen[T]
 }
 
 @js.native
