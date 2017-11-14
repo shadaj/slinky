@@ -4,6 +4,9 @@ import org.scalatest.FunSuite
 
 import scala.scalajs.js
 
+// cannot be a local class
+class ValueClass(val int: Int) extends AnyVal
+
 class ReaderWriterTest extends FunSuite {
   private def readWrittenSame[T](v: T, isOpaque: Boolean = false)(implicit reader: Reader[T], writer: Writer[T]) = {
     val written = writer.write(v)
@@ -66,6 +69,13 @@ class ReaderWriterTest extends FunSuite {
     readWrittenSame[MySealedTrait](SubTypeA(-1))
     readWrittenSame[MySealedTrait](SubTypeB(true))
     readWrittenSame[MySealedTrait](SubTypeC)
+  }
+
+  test("Read/write - value class") {
+    readWrittenSame(new ValueClass(1))
+
+    // directly writes the inner value without wrapping it in an object
+    assert(implicitly[Writer[ValueClass]].write(new ValueClass(1)).asInstanceOf[Int] == 1)
   }
 
   test("Read/write - sequences") {

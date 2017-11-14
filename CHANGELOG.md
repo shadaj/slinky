@@ -2,19 +2,21 @@
 
 ## vNEXT
 + **BREAKING**: Instead of taking key and refs as additional parameters next to props, they are now taken in through the methods `withKey` and `withRef` (components and external components only)
-+ **BREAKING**: Introduce the macro annotation `@react` to simplify component and external component creation with auto-generated companion object for a component class (or external component object). This is a major change to how applications with Slinky are written, so please see the notes at the end of the changelog [PR #29](https://github.com/shadaj/slinky/pull/29)
++ **BREAKING**: Introduce the experimental macro annotation `@react` to simplify component and external component creation with auto-generated companion object for a component class (or external component object). This is a major change to how applications with Slinky are written, so please see the notes at the end of the changelog [PR #29](https://github.com/shadaj/slinky/pull/29)
+  + **BREAKING**: This change also renames the `Component` class to `ComponentWrapper`. The `Component` class is now used for the `@react` annotation.
 + **BREAKING**: Rename `ExternalComponentWithTagMods` to `ExternalComponentWithAttributes` and take attributes as a curried parameter instead of an extra parameter after `Props` [PR #26](https://github.com/shadaj/slinky/pull/26)
 + Have mouse attributes such as `onMouseDown` take a `MouseEvent` instead of just an `Event` [PR #27](https://github.com/shadaj/slinky/pull/27)
++ Add support for generating `Reader` and `Writer` for sealed traits, value classes, and case objects (through a Magnolia upgrade) [PR #45](https://github.com/shadaj/slinky/pull/45)
 
-### `@react` macro annotation
+### `@react` macro annotation (experimental)
 One of Slinky's main goals is to have React components written in Scala look very similar to ES6. In version 0.1.x, Slinky required
-extra boilerplate for defining an object that contained `apply` methods and then creating a `Definition` inner class that contained the actual component logic.
+extra boilerplate for defining an object that contained `apply` methods and then creating a `Def` inner class that contained the actual component logic.
 
-This version includes the `@react` macro annotation, which makes it possible to only write the class containing component logic and have Slinky generate
+This version includes the `@react` macro annotation, which makes it possible to directly write the class containing component logic and have Slinky generate
 the companion object for constructing component instances. The macro annotation also now generates special `apply` methods when your Props is a case class
 so that constructing Scala components looks more similar to JSX, with the Props values directly taken as parameters of the `apply`.
 
-Note that use of the macro annotation is **not required**. To use the original component style simply replace the `extends Component` to `extends ComponentWrapper` and your
+Note that the macro annotation is **experimental** and **not required**. To use the original component style simply replace the `extends Component` with `extends ComponentWrapper` and your
 components should continue to function as they did before.
 
 As an example of migrating an existing component to the new macro annotation style, take a simple component that displays a header:

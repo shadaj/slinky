@@ -1,4 +1,4 @@
-<p align="center"><img width="400" src="./logo.png"/></p>
+<p align="center"><img width="400" src="https://github.com/shadaj/slinky/raw/master/logo.png"/></p>
 <p align="center"><i>Write Scala.js React apps just like you would in ES6</i></p>
 <p align="center">
   <a href="https://travis-ci.org/shadaj/slinky">
@@ -17,18 +17,19 @@
 Add the dependencies that match your application:
 ```scala
 libraryDependencies += "me.shadaj" %%% "slinky-core" % "0.1.1" // core React functionality, no React DOM
-addCompilerPlugin("org.scalameta" % "paradise" % "3.0.0-M10" cross CrossVersion.full) // required for the @react macro annotation
-
 libraryDependencies += "me.shadaj" %%% "slinky-web" % "0.1.1" // React DOM, HTML and SVG tags
 libraryDependencies += "me.shadaj" %%% "slinky-hot" % "0.1.1" // Hot loading with Webpack
 libraryDependencies += "me.shadaj" %%% "slinky-scalajsreact-interop" % "0.1.1" // Interop with japgolly/scalajs-react
+
+// optional, enables the @react macro annotation API
+addCompilerPlugin("org.scalameta" % "paradise" % "3.0.0-M10" cross CrossVersion.full)
 ```
 
 Slinky supports loading React via either CommonJS or as a global object. If loading as a global object, make sure React is available
 as `window.React` and React DOM as `window.ReactDOM`.
 
-## Writing Components (0.1.x style)
-Writing React code in Slinky closely mirrors the layout of React code in ES6.
+## Writing Components
+Writing React code in Slinky closely mirrors the layout of React code in ES6. Slinky components can be used by calling the `apply` method and passing in an instance of `Props`.
 
 ### Slinky
 ```scala
@@ -45,6 +46,9 @@ object HelloMessage extends StatelessComponentWrapper {
     }
   }
 }
+
+// elsewhere...
+HelloMessage(HelloMessage.Props("World"))
 ```
 
 ### ES6
@@ -56,6 +60,9 @@ class HelloMessage extends React.Component {
     return <div>Hello {this.props.name}</div>;
   }
 }
+
+// elsewhere...
+<HelloMessage name="World"/>
 ```
 
 To create stateful components, specify the `State` type, provide an initial state, and use your state in `render` via the `state` variable:
@@ -78,65 +85,17 @@ object HelloMessage extends ComponentWrapper {
 }
 ```
 
-## Writing Components (0.2.0-SNAPSHOT style)
-Writing React code in Slinky closely mirrors the layout of React code in ES6.
-
-### Slinky
-```scala
-import me.shadaj.slinky.core.{Component, react}
-import me.shadaj.slinky.web.html._
-
-@react class HelloMessage extends Component {
-  case class Props(name: String)
-  type State = Unit // this is a stateless component
-  
-  def initialState = () // no state
-
-  def render() = {
-    div(s"Hello ${props.name}")
-  }
-}
-```
-
-### ES6
-```js
-import React from 'react';
-
-class HelloMessage extends React.Component {
-  render() {
-    return <div>Hello {this.props.name}</div>;
-  }
-}
-```
-
-To create stateful components, specify the `State` type, provide an initial state, and use your state in `render` via the `state` variable:
-```scala
-import me.shadaj.slinky.core.{Component, react}
-import me.shadaj.slinky.web.html._
-
-@react class HelloMessage extends Component {
-  type Props = Unit // we have no props
-  type State = Int // we use an Int directly for state, but we could also have used a case class
-
-  def initialState = 0
-
-  def render() = {
-    a(onClick := (() => setState(state + 1)))(s"Clicks: ${state}")
-  }
-}
-```
-
 ## Tags
 Slinky uses the same tag building syntax as ScalaTags and scalajs-react.
 
-To create an HTML element, simply import the tags module and follow the same style as regular Scala tag libraries
+To create an HTML element, simply import the tags module and follow the same style as regular Scala tag libraries:
 ```scala
 import me.shadaj.slinky.web.html._
 
 a(href := "http://example.com")("Example")
 ```
 
-Slinky includes additional typing for detecting use of incompatible attributes at compile time:
+Slinky also includes typing for detecting use of incompatible attributes at compile time:
 ```scala
 import me.shadaj.slinky.web.html._
 
@@ -148,14 +107,14 @@ One of Slinky's most powerful features is the ability to use external React comp
 up an external component is just like creating a regular component:
 
 ```scala
-import me.shadaj.slinky.core.{ExternalComponent, react}
+import me.shadaj.slinky.core.ExternalComponent
 
 import scala.scalajs.js
 
 import org.scalajs.dom.html
 
 // external component for react-three-renderer
-@react object React3 extends ExternalComponent {
+object React3 extends ExternalComponent {
   case class Props(mainCamera: String, width: Int, height: Int,
                    onAnimate: Option[() => Unit] = None, alpha: Boolean = false)
 
@@ -167,7 +126,70 @@ With Slinky's built in typeclass derivation for converting between Scala and Jav
 we can describe the properties of the external component using idiomatic Scala, using types like Option
 that will be converted into a JS representation at runtime (in this case the value for Some and undefined for None).
 
+## `@react` Macro Annotation (experimental)
+The experimental `@react` macro annotation (available in versions > 0.1.1) makes it possible to directly write the class containing component logic and have Slinky generate
+the companion object for constructing component instances. The macro annotation also now generates special `apply` methods when your Props is a case class
+so that constructing Scala components looks more similar to JSX, with the Props values directly taken as parameters of the `apply`.
+
+As an example of migrating an existing component to the new macro annotation style, take a simple component that displays a header:
+```scala
+import me.shadaj.slinky.core.WrapperComponent
+import me.shadaj.slinky.web.html._
+
+object HelloMessage extends WrapperComponent {
+  case class Props(name: String)
+  type State = Unit
+
+  @ScalaJSDefined
+  class Def(jsProps: js.Object) extends Definition(jsProps) {
+    def render() = {
+      div(s"Hello ${props.name}")
+    }
+  }
+}
+``` 
+
+to use the new macro annotation style, we essentially extract out the definition class, move the `Props` and `State` types into the class, and extend `Component` instead of `Definition`:
+```scala
+import me.shadaj.core.{Component, react}
+import me.shadaj.slinky.web.html._
+
+@react class HelloMessage extends Component {
+  case class Props(name: String)
+  type State = Unit
+  
+  def render() = {
+    div(s"Hello ${props.name}")
+  }
+}
+```
+
+To use this component, we now have a new option for constructing it directly passing in the Props values
+```scala
+HelloMessage(HelloMessage.Props("Shadaj")) // old style
+HelloMessage("Shadaj") // now possible!
+HelloMessage(name = "Shadaj") // now possible, closest to JSX
+```
+
+The `@react` annotation is also available for external components. For external components, the annotation generates the new `apply` method style in the same style as Scala components.
+```scala
+import me.shadaj.slinky.core.annotations.react
+import me.shadaj.slinky.core.ExternalComponent
+
+@react object React3 extends ExternalComponent {
+  case class Props(mainCamera: String, width: Int, height: Int,
+                   onAnimate: Option[() => Unit] = None, alpha: Boolean = false)
+
+  override val component: js.Object = js.Dynamic.global.React3.asInstanceOf[js.Object]
+}
+```
+
+this makes it possible to construct the external component as
+```scala
+React3(mainCamera = "camera", width = 800, height = 800)
+```
+
 ## Credits
 Much credit goes to existing Scala.js libraries for React, such as scalajs-react and SRI, which provided a lot of inspiration for Slinky's design. Credit also goes to scala-js-preact, which provided the inspiration for the `@react` macro annotation. 
 
-Slinky logo based on https://thenounproject.com/dianatomic/uploads/?i=40452
+Slinky logo is based on https://thenounproject.com/dianatomic/uploads/?i=40452
