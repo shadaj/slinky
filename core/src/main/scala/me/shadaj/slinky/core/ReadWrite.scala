@@ -25,7 +25,7 @@ trait Reader[P] {
 }
 
 object Reader {
-  implicit def objectReader[T <: js.Object]: Reader[T] = (s, root) => (if (root) {
+  implicit def jsAnyReader[T <: js.Any]: Reader[T] = (s, root) => (if (root) {
     s.asInstanceOf[js.Dynamic].value
   } else {
     s
@@ -184,10 +184,10 @@ trait Writer[P] {
 }
 
 object Writer {
-  implicit def objectWriter[T <: js.Object]: Writer[T] = (s, root) => if (root) {
+  implicit def jsAnyWriter[T <: js.Any]: Writer[T] = (s, root) => if (root) {
     js.Dynamic.literal("value" -> s)
   } else {
-    s
+    s.asInstanceOf[js.Object]
   }
 
   implicit val unitWriter: Writer[Unit] = (_, _) => js.Dynamic.literal()
