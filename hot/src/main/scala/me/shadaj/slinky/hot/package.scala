@@ -12,20 +12,22 @@ package object hot {
     }
 
     BaseComponentWrapper.insertMiddleware((constructor, component) => {
+      val componentName = component.asInstanceOf[BaseComponentWrapper].getClass.getName
+
       if (js.isUndefined(component.asInstanceOf[js.Dynamic]._hot)) {
         component.asInstanceOf[js.Dynamic]._hot = true
 
-        if (js.isUndefined(js.Dynamic.global.proxies.selectDynamic(this.getClass.getName))) {
-          js.Dynamic.global.proxies.updateDynamic(this.getClass.getName)(ReactProxy.createProxy(constructor))
+        if (js.isUndefined(js.Dynamic.global.proxies.selectDynamic(componentName))) {
+          js.Dynamic.global.proxies.updateDynamic(componentName)(ReactProxy.createProxy(constructor))
         } else {
           val forceUpdate = ReactProxy.getForceUpdate(React)
-          js.Dynamic.global.proxies.selectDynamic(this.getClass.getName)
+          js.Dynamic.global.proxies.selectDynamic(componentName)
             .update(constructor).asInstanceOf[js.Array[js.Object]]
             .foreach(o => forceUpdate(o))
         }
       }
 
-      js.Dynamic.global.proxies.selectDynamic(this.getClass.getName).get().asInstanceOf[js.Object]
+      js.Dynamic.global.proxies.selectDynamic(componentName).get().asInstanceOf[js.Object]
     })
 
     BaseComponentWrapper.enableScalaComponentWriting()
