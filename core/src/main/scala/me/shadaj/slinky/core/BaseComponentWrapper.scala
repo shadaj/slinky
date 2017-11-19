@@ -33,24 +33,42 @@ abstract class BaseComponentWrapper {
 
   type Definition <: js.Object
 
-  def componentConstructor(implicit constructorTag: ConstructorTag[Def]): js.Object = {
+  def componentConstructor(implicit propsWriter: Writer[Props], propsReader: Reader[Props],
+                           stateWriter: Writer[State], stateReader: Reader[State],
+                           constructorTag: ConstructorTag[Def]): js.Object = {
     val constructor = constructorTag.constructor
     constructor.displayName = getClass.getSimpleName
+    constructor._base = this.asInstanceOf[js.Any]
+
+    this.asInstanceOf[js.Dynamic]._propsWriter = propsWriter.asInstanceOf[js.Any]
+    this.asInstanceOf[js.Dynamic]._propsReader = propsReader.asInstanceOf[js.Any]
+    this.asInstanceOf[js.Dynamic]._stateWriter = stateWriter.asInstanceOf[js.Any]
+    this.asInstanceOf[js.Dynamic]._stateReader = stateReader.asInstanceOf[js.Any]
+
     BaseComponentWrapper.componentConstructorMiddleware(
       constructor.asInstanceOf[js.Object], this.asInstanceOf[js.Object])
   }
 
-  def apply(p: Props)(implicit propsWriter: Writer[Props], constructorTag: ConstructorTag[Def]): KeyAndRefAddingStage[Def] = {
+  private var componentConstructorInstance: js.Object = null
+
+  def apply(p: Props)(implicit propsWriter: Writer[Props], propsReader: Reader[Props], stateWriter: Writer[State], stateReader: Reader[State], constructorTag: ConstructorTag[Def]): KeyAndRefAddingStage[Def] = {
     val propsObj = if(BaseComponentWrapper.scalaComponentWritingEnabled) {
       propsWriter.write(p, root = true).asInstanceOf[js.Dictionary[js.Any]]
     } else js.Dictionary("__" -> p.asInstanceOf[js.Any])
 
-    new KeyAndRefAddingStage(propsObj, componentConstructor)
+    if (componentConstructorInstance == null) {
+      componentConstructorInstance = componentConstructor
+    }
+
+    new KeyAndRefAddingStage(
+      propsObj,
+      componentConstructorInstance
+    )
   }
 }
 
 object BaseComponentWrapper {
-  implicit def proplessKeyAndRef[C <: BaseComponentWrapper { type Props = Unit }](c: C)(implicit constructorTag: ConstructorTag[c.Def]): KeyAndRefAddingStage[c.Def] = {
+  implicit def proplessKeyAndRef[C <: BaseComponentWrapper { type Props = Unit }](c: C)(implicit stateWriter: Writer[c.State], stateReader: Reader[c.State], constructorTag: ConstructorTag[c.Def]): KeyAndRefAddingStage[c.Def] = {
     c.apply(())
   }
 

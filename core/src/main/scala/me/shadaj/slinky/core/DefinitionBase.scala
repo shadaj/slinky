@@ -7,10 +7,12 @@ import scala.scalajs.js.JSON
 import scala.scalajs.js.annotation.{JSName, ScalaJSDefined}
 
 @ScalaJSDefined
-abstract class DefinitionBase[Props, State](jsProps: js.Object)(implicit propsReader: Reader[Props],
-                                                                propsWriter: Writer[Props],
-                                                                stateReader: Reader[State],
-                                                                stateWriter: Writer[State]) extends React.Component(jsProps) {
+abstract class DefinitionBase[Props, State](jsProps: js.Object) extends React.Component(jsProps) {
+  @inline def stateReader: Reader[State] = this.asInstanceOf[js.Dynamic].__proto__.constructor._base._stateReader.asInstanceOf[Reader[State]]
+  @inline def stateWriter: Writer[State] = this.asInstanceOf[js.Dynamic].__proto__.constructor._base._stateWriter.asInstanceOf[Writer[State]]
+  @inline def propsReader: Reader[Props] = this.asInstanceOf[js.Dynamic].__proto__.constructor._base._propsReader.asInstanceOf[Reader[Props]]
+  @inline def propsWriter: Writer[Props] = this.asInstanceOf[js.Dynamic].__proto__.constructor._base._propsWriter.asInstanceOf[Writer[Props]]
+
   def initialState: State
 
   this.asInstanceOf[PrivateComponentClass].stateR = {

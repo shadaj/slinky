@@ -7,6 +7,7 @@
 + **BREAKING**: Rename `ExternalComponentWithTagMods` to `ExternalComponentWithAttributes` and take attributes as a curried parameter instead of an extra parameter after `Props` [PR #26](https://github.com/shadaj/slinky/pull/26)
 + Have mouse attributes such as `onMouseDown` take a `MouseEvent` instead of just an `Event` [PR #27](https://github.com/shadaj/slinky/pull/27)
 + Add support for generating `Reader` and `Writer` for sealed traits, value classes, and case objects (through a Magnolia upgrade) [PR #45](https://github.com/shadaj/slinky/pull/45)
++ Fix bug with hot loading not updating instances of readers and writers [PR #49](https://github.com/shadaj/slinky/pull/49)
 
 ### `@react` macro annotation (experimental)
 One of Slinky's main goals is to have React components written in Scala look very similar to ES6. In version 0.1.x, Slinky required

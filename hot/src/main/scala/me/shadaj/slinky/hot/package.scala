@@ -16,10 +16,8 @@ package object hot {
         component.asInstanceOf[js.Dynamic]._hot = true
 
         if (js.isUndefined(js.Dynamic.global.proxies.selectDynamic(this.getClass.getName))) {
-          println("creating proxy")
           js.Dynamic.global.proxies.updateDynamic(this.getClass.getName)(ReactProxy.createProxy(constructor))
         } else {
-          println("updating proxy")
           val forceUpdate = ReactProxy.getForceUpdate(React)
           js.Dynamic.global.proxies.selectDynamic(this.getClass.getName)
             .update(constructor).asInstanceOf[js.Array[js.Object]]
