@@ -48,6 +48,10 @@ class ReaderWriterTest extends FunSuite {
     readWrittenSame(1D)
   }
 
+  test("Read/write - js.Dynamic") {
+    readWrittenSame(js.Dynamic.literal(a = 1))
+  }
+
   test("Read/write - js.UndefOr") {
     val defined: js.UndefOr[List[Int]] = List(1)
     readWrittenSame(defined)
