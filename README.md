@@ -18,7 +18,7 @@ Add the dependencies that match your application:
 ```scala
 libraryDependencies += "me.shadaj" %%% "slinky-core" % "0.1.1" // core React functionality, no React DOM
 libraryDependencies += "me.shadaj" %%% "slinky-web" % "0.1.1" // React DOM, HTML and SVG tags
-libraryDependencies += "me.shadaj" %%% "slinky-hot" % "0.1.1" // Hot loading with Webpack
+libraryDependencies += "me.shadaj" %%% "slinky-hot" % "0.1.1" // Hot loading, requires react-proxy package
 libraryDependencies += "me.shadaj" %%% "slinky-scalajsreact-interop" % "0.1.1" // Interop with japgolly/scalajs-react
 
 // optional, enables the @react macro annotation API

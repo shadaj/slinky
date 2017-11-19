@@ -33,34 +33,72 @@ abstract class BaseComponentWrapper {
 
   type Definition <: js.Object
 
-  def componentConstructor(implicit constructorTag: ConstructorTag[Def]): js.Object = {
+  def componentConstructor(implicit propsWriter: Writer[Props], propsReader: Reader[Props],
+                           stateWriter: Writer[State], stateReader: Reader[State],
+                           constructorTag: ConstructorTag[Def]): js.Object = {
     val constructor = constructorTag.constructor
     constructor.displayName = getClass.getSimpleName
-    constructor.__fullName = getClass.getName
-    constructor.asInstanceOf[js.Object]
+    constructor._base = this.asInstanceOf[js.Any]
+
+    this.asInstanceOf[js.Dynamic]._propsWriter = propsWriter.asInstanceOf[js.Any]
+    this.asInstanceOf[js.Dynamic]._propsReader = propsReader.asInstanceOf[js.Any]
+    this.asInstanceOf[js.Dynamic]._stateWriter = stateWriter.asInstanceOf[js.Any]
+    this.asInstanceOf[js.Dynamic]._stateReader = stateReader.asInstanceOf[js.Any]
+
+    BaseComponentWrapper.componentConstructorMiddleware(
+      constructor.asInstanceOf[js.Object], this.asInstanceOf[js.Object])
   }
 
-  def apply(p: Props)(implicit propsWriter: Writer[Props], constructorTag: ConstructorTag[Def]): KeyAndRefAddingStage[Def] = {
-    val propsObj = js.Dictionary("__" -> p.asInstanceOf[js.Any])
+  private var componentConstructorInstance: js.Object = null
 
-    new KeyAndRefAddingStage(propsObj, componentConstructor)
+  def apply(p: Props)(implicit propsWriter: Writer[Props], propsReader: Reader[Props], stateWriter: Writer[State], stateReader: Reader[State], constructorTag: ConstructorTag[Def]): KeyAndRefAddingStage[Def] = {
+    val propsObj = if(BaseComponentWrapper.scalaComponentWritingEnabled) {
+      propsWriter.write(p, root = true).asInstanceOf[js.Dictionary[js.Any]]
+    } else js.Dictionary("__" -> p.asInstanceOf[js.Any])
+
+    if (componentConstructorInstance == null) {
+      componentConstructorInstance = componentConstructor
+    }
+
+    new KeyAndRefAddingStage(
+      propsObj,
+      componentConstructorInstance
+    )
   }
 }
 
 object BaseComponentWrapper {
-  implicit def proplessKeyAndRef[C <: BaseComponentWrapper { type Props = Unit }](c: C)(implicit constructorTag: ConstructorTag[c.Def]): KeyAndRefAddingStage[c.Def] = {
+  implicit def proplessKeyAndRef[C <: BaseComponentWrapper { type Props = Unit }](c: C)(implicit stateWriter: Writer[c.State], stateReader: Reader[c.State], constructorTag: ConstructorTag[c.Def]): KeyAndRefAddingStage[c.Def] = {
     c.apply(())
   }
 
-  private[core] var getWrittenInitialStateMiddleware: Option[String => Option[js.Object]] = None
-  private[core] var writtenStateMiddleware: Option[(String, () => js.Object) => Unit] = None
-
-
-  def insertGetInitialWrittenStateMiddleware(fn: String => Option[js.Object]) = {
-    getWrittenInitialStateMiddleware = Some(fn)
+  private var componentConstructorMiddleware = (constructor: js.Object, _: js.Object) => {
+    constructor
   }
 
-  def insertWrittenStateMiddleware(fn: (String, () => js.Object) => Unit) = {
-    writtenStateMiddleware = Some(fn)
+  private[core] var scalaComponentWritingEnabled = false
+
+  /**
+    * Enables writing props and state for Scala defined components. This is
+    * needed for hot loading, where data must be written to a JS object and
+    * then read when the application is reloaded.
+    */
+  def enableScalaComponentWriting(): Unit = {
+    scalaComponentWritingEnabled = true
+  }
+
+  /**
+    * Inserts a component constructor middleware function, which transforms a component constructor
+    * given the original constructor and the outer component object (for state tracking)
+    *
+    * This is used for hot-loading, which wraps the component constructor inside a proxy component
+    *
+    * @param middleware the middleware function to use
+    */
+  def insertMiddleware(middleware: (js.Object, js.Object) => js.Object): Unit = {
+    val orig = componentConstructorMiddleware
+    componentConstructorMiddleware = (constructor: js.Object, componentObject: js.Object) => {
+      middleware(orig(constructor, componentObject), componentObject)
+    }
   }
 }
