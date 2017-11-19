@@ -36,14 +36,12 @@ abstract class BaseComponentWrapper {
   def componentConstructor(implicit constructorTag: ConstructorTag[Def]): js.Object = {
     val constructor = constructorTag.constructor
     constructor.displayName = getClass.getSimpleName
-    BaseComponentWrapper.componentConstructorMiddleware(
-      constructor.asInstanceOf[js.Object], this.asInstanceOf[js.Object])
+    constructor.__fullName = getClass.getName
+    constructor.asInstanceOf[js.Object]
   }
 
   def apply(p: Props)(implicit propsWriter: Writer[Props], constructorTag: ConstructorTag[Def]): KeyAndRefAddingStage[Def] = {
-    val propsObj = if(BaseComponentWrapper.scalaComponentWritingEnabled) {
-      propsWriter.write(p, root = true).asInstanceOf[js.Dictionary[js.Any]]
-    } else js.Dictionary("__" -> p.asInstanceOf[js.Any])
+    val propsObj = js.Dictionary("__" -> p.asInstanceOf[js.Any])
 
     new KeyAndRefAddingStage(propsObj, componentConstructor)
   }
@@ -54,33 +52,15 @@ object BaseComponentWrapper {
     c.apply(())
   }
 
-  private var componentConstructorMiddleware = (constructor: js.Object, _: js.Object) => {
-    constructor
+  private[core] var getWrittenInitialStateMiddleware: Option[String => Option[js.Object]] = None
+  private[core] var writtenStateMiddleware: Option[(String, () => js.Object) => Unit] = None
+
+
+  def insertGetInitialWrittenStateMiddleware(fn: String => Option[js.Object]) = {
+    getWrittenInitialStateMiddleware = Some(fn)
   }
 
-  private[core] var scalaComponentWritingEnabled = false
-
-  /**
-    * Enables writing props and state for Scala defined components. This is
-    * needed for hot loading, where data must be written to a JS object and
-    * then read when the application is reloaded.
-    */
-  def enableScalaComponentWriting(): Unit = {
-    scalaComponentWritingEnabled = true
-  }
-
-  /**
-    * Inserts a component constructor middleware function, which transforms a component constructor
-    * given the original constructor and the outer component object (for state tracking)
-    *
-    * This is used for hot-loading, which wraps the component constructor inside a proxy component
-    *
-    * @param middleware the middleware function to use
-    */
-  def insertMiddleware(middleware: (js.Object, js.Object) => js.Object): Unit = {
-    val orig = componentConstructorMiddleware
-    componentConstructorMiddleware = (constructor: js.Object, componentObject: js.Object) => {
-      middleware(orig(constructor, componentObject), componentObject)
-    }
+  def insertWrittenStateMiddleware(fn: (String, () => js.Object) => Unit) = {
+    writtenStateMiddleware = Some(fn)
   }
 }
