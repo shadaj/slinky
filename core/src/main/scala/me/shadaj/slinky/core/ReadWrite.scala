@@ -7,8 +7,10 @@ import scala.language.implicitConversions
 import scala.language.higherKinds
 import scala.language.experimental.macros
 import scala.scalajs.concurrent.JSExecutionContext.Implicits.queue
-
 import magnolia._
+
+import scala.reflect.ClassTag
+import scala.scalajs.js.|
 
 trait Reader[P] {
   def read(o: js.Object, root: Boolean = false): P = {
@@ -98,6 +100,15 @@ object Reader {
       js.undefined
     } else {
       reader.read(value)
+    }
+  }
+
+  implicit def unionReader[A, B](implicit aReader: Reader[A], bReader: Reader[B]): Reader[A | B] = (s, root) => {
+    try {
+      aReader.read(s, root)
+    } catch {
+      case e: Throwable =>
+        bReader.read(s, root)
     }
   }
 
@@ -253,6 +264,13 @@ object Writer {
       }.getOrElse(js.Dynamic.literal())
     } else {
       s.map(v => writer.write(v)).getOrElse(js.undefined.asInstanceOf[js.Object])
+    }
+  }
+
+  implicit def unionWriter[A: ClassTag, B: ClassTag](implicit aWriter: Writer[A], bWriter: Writer[B]): Writer[A | B] = (s, root) => {
+    s match {
+      case a: A => aWriter.write(a, root)
+      case b: B => bWriter.write(b, root)
     }
   }
 
