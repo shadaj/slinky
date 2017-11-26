@@ -3,6 +3,7 @@ package me.shadaj.slinky.core
 import org.scalatest.FunSuite
 
 import scala.scalajs.js
+import scala.scalajs.js.|
 
 // cannot be a local class
 class ValueClass(val int: Int) extends AnyVal
@@ -57,6 +58,11 @@ class ReaderWriterTest extends FunSuite {
     readWrittenSame(defined)
     val undefined: js.UndefOr[List[Int]] = js.undefined
     readWrittenSame(undefined)
+  }
+
+  test("Read/write - js.|") {
+    readWrittenSame[Int | String](1)
+    readWrittenSame[Int | String]("str")
   }
 
   test("Read/write - case class") {
