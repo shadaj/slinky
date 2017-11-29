@@ -2,672 +2,784 @@
   "tags" : [
     {
       "tagName" : "a",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "<span class=\"seoSummary\">The <strong>HTML <code>&lt;a&gt;</code> element</strong> (or <em>anchor</em> element) creates a hyperlink to other web pages, files, locations within the same page, email addresses, or any other URL.</span>"
       ]
     },
     {
       "tagName" : "abbr",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;abbr&gt;</code> element</strong> represents an abbreviation and optionally provides a full description for it. If present, the <code><a href=\"/en-US/docs/Web/HTML/Global_attributes#attr-title\">title</a></code> attribute must contain this full description and nothing else."
       ]
     },
     {
       "tagName" : "address",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "<span class=\"seoSummary\">The <strong>HTML&nbsp;<code>&lt;address&gt;</code> element</strong> supplies contact information for its nearest <a title=\"The HTML <article> element represents a self-contained composition in a document, page, application, or site, which is intended to be independently distributable or reusable (e.g., in syndication). Examples include: a forum post, a magazine or newspaper article, or a blog entry.\" href=\"/en-US/docs/Web/HTML/Element/article\"><code>&lt;article&gt;</code></a> or <a title=\"The HTML <body> Element represents the content of an HTML&nbsp;document. There can be only one <body> element in a document.\" href=\"/en-US/docs/Web/HTML/Element/body\"><code>&lt;body&gt;</code></a> ancestor; in the latter case, it applies to the whole document.</span>"
       ]
     },
     {
       "tagName" : "area",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;area&gt;</code> element</strong> defines a hot-spot region on an image, and optionally associates it with a <a title=\"hypertext link: Hyperlinks connect webpages or data items to one another. In HTML, <a> elements define hyperlinks from a spot on a webpage (like a text string or image) to another spot on some other webpage (or even on the same page).\" class=\"glossaryLink\" href=\"/en-US/docs/Glossary/Hyperlink\">hypertext link</a>. This element is used only within a <a title=\"The HTML <map> element is used with <area> elements to define an image map (a clickable link area).\" href=\"/en-US/docs/Web/HTML/Element/map\"><code>&lt;map&gt;</code></a> element."
       ]
     },
     {
       "tagName" : "article",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;article&gt;</code> element</strong> represents a self-contained composition in a document, page, application, or site, which is intended to be independently distributable or reusable (e.g., in syndication). Examples include: a forum post, a magazine or newspaper article, or a blog entry."
       ]
     },
     {
       "tagName" : "aside",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;aside&gt;</code> element</strong> represents a section of a document with content connected tangentially to the main content of the document (often presented as a sidebar)."
       ]
     },
     {
       "tagName" : "audio",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "<span class=\"seoSummary\">The <strong>HTML <code>&lt;audio&gt;</code> element</strong> is used to embed sound content in documents. It may contain one or more audio sources, represented using the <code>src</code> attribute or the <a title=\"The HTML <source> element specifies multiple media resources for either the <picture>, the <audio> or the <video> element. It is an empty element. It is commonly used to serve the same media content in multiple formats supported by different browsers.\" href=\"/en-US/docs/Web/HTML/Element/source\"><code>&lt;source&gt;</code></a> element:&nbsp;the browser will choose the most suitable one. It can also be the destination for streamed media, using a <a title=\"The MediaStream interface represents a stream of media content. A stream consists of several tracks such as&nbsp;video or audio tracks. Each track is specified as an instance of MediaStreamTrack.\" href=\"/en-US/docs/Web/API/MediaStream\"><code>MediaStream</code></a>.</span>"
       ]
     },
     {
       "tagName" : "b",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;b&gt;</code> element</strong> represents a span of text stylistically different from normal text, without conveying any special importance or relevance, and that is typically rendered in boldface."
       ]
     },
     {
       "tagName" : "base",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;base&gt;</code> element</strong> specifies the base URL to use for all relative URLs contained within a document. There can be only one <code>&lt;base&gt;</code> element in a document.&nbsp;"
       ]
     },
     {
       "tagName" : "bdi",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;bdi&gt;</code> element</strong> (<em>bidirectional isolation</em>) isolates a span of text that might be formatted in a different direction from other text outside it."
       ]
     },
     {
       "tagName" : "bdo",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;bdo&gt;</code> element</strong> (<em>bidirectional override</em>) is used to override the current directionality of text. It causes the directionality of the characters to be ignored in favor of the specified directionality."
       ]
     },
     {
       "tagName" : "big",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The HTML Big Element (<code>&lt;big&gt;</code>)&nbsp;makes the text <em>font size</em> one size bigger (for example, from small to medium, or from large to x-large) up to the browser's maximum font size."
       ]
     },
     {
       "tagName" : "blockquote",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;blockquote&gt;</code> Element</strong> (or <em>HTML Block Quotation Element</em>) indicates that the enclosed text is an extended quotation. Usually, this is rendered visually by indentation (see <a href=\"/en-US/docs/HTML/Element/blockquote#Notes\">Notes</a> for how to change it). A URL for the source of the quotation may be given using the <strong>cite</strong> attribute, while a text representation of the source can be given using the <a title=\"The HTML <cite> element represents a reference to a creative work. It must include the title of a work or a URL reference, which may be in an abbreviated form according to the conventions used for the addition of citation metadata.\" href=\"/en-US/docs/Web/HTML/Element/cite\"><code>&lt;cite&gt;</code></a> element."
       ]
     },
     {
       "tagName" : "body",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;body&gt;</code> Element</strong> represents the content of an HTML&nbsp;document. There can be only one <code>&lt;body&gt;</code> element in a document."
       ]
     },
     {
       "tagName" : "br",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;br&gt;</code> element</strong> produces a line break in text (carriage-return). It is useful for writing a poem or an address, where the division of lines is significant."
       ]
     },
     {
       "tagName" : "button",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;button&gt;</code> element</strong> represents a clickable button."
       ]
     },
     {
       "tagName" : "canvas",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "Use the <strong>HTML <code>&lt;canvas&gt;</code> element</strong> with the <a href=\"/en-US/docs/Web/API/Canvas_API\">canvas scripting API </a>to draw graphics and animations."
       ]
     },
     {
       "tagName" : "caption",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;caption&gt;</code> element</strong> represents the title of a table. Though it is always the first descendant of a <a title=\"The HTML <table> element represents tabular data — that is, information expressed via a two-dimensional data table.\" href=\"/en-US/docs/Web/HTML/Element/table\"><code>&lt;table&gt;</code></a>, its styling, using CSS, may place it elsewhere, relative to the table."
       ]
     },
     {
       "tagName" : "cite",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML &lt;cite&gt; element</strong> represents a reference to a creative work. It must include the title of a work or a URL reference, which may be in an abbreviated form according to the conventions used for the addition of citation metadata."
       ]
     },
     {
       "tagName" : "code",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;code&gt;</code> element</strong> represents a fragment of computer code. By default, it is displayed in the browser's default monospace font."
       ]
     },
     {
       "tagName" : "col",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;col&gt;</code> element</strong> defines a column within a table and is used for defining common semantics on all common cells. It is generally found within a <a title=\"The HTML <colgroup> element defines a group of columns within a table.\" href=\"/en-US/docs/Web/HTML/Element/colgroup\"><code>&lt;colgroup&gt;</code></a> element."
       ]
     },
     {
       "tagName" : "colgroup",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;colgroup&gt;</code> element</strong> defines a group of columns within a table."
       ]
     },
     {
       "tagName" : "data",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;data&gt;</code> element</strong> links a given content with a machine-readable translation. If the content is time- or date-related, the <a title=\"The HTML <time> element represents either a time on a 24-hour clock or a precise date in the Gregorian calendar (with optional time and timezone information).\" href=\"/en-US/docs/Web/HTML/Element/time\"><code>&lt;time&gt;</code></a> element must be used."
       ]
     },
     {
       "tagName" : "datalist",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;datalist&gt;</code> element</strong> contains a set of <a title=\"The HTML <option> element is used to define an item contained in a <select>, an <optgroup>, or a <datalist>&nbsp;element. As such,&nbsp;<option>&nbsp;can represent menu items in popups and other lists of items in an HTML document.\" href=\"/en-US/docs/Web/HTML/Element/option\"><code>&lt;option&gt;</code></a> elements that represent the values available for other controls."
       ]
     },
     {
       "tagName" : "dd",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The&nbsp;<strong>HTML <code>&lt;dd&gt;</code> element</strong> indicates the description of a term in a description list (<a title=\"The HTML <dl>&nbsp;element represents a description list.&nbsp;The element encloses a list of groups of terms and descriptions. Common uses for this element are to implement a glossary or to display metadata (a list of key-value pairs).\" href=\"/en-US/docs/Web/HTML/Element/dl\"><code>&lt;dl&gt;</code></a>)."
       ]
     },
     {
       "tagName" : "del",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;del&gt;</code> element</strong> represents a range of text that has been deleted from a document. This element is often (but need not be) rendered with strike-through text."
       ]
     },
     {
       "tagName" : "details",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;details&gt;</code> element</strong> is used as a disclosure widget from which the user can retrieve additional information."
       ]
     },
     {
       "tagName" : "dfn",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML &lt;dfn&gt; element</strong> represents the defining instance of a term."
       ]
     },
     {
       "tagName" : "dialog",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;dialog&gt;</code> element</strong> represents a dialog box or other interactive component, such as an inspector or window."
       ]
     },
     {
       "tagName" : "div",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;div&gt;</code> element</strong> is the generic container for flow content and does not inherently represent anything. Use it to group elements for purposes such as styling (using the <code><a href=\"/en-US/docs/Web/HTML/Global_attributes#attr-class\">class</a></code> or <code><a href=\"/en-US/docs/Web/HTML/Global_attributes#attr-id\">id</a></code> attributes), marking a section of a document in a different language (using the <code><a href=\"/en-US/docs/Web/HTML/Global_attributes#attr-lang\">lang</a></code> attribute), and so on."
       ]
     },
     {
       "tagName" : "dl",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;dl&gt;</code>&nbsp;</strong>element represents a description list.<strong>&nbsp;</strong>The element encloses a list of groups of terms and descriptions. Common uses for this element are to implement a glossary or to display metadata (a list of key-value pairs)."
       ]
     },
     {
       "tagName" : "dt",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;dt&gt;</code> element</strong> identifies a term in a description list. This element can occur only as a child element of a <a title=\"The HTML <dl>&nbsp;element represents a description list.&nbsp;The element encloses a list of groups of terms and descriptions. Common uses for this element are to implement a glossary or to display metadata (a list of key-value pairs).\" href=\"/en-US/docs/Web/HTML/Element/dl\"><code>&lt;dl&gt;</code></a>. It is usually followed by a <a title=\"The&nbsp;HTML <dd> element indicates the description of a term in a description list (<dl>).\" href=\"/en-US/docs/Web/HTML/Element/dd\"><code>&lt;dd&gt;</code></a> element; however, multiple <code>&lt;dt&gt;</code> elements in a row indicate several terms that are all defined by the immediate next <a title=\"The&nbsp;HTML <dd> element indicates the description of a term in a description list (<dl>).\" href=\"/en-US/docs/Web/HTML/Element/dd\"><code>&lt;dd&gt;</code></a> element."
       ]
     },
     {
       "tagName" : "em",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;em&gt;</code> element</strong>&nbsp;marks text that has stress emphasis. The <code>&lt;em&gt;</code> element can be nested, with each level of nesting indicating a greater degree of emphasis."
       ]
     },
     {
       "tagName" : "embed",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;embed&gt;</code> element</strong> represents an integration point for an external application or interactive content (in other words, a plug-in)."
       ]
     },
     {
       "tagName" : "fieldset",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;fieldset&gt;</code> element</strong> is used to group several controls as well as labels (<a href=\"/en-US/docs/Web/HTML/Element/label\" title=\"The HTML <label> element represents a caption for an item in a user interface.\"><code>&lt;label&gt;</code></a>) within a web form."
       ]
     },
     {
       "tagName" : "figcaption",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;figcaption&gt;</code> element</strong> represents a caption or a legend associated with a figure or an illustration described by the rest of the data of the <a title=\"The HTML <figure> element represents self-contained content, frequently with a caption (<figcaption>), and is typically referenced as a single unit.\" href=\"/en-US/docs/Web/HTML/Element/figure\"><code>&lt;figure&gt;</code></a> element which is its immediate ancestor."
       ]
     },
     {
       "tagName" : "figure",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;figure&gt;</code> element</strong> represents self-contained content, frequently with a caption (<a title=\"The HTML <figcaption> element represents a caption or a legend associated with a figure or an illustration described by the rest of the data of the <figure> element which is its immediate ancestor.\" href=\"/en-US/docs/Web/HTML/Element/figcaption\"><code>&lt;figcaption&gt;</code></a>), and is typically referenced as a single unit."
       ]
     },
     {
       "tagName" : "footer",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The<strong> HTML <code>&lt;footer&gt;</code> element</strong> represents a footer for its nearest <a href=\"/en-US/docs/Web/Guide/HTML/Sections_and_Outlines_of_an_HTML5_document#Defining_Sections_in_HTML5\">sectioning content</a> or <a title=\"Sections and Outlines of an HTML5 document#Sectioning root\" href=\"/en-US/docs/Web/Guide/HTML/Sections_and_Outlines_of_an_HTML5_document#Sectioning_root\">sectioning root</a> element. A footer typically contains information about the author of the section, copyright data or links to related documents."
       ]
     },
     {
       "tagName" : "form",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;form&gt;</code> element</strong> represents a document section that contains interactive controls to submit information to a web server."
       ]
     },
     {
       "tagName" : "h1",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "A header element"
       ]
     },
     {
       "tagName" : "h2",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "A header element"
       ]
     },
     {
       "tagName" : "h3",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "A header element"
       ]
     },
     {
       "tagName" : "h4",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "A header element"
       ]
     },
     {
       "tagName" : "h5",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "A header element"
       ]
     },
     {
       "tagName" : "h6",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "A header element"
       ]
     },
     {
       "tagName" : "head",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;head&gt;</code> element</strong> provides general information (metadata) about the document, including its title and links to its&nbsp;scripts and style sheets."
       ]
     },
     {
       "tagName" : "header",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;header&gt;</code> element</strong> represents introductory content, typically a group of introductory or navigational aids. It may contain some heading elements but also other elements like a logo, a search form, an author name, and so on."
       ]
     },
     {
       "tagName" : "hr",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;hr&gt;</code> element</strong> represents a thematic break between paragraph-level elements (for example, a change of scene in a story, or a shift of topic with a section). In previous versions of HTML, it represented a horizontal rule. It may still be displayed as a horizontal rule in visual browsers, but is now defined in semantic terms, rather than presentational terms."
       ]
     },
     {
       "tagName" : "html",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;html&gt;</code> element</strong> represents the root (top-level element) of an HTML document, so it is also referred to as the <em>root element</em>. All other elements must be descendants of this element."
       ]
     },
     {
       "tagName" : "i",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;i&gt;</code> element</strong> represents a range of text that is set off from the normal text for some reason, for example, technical terms, foreign language phrases, or fictional character thoughts. It is typically displayed in italic type."
       ]
     },
     {
       "tagName" : "iframe",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;iframe&gt;</code>&nbsp;element</strong>&nbsp;represents a nested browsing context, effectively embedding another HTML page into the current page. In HTML 4.01, a document may contain a <code>head</code> and a <code>body</code> or a <code>head</code> and a <code>frameset</code>, but not both a <code>body</code> and a <code>frameset</code>. However, an <code>&lt;iframe&gt;</code> can be used within a normal document body. Each browsing context has its own session history and active document. The browsing context that contains the embedded content is called the <dfn>parent</dfn> browsing context. The <dfn>top-level</dfn> browsing context (which has no parent) is typically the browser window."
       ]
     },
     {
       "tagName" : "img",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;img&gt;</code> element</strong> represents an image in the document."
       ]
     },
     {
       "tagName" : "input",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLInputElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;input&gt;</code> element</strong> is used to create interactive controls for web-based forms in order to accept data from the user."
       ]
     },
     {
       "tagName" : "ins",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;ins&gt;</code> element</strong> represents a range of text that has been added to a document."
       ]
     },
     {
       "tagName" : "kbd",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;kbd&gt;</code> element</strong> represents user input and produces an inline element displayed in the browser's default monospace font."
       ]
     },
     {
       "tagName" : "keygen",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The HTML <code>&lt;keygen&gt;</code> element exists to facilitate generation of key material, and submission of the public key as part of an <a href=\"/en-US/docs/Web/Guide/HTML/Forms\">HTML form</a>. This mechanism is designed for use with Web-based certificate management systems. It is expected that the <code>&lt;keygen&gt;</code> element will be used in an HTML form along with other information needed to construct a certificate request, and that the result of the process will be a signed certificate."
       ]
     },
     {
       "tagName" : "label",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;label&gt;</code> element</strong> represents a caption for an item in a user interface."
       ]
     },
     {
       "tagName" : "legend",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;legend&gt;</code> element</strong> represents a caption for the content of its parent <a title=\"The HTML <fieldset> element is used to group several controls as well as labels (<label>) within a web form.\" href=\"/en-US/docs/Web/HTML/Element/fieldset\"><code>&lt;fieldset&gt;</code></a>."
       ]
     },
     {
       "tagName" : "li",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;li&gt;</code> element</strong> is used to represent an item in a list. It must be contained in a parent element: an ordered list (<a title=\"The HTML <ol> element represents an ordered list of items, typically rendered as a numbered list.\" href=\"/en-US/docs/Web/HTML/Element/ol\"><code>&lt;ol&gt;</code></a>), an unordered list (<a title=\"The HTML <ul> element represents an unordered list of items, typically rendered as a bulleted list.\" href=\"/en-US/docs/Web/HTML/Element/ul\"><code>&lt;ul&gt;</code></a>), or a menu (<a title=\"The HTML <menu> element represents a group of commands that a user can perform or activate. This includes both list menus, which might appear across the top of a screen, as well as context menus, such as those that might appear underneath a button after it has been clicked.\" href=\"/en-US/docs/Web/HTML/Element/menu\"><code>&lt;menu&gt;</code></a>). In menus and unordered lists, list items are usually displayed using bullet points. In ordered lists, they are usually displayed with an ascending counter on the left, such as a number or letter."
       ]
     },
     {
       "tagName" : "link",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;link&gt;</code> element</strong> specifies relationships between the current document and an external resource. Possible uses for this element include defining a relational framework for navigation. This element is most used to link to <a title=\"Cascading Style Sheets\" href=\"/en-US/docs/Glossary/CSS\">style sheets</a>."
       ]
     },
     {
       "tagName" : "main",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;main&gt;</code> element</strong> represents the main content of&nbsp;the <a title=\"The HTML <body> Element represents the content of an HTML&nbsp;document. There can be only one <body> element in a document.\" href=\"/en-US/docs/Web/HTML/Element/body\"><code>&lt;body&gt;</code></a> of a document, portion of a document, or application. The main content area consists of content that is directly related to, or expands upon the central topic of, a document or the central functionality of an application."
       ]
     },
     {
       "tagName" : "map",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;map&gt;</code> element</strong> is used with <a title=\"The HTML <area> element defines a hot-spot region on an image, and optionally associates it with a hypertext link. This element is used only within a <map> element.\" href=\"/en-US/docs/Web/HTML/Element/area\"><code>&lt;area&gt;</code></a> elements to define an image map (a clickable link area)."
       ]
     },
     {
       "tagName" : "mark",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "<span class=\"seoSummary\">The <strong>HTML <code>&lt;mark&gt;</code> element</strong> represents highlighted text, i.e., a run of text marked for reference purpose, due to its <em>relevance</em> in a particular context.</span> For example it can be used in a page showing search results to highlight every instance of the searched-for word."
       ]
     },
     {
       "tagName" : "menu",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;menu&gt;</code> element</strong> represents a group of commands that a user can perform or activate. This includes both list menus, which might appear across the top of a screen, as well as context menus, such as those that might appear underneath a button after it has been clicked."
       ]
     },
     {
       "tagName" : "menuitem",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;menuitem&gt;</code> element</strong> represents a command that a user is able to invoke through a popup menu. This includes context menus, as well as menus that might be attached to a menu button."
       ]
     },
     {
       "tagName" : "meta",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;meta&gt;</code> element</strong> represents <a title=\"metadata: Metadata is — in its very simplest definition — data that describes data. For example, an HTML document is data, but HTML can also contain metadata in its <head> element that describes the document — for example who wrote it, and its summary.\" class=\"glossaryLink\" href=\"/en-US/docs/Glossary/Metadata\">metadata</a> that cannot be represented by other HTML meta-related elements, like <a title=\"The HTML <base> element specifies the base URL to use for all relative URLs contained within a document. There can be only one <base> element in a document.\" href=\"/en-US/docs/Web/HTML/Element/base\"><code>&lt;base&gt;</code></a>, <a title=\"The HTML <link> element specifies relationships between the current document and an external resource. Possible uses for this element include defining a relational framework for navigation. This element is most used to link to style sheets.\" href=\"/en-US/docs/Web/HTML/Element/link\"><code>&lt;link&gt;</code></a>, <a title=\"The HTML <script> element is used to embed or reference an executable script.\" href=\"/en-US/docs/Web/HTML/Element/script\"><code>&lt;script&gt;</code></a>, <a title=\"The HTML <style> element contains style information for a document, or part of a document. By default, the style instructions written inside that element are expected to be CSS.\" href=\"/en-US/docs/Web/HTML/Element/style\"><code>&lt;style&gt;</code></a> or <a title=\"The HTML <title> element defines the title of the document, shown in a browser's title bar or on the page's tab. It can only contain text, and any contained tags are ignored.\" href=\"/en-US/docs/Web/HTML/Element/title\"><code>&lt;title&gt;</code></a>."
       ]
     },
     {
       "tagName" : "meter",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;meter&gt;</code> element</strong> represents either a scalar value within a known range or a fractional value."
       ]
     },
     {
       "tagName" : "nav",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "<span class=\"seoSummary\">The <strong>HTML <code>&lt;nav&gt;</code> element</strong> represents a section of a page whose purpose is to provide navigation links, either within the current document or to other documents. Common examples of navigation sections are menus, tables of contents, and indexes.</span>"
       ]
     },
     {
       "tagName" : "noscript",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;noscript&gt;</code> element</strong> defines a section of HTML to be inserted if a script type on the page is unsupported or if scripting is currently turned off in the browser."
       ]
     },
     {
       "tagName" : "object",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;object&gt;</code> element</strong> represents an external resource, which can be treated as an image, a nested browsing context, or a resource to be handled by a plugin."
       ]
     },
     {
       "tagName" : "ol",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;ol&gt;</code> element</strong> represents an ordered list of items, typically rendered as a numbered list."
       ]
     },
     {
       "tagName" : "optgroup",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;optgroup&gt;</code> element</strong> creates a grouping of options within a <a title=\"The HTML <select> element represents a control that provides a menu of options:\" href=\"/en-US/docs/Web/HTML/Element/select\"><code>&lt;select&gt;</code></a> element."
       ]
     },
     {
       "tagName" : "option",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "<span class=\"seoSummary\">The <strong>HTML <code>&lt;option&gt;</code> element</strong> is used to define an item contained in a <a title=\"The HTML <select> element represents a control that provides a menu of options:\" href=\"/en-US/docs/Web/HTML/Element/select\"><code>&lt;select&gt;</code></a>, an <a title=\"The HTML <optgroup> element creates a grouping of options within a <select> element.\" href=\"/en-US/docs/Web/HTML/Element/optgroup\"><code>&lt;optgroup&gt;</code></a>, or a <a title=\"The HTML <datalist> element contains a set of <option> elements that represent the values available for other controls.\" href=\"/en-US/docs/Web/HTML/Element/datalist\"><code>&lt;datalist&gt;</code></a>&nbsp;element. As such,&nbsp;<code>&lt;option&gt;</code>&nbsp;can represent menu items in popups and other lists of items in an HTML document.</span>"
       ]
     },
     {
       "tagName" : "output",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;output&gt;</code> element</strong> represents the result of a calculation or user action."
       ]
     },
     {
       "tagName" : "p",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "<span class=\"seoSummary\">The <strong>HTML <code>&lt;p&gt;</code> element</strong> represents a paragraph of text.</span> Paragraphs are usually represented in visual media as blocks of text that are separated from adjacent blocks by vertical blank space and/or first-line indentation.&nbsp;Paragraphs are <a href=\"/en-US/docs/Web/HTML/Block-level_elements\">block-level elements</a>."
       ]
     },
     {
       "tagName" : "param",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;param&gt;</code> element</strong> defines parameters for an <a title=\"The HTML <object> element represents an external resource, which can be treated as an image, a nested browsing context, or a resource to be handled by a plugin.\" href=\"/en-US/docs/Web/HTML/Element/object\"><code>&lt;object&gt;</code></a> element."
       ]
     },
     {
       "tagName" : "picture",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;picture&gt;</code> element</strong> is a container used to specify multiple <a title=\"The HTML <source> element specifies multiple media resources for either the <picture>, the <audio> or the <video> element. It is an empty element. It is commonly used to serve the same media content in multiple formats supported by different browsers.\" href=\"/en-US/docs/Web/HTML/Element/source\"><code>&lt;source&gt;</code></a> elements for a specific <a title=\"The HTML <img> element represents an image in the document.\" href=\"/en-US/docs/Web/HTML/Element/img\"><code>&lt;img&gt;</code></a> contained in it. The browser will choose the most suitable source according to the current layout of the page (the constraints of the box the image will appear in) and the device it will be displayed on (e.g. a normal or hiDPI device.)"
       ]
     },
     {
       "tagName" : "pre",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;pre&gt;</code> element</strong> represents preformatted text. Text within this element is typically displayed in a non-proportional (\"<a href=\"/en-US/docs/XUL/Style/monospace\">monospace</a>\") font exactly as it is laid out in the file. Whitespace inside this element is displayed as typed."
       ]
     },
     {
       "tagName" : "progress",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;progress&gt;</code> element</strong> represents the completion progress of a task, typically displayed as a progress bar."
       ]
     },
     {
       "tagName" : "q",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;q&gt;</code> element </strong> indicates that the enclosed text is a short inline quotation. This element is intended for short quotations that don't require paragraph breaks; for long quotations use the <a title=\"The HTML <blockquote> Element (or HTML Block Quotation Element) indicates that the enclosed text is an extended quotation. Usually, this is rendered visually by indentation (see Notes for how to change it). A URL for the source of the quotation may be given using the cite attribute, while a text representation of the source can be given using the <cite> element.\" href=\"/en-US/docs/Web/HTML/Element/blockquote\"><code>&lt;blockquote&gt;</code></a> element."
       ]
     },
     {
       "tagName" : "rp",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;rp&gt;</code> element</strong> is used to provide fall-back parentheses for browsers that do not support display of ruby annotations using the <a title=\"The HTML <ruby> element represents a ruby annotation. Ruby annotations are for showing pronunciation of East Asian characters.\" href=\"/en-US/docs/Web/HTML/Element/ruby\"><code>&lt;ruby&gt;</code></a> element."
       ]
     },
     {
       "tagName" : "rt",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;rt&gt;</code> element</strong> embraces pronunciation of characters presented in a ruby annotations, which are used to describe the pronunciation of East Asian characters. This element is always used inside a <a title=\"The HTML <ruby> element represents a ruby annotation. Ruby annotations are for showing pronunciation of East Asian characters.\" href=\"/en-US/docs/Web/HTML/Element/ruby\"><code>&lt;ruby&gt;</code></a> element."
       ]
     },
     {
       "tagName" : "ruby",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;ruby&gt;</code> element</strong> represents a ruby annotation. Ruby annotations are for showing pronunciation of East Asian characters."
       ]
     },
     {
       "tagName" : "s",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;s&gt;</code> element</strong> renders text with a strikethrough, or a line through it. Use the <code>&lt;s&gt;</code> element to represent things that are no longer relevant or no longer accurate. However, <code>&lt;s&gt;</code> is not appropriate when indicating document edits; for that, use the <a title=\"The HTML <del> element represents a range of text that has been deleted from a document. This element is often (but need not be) rendered with strike-through text.\" href=\"/en-US/docs/Web/HTML/Element/del\"><code>&lt;del&gt;</code></a> and <a title=\"The HTML <ins> element represents a range of text that has been added to a document.\" href=\"/en-US/docs/Web/HTML/Element/ins\"><code>&lt;ins&gt;</code></a> elements, as appropriate."
       ]
     },
     {
       "tagName" : "samp",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;samp&gt;</code> element</strong> is an element intended to identify sample output from a computer program. It is usually displayed in the browser's default monotype font (such as Lucida Console)."
       ]
     },
     {
       "tagName" : "script",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;script&gt;</code> element</strong> is used to embed or reference an executable script."
       ]
     },
     {
       "tagName" : "section",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;section&gt;</code> element</strong> represents a standalone section of functionality contained within an HTML document, typically with a heading, which doesn't have a more specific semantic element to represent it."
       ]
     },
     {
       "tagName" : "select",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "<span class=\"seoSummary\">The <strong>HTML <code>&lt;select&gt;</code> element</strong> represents a control that provides a menu of options:</span>"
       ]
     },
     {
       "tagName" : "small",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;small&gt;</code></strong> <strong>element </strong>makes the text <em>font size</em> one size smaller (for example, from large to medium, or from small to x-small) down to the browser's minimum font size.&nbsp; In HTML5, this element is repurposed to represent side-comments and small print, including copyright and legal text, independent of its styled presentation."
       ]
     },
     {
       "tagName" : "source",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;source&gt;</code> element</strong> specifies multiple media resources for either the <a title=\"The HTML <picture> element is a container used to specify multiple <source> elements for a specific <img> contained in it. The browser will choose the most suitable source according to the current layout of the page (the constraints of the box the image will appear in) and the device it will be displayed on (e.g. a normal or hiDPI device.)\" href=\"/en-US/docs/Web/HTML/Element/picture\"><code>&lt;picture&gt;</code></a>, the <a title=\"The HTML <audio> element is used to embed sound content in documents. It may contain one or more audio sources, represented using the src attribute or the <source> element:&nbsp;the browser will choose the most suitable one. It can also be the destination for streamed media, using a MediaStream.\" href=\"/en-US/docs/Web/HTML/Element/audio\"><code>&lt;audio&gt;</code></a> or the <a title=\"Use the HTML <video> element to embed video content in a document.\" href=\"/en-US/docs/Web/HTML/Element/video\"><code>&lt;video&gt;</code></a> element. It is an empty element. It is commonly used to serve the same media content in <a href=\"/en-US/docs/Media_formats_supported_by_the_audio_and_video_elements\">multiple formats supported by different browsers</a>."
       ]
     },
     {
       "tagName" : "span",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "<span class=\"seoSummary\">The <strong>HTML <code>&lt;span&gt;</code> element</strong> is a generic inline container for phrasing content, which does not inherently represent anything. It can be used to group elements for styling purposes (using the <code>class</code> or <code>id</code> attributes), or because they share attribute values, such as <code>lang</code>.</span> It should be used only when no other semantic element is appropriate. <code>&lt;span&gt;</code> is very much like a <a title=\"The HTML <div> element is the generic container for flow content and does not inherently represent anything. Use it to group elements for purposes such as styling (using the class or id attributes), marking a section of a document in a different language (using the lang attribute), and so on.\" href=\"/en-US/docs/Web/HTML/Element/div\"><code>&lt;div&gt;</code></a> element, but <a title=\"The HTML <div> element is the generic container for flow content and does not inherently represent anything. Use it to group elements for purposes such as styling (using the class or id attributes), marking a section of a document in a different language (using the lang attribute), and so on.\" href=\"/en-US/docs/Web/HTML/Element/div\"><code>&lt;div&gt;</code></a> is a <a href=\"/en-US/docs/HTML/Block-level_elements\">block-level element</a> whereas a <code>&lt;span&gt;</code> is an<a href=\"/en-US/docs/HTML/Inline_elements\"> inline element</a>."
       ]
     },
     {
       "tagName" : "strong",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML </strong><code><strong>&lt;strong&gt;</strong></code><strong> element</strong> gives text strong importance, and is typically displayed in bold."
       ]
     },
     {
       "tagName" : "style",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;style&gt;</code> element</strong> contains style information for a document, or part of a document. By default, the style instructions written inside that element are expected to be <a href=\"/en-US/docs/Web/CSS\">CSS</a>."
       ]
     },
     {
       "tagName" : "sub",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;sub&gt;</code> element</strong> defines a span of text that should be displayed, for typographic reasons, lower, and often smaller, than the main span of text."
       ]
     },
     {
       "tagName" : "summary",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;summary&gt;</code> element</strong> is used as a summary, caption, or legend for the content of a <a title=\"The HTML <details> element is used as a disclosure widget from which the user can retrieve additional information.\" href=\"/en-US/docs/Web/HTML/Element/details\"><code>&lt;details&gt;</code></a> element."
       ]
     },
     {
       "tagName" : "sup",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;sup&gt;</code> element</strong> defines a span of text that should be displayed, for typographic reasons, higher, and often smaller, than the main span of text."
       ]
     },
     {
       "tagName" : "table",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;table&gt;</code> element</strong> represents tabular data — that is, information expressed via a two-dimensional data table."
       ]
     },
     {
       "tagName" : "tbody",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;tbody&gt;</code> element</strong> groups one or more <a title=\"The HTML <tr> element specifies that the markup contained inside the <tr> block comprises one row of a table, inside which the <th> and <td> elements create header and data cells, respectively, within the row.\" href=\"/en-US/docs/Web/HTML/Element/tr\"><code>&lt;tr&gt;</code></a> elements as the body of a <a title=\"The HTML <table> element represents tabular data — that is, information expressed via a two-dimensional data table.\" href=\"/en-US/docs/Web/HTML/Element/table\"><code>&lt;table&gt;</code></a> element."
       ]
     },
     {
       "tagName" : "td",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;td&gt;</code> element</strong> defines a cell of a table that contains data. It participates in the <em>table model</em>."
       ]
     },
     {
       "tagName" : "textarea",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;textarea&gt;</code> element</strong> represents a multi-line plain-text editing control."
       ]
     },
     {
       "tagName" : "tfoot",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;tfoot&gt;</code> element</strong> defines a set of rows summarizing the columns of the table."
       ]
     },
     {
       "tagName" : "th",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "<span class=\"seoSummary\">The <strong>HTML <code>&lt;th&gt;</code> element</strong> defines a cell as header of a group of table cells. The exact nature of this group is defined by the <code><a href=\"/en-US/docs/Web/HTML/Element/th#attr-scope\">scope</a></code> and <code><a href=\"/en-US/docs/Web/HTML/Element/th#attr-headers\">headers</a></code> attributes.</span>"
       ]
     },
     {
       "tagName" : "thead",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;thead&gt;</code> element</strong> defines a set of rows defining the head of the columns of the table."
       ]
     },
     {
       "tagName" : "time",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;time&gt;</code> element</strong> represents either a time on a 24-hour clock or a precise date in the <a class=\"external\" href=\"https://en.wikipedia.org/wiki/Gregorian_calendar\">Gregorian calendar</a> (with optional time and timezone information)."
       ]
     },
     {
       "tagName" : "title",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;title&gt;</code> element</strong> defines the title of the document, shown in a browser's title bar or on the page's tab. It can only contain text, and any contained tags are ignored."
       ]
     },
     {
       "tagName" : "tr",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;tr&gt;</code> element</strong> defines a row of cells in a table. Those can be a mix of <a title=\"The HTML <td> element defines a cell of a table that contains data. It participates in the table model.\" href=\"/en-US/docs/Web/HTML/Element/td\"><code>&lt;td&gt;</code></a> and <a title=\"The HTML <th> element defines a cell as header of a group of table cells. The exact nature of this group is defined by the scope and headers attributes.\" href=\"/en-US/docs/Web/HTML/Element/th\"><code>&lt;th&gt;</code></a> elements."
       ]
     },
     {
       "tagName" : "track",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;track&gt;</code> element</strong> is used as a child of the media elements <a title=\"The HTML <audio> element is used to embed sound content in documents. It may contain one or more audio sources, represented using the src attribute or the <source> element:&nbsp;the browser will choose the most suitable one. It can also be the destination for streamed media, using a MediaStream.\" href=\"/en-US/docs/Web/HTML/Element/audio\"><code>&lt;audio&gt;</code></a> and <a title=\"Use the HTML <video> element to embed video content in a document.\" href=\"/en-US/docs/Web/HTML/Element/video\"><code>&lt;video&gt;</code></a>. It lets you specify timed text tracks (or time-based data), for example to automatically handle subtitles. The tracks are formatted in <a href=\"/en-US/docs/Web/API/Web_Video_Text_Tracks_Format\">WebVTT format</a> (<code>.vtt</code> files) — Web Video Text Tracks."
       ]
     },
     {
       "tagName" : "u",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;u&gt;</code> element</strong> renders text with an underline, a line under the baseline of its content. In HTML5, this element represents a span of text with an unarticulated, though explicitly rendered, non-textual annotation, such as labeling the text as being a proper name in Chinese text (a Chinese proper name mark), or labeling the text as being misspelled."
       ]
     },
     {
       "tagName" : "ul",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The<strong> HTML <code>&lt;ul&gt;</code> element</strong> represents an unordered list of items, typically rendered as a bulleted list."
       ]
     },
     {
       "tagName" : "var",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;var&gt;</code> element</strong> represents a variable in a mathematical expression or a programming context."
       ]
     },
     {
       "tagName" : "video",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "Use the <strong>HTML <code>&lt;video&gt;</code> element</strong> to embed video content in a document."
       ]
     },
     {
       "tagName" : "wbr",
+      "scalajsDomType": "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
         "The <strong>HTML <code>&lt;wbr&gt;</code> element</strong> represents a word break opportunity—a position within text where the browser may optionally break a line, though its line-breaking rules would not otherwise create a break at that location."
       ]

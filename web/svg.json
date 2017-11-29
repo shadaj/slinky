@@ -2,366 +2,439 @@
   "tags" : [
     {
       "tagName" : "a",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "altGlyph",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "altGlyphDef",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "altGlyphItem",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "animate",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "animateColor",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "animateMotion",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "animateTransform",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "circle",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "clipPath",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "cursor",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "defs",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "desc",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "ellipse",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "feBlend",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "feColorMatrix",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "feComponentTransfer",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "feComposite",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "feConvolveMatrix",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "feDiffuseLighting",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "feDisplacementMap",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "feDistantLight",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "feFlood",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "feFuncA",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "feFuncB",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "feFuncG",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "feFuncR",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "feGaussianBlur",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "feImage",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "feMerge",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "feMergeNode",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "feMorphology",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "feOffset",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "fePointLight",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "feSpecularLighting",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "feSpotLight",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "feTile",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "feTurbulence",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "filter",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "font",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "foreignObject",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "g",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "glyph",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "glyphRef",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "hkern",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "image",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "line",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "linearGradient",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "marker",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "mask",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "metadata",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "mpath",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "path",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "pattern",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "polygon",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "polyline",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "radialGradient",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "rect",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "script",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "set",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "stop",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "style",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "svg",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "switch",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "symbol",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "text",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "textPath",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "title",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "tref",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "tspan",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "use",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "view",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     },
     {
       "tagName" : "vkern",
+      "scalajsDomType" : "org.scalajs.dom.raw.HTMLElement",
       "docLines" : [
       ]
     }

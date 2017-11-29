@@ -12,10 +12,18 @@ object Utils {
 
 case class TagsModel(tags: Seq[Tag], attributes: Seq[Attribute])
 
-case class Tag(tagName: String, docLines: Seq[String])
+case class Tag(tagName: String, scalajsDomType: String, docLines: Seq[String])
 
 case class Attribute(attributeName: String,
                      attributeType: String,
                      docLines: Seq[String],
                      compatibleTags: Option[Seq[String]],
-                     withDash: Boolean) /* tag, identifier, doc */
+                     withDash: Boolean) /* tag, identifier, doc */ {
+  lazy val event: Option[String] = {
+    if (attributeType.endsWith("EventHandler")) {
+      Some(attributeType.dropRight("Handler".length))
+    } else {
+      None
+    }
+  }
+}

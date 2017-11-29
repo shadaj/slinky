@@ -64,8 +64,8 @@ object Main extends JSApp {
         input(
           `type` := "foo",
           onChange := ((e) => {
-            println(e.target.asInstanceOf[html.Input].value)
-            setState(e.target.asInstanceOf[html.Input].value)
+            println(e.target.value)
+            setState(e.target.value)
           }),
           className := "foo",
           style := js.Dynamic.literal(

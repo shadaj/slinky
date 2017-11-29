@@ -167,7 +167,7 @@ object MDN extends TagsProvider {
   def extract: (Seq[Tag], Seq[Attribute]) = {
     val tagsWithAttributes = tags.map { n =>
       val extracted = htmlElement(n)
-      (Tag(n, extracted._1.split('\n')), extracted._2)
+      (Tag(n, "", extracted._1.split('\n')), extracted._2)
     }
 
     val attrs = tagsWithAttributes.flatMap(v => v._2.map(t => (v._1, t._1, t._2)))
