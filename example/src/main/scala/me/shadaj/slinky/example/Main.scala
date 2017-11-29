@@ -3,14 +3,10 @@ package me.shadaj.slinky.example
 import me.shadaj.slinky.core._
 import me.shadaj.slinky.core.annotations.react
 import me.shadaj.slinky.core.facade.ReactElement
-
 import me.shadaj.slinky.web.ReactDOM
 import me.shadaj.slinky.web.html._
-
 import me.shadaj.slinky.hot
-
 import me.shadaj.slinky.scalajsreact.Converters._
-
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.html_<^._
 
@@ -18,7 +14,9 @@ import scala.scalajs.js
 import scala.scalajs.js.JSApp
 import org.scalajs.dom.{document, html}
 
-object Main extends JSApp {
+import scala.scalajs.js.annotation.JSExportTopLevel
+
+object Main {
   val Hello =
     ScalaComponent.builder[String]("Hello")
       .render_P(name => <.div(
@@ -82,6 +80,7 @@ object Main extends JSApp {
     }
   }
 
+  @JSExportTopLevel("entrypoint.main")
   def main(): Unit = {
     hot.initialize()
     if (js.isUndefined(js.Dynamic.global.reactContainer)) {

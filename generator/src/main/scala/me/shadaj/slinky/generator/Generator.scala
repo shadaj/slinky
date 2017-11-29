@@ -45,7 +45,6 @@ object Generator extends App {
         }.mkString("\n")
 
         s"""$tagSpecific
-           |def :=(v: ${a.event.get}[org.scalajs.dom.raw.HTMLElement] => Unit) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)
            |def :=(v: () => Unit) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)""".stripMargin
       } else {
         s"""def :=(v: ${a.attributeType}) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)"""
