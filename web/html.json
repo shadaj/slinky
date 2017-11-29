@@ -801,7 +801,7 @@
     },
     {
       "attributeName" : "onToggle",
-      "attributeType" : "EventHandler",
+      "attributeType" : "me.shadaj.slinky.core.facade.SyntheticEvent",
       "docLines" : [
         ""
       ],
@@ -823,7 +823,7 @@
     },
     {
       "attributeName" : "onClose",
-      "attributeType" : "EventHandler",
+      "attributeType" : "me.shadaj.slinky.core.facade.SyntheticEvent",
       "docLines" : [
         ""
       ],
@@ -870,7 +870,7 @@
     },
     {
       "attributeName" : "onPlaying",
-      "attributeType" : "EventHandler",
+      "attributeType" : "me.shadaj.slinky.core.facade.SyntheticEvent",
       "docLines" : [
         ""
       ],
@@ -890,7 +890,7 @@
     },
     {
       "attributeName" : "onTimeUpdate",
-      "attributeType" : "EventHandler",
+      "attributeType" : "me.shadaj.slinky.core.facade.SyntheticEvent",
       "docLines" : [
         ""
       ],
@@ -899,7 +899,7 @@
     },
     {
       "attributeName" : "onSubmit",
-      "attributeType" : "EventHandler",
+      "attributeType" : "me.shadaj.slinky.core.facade.SyntheticEvent",
       "docLines" : [
         ""
       ],
@@ -919,7 +919,7 @@
     },
     {
       "attributeName" : "onLoad",
-      "attributeType" : "EventHandler",
+      "attributeType" : "me.shadaj.slinky.core.facade.SyntheticEvent",
       "docLines" : [
         ""
       ],
@@ -982,7 +982,7 @@
     },
     {
       "attributeName" : "onDragEnd",
-      "attributeType" : "EventHandler",
+      "attributeType" : "me.shadaj.slinky.core.facade.SyntheticEvent",
       "docLines" : [
         ""
       ],
@@ -991,7 +991,7 @@
     },
     {
       "attributeName" : "onFocus",
-      "attributeType" : "EventHandler",
+      "attributeType" : "me.shadaj.slinky.core.facade.SyntheticEvent",
       "docLines" : [
         ""
       ],
@@ -1009,7 +1009,7 @@
     },
     {
       "attributeName" : "onWaiting",
-      "attributeType" : "EventHandler",
+      "attributeType" : "me.shadaj.slinky.core.facade.SyntheticEvent",
       "docLines" : [
         ""
       ],
@@ -1033,7 +1033,7 @@
     },
     {
       "attributeName" : "onError",
-      "attributeType" : "EventHandler",
+      "attributeType" : "me.shadaj.slinky.core.facade.SyntheticEvent",
       "docLines" : [
         ""
       ],
@@ -1042,7 +1042,7 @@
     },
     {
       "attributeName" : "onDragExit",
-      "attributeType" : "EventHandler",
+      "attributeType" : "me.shadaj.slinky.core.facade.SyntheticEvent",
       "docLines" : [
         ""
       ],
@@ -1051,7 +1051,7 @@
     },
     {
       "attributeName" : "onLoadStart",
-      "attributeType" : "EventHandler",
+      "attributeType" : "me.shadaj.slinky.core.facade.SyntheticEvent",
       "docLines" : [
         ""
       ],
@@ -1060,7 +1060,7 @@
     },
     {
       "attributeName" : "onAutoComplete",
-      "attributeType" : "EventHandler",
+      "attributeType" : "me.shadaj.slinky.core.facade.SyntheticEvent",
       "docLines" : [
         ""
       ],
@@ -1094,7 +1094,7 @@
     },
     {
       "attributeName" : "onContextMenu",
-      "attributeType" : "EventHandler",
+      "attributeType" : "me.shadaj.slinky.core.facade.SyntheticEvent",
       "docLines" : [
         ""
       ],
@@ -1129,7 +1129,7 @@
     },
     {
       "attributeName" : "onScroll",
-      "attributeType" : "EventHandler",
+      "attributeType" : "me.shadaj.slinky.core.facade.SyntheticEvent",
       "docLines" : [
         ""
       ],
@@ -1169,7 +1169,7 @@
     },
     {
       "attributeName" : "onInput",
-      "attributeType" : "EventHandler",
+      "attributeType" : "me.shadaj.slinky.core.facade.SyntheticEvent",
       "docLines" : [
         ""
       ],
@@ -1215,7 +1215,7 @@
     },
     {
       "attributeName" : "onCanPlay",
-      "attributeType" : "EventHandler",
+      "attributeType" : "me.shadaj.slinky.core.facade.SyntheticEvent",
       "docLines" : [
         ""
       ],
@@ -1233,7 +1233,7 @@
     },
     {
       "attributeName" : "onClick",
-      "attributeType" : "EventHandler",
+      "attributeType" : "me.shadaj.slinky.core.facade.SyntheticEvent",
       "docLines" : [
         ""
       ],
@@ -1242,7 +1242,7 @@
     },
     {
       "attributeName" : "onLoadedData",
-      "attributeType" : "EventHandler",
+      "attributeType" : "me.shadaj.slinky.core.facade.SyntheticEvent",
       "docLines" : [
         ""
       ],
@@ -1284,7 +1284,7 @@
     },
     {
       "attributeName" : "onShow",
-      "attributeType" : "EventHandler",
+      "attributeType" : "me.shadaj.slinky.core.facade.SyntheticEvent",
       "docLines" : [
         ""
       ],
@@ -1293,7 +1293,7 @@
     },
     {
       "attributeName" : "onSort",
-      "attributeType" : "EventHandler",
+      "attributeType" : "me.shadaj.slinky.core.facade.SyntheticEvent",
       "docLines" : [
         ""
       ],
@@ -1313,7 +1313,7 @@
     },
     {
       "attributeName" : "onMouseUp",
-      "attributeType" : "MouseEventHandler",
+      "attributeType" : "me.shadaj.slinky.web.SyntheticMouseEvent",
       "docLines" : [
         ""
       ],
@@ -1322,7 +1322,7 @@
     },
     {
       "attributeName" : "onCueChange",
-      "attributeType" : "EventHandler",
+      "attributeType" : "me.shadaj.slinky.core.facade.SyntheticEvent",
       "docLines" : [
         ""
       ],
@@ -1331,7 +1331,7 @@
     },
     {
       "attributeName" : "onInvalid",
-      "attributeType" : "EventHandler",
+      "attributeType" : "me.shadaj.slinky.core.facade.SyntheticEvent",
       "docLines" : [
         ""
       ],
@@ -1397,7 +1397,7 @@
     },
     {
       "attributeName" : "onKeyUp",
-      "attributeType" : "EventHandler",
+      "attributeType" : "me.shadaj.slinky.core.facade.SyntheticEvent",
       "docLines" : [
         ""
       ],
@@ -1465,7 +1465,7 @@
     },
     {
       "attributeName" : "onSelect",
-      "attributeType" : "EventHandler",
+      "attributeType" : "me.shadaj.slinky.core.facade.SyntheticEvent",
       "docLines" : [
         ""
       ],
@@ -1474,7 +1474,7 @@
     },
     {
       "attributeName" : "onResize",
-      "attributeType" : "EventHandler",
+      "attributeType" : "me.shadaj.slinky.core.facade.SyntheticEvent",
       "docLines" : [
         ""
       ],
@@ -1492,7 +1492,7 @@
     },
     {
       "attributeName" : "onDrag",
-      "attributeType" : "EventHandler",
+      "attributeType" : "me.shadaj.slinky.core.facade.SyntheticEvent",
       "docLines" : [
         ""
       ],
@@ -1547,7 +1547,7 @@
     },
     {
       "attributeName" : "onMouseMove",
-      "attributeType" : "MouseEventHandler",
+      "attributeType" : "me.shadaj.slinky.web.SyntheticMouseEvent",
       "docLines" : [
         ""
       ],
@@ -1556,7 +1556,7 @@
     },
     {
       "attributeName" : "onMouseDown",
-      "attributeType" : "MouseEventHandler",
+      "attributeType" : "me.shadaj.slinky.web.SyntheticMouseEvent",
       "docLines" : [
         ""
       ],
@@ -1565,7 +1565,7 @@
     },
     {
       "attributeName" : "onPause",
-      "attributeType" : "EventHandler",
+      "attributeType" : "me.shadaj.slinky.core.facade.SyntheticEvent",
       "docLines" : [
         ""
       ],
@@ -1600,7 +1600,7 @@
     },
     {
       "attributeName" : "onMouseEnter",
-      "attributeType" : "MouseEventHandler",
+      "attributeType" : "me.shadaj.slinky.web.SyntheticMouseEvent",
       "docLines" : [
         ""
       ],
@@ -1609,7 +1609,7 @@
     },
     {
       "attributeName" : "onDrop",
-      "attributeType" : "EventHandler",
+      "attributeType" : "me.shadaj.slinky.core.facade.SyntheticEvent",
       "docLines" : [
         ""
       ],
@@ -1618,7 +1618,7 @@
     },
     {
       "attributeName" : "onEnded",
-      "attributeType" : "EventHandler",
+      "attributeType" : "me.shadaj.slinky.core.facade.SyntheticEvent",
       "docLines" : [
         ""
       ],
@@ -1715,7 +1715,7 @@
     },
     {
       "attributeName" : "onEmptied",
-      "attributeType" : "EventHandler",
+      "attributeType" : "me.shadaj.slinky.core.facade.SyntheticEvent",
       "docLines" : [
         ""
       ],
@@ -1744,7 +1744,7 @@
     },
     {
       "attributeName" : "onMouseOver",
-      "attributeType" : "MouseEventHandler",
+      "attributeType" : "me.shadaj.slinky.web.SyntheticMouseEvent",
       "docLines" : [
         ""
       ],
@@ -1753,7 +1753,7 @@
     },
     {
       "attributeName" : "onCanPlayThrough",
-      "attributeType" : "EventHandler",
+      "attributeType" : "me.shadaj.slinky.core.facade.SyntheticEvent",
       "docLines" : [
         ""
       ],
@@ -1773,7 +1773,7 @@
     },
     {
       "attributeName" : "onAbort",
-      "attributeType" : "EventHandler",
+      "attributeType" : "me.shadaj.slinky.core.facade.SyntheticEvent",
       "docLines" : [
         ""
       ],
@@ -1821,7 +1821,7 @@
     },
     {
       "attributeName" : "onLoadedMetadata",
-      "attributeType" : "EventHandler",
+      "attributeType" : "me.shadaj.slinky.core.facade.SyntheticEvent",
       "docLines" : [
         ""
       ],
@@ -1856,7 +1856,7 @@
     },
     {
       "attributeName" : "onPlay",
-      "attributeType" : "EventHandler",
+      "attributeType" : "me.shadaj.slinky.core.facade.SyntheticEvent",
       "docLines" : [
         ""
       ],
@@ -1910,7 +1910,7 @@
     },
     {
       "attributeName" : "onProgress",
-      "attributeType" : "EventHandler",
+      "attributeType" : "me.shadaj.slinky.core.facade.SyntheticEvent",
       "docLines" : [
         ""
       ],
@@ -1919,7 +1919,7 @@
     },
     {
       "attributeName" : "onCancel",
-      "attributeType" : "EventHandler",
+      "attributeType" : "me.shadaj.slinky.core.facade.SyntheticEvent",
       "docLines" : [
         ""
       ],
@@ -1928,7 +1928,7 @@
     },
     {
       "attributeName" : "onReset",
-      "attributeType" : "EventHandler",
+      "attributeType" : "me.shadaj.slinky.core.facade.SyntheticEvent",
       "docLines" : [
         ""
       ],
@@ -1965,7 +1965,7 @@
     },
     {
       "attributeName" : "onKeyDown",
-      "attributeType" : "EventHandler",
+      "attributeType" : "me.shadaj.slinky.core.facade.SyntheticEvent",
       "docLines" : [
         ""
       ],
@@ -1985,7 +1985,7 @@
     },
     {
       "attributeName" : "onStalled",
-      "attributeType" : "EventHandler",
+      "attributeType" : "me.shadaj.slinky.core.facade.SyntheticEvent",
       "docLines" : [
         ""
       ],
@@ -2060,7 +2060,7 @@
     },
     {
       "attributeName" : "onMouseLeave",
-      "attributeType" : "MouseEventHandler",
+      "attributeType" : "me.shadaj.slinky.web.SyntheticMouseEvent",
       "docLines" : [
         ""
       ],
@@ -2104,7 +2104,7 @@
     },
     {
       "attributeName" : "onDragOver",
-      "attributeType" : "EventHandler",
+      "attributeType" : "me.shadaj.slinky.core.facade.SyntheticEvent",
       "docLines" : [
         ""
       ],
@@ -2113,7 +2113,7 @@
     },
     {
       "attributeName" : "onDoubleClick",
-      "attributeType" : "EventHandler",
+      "attributeType" : "me.shadaj.slinky.core.facade.SyntheticEvent",
       "docLines" : [
         ""
       ],
@@ -2144,7 +2144,7 @@
     },
     {
       "attributeName" : "onAutoCompleteError",
-      "attributeType" : "EventHandler",
+      "attributeType" : "me.shadaj.slinky.core.facade.SyntheticEvent",
       "docLines" : [
         ""
       ],
@@ -2212,7 +2212,7 @@
     },
     {
       "attributeName" : "onDragStart",
-      "attributeType" : "EventHandler",
+      "attributeType" : "me.shadaj.slinky.core.facade.SyntheticEvent",
       "docLines" : [
         ""
       ],
@@ -2234,7 +2234,7 @@
     },
     {
       "attributeName" : "onSuspend",
-      "attributeType" : "EventHandler",
+      "attributeType" : "me.shadaj.slinky.core.facade.SyntheticEvent",
       "docLines" : [
         ""
       ],
@@ -2254,7 +2254,7 @@
     },
     {
       "attributeName" : "onSeeked",
-      "attributeType" : "EventHandler",
+      "attributeType" : "me.shadaj.slinky.core.facade.SyntheticEvent",
       "docLines" : [
         ""
       ],
@@ -2263,7 +2263,7 @@
     },
     {
       "attributeName" : "onMouseOut",
-      "attributeType" : "MouseEventHandler",
+      "attributeType" : "me.shadaj.slinky.web.SyntheticMouseEvent",
       "docLines" : [
         ""
       ],
@@ -2272,7 +2272,7 @@
     },
     {
       "attributeName" : "onMouseWheel",
-      "attributeType" : "MouseEventHandler",
+      "attributeType" : "me.shadaj.slinky.web.SyntheticMouseEvent",
       "docLines" : [
         ""
       ],
@@ -2290,7 +2290,7 @@
     },
     {
       "attributeName" : "onSeeking",
-      "attributeType" : "EventHandler",
+      "attributeType" : "me.shadaj.slinky.core.facade.SyntheticEvent",
       "docLines" : [
         ""
       ],
@@ -2299,7 +2299,7 @@
     },
     {
       "attributeName" : "onChange",
-      "attributeType" : "EventHandler",
+      "attributeType" : "me.shadaj.slinky.core.facade.SyntheticEvent",
       "docLines" : [
         ""
       ],
@@ -2308,7 +2308,7 @@
     },
     {
       "attributeName" : "onBlur",
-      "attributeType" : "EventHandler",
+      "attributeType" : "me.shadaj.slinky.core.facade.SyntheticEvent",
       "docLines" : [
         ""
       ],
@@ -2317,7 +2317,7 @@
     },
     {
       "attributeName" : "onKeyPress",
-      "attributeType" : "EventHandler",
+      "attributeType" : "me.shadaj.slinky.core.facade.SyntheticEvent",
       "docLines" : [
         ""
       ],
@@ -2339,7 +2339,7 @@
     },
     {
       "attributeName" : "onDragLeave",
-      "attributeType" : "EventHandler",
+      "attributeType" : "me.shadaj.slinky.core.facade.SyntheticEvent",
       "docLines" : [
         ""
       ],
@@ -2348,7 +2348,7 @@
     },
     {
       "attributeName" : "onDragEnter",
-      "attributeType" : "EventHandler",
+      "attributeType" : "me.shadaj.slinky.core.facade.SyntheticEvent",
       "docLines" : [
         ""
       ],
@@ -2378,7 +2378,7 @@
     },
     {
       "attributeName" : "onVolumeChange",
-      "attributeType" : "EventHandler",
+      "attributeType" : "me.shadaj.slinky.core.facade.SyntheticEvent",
       "docLines" : [
         ""
       ],
@@ -2402,7 +2402,7 @@
     },
     {
       "attributeName" : "onDurationChange",
-      "attributeType" : "EventHandler",
+      "attributeType" : "me.shadaj.slinky.core.facade.SyntheticEvent",
       "docLines" : [
         ""
       ],
@@ -2484,7 +2484,7 @@
     },
     {
       "attributeName" : "onRateChange",
-      "attributeType" : "EventHandler",
+      "attributeType" : "me.shadaj.slinky.core.facade.SyntheticEvent",
       "docLines" : [
         ""
       ],

@@ -20,8 +20,8 @@ case class Attribute(attributeName: String,
                      compatibleTags: Option[Seq[String]],
                      withDash: Boolean) /* tag, identifier, doc */ {
   lazy val event: Option[String] = {
-    if (attributeType.endsWith("EventHandler")) {
-      Some(attributeType.dropRight("Handler".length))
+    if (attributeType.contains("Synthetic")) {
+      Some(attributeType)
     } else {
       None
     }

@@ -6,7 +6,8 @@ import me.shadaj.slinky.web.html._
 
 import scala.scalajs.js
 
-import org.scalajs.dom.MouseEvent
+import me.shadaj.slinky.web.SyntheticMouseEvent
+import org.scalajs.dom.raw.HTMLElement
 
 class TagTest extends FunSuite {
   test("Fails compilation when an incompatible attr is provided") {
@@ -43,6 +44,6 @@ class TagTest extends FunSuite {
   }
 
   test("Mouse events can be given a function taking a MouseEvent") {
-    assertCompiles("div(onMouseOver := ((v: MouseEvent) => {}))")
+    assertCompiles("div(onMouseOver := ((v: SyntheticMouseEvent[HTMLElement]) => {}))")
   }
 }

@@ -41,14 +41,12 @@ object Generator extends App {
         }
 
         val tagSpecific = targetTags.map { t =>
-          s"""
-              def :=(v: SyntheticEvent[${t.scalajsDomType}] => Unit)(implicit _imp: ${Utils.identifierFor(t.tagName)}.tagType.type): TagMod[${Utils.identifierFor(t.tagName)}.tag.type] = new AttrPair[${Utils.identifierFor(t.tagName)}.tag.type]("${a.attributeName}", v)
-           """.stripMargin
+          s"""def :=(v: ${a.event.get}[${t.scalajsDomType}] => Unit)(implicit _imp: ${Utils.identifierFor(t.tagName)}.tagType.type): TagMod[${Utils.identifierFor(t.tagName)}.tag.type] = new AttrPair[${Utils.identifierFor(t.tagName)}.tag.type]("${a.attributeName}", v)"""
         }.mkString("\n")
 
         s"""$tagSpecific
-           |def :=(v: () => Unit) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)
-         """.stripMargin
+           |def :=(v: ${a.event.get}[org.scalajs.dom.raw.HTMLElement] => Unit) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)
+           |def :=(v: () => Unit) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)""".stripMargin
       } else {
         s"""def :=(v: ${a.attributeType}) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)"""
       }
