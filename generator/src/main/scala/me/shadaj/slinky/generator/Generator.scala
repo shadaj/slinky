@@ -46,6 +46,14 @@ object Generator extends App {
 
         s"""$tagSpecific
            |def :=(v: () => Unit) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)""".stripMargin
+      } else if (a.attributeName == "ref") {
+        val targetTags = a.compatibleTags.getOrElse(extracted.tags.map(_.tagName)).map { t =>
+          extracted.tags.find(_.tagName == t).get
+        }
+
+        targetTags.map { t =>
+          s"""def :=(v: ${t.scalajsDomType} => Unit)(implicit _imp: ${Utils.identifierFor(t.tagName)}.tagType.type): TagMod[${Utils.identifierFor(t.tagName)}.tag.type] = new AttrPair[${Utils.identifierFor(t.tagName)}.tag.type]("${a.attributeName}", v)"""
+        }.mkString("\n")
       } else {
         s"""def :=(v: ${a.attributeType}) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)"""
       }

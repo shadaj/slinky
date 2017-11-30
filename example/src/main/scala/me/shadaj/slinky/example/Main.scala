@@ -65,6 +65,9 @@ object Main {
             println(e.target.value)
             setState(e.target.value)
           }),
+          ref := ((node) => {
+            println(node.value)
+          }),
           className := "foo",
           style := js.Dynamic.literal(
             "color" -> (if (state.contains(" ")) "red" else "green")
