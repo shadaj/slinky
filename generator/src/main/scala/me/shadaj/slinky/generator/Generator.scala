@@ -72,7 +72,7 @@ object Generator extends App {
       out.println(
         s"""package ${pkg}
            |
-           |import me.shadaj.slinky.core.{AttrPair, TagComponent, TagMod}
+           |import me.shadaj.slinky.core.{AttrPair, TagComponent, TagMod, TagElement}
            |import scala.scalajs.js
            |import scala.language.implicitConversions
            |
@@ -80,7 +80,7 @@ object Generator extends App {
            | * ${attrs.map(_.docLines.map(_.replace("*", "&#47;")).mkString("\n * ")).getOrElse("")}
            | */
            |object $symbol $symbolExtends {
-           |object tag
+           |object tag extends TagElement
            |${tagsGen.mkString("\n")}
            |${attrsGen.mkString("\n")}
            |}
