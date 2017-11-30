@@ -33,7 +33,9 @@ lazy val macroAnnotationSettings = Seq(
 
 lazy val generator = project
 
-lazy val core = project.settings(macroAnnotationSettings, publishSettings)
+lazy val readWrite = project.settings(publishSettings)
+
+lazy val core = project.settings(macroAnnotationSettings, publishSettings).dependsOn(readWrite)
 
 lazy val web = project.settings(
   sourceGenerators in Compile += Def.taskDyn[Seq[File]] {

@@ -1,5 +1,7 @@
 package me.shadaj.slinky.core
 
+import me.shadaj.slinky.readwrite.{Reader, Writer}
+
 import scala.scalajs.js
 import scala.scalajs.js.annotation.ScalaJSDefined
 

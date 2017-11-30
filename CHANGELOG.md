@@ -11,6 +11,7 @@
 + Fix bug with hot loading using the wrong proxy component when there are multiple components classes in the tree [PR #50](https://github.com/shadaj/slinky/pull/50)
 + Add support for reading and writing js.Dynamic (and anything that extends js.Any) [PR #51](https://github.com/shadaj/slinky/pull/51)
 + Add support for reading and writing union types (js.|) [PR #52](https://github.com/shadaj/slinky/pull/52)
++ Slinky's implementation of mapping Scala types to JS types is now available as a separate module `slinky-readwrite` [PR #54](https://github.com/shadaj/slinky/pull/54)
 
 ### `@react` macro annotation (experimental)
 One of Slinky's main goals is to have React components written in Scala look very similar to ES6. In version 0.1.x, Slinky required
