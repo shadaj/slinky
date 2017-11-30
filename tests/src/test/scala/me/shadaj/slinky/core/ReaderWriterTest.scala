@@ -1,5 +1,6 @@
 package me.shadaj.slinky.core
 
+import me.shadaj.slinky.readwrite.{Reader, Writer}
 import org.scalatest.FunSuite
 
 import scala.scalajs.js
@@ -18,7 +19,6 @@ class ReaderWriterTest extends FunSuite {
     }
 
     assert(reader.read(written) == v)
-    assert(reader.read(writer.write(v, true), true) == v)
   }
 
   test("Read/write - byte") {

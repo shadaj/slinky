@@ -1,6 +1,7 @@
 package me.shadaj.slinky.core
 
 import me.shadaj.slinky.core.facade.{React, ReactElement}
+import me.shadaj.slinky.readwrite.{Reader, Writer}
 
 import scala.scalajs.js
 import scala.scalajs.js.ConstructorTag
@@ -53,7 +54,7 @@ abstract class BaseComponentWrapper {
 
   def apply(p: Props)(implicit propsWriter: Writer[Props], propsReader: Reader[Props], stateWriter: Writer[State], stateReader: Reader[State], constructorTag: ConstructorTag[Def]): KeyAndRefAddingStage[Def] = {
     val propsObj = if(BaseComponentWrapper.scalaComponentWritingEnabled) {
-      propsWriter.write(p, root = true).asInstanceOf[js.Dictionary[js.Any]]
+      DefinitionBase.writeWithWrappingAdjustment(propsWriter)(p).asInstanceOf[js.Dictionary[js.Any]]
     } else js.Dictionary("__" -> p.asInstanceOf[js.Any])
 
     if (componentConstructorInstance == null) {
