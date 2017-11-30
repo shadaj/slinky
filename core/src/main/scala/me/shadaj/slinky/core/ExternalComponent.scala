@@ -62,7 +62,7 @@ object BuildingComponentMacros {
 
 abstract class ExternalComponent extends ExternalComponentWithAttributes[Nothing]
 
-abstract class ExternalComponentWithAttributes[E] {
+abstract class ExternalComponentWithAttributes[E <: TagElement] {
   type Props
   type Element = E
 
