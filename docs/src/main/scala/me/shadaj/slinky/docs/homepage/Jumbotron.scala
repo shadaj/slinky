@@ -3,6 +3,7 @@ package me.shadaj.slinky.docs.homepage
 import me.shadaj.slinky.core.Component
 import me.shadaj.slinky.core.annotations.react
 import me.shadaj.slinky.core.facade.ReactElement
+import me.shadaj.slinky.reactrouter.Link
 import me.shadaj.slinky.web.html._
 
 import scala.scalajs.js.Dynamic.literal
@@ -45,7 +46,7 @@ import scala.scalajs.js.Dynamic.literal
         flexDirection = "row",
         alignSelf = "center"
       ))(
-        a(style := literal(
+        Link(to = "/docs/installation")(style := literal(
           padding = "15px",
           backgroundColor = "#DC322F",
           color = "white",

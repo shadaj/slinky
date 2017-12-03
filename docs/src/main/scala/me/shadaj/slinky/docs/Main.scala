@@ -4,9 +4,11 @@ import scala.scalajs.js
 import scala.scalajs.js.annotation.{JSExportTopLevel, JSImport}
 import scala.scalajs.LinkingInfo
 import me.shadaj.slinky.core._
-import me.shadaj.slinky.docs.homepage.App
+import me.shadaj.slinky.docs.homepage.Homepage
 import me.shadaj.slinky.web.ReactDOM
 import me.shadaj.slinky.hot
+import me.shadaj.slinky.reactrouter.{BrowserRouter, Route, Switch}
+import me.shadaj.slinky.web.html.{div, style}
 import org.scalajs.dom
 
 @JSImport("resources/index.css", JSImport.Default)
@@ -29,6 +31,21 @@ object Main {
       elem
     }
 
-    ReactDOM.render(App(), container)
+    ReactDOM.render(
+      BrowserRouter(
+        div(
+          Navbar(),
+          div(style := js.Dynamic.literal(
+            marginTop = "60px"
+          ))(
+            Switch(
+              Route("/", Homepage, exact = true),
+              Route("/docs/*", DocsPage)
+            )
+          )
+        )
+      ),
+      container
+    )
   }
 }

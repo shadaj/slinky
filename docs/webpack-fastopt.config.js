@@ -9,6 +9,7 @@ module.exports = {
   },
   output: {
     path: __dirname,
+    publicPath: '/',
     filename: "[name]-library.js",
     library: "appLibrary",
     libraryTarget: "var"
@@ -51,7 +52,8 @@ module.exports = {
     ]),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, "../../../../public/404-fastopt.html"),
-      inject: false
+      inject: false,
+      filename: "404.html"
     })
   ],
   devServer: {

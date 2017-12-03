@@ -12,13 +12,7 @@ import scala.scalajs.js.Dynamic.literal
   type Props = Unit
 
   override def render(): ReactElement = {
-    div(style := literal(
-      maxWidth = "1260px",
-      marginLeft = "auto",
-      marginRight = "auto",
-      marginTop = "10px",
-      padding = "15px"
-    ))(
+    div(
       div(style := literal(
         display = "flex",
         flexDirection = "row",

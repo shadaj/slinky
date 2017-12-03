@@ -162,10 +162,10 @@ object DefinitionBase {
   @inline private[slinky] final def readWithWrappingAdjustment[T](reader: Reader[T])(value: js.Object): T = {
     val __value = value.asInstanceOf[js.Dynamic].__value
 
-    if (js.isUndefined(__value)) {
-      reader.read(value)
-    } else {
+    if (value.hasOwnProperty("__value")) {
       reader.read(__value.asInstanceOf[js.Object])
+    } else {
+      reader.read(value)
     }
   }
 

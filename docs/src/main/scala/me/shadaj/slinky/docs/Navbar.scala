@@ -4,6 +4,7 @@ import me.shadaj.slinky.core.Component
 import me.shadaj.slinky.core.annotations.react
 import me.shadaj.slinky.core.facade.ReactElement
 import me.shadaj.slinky.docs.homepage.SlinkyHorizontalLogo
+import me.shadaj.slinky.reactrouter.Link
 import me.shadaj.slinky.web.html._
 
 import scala.scalajs.js
@@ -55,7 +56,7 @@ import scala.scalajs.js
             width = "20%"
           )
         )(
-          a(
+          Link(to = "/")(
             style := js.Dynamic.literal(
               marginRight = "50px"
             )
@@ -74,7 +75,7 @@ import scala.scalajs.js
             width = "60%"
           )
         )(
-          a(style := linkStyle)(
+          Link(to = "/docs/installation")(style := linkStyle)(
             "Docs"
           ),
           a(style := linkStyle)(
