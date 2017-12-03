@@ -75,7 +75,7 @@ import scala.scalajs.js
             width = "60%"
           )
         )(
-          Link(to = "/docs/installation")(style := linkStyle)(
+          Link(to = "/docs/installation/")(style := linkStyle)(
             "Docs"
           ),
           a(style := linkStyle)(

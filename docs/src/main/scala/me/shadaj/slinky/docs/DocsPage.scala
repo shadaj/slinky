@@ -81,16 +81,31 @@ import js.Dynamic.literal
     )
   )
 
-  override def initialState: Option[String] = None
+  def docsFilePath = {
+    val matchString = props.selectDynamic("match").params.selectDynamic("0").toString
+    s"/docs/${matchString.reverse.dropWhile(_ == '/').reverse}.md"
+  }
+
+  override def initialState: Option[String] = {
+    if (js.typeOf(js.Dynamic.global.window.getPublic) != "undefined") {
+      Some(js.Dynamic.global.window.getPublic(docsFilePath).asInstanceOf[String])
+    } else if (js.typeOf(js.Dynamic.global.window.publicSSR) != "undefined") {
+      js.Dynamic.global.window.publicSSR.asInstanceOf[js.Dictionary[String]].get(docsFilePath)
+    } else {
+      None
+    }
+  }
 
   override def componentDidMount(): Unit = {
-    val xhr = new XMLHttpRequest
-    xhr.onload = _ => {
-      setState(Some(xhr.responseText))
-    }
+    if (state.isEmpty) {
+      val xhr = new XMLHttpRequest
+      xhr.onload = _ => {
+        setState(Some(xhr.responseText))
+      }
 
-    xhr.open("GET", s"/docs/${props.selectDynamic("match").params.selectDynamic("0").toString}.md")
-    xhr.send()
+      xhr.open("GET", docsFilePath)
+      xhr.send()
+    }
   }
 
   override def render(): ReactElement = {

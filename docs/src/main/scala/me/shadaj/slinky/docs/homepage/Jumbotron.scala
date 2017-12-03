@@ -46,7 +46,7 @@ import scala.scalajs.js.Dynamic.literal
         flexDirection = "row",
         alignSelf = "center"
       ))(
-        Link(to = "/docs/installation")(style := literal(
+        Link(to = "/docs/installation/")(style := literal(
           padding = "15px",
           backgroundColor = "#DC322F",
           color = "white",
