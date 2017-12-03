@@ -13,6 +13,7 @@ npmDependencies in Compile += "react-syntax-highlighter" -> "6.0.4"
 npmDependencies in Compile += "remark" -> "8.0.0"
 npmDependencies in Compile += "remark-react" -> "4.0.1"
 
+npmDevDependencies in Compile += "url-loader" -> "0.6.2"
 npmDevDependencies in Compile += "file-loader" -> "1.1.5"
 npmDevDependencies in Compile += "style-loader" -> "0.19.0"
 npmDevDependencies in Compile += "css-loader" -> "0.28.7"

@@ -30,17 +30,10 @@ module.exports = {
         test: /\.css$/,
         use: [ 'style-loader', 'css-loader' ]
       },
-      // "file" loader for svg
+      // url loader for svg
       {
         test: /\.svg$/,
-        use: [
-          {
-            loader: 'file-loader',
-            query: {
-              name: 'static/media/[name].[hash:8].[ext]'
-            }
-          }
-        ]
+        use: [ 'url-loader' ]
       }
     ]
   },
