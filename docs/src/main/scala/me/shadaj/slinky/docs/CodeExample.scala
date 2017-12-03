@@ -66,7 +66,7 @@ import scala.reflect.macros.blackbox
           padding = "10px",
           backgroundColor = "#282c34",
           boxSizing = "border-box",
-          height = "calc(100% - 48px)",
+          height = "calc(100% - 36px)",
           overflow = "auto"
         ))(
           SyntaxHighlighter(language = "scala", style = prismColors)(

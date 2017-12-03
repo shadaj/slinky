@@ -21,7 +21,7 @@ case class BuildingComponent[P, E](c: String | js.Object, props: P, key: String 
   def withRef(ref: js.Object => Unit): BuildingComponent[P, E] = copy(ref = ref)
 
   def apply(children: ReactElement*)(implicit writer: Writer[P]): ReactElement = {
-    val written = writer.write(props).asInstanceOf[js.Dictionary[js.Any]]
+    val written = (if (props != null) writer.write(props) else js.Dynamic.literal()).asInstanceOf[js.Dictionary[js.Any]]
 
     if (key != null) {
       written("key") = key

@@ -2,7 +2,7 @@ package me.shadaj.slinky.docs
 
 import me.shadaj.slinky.core.Component
 import me.shadaj.slinky.core.annotations.react
-import me.shadaj.slinky.core.facade.ReactElement
+import me.shadaj.slinky.core.facade.{Fragment, ReactElement}
 import me.shadaj.slinky.remarkreact.{ReactRenderer, Remark}
 import me.shadaj.slinky.web.html._
 import org.scalajs.dom.raw.XMLHttpRequest
@@ -58,7 +58,7 @@ import js.Dynamic.literal
   case class Props(children: Seq[String])
 
   override def render(): ReactElement = {
-    Seq(
+    Fragment(
       hr(style := literal(
         height = "1px",
         marginBottom = "-1px",
@@ -85,8 +85,7 @@ import js.Dynamic.literal
 
   override def componentDidMount(): Unit = {
     val xhr = new XMLHttpRequest
-    xhr.onload = e => {
-      println(xhr.responseText)
+    xhr.onload = _ => {
       setState(Some(xhr.responseText))
     }
 

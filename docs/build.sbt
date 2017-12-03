@@ -4,8 +4,8 @@ name := "docs"
 
 libraryDependencies += "com.lihaoyi" %%% "sourcecode" % "0.1.4"
 
-npmDependencies in Compile += "react" -> "16.1.0"
-npmDependencies in Compile += "react-dom" -> "16.1.0"
+npmDependencies in Compile += "react" -> "16.2.0"
+npmDependencies in Compile += "react-dom" -> "16.2.0"
 npmDependencies in Compile += "react-proxy" -> "1.1.8"
 
 npmDependencies in Compile += "react-router-dom" -> "4.2.2"

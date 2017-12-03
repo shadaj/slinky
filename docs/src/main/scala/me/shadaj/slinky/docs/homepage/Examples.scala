@@ -18,7 +18,7 @@ import scala.scalajs.js.Dynamic.literal
         flexDirection = "row",
         justifyContent = "space-between",
         width = "100%",
-        maxHeight = "450px",
+        minHeight = "350px",
         marginTop = "35px"
       ))(
         div(style := literal(
@@ -33,7 +33,7 @@ import scala.scalajs.js.Dynamic.literal
             "Input data that is passed into the component can be accessed by ", code("render()"), " via ", code("props")
           )
         ),
-        div(style := literal(width = "65%"))(
+        div(style := literal(width = "65%", maxHeight = "450px"))(
           CodeExample("me.shadaj.slinky.docs.homepage.HelloMessage")
         )
       ),
@@ -42,7 +42,7 @@ import scala.scalajs.js.Dynamic.literal
         flexDirection = "row",
         justifyContent = "space-between",
         width = "100%",
-        maxHeight = "450px",
+        minHeight = "350px",
         marginTop = "35px"
       ))(
         div(style := literal(
@@ -54,7 +54,7 @@ import scala.scalajs.js.Dynamic.literal
             " When a component's state data changes after an invocation of ", code("setState"), ", the rendered markup will be update by re-invoking ", code("render()"), "."
           )
         ),
-        div(style := literal(width = "65%"))(
+        div(style := literal(width = "65%", maxHeight = "450px"))(
           CodeExample("me.shadaj.slinky.docs.homepage.Timer")
         )
       ),
@@ -63,7 +63,7 @@ import scala.scalajs.js.Dynamic.literal
         flexDirection = "row",
         justifyContent = "space-between",
         width = "100%",
-        maxHeight = "450px",
+        minHeight = "350px",
         marginTop = "35px"
       ))(
         div(style := literal(
@@ -74,7 +74,7 @@ import scala.scalajs.js.Dynamic.literal
             "Using ", code("props"), " and ", code("state"), ", we can put together a small Todo application. This example uses state to track the current list of items as well as the text that the user has entered."
           )
         ),
-        div(style := literal(width = "65%"))(
+        div(style := literal(width = "65%", maxHeight = "450px"))(
           CodeExample("me.shadaj.slinky.docs.homepage.TodoApp")
         )
       )
