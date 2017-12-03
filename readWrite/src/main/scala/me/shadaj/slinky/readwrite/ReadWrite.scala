@@ -15,7 +15,7 @@ trait Reader[P] {
   def read(o: js.Object): P = {
     val dyn = o.asInstanceOf[js.Dynamic]
 
-    if (!js.isUndefined(dyn) && !js.isUndefined(dyn.__)) {
+    if (dyn != null && !js.isUndefined(dyn) && !js.isUndefined(dyn.__)) {
       dyn.__.asInstanceOf[P]
     } else {
       forceRead(o)

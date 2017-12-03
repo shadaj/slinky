@@ -38,13 +38,14 @@ class react extends scala.annotation.StaticAnnotation {
             Some(defn)
           case _ => None
         }
-      }.head
+      }.headOption
 
       val definitionClass =
         q"""
            @__SJSDefined
            class Def(jsProps: scala.scalajs.js.Object) extends Definition(jsProps) {
-             ..${clazz.templ.stats.getOrElse(Nil).filterNot(s => s == propsDefinition || s == stateDefinition)}
+             ..${clazz.templ.stats.getOrElse(Nil).filterNot(s => s == propsDefinition || s == stateDefinition.orNull)}
+             ..${if (stateDefinition.isEmpty) Seq(q"override def initialState: State = ()") else Seq.empty}
            }
          """
 
@@ -61,8 +62,14 @@ class react extends scala.annotation.StaticAnnotation {
       (q"type Props = $propsSelect" +:
         q"type State = $stateSelect" +:
         propsAndStateImport +:
-        clazz.templ.stats.getOrElse(Nil).filterNot(s => s == propsDefinition || s == stateDefinition),
-        q"import scala.scalajs.js.annotation.{ScalaJSDefined => __SJSDefined}" +: propsDefinition +: stateDefinition +: definitionClass +: applyMethods)
+        ((if (stateDefinition.isEmpty) Seq(q"override def initialState: State = ()") else Seq.empty) ++
+        clazz.templ.stats.getOrElse(Nil).filterNot(s => s == propsDefinition || s == stateDefinition.orNull)),
+        q"import scala.scalajs.js.annotation.{ScalaJSDefined => __SJSDefined}" +:
+          propsDefinition +:
+          stateDefinition.getOrElse(q"type State = Unit") +:
+          definitionClass +:
+          applyMethods
+      )
     }
 
     def createExternalBody(obj: Defn.Object): Seq[Stat] = {

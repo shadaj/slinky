@@ -64,3 +64,7 @@ lazy val scalajsReactInterop = project.settings(macroAnnotationSettings).depends
 lazy val tests = project.settings(macroAnnotationSettings).dependsOn(core, web, hot, scalajsReactInterop)
 
 lazy val example = project.settings(macroAnnotationSettings).dependsOn(web, hot, scalajsReactInterop)
+
+lazy val docsMacros = project.settings(macroAnnotationSettings).dependsOn(web, hot, scalajsReactInterop)
+
+lazy val docs = project.settings(macroAnnotationSettings).dependsOn(web, hot, scalajsReactInterop, docsMacros)

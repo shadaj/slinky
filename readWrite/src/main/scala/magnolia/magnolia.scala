@@ -169,7 +169,7 @@ object Magnolia {
               val assignedName: TermName = TermName(c.freshName(s"${genericTypeName}Typeclass"))
 
               recurse(ChainedImplicit(genericType.toString), genericType, assignedName) {
-                c.inferImplicitValue(searchType, false, true, c.enclosingPosition)
+                c.inferImplicitValue(searchType, false, false, c.enclosingPosition)
               }.get
             }
 
