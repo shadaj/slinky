@@ -47,13 +47,13 @@ module.exports = {
       { from: path.resolve(__dirname, "../../../../public") }
     ]),
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, "../../../../public/index-fastopt.html"),
+      template: path.resolve(__dirname, "../../../../public/404-fastopt.html"),
       inject: false
     })
   ],
   devServer: {
     historyApiFallback: {
-      index: 'index.html'
+      index: '404.html'
     }
   }
 }

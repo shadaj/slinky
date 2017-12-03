@@ -4,3 +4,4 @@ target/
 core/src/gen
 node_modules/
 package-lock.json
+docs/build

@@ -42,7 +42,7 @@ module.exports = {
       { from: path.resolve(__dirname, "../../../../public") }
     ]),
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, "../../../../public/index.html")
+      template: path.resolve(__dirname, "../../../../public/404.html")
     }),
     new webpack.DefinePlugin({
       'process.env': {
@@ -53,7 +53,7 @@ module.exports = {
   ],
   devServer: {
       historyApiFallback: {
-          index: 'index.html'
+          index: '404.html'
       }
   }
 }
