@@ -62,10 +62,7 @@ module.exports = {
     }),
     new webpack.optimize.UglifyJsPlugin(),
     new StaticSiteGeneratorPlugin({
-        paths: [
-            '/',
-            '/docs/installation'
-        ],
+        crawl: true,
         globals: {
           window: dom.window,
           document: dom.window.document,
