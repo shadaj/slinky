@@ -39,10 +39,14 @@ module.exports = {
   },
   plugins: [
     new CopyWebpackPlugin([
-      { from: path.resolve(__dirname, "../../../../public") }
+      {
+        from: path.resolve(__dirname, "../../../../public"),
+        ignore: ["404.html", "404-fastopt.html"]
+      }
     ]),
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, "../../../../public/404.html")
+      template: path.resolve(__dirname, "../../../../public/404.html"),
+      filename: "404.html"
     }),
     new webpack.DefinePlugin({
       'process.env': {
@@ -56,4 +60,4 @@ module.exports = {
           index: '404.html'
       }
   }
-}
+};
