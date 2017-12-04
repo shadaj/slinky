@@ -141,7 +141,11 @@ import DocsTree._
   }
 
   override def render(): ReactElement = {
-    div(className := "article fill-right", style := literal(marginTop = "40px"))(
+    div(className := "article fill-right", style := literal(
+      marginTop = "40px",
+      paddingLeft = "15px",
+      boxSizing = "border-box"
+    ))(
       div(style := literal(
         display = "flex",
         flexDirection = "row"
