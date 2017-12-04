@@ -20,6 +20,7 @@ object ReactRouterDOM extends js.Object {
   val Route: js.Object = js.native
   val Switch : js.Object = js.native
   val Link: js.Object = js.native
+  val NavLink: js.Object = js.native
 }
 
 @react object StaticRouter extends ExternalComponent {
@@ -48,4 +49,9 @@ object ReactRouterDOM extends js.Object {
 @react object Link extends ExternalComponentWithAttributes[a.tag.type] {
   case class Props(to: String)
   override val component = ReactRouterDOM.Link
+}
+
+@react object NavLink extends ExternalComponentWithAttributes[a.tag.type] {
+  case class Props(to: String, activeStyle: Option[js.Dynamic] = None, activeClassName: Option[String] = None)
+  override val component = ReactRouterDOM.NavLink
 }

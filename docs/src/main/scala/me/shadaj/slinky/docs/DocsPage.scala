@@ -72,40 +72,71 @@ import js.Dynamic.literal
   }
 }
 
-@react class DocsPage extends Component {
-  type Props = js.Dynamic
-  type State = Option[String]
-
+object DocsTree {
   val tree: Map[String, List[(String, String)]] = Map(
     "Quick Start" -> List(
-      "Installation" -> "/docs/installation"
+      "Installation" -> "/docs/installation/",
+      "Hello World!" -> "/docs/hello-world/"
     )
   )
+}
 
-  def docsFilePath = {
+import DocsTree._
+
+@react class DocsPage extends Component {
+  type Props = js.Dynamic
+  case class State(selectedGroup: String, document: Option[String])
+
+  def docsFilePath(props: js.Dynamic) = {
     val matchString = props.selectDynamic("match").params.selectDynamic("0").toString
     s"/docs/${matchString.reverse.dropWhile(_ == '/').reverse}.md"
   }
 
-  override def initialState: Option[String] = {
+  override def initialState: State = {
+    val matchString = props.selectDynamic("match").params.selectDynamic("0").toString
+    val group = tree.find(_._2.exists(_._2 == s"/docs/$matchString")).get._1
+
     if (js.typeOf(js.Dynamic.global.window.getPublic) != "undefined") {
-      Some(js.Dynamic.global.window.getPublic(docsFilePath).asInstanceOf[String])
+      State(group, Some(js.Dynamic.global.window.getPublic(docsFilePath(props)).asInstanceOf[String]))
     } else if (js.typeOf(js.Dynamic.global.window.publicSSR) != "undefined") {
-      js.Dynamic.global.window.publicSSR.asInstanceOf[js.Dictionary[String]].get(docsFilePath)
+      State(group, js.Dynamic.global.window.publicSSR.asInstanceOf[js.Dictionary[String]].get(docsFilePath(props)))
     } else {
-      None
+      State(group, None)
     }
   }
 
   override def componentDidMount(): Unit = {
-    if (state.isEmpty) {
+    if (state.document.isEmpty) {
       val xhr = new XMLHttpRequest
       xhr.onload = _ => {
-        setState(Some(xhr.responseText))
+        setState(state.copy(document = Some(xhr.responseText)))
       }
 
-      xhr.open("GET", docsFilePath)
+      xhr.open("GET", docsFilePath(props))
       xhr.send()
+    }
+  }
+
+  override def componentDidUpdate(prevProps: Props, prevState: State): Unit = {
+    if (docsFilePath(props) != docsFilePath(prevProps)) {
+      val matchString = props.selectDynamic("match").params.selectDynamic("0").toString
+      val group = tree.find(_._2.exists(_._2 == s"/docs/$matchString")).get._1
+
+      val xhr = new XMLHttpRequest
+      xhr.onload = _ => {
+        setState(State(group, Some(xhr.responseText)))
+      }
+
+      xhr.open("GET", docsFilePath(props))
+      xhr.send()
+    }
+  }
+
+  def requestOpen(group: String): Function0[Unit] = {
+    new Function0[Unit] {
+      override def apply(): Unit = {
+        setState(state.copy(selectedGroup = group))
+      }
     }
   }
 
@@ -118,7 +149,7 @@ import js.Dynamic.literal
         div(style := literal(
           width = "calc(100% - 300px)"
         ))(
-          state.map { t =>
+          state.document.map { t =>
             Remark().use(ReactRenderer, literal(
               remarkReactComponents = literal(
                 h2 = RemarkH2.componentConstructor,
@@ -138,13 +169,25 @@ import js.Dynamic.literal
               backgroundColor = "#f7f7f7",
               borderLeft = "1px solid #ececec",
               marginLeft = "20px",
-              padding = "20px",
               paddingTop = "40px",
               paddingRight = "1000px",
               boxSizing = "border-box"
             )
           )(
-            "hello!"
+            nav(style := literal(
+              position = "relative",
+              paddingLeft = "20px",
+              width = "300px"
+            ))(
+              tree.keys.toList.map { group =>
+                DocsGroup(
+                  name = group,
+                  isOpen = group == state.selectedGroup,
+                  onRequestOpen = requestOpen(group),
+                  children = tree(group)
+                ).withKey(group)
+              }
+            )
           )
         )
       )
