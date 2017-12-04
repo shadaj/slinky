@@ -7,8 +7,6 @@ import scala.language.implicitConversions
 import scala.scalajs.js
 import scala.scalajs.js.|
 
-trait NoExternalProps
-
 case class BuildingComponent[E](c: String | js.Object, props: js.Object, key: String = null, ref: js.Object => Unit = null, mods: Seq[AttrPair[E]] = Seq.empty) {
   def apply(tagMods: AttrPair[E]*): BuildingComponent[E] = copy(mods = mods ++ tagMods)
 
@@ -46,14 +44,23 @@ abstract class ExternalComponentWithAttributes[E <: TagElement] {
 
   val component: String | js.Object
 
-  def apply(p: Props)(implicit writer: Writer[Props]): BuildingComponent[Element] = {
+  def apply(p: Props)(implicit writer: Writer[Props]): BuildingComponent[E] = {
     // no need to take key or ref here because those can be passed in through attributes
     new BuildingComponent(component, writer.write(p), null, null, Seq.empty)
   }
+}
 
-  def apply(tagMods: AttrPair[E]*)(implicit ev: NoExternalProps =:= Props): BuildingComponent[E] =
-    apply(null.asInstanceOf[NoExternalProps])(_ => js.Dynamic.literal()).apply(tagMods: _*)
+abstract class ExternalComponentNoProps extends ExternalComponentNoPropsWithAttributes[Nothing]
 
-  def apply(children: ReactElement*)(implicit ev: NoExternalProps =:= Props): ReactElement =
-    apply(null.asInstanceOf[NoExternalProps])(_ => js.Dynamic.literal()).apply(children: _*)
+abstract class ExternalComponentNoPropsWithAttributes[E <: TagElement] {
+  val component: String | js.Object
+
+  def apply(mod: AttrPair[E], tagMods: AttrPair[E]*): BuildingComponent[E] = BuildingComponent(component, js.Dynamic.literal(), mods = mod +: tagMods)
+
+  def withKey(key: String): BuildingComponent[E] = BuildingComponent(component, js.Dynamic.literal(), key = key)
+  def withRef(ref: js.Object => Unit): BuildingComponent[E] = BuildingComponent(component, js.Dynamic.literal(), ref = ref)
+
+  def apply(children: ReactElement*): ReactElement = {
+    React.createElement(component, js.Dynamic.literal().asInstanceOf[js.Dictionary[js.Any]], children: _*)
+  }
 }

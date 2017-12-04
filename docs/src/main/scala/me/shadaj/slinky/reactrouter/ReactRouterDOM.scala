@@ -1,6 +1,6 @@
 package me.shadaj.slinky.reactrouter
 
-import me.shadaj.slinky.core.{ExternalComponent, ExternalComponentWithAttributes, NoExternalProps, ReactComponentClass}
+import me.shadaj.slinky.core._
 import me.shadaj.slinky.core.annotations.react
 import me.shadaj.slinky.web.html.a
 
@@ -29,15 +29,11 @@ object ReactRouterDOM extends js.Object {
   override val component = ReactRouter.StaticRouter
 }
 
-@react object BrowserRouter extends ExternalComponent {
-  type Props = NoExternalProps
-
+object BrowserRouter extends ExternalComponentNoProps {
   override val component = ReactRouterDOM.BrowserRouter
 }
 
-@react object Switch extends ExternalComponent {
-  type Props = NoExternalProps
-
+object Switch extends ExternalComponentNoProps {
   override val component = ReactRouterDOM.Switch
 }
 

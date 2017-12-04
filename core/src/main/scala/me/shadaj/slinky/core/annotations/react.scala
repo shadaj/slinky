@@ -110,10 +110,10 @@ class react extends scala.annotation.StaticAnnotation {
         Term.Block(Seq(cls.copy(templ = cls.templ.copy(stats = Some(clsStats))), companion))
       case obj@Defn.Object(_, _, Template(_, Seq(Term.Apply(Ctor.Ref.Name(sc), _)), _, _)) if sc == "ExternalComponent" =>
         val objStats = createExternalBody(obj) ++ obj.templ.stats.getOrElse(Nil)
-        q"object ${obj.name} extends ${Ctor.Ref.Name(sc)} { ..$objStats }"
+        obj.copy(templ = obj.templ.copy(stats = Some(objStats)))
       case obj@Defn.Object(_, _, Template(_, Seq(Term.Apply(Term.ApplyType(Ctor.Ref.Name(sc), _), _)), _, _)) if sc == "ExternalComponentWithAttributes" =>
         val objStats = createExternalBody(obj) ++ obj.templ.stats.getOrElse(Nil)
-        q"object ${obj.name} extends ${Ctor.Ref.Name(sc)} { ..$objStats }"
+        obj.copy(templ = obj.templ.copy(stats = Some(objStats)))
       case _ =>
         abort(s"@react must annotate a class that extends Component ${defn.structure}")
     }

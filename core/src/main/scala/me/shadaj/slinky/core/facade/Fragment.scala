@@ -1,9 +1,7 @@
 package me.shadaj.slinky.core.facade
 
-import me.shadaj.slinky.core.{ExternalComponent, NoExternalProps}
-import me.shadaj.slinky.core.annotations.react
+import me.shadaj.slinky.core.ExternalComponentNoProps
 
-object Fragment extends ExternalComponent {
-  type Props = NoExternalProps
+object Fragment extends ExternalComponentNoProps {
   override val component = React.Fragment
 }
