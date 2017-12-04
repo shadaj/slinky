@@ -39,7 +39,7 @@ import scala.scalajs.js.Dynamic.literal
           textAlign = "center",
           marginTop = "0px"
         )
-      )("Write React apps in Scala just like you would with ES6"),
+      )("Write React apps in Scala just like you would in ES6"),
       div(style := literal(
         display = "flex",
         alignItems = "center",

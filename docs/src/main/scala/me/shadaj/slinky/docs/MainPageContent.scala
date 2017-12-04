@@ -11,9 +11,7 @@ object MainPageContent {
     div(className := "article", style := literal(
       maxWidth = "1400px",
       marginLeft = "auto",
-      marginRight = "auto",
-      padding = "15px",
-      marginTop = "40px"
+      marginRight = "auto"
     ))(
       children.map(v => v: TagMod[div.tag.type]): _*
     )

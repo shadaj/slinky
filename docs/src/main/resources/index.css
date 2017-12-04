@@ -57,3 +57,8 @@ a {
   background-color: #bbeffd;
   border-bottom-color: #1a1a1a;
 }
+@media screen and (min-width: 1400px) {
+  .article.fill-right {
+    margin-left: calc(50vw - 700px);
+  }
+}

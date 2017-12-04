@@ -141,7 +141,7 @@ import DocsTree._
   }
 
   override def render(): ReactElement = {
-    MainPageContent(
+    div(className := "article fill-right", style := literal(marginTop = "40px"))(
       div(style := literal(
         display = "flex",
         flexDirection = "row"
@@ -149,17 +149,20 @@ import DocsTree._
         div(style := literal(
           width = "calc(100% - 300px)"
         ))(
-          state.document.map { t =>
-            Remark().use(ReactRenderer, literal(
-              remarkReactComponents = literal(
-                h2 = RemarkH2.componentConstructor,
-                code = RemarkCode.componentConstructor
-              )
-            )).processSync(t).contents
-          }
+          div(style := literal(maxWidth = "1400px"))(
+            state.document.map { t =>
+              Remark().use(ReactRenderer, literal(
+                remarkReactComponents = literal(
+                  h2 = RemarkH2.componentConstructor,
+                  code = RemarkCode.componentConstructor
+                )
+              )).processSync(t).contents
+            }
+          )
         ),
         div(style := literal(
-          width = "300px"
+          width = "300px",
+          marginLeft = "20px"
         ))(
           div(
             style := literal(
@@ -168,7 +171,6 @@ import DocsTree._
               height = "calc(100vh - 60px)",
               backgroundColor = "#f7f7f7",
               borderLeft = "1px solid #ececec",
-              marginLeft = "20px",
               paddingTop = "40px",
               paddingRight = "1000px",
               boxSizing = "border-box"

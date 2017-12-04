@@ -8,7 +8,7 @@ import scala.scalajs.js
 import scala.scalajs.js.|
 
 case class BuildingComponent[E](c: String | js.Object, props: js.Object, key: String = null, ref: js.Object => Unit = null, mods: Seq[AttrPair[E]] = Seq.empty) {
-  def apply(tagMods: AttrPair[E]*): BuildingComponent[E] = copy(mods = mods ++ tagMods)
+  def apply(tagMod: AttrPair[E], tagMods: AttrPair[E]*): BuildingComponent[E] = copy(mods = mods ++ (tagMod +: tagMods))
 
   def withKey(key: String): BuildingComponent[E] = copy(key = key)
   def withRef(ref: js.Object => Unit): BuildingComponent[E] = copy(ref = ref)
