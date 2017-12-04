@@ -118,15 +118,13 @@ import js.Dynamic.literal
         div(style := literal(
           width = "calc(100% - 300px)"
         ))(
-          if (state.isDefined) {
+          state.map { t =>
             Remark().use(ReactRenderer, literal(
               remarkReactComponents = literal(
                 h2 = RemarkH2.componentConstructor,
                 code = RemarkCode.componentConstructor
               )
-            )).processSync(state.get).contents
-          } else {
-            h1("Loading")
+            )).processSync(t).contents
           }
         ),
         div(style := literal(
