@@ -9,7 +9,7 @@ import scala.scalajs.js.Dynamic.literal
 object MainPageContent {
   def apply(children: ReactElement*): ReactElement = {
     div(className := "article", style := literal(
-      maxWidth = "1260px",
+      maxWidth = "1400px",
       marginLeft = "auto",
       marginRight = "auto",
       padding = "15px",

@@ -9,10 +9,7 @@ import scala.reflect.macros.whitebox
 import scala.scalajs.js
 import scala.scalajs.js.|
 
-class NoExternalProps private()
-object NoExternalProps {
-  implicit val writer: Writer[NoExternalProps] = _ => js.Dynamic.literal()
-}
+case class NoExternalProps()
 
 case class BuildingComponent[P, E](c: String | js.Object, props: P, key: String = null, ref: js.Object => Unit = null, mods: Seq[AttrPair[E]] = Seq.empty) {
   def apply(tagMods: AttrPair[E]*): BuildingComponent[P, E] = copy(mods = mods ++ tagMods)
@@ -21,7 +18,7 @@ case class BuildingComponent[P, E](c: String | js.Object, props: P, key: String 
   def withRef(ref: js.Object => Unit): BuildingComponent[P, E] = copy(ref = ref)
 
   def apply(children: ReactElement*)(implicit writer: Writer[P]): ReactElement = {
-    val written = (if (props != null) writer.write(props) else js.Dynamic.literal()).asInstanceOf[js.Dictionary[js.Any]]
+    val written = writer.write(props).asInstanceOf[js.Dictionary[js.Any]]
 
     if (key != null) {
       written("key") = key
@@ -79,14 +76,14 @@ abstract class ExternalComponentWithAttributes[E <: TagElement] {
   }
 
   def apply(tagMods: AttrPair[E]*)(implicit ev: NoExternalProps =:= Props): BuildingComponent[Props, E] =
-    apply(null.asInstanceOf[NoExternalProps]).apply(tagMods: _*)
+    apply(NoExternalProps()).apply(tagMods: _*)
 
   def apply(children: ReactElement*)(implicit ev: NoExternalProps =:= Props): ReactElement =
-    apply(null.asInstanceOf[NoExternalProps]).apply(children: _*)
+    apply(NoExternalProps()).apply(children: _*)
 }
 
 object ExternalComponentWithAttributes {
   implicit def skipProps(comp: ExternalComponentWithAttributes[_])(implicit ev: NoExternalProps =:= comp.Props) = {
-    comp.apply(null.asInstanceOf[NoExternalProps])
+    comp.apply(NoExternalProps())
   }
 }

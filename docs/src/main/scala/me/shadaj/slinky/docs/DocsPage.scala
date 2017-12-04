@@ -30,7 +30,8 @@ import js.Dynamic.literal
       color = "#ffffff",
       fontSize = "15px",
       lineHeight = "20px",
-      padding = "20px"
+      padding = "20px",
+      overflow = "auto"
     ),
     "code[class*=\"language-\"]" -> literal(
       backgroundColor = "#282c34",
@@ -110,31 +111,44 @@ import js.Dynamic.literal
 
   override def render(): ReactElement = {
     MainPageContent(
-      if (state.isDefined) {
-        Remark().use(ReactRenderer, literal(
-          remarkReactComponents = literal(
-            h2 = RemarkH2.componentConstructor,
-            code = RemarkCode.componentConstructor
+      div(style := literal(
+        display = "flex",
+        flexDirection = "row"
+      ))(
+        div(style := literal(
+          width = "calc(100% - 300px)"
+        ))(
+          if (state.isDefined) {
+            Remark().use(ReactRenderer, literal(
+              remarkReactComponents = literal(
+                h2 = RemarkH2.componentConstructor,
+                code = RemarkCode.componentConstructor
+              )
+            )).processSync(state.get).contents
+          } else {
+            h1("Loading")
+          }
+        ),
+        div(style := literal(
+          width = "300px"
+        ))(
+          div(
+            style := literal(
+              position = "fixed",
+              top = "60px",
+              height = "calc(100vh - 60px)",
+              backgroundColor = "#f7f7f7",
+              borderLeft = "1px solid #ececec",
+              marginLeft = "20px",
+              padding = "20px",
+              paddingTop = "40px",
+              paddingRight = "1000px",
+              boxSizing = "border-box"
+            )
+          )(
+            "hello!"
           )
-        )).processSync(state.get).contents
-      } else {
-        h1("Loading")
-      },
-      div(
-        style := literal(
-          position = "fixed",
-          right = 0,
-          top = "60px",
-          width = "300px",
-          height = "calc(100vh - 60px)",
-          backgroundColor = "#f7f7f7",
-          borderLeft = "1px solid #ececec",
-          padding = "20px",
-          paddingTop = "40px",
-          boxSizing = "border-box"
         )
-      )(
-        "hello!"
       )
     )
   }

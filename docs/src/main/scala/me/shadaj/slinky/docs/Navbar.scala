@@ -43,7 +43,7 @@ import scala.scalajs.js
           height = "60px",
           flexDirection = "row",
           alignItems = "center",
-          maxWidth = "1260px",
+          maxWidth = "1400px",
           marginLeft = "auto",
           marginRight = "auto"
         )
