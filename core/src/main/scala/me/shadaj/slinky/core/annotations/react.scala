@@ -115,7 +115,7 @@ class react extends scala.annotation.StaticAnnotation {
         val objStats = createExternalBody(obj) ++ obj.templ.stats.getOrElse(Nil)
         obj.copy(templ = obj.templ.copy(stats = Some(objStats)))
       case _ =>
-        abort(s"@react must annotate a class that extends Component ${defn.structure}")
+        abort(s"@react must annotate a class that extends Component or an object that extends ExternalComponent(WithAttributes)")
     }
   }
 }
