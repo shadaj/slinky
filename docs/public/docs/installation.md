@@ -2,7 +2,7 @@
 It's super easy to get started with using Slinky, whether you're working on a new project or adding Slinky to your existing work.
 
 ## Creating a New Project
-The easiest way to create a new project is to use [Create React Scala App](https://github.com/shadaj/create-react-slinky-app.g8). This template creates a starter project with a default Webpack-based build configuration that enables hot reloading and bundling into a production site.
+The easiest way to create a new project is to use [Create React Scala App](https://github.com/shadaj/create-react-scala-app.g8). This template creates a starter project with a default Webpack-based build configuration that enables hot reloading and bundling into a production site.
 
 You can use this template from the command line with SBT:
 ```scala
