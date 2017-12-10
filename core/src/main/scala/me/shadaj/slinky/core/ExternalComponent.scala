@@ -4,19 +4,17 @@ import me.shadaj.slinky.core.facade.{React, ReactElement}
 import me.shadaj.slinky.readwrite.Writer
 
 import scala.language.implicitConversions
-import scala.language.experimental.macros
-import scala.reflect.macros.whitebox
 import scala.scalajs.js
 import scala.scalajs.js.|
 
-case class BuildingComponent[P, E](c: String | js.Object, props: P, key: String = null, ref: js.Object => Unit = null, mods: Seq[AttrPair[E]] = Seq.empty) {
-  def apply(tagMods: AttrPair[E]*): BuildingComponent[P, E] = copy(mods = mods ++ tagMods)
+case class BuildingComponent[E](c: String | js.Object, props: js.Object, key: String = null, ref: js.Object => Unit = null, mods: Seq[AttrPair[E]] = Seq.empty) {
+  def apply(tagMod: AttrPair[E], tagMods: AttrPair[E]*): BuildingComponent[E] = copy(mods = mods ++ (tagMod +: tagMods))
 
-  def withKey(key: String): BuildingComponent[P, E] = copy(key = key)
-  def withRef(ref: js.Object => Unit): BuildingComponent[P, E] = copy(ref = ref)
+  def withKey(key: String): BuildingComponent[E] = copy(key = key)
+  def withRef(ref: js.Object => Unit): BuildingComponent[E] = copy(ref = ref)
 
-  def apply(children: ReactElement*)(implicit writer: Writer[P]): ReactElement = {
-    val written = writer.write(props).asInstanceOf[js.Dictionary[js.Any]]
+  def apply(children: ReactElement*): ReactElement = {
+    val written = props.asInstanceOf[js.Dictionary[js.Any]]
 
     if (key != null) {
       written("key") = key
@@ -35,29 +33,7 @@ case class BuildingComponent[P, E](c: String | js.Object, props: P, key: String 
 }
 
 object BuildingComponent {
-  implicit def make[P, E]: BuildingComponent[P, E] => ReactElement = macro BuildingComponentMacros.makeImpl[P, E]
-}
-
-final class Maker[P: Writer, E] extends (BuildingComponent[P, E] => ReactElement) {
-  override def apply(v1: BuildingComponent[P, E]): ReactElement = {
-    v1()
-  }
-}
-
-object BuildingComponentMacros {
-  class Maker[P](implicit writer: Writer[P]) extends (BuildingComponent[P, _] => ReactElement) {
-    override def apply(v1: BuildingComponent[P, _]): ReactElement = {
-      v1(Seq.empty[ReactElement]: _*)
-    }
-  }
-
-  // SUPER SKETCHY INTELLIJ HACK: IntellJ is unable to detect implicits that take type parameters
-  def makeImpl[P: c.WeakTypeTag, E: c.WeakTypeTag](c: whitebox.Context): c.Expr[BuildingComponent[P, _] => ReactElement] = {
-    import c.universe._
-    c.Expr[BuildingComponent[P, _] => ReactElement](c.typecheck(
-      q"new _root_.me.shadaj.slinky.core.BuildingComponentMacros.Maker[${implicitly[WeakTypeTag[P]]}]"
-    ))
-  }
+  implicit def make[E]: BuildingComponent[E] => ReactElement = _.apply(Seq.empty: _*)
 }
 
 abstract class ExternalComponent extends ExternalComponentWithAttributes[Nothing]
@@ -68,8 +44,23 @@ abstract class ExternalComponentWithAttributes[E <: TagElement] {
 
   val component: String | js.Object
 
-  def apply(p: Props): BuildingComponent[Props, Element] = {
+  def apply(p: Props)(implicit writer: Writer[Props]): BuildingComponent[E] = {
     // no need to take key or ref here because those can be passed in through attributes
-    new BuildingComponent(component, p, null, null, Seq.empty)
+    new BuildingComponent(component, writer.write(p), null, null, Seq.empty)
+  }
+}
+
+abstract class ExternalComponentNoProps extends ExternalComponentNoPropsWithAttributes[Nothing]
+
+abstract class ExternalComponentNoPropsWithAttributes[E <: TagElement] {
+  val component: String | js.Object
+
+  def apply(mod: AttrPair[E], tagMods: AttrPair[E]*): BuildingComponent[E] = BuildingComponent(component, js.Dynamic.literal(), mods = mod +: tagMods)
+
+  def withKey(key: String): BuildingComponent[E] = BuildingComponent(component, js.Dynamic.literal(), key = key)
+  def withRef(ref: js.Object => Unit): BuildingComponent[E] = BuildingComponent(component, js.Dynamic.literal(), ref = ref)
+
+  def apply(children: ReactElement*): ReactElement = {
+    React.createElement(component, js.Dynamic.literal().asInstanceOf[js.Dictionary[js.Any]], children: _*)
   }
 }

@@ -8,8 +8,7 @@ import org.scalajs.dom
 
 import scala.scalajs.js
 
-@react object ExternalSimple extends ExternalComponent {
-  override type Props = Unit
+object ExternalSimple extends ExternalComponentNoProps {
   override val component = "div"
 }
 
@@ -18,9 +17,7 @@ import scala.scalajs.js
   override val component = "div"
 }
 
-@react object ExternalSimpleWithAttributes extends ExternalComponentWithAttributes[div.tag.type] {
-  override type Props = Unit
-
+object ExternalSimpleWithAttributes extends ExternalComponentNoPropsWithAttributes[div.tag.type] {
   override val component = "div"
 }
 
@@ -53,10 +50,6 @@ class ExternalComponentTest extends FunSuite {
 
   test("Can construct an external component taking Unit props with no arguments") {
     assertCompiles("""ExternalSimple()""")
-  }
-
-  test("Cannot pass in attributes to a basic external component") {
-    assertCompiles("""ExternalSimple(className := "hi")""")
   }
 
   test("Can construct an external component taking Unit props and attributes with no arguments") {

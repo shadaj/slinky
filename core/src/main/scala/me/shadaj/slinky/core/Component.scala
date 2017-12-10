@@ -16,9 +16,13 @@ abstract class Component {
 
   final def setState(s: State): Unit = ???
 
+  final def setState(fn: State => State): Unit = ???
+
   final def setState(fn: (State, Props) => State): Unit = ???
 
   final def setState(s: State, callback: js.Function0[Unit]): Unit = ???
+
+  final def setState(fn: State => State, callback: js.Function0[Unit]): Unit = ???
 
   final def setState(fn: (State, Props) => State, callback: js.Function0[Unit]): Unit = ???
 

@@ -38,13 +38,14 @@ class react extends scala.annotation.StaticAnnotation {
             Some(defn)
           case _ => None
         }
-      }.head
+      }.headOption
 
       val definitionClass =
         q"""
            @__SJSDefined
            class Def(jsProps: scala.scalajs.js.Object) extends Definition(jsProps) {
-             ..${clazz.templ.stats.getOrElse(Nil).filterNot(s => s == propsDefinition || s == stateDefinition)}
+             ..${clazz.templ.stats.getOrElse(Nil).filterNot(s => s == propsDefinition || s == stateDefinition.orNull)}
+             ..${if (stateDefinition.isEmpty) Seq(q"override def initialState: State = ()") else Seq.empty}
            }
          """
 
@@ -61,8 +62,14 @@ class react extends scala.annotation.StaticAnnotation {
       (q"type Props = $propsSelect" +:
         q"type State = $stateSelect" +:
         propsAndStateImport +:
-        clazz.templ.stats.getOrElse(Nil).filterNot(s => s == propsDefinition || s == stateDefinition),
-        q"import scala.scalajs.js.annotation.{ScalaJSDefined => __SJSDefined}" +: propsDefinition +: stateDefinition +: definitionClass +: applyMethods)
+        ((if (stateDefinition.isEmpty) Seq(q"override def initialState: State = ()") else Seq.empty) ++
+        clazz.templ.stats.getOrElse(Nil).filterNot(s => s == propsDefinition || s == stateDefinition.orNull)),
+        q"import scala.scalajs.js.annotation.{ScalaJSDefined => __SJSDefined}" +:
+          propsDefinition +:
+          stateDefinition.getOrElse(q"type State = Unit") +:
+          definitionClass +:
+          applyMethods
+      )
     }
 
     def createExternalBody(obj: Defn.Object): Seq[Stat] = {
@@ -75,11 +82,11 @@ class react extends scala.annotation.StaticAnnotation {
             val applyValues = caseClassparamss.map(ps => ps.map(p => Term.Name(p.name.value)))
             val caseClassApply = if (applyTypes.isEmpty) {
               q"""
-                 def apply[..$tparams](...$caseClassparamss): me.shadaj.slinky.core.BuildingComponent[Props, Element] = this.apply(${Term.Name(tname.value)}.apply(...$applyValues))
+                 def apply[..$tparams](...$caseClassparamss): me.shadaj.slinky.core.BuildingComponent[Element] = this.apply(${Term.Name(tname.value)}.apply(...$applyValues))
                """
             } else {
               q"""
-                 def apply[..$tparams](...$caseClassparamss): me.shadaj.slinky.core.BuildingComponent[Props, Element] = this.apply(${Term.Name(tname.value)}.apply[..$applyTypes](...$applyValues))
+                 def apply[..$tparams](...$caseClassparamss): me.shadaj.slinky.core.BuildingComponent[Element] = this.apply(${Term.Name(tname.value)}.apply[..$applyTypes](...$applyValues))
                """
             }
 
@@ -103,13 +110,12 @@ class react extends scala.annotation.StaticAnnotation {
         Term.Block(Seq(cls.copy(templ = cls.templ.copy(stats = Some(clsStats))), companion))
       case obj@Defn.Object(_, _, Template(_, Seq(Term.Apply(Ctor.Ref.Name(sc), _)), _, _)) if sc == "ExternalComponent" =>
         val objStats = createExternalBody(obj) ++ obj.templ.stats.getOrElse(Nil)
-        q"object ${obj.name} extends ${Ctor.Ref.Name(sc)} { ..$objStats }"
+        obj.copy(templ = obj.templ.copy(stats = Some(objStats)))
       case obj@Defn.Object(_, _, Template(_, Seq(Term.Apply(Term.ApplyType(Ctor.Ref.Name(sc), _), _)), _, _)) if sc == "ExternalComponentWithAttributes" =>
         val objStats = createExternalBody(obj) ++ obj.templ.stats.getOrElse(Nil)
-        q"object ${obj.name} extends ${Ctor.Ref.Name(sc)} { ..$objStats }"
+        obj.copy(templ = obj.templ.copy(stats = Some(objStats)))
       case _ =>
-        println(defn.structure)
-        abort(s"@react must annotate a class that extends Component ${defn.structure}")
+        abort(s"@react must annotate a class that extends Component or an object that extends ExternalComponent(WithAttributes)")
     }
   }
 }

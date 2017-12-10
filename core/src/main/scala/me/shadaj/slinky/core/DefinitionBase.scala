@@ -50,6 +50,16 @@ abstract class DefinitionBase[Props, State](jsProps: js.Object) extends React.Co
   }
 
   @JSName("setState_scala")
+  @inline final def setState(fn: State => State): Unit = {
+    this.asInstanceOf[PrivateComponentClass].setStateR((ps: js.Object) => {
+      val s = fn(readWithWrappingAdjustment(stateReader)(ps))
+      if (BaseComponentWrapper.scalaComponentWritingEnabled) {
+        writeWithWrappingAdjustment(stateWriter)(s)
+      } else js.Dynamic.literal(__ = s.asInstanceOf[js.Any])
+    })
+  }
+
+  @JSName("setState_scala")
   @inline final def setState(fn: (State, Props) => State): Unit = {
     this.asInstanceOf[PrivateComponentClass].setStateR((ps: js.Object, p: js.Object) => {
       val s = fn(readWithWrappingAdjustment(stateReader)(ps), readWithWrappingAdjustment(propsReader)(p))
@@ -65,6 +75,16 @@ abstract class DefinitionBase[Props, State](jsProps: js.Object) extends React.Co
       writeWithWrappingAdjustment(stateWriter)(s)
     } else js.Dynamic.literal(__ = s.asInstanceOf[js.Any])
     this.asInstanceOf[PrivateComponentClass].setStateR(stateObject, callback)
+  }
+
+  @JSName("setState_scala")
+  @inline final def setState(fn: State => State, callback: js.Function0[Unit]): Unit = {
+    this.asInstanceOf[PrivateComponentClass].setStateR((ps: js.Object) => {
+      val s = fn(readWithWrappingAdjustment(stateReader)(ps))
+      if (BaseComponentWrapper.scalaComponentWritingEnabled) {
+        writeWithWrappingAdjustment(stateWriter)(s)
+      } else js.Dynamic.literal(__ = s.asInstanceOf[js.Any])
+    }, callback)
   }
 
   @JSName("setState_scala")
@@ -142,10 +162,10 @@ object DefinitionBase {
   @inline private[slinky] final def readWithWrappingAdjustment[T](reader: Reader[T])(value: js.Object): T = {
     val __value = value.asInstanceOf[js.Dynamic].__value
 
-    if (js.isUndefined(__value)) {
-      reader.read(value)
-    } else {
+    if (value.hasOwnProperty("__value")) {
       reader.read(__value.asInstanceOf[js.Object])
+    } else {
+      reader.read(value)
     }
   }
 
