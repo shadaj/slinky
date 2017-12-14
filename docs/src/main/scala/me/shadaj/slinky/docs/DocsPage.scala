@@ -76,7 +76,9 @@ object DocsTree {
   val tree: Map[String, List[(String, String)]] = Map(
     "Quick Start" -> List(
       "Installation" -> "/docs/installation/",
-      "Hello World!" -> "/docs/hello-world/"
+      "Hello World!" -> "/docs/hello-world/",
+      "The Tag API" -> "/docs/the-tag-api/",
+      "Writing Components" -> "/docs/writing-components/"
     )
   )
 }
