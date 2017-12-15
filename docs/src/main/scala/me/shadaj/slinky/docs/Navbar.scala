@@ -43,6 +43,7 @@ import scala.scalajs.js
           height = "60px",
           flexDirection = "row",
           alignItems = "center",
+          justifyContent = "space-between",
           maxWidth = "1400px",
           marginLeft = "auto",
           marginRight = "auto"
@@ -53,7 +54,7 @@ import scala.scalajs.js
             display = "flex",
             height = "100%",
             alignItems = "center",
-            width = "20%"
+            minWidth = "150px"
           )
         )(
           Link(to = "/")(
@@ -72,7 +73,7 @@ import scala.scalajs.js
             display = "flex",
             height = "100%",
             alignItems = "center",
-            width = "60%"
+            marginRight = "auto"
           )
         )(
           Link(to = "/docs/installation/")(style := linkStyle)(
@@ -84,8 +85,9 @@ import scala.scalajs.js
             display = "flex",
             height = "100%",
             alignItems = "center",
-            width = "20%"
-          )
+            marginRight = "20px"
+          ),
+          className := "sidebar-right"
         )(
           a(
             href := "https://gitter.im/shadaj/slinky",

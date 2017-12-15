@@ -57,8 +57,40 @@ a {
   background-color: #bbeffd;
   border-bottom-color: #1a1a1a;
 }
+
 @media screen and (min-width: 1400px) {
   .article.fill-right {
     margin-left: calc(50vw - 700px);
+  }
+}
+
+@media (max-width: 779px) {
+  .sidebar-right {
+    display: none !important;
+  }
+
+  .docs-page {
+    display: block !important;
+  }
+
+  .docs-content {
+    width: calc(100% - 15px) !important;
+    margin-top: 90px;
+  }
+
+  .docs-sidebar {
+    width: calc(100% - 15px) !important;
+    margin-left: 0 !important;
+  }
+
+  .docs-sidebar-content {
+    position: static !important;
+    height: auto !important;
+    padding-top: 0 !important;
+    border: 1px solid #ececec !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    margin-bottom: 10px !important;
+    padding-right: 0 !important;
   }
 }

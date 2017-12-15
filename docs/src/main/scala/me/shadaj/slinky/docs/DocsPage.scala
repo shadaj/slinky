@@ -153,10 +153,10 @@ import DocsTree._
       div(style := literal(
         display = "flex",
         flexDirection = "row"
-      ))(
+      ), className := "docs-page")(
         div(style := literal(
           width = "calc(100% - 300px)"
-        ))(
+        ), className := "docs-content")(
           div(style := literal(maxWidth = "1400px"))(
             state.document.map { t =>
               Remark().use(ReactRenderer, literal(
@@ -171,7 +171,7 @@ import DocsTree._
         div(style := literal(
           width = "300px",
           marginLeft = "20px"
-        ))(
+        ), className := "docs-sidebar")(
           div(
             style := literal(
               position = "fixed",
@@ -182,7 +182,8 @@ import DocsTree._
               paddingTop = "40px",
               paddingRight = "1000px",
               boxSizing = "border-box"
-            )
+            ),
+            className := "docs-sidebar-content"
           )(
             nav(style := literal(
               position = "relative",
