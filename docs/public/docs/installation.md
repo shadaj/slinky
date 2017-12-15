@@ -14,12 +14,14 @@ Follow the prompts, and you'll be all set up with a Scala-based React applicatio
 ## Adding to an Existing Project
 Since Slinky is distributed just like any other Scala.js library, it's very easy to integrate into an existing project.
 
-Add the dependencies that match your application:
+Add the dependencies that match your application as well as required Scala.js compiler options:
 ```scala
-libraryDependencies += "me.shadaj" %%% "slinky-core" % "0.1.1" // core React functionality, no React DOM
-libraryDependencies += "me.shadaj" %%% "slinky-web" % "0.1.1" // React DOM, HTML and SVG tags
-libraryDependencies += "me.shadaj" %%% "slinky-hot" % "0.1.1" // Hot loading, requires react-proxy package
-libraryDependencies += "me.shadaj" %%% "slinky-scalajsreact-interop" % "0.1.1" // Interop with japgolly/scalajs-react
+libraryDependencies += "me.shadaj" %%% "slinky-core" % "0.2.0" // core React functionality, no React DOM
+libraryDependencies += "me.shadaj" %%% "slinky-web" % "0.2.0" // React DOM, HTML and SVG tags
+libraryDependencies += "me.shadaj" %%% "slinky-hot" % "0.2.0" // Hot loading, requires react-proxy package
+libraryDependencies += "me.shadaj" %%% "slinky-scalajsreact-interop" % "0.2.0" // Interop with japgolly/scalajs-react
+
+scalacOptions += "-P:scalajs:sjsDefinedByDefault"
 
 // optional, but recommended; enables the @react macro annotation API
 addCompilerPlugin("org.scalameta" % "paradise" % "3.0.0-M10" cross CrossVersion.full)
