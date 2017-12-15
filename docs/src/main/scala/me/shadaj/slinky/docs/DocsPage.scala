@@ -31,7 +31,8 @@ import js.Dynamic.literal
       fontSize = "15px",
       lineHeight = "20px",
       padding = "20px",
-      overflow = "auto"
+      overflow = "auto",
+      marginBottom = "0px"
     ),
     "code[class*=\"language-\"]" -> literal(
       backgroundColor = "#282c34",
@@ -78,7 +79,8 @@ object DocsTree {
       "Installation" -> "/docs/installation/",
       "Hello World!" -> "/docs/hello-world/",
       "The Tag API" -> "/docs/the-tag-api/",
-      "Writing Components" -> "/docs/writing-components/"
+      "Writing Components" -> "/docs/writing-components/",
+      "External Components" -> "/docs/external-components/"
     )
   )
 }
