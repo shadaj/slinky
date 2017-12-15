@@ -29,3 +29,8 @@ Slinky supports loading React via either CommonJS or as a global object. If load
 as `window.React` and React DOM as `window.ReactDOM`.
 
 While Slinky can be in a simple Scala.js app with no bundler, we highly recommend that you use [webpack](https://webpack.js.org/) for bundling your application with its dependencies. The SBT plugin [scalajs-bundler](https://scalacenter.github.io/scalajs-bundler/) automates much of the process around configuring webpack, and is very useful for adding webpack to an SBT build setup.
+
+## Credits
+Much credit goes to existing Scala.js libraries for React, such as scalajs-react and SRI, which provided a lot of inspiration for Slinky's design. Credit also goes to scala-js-preact, which provided the inspiration for the `@react` macro annotation. 
+
+Slinky logo is based on [https://thenounproject.com/dianatomic/uploads/?i=40452](https://thenounproject.com/dianatomic/uploads/?i=40452)
