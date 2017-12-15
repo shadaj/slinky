@@ -77,9 +77,6 @@ import scala.scalajs.js
         )(
           Link(to = "/docs/installation/")(style := linkStyle)(
             "Docs"
-          ),
-          a(style := linkStyle)(
-            "Tutorial"
           )
         ),
         div(
@@ -90,6 +87,12 @@ import scala.scalajs.js
             width = "20%"
           )
         )(
+          a(
+            href := "https://gitter.im/shadaj/slinky",
+            style := smallLinkStyle
+          )(
+            "Community"
+          ),
           a(
             href := "https://github.com/shadaj/slinky/releases",
             style := smallLinkStyle
