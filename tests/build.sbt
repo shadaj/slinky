@@ -7,3 +7,5 @@ jsDependencies += "org.webjars.npm" % "react-dom" % "15.6.1" % Test / "react-dom
 jsDependencies += RuntimeDOM % Test
 
 jsEnv := new org.scalajs.jsenv.jsdomnodejs.JSDOMNodeJSEnv()
+
+scalacOptions += "-P:scalajs:sjsDefinedByDefault"

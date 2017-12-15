@@ -28,3 +28,5 @@ webpackConfigFile in fullOptJS := Some(baseDirectory.value / "webpack-opt.config
 webpackDevServerExtraArgs in fastOptJS := Seq("--inline", "--hot")
 
 webpackBundlingMode in fastOptJS := BundlingMode.LibraryOnly()
+
+scalacOptions += "-P:scalajs:sjsDefinedByDefault"

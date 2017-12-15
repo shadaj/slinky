@@ -3,9 +3,7 @@ package me.shadaj.slinky.core
 import me.shadaj.slinky.readwrite.{Reader, Writer}
 
 import scala.scalajs.js
-import scala.scalajs.js.annotation.ScalaJSDefined
 
-@ScalaJSDefined
 abstract class StatelessDefinition[Props](jsProps: js.Object)
                                          (implicit propsReader: Reader[Props],
                                           propsWriter: Writer[Props]) extends DefinitionBase[Props, Unit](jsProps) {

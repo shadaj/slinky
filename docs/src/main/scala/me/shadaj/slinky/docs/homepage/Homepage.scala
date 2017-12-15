@@ -7,7 +7,7 @@ import me.shadaj.slinky.web.html._
 
 import scala.scalajs.js
 import scala.scalajs.js.Dynamic.literal
-import scala.scalajs.js.annotation.{JSImport, ScalaJSDefined}
+import scala.scalajs.js.annotation.JSImport
 
 @JSImport("resources/slinky-logo-horizontal.svg", JSImport.Default)
 @js.native

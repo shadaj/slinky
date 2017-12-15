@@ -94,10 +94,10 @@ import scala.scalajs.js
             "Community"
           ),
           a(
-            href := "https://github.com/shadaj/slinky/releases",
+            href := "https://github.com/shadaj/slinky/blob/master/CHANGELOG.md",
             style := smallLinkStyle
           )(
-            "v0.1.1"
+            "v0.2.0"
           ),
           a(
             href := "https://github.com/shadaj/slinky",

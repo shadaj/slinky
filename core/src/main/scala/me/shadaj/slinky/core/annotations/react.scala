@@ -42,7 +42,6 @@ class react extends scala.annotation.StaticAnnotation {
 
       val definitionClass =
         q"""
-           @__SJSDefined
            class Def(jsProps: scala.scalajs.js.Object) extends Definition(jsProps) {
              ..${clazz.templ.stats.getOrElse(Nil).filterNot(s => s == propsDefinition || s == stateDefinition.orNull)}
              ..${if (stateDefinition.isEmpty) Seq(q"override def initialState: State = ()") else Seq.empty}
@@ -64,8 +63,7 @@ class react extends scala.annotation.StaticAnnotation {
         propsAndStateImport +:
         ((if (stateDefinition.isEmpty) Seq(q"override def initialState: State = ()") else Seq.empty) ++
         clazz.templ.stats.getOrElse(Nil).filterNot(s => s == propsDefinition || s == stateDefinition.orNull)),
-        q"import scala.scalajs.js.annotation.{ScalaJSDefined => __SJSDefined}" +:
-          propsDefinition +:
+        propsDefinition +:
           stateDefinition.getOrElse(q"type State = Unit") +:
           definitionClass +:
           applyMethods
