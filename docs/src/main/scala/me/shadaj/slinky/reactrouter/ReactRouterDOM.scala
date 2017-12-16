@@ -3,6 +3,7 @@ package me.shadaj.slinky.reactrouter
 import me.shadaj.slinky.core._
 import me.shadaj.slinky.core.annotations.react
 import me.shadaj.slinky.web.html.a
+import org.scalajs.dom.History
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSImport
@@ -16,6 +17,7 @@ object ReactRouter extends js.Object {
 @JSImport("react-router-dom", JSImport.Default)
 @js.native
 object ReactRouterDOM extends js.Object {
+  val Router: js.Object = js.native
   val BrowserRouter: js.Object = js.native
   val Route: js.Object = js.native
   val Switch : js.Object = js.native
@@ -27,6 +29,11 @@ object ReactRouterDOM extends js.Object {
   case class Props(location: String, context: js.Object)
 
   override val component = ReactRouter.StaticRouter
+}
+
+@react object Router extends ExternalComponent {
+  case class Props(history: History)
+  override val component = ReactRouterDOM.Router
 }
 
 object BrowserRouter extends ExternalComponentNoProps {

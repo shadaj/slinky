@@ -32,7 +32,7 @@ module.exports = {
         use: [ 'url-loader' ]
       }
     ],
-    noParse: (content) => {
+    noParse: function (content) {
       return content.endsWith("-fastopt.js");
     }
   },
@@ -53,5 +53,11 @@ module.exports = {
     historyApiFallback: {
       index: '404.html'
     }
+  },
+  node: {
+    console: true,
+    fs: 'empty',
+    net: 'empty',
+    tls: 'empty'
   }
 }

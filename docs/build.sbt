@@ -12,6 +12,8 @@ npmDependencies in Compile += "react-router-dom" -> "4.2.2"
 npmDependencies in Compile += "react-syntax-highlighter" -> "6.0.4"
 npmDependencies in Compile += "remark" -> "8.0.0"
 npmDependencies in Compile += "remark-react" -> "4.0.1"
+npmDependencies in Compile += "universal-analytics" -> "0.4.16"
+npmDependencies in Compile += "history" -> "4.7.2"
 
 npmDevDependencies in Compile += "url-loader" -> "0.6.2"
 npmDevDependencies in Compile += "file-loader" -> "1.1.5"
