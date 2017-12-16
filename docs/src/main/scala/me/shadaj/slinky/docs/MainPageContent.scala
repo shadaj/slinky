@@ -12,7 +12,8 @@ object MainPageContent {
       maxWidth = "1400px",
       marginLeft = "auto",
       marginRight = "auto",
-      marginBottom = "15px"
+      marginBottom = "15px",
+      padding = "5px"
     ))(
       children.map(v => v: TagMod[div.tag.type]): _*
     )

@@ -53,14 +53,6 @@ import scala.scalajs.js.Dynamic.literal
           fontSize = "30px"
         ))(
           "Get Started"
-        ),
-        a(style := literal(
-          marginLeft = "15px",
-          color = "#61dafb",
-          fontSize = "30px",
-          fontWeight = 300
-        ))(
-          "Take the Tutorial"
         )
       )
     )

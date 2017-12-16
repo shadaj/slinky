@@ -23,7 +23,8 @@ import scala.scalajs.js.Dynamic.literal
         fontWeight = "700",
         padding = "0",
         width = "100%",
-        textAlign = "left"
+        textAlign = "left",
+        outline = "none"
       ), onClick := props.onRequestOpen)(
         div(style := literal(
           color = if (props.isOpen) "rgb(26, 26, 26)" else "rgb(109, 109, 109)"
@@ -31,7 +32,7 @@ import scala.scalajs.js.Dynamic.literal
       ),
       ul(style := literal(display = if (props.isOpen) "block" else "none", listStyle = "none", padding = "0"))(
         props.children.zipWithIndex.map { case ((name, link), index) =>
-          li(key := index.toString, style := literal(marginTop = "5px"))(
+          li(key := index.toString, style := literal(marginTop = "5px", marginBottom = "10px"))(
             NavLink(link, Some(literal(fontWeight = 700)), None)(
               style := literal(
                 color = "rgb(26, 26, 26)",

@@ -4,10 +4,8 @@ import me.shadaj.slinky.core.facade.{PrivateComponentClass, React, ReactElement}
 import me.shadaj.slinky.readwrite.{Reader, Writer}
 
 import scala.scalajs.js
-import scala.scalajs.js.JSON
-import scala.scalajs.js.annotation.{JSName, ScalaJSDefined}
+import scala.scalajs.js.annotation.JSName
 
-@ScalaJSDefined
 abstract class DefinitionBase[Props, State](jsProps: js.Object) extends React.Component(jsProps) {
   import DefinitionBase._
 

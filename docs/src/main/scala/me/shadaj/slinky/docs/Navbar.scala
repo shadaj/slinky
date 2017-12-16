@@ -43,6 +43,7 @@ import scala.scalajs.js
           height = "60px",
           flexDirection = "row",
           alignItems = "center",
+          justifyContent = "space-between",
           maxWidth = "1400px",
           marginLeft = "auto",
           marginRight = "auto"
@@ -53,7 +54,7 @@ import scala.scalajs.js
             display = "flex",
             height = "100%",
             alignItems = "center",
-            width = "20%"
+            minWidth = "150px"
           )
         )(
           Link(to = "/")(
@@ -72,14 +73,11 @@ import scala.scalajs.js
             display = "flex",
             height = "100%",
             alignItems = "center",
-            width = "60%"
+            marginRight = "auto"
           )
         )(
           Link(to = "/docs/installation/")(style := linkStyle)(
             "Docs"
-          ),
-          a(style := linkStyle)(
-            "Tutorial"
           )
         ),
         div(
@@ -87,14 +85,21 @@ import scala.scalajs.js
             display = "flex",
             height = "100%",
             alignItems = "center",
-            width = "20%"
-          )
+            marginRight = "20px"
+          ),
+          className := "sidebar-right"
         )(
           a(
-            href := "https://github.com/shadaj/slinky/releases",
+            href := "https://gitter.im/shadaj/slinky",
             style := smallLinkStyle
           )(
-            "v0.1.1"
+            "Community"
+          ),
+          a(
+            href := "https://github.com/shadaj/slinky/blob/master/CHANGELOG.md",
+            style := smallLinkStyle
+          )(
+            "v0.2.0"
           ),
           a(
             href := "https://github.com/shadaj/slinky",

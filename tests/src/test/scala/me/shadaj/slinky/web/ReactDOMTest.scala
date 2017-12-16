@@ -5,7 +5,6 @@ import me.shadaj.slinky.core.facade.ReactElement
 import org.scalajs.dom.{Element, document}
 
 import scala.scalajs.js
-import scala.scalajs.js.annotation.ScalaJSDefined
 import html._
 import org.scalatest.FunSuite
 
@@ -13,7 +12,6 @@ object TestComponent extends ComponentWrapper {
   type Props = Unit
   type State = Unit
 
-  @ScalaJSDefined
   class Def(jsProps: js.Object) extends Definition(jsProps) {
     override def initialState: Unit = ()
 

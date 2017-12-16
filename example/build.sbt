@@ -14,3 +14,5 @@ webpackConfigFile in fullOptJS := Some(baseDirectory.value / "webpack-opt.config
 emitSourceMaps := false
 
 webpackDevServerExtraArgs := Seq("--inline", "--hot")
+
+scalacOptions += "-P:scalajs:sjsDefinedByDefault"
