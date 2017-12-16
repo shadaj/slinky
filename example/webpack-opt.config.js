@@ -2,7 +2,7 @@ var webpack = require('webpack');
 
 module.exports = {
   "entry": {
-    "simple-react-example-opt": "./opt-launcher.js"
+    "slinky-example-opt": "./opt-launcher.js"
   },
   "output": {
     "path": ".",

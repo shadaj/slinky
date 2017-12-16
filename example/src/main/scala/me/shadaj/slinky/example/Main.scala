@@ -24,7 +24,7 @@ object Main extends JSApp {
       .render_P(name => <.div(
         "This is a component from scalajs-react being used in ", name,
         div(
-          "and this is from simple-react inside the scalajs-react component!"
+          "and this is from Slinky inside the scalajs-react component!"
         )
       ))
       .build
@@ -77,7 +77,7 @@ object Main extends JSApp {
         <.h2(s"this was rendered by scalajs-react!"),
         maybeChild,
         (1 to state.size).map(n => div(key := n.toString)(s"$n - $state")),
-        Hello("simple-react")
+        Hello("slinky")
       )
     }
   }

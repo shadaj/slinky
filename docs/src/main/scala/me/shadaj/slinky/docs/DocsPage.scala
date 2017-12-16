@@ -75,12 +75,15 @@ import js.Dynamic.literal
 
 object DocsTree {
   val tree: Map[String, List[(String, String)]] = Map(
-    "" -> List(
+    "Core Concepts" -> List(
       "Installation" -> "/docs/installation/",
       "Hello World!" -> "/docs/hello-world/",
       "The Tag API" -> "/docs/the-tag-api/",
       "Writing Components" -> "/docs/writing-components/",
       "External Components" -> "/docs/external-components/"
+    ),
+    "Advanced Guides" -> List(
+      "Scala.js React Interop" -> "/docs/scalajs-react-interop/"
     )
   )
 }
