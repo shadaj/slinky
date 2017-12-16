@@ -57,7 +57,8 @@ object Main {
           ))(
             Switch(
               Route("/", Homepage, exact = true),
-              Route("/docs/*", DocsPage)
+              Route("/docs/*", DocsPage),
+              Route("*", Homepage)
             )
           )
         )
@@ -77,7 +78,8 @@ object Main {
           ))(
             Switch(
               Route("/", Homepage, exact = true),
-              Route("/docs/*", DocsPage)
+              Route("/docs/*", DocsPage),
+              Route("*", Homepage)
             )
           )
         )
@@ -101,7 +103,8 @@ object Main {
           ))(
             Switch(
               Route("/", Homepage, exact = true),
-              Route("/docs/*", DocsPage)
+              Route("/docs/*", DocsPage),
+              Route("*", Homepage)
             )
           )
         )
