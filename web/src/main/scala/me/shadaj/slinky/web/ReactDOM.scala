@@ -12,6 +12,16 @@ object ReactDOM extends js.Object {
   def render(component: ReactElement, target: Element): ReactInstance = js.native
   def hydrate(component: ReactElement, target: Element): ReactInstance = js.native
   def findDOMNode(instance: React.Component): Element = js.native
+
+  /**
+    * React Docs - Creates a portal. Portals provide a way to render children into a DOM node that exists outside the hierarchy of the DOM component.
+    *
+    * React 16 only
+    * @param child the React node to render inside the selected container
+    * @param container the DOM node to render the child node inside
+    * @return a portal React element
+    */
+  def createPortal(child: ReactElement, container: Element): ReactElement = js.native
 }
 
 @js.native

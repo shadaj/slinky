@@ -1,6 +1,7 @@
 # Changelog
 
 ## vNEXT
++ Add support for portal elements, which were introduced in React 16 [PR #65](https://github.com/shadaj/slinky/pull/65)
 
 ## v0.2.0
 + **BREAKING**: Instead of taking key and refs as additional parameters next to props, they are now taken in through the methods `withKey` and `withRef` (components and external components only)
