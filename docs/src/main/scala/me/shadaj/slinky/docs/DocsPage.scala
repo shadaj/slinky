@@ -83,6 +83,7 @@ object DocsTree {
       "External Components" -> "/docs/external-components/"
     ),
     "Advanced Guides" -> List(
+      "Fragments and Portals" -> "/docs/fragments-and-portals/",
       "Scala.js React Interop" -> "/docs/scalajs-react-interop/"
     )
   )
