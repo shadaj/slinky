@@ -1,11 +1,9 @@
-enablePlugins(ScalaJSPlugin)
+enablePlugins(ScalaJSBundlerPlugin)
 
 libraryDependencies += "org.scalatest" %%% "scalatest" % "3.0.3" % Test
 
-jsDependencies += "org.webjars.npm" % "react" % "15.6.1" % Test / "react-with-addons.js" minified "react-with-addons.min.js" commonJSName "React"
-jsDependencies += "org.webjars.npm" % "react-dom" % "15.6.1" % Test / "react-dom.js" minified "react-dom.min.js" commonJSName "ReactDOM" dependsOn "react-with-addons.js"
+npmDependencies in Test += "react" -> "16.2.0"
+npmDependencies in Test += "react-dom" -> "16.2.0"
 jsDependencies += RuntimeDOM % Test
-
-jsEnv := new org.scalajs.jsenv.jsdomnodejs.JSDOMNodeJSEnv()
 
 scalacOptions += "-P:scalajs:sjsDefinedByDefault"

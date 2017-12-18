@@ -29,7 +29,7 @@ class ReactDOMTest extends FunSuite {
       target
     )
 
-    assert(target.childNodes(0).asInstanceOf[Element].tagName.toLowerCase == "a")
+    assert(target.innerHTML == "<a></a>")
   }
 
   test("Finds a dom node for a component") {
@@ -41,5 +41,19 @@ class ReactDOMTest extends FunSuite {
     ).asInstanceOf[TestComponent.Def]
 
     assert(target.childNodes(0).asInstanceOf[Element] == ReactDOM.findDOMNode(instance))
+  }
+
+  test("Renders portals to the appropriate container DOM node") {
+    val target = document.createElement("div")
+    val container = document.createElement("div")
+    ReactDOM.render(
+      div(
+        ReactDOM.createPortal(h1("hi"), container)
+      ),
+      target
+    )
+
+    assert(container.innerHTML == "<h1>hi</h1>")
+    assert(target.innerHTML == "<div></div>")
   }
 }
