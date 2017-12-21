@@ -4,6 +4,7 @@ import me.shadaj.slinky.readwrite.{Reader, Writer}
 
 import scala.scalajs.js
 import scala.scalajs.js.ConstructorTag
+import scala.language.implicitConversions
 
 abstract class ComponentWrapper extends BaseComponentWrapper {
   override type Definition = DefinitionBase[Props, State]
