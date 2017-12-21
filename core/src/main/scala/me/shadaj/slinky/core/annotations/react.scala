@@ -28,7 +28,7 @@ class react extends scala.annotation.StaticAnnotation {
             Some((defn, Seq(caseClassApply)))
           case _ => None
         }
-      }.head
+      }.headOption.getOrElse(abort("Components must define a Props type or case class, but none was found."))
 
       val stateDefinition = clazz.templ.stats.getOrElse(Nil).flatMap { t =>
         t match {
