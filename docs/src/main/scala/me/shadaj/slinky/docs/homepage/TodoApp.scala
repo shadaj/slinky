@@ -1,6 +1,6 @@
 package me.shadaj.slinky.docs.homepage //nodisplay
 
-import me.shadaj.slinky.core.Component //nodisplay
+import me.shadaj.slinky.core.{Component, StatelessComponent} //nodisplay
 import me.shadaj.slinky.core.annotations.react //nodisplay
 import me.shadaj.slinky.web.html._ //nodisplay
 import org.scalajs.dom.raw.{Event, HTMLInputElement} //nodisplay
@@ -54,7 +54,7 @@ case class TodoItem(text: String, id: Long)
   }
 }
 
-@react class TodoList extends Component {
+@react class TodoList extends StatelessComponent {
   case class Props(items: Seq[TodoItem])
 
   override def render() = {

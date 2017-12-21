@@ -1,14 +1,14 @@
 package me.shadaj.slinky.docs
 
-import me.shadaj.slinky.core.Component
+import me.shadaj.slinky.core.StatelessComponent
 import me.shadaj.slinky.core.annotations.react
 import me.shadaj.slinky.core.facade.ReactElement
-import me.shadaj.slinky.reactrouter.{Link, NavLink}
+import me.shadaj.slinky.reactrouter.NavLink
 import me.shadaj.slinky.web.html._
 
 import scala.scalajs.js.Dynamic.literal
 
-@react class DocsGroup extends Component {
+@react class DocsGroup extends StatelessComponent {
   case class Props(name: String, isOpen: Boolean, onRequestOpen: Function0[Unit], children: List[(String, String)])
 
   override def render(): ReactElement = {

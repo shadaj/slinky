@@ -1,6 +1,8 @@
 # Changelog
 
 ## vNEXT
++ **BREAKING**: Stateless components that use the `@react` macro annotation must extend the `StatelessComponent` class instead of just `Component` [PR #69](https://github.com/shadaj/slinky/pull/69)
++ Greatly improve IntelliJ support for Slinky with special macro annotation behavior [PR #69](https://github.com/shadaj/slinky/pull/69)
 + Add support for portal elements, which were introduced in React 16 [PR #65](https://github.com/shadaj/slinky/pull/65)
 
 ## v0.2.0

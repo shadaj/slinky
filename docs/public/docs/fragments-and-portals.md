@@ -5,7 +5,7 @@ Slinky supports the special fragment and portal element types that were introduc
 [Fragments](https://reactjs.org/docs/fragments.html) make it possible to return multiple elements from a component. To create a fragment simply return a list of elements in your `render` method.
 
 ```scala
-@react class MyComponent extends Component {
+@react class MyComponent extends StatelessComponent {
   trait Props = Unit
   
   def render = {
@@ -23,7 +23,7 @@ Additionally, Slinky supports the `Fragment` component [introduced in React 16.2
 ```scala
 import me.shadaj.slinky.core.facade.Fragment
 
-@react class MyComponent extends Component {
+@react class MyComponent extends StatelessComponent {
   trait Props = Unit
   
   def render = {

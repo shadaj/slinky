@@ -1,6 +1,6 @@
 package me.shadaj.slinky.docs.homepage
 
-import me.shadaj.slinky.core.Component
+import me.shadaj.slinky.core.{Component, StatelessComponent}
 import me.shadaj.slinky.core.annotations.react
 import me.shadaj.slinky.core.facade.ReactElement
 import me.shadaj.slinky.reactrouter.Link
@@ -8,7 +8,7 @@ import me.shadaj.slinky.web.html._
 
 import scala.scalajs.js.Dynamic.literal
 
-@react class Jumbotron extends Component {
+@react class Jumbotron extends StatelessComponent {
   type Props = Unit
 
   override def render(): ReactElement = {

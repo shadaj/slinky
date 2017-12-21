@@ -1,17 +1,15 @@
 package me.shadaj.slinky.docs
 
-import me.shadaj.slinky.core.Component
+import me.shadaj.slinky.core.StatelessComponent
 import me.shadaj.slinky.core.annotations.react
 import me.shadaj.slinky.core.facade.ReactElement
 import me.shadaj.slinky.web.html._
-import sourcecode.Text
 
 import scala.scalajs.js
 import scala.scalajs.js.Dynamic.literal
 import scala.language.experimental.macros
-import scala.reflect.macros.blackbox
 
-@react class CodeExampleInternal extends Component {
+@react class CodeExampleInternal extends StatelessComponent {
   case class Props(codeText: String, demoElement: ReactElement)
 
   // from the reactjs.org theme

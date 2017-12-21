@@ -1,6 +1,6 @@
 package me.shadaj.slinky.docs
 
-import me.shadaj.slinky.core.Component
+import me.shadaj.slinky.core.StatelessComponent
 import me.shadaj.slinky.core.annotations.react
 import me.shadaj.slinky.core.facade.ReactElement
 import me.shadaj.slinky.docs.homepage.SlinkyHorizontalLogo
@@ -9,7 +9,7 @@ import me.shadaj.slinky.web.html._
 
 import scala.scalajs.js
 
-@react class Navbar extends Component {
+@react class Navbar extends StatelessComponent {
   type Props = Unit
 
   val linkStyle = js.Dynamic.literal(

@@ -1,11 +1,11 @@
 package me.shadaj.slinky.docs.homepage //nodisplay
 
-import me.shadaj.slinky.core.Component //nodisplay
+import me.shadaj.slinky.core.StatelessComponent //nodisplay
 import me.shadaj.slinky.core.annotations.react //nodisplay
 import me.shadaj.slinky.core.facade.ReactElement //nodisplay
 import me.shadaj.slinky.web.html._ //nodisplay
 
-@react class HelloMessage extends Component {
+@react class HelloMessage extends StatelessComponent {
   case class Props(name: String)
 
   override def render(): ReactElement = {

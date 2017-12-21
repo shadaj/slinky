@@ -42,3 +42,8 @@ abstract class Component {
 
   def render(): ReactElement
 }
+
+abstract class StatelessComponent extends Component {
+  type State = Unit
+  def initialState: State = ()
+}

@@ -1,6 +1,6 @@
 package me.shadaj.slinky.docs.homepage
 
-import me.shadaj.slinky.core.Component
+import me.shadaj.slinky.core.{Component, StatelessComponent}
 import me.shadaj.slinky.core.annotations.react
 import me.shadaj.slinky.core.facade.ReactElement
 import me.shadaj.slinky.docs.CodeExample
@@ -8,7 +8,7 @@ import me.shadaj.slinky.web.html._
 
 import scala.scalajs.js.Dynamic.literal
 
-@react class Examples extends Component {
+@react class Examples extends StatelessComponent {
   type Props = Unit
 
   override def render(): ReactElement = {

@@ -3,7 +3,7 @@ Writing React components in Slinky is just like writing them with the native ES6
 
 Slinky components must define the type of their React props and implement a render method. Within the component, you can access the props using the `props` variable.
 ```scala
-@react class HelloName extends Component {
+@react class HelloName extends StatelessComponent {
   case class Props(name: String)
   
   def render = {
@@ -13,7 +13,7 @@ Slinky components must define the type of their React props and implement a rend
 ```
 
 ## Adding State
-To make your component stateful, first define your state type and initial state
+To make your component stateful, extend the `Component` class (instead of `StatelessComponent`) and define your state type and initial state
 ```scala
 case class State(buttonPresses: Int)
 
@@ -70,6 +70,19 @@ object MyComponent extends ComponentWrapper {
   class Def(jsProps: js.Object) extends Definition(jsProps) {
     def initialState = ...
     
+    def render = {
+      ...
+    }
+  }
+}
+```
+
+And in the case of a `StatelessComponent` something like this:
+```scala
+object MyComponent extends StatelessComponentWrapper {
+  case class Props(...)
+  
+  class Def(jsProps: js.Object) extends Definition(jsProps) {
     def render = {
       ...
     }
