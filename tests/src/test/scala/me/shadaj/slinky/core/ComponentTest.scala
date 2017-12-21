@@ -31,6 +31,25 @@ class TestComponent extends Component {
   }
 }
 
+@react class TestComponentForSetStateCallback extends Component {
+  type Props = Int => Unit
+  type State = Int
+
+  override def initialState: Int = 0
+
+  override def componentDidMount(): Unit = {
+    setState((s, p) => {
+      s + 1
+    }, new Function0[Unit] {
+      override def apply(): Unit = props.apply(state)
+    })
+  }
+
+  override def render(): ReactElement = {
+    null
+  }
+}
+
 @react
 class TestComponentStateCaseClass extends Component {
   type Props = Unit
@@ -69,6 +88,17 @@ class TestComponentCaseClass extends Component {
 
 class ComponentTest extends AsyncFunSuite {
   test("setState given function is applied") {
+    val promise: Promise[Assertion] = Promise()
+
+    ReactDOM.render(
+      TestComponent(i => promise.success(assert(i == 1))),
+      dom.document.createElement("div")
+    )
+
+    promise.future
+  }
+
+  test("setState callback function is run") {
     val promise: Promise[Assertion] = Promise()
 
     ReactDOM.render(

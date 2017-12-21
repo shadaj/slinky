@@ -20,11 +20,11 @@ abstract class Component {
 
   final def setState(fn: (State, Props) => State): Unit = ???
 
-  final def setState(s: State, callback: js.Function0[Unit]): Unit = ???
+  final def setState(s: State, callback: () => Unit): Unit = ???
 
-  final def setState(fn: State => State, callback: js.Function0[Unit]): Unit = ???
+  final def setState(fn: State => State, callback: () => Unit): Unit = ???
 
-  final def setState(fn: (State, Props) => State, callback: js.Function0[Unit]): Unit = ???
+  final def setState(fn: (State, Props) => State, callback: () => Unit): Unit = ???
 
   def componentWillMount(): Unit = {}
 

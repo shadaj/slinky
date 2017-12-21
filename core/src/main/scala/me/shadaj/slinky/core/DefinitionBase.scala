@@ -68,7 +68,7 @@ abstract class DefinitionBase[Props, State](jsProps: js.Object) extends React.Co
   }
 
   @JSName("setState_scala")
-  @inline final def setState(s: State, callback: js.Function0[Unit]): Unit = {
+  @inline final def setState(s: State, callback: () => Unit): Unit = {
     val stateObject = if (BaseComponentWrapper.scalaComponentWritingEnabled) {
       writeWithWrappingAdjustment(stateWriter)(s)
     } else js.Dynamic.literal(__ = s.asInstanceOf[js.Any])
@@ -76,7 +76,7 @@ abstract class DefinitionBase[Props, State](jsProps: js.Object) extends React.Co
   }
 
   @JSName("setState_scala")
-  @inline final def setState(fn: State => State, callback: js.Function0[Unit]): Unit = {
+  @inline final def setState(fn: State => State, callback: () => Unit): Unit = {
     this.asInstanceOf[PrivateComponentClass].setStateR((ps: js.Object) => {
       val s = fn(readWithWrappingAdjustment(stateReader)(ps))
       if (BaseComponentWrapper.scalaComponentWritingEnabled) {
@@ -86,7 +86,7 @@ abstract class DefinitionBase[Props, State](jsProps: js.Object) extends React.Co
   }
 
   @JSName("setState_scala")
-  @inline final def setState(fn: (State, Props) => State, callback: js.Function0[Unit]): Unit = {
+  @inline final def setState(fn: (State, Props) => State, callback: () => Unit): Unit = {
     this.asInstanceOf[PrivateComponentClass].setStateR((ps: js.Object, p: js.Object) => {
       val s = fn(readWithWrappingAdjustment(stateReader)(ps), readWithWrappingAdjustment(propsReader)(p))
       if (BaseComponentWrapper.scalaComponentWritingEnabled) {
