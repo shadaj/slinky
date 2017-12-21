@@ -13,7 +13,7 @@ class KeyAndRefAddingStage[D <: js.Any](val props: js.Dictionary[js.Any], val co
     new KeyAndRefAddingStage[D](props, constructor)
   }
 
-  def withRef(ref: js.Object => Unit): KeyAndRefAddingStage[D] = {
+  def withRef(ref: D => Unit): KeyAndRefAddingStage[D] = {
     props("ref") = ref
     new KeyAndRefAddingStage[D](props, constructor)
   }
@@ -65,6 +65,10 @@ abstract class BaseComponentWrapper {
       propsObj,
       componentConstructorInstance
     )
+  }
+
+  def apply()(implicit ev: Unit =:= Props, stateWriter: Writer[State], stateReader: Reader[State], constructorTag: ConstructorTag[Def]): KeyAndRefAddingStage[Def] = {
+    apply(())(Writer.unitWriter.asInstanceOf[Writer[Props]], Reader.unitReader.asInstanceOf[Reader[Props]], stateWriter, stateReader, constructorTag)
   }
 }
 
