@@ -3,13 +3,17 @@ package me.shadaj.slinky.docs
 import scala.scalajs.js
 import scala.scalajs.js.annotation.{JSExportTopLevel, JSImport}
 import scala.scalajs.LinkingInfo
-import me.shadaj.slinky.core._
+
 import me.shadaj.slinky.docs.homepage.Homepage
+import me.shadaj.slinky.history.History
 import me.shadaj.slinky.web.{ReactDOM, ReactDOMServer}
 import me.shadaj.slinky.hot
-import me.shadaj.slinky.reactrouter.{BrowserRouter, Route, StaticRouter, Switch}
+import me.shadaj.slinky.reactrouter._
+import me.shadaj.slinky.universalanalytics.UniversalAnalytics
 import me.shadaj.slinky.web.html.{div, style}
+
 import org.scalajs.dom
+import org.scalajs.dom.History
 
 @JSImport("resources/index.css", JSImport.Default)
 @js.native
@@ -17,6 +21,17 @@ object IndexCSS extends js.Object
 
 object Main {
   val css = IndexCSS
+
+  def setupAnalytics(): History = {
+    val visitor = UniversalAnalytics("UA-54128141-3", js.Dynamic.literal(https = true))
+    val history = History.createBrowserHistory()
+    visitor.pageview(dom.window.location.pathname).send()
+    history.listen(() => {
+      visitor.pageview(dom.window.location.pathname).send()
+    })
+
+    history
+  }
 
   @JSExportTopLevel("entrypoint.main")
   def main(): Unit = {
@@ -31,8 +46,10 @@ object Main {
       elem
     }
 
+    setupAnalytics()
+
     ReactDOM.render(
-      BrowserRouter(
+      Router(history = setupAnalytics())(
         div(
           Navbar(),
           div(style := js.Dynamic.literal(
@@ -40,7 +57,8 @@ object Main {
           ))(
             Switch(
               Route("/", Homepage, exact = true),
-              Route("/docs/*", DocsPage)
+              Route("/docs/*", DocsPage),
+              Route("*", Homepage)
             )
           )
         )
@@ -60,7 +78,8 @@ object Main {
           ))(
             Switch(
               Route("/", Homepage, exact = true),
-              Route("/docs/*", DocsPage)
+              Route("/docs/*", DocsPage),
+              Route("*", Homepage)
             )
           )
         )
@@ -72,8 +91,11 @@ object Main {
   def hydrate(): Unit = {
     val container = dom.document.getElementById("root")
 
+    println("SETTING UP ANALYTICS")
+    setupAnalytics()
+
     ReactDOM.hydrate(
-      BrowserRouter(
+      Router(history = setupAnalytics())(
         div(
           Navbar(),
           div(style := js.Dynamic.literal(
@@ -81,7 +103,8 @@ object Main {
           ))(
             Switch(
               Route("/", Homepage, exact = true),
-              Route("/docs/*", DocsPage)
+              Route("/docs/*", DocsPage),
+              Route("*", Homepage)
             )
           )
         )

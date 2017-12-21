@@ -55,15 +55,21 @@ module.exports = {
     }),
     new webpack.optimize.UglifyJsPlugin(),
     new StaticSiteGeneratorPlugin({
-        crawl: true,
-        globals: {
-          window: dom.window,
-          document: dom.window.document,
-          navigator: dom.window.navigator,
-          ssr: true,
-          fs: require('fs'),
-          __dirname: __dirname
-        }
+      crawl: true,
+      globals: {
+        window: dom.window,
+        document: dom.window.document,
+        navigator: dom.window.navigator,
+        ssr: true,
+        fs: require('fs'),
+        __dirname: __dirname
+      }
     })
-  ]
+  ],
+  node: {
+    console: true,
+    fs: 'empty',
+    net: 'empty',
+    tls: 'empty'
+  }
 };
