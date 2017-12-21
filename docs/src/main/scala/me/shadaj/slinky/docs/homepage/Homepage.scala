@@ -1,6 +1,6 @@
 package me.shadaj.slinky.docs.homepage
 
-import me.shadaj.slinky.core.{Component, StatelessComponentWrapper}
+import me.shadaj.slinky.core.{Component, StatelessComponent, StatelessComponentWrapper}
 import me.shadaj.slinky.core.annotations.react
 import me.shadaj.slinky.docs.{MainPageContent, Navbar}
 import me.shadaj.slinky.web.html._
@@ -17,7 +17,7 @@ object SlinkyHorizontalLogo extends js.Object
 @js.native
 object SlinkyLogo extends js.Object
 
-@react class Homepage extends Component {
+@react class Homepage extends StatelessComponent {
   type Props = Unit
 
   def render() = {

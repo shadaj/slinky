@@ -25,7 +25,7 @@ val ScalajsReactComponent =
     ))
     .build
     
-@react class SlinkyComponent extends Component {
+@react class SlinkyComponent extends StatelessComponent {
   case class Props(name: String)
 
   def render(): ReactElement = {

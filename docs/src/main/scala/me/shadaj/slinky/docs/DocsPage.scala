@@ -1,6 +1,6 @@
 package me.shadaj.slinky.docs
 
-import me.shadaj.slinky.core.Component
+import me.shadaj.slinky.core.{Component, StatelessComponent}
 import me.shadaj.slinky.core.annotations.react
 import me.shadaj.slinky.core.facade.{Fragment, ReactElement}
 import me.shadaj.slinky.remarkreact.{ReactRenderer, Remark}
@@ -10,7 +10,7 @@ import org.scalajs.dom.raw.XMLHttpRequest
 import scala.scalajs.js
 import js.Dynamic.literal
 
-@react class RemarkCode extends Component {
+@react class RemarkCode extends StatelessComponent {
   case class Props(children: Seq[String])
 
   // from the reactjs.org theme
@@ -56,7 +56,7 @@ import js.Dynamic.literal
   }
 }
 
-@react class RemarkH2 extends Component {
+@react class RemarkH2 extends StatelessComponent {
   case class Props(children: Seq[String])
 
   override def render(): ReactElement = {
