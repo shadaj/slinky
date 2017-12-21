@@ -91,7 +91,6 @@ object Main {
   def hydrate(): Unit = {
     val container = dom.document.getElementById("root")
 
-    println("SETTING UP ANALYTICS")
     setupAnalytics()
 
     ReactDOM.hydrate(
