@@ -1,6 +1,5 @@
 package me.shadaj.slinky.docs
 
-import me.shadaj.slinky.core.TagMod
 import me.shadaj.slinky.core.facade.ReactElement
 import me.shadaj.slinky.web.html.{className, div, style}
 
@@ -15,7 +14,7 @@ object MainPageContent {
       marginBottom = "15px",
       padding = "5px"
     ))(
-      children.map(v => v: TagMod[div.tag.type]): _*
+      children: _*
     )
   }
 }

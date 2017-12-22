@@ -32,7 +32,11 @@ object Generator extends App {
         s"""/**
            | * ${t.docLines.map(_.replace("*", "&#47;")).mkString("\n * ")}
            | */
-           |def apply(mods: TagMod[tag.type]*) = new TagComponent[tag.type]("${t.tagName}").apply(mods: _*)""".stripMargin
+           |@inline def apply(mod: AttrPair[tag.type], remainingMods: AttrPair[tag.type]*) = new WithAttrs("${t.tagName}", js.Dictionary((mod +: remainingMods).map(m => m.name -> m.value): _*))
+           |/**
+           | * ${t.docLines.map(_.replace("*", "&#47;")).mkString("\n * ")}
+           | */
+           |@inline def apply(elems: ReactElement*) = React.createElement("${t.tagName}", js.Dictionary.empty[js.Any], elems: _*)"""
       }
 
       val attrsGen = attrs.toList.flatMap { a =>
@@ -72,7 +76,8 @@ object Generator extends App {
       out.println(
         s"""package ${pkg}
            |
-           |import me.shadaj.slinky.core.{AttrPair, TagComponent, TagMod, TagElement}
+           |import me.shadaj.slinky.core.{AttrPair, TagElement, WithAttrs}
+           |import me.shadaj.slinky.core.facade.{React, ReactElement}
            |import scala.scalajs.js
            |import scala.language.implicitConversions
            |
