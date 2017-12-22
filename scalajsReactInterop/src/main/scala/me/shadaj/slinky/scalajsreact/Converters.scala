@@ -5,7 +5,6 @@ import japgolly.scalajs.react.raw.ReactNode
 import japgolly.scalajs.react.vdom.{TagOf, VdomNode}
 import japgolly.scalajs.react.vdom.html_<^._
 
-import me.shadaj.slinky.core.TagComponent
 import me.shadaj.slinky.core.facade.ReactElement
 
 import scala.language.implicitConversions
@@ -23,11 +22,7 @@ object Converters {
     vdom.rawNode.asInstanceOf[ReactElement]
   }
 
-  implicit def htmlToVdom(component: TagComponent[_]): VdomNode = {
-    VdomNode((component: ReactElement).asInstanceOf[ReactNode])
-  }
-
-  implicit def componentInstanceToVdom(component: ReactElement): VdomNode = {
+  implicit def componentInstanceToVdom[T](component: T)(implicit ev: T => ReactElement): VdomNode = {
     VdomNode(component.asInstanceOf[ReactNode])
   }
 }

@@ -56,11 +56,15 @@ trait PrivateComponentClass extends js.Object {
 }
 
 object ReactElement {
-  implicit def stringToElement(s: String): ReactElement = {
+  @inline implicit def stringToElement(s: String): ReactElement = {
     s.asInstanceOf[ReactElement]
   }
 
-  implicit def seqElementToElement[T](s: Iterable[T])(implicit cv: T => ReactElement): ReactElement = {
+  @inline implicit def optionToElement(s: Option[ReactElement]): ReactElement = {
+    s.getOrElse(null.asInstanceOf[ReactElement])
+  }
+
+  @inline implicit def seqElementToElement[T](s: Iterable[T])(implicit cv: T => ReactElement): ReactElement = {
     s.map(cv).toJSArray.asInstanceOf[ReactElement]
   }
 }
