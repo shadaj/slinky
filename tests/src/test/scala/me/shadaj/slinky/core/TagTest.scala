@@ -14,7 +14,7 @@ class TagTest extends FunSuite {
   }
 
   test("Sequence of different tag types can be typed to TagComponent[Any]") {
-    assertCompiles("val foo: Seq[TagComponent[Any]] = Seq(div(), a())")
+    assertCompiles("val foo: Seq[ReactElement] = Seq(div(), a())")
   }
 
   test("Sequence of different tag types can used as child of tag") {
