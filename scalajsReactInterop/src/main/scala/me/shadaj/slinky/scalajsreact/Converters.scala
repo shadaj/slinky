@@ -23,6 +23,6 @@ object Converters {
   }
 
   implicit def componentInstanceToVdom[T](component: T)(implicit ev: T => ReactElement): VdomNode = {
-    VdomNode(component.asInstanceOf[ReactNode])
+    VdomNode(ev(component).asInstanceOf[ReactNode])
   }
 }
