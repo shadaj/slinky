@@ -4,6 +4,7 @@
 + **BREAKING**: Stateless components that use the `@react` macro annotation must extend the `StatelessComponent` class instead of just `Component` [PR #69](https://github.com/shadaj/slinky/pull/69)
 + **BREAKING**: Callbacks passed to `setState` are now Scala functions, so there is no need to force implicit conversions [PR #71](https://github.com/shadaj/slinky/pull/71)
 + **BREAKING**: The tag construction flow now requires attributes to come before children. In addition, an empty list of attributes is no longer allowed [PR #73](https://github.com/shadaj/slinky/pull/73)
++ Add missing global HTML attributes: `spellCheck`, `contentEditable`, and `tabIndex` [PR #77](https://github.com/shadaj/slinky/pull/77)
 + Large performance gains in tag construction, with over 5x improvements for some components! [PR #73](https://github.com/shadaj/slinky/pull/73)
 + Better support for converting Slinky types to scalajs-react types when an implicit conversion to `ReactElement` is needed [PR #73](https://github.com/shadaj/slinky/pull/73)
 + Add better error message when `@react` annotation is used on a component with no `Props` type declaration [PR #72](https://github.com/shadaj/slinky/pull/72)

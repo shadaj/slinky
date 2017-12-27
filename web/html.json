@@ -2378,6 +2378,27 @@
       ],
       "compatibleTags" : null,
       "withDash" : false
+    },
+    {
+      "attributeName": "spellCheck",
+      "attributeType": "Boolean",
+      "docLines": [],
+      "compatibleTags": null,
+      "withDash": false
+    },
+    {
+      "attributeName": "contentEditable",
+      "attributeType": "Boolean",
+      "docLines": [],
+      "compatibleTags": null,
+      "withDash": false
+    },
+    {
+      "attributeName": "tabIndex",
+      "attributeType": "Int",
+      "docLines": [],
+      "compatibleTags": null,
+      "withDash": false
     }
   ]
 }
