@@ -22,6 +22,7 @@ object React extends js.Object {
 
   @js.native
   class Component(jsProps: js.Object) extends js.Object {
+    def forceUpdate(): Unit = js.native
     def forceUpdate(callback: js.Function0[Unit]): Unit = js.native
   }
 
