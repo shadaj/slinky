@@ -86,6 +86,21 @@ class TestComponentCaseClass extends Component {
   }
 }
 
+@react class TestForceUpdateComponent extends Component {
+  type Props = Function0[Unit]
+  type State = Int
+
+  override def componentDidUpdate(prevProps: Props, prevState: State): Unit = {
+    props.apply()
+  }
+
+  override def initialState: Int = 0
+
+  override def render(): ReactElement = {
+    null
+  }
+}
+
 class ComponentTest extends AsyncFunSuite {
   test("setState given function is applied") {
     val promise: Promise[Assertion] = Promise()
@@ -128,5 +143,18 @@ class ComponentTest extends AsyncFunSuite {
     val element: ReactElement = NoPropsComponent.withKey("hi").withRef((r: js.Object) => {})
     assert(element.asInstanceOf[js.Dynamic].key.toString == "hi")
     assert(!js.isUndefined(element.asInstanceOf[js.Dynamic].ref))
+  }
+
+  test("Force updating a component by its ref works") {
+    val promise: Promise[Assertion] = Promise()
+
+    ReactDOM.render(
+      TestForceUpdateComponent(() => promise.success(assert(true))).withRef(ref => {
+        ref.forceUpdate()
+      }),
+      dom.document.createElement("div")
+    )
+
+    promise.future
   }
 }

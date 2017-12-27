@@ -1,10 +1,8 @@
 package me.shadaj.slinky.core
 
-import me.shadaj.slinky.core.facade.ReactElement
+import me.shadaj.slinky.core.facade.{React, ReactElement}
 
-import scala.scalajs.js
-
-abstract class Component {
+abstract class Component extends React.Component(null) {
   type Props
   type State
 
