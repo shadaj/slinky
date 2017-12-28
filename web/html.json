@@ -2399,6 +2399,15 @@
       "docLines": [],
       "compatibleTags": null,
       "withDash": false
+    },
+    {
+      "attributeName": "readOnly",
+      "attributeType": "Boolean",
+      "docLines": [],
+      "compatibleTags": [
+        "input"
+      ],
+      "withDash": false
     }
   ]
 }
