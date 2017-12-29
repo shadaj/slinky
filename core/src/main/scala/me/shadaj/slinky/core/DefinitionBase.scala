@@ -1,6 +1,6 @@
 package me.shadaj.slinky.core
 
-import me.shadaj.slinky.core.facade.{PrivateComponentClass, React, ReactElement}
+import me.shadaj.slinky.core.facade.{ErrorBoundaryInfo, PrivateComponentClass, React, ReactElement}
 import me.shadaj.slinky.readwrite.{Reader, Writer}
 
 import scala.scalajs.js
@@ -167,7 +167,7 @@ object DefinitionBase {
     }
   }
 
-  @inline private[slinky] final  def writeWithWrappingAdjustment[T](writer: Writer[T])(value: T): js.Object = {
+  @inline private[slinky] final def writeWithWrappingAdjustment[T](writer: Writer[T])(value: T): js.Object = {
     val __value = writer.write(value)
 
     if (js.typeOf(__value) == "object") {
@@ -176,4 +176,8 @@ object DefinitionBase {
       js.Dynamic.literal(__value = __value)
     }
   }
+}
+
+trait ErrorBoundary extends React.Component {
+  def componentDidCatch(error: js.Error, info: ErrorBoundaryInfo): Unit
 }

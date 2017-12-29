@@ -1,6 +1,6 @@
 package me.shadaj.slinky.core
 
-import me.shadaj.slinky.core.facade.ReactElement
+import me.shadaj.slinky.core.facade.{ErrorBoundaryInfo, ReactElement}
 import me.shadaj.slinky.web.ReactDOM
 import org.scalajs.dom
 import org.scalatest.{Assertion, AsyncFunSuite}
@@ -81,6 +81,34 @@ object TestForceUpdateComponent extends ComponentWrapper {
   }
 }
 
+object BadComponent extends StatelessComponentWrapper {
+  type Props = Unit
+
+  class Def(jsProps: js.Object) extends Definition(jsProps) {
+    override def render(): ReactElement = {
+      throw new Exception("BOO")
+    }
+  }
+}
+
+object ErrorBoundaryComponent extends StatelessComponentWrapper {
+  case class Props(bad: Boolean, handler: (js.Error, ErrorBoundaryInfo) => Unit)
+
+  class Def(jsProps: js.Object) extends Definition(jsProps) with ErrorBoundary {
+    override def componentDidCatch(error: js.Error, info: ErrorBoundaryInfo): Unit = {
+      props.handler.apply(error, info)
+    }
+
+    override def render(): ReactElement = {
+      if (props.bad) {
+        BadComponent()
+      } else {
+        null
+      }
+    }
+  }
+}
+
 class ComponentTest extends AsyncFunSuite {
   test("setState given function is applied") {
     val promise: Promise[Assertion] = Promise()
@@ -131,5 +159,31 @@ class ComponentTest extends AsyncFunSuite {
     )
 
     promise.future
+  }
+
+  test("Error boundary component catches an exception in its children") {
+    val promise: Promise[Assertion] = Promise()
+
+    ReactDOM.render(
+      ErrorBoundaryComponent(ErrorBoundaryComponent.Props(true, (error, info) => {
+        promise.success(assert(true))
+      })),
+      dom.document.createElement("div")
+    )
+
+    promise.future
+  }
+
+  test("Error boundary component works fine with no errors") {
+    var sawError = false
+
+    ReactDOM.render(
+      ErrorBoundaryComponent(ErrorBoundaryComponent.Props(false, (error, info) => {
+        sawError = true
+      })),
+      dom.document.createElement("div")
+    )
+
+    assert(!sawError)
   }
 }
