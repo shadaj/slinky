@@ -118,13 +118,17 @@ class react extends scala.annotation.StaticAnnotation {
           Term.Block(Seq(newCls, companion))
         }
 
-      case obj@Defn.Object(_, _, Template(_, Seq(Term.Apply(Ctor.Ref.Name(sc), _)), _, _)) if sc == "ExternalComponent" =>
+      case obj@Defn.Object(_, _, Template(_, Seq(Term.Apply(Ctor.Ref.Name("ExternalComponent"), _)), _, _)) =>
         val objStats = createExternalBody(obj) ++ obj.templ.stats.getOrElse(Nil)
         obj.copy(templ = obj.templ.copy(stats = Some(objStats)))
 
-      case obj@Defn.Object(_, _, Template(_, Seq(Term.Apply(Term.ApplyType(Ctor.Ref.Name(sc), _), _)), _, _)) if sc == "ExternalComponentWithAttributes" =>
+      case obj@Defn.Object(_, _, Template(_, Seq(Term.Apply(Term.ApplyType(Ctor.Ref.Name("ExternalComponentWithAttributes"), _), _)), _, _)) =>
         val objStats = createExternalBody(obj) ++ obj.templ.stats.getOrElse(Nil)
         obj.copy(templ = obj.templ.copy(stats = Some(objStats)))
+
+      case Defn.Object(_, _, Template(_, Seq(Term.Apply(Ctor.Ref.Name("ExternalComponentWithAttributes"), _)), _, _)) =>
+        abort("ExternalComponentWithAttributes must take a type argument of the target tag type but found none")
+
       case _ =>
         abort(s"@react must annotate a class that extends Component or an object that extends ExternalComponent(WithAttributes), got ${defn.structure}")
     }
