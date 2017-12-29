@@ -2408,6 +2408,13 @@
         "input"
       ],
       "withDash": false
+    },
+    {
+      "attributeName": "on",
+      "attributeType": "String",
+      "docLines": [],
+      "compatibleTags": null,
+      "withDash": false
     }
   ]
 }
