@@ -44,6 +44,9 @@ object ReactElement {
 trait ReactInstance extends js.Object
 
 @js.native
+trait ReactChildren extends ReactElement
+
+@js.native
 @JSImport("react", JSImport.Namespace, "React")
 object React extends js.Object {
   def createElement(elementName: String | js.Object,
@@ -54,6 +57,21 @@ object React extends js.Object {
   class Component(jsProps: js.Object) extends js.Object {
     def forceUpdate(): Unit = js.native
     def forceUpdate(callback: js.Function0[Unit]): Unit = js.native
+  }
+
+  @js.native
+  object Children extends js.Object {
+    def map(children: ReactChildren, transformer: js.Function1[ReactElement, ReactElement]): ReactChildren = js.native
+    def map(children: ReactChildren, transformer: js.Function2[ReactElement, Int, ReactElement]): ReactChildren = js.native
+
+    def forEach(children: ReactChildren, transformer: js.Function1[ReactElement, Unit]): Unit = js.native
+    def forEach(children: ReactChildren, transformer: js.Function2[ReactElement, Int, Unit]): Unit = js.native
+
+    def only(children: ReactChildren): ReactElement = js.native
+
+    def count(children: ReactChildren): Int = js.native
+
+    def toArray(children: ReactChildren): js.Array[ReactElement] = js.native
   }
 
   val Fragment: js.Object = js.native
