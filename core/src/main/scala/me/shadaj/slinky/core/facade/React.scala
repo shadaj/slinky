@@ -15,6 +15,22 @@ object ReactElement {
     s.asInstanceOf[ReactElement]
   }
 
+  @inline implicit def intToElement(i: Int): ReactElement = {
+    i.asInstanceOf[ReactElement]
+  }
+
+  @inline implicit def doubleToElement(d: Double): ReactElement = {
+    d.asInstanceOf[ReactElement]
+  }
+
+  @inline implicit def floatToElement(f: Float): ReactElement = {
+    f.asInstanceOf[ReactElement]
+  }
+
+  @inline implicit def booleanToElement(b: Boolean): ReactElement = {
+    b.asInstanceOf[ReactElement]
+  }
+
   @inline implicit def optionToElement(s: Option[ReactElement]): ReactElement = {
     s.getOrElse(null.asInstanceOf[ReactElement])
   }
