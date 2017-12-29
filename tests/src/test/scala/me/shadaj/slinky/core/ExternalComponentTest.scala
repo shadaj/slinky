@@ -21,6 +21,10 @@ object ExternalSimpleWithAttributes extends ExternalComponentNoPropsWithAttribut
   override val component = "div"
 }
 
+object ExternalSimpleWithWildcardAttributes extends ExternalComponentNoPropsWithAttributes[*.tag.type] {
+  override val component = "div"
+}
+
 @react object ExternalDivWithProps extends ExternalComponent {
   case class Props(id: String)
   override val component = "div"
@@ -58,5 +62,13 @@ class ExternalComponentTest extends FunSuite {
 
   test("Can construct an external component taking Unit props and attributes with some children") {
     assertCompiles("""ExternalSimpleWithAttributes(className := "hi")(div())""")
+  }
+
+  test("Cannot construct an external component taking div attributes with attributes for another tag") {
+    assertDoesNotCompile("""ExternalSimpleWithAttributes(className := "hi", href := "foo")""")
+  }
+
+  test("Can construct an external component taking * attributes") {
+    assertCompiles("""ExternalSimpleWithWildcardAttributes(className := "hi", href := "foo")""")
   }
 }

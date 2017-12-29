@@ -14,7 +14,13 @@ object Generator extends App {
   if (!outFolder.exists()) {
     outFolder.mkdirs()
 
-    val extracted = decode[TagsModel](Source.fromFile(providerName).getLines().mkString("\n")).right.get
+    // we add a * tag which is supported by all attributes
+    val extractedWithoutStar = decode[TagsModel](Source.fromFile(providerName).getLines().mkString("\n")).right.get
+    val extracted = extractedWithoutStar.copy(
+      tags = extractedWithoutStar.tags :+ Tag("*", Seq.empty),
+      attributes = extractedWithoutStar.attributes.map(a =>
+        a.copy(compatibleTags = a.compatibleTags.map(_ :+ "*")))
+    )
 
     val allSymbols = extracted.attributes.foldLeft(extracted.tags.map(t => Utils.identifierFor(t.tagName) -> (Some(t): Option[Tag], None: Option[Attribute])).toSet) { case (symbols, attr) =>
       symbols.find(_._1 == Utils.identifierFor(attr.attributeName)) match {
@@ -27,6 +33,7 @@ object Generator extends App {
 
     allSymbols.foreach { case (symbol, (tags, attrs)) =>
       val symbolWithoutEscape = if (symbol.startsWith("`")) symbol.tail.init else symbol
+      val symbolWithoutEscapeFixed = if (symbolWithoutEscape == "*") "star" else symbolWithoutEscape
 
       val tagsGen = tags.map { t =>
         s"""/**
@@ -63,7 +70,8 @@ object Generator extends App {
 
       val attrToTagImplicits = attrs.toList.flatMap { a =>
         a.compatibleTags.getOrElse(extracted.tags.map(_.tagName)).map { t =>
-          s"""implicit def to${t}Applied(pair: AttrPair[_${symbolWithoutEscape}_attr.type]) = pair.asInstanceOf[AttrPair[${Utils.identifierFor(t)}.tag.type]]"""
+          val fixedT = if (t == "*") "star" else t
+          s"""implicit def to${fixedT}Applied(pair: AttrPair[_${symbolWithoutEscape}_attr.type]) = pair.asInstanceOf[AttrPair[${Utils.identifierFor(t)}.tag.type]]"""
         }
       }
 
@@ -74,7 +82,7 @@ object Generator extends App {
       val out = new PrintWriter(new File(outFolder.getAbsolutePath + "/" + symbol + ".scala"))
 
       out.println(
-        s"""package ${pkg}
+        s"""package $pkg
            |
            |import me.shadaj.slinky.core.{AttrPair, TagElement, WithAttrs}
            |import me.shadaj.slinky.core.facade.{React, ReactElement}
@@ -90,7 +98,7 @@ object Generator extends App {
            |${attrsGen.mkString("\n")}
            |}
            |
-           |object _${symbolWithoutEscape}_attr {
+           |object _${symbolWithoutEscapeFixed}_attr {
            |${attrToTagImplicits.mkString("\n")}
            |}""".stripMargin
       )
