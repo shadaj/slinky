@@ -1,6 +1,8 @@
 package me.shadaj.slinky.core
 
-import me.shadaj.slinky.core.facade.{React, ReactElement}
+import me.shadaj.slinky.core.facade.{ErrorBoundaryInfo, React, ReactElement}
+
+import scala.scalajs.js
 
 abstract class Component extends React.Component(null) {
   type Props
@@ -37,6 +39,8 @@ abstract class Component extends React.Component(null) {
   def componentDidUpdate(prevProps: Props, prevState: State): Unit = {}
 
   def componentWillUnmount(): Unit = {}
+
+  def componentDidCatch(error: js.Error, info: ErrorBoundaryInfo): Unit = {}
 
   def render(): ReactElement
 }

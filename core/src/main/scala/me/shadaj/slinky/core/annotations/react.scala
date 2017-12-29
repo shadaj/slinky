@@ -54,12 +54,25 @@ class react extends scala.annotation.StaticAnnotation {
         abort("There is no State type defined. If you want to create a stateless component, extend the StatelessComponent class instead.")
       }
 
+      val isErrorBoundary = clazz.templ.stats.getOrElse(Nil).exists {
+        case d: Defn.Def => d.name.value == "componentDidCatch"
+        case _ => false
+      }
+
       val newClazz =
-        q"""class ${clazz.name}(jsProps: scala.scalajs.js.Object) extends me.shadaj.slinky.core.DefinitionBase[$propsSelect, $stateSelect](jsProps) {
-              $propsAndStateImport
-              ..${if (stateDefinition.isEmpty) Seq(q"override def initialState: State = ()") else Seq.empty}
-              ..${clazz.templ.stats.getOrElse(Nil).filterNot(s => s == propsDefinition || s == stateDefinition.orNull)}
-            }"""
+        if (isErrorBoundary) {
+          q"""class ${clazz.name}(jsProps: scala.scalajs.js.Object) extends me.shadaj.slinky.core.DefinitionBase[$propsSelect, $stateSelect](jsProps) with me.shadaj.slinky.core.ErrorBoundary {
+                $propsAndStateImport
+                ..${if (stateDefinition.isEmpty) Seq(q"override def initialState: State = ()") else Seq.empty}
+                ..${clazz.templ.stats.getOrElse(Nil).filterNot(s => s == propsDefinition || s == stateDefinition.orNull)}
+              }"""
+        } else {
+          q"""class ${clazz.name}(jsProps: scala.scalajs.js.Object) extends me.shadaj.slinky.core.DefinitionBase[$propsSelect, $stateSelect](jsProps) {
+                $propsAndStateImport
+                ..${if (stateDefinition.isEmpty) Seq(q"override def initialState: State = ()") else Seq.empty}
+                ..${clazz.templ.stats.getOrElse(Nil).filterNot(s => s == propsDefinition || s == stateDefinition.orNull)}
+              }"""
+        }
 
       (newClazz,
         propsDefinition +:

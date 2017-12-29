@@ -10,6 +10,20 @@ import scala.language.implicitConversions
 @js.native
 trait ReactElement extends js.Object
 
+object ReactElement {
+  @inline implicit def stringToElement(s: String): ReactElement = {
+    s.asInstanceOf[ReactElement]
+  }
+
+  @inline implicit def optionToElement(s: Option[ReactElement]): ReactElement = {
+    s.getOrElse(null.asInstanceOf[ReactElement])
+  }
+
+  @inline implicit def seqElementToElement[T](s: Iterable[T])(implicit cv: T => ReactElement): ReactElement = {
+    s.map(cv).toJSArray.asInstanceOf[ReactElement]
+  }
+}
+
 @js.native
 trait ReactInstance extends js.Object
 
@@ -27,6 +41,11 @@ object React extends js.Object {
   }
 
   val Fragment: js.Object = js.native
+}
+
+@js.native
+trait ErrorBoundaryInfo extends js.Object {
+  val componentStack: String = js.native
 }
 
 @js.native
@@ -54,18 +73,4 @@ trait PrivateComponentClass extends js.Object {
 
   @JSName("setState")
   def setStateR(fn: js.Function2[js.Object, js.Object, js.Object], callback: js.Function0[Unit]): Unit = js.native
-}
-
-object ReactElement {
-  @inline implicit def stringToElement(s: String): ReactElement = {
-    s.asInstanceOf[ReactElement]
-  }
-
-  @inline implicit def optionToElement(s: Option[ReactElement]): ReactElement = {
-    s.getOrElse(null.asInstanceOf[ReactElement])
-  }
-
-  @inline implicit def seqElementToElement[T](s: Iterable[T])(implicit cv: T => ReactElement): ReactElement = {
-    s.map(cv).toJSArray.asInstanceOf[ReactElement]
-  }
 }
