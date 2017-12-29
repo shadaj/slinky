@@ -4,6 +4,7 @@
 + **BREAKING**: Stateless components that use the `@react` macro annotation must extend the `StatelessComponent` class instead of just `Component` [PR #69](https://github.com/shadaj/slinky/pull/69)
 + **BREAKING**: Callbacks passed to `setState` are now Scala functions, so there is no need to force implicit conversions [PR #71](https://github.com/shadaj/slinky/pull/71)
 + **BREAKING**: The tag construction flow now requires attributes to come before children. In addition, an empty list of attributes is no longer allowed [PR #73](https://github.com/shadaj/slinky/pull/73)
++ Add remaining methods from ReactDOMServer, including those introduced in React 16 [PR #84](https://github.com/shadaj/slinky/pull/84)
 + Add support for all `ReactElement` types introduced in React 16, such as numbers and booleans [PR #83](https://github.com/shadaj/slinky/pull/83)
 + Add support for error boundaries, which were added in React 16 [PR #82](https://github.com/shadaj/slinky/pull/82)
 + Add a `*` tag for external components that can take any attribute [PR #81](https://github.com/shadaj/slinky/pull/81)

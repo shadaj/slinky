@@ -28,4 +28,8 @@ object ReactDOM extends js.Object {
 @JSImport("react-dom/server", JSImport.Namespace, "ReactDOMServer")
 object ReactDOMServer extends js.Object {
   def renderToString(element: ReactElement): String = js.native
+  def renderToStaticMarkup(element: ReactElement): String = js.native
+
+  def renderToNodeStream(element: ReactElement): js.Object = js.native
+  def renderToStaticNodeStream(element: ReactElement): js.Object = js.native
 }
