@@ -56,4 +56,18 @@ class ReactDOMTest extends FunSuite {
     assert(container.innerHTML == "<h1>hi</h1>")
     assert(target.innerHTML == "<div></div>")
   }
+
+  test("unmountComponentAtNode clears out the container") {
+    val container = document.createElement("div")
+    ReactDOM.render(
+      div("hello"),
+      container
+    )
+
+    assert(container.innerHTML == "<div>hello</div>")
+
+    ReactDOM.unmountComponentAtNode(container)
+
+    assert(container.innerHTML.length == 0)
+  }
 }

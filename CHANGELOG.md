@@ -4,6 +4,7 @@
 + **BREAKING**: Stateless components that use the `@react` macro annotation must extend the `StatelessComponent` class instead of just `Component` [PR #69](https://github.com/shadaj/slinky/pull/69)
 + **BREAKING**: Callbacks passed to `setState` are now Scala functions, so there is no need to force implicit conversions [PR #71](https://github.com/shadaj/slinky/pull/71)
 + **BREAKING**: The tag construction flow now requires attributes to come before children. In addition, an empty list of attributes is no longer allowed [PR #73](https://github.com/shadaj/slinky/pull/73)
++ Add facade for `ReactDOM.unmountComponentAtNode` [PR #88](https://github.com/shadaj/slinky/pull/88)
 + Add facade for `React.Children`, including a new type `ReactChildren` for `props.children` [PR #86](https://github.com/shadaj/slinky/pull/86)
 + Add the custom `on` attribute for AMP pages, introduced in React 16 [PR #85](https://github.com/shadaj/slinky/pull/85)
 + Add remaining methods from ReactDOMServer, including those introduced in React 16 [PR #84](https://github.com/shadaj/slinky/pull/84)
