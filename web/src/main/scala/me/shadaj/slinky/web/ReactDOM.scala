@@ -13,6 +13,8 @@ object ReactDOM extends js.Object {
   def hydrate(component: ReactElement, target: Element): ReactInstance = js.native
   def findDOMNode(instance: React.Component): Element = js.native
 
+  def unmountComponentAtNode(container: Element): Unit = js.native
+
   /**
     * React Docs - Creates a portal. Portals provide a way to render children into a DOM node that exists outside the hierarchy of the DOM component.
     *
