@@ -2415,6 +2415,33 @@
       "docLines": [],
       "compatibleTags": null,
       "withDash": false
+    },
+    {
+      "attributeName" : "onCopy",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onCut",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onPaste",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
     }
   ]
 }
