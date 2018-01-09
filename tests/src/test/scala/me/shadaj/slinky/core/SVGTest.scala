@@ -10,6 +10,6 @@ class SVGTest extends FunSuite {
   test("Can specify key attribute for SVG element") {
     val instance: ReactElement = circle(key := "1")
 
-    assert(instance.asInstanceOf[js.Dynamic].key == "1")
+    assert(instance.asInstanceOf[js.Dynamic].key.asInstanceOf[String] == "1")
   }
 }
