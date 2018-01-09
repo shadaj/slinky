@@ -70,6 +70,18 @@ class ReaderWriterTest extends FunSuite {
     readWrittenSame(CaseClass(1, true))
   }
 
+  test("Read/write - case class with default js.undefined") {
+    case class CaseClass(int: Int, boolean: js.UndefOr[Boolean] = js.undefined)
+    readWrittenSame(CaseClass(1))
+    readWrittenSame(CaseClass(1, true))
+
+    // Assert that any undefined property in the input does not map to the written object's property;
+    // not even as js.undefined
+    val written = implicitly[Writer[CaseClass]].write(CaseClass(1))
+    assert(written.asInstanceOf[js.Object].hasOwnProperty("int"))
+    assert(!written.asInstanceOf[js.Object].hasOwnProperty("boolean"))
+  }
+
   test("Read/write - sealed trait with case objects") {
     sealed trait MySealedTrait
     case class SubTypeA(int: Int) extends MySealedTrait

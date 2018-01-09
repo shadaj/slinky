@@ -201,7 +201,12 @@ object Writer {
     } else {
       val ret = js.Dynamic.literal()
       ctx.parameters.foreach { param =>
-        ret.updateDynamic(param.label)(param.typeclass.write(param.dereference(value)))
+      // If any value is js.undefined, don't add it as a property to the written object.
+      // This way, JS libraries that rely on checking if a property does not exists (where or not set to undefined)
+      // will work correctly
+      if (!js.isUndefined(param.dereference(value))) {
+          ret.updateDynamic(param.label)(param.typeclass.write(param.dereference(value)))
+        }
       }
 
       ret
