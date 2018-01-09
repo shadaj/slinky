@@ -37,7 +37,7 @@ class ExternalComponentTest extends FunSuite {
       dom.document.createElement("div")
     )
 
-    assert(rendered.asInstanceOf[js.Dynamic].id == "test")
+    assert(rendered.asInstanceOf[js.Dynamic].id.asInstanceOf[String] == "test")
   }
 
   test("Can construct an external component with generated apply") {
