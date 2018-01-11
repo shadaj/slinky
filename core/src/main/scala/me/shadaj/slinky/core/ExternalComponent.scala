@@ -36,15 +36,17 @@ object BuildingComponent {
   implicit def make[E]: BuildingComponent[E] => ReactElement = _.apply(Seq.empty: _*)
 }
 
-abstract class ExternalComponent extends ExternalComponentWithAttributes[Nothing]
+abstract class ExternalComponent(implicit pw: PropsWriterProvider) extends ExternalComponentWithAttributes[Nothing]()(pw)
 
-abstract class ExternalComponentWithAttributes[E <: TagElement] {
+abstract class ExternalComponentWithAttributes[E <: TagElement](implicit pw: PropsWriterProvider) {
   type Props
   type Element = E
 
+  private[this] final val writer = pw.asInstanceOf[Writer[Props]]
+
   val component: String | js.Object
 
-  def apply(p: Props)(implicit writer: Writer[Props]): BuildingComponent[E] = {
+  def apply(p: Props): BuildingComponent[E] = {
     // no need to take key or ref here because those can be passed in through attributes
     new BuildingComponent(component, writer.write(p), null, null, Seq.empty)
   }
