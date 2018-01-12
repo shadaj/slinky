@@ -2442,6 +2442,17 @@
       ],
       "compatibleTags" : null,
       "withDash" : false
+    },
+    {
+      "attributeName" : "autoFocus",
+      "attributeType" : "Boolean",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : [
+        "input"
+      ],
+      "withDash" : false
     }
   ]
 }
