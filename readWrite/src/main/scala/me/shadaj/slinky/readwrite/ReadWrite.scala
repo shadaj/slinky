@@ -13,10 +13,8 @@ import magnolia._
 
 trait Reader[P] {
   def read(o: js.Object): P = {
-    val dyn = o.asInstanceOf[js.Dynamic]
-
-    if (dyn != null && !js.isUndefined(dyn) && !js.isUndefined(dyn.__)) {
-      dyn.__.asInstanceOf[P]
+    if (js.typeOf(o) == "object" && o.hasOwnProperty("__")) {
+      o.asInstanceOf[js.Dynamic].__.asInstanceOf[P]
     } else {
       forceRead(o)
     }
@@ -115,7 +113,7 @@ object Reader {
   }
 
   def fallback[T]: Reader[T] = v => {
-    if (js.isUndefined(v.asInstanceOf[js.Dynamic].__)) {
+    if (!v.hasOwnProperty("__")) {
       throw new IllegalArgumentException("Tried to read opaque Scala.js type that was not written by opaque writer")
     } else {
       v.asInstanceOf[js.Dynamic].__.asInstanceOf[T]

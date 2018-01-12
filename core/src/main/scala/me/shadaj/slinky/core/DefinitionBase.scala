@@ -157,7 +157,7 @@ abstract class DefinitionBase[Props, State](jsProps: js.Object) extends React.Co
 }
 
 object DefinitionBase {
-  @inline private[slinky] final def readWithWrappingAdjustment[T](reader: Reader[T])(value: js.Object): T = {
+  private[slinky] final def readWithWrappingAdjustment[T](reader: Reader[T])(value: js.Object): T = {
     val __value = value.asInstanceOf[js.Dynamic].__value
 
     if (value.hasOwnProperty("__value")) {
@@ -167,7 +167,7 @@ object DefinitionBase {
     }
   }
 
-  @inline private[slinky] final def writeWithWrappingAdjustment[T](writer: Writer[T])(value: T): js.Object = {
+  private[slinky] final def writeWithWrappingAdjustment[T](writer: Writer[T])(value: T): js.Object = {
     val __value = writer.write(value)
 
     if (js.typeOf(__value) == "object") {
