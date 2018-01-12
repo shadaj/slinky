@@ -36,20 +36,23 @@ abstract class BaseComponentWrapper(pr: PropsReaderProvider, pw: PropsWriterProv
 
   type Definition <: js.Object
 
-  private[this] val propsReader = pr.asInstanceOf[Reader[Props]]
-  private[this] val propsWriter = pw.asInstanceOf[Writer[Props]]
-  private[this] val stateReader = pr.asInstanceOf[Reader[State]]
-  private[this] val stateWriter = pw.asInstanceOf[Writer[State]]
+  private[this] val hot_propsReader = pr.asInstanceOf[Reader[Props]]
+  private[this] val hot_propsWriter = pw.asInstanceOf[Writer[Props]]
+  private[this] val hot_stateReader = pr.asInstanceOf[Reader[State]]
+  private[this] val hot_stateWriter = pw.asInstanceOf[Writer[State]]
 
-  this.asInstanceOf[js.Dynamic]._propsWriter = propsWriter.asInstanceOf[js.Any]
-  this.asInstanceOf[js.Dynamic]._propsReader = propsReader.asInstanceOf[js.Any]
-  this.asInstanceOf[js.Dynamic]._stateWriter = stateWriter.asInstanceOf[js.Any]
-  this.asInstanceOf[js.Dynamic]._stateReader = stateReader.asInstanceOf[js.Any]
-
-  def componentConstructor(implicit constructorTag: ConstructorTag[Def]): js.Object = {
+  def componentConstructor(implicit propsWriter: Writer[Props], propsReader: Reader[Props],
+                           stateWriter: Writer[State], stateReader: Reader[State], constructorTag: ConstructorTag[Def]): js.Object = {
     val constructor = constructorTag.constructor
     constructor.displayName = getClass.getSimpleName
     constructor._base = this.asInstanceOf[js.Any]
+
+    if (propsWriter != null) {
+      this.asInstanceOf[js.Dynamic]._propsWriter = propsWriter.asInstanceOf[js.Any]
+      this.asInstanceOf[js.Dynamic]._propsReader = propsReader.asInstanceOf[js.Any]
+      this.asInstanceOf[js.Dynamic]._stateWriter = stateWriter.asInstanceOf[js.Any]
+      this.asInstanceOf[js.Dynamic]._stateReader = stateReader.asInstanceOf[js.Any]
+    }
 
     BaseComponentWrapper.componentConstructorMiddleware(
       constructor.asInstanceOf[js.Object], this.asInstanceOf[js.Object])
@@ -59,11 +62,16 @@ abstract class BaseComponentWrapper(pr: PropsReaderProvider, pw: PropsWriterProv
 
   def apply(p: Props)(implicit constructorTag: ConstructorTag[Def]): KeyAndRefAddingStage[Def] = {
     val propsObj = if(BaseComponentWrapper.scalaComponentWritingEnabled) {
-      DefinitionBase.writeWithWrappingAdjustment(propsWriter)(p).asInstanceOf[js.Dictionary[js.Any]]
+      DefinitionBase.writeWithWrappingAdjustment(hot_propsWriter)(p).asInstanceOf[js.Dictionary[js.Any]]
     } else js.Dictionary("__" -> p.asInstanceOf[js.Any])
 
     if (componentConstructorInstance == null) {
-      componentConstructorInstance = componentConstructor
+      componentConstructorInstance =
+        componentConstructor(
+          hot_propsWriter, hot_propsReader,
+          hot_stateWriter, hot_stateReader,
+          constructorTag
+        )
     }
 
     new KeyAndRefAddingStage(
@@ -120,8 +128,8 @@ object PropsReaderProvider {
     val compName = c.internal.enclosingOwner.owner.asClass
     val readerType = tq"_root_.me.shadaj.slinky.readwrite.Reader[$compName.Props]"
     val q"val x: $typedReaderType = null" = c.typecheck(q"val x: $readerType = null")
-    val tpcls = c.inferImplicitValue(typedReaderType.tpe.asInstanceOf[c.Type], false)
-    c.Expr(q"$tpcls.asInstanceOf[_root_.me.shadaj.slinky.core.PropsReaderProvider]")
+    val tpcls = c.inferImplicitValue(typedReaderType.tpe.asInstanceOf[c.Type])
+    c.Expr(q"if (_root_.scala.scalajs.LinkingInfo.productionMode) _root_.me.shadaj.slinky.readwrite.Reader.fallback[$compName.State].asInstanceOf[_root_.me.shadaj.slinky.core.PropsReaderProvider] else $tpcls.asInstanceOf[_root_.me.shadaj.slinky.core.PropsReaderProvider]")
   }
 
   implicit def get: PropsReaderProvider = macro impl
@@ -134,8 +142,8 @@ object PropsWriterProvider {
     val compName = c.internal.enclosingOwner.owner.asClass
     val readerType = tq"_root_.me.shadaj.slinky.readwrite.Writer[$compName.Props]"
     val q"val x: $typedReaderType = null" = c.typecheck(q"val x: $readerType = null")
-    val tpcls = c.inferImplicitValue(typedReaderType.tpe.asInstanceOf[c.Type], false)
-    c.Expr(q"$tpcls.asInstanceOf[_root_.me.shadaj.slinky.core.PropsWriterProvider]")
+    val tpcls = c.inferImplicitValue(typedReaderType.tpe.asInstanceOf[c.Type])
+    c.Expr(q"if (_root_.scala.scalajs.LinkingInfo.productionMode) null else $tpcls.asInstanceOf[_root_.me.shadaj.slinky.core.PropsWriterProvider]")
   }
 
   implicit def get: PropsWriterProvider = macro impl
@@ -148,8 +156,8 @@ object StateReaderProvider {
     val compName = c.internal.enclosingOwner.owner.asClass
     val readerType = tq"_root_.me.shadaj.slinky.readwrite.Reader[$compName.State]"
     val q"val x: $typedReaderType = null" = c.typecheck(q"val x: $readerType = null")
-    val tpcls = c.inferImplicitValue(typedReaderType.tpe.asInstanceOf[c.Type], false)
-    c.Expr(q"$tpcls.asInstanceOf[_root_.me.shadaj.slinky.core.StateReaderProvider]")
+    val tpcls = c.inferImplicitValue(typedReaderType.tpe.asInstanceOf[c.Type])
+    c.Expr(q"if (_root_.scala.scalajs.LinkingInfo.productionMode) _root_.me.shadaj.slinky.readwrite.Reader.fallback[$compName.State].asInstanceOf[_root_.me.shadaj.slinky.core.StateReaderProvider] else $tpcls.asInstanceOf[_root_.me.shadaj.slinky.core.StateReaderProvider]")
   }
 
   implicit def get: StateReaderProvider = macro impl
@@ -162,8 +170,8 @@ object StateWriterProvider {
     val compName = c.internal.enclosingOwner.owner.asClass
     val readerType = tq"_root_.me.shadaj.slinky.readwrite.Writer[$compName.State]"
     val q"val x: $typedReaderType = null" = c.typecheck(q"val x: $readerType = null")
-    val tpcls = c.inferImplicitValue(typedReaderType.tpe.asInstanceOf[c.Type], false)
-    c.Expr(q"$tpcls.asInstanceOf[_root_.me.shadaj.slinky.core.StateWriterProvider]")
+    val tpcls = c.inferImplicitValue(typedReaderType.tpe.asInstanceOf[c.Type])
+    c.Expr(q"if (_root_.scala.scalajs.LinkingInfo.productionMode) null else $tpcls.asInstanceOf[_root_.me.shadaj.slinky.core.StateWriterProvider]")
   }
 
   implicit def get: StateWriterProvider = macro impl
