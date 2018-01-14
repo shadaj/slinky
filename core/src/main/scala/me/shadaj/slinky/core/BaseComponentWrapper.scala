@@ -41,17 +41,23 @@ abstract class BaseComponentWrapper(pr: PropsReaderProvider, pw: PropsWriterProv
   private[this] val hot_stateReader = pr.asInstanceOf[Reader[State]]
   private[this] val hot_stateWriter = pw.asInstanceOf[Writer[State]]
 
+  private var hasInsertedProperReaderWriter = false
+
   def componentConstructor(implicit propsWriter: Writer[Props], propsReader: Reader[Props],
                            stateWriter: Writer[State], stateReader: Reader[State], constructorTag: ConstructorTag[Def]): js.Object = {
     val constructor = constructorTag.constructor
     constructor.displayName = getClass.getSimpleName
     constructor._base = this.asInstanceOf[js.Any]
 
-    if (propsWriter != null) {
+    if (!hasInsertedProperReaderWriter) {
       this.asInstanceOf[js.Dynamic]._propsWriter = propsWriter.asInstanceOf[js.Any]
       this.asInstanceOf[js.Dynamic]._propsReader = propsReader.asInstanceOf[js.Any]
       this.asInstanceOf[js.Dynamic]._stateWriter = stateWriter.asInstanceOf[js.Any]
       this.asInstanceOf[js.Dynamic]._stateReader = stateReader.asInstanceOf[js.Any]
+    }
+
+    if (propsWriter != null) {
+      hasInsertedProperReaderWriter = true
     }
 
     BaseComponentWrapper.componentConstructorMiddleware(
