@@ -6,7 +6,7 @@ import scala.scalajs.js
 import scala.scalajs.js.ConstructorTag
 import scala.language.implicitConversions
 
-abstract class ComponentWrapper extends BaseComponentWrapper {
+abstract class ComponentWrapper(implicit pr: PropsReaderProvider, pw: PropsWriterProvider, sr: StateReaderProvider, sw: StateWriterProvider) extends BaseComponentWrapper(pr, pw, sr, sw) {
   override type Definition = DefinitionBase[Props, State]
 }
 
@@ -15,10 +15,8 @@ trait ReactComponentClass extends js.Object
 
 object ReactComponentClass {
   implicit def wrapperToClass[T <: ComponentWrapper](wrapper: T)
-                                                    (implicit propsReader: Reader[wrapper.Props],
-                                                     propsWriter: Writer[wrapper.Props],
-                                                     stateReader: Reader[wrapper.State],
-                                                     stateWriter: Writer[wrapper.State],
+                                                    (implicit propsReader: Reader[T#Props],
+                                                     stateWriter: Writer[T#State], stateReader: Reader[T#State],
                                                      ctag: ConstructorTag[wrapper.Def]): ReactComponentClass = {
     wrapper.componentConstructor.asInstanceOf[ReactComponentClass]
   }

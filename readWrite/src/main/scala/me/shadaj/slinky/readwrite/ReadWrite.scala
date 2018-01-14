@@ -13,10 +13,8 @@ import magnolia._
 
 trait Reader[P] {
   def read(o: js.Object): P = {
-    val dyn = o.asInstanceOf[js.Dynamic]
-
-    if (dyn != null && !js.isUndefined(dyn) && !js.isUndefined(dyn.__)) {
-      dyn.__.asInstanceOf[P]
+    if (js.typeOf(o) == "object" && o.hasOwnProperty("__")) {
+      o.asInstanceOf[js.Dynamic].__.asInstanceOf[P]
     } else {
       forceRead(o)
     }
@@ -115,7 +113,7 @@ object Reader {
   }
 
   def fallback[T]: Reader[T] = v => {
-    if (js.isUndefined(v.asInstanceOf[js.Dynamic].__)) {
+    if (!v.hasOwnProperty("__")) {
       throw new IllegalArgumentException("Tried to read opaque Scala.js type that was not written by opaque writer")
     } else {
       v.asInstanceOf[js.Dynamic].__.asInstanceOf[T]
@@ -201,11 +199,12 @@ object Writer {
     } else {
       val ret = js.Dynamic.literal()
       ctx.parameters.foreach { param =>
-      // If any value is js.undefined, don't add it as a property to the written object.
-      // This way, JS libraries that rely on checking if a property does not exists (where or not set to undefined)
-      // will work correctly
-      if (!js.isUndefined(param.dereference(value))) {
-          ret.updateDynamic(param.label)(param.typeclass.write(param.dereference(value)))
+        val dereferenced = param.dereference(value)
+        // If any value is js.undefined, don't add it as a property to the written object.
+        // This way, JS libraries that rely on checking if a property does not exists (where or not set to undefined)
+        // will work correctly
+        if (!js.isUndefined(dereferenced)) {
+          ret.updateDynamic(param.label)(param.typeclass.write(dereferenced))
         }
       }
 
