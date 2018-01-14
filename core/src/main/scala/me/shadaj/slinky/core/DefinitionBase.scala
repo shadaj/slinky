@@ -17,8 +17,6 @@ abstract class DefinitionBase[Props, State](jsProps: js.Object) extends React.Co
     this.asInstanceOf[js.Dynamic].__proto__.constructor._base._stateWriter.asInstanceOf[Writer[State]]
   @inline private[this] final def propsReader: Reader[Props] =
     this.asInstanceOf[js.Dynamic].__proto__.constructor._base._propsReader.asInstanceOf[Reader[Props]]
-  @inline private[this] final def propsWriter: Writer[Props] =
-    this.asInstanceOf[js.Dynamic].__proto__.constructor._base._propsWriter.asInstanceOf[Writer[Props]]
 
   def initialState: State
 

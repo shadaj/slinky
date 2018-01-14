@@ -50,7 +50,6 @@ abstract class BaseComponentWrapper(pr: PropsReaderProvider, pw: PropsWriterProv
     constructor._base = this.asInstanceOf[js.Any]
 
     if (!hasInsertedProperReaderWriter) {
-      this.asInstanceOf[js.Dynamic]._propsWriter = propsWriter.asInstanceOf[js.Any]
       this.asInstanceOf[js.Dynamic]._propsReader = propsReader.asInstanceOf[js.Any]
       this.asInstanceOf[js.Dynamic]._stateWriter = stateWriter.asInstanceOf[js.Any]
       this.asInstanceOf[js.Dynamic]._stateReader = stateReader.asInstanceOf[js.Any]
