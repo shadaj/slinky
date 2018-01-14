@@ -15,7 +15,7 @@ trait ReactComponentClass extends js.Object
 
 object ReactComponentClass {
   implicit def wrapperToClass[T <: ComponentWrapper](wrapper: T)
-                                                    (implicit propsWriter: Writer[T#Props], propsReader: Reader[T#Props],
+                                                    (implicit propsReader: Reader[T#Props],
                                                      stateWriter: Writer[T#State], stateReader: Reader[T#State],
                                                      ctag: ConstructorTag[wrapper.Def]): ReactComponentClass = {
     wrapper.componentConstructor.asInstanceOf[ReactComponentClass]

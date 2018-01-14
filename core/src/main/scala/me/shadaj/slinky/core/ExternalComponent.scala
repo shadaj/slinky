@@ -7,6 +7,9 @@ import scala.language.implicitConversions
 import scala.scalajs.js
 import scala.scalajs.js.|
 
+import scala.language.experimental.macros
+import scala.reflect.macros.blackbox
+
 case class BuildingComponent[E](c: String | js.Object, props: js.Object, key: String = null, ref: js.Object => Unit = null, mods: Seq[AttrPair[E]] = Seq.empty) {
   def apply(tagMod: AttrPair[E], tagMods: AttrPair[E]*): BuildingComponent[E] = copy(mods = mods ++ (tagMod +: tagMods))
 
@@ -36,9 +39,9 @@ object BuildingComponent {
   implicit def make[E]: BuildingComponent[E] => ReactElement = _.apply(Seq.empty: _*)
 }
 
-abstract class ExternalComponent(implicit pw: PropsWriterProvider) extends ExternalComponentWithAttributes[Nothing]()(pw)
+abstract class ExternalComponent(implicit pw: ExternalPropsWriterProvider) extends ExternalComponentWithAttributes[Nothing]()(pw)
 
-abstract class ExternalComponentWithAttributes[E <: TagElement](implicit pw: PropsWriterProvider) {
+abstract class ExternalComponentWithAttributes[E <: TagElement](implicit pw: ExternalPropsWriterProvider) {
   type Props
   type Element = E
 
@@ -65,4 +68,18 @@ abstract class ExternalComponentNoPropsWithAttributes[E <: TagElement] {
   def apply(children: ReactElement*): ReactElement = {
     React.createElement(component, js.Dynamic.literal().asInstanceOf[js.Dictionary[js.Any]], children: _*)
   }
+}
+
+trait ExternalPropsWriterProvider extends js.Object
+object ExternalPropsWriterProvider {
+  def impl(c: blackbox.Context): c.Expr[ExternalPropsWriterProvider] = {
+    import c.universe._
+    val compName = c.internal.enclosingOwner.owner.asClass
+    val readerType = tq"_root_.me.shadaj.slinky.readwrite.Writer[$compName.Props]"
+    val q"val x: $typedReaderType = null" = c.typecheck(q"val x: $readerType = null")
+    val tpcls = c.inferImplicitValue(typedReaderType.tpe.asInstanceOf[c.Type])
+    c.Expr(q"$tpcls.asInstanceOf[_root_.me.shadaj.slinky.core.ExternalPropsWriterProvider]")
+  }
+
+  implicit def get: ExternalPropsWriterProvider = macro impl
 }

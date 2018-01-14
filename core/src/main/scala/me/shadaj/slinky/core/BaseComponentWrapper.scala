@@ -41,22 +41,16 @@ abstract class BaseComponentWrapper(pr: PropsReaderProvider, pw: PropsWriterProv
   private[this] val hot_stateReader = pr.asInstanceOf[Reader[State]]
   private[this] val hot_stateWriter = pw.asInstanceOf[Writer[State]]
 
-  private var hasInsertedProperReaderWriter = false
-
-  def componentConstructor(implicit propsWriter: Writer[Props], propsReader: Reader[Props],
+  def componentConstructor(implicit propsReader: Reader[Props],
                            stateWriter: Writer[State], stateReader: Reader[State], constructorTag: ConstructorTag[Def]): js.Object = {
     val constructor = constructorTag.constructor
     constructor.displayName = getClass.getSimpleName
     constructor._base = this.asInstanceOf[js.Any]
 
-    if (!hasInsertedProperReaderWriter) {
+    if (propsReader != null) { // we are creating a constructor to pass externally, so set up the full reader/writers
       this.asInstanceOf[js.Dynamic]._propsReader = propsReader.asInstanceOf[js.Any]
       this.asInstanceOf[js.Dynamic]._stateWriter = stateWriter.asInstanceOf[js.Any]
       this.asInstanceOf[js.Dynamic]._stateReader = stateReader.asInstanceOf[js.Any]
-    }
-
-    if (propsWriter != null) {
-      hasInsertedProperReaderWriter = true
     }
 
     BaseComponentWrapper.componentConstructorMiddleware(
@@ -75,7 +69,7 @@ abstract class BaseComponentWrapper(pr: PropsReaderProvider, pw: PropsWriterProv
     if (componentConstructorInstance == null) {
       componentConstructorInstance =
         componentConstructor(
-          hot_propsWriter, hot_propsReader,
+          hot_propsReader,
           hot_stateWriter, hot_stateReader,
           constructorTag
         )
@@ -109,7 +103,11 @@ object BaseComponentWrapper {
     * then read when the application is reloaded.
     */
   def enableScalaComponentWriting(): Unit = {
-    scalaComponentWritingEnabled = true
+    if (scala.scalajs.LinkingInfo.productionMode) {
+      throw new IllegalStateException("Cannot enable Scala component writing in production mode")
+    } else {
+      scalaComponentWritingEnabled = true
+    }
   }
 
   /**
@@ -136,7 +134,7 @@ object PropsReaderProvider {
     val readerType = tq"_root_.me.shadaj.slinky.readwrite.Reader[$compName.Props]"
     val q"val x: $typedReaderType = null" = c.typecheck(q"val x: $readerType = null")
     val tpcls = c.inferImplicitValue(typedReaderType.tpe.asInstanceOf[c.Type])
-    c.Expr(q"if (_root_.scala.scalajs.LinkingInfo.productionMode) _root_.me.shadaj.slinky.readwrite.Reader.fallback[$compName.State].asInstanceOf[_root_.me.shadaj.slinky.core.PropsReaderProvider] else $tpcls.asInstanceOf[_root_.me.shadaj.slinky.core.PropsReaderProvider]")
+    c.Expr(q"if (_root_.scala.scalajs.LinkingInfo.productionMode) null else $tpcls.asInstanceOf[_root_.me.shadaj.slinky.core.PropsReaderProvider]")
   }
 
   implicit def get: PropsReaderProvider = macro impl
@@ -164,7 +162,7 @@ object StateReaderProvider {
     val readerType = tq"_root_.me.shadaj.slinky.readwrite.Reader[$compName.State]"
     val q"val x: $typedReaderType = null" = c.typecheck(q"val x: $readerType = null")
     val tpcls = c.inferImplicitValue(typedReaderType.tpe.asInstanceOf[c.Type])
-    c.Expr(q"if (_root_.scala.scalajs.LinkingInfo.productionMode) _root_.me.shadaj.slinky.readwrite.Reader.fallback[$compName.State].asInstanceOf[_root_.me.shadaj.slinky.core.StateReaderProvider] else $tpcls.asInstanceOf[_root_.me.shadaj.slinky.core.StateReaderProvider]")
+    c.Expr(q"if (_root_.scala.scalajs.LinkingInfo.productionMode) null else $tpcls.asInstanceOf[_root_.me.shadaj.slinky.core.StateReaderProvider]")
   }
 
   implicit def get: StateReaderProvider = macro impl
@@ -178,7 +176,7 @@ object StateWriterProvider {
     val readerType = tq"_root_.me.shadaj.slinky.readwrite.Writer[$compName.State]"
     val q"val x: $typedReaderType = null" = c.typecheck(q"val x: $readerType = null")
     val tpcls = c.inferImplicitValue(typedReaderType.tpe.asInstanceOf[c.Type])
-    c.Expr(q"if (_root_.scala.scalajs.LinkingInfo.productionMode) _root_.me.shadaj.slinky.readwrite.Writer.fallback[$compName.State].asInstanceOf[_root_.me.shadaj.slinky.core.StateWriterProvider] else $tpcls.asInstanceOf[_root_.me.shadaj.slinky.core.StateWriterProvider]")
+    c.Expr(q"if (_root_.scala.scalajs.LinkingInfo.productionMode) null else $tpcls.asInstanceOf[_root_.me.shadaj.slinky.core.StateWriterProvider]")
   }
 
   implicit def get: StateWriterProvider = macro impl
