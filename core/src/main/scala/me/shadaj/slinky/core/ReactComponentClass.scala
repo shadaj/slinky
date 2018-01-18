@@ -5,6 +5,8 @@ import me.shadaj.slinky.readwrite.Reader
 import scala.scalajs.js
 import scala.scalajs.js.ConstructorTag
 
+import scala.language.implicitConversions
+
 @js.native
 trait ReactComponentClass extends js.Object
 

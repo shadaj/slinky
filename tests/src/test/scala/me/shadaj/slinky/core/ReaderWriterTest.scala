@@ -65,6 +65,10 @@ class ReaderWriterTest extends FunSuite {
     readWrittenSame[Int | String]("str")
   }
 
+  test("Read/write - js.Array") {
+    readWrittenSame[js.Array[String]](js.Array("hello"))
+  }
+
   test("Read/write - case class") {
     case class CaseClass(int: Int, boolean: Boolean)
     readWrittenSame(CaseClass(1, true))
