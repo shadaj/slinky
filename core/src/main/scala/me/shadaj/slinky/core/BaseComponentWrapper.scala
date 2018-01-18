@@ -42,16 +42,17 @@ abstract class BaseComponentWrapper(pr: PropsReaderProvider, pw: PropsWriterProv
   private[this] val hot_stateWriter = pw.asInstanceOf[Writer[State]]
 
   def componentConstructor(implicit propsReader: Reader[Props],
-                           stateWriter: Writer[State], stateReader: Reader[State], constructorTag: ConstructorTag[Def]): js.Object = {
+                           stateWriter: Writer[State], stateReader: Reader[State],
+                           constructorTag: ConstructorTag[Def]): js.Object = {
     val constructor = constructorTag.constructor
     constructor.displayName = getClass.getSimpleName
     constructor._base = this.asInstanceOf[js.Any]
 
-    if (propsReader != null) { // we are creating a constructor to pass externally, so set up the full reader/writers
-      this.asInstanceOf[js.Dynamic]._propsReader = propsReader.asInstanceOf[js.Any]
-      this.asInstanceOf[js.Dynamic]._stateWriter = stateWriter.asInstanceOf[js.Any]
-      this.asInstanceOf[js.Dynamic]._stateReader = stateReader.asInstanceOf[js.Any]
-    }
+    // we only receive non-null reader/writers here when we generate a full typeclass; otherwise we don't set
+    // the reader/writer values since we can just use the fallback ones
+    if (propsReader != null) this.asInstanceOf[js.Dynamic]._propsReader = propsReader.asInstanceOf[js.Any]
+    if (stateWriter != null) this.asInstanceOf[js.Dynamic]._stateWriter = stateWriter.asInstanceOf[js.Any]
+    if (stateReader != null) this.asInstanceOf[js.Dynamic]._stateReader = stateReader.asInstanceOf[js.Any]
 
     BaseComponentWrapper.componentConstructorMiddleware(
       constructor.asInstanceOf[js.Object], this.asInstanceOf[js.Object])
