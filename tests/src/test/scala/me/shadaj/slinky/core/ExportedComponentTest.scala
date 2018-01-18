@@ -42,4 +42,16 @@ class ExportedComponentTest extends FunSuite {
 
     assert(container.innerHTML == "lol 1")
   }
+
+  test("Can construct an instance of a stateless exported component with JS-provided props") {
+    val container = document.createElement("div")
+    ReactDOM.render(React.createElement(
+      TestExportedComponentStateless: ReactComponentClass,
+      js.Dictionary(
+        "name" -> "lol"
+      )
+    ), container)
+
+    assert(container.innerHTML == "lol")
+  }
 }
