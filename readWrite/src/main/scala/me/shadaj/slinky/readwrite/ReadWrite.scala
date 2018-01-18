@@ -70,9 +70,10 @@ object Reader {
     }
   }
 
-  implicit def collectionReader[T, Col[_]](implicit reader: Reader[T],
-                                           cbf: CanBuildFrom[Nothing, T, Col[T]]): Reader[Col[T]] =
-    _.asInstanceOf[js.Array[js.Object]].map(o => reader.read(o)).to[Col]
+  implicit def collectionReader[T, C[_]](implicit reader: Reader[T],
+                                         cbf: CanBuildFrom[Nothing, T, C[T]],
+                                         ev: C[T] <:< Iterable[T]): Reader[C[T]] =
+    _.asInstanceOf[js.Array[js.Object]].map(o => reader.read(o)).to[C]
 
   implicit def function0Reader[O](implicit oReader: Reader[O]): Reader[() => O] = s => {
     val fn = s.asInstanceOf[js.Function0[js.Object]]
@@ -162,7 +163,7 @@ object Writer {
     _.map(v => writer.write(v)).getOrElse(js.undefined.asInstanceOf[js.Object])
 
   implicit def collectionWriter[T, C[_]](implicit writer: Writer[T],
-                                         cbf: CanBuildFrom[C[T], T, Seq[T]],
+                                         cbf: CanBuildFrom[Nothing, T, Seq[T]],
                                          ev: C[T] <:< Iterable[T]): Writer[C[T]] = s => {
     js.Array(s.to[Seq](cbf).map(v => writer.write(v)): _*).asInstanceOf[js.Object]
   }
