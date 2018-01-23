@@ -1,11 +1,12 @@
 package me.shadaj.slinky.core
 
 import me.shadaj.slinky.core.facade.ReactElement
+import me.shadaj.slinky.web.ReactDOM
 import org.scalatest.FunSuite
 import me.shadaj.slinky.web.html._
 
 import scala.scalajs.js
-
+import org.scalajs.dom
 import org.scalajs.dom.MouseEvent
 
 class TagTest extends FunSuite {
@@ -44,5 +45,15 @@ class TagTest extends FunSuite {
 
   test("Mouse events can be given a function taking a MouseEvent") {
     assertCompiles("div(onMouseOver := ((v: MouseEvent) => {}))")
+  }
+
+  test("Can construct tag with abstraction over element type") {
+    def constructTag[T <: Tag](tag: T): ReactElement = {
+      tag.apply((className := "foo").asInstanceOf[AttrPair[tag.tagType]])("hello!")
+    }
+
+    val divContainer = dom.document.createElement("div")
+    ReactDOM.render(constructTag(div), divContainer)
+    assert(divContainer.innerHTML == """<div class="foo">hello!</div>""")
   }
 }
