@@ -36,7 +36,8 @@ object Generator extends App {
       val symbolWithoutEscapeFixed = if (symbolWithoutEscape == "*") "star" else symbolWithoutEscape
 
       val tagsGen = tags.map { t =>
-        s"""/**
+        s"""type tagType = tag.type
+           |/**
            | * ${t.docLines.map(_.replace("*", "&#47;")).mkString("\n * ")}
            | */
            |@inline def apply(mod: AttrPair[tag.type], remainingMods: AttrPair[tag.type]*) = new WithAttrs("${t.tagName}", js.Dictionary((mod +: remainingMods).map(m => m.name -> m.value): _*))
@@ -75,16 +76,18 @@ object Generator extends App {
         }
       }
 
-      val symbolExtends = if (attrs.isDefined && attrs.get.attributeType == "Boolean") {
-        s"""extends AttrPair[_${symbolWithoutEscape}_attr.type]("${attrs.get.attributeName}", true)"""
-      } else ""
+      val symbolExtendsList = (if (attrs.isDefined && attrs.get.attributeType == "Boolean") {
+        Seq(s"""AttrPair[_${symbolWithoutEscape}_attr.type]("${attrs.get.attributeName}", true)""")
+      } else Seq.empty) ++ (if (tags.nonEmpty) Seq("Tag") else Seq.empty)
+
+      val symbolExtends = if (symbolExtendsList.isEmpty) "" else symbolExtendsList.mkString("extends ", " with ", "")
 
       val out = new PrintWriter(new File(outFolder.getAbsolutePath + "/" + symbol + ".scala"))
 
       out.println(
         s"""package $pkg
            |
-           |import me.shadaj.slinky.core.{AttrPair, TagElement, WithAttrs}
+           |import me.shadaj.slinky.core.{AttrPair, TagElement, Tag, WithAttrs}
            |import me.shadaj.slinky.core.facade.{React, ReactElement}
            |import scala.scalajs.js
            |import scala.language.implicitConversions

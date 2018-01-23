@@ -5,6 +5,12 @@ import me.shadaj.slinky.core.facade.{React, ReactElement}
 import scala.language.implicitConversions
 import scala.scalajs.js
 
+trait Tag {
+  type tagType <: TagElement
+  def apply(mod: AttrPair[tagType], remainingMods: AttrPair[tagType]*): WithAttrs
+  def apply(elems: ReactElement*): ReactElement
+}
+
 abstract class TagElement
 
 final class CustomAttribute[T](private val name: String) {
