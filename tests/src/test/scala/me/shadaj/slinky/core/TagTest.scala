@@ -1,11 +1,12 @@
 package me.shadaj.slinky.core
 
 import me.shadaj.slinky.core.facade.ReactElement
+import me.shadaj.slinky.web.ReactDOM
 import org.scalatest.FunSuite
 import me.shadaj.slinky.web.html._
 
 import scala.scalajs.js
-
+import org.scalajs.dom
 import org.scalajs.dom.MouseEvent
 
 class TagTest extends FunSuite {
@@ -30,12 +31,12 @@ class TagTest extends FunSuite {
 
   test("Can use Boolean attribute by itself providing a value") {
     val instance: ReactElement = input(disabled := false)
-    assert(instance.asInstanceOf[js.Dynamic].props.disabled.asInstanceOf[Boolean] == false)
+    assert(!instance.asInstanceOf[js.Dynamic].props.disabled.asInstanceOf[Boolean])
   }
 
   test("Can use Boolean attribute by itself without providing value") {
     val instance: ReactElement = input(disabled)
-    assert(instance.asInstanceOf[js.Dynamic].props.disabled.asInstanceOf[Boolean] == true)
+    assert(instance.asInstanceOf[js.Dynamic].props.disabled.asInstanceOf[Boolean])
   }
 
   test("Using a non-Boolean attribute by itself does not compiles") {
@@ -44,5 +45,15 @@ class TagTest extends FunSuite {
 
   test("Mouse events can be given a function taking a MouseEvent") {
     assertCompiles("div(onMouseOver := ((v: MouseEvent) => {}))")
+  }
+
+  test("Can construct tag with abstraction over element type") {
+    def constructTag[T <: Tag: className.supports](tag: T): ReactElement = {
+      tag.apply(className := "foo")("hello!")
+    }
+
+    val divContainer = dom.document.createElement("div")
+    ReactDOM.render(constructTag(div), divContainer)
+    assert(divContainer.innerHTML == """<div class="foo">hello!</div>""")
   }
 }
