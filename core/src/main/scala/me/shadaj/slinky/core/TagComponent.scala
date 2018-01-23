@@ -11,6 +11,11 @@ trait Tag {
   def apply(elems: ReactElement*): ReactElement
 }
 
+trait Attr {
+  type attrType
+  type supports[T <: Tag] = AttrPair[attrType] => AttrPair[T#tagType]
+}
+
 abstract class TagElement
 
 final class CustomAttribute[T](private val name: String) {

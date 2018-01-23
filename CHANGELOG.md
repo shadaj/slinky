@@ -4,7 +4,6 @@
 + **BREAKING**: Stateless components that use the `@react` macro annotation must extend the `StatelessComponent` class instead of just `Component` [PR #69](https://github.com/shadaj/slinky/pull/69)
 + **BREAKING**: Callbacks passed to `setState` are now Scala functions, so there is no need to force implicit conversions [PR #71](https://github.com/shadaj/slinky/pull/71)
 + **BREAKING**: The tag construction flow now requires attributes to come before children. In addition, an empty list of attributes is no longer allowed [PR #73](https://github.com/shadaj/slinky/pull/73)
-+ **BREAKING**: Add common supertype `Tag` for all tag elements to allow abstracting over them [PR #101](https://github.com/shadaj/slinky/pull/101)
 + Add support for portal elements, which were introduced in React 16 [PR #65](https://github.com/shadaj/slinky/pull/65)
 + Greatly improve IntelliJ support for Slinky with special macro annotation behavior [PR #69](https://github.com/shadaj/slinky/pull/69)
 + Add an alternative `apply` method to eliminate compiler warnings when using propless components [PR #70](https://github.com/shadaj/slinky/pull/70)
@@ -24,6 +23,8 @@
 + Add facade for `ReactDOM.unmountComponentAtNode` [PR #88](https://github.com/shadaj/slinky/pull/88)
 + Fix mapping of undefined values in a case class. Such values now do not become a property in the written object [PR #95](https://github.com/shadaj/slinky/pull/95)
 + Add readers for `js.Array[T]` [PR #100](https://github.com/shadaj/slinky/pull/100)
++ Add common supertype `Tag` for all tag elements to allow abstracting over them [PR #101](https://github.com/shadaj/slinky/pull/101)
++ Add common supertype `Attr` with the typeclass `supports[Tag]` to allow abstracting over supported attributes (see `TagTest` for example) [PR #101](https://github.com/shadaj/slinky/pull/101)
 
 ## v0.2.0
 + **BREAKING**: Instead of taking key and refs as additional parameters next to props, they are now taken in through the methods `withKey` and `withRef` (components and external components only)
