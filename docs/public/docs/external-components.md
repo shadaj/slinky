@@ -43,7 +43,7 @@ Switch()
 ## External Components with Attributes
 Some external components may be wrappers around HTML elements, with props being passed down to be used as attributes around the elements. To create an interface to use such components, you can use `ExternalComponentWithAttributes`, which provides an API that takes additional attributes for a specified target element type.
 
-By specifying a target element type, in this case `a.tag.type`, your code will be checked at compile time to make sure that the attributes you are setting make sense for the target type.
+By specifying a target element type, in this case `a.tag.type`, your code will be checked at compile time to make sure that the attributes you are setting make sense for the target type. If you are working with external components that do not have a specified target type, you can use the `*.tag.type` fallback target type instead, which allows any attributes to be passed in.
 
 ```scala
 @react object NavLink extends ExternalComponentWithAttributes[a.tag.type] {
