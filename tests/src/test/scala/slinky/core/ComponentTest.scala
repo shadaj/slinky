@@ -1,0 +1,189 @@
+package slinky.core
+
+import slinky.web.ReactDOM
+import org.scalajs.dom
+import org.scalatest.{Assertion, AsyncFunSuite}
+import slinky.core.facade.{ErrorBoundaryInfo, ReactElement}
+
+import scala.concurrent.Promise
+import scala.scalajs.js
+
+object TestComponent extends ComponentWrapper {
+  type Props = Int => Unit
+  type State = Int
+
+  class Def(jsProps: js.Object) extends Definition(jsProps) {
+    override def initialState: Int = 0
+
+    override def componentWillUpdate(nextProps: Props, nextState: Int): Unit = {
+      props.apply(nextState)
+    }
+
+    override def componentDidMount(): Unit = {
+      setState((s, p) => {
+        s + 1
+      })
+    }
+
+    override def render(): ReactElement = {
+      null
+    }
+  }
+}
+
+object TestComponentForSetStateCallback extends ComponentWrapper {
+  type Props = Int => Unit
+  type State = Int
+
+  class Def(jsProps: js.Object) extends Definition(jsProps) {
+    override def initialState: Int = 0
+
+    override def componentDidMount(): Unit = {
+      setState((s, p) => {
+        s + 1
+      }, () => {
+        props.apply(state)
+      })
+    }
+
+    override def render(): ReactElement = {
+      null
+    }
+  }
+}
+object NoPropsComponent extends ComponentWrapper {
+  type Props = Unit
+  type State = Int
+
+  class Def(jsProps: js.Object) extends Definition(jsProps) {
+    override def initialState: Int = 0
+
+    override def render(): ReactElement = {
+      null
+    }
+  }
+}
+
+object TestForceUpdateComponent extends ComponentWrapper {
+  type Props = () => Unit
+  type State = Int
+
+  class Def(jsProps: js.Object) extends Definition(jsProps) {
+    override def componentDidUpdate(prevProps: Props, prevState: State): Unit = {
+      props.apply()
+    }
+
+    override def initialState: Int = 0
+
+    override def render(): ReactElement = {
+      null
+    }
+  }
+}
+
+object BadComponent extends StatelessComponentWrapper {
+  type Props = Unit
+
+  class Def(jsProps: js.Object) extends Definition(jsProps) {
+    override def render(): ReactElement = {
+      throw new Exception("BOO")
+    }
+  }
+}
+
+object ErrorBoundaryComponent extends StatelessComponentWrapper {
+  case class Props(bad: Boolean, handler: (js.Error, ErrorBoundaryInfo) => Unit)
+
+  class Def(jsProps: js.Object) extends Definition(jsProps) with ErrorBoundary {
+    override def componentDidCatch(error: js.Error, info: ErrorBoundaryInfo): Unit = {
+      props.handler.apply(error, info)
+    }
+
+    override def render(): ReactElement = {
+      if (props.bad) {
+        BadComponent()
+      } else {
+        null
+      }
+    }
+  }
+}
+
+class ComponentTest extends AsyncFunSuite {
+  test("setState given function is applied") {
+    val promise: Promise[Assertion] = Promise()
+
+    ReactDOM.render(
+      TestComponent(i => promise.success(assert(i == 1))),
+      dom.document.createElement("div")
+    )
+
+    promise.future
+  }
+
+  test("setState callback function is run") {
+    val promise: Promise[Assertion] = Promise()
+
+    ReactDOM.render(
+      TestComponent(i => promise.success(assert(i == 1))),
+      dom.document.createElement("div")
+    )
+
+    promise.future
+  }
+
+  test("Can construct a component and provide key") {
+    val element: ReactElement = TestComponent(_ => ()).withKey("test")
+    assert(element.asInstanceOf[js.Dynamic].key.toString == "test")
+  }
+
+  test("Can construct a component taking Unit props with no arguments") {
+    val element: ReactElement = NoPropsComponent()
+    assert(!js.isUndefined(element.asInstanceOf[js.Dynamic]))
+  }
+
+  test("Can construct a component taking Unit props with refs and key") {
+    val element: ReactElement = NoPropsComponent.withKey("hi").withRef((r: js.Object) => {})
+    assert(element.asInstanceOf[js.Dynamic].key.toString == "hi")
+    assert(!js.isUndefined(element.asInstanceOf[js.Dynamic].ref))
+  }
+
+  test("Force updating a component by its ref works") {
+    val promise: Promise[Assertion] = Promise()
+
+    ReactDOM.render(
+      TestForceUpdateComponent(() => promise.success(assert(true))).withRef(ref => {
+        ref.forceUpdate()
+      }),
+      dom.document.createElement("div")
+    )
+
+    promise.future
+  }
+
+  test("Error boundary component catches an exception in its children") {
+    val promise: Promise[Assertion] = Promise()
+
+    ReactDOM.render(
+      ErrorBoundaryComponent(ErrorBoundaryComponent.Props(true, (error, info) => {
+        promise.success(assert(true))
+      })),
+      dom.document.createElement("div")
+    )
+
+    promise.future
+  }
+
+  test("Error boundary component works fine with no errors") {
+    var sawError = false
+
+    ReactDOM.render(
+      ErrorBoundaryComponent(ErrorBoundaryComponent.Props(false, (error, info) => {
+        sawError = true
+      })),
+      dom.document.createElement("div")
+    )
+
+    assert(!sawError)
+  }
+}

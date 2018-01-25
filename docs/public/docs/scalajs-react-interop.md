@@ -8,7 +8,7 @@ libraryDependencies += "me.shadaj" %%% "slinky-scalajsreact-interop" % "0.2.0"
 To use this module, simply import the implicit conversions between Slinky and scalajs-react types.
 
 ```scala
-import me.shadaj.slinky.scalajsreact.Converters._
+import slinky.scalajsreact.Converters._
 ```
 
 This makes it possible to use Slinky components from scalajs-react and vice-versa. For example, the following code can now work:

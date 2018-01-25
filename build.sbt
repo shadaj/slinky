@@ -37,14 +37,14 @@ lazy val core = project.settings(macroAnnotationSettings).dependsOn(readWrite)
 
 lazy val web = project.settings(
   sourceGenerators in Compile += Def.taskDyn[Seq[File]] {
-    val rootFolder = (sourceManaged in Compile).value / "me/shadaj/slinky/web"
+    val rootFolder = (sourceManaged in Compile).value / "slinky/web"
     rootFolder.mkdirs()
 
-    val html = (runMain in Compile in generator).toTask(Seq("me.shadaj.slinky.generator.Generator", "web/html.json", (rootFolder / "html").getAbsolutePath, "me.shadaj.slinky.web.html").mkString(" ", " ", "")).map { _ =>
+    val html = (runMain in Compile in generator).toTask(Seq("slinky.generator.Generator", "web/html.json", (rootFolder / "html").getAbsolutePath, "slinky.web.html").mkString(" ", " ", "")).map { _ =>
       (rootFolder / "html" ** "*.scala").get
     }
 
-    val svg = (runMain in Compile in generator).toTask(Seq("me.shadaj.slinky.generator.Generator", "web/svg.json", (rootFolder / "svg").getAbsolutePath, "me.shadaj.slinky.web.svg").mkString(" ", " ", "")).map { _ =>
+    val svg = (runMain in Compile in generator).toTask(Seq("slinky.generator.Generator", "web/svg.json", (rootFolder / "svg").getAbsolutePath, "slinky.web.svg").mkString(" ", " ", "")).map { _ =>
       (rootFolder / "svg" ** "*.scala").get
     }
 

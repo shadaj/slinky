@@ -1,6 +1,7 @@
 # Changelog
 
 ## vNEXT
++ **BREAKING!**: The package `me.shadaj.slinky` has been renamed to `slinky` [PR #103](https://github.com/shadaj/slinky/pull/103)
 + **BREAKING**: Stateless components that use the `@react` macro annotation must extend the `StatelessComponent` class instead of just `Component` [PR #69](https://github.com/shadaj/slinky/pull/69)
 + **BREAKING**: Callbacks passed to `setState` are now Scala functions, so there is no need to force implicit conversions [PR #71](https://github.com/shadaj/slinky/pull/71)
 + **BREAKING**: The tag construction flow now requires attributes to come before children. In addition, an empty list of attributes is no longer allowed [PR #73](https://github.com/shadaj/slinky/pull/73)
