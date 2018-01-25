@@ -1,11 +1,9 @@
 package slinky.docs
 
 import slinky.core.StatelessComponent
-import slinky.core.facade.ReactElement
-import slinky.web.html._
-import slinky.core.StatelessComponent
 import slinky.core.annotations.react
 import slinky.core.facade.ReactElement
+import slinky.web.html._
 
 import scala.scalajs.js
 import scala.scalajs.js.Dynamic.literal

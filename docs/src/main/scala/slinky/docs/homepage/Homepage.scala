@@ -1,10 +1,9 @@
 package slinky.docs.homepage
 
 import slinky.core.{Component, StatelessComponent, StatelessComponentWrapper}
+import slinky.core.annotations.react
 import slinky.docs.{MainPageContent, Navbar}
 import slinky.web.html._
-import slinky.core.StatelessComponent
-import slinky.core.annotations.react
 
 import scala.scalajs.js
 import scala.scalajs.js.Dynamic.literal

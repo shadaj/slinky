@@ -1,7 +1,6 @@
 package slinky.docs
 
 import slinky.core.ExternalComponent
-import slinky.core.ExternalComponent
 import slinky.core.annotations.react
 
 import scala.scalajs.js

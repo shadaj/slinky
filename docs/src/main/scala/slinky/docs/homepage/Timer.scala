@@ -1,12 +1,10 @@
 package slinky.docs.homepage //nodisplay
-//nodisplay
-import slinky.core.Component
-import slinky.core.facade.ReactElement
+
+import slinky.core.annotations.react //nodisplay
+import slinky.core.Component //nodisplay
+import slinky.core.facade.ReactElement //nodisplay
 import slinky.web.html._
 import org.scalajs.dom.window._
-import slinky.core.Component
-import slinky.core.annotations.react
-import slinky.core.facade.ReactElement //nodisplay
 
 @react class Timer extends Component {
   type Props = Unit

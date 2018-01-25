@@ -1,13 +1,12 @@
 package slinky.web
 
 import slinky.core.ComponentWrapper
+import slinky.core.facade.ReactElement
 import org.scalajs.dom.{Element, document}
 
 import scala.scalajs.js
 import html._
 import org.scalatest.FunSuite
-import slinky.core.ComponentWrapper
-import slinky.core.facade.ReactElement
 
 object TestComponent extends ComponentWrapper {
   type Props = Unit

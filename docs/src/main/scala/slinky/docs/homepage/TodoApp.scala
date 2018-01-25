@@ -1,9 +1,7 @@
 package slinky.docs.homepage //nodisplay
 
-import slinky.core.{Component, StatelessComponent}
-import slinky.core.{Component, StatelessComponent}
+import slinky.core.{Component, StatelessComponent}  //nodisplay
 import slinky.core.annotations.react //nodisplay
-//nodisplay
 import slinky.web.html._ //nodisplay
 import org.scalajs.dom.raw.{Event, HTMLInputElement} //nodisplay
 

@@ -1,7 +1,6 @@
 package slinky.core
 
 import slinky.core.facade.{React, ReactElement}
-import slinky.core.facade.{React, ReactElement}
 
 import scala.language.implicitConversions
 import scala.scalajs.js

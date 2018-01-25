@@ -1,14 +1,13 @@
 package slinky.core
 
-import slinky.core.facade.{React, ReactChildren}
+import slinky.core.facade.{React, ReactChildren, ReactElement}
 import slinky.web.html.div
 import org.scalatest.FunSuite
-import slinky.core.facade.{ReactChildren, ReactElement}
 
 import scala.scalajs.js
 
 class ReactChildrenTest extends FunSuite {
-  import slinky.core.facade.React.Children._
+  import React.Children._
 
   test("Can map over a single element") {
     assert(count(map((div(): ReactElement).asInstanceOf[ReactChildren], elem => elem)) == 1)

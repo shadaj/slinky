@@ -1,11 +1,10 @@
 package slinky.core
 
-import slinky.core.facade.Fragment
+import slinky.core.facade.{Fragment, ReactElement}
 import slinky.web.ReactDOM
 import slinky.web.html._
 import org.scalajs.dom
 import org.scalatest.FunSuite
-import slinky.core.facade.{Fragment, ReactElement}
 
 class ComponentReturnTypeTests extends FunSuite {
   def testElement(elem: ReactElement): Unit = {

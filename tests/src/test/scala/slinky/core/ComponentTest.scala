@@ -1,9 +1,9 @@
 package slinky.core
 
+import slinky.core.facade.{ErrorBoundaryInfo, ReactElement}
 import slinky.web.ReactDOM
 import org.scalajs.dom
 import org.scalatest.{Assertion, AsyncFunSuite}
-import slinky.core.facade.{ErrorBoundaryInfo, ReactElement}
 
 import scala.concurrent.Promise
 import scala.scalajs.js

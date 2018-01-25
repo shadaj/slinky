@@ -1,10 +1,10 @@
 package slinky.core
 
+import slinky.core.annotations.react
 import slinky.web.ReactDOM
 import org.scalatest.FunSuite
 import slinky.web.html._
 import org.scalajs.dom
-import slinky.core.annotations.react
 
 import scala.scalajs.js
 

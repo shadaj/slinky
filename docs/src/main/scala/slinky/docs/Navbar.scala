@@ -1,13 +1,11 @@
 package slinky.docs
 
 import slinky.core.StatelessComponent
+import slinky.core.annotations.react
 import slinky.core.facade.ReactElement
 import slinky.docs.homepage.SlinkyHorizontalLogo
 import slinky.reactrouter.Link
 import slinky.web.html._
-import slinky.core.StatelessComponent
-import slinky.core.annotations.react
-import slinky.core.facade.ReactElement
 
 import scala.scalajs.js
 

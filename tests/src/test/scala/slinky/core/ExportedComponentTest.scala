@@ -1,12 +1,11 @@
 package slinky.core
 
-import slinky.core.facade.React
+import slinky.core.facade.{React, ReactElement}
 import slinky.web.ReactDOM
 import org.scalatest.FunSuite
 
 import scala.scalajs.js
 import org.scalajs.dom.document
-import slinky.core.facade.{React, ReactElement}
 
 object TestExportedComponentWithState extends ComponentWrapper {
   case class Props(name: String)

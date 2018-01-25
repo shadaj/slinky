@@ -8,7 +8,6 @@ import slinky.web.html._
 import scala.scalajs.js
 import org.scalajs.dom
 import org.scalajs.dom.MouseEvent
-import slinky.core.facade.ReactElement
 
 class TagTest extends FunSuite {
   test("Fails compilation when an incompatible attr is provided") {

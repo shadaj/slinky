@@ -2,11 +2,11 @@ package slinky.core
 
 import slinky.core.facade.{React, ReactElement}
 import slinky.readwrite.Writer
-import slinky.core.facade.{React, ReactElement}
 
 import scala.language.implicitConversions
 import scala.scalajs.js
 import scala.scalajs.js.|
+
 import scala.language.experimental.macros
 import scala.reflect.macros.blackbox
 

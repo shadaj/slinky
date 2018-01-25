@@ -4,6 +4,7 @@ import japgolly.scalajs.react.component.Generic.UnmountedRaw
 import japgolly.scalajs.react.raw.ReactNode
 import japgolly.scalajs.react.vdom.{TagOf, VdomNode}
 import japgolly.scalajs.react.vdom.html_<^._
+
 import slinky.core.facade.ReactElement
 
 import scala.language.implicitConversions

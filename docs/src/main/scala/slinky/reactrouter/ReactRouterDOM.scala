@@ -1,10 +1,9 @@
 package slinky.reactrouter
 
 import slinky.core._
+import slinky.core.annotations.react
 import slinky.web.html.a
 import org.scalajs.dom.History
-import slinky.core.{ExternalComponent, ExternalComponentNoProps, ExternalComponentWithAttributes, ReactComponentClass}
-import slinky.core.annotations.react
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSImport

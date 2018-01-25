@@ -3,7 +3,6 @@ package slinky.core
 import slinky.core.facade.ReactElement
 import org.scalatest.FunSuite
 import slinky.web.svg._
-import slinky.core.facade.ReactElement
 
 import scala.scalajs.js
 

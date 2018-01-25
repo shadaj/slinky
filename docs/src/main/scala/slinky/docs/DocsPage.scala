@@ -1,13 +1,11 @@
 package slinky.docs
 
 import slinky.core.{Component, StatelessComponent}
+import slinky.core.annotations.react
 import slinky.core.facade.{Fragment, ReactElement}
 import slinky.remarkreact.{ReactRenderer, Remark}
 import slinky.web.html._
 import org.scalajs.dom.raw.XMLHttpRequest
-import slinky.core.{Component, StatelessComponent}
-import slinky.core.annotations.react
-import slinky.core.facade.{Fragment, ReactElement}
 
 import scala.scalajs.js
 import js.Dynamic.literal

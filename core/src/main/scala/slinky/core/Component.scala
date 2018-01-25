@@ -1,7 +1,6 @@
 package slinky.core
 
 import slinky.core.facade.{ErrorBoundaryInfo, React, ReactElement}
-import slinky.core.facade.{ErrorBoundaryInfo, React, ReactElement}
 
 import scala.scalajs.js
 

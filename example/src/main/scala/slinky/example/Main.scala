@@ -1,20 +1,22 @@
 package slinky.example
 
 import slinky.core._
+import slinky.core.annotations.react
 import slinky.core.facade.ReactElement
+
 import slinky.web.ReactDOM
 import slinky.web.html._
+
 import slinky.hot
+
 import slinky.scalajsreact.Converters._
+
 import japgolly.scalajs.react._
 import japgolly.scalajs.react.vdom.html_<^._
 
 import scala.scalajs.js
 import scala.scalajs.js.JSApp
 import org.scalajs.dom.{document, html}
-import slinky.core.Component
-import slinky.core.annotations.react
-import slinky.core.facade.ReactElement
 
 object Main extends JSApp {
   val Hello =

@@ -1,8 +1,7 @@
 package slinky.core
 
-import slinky.core.facade.{ErrorBoundaryInfo, PrivateComponentClass, React}
-import slinky.readwrite.{Reader, Writer}
 import slinky.core.facade.{ErrorBoundaryInfo, PrivateComponentClass, React, ReactElement}
+import slinky.readwrite.{Reader, Writer}
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSName

@@ -1,11 +1,8 @@
 package slinky.docs.homepage //nodisplay
 
-import slinky.core.StatelessComponent
-import slinky.core.StatelessComponent
-import slinky.core.annotations.react
+import slinky.core.StatelessComponent //nodisplay
+import slinky.core.annotations.react //nodisplay
 import slinky.core.facade.ReactElement //nodisplay
-//nodisplay
-//nodisplay
 import slinky.web.html._ //nodisplay
 
 @react class HelloMessage extends StatelessComponent {

@@ -1,7 +1,6 @@
 package slinky
 
 import slinky.core.BaseComponentWrapper
-import slinky.core.BaseComponentWrapper
 import slinky.core.facade.React
 
 import scala.scalajs.js

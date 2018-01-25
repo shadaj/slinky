@@ -2,7 +2,6 @@ package slinky.core
 
 import slinky.core.facade.{React, ReactElement}
 import slinky.readwrite.{Reader, Writer}
-import slinky.core.facade.{React, ReactElement}
 
 import scala.language.experimental.macros
 import scala.scalajs.js

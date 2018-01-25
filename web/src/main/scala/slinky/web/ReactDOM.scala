@@ -1,8 +1,7 @@
 package slinky.web
 
-import slinky.core.facade.{React, ReactInstance}
-import org.scalajs.dom.Element
 import slinky.core.facade.{React, ReactElement, ReactInstance}
+import org.scalajs.dom.Element
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSImport
