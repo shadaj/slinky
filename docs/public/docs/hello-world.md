@@ -5,9 +5,9 @@ If you want to test this locally, take a look at the [Installation](/docs/instal
 
 The simplest Slinky app, which renders "Hello, world!" to the screen, looks like this:
 ```scala
-import me.shadaj.slinky.core._
-import me.shadaj.slinky.web.ReactDOM
-import me.shadaj.slinky.web.html._
+import slinky.core._
+import slinky.web.ReactDOM
+import slinky.web.html._
 
 ReactDOM.render(
   h1("Hello, world!"),
