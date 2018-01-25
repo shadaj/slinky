@@ -24,7 +24,7 @@ libraryDependencies += "me.shadaj" %%% "slinky-scalajsreact-interop" % "0.2.0" /
 scalacOptions += "-P:scalajs:sjsDefinedByDefault"
 
 // optional, but recommended; enables the @react macro annotation API
-addCompilerPlugin("org.scalameta" % "paradise" % "3.0.0-M10" cross CrossVersion.full)
+addCompilerPlugin("org.scalameta" % "paradise" % "3.0.0-M11" cross CrossVersion.full)
 ```
 
 Slinky supports loading React via either CommonJS or as a global object. If loading as a global object, make sure React is available
