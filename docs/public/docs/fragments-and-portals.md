@@ -21,7 +21,7 @@ Slinky supports the special fragment and portal element types that were introduc
 Additionally, Slinky supports the `Fragment` component [introduced in React 16.2](https://reactjs.org/blog/2017/11/28/react-v16.2.0-fragment-support.html).
 
 ```scala
-import me.shadaj.slinky.core.facade.Fragment
+import slinky.core.facade.Fragment
 
 @react class MyComponent extends StatelessComponent {
   trait Props = Unit
@@ -48,7 +48,7 @@ val containerDOMNode = document.createElement("button")
 
 // ...
 
-import me.shadaj.slinky.web.ReactDOM
+import slinky.web.ReactDOM
 
 div(  
   // ...,

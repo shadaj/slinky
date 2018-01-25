@@ -8,7 +8,7 @@ Let's get started with rendering a simple HTML element!
 
 First, we import all HTML tags from the `web` module:
 ```scala
-import me.shadaj.slinky.web.html._
+import slinky.web.html._
 ```
 
 Now, we can render the element:
