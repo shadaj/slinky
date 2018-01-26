@@ -5,6 +5,8 @@ import slinky.core.annotations.react
 import slinky.core.facade.{Fragment, ReactElement}
 import slinky.remarkreact.{ReactRenderer, Remark}
 import slinky.web.html._
+
+import org.scalajs.dom
 import org.scalajs.dom.raw.XMLHttpRequest
 
 import scala.scalajs.js
@@ -134,6 +136,7 @@ import DocsTree._
 
       val xhr = new XMLHttpRequest
       xhr.onload = _ => {
+        dom.window.scrollTo(0, 0)
         setState(State(group, Some(xhr.responseText)))
       }
 

@@ -9,6 +9,8 @@ import scala.scalajs.js
 import scala.scalajs.js.Dynamic.literal
 import scala.scalajs.js.annotation.JSImport
 
+import org.scalajs.dom
+
 @JSImport("resources/slinky-logo-horizontal.svg", JSImport.Default)
 @js.native
 object SlinkyHorizontalLogo extends js.Object
@@ -19,6 +21,10 @@ object SlinkyLogo extends js.Object
 
 @react class Homepage extends StatelessComponent {
   type Props = Unit
+
+  override def componentDidMount(): Unit = {
+    dom.window.scrollTo(0, 0)
+  }
 
   def render() = {
     div(
