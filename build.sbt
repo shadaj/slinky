@@ -14,6 +14,14 @@ lazy val slinky = project.in(file(".")).aggregate(
   scalajsReactInterop
 ).settings(publishArtifact := false)
 
+addCommandAlias(
+  "publishSignedAll",
+  (slinky: ProjectDefinition[ProjectReference])
+    .aggregate
+    .map(p => s"${p.asInstanceOf[LocalProject].project}/publishSigned")
+    .mkString(";", ";", "")
+)
+
 lazy val macroAnnotationSettings = Seq(
   // New-style macro annotations are under active development.  As a result, in
   // this build we'll be referring to snapshot versions of both scala.meta and
