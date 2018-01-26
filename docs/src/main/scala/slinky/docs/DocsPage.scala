@@ -85,7 +85,8 @@ object DocsTree {
     "Advanced Guides" -> List(
       "Fragments and Portals" -> "/docs/fragments-and-portals/",
       "Error Boundaries" -> "/docs/error-boundaries/",
-      "Scala.js React Interop" -> "/docs/scalajs-react-interop/"
+      "Scala.js React Interop" -> "/docs/scalajs-react-interop/",
+      "Abstracting Over Tags" -> "/docs/abstracting-over-tags/",
     )
   )
 }
