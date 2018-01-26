@@ -14,6 +14,6 @@ object ReactComponentClass {
   implicit def wrapperToClass[T <: BaseComponentWrapper](wrapper: T)
                                                         (implicit propsReader: Reader[wrapper.Props],
                                                          ctag: ConstructorTag[wrapper.Def]): ReactComponentClass = {
-    wrapper.componentConstructor(propsReader, null, null, ctag).asInstanceOf[ReactComponentClass]
+    wrapper.componentConstructor(propsReader, wrapper.hot_stateWriter, wrapper.hot_stateReader, ctag).asInstanceOf[ReactComponentClass]
   }
 }

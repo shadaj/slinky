@@ -36,10 +36,10 @@ abstract class BaseComponentWrapper(pr: PropsReaderProvider, pw: PropsWriterProv
 
   type Definition <: js.Object
 
-  private[this] val hot_propsReader = pr.asInstanceOf[Reader[Props]]
-  private[this] val hot_propsWriter = pw.asInstanceOf[Writer[Props]]
-  private[this] val hot_stateReader = pr.asInstanceOf[Reader[State]]
-  private[this] val hot_stateWriter = pw.asInstanceOf[Writer[State]]
+  private[core] val hot_propsReader = pr.asInstanceOf[Reader[Props]]
+  private[core] val hot_propsWriter = pw.asInstanceOf[Writer[Props]]
+  private[core] val hot_stateReader = sr.asInstanceOf[Reader[State]]
+  private[core] val hot_stateWriter = sw.asInstanceOf[Writer[State]]
 
   def componentConstructor(implicit propsReader: Reader[Props],
                            stateWriter: Writer[State], stateReader: Reader[State],
@@ -51,8 +51,8 @@ abstract class BaseComponentWrapper(pr: PropsReaderProvider, pw: PropsWriterProv
     // we only receive non-null reader/writers here when we generate a full typeclass; otherwise we don't set
     // the reader/writer values since we can just use the fallback ones
     if (propsReader != null) this.asInstanceOf[js.Dynamic]._propsReader = propsReader.asInstanceOf[js.Any]
-    if (stateWriter != null) this.asInstanceOf[js.Dynamic]._stateWriter = stateWriter.asInstanceOf[js.Any]
     if (stateReader != null) this.asInstanceOf[js.Dynamic]._stateReader = stateReader.asInstanceOf[js.Any]
+    if (stateWriter != null) this.asInstanceOf[js.Dynamic]._stateWriter = stateWriter.asInstanceOf[js.Any]
 
     BaseComponentWrapper.componentConstructorMiddleware(
       constructor.asInstanceOf[js.Object], this.asInstanceOf[js.Object])
