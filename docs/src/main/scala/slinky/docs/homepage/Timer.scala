@@ -20,7 +20,7 @@ import org.scalajs.dom.window._
   private var interval = -1
 
   override def componentDidMount(): Unit = {
-    interval = setInterval(tick: () => Unit, 1000)
+    interval = setInterval(() => tick(), 1000)
   }
 
   override def componentWillUnmount(): Unit = {
