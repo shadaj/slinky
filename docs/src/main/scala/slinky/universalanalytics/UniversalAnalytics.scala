@@ -10,6 +10,7 @@ object UniversalAnalytics extends js.Object {
 }
 
 @js.native trait Visitor extends js.Object {
+  def pageview(config: js.Object): Sendable = js.native
   def pageview(path: String): Sendable = js.native
 }
 
