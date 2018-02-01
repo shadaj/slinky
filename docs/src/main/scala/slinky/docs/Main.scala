@@ -25,7 +25,10 @@ object Main {
   def setupAnalytics(): History = {
     val visitor = UniversalAnalytics("UA-54128141-3", js.Dynamic.literal(https = true))
     val history = History.createBrowserHistory()
-    visitor.pageview(dom.window.location.pathname).send()
+    visitor.pageview(js.Dynamic.literal(
+      dp = dom.window.location.pathname,
+      dr = dom.document.referrer
+    )).send()
     history.listen(() => {
       visitor.pageview(dom.window.location.pathname).send()
     })
