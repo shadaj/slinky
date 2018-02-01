@@ -12,6 +12,14 @@ Slinky components must define the type of their React props and implement a rend
 }
 ```
 
+To use a component, call the generated companion object's apply method with the parameters defined in props.
+
+```scala
+div(
+  HelloName(name = "World")
+)
+```
+
 ## Adding State
 To make your component stateful, extend the `Component` class (instead of `StatelessComponent`) and define your state type and initial state
 ```scala
