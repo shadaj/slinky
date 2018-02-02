@@ -3,8 +3,8 @@ package slinky.docs.homepage //nodisplay
 import slinky.core.annotations.react //nodisplay
 import slinky.core.Component //nodisplay
 import slinky.core.facade.ReactElement //nodisplay
-import slinky.web.html._
-import org.scalajs.dom.window._
+import slinky.web.html._ //nodisplay
+import org.scalajs.dom.window._ //nodisplay
 
 @react class Timer extends Component {
   type Props = Unit
