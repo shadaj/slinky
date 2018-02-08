@@ -1,6 +1,12 @@
 # Changelog
 
 ## v0.3.0
+### Highlights
++ Slinky now has **full support for React 16** features such as fragments, portals, and streaming server-side-rendering
++ The tag API has been remodeled to be more efficient and flexible (see https://slinky.shadaj.me/docs/abstracting-over-tags/)
++ The `@react` macro annotation is now compatible with many more use cases, such as pulling values from a companion object, and has improved support in IntelliJ
+
+### Details
 + **BREAKING!**: The package `me.shadaj.slinky` has been renamed to `slinky` [PR #103](https://github.com/shadaj/slinky/pull/103)
 + **BREAKING**: Stateless components that use the `@react` macro annotation must extend the `StatelessComponent` class instead of just `Component` [PR #69](https://github.com/shadaj/slinky/pull/69)
 + **BREAKING**: Callbacks passed to `setState` are now Scala functions, so there is no need to force implicit conversions [PR #71](https://github.com/shadaj/slinky/pull/71)
