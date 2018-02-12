@@ -31,8 +31,11 @@ object ReactElement {
     b.asInstanceOf[ReactElement]
   }
 
-  @inline implicit def optionToElement(s: Option[ReactElement]): ReactElement = {
-    s.getOrElse(null.asInstanceOf[ReactElement])
+  @inline implicit def optionToElement[T](s: Option[T])(implicit cv: T => ReactElement): ReactElement = {
+    s match {
+      case Some(e) => cv(e)
+      case None => null.asInstanceOf[ReactElement]
+    }
   }
 
   @inline implicit def seqElementToElement[T](s: Iterable[T])(implicit cv: T => ReactElement): ReactElement = {

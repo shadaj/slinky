@@ -1,5 +1,8 @@
 # Changelog
 
+## vNEXT
++ Fix compilation errors when using an `Option` of a component instance in a tag tree [PR #111](https://github.com/shadaj/slinky/pull/111)
+
 ## v0.3.0
 ### Highlights
 + Slinky now has **full support for React 16** features such as fragments, portals, and streaming server-side-rendering
