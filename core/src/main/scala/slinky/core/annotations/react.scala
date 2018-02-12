@@ -63,18 +63,25 @@ class react extends scala.annotation.StaticAnnotation {
         if (isErrorBoundary) {
           q"""class ${clazz.name}(jsProps: scala.scalajs.js.Object) extends slinky.core.DefinitionBase[$propsSelect, $stateSelect](jsProps) with slinky.core.ErrorBoundary {
                 $propsAndStateImport
+                null.asInstanceOf[${Type.Name("Props")}]
+                null.asInstanceOf[${Type.Name("State")}]
                 ..${if (stateDefinition.isEmpty) Seq(q"override def initialState: State = ()") else Seq.empty}
                 ..${clazz.templ.stats.getOrElse(Nil).filterNot(s => s == propsDefinition || s == stateDefinition.orNull)}
               }"""
         } else {
           q"""class ${clazz.name}(jsProps: scala.scalajs.js.Object) extends slinky.core.DefinitionBase[$propsSelect, $stateSelect](jsProps) {
                 $propsAndStateImport
+                null.asInstanceOf[${Type.Name("Props")}]
+                null.asInstanceOf[${Type.Name("State")}]
                 ..${if (stateDefinition.isEmpty) Seq(q"override def initialState: State = ()") else Seq.empty}
                 ..${clazz.templ.stats.getOrElse(Nil).filterNot(s => s == propsDefinition || s == stateDefinition.orNull)}
               }"""
         }
 
+      val originalExtends = clazz.templ.parents.head.asInstanceOf[Term.Apply].fun.asInstanceOf[Ctor.Ref.Name].value
+
       (newClazz,
+        q"null.asInstanceOf[${Type.Name(originalExtends)}]" +:
         propsDefinition +:
           stateDefinition.getOrElse(q"type State = Unit") +:
           definitionClass +:

@@ -7,3 +7,4 @@ npmDependencies in Test += "react-dom" -> "16.2.0"
 jsDependencies += RuntimeDOM % Test
 
 scalacOptions += "-P:scalajs:sjsDefinedByDefault"
+scalacOptions += "-Ywarn-unused-import"
