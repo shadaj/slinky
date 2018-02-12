@@ -1,10 +1,14 @@
 # Changelog
 
+## vNEXT
++ Fix compilation errors when using an `Option` of a component instance in a tag tree [PR #111](https://github.com/shadaj/slinky/pull/111)
+
 ## v0.3.0
 + **BREAKING!**: The package `me.shadaj.slinky` has been renamed to `slinky` [PR #103](https://github.com/shadaj/slinky/pull/103)
 + **BREAKING**: Stateless components that use the `@react` macro annotation must extend the `StatelessComponent` class instead of just `Component` [PR #69](https://github.com/shadaj/slinky/pull/69)
 + **BREAKING**: Callbacks passed to `setState` are now Scala functions, so there is no need to force implicit conversions [PR #71](https://github.com/shadaj/slinky/pull/71)
 + **BREAKING**: The tag construction flow now requires attributes to come before children. In addition, an empty list of attributes is no longer allowed. When generating tags with dynamic attributes, you will now need to construct the tag as `tag(attrs.head, attrs.tail: _*)` to satisfy this requirement [PR #73](https://github.com/shadaj/slinky/pull/73)
++ **BREAKING**: (fixed in v0.3.1) Options of components result in compilation failures
 + Add support for portal elements, which were introduced in React 16 [PR #65](https://github.com/shadaj/slinky/pull/65)
 + Greatly improve IntelliJ support for Slinky with special macro annotation behavior [PR #69](https://github.com/shadaj/slinky/pull/69)
 + Add an alternative `apply` method to eliminate compiler warnings when using propless components [PR #70](https://github.com/shadaj/slinky/pull/70)

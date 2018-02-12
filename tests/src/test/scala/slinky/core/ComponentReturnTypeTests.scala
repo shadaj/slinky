@@ -41,6 +41,7 @@ class ComponentReturnTypeTests extends FunSuite {
 
   test("Components can return - options") {
     testElement(Some(h1("hi")))
+    testElement(Some(NoPropsComponent()))
     testElement(None)
   }
 
