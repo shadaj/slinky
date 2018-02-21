@@ -9,7 +9,7 @@ You can use this template from the command line with SBT:
 sbt new shadaj/create-react-scala-app.g8
 ```
 
-Follow the prompts, and you'll be all set up with a Scala-based React application with Slinky! Check out the [repo](https://github.com/shadaj/create-react-slinky-app.g8) for more details on what's included with the starter project.
+Follow the prompts, and you'll be all set up with a Scala-based React application with Slinky! Check out the [repo](https://github.com/shadaj/create-react-scala-app.g8) for more details on what's included with the starter project.
 
 ## Adding to an Existing Project
 Since Slinky is distributed just like any other Scala.js library, it's very easy to integrate into an existing project.
