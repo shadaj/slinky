@@ -1,6 +1,8 @@
 # Changelog
 
 ## vNEXT
+
+## v0.3.1
 + Fix compilation errors when using an `Option` of a component instance in a tag tree [PR #111](https://github.com/shadaj/slinky/pull/111)
 + Reduce warnings for unused imports when using the `@react` macro annotation [PR #112](https://github.com/shadaj/slinky/pull/112)
 
