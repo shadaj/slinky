@@ -14,7 +14,6 @@ import scala.scalajs.js.Dynamic.literal
   override def render(): ReactElement = {
     div(style := literal(width = "100%"))(
       button(style := literal(
-        cursor = "pointer",
         backgroundColor = "transparent",
         marginTop = "10px",
         border = "none",
