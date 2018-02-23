@@ -9,7 +9,7 @@ import slinky.web.html._
 import scala.scalajs.js.Dynamic.literal
 
 @react class DocsGroup extends StatelessComponent {
-  case class Props(name: String, isOpen: Boolean, onRequestOpen: Function0[Unit], children: List[(String, String)])
+  case class Props(name: String, isOpen: Boolean, children: List[(String, String)])
 
   override def render(): ReactElement = {
     div(style := literal(width = "100%"))(
@@ -25,12 +25,12 @@ import scala.scalajs.js.Dynamic.literal
         width = "100%",
         textAlign = "left",
         outline = "none"
-      ), onClick := props.onRequestOpen)(
+      ))(
         div(style := literal(
           color = if (props.isOpen) "rgb(26, 26, 26)" else "rgb(109, 109, 109)"
-        ))(props.name + (if (props.isOpen) "" else "     ▼"))
+        ))(props.name)
       ),
-      ul(style := literal(display = if (props.isOpen) "block" else "none", listStyle = "none", padding = "0"))(
+      ul(style := literal(display = "block", listStyle = "none", padding = "0"))(
         props.children.zipWithIndex.map { case ((name, link), index) =>
           li(key := index.toString, style := literal(marginTop = "5px", marginBottom = "10px"))(
             NavLink(link, Some(literal(fontWeight = 700)), None)(
