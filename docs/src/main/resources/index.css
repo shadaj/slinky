@@ -27,6 +27,11 @@ p {
   line-height: 28.9px
 }
 
+.docs-content li {
+  font-size: 17px;
+  line-height: 25px;
+}
+
 pre {
   margin: 0 0 17px;
 }

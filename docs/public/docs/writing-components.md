@@ -52,6 +52,19 @@ So a full component would look something like this:
 }
 ```
 
+## Props and State Type Definitions
+When defining the `Props` and `State` types, Slinky accepts **any type definition**, so you can define these types as type aliases, case classes, or even regular classes. For example, if we had a component that takes a single `String` as its props, we could define it as:
+
+```scala
+@react class MyComponent extends StatelessComponent {
+  type Props = String
+
+  def render = props
+}
+```
+
+where `props` is the `String` value passed in from a parent.
+
 ## Component Styles
 With Slinky 0.2.0, the `@react` macro annotation was introduced to reduce the boilerplate involved with creating components. Most examples in the documentation will use the macro annotation, but it is always possible to use the no-annotation API with just a few changes.
 

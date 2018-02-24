@@ -80,11 +80,13 @@ object DocsTree {
     "Core Concepts" -> List(
       "Installation" -> "/docs/installation/",
       "Hello World!" -> "/docs/hello-world/",
+      "Why Slinky?" -> "/docs/why-slinky/",
       "The Tag API" -> "/docs/the-tag-api/",
       "Writing Components" -> "/docs/writing-components/",
       "External Components" -> "/docs/external-components/"
     ),
     "Advanced Guides" -> List(
+      "Technical Overview" -> "/docs/technical-overview/",
       "Fragments and Portals" -> "/docs/fragments-and-portals/",
       "Error Boundaries" -> "/docs/error-boundaries/",
       "Scala.js React Interop" -> "/docs/scalajs-react-interop/",
@@ -145,14 +147,6 @@ import DocsTree._
     }
   }
 
-  def requestOpen(group: String): Function0[Unit] = {
-    new Function0[Unit] {
-      override def apply(): Unit = {
-        setState(state.copy(selectedGroup = group))
-      }
-    }
-  }
-
   override def render(): ReactElement = {
     div(className := "article fill-right", style := literal(
       marginTop = "40px",
@@ -203,7 +197,6 @@ import DocsTree._
                 DocsGroup(
                   name = group,
                   isOpen = group == state.selectedGroup,
-                  onRequestOpen = requestOpen(group),
                   children = tree(group)
                 ).withKey(group)
               }

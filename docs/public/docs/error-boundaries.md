@@ -3,15 +3,23 @@ Slinky supports writing error boundary components, a feature introduced in React
 
 To create an error boundary using the `@react` macro annotation, simply define the `componentDidCatch` method:
 ```scala
-@react class ErrorBoundaryComponent extends StatelessComponent {
-  type Props = Unit
+@react class ErrorBoundaryComponent extends Component {
+  type Props = ReactElement
+  case class State(hasError: Boolean)
+
+  def initialState = State(hasError = false)
 
   override def componentDidCatch(error: js.Error, info: ErrorBoundaryInfo): Unit = {
+    setState(State(hasError = true))
     println(s"got an error $error")
   }
 
   override def render(): ReactElement = {
-    ...
+    if (state.hasError) {
+      h1("Something went wrong.")
+    } else {
+      props
+    }
   }
 }
 ```
@@ -19,15 +27,23 @@ To create an error boundary using the `@react` macro annotation, simply define t
 If using the `ComponentWrapper` API, you will need to mix in the `ErrorBoundary` trait to the `Def` class and then implement the `componentDidCatch` method as above.
 ```scala
 object ErrorBoundaryComponent extends StatelessComponentWrapper {
-  type Props = Unit
+  type Props = ReactElement
+  case class State(hasError: Boolean)
 
   class Def(jsProps: js.Object) extends Definition(jsProps) with ErrorBoundary {
+    def initialState = State(hasError = false)
+
     override def componentDidCatch(error: js.Error, info: ErrorBoundaryInfo): Unit = {
+      setState(State(hasError = true))
       println(s"got an error $error")
     }
 
     override def render(): ReactElement = {
-      ...
+      if (state.hasError) {
+        h1("Something went wrong.")
+      } else {
+        props
+      }
     }
   }
 }
