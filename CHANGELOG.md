@@ -1,6 +1,7 @@
 # Changelog
 
 ## vNEXT
++ Improve support for creating custom tags and attributes (see docs for details) [PR #116](https://github.com/shadaj/slinky/pull/116)
 
 ## v0.3.1
 + Fix compilation errors when using an `Option` of a component instance in a tag tree [PR #111](https://github.com/shadaj/slinky/pull/111)

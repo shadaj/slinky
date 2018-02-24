@@ -56,4 +56,22 @@ class TagTest extends FunSuite {
     ReactDOM.render(constructTag(div), divContainer)
     assert(divContainer.innerHTML == """<div class="foo">hello!</div>""")
   }
+
+  test("Can construct a custom tag with existing attributes") {
+    val customTag = new CustomTag("custom-element")
+
+    val divContainer = dom.document.createElement("div")
+    ReactDOM.render(customTag(href := "foo")("hello!"), divContainer)
+    assert(divContainer.innerHTML == """<custom-element href="foo">hello!</custom-element>""")
+  }
+
+  test("Can construct a custom tag with custom attributes") {
+    val customTag = new CustomTag("custom-element")
+    val customClass = new CustomAttribute[String]("class")
+    val customColorAttr = new CustomAttribute[String]("color")
+
+    val divContainer = dom.document.createElement("div")
+    ReactDOM.render(customTag(customClass := "foo", customColorAttr := "bar")("hello!"), divContainer)
+    assert(divContainer.innerHTML == """<custom-element class="foo" color="bar">hello!</custom-element>""")
+  }
 }
