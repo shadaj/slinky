@@ -5,10 +5,22 @@ import slinky.core.facade.{React, ReactElement}
 import scala.language.implicitConversions
 import scala.scalajs.js
 
-trait Tag {
+trait Tag extends Any {
   type tagType <: TagElement
   def apply(mod: AttrPair[tagType], remainingMods: AttrPair[tagType]*): WithAttrs
   def apply(elems: ReactElement*): ReactElement
+}
+
+final class CustomTag(private val name: String) extends AnyVal with Tag {
+  override type tagType = Nothing
+
+  @inline override def apply(mod: AttrPair[Nothing], remainingMods: AttrPair[Nothing]*): WithAttrs = {
+    new WithAttrs(name, js.Dictionary((mod +: remainingMods).map(m => m.name -> m.value): _*))
+  }
+
+  @inline override def apply(elems: ReactElement*): ReactElement = {
+    React.createElement(name, js.Dictionary.empty[js.Any], elems: _*)
+  }
 }
 
 trait Attr {
@@ -18,7 +30,7 @@ trait Attr {
 
 abstract class TagElement
 
-final class CustomAttribute[T](private val name: String) {
+final class CustomAttribute[T](private val name: String) extends AnyVal {
   @inline def :=(v: T) = new AttrPair[Any](name, v.asInstanceOf[js.Any])
 }
 
