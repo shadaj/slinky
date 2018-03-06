@@ -11,7 +11,7 @@ import org.scalajs.dom.MouseEvent
 
 import scala.scalajs.js.annotation.ScalaJSDefined
 
-@ScalaJSDefined class InnerClassCustom extends js.Object {
+class InnerClassCustom extends js.Object {
   val customTag = new CustomTag("custom-element")
   val customClass = new CustomAttribute[String]("class")
   val customColorAttr = new CustomAttribute[String]("color")

@@ -11,7 +11,7 @@ trait Tag extends Any {
   def apply(elems: ReactElement*): ReactElement
 }
 
-final class CustomTag(private val name: String) extends AnyVal with Tag {
+final class CustomTag(private val name: String) extends Tag {
   override type tagType = Nothing
 
   @inline override def apply(mod: AttrPair[Nothing], remainingMods: AttrPair[Nothing]*): WithAttrs = {
@@ -30,7 +30,7 @@ trait Attr {
 
 abstract class TagElement
 
-final class CustomAttribute[T](private val name: String) extends AnyVal {
+final class CustomAttribute[T](private val name: String) {
   @inline def :=(v: T) = new AttrPair[Any](name, v.asInstanceOf[js.Any])
 }
 
