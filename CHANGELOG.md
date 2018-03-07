@@ -1,6 +1,7 @@
 # Changelog
 
 ## vNEXT
++ Fix exceptions when declaring custom tags and attributes in a component class [PR #118](https://github.com/shadaj/slinky/pull/118)
 
 ## v0.3.2
 + Improve support for creating custom tags and attributes (see docs for details) [PR #116](https://github.com/shadaj/slinky/pull/116)
