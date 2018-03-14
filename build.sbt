@@ -10,6 +10,8 @@ lazy val slinky = project.in(file(".")).aggregate(
   readWrite,
   core,
   web,
+  testRenderer,
+  native,
   hot,
   scalajsReactInterop
 ).settings(publishArtifact := false)
@@ -64,6 +66,10 @@ lazy val web = project.settings(
     files.map { f => (f, f.relativeTo(base).get.getPath) }
   }
 ).dependsOn(core)
+
+lazy val testRenderer = project.settings(macroAnnotationSettings).dependsOn(core)
+
+lazy val native = project.settings(macroAnnotationSettings).dependsOn(core, testRenderer % Test)
 
 lazy val hot = project.settings(macroAnnotationSettings).dependsOn(core)
 
