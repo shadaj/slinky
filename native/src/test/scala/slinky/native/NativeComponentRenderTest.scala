@@ -32,4 +32,14 @@ class NativeComponentRenderTest extends FunSuite {
       )
     ).toJSON()))
   }
+
+  test("Can render an image component") {
+    assert(!js.isUndefined(TestRenderer.create(
+      Image(
+        source = ImageURISource(
+          uri = ""
+        )
+      )
+    )))
+  }
 }

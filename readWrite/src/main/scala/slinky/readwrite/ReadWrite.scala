@@ -154,9 +154,20 @@ object Writer {
   implicit def undefOrWriter[T](implicit writer: Writer[T]): Writer[js.UndefOr[T]] =
     _.map(v => writer.write(v)).getOrElse(js.undefined.asInstanceOf[js.Object])
 
-  implicit def unionWriter[A: ClassTag, B: ClassTag](implicit aWriter: Writer[A], bWriter: Writer[B]): Writer[A | B] = {
-    case a: A => aWriter.write(a)
-    case b: B => bWriter.write(b)
+  implicit def unionWriter[A: ClassTag, B: ClassTag](implicit aWriter: Writer[A], bWriter: Writer[B]): Writer[A | B] = { v =>
+    try {
+      aWriter.write(v.asInstanceOf[A])
+    } catch {
+      case e: Throwable =>
+        try {
+          bWriter.write(v.asInstanceOf[B])
+        } catch {
+          case e2: Throwable =>
+            println("Neither writer for the union worked.")
+            e.printStackTrace()
+            throw e2
+        }
+    }
   }
 
   implicit def optionWriter[T](implicit writer: Writer[T]): Writer[Option[T]] =
