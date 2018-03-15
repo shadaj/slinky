@@ -160,6 +160,14 @@ class react extends scala.annotation.StaticAnnotation {
         val objStats = createExternalBody(obj) ++ obj.templ.stats.getOrElse(Nil)
         obj.copy(templ = obj.templ.copy(stats = Some(objStats)))
 
+      case obj@Defn.Object(_, _, Template(_, Seq(Term.Apply(Term.ApplyType(Ctor.Ref.Name("ExternalComponentWithRefType"), _), _)), _, _)) =>
+        val objStats = createExternalBody(obj) ++ obj.templ.stats.getOrElse(Nil)
+        obj.copy(templ = obj.templ.copy(stats = Some(objStats)))
+
+      case obj@Defn.Object(_, _, Template(_, Seq(Term.Apply(Term.ApplyType(Ctor.Ref.Name("ExternalComponentWithAttributesWithRefType"), _), _)), _, _)) =>
+        val objStats = createExternalBody(obj) ++ obj.templ.stats.getOrElse(Nil)
+        obj.copy(templ = obj.templ.copy(stats = Some(objStats)))
+
       case Defn.Object(_, _, Template(_, Seq(Term.Apply(Ctor.Ref.Name("ExternalComponentWithAttributes"), _)), _, _)) =>
         abort("ExternalComponentWithAttributes must take a type argument of the target tag type but found none")
 

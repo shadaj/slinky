@@ -1,6 +1,12 @@
 # Changelog
 
 ## vNEXT
+### Highlights
++ Slinky now has support for **React Native**, available in the `slinky-native` module.
+
+### Details
++ The `@react` macro now produces nicer APIs for external components that have default values for all props parameters.
++ Add more variations for `ExternalComponent` that support providing a statically-typed interface for the component instance: `ExternalComponentWithRefType`, `ExternalComponentWithAttributesWithRefType`, `ExternalComponentNoPropsWithRefType`, `ExternalComponentNoPropsWithAttributesWithRefType`
 
 ## v0.3.2
 + Improve support for creating custom tags and attributes (see docs for details) [PR #116](https://github.com/shadaj/slinky/pull/116)
