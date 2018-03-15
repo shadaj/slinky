@@ -7,6 +7,7 @@
 ### Details
 + The `@react` macro now produces nicer APIs for external components that have default values for all props parameters.
 + Add more variations for `ExternalComponent` that support providing a statically-typed interface for the component instance: `ExternalComponentWithRefType`, `ExternalComponentWithAttributesWithRefType`, `ExternalComponentNoPropsWithRefType`, `ExternalComponentNoPropsWithAttributesWithRefType`
++ Fix exceptions when declaring custom tags and attributes in a component class [PR #118](https://github.com/shadaj/slinky/pull/118)
 
 ## v0.3.2
 + Improve support for creating custom tags and attributes (see docs for details) [PR #116](https://github.com/shadaj/slinky/pull/116)

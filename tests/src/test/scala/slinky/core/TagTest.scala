@@ -9,6 +9,20 @@ import scala.scalajs.js
 import org.scalajs.dom
 import org.scalajs.dom.MouseEvent
 
+import scala.scalajs.js.annotation.ScalaJSDefined
+
+class InnerClassCustom extends js.Object {
+  val customTag = new CustomTag("custom-element")
+  val customClass = new CustomAttribute[String]("class")
+  val customColorAttr = new CustomAttribute[String]("color")
+
+  def run(): Unit = {
+    val divContainer = dom.document.createElement("div")
+    ReactDOM.render(customTag(customClass := "foo", customColorAttr := "bar")("hello!"), divContainer)
+    assert(divContainer.innerHTML == """<custom-element class="foo" color="bar">hello!</custom-element>""")
+  }
+}
+
 class TagTest extends FunSuite {
   test("Fails compilation when an incompatible attr is provided") {
     assertDoesNotCompile("div(width := 1)")
@@ -73,5 +87,9 @@ class TagTest extends FunSuite {
     val divContainer = dom.document.createElement("div")
     ReactDOM.render(customTag(customClass := "foo", customColorAttr := "bar")("hello!"), divContainer)
     assert(divContainer.innerHTML == """<custom-element class="foo" color="bar">hello!</custom-element>""")
+  }
+
+  test("Can construct a custom tag with custom attributes inside another class") {
+    (new InnerClassCustom).run()
   }
 }
