@@ -11,15 +11,13 @@ class NativeComponentRenderTest extends FunSuite {
       Button(
         title = "foo",
         onPress = () => {}
-      )(
-        "Hello!"
-      )
+      )("Hello!")
     ).toJSON()))
   }
 
   test("Can render a text component") {
     assert(!js.isUndefined(TestRenderer.create(
-      Text()(
+      Text(
         "Hello!"
       )
     ).toJSON()))
@@ -27,8 +25,8 @@ class NativeComponentRenderTest extends FunSuite {
 
   test("Can render a view component with children") {
     assert(!js.isUndefined(TestRenderer.create(
-      View()(
-        View()()
+      View(
+        View()
       )
     ).toJSON()))
   }
