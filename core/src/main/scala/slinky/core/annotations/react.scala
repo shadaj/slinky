@@ -95,10 +95,10 @@ class react extends scala.annotation.StaticAnnotation {
           val applyTypes = tparams.map(t => Type.Name(t.name.value))
           val applyValues = caseClassparamss.map(ps => ps.map(p => Term.Name(p.name.value)))
           val caseClassApply = if (applyTypes.isEmpty) {
-            q"""def apply[..$tparams](...$caseClassparamss): slinky.core.BuildingComponent[Element] =
+            q"""def apply[..$tparams](...$caseClassparamss): slinky.core.BuildingComponent[Element, RefType] =
                   this.apply(${Term.Name(tname.value)}.apply(...$applyValues))"""
           } else {
-            q"""def apply[..$tparams](...$caseClassparamss): slinky.core.BuildingComponent[Element] =
+            q"""def apply[..$tparams](...$caseClassparamss): slinky.core.BuildingComponent[Element, RefType] =
                   this.apply(${Term.Name(tname.value)}.apply[..$applyTypes](...$applyValues))"""
           }
 
@@ -150,7 +150,7 @@ class react extends scala.annotation.StaticAnnotation {
         abort("ExternalComponentWithAttributes must take a type argument of the target tag type but found none")
 
       case _ =>
-        abort(s"@react must annotate a class that extends Component or an object that extends ExternalComponent(WithAttributes), got ${defn.structure}")
+        abort(s"@react must annotate a class that extends Component or an object that extends ExternalComponent(WithAttributes)(WithRefType), got ${defn.structure}")
     }
   }
 }

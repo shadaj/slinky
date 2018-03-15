@@ -42,4 +42,10 @@ class NativeComponentRenderTest extends FunSuite {
       )
     )))
   }
+
+  test("Can request prefetch of an image") {
+    // note: this doesn't actually test that the image is prefetched, since
+    // the mocking library replaces the method with a no-op
+    Image.prefetch("bar")
+  }
 }
