@@ -1,8 +1,9 @@
 # Changelog
 
 ## vNEXT
-### Highlights
-+ Slinky now has support for **React Native**, available in the `slinky-native` module.
+### Highlights :tada:
++ **Slinky now has support for React Native**, available in the `slinky-native` module. Try it out with [create-react-native-scala-app](https://github.com/shadaj/create-react-native-scala-app.g8)
++ Want to write fancier unit tests for your Slinky app? Slinky now comes with an interface for `react-test-renderer`, available under the `slinky-testrenderer` module.
 
 ### Details
 + The `@react` macro now produces nicer APIs for external components that have default values for all props parameters.
