@@ -68,4 +68,26 @@ class NativeComponentRenderTest extends FunSuite {
 
     assert(clearedValue)
   }
+
+  test("Can render a ScrollView with children") {
+    assert(!js.isUndefined(TestRenderer.create(
+      ScrollView(
+        TextInput(value = "hello")
+      )
+    )))
+  }
+
+  test("Can call scrollTo() on a scroll view instance") {
+    var scrolled = false
+    assert(!js.isUndefined(TestRenderer.create(
+      ScrollView.withRef { i =>
+        i.scrollTo(ScrollTarget(x = 0, y = 50, animated = true))
+        scrolled = true
+      }(
+        TextInput(value = "hello")
+      )
+    )))
+
+    assert(scrolled)
+  }
 }
