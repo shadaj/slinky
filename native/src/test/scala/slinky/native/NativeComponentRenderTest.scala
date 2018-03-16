@@ -90,4 +90,13 @@ class NativeComponentRenderTest extends FunSuite {
 
     assert(scrolled)
   }
+
+  test("Can render a picker with items") {
+    assert(!js.isUndefined(TestRenderer.create(
+      Picker(
+        Picker.Item(label = "abc", value = "abc"),
+        Picker.Item(label = "abc2", value = "abc2")
+      )
+    )))
+  }
 }
