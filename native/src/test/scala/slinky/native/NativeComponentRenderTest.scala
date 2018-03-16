@@ -46,4 +46,26 @@ class NativeComponentRenderTest extends FunSuite {
     // the mocking library replaces the method with a no-op
     Image.prefetch("bar")
   }
+
+  test("Can render a text input") {
+    assert(!js.isUndefined(TestRenderer.create(
+      TextInput(
+        value = "hello"
+      )
+    )))
+  }
+
+  test("Can call clear() on a text input instance") {
+    var clearedValue = false
+    assert(!js.isUndefined(TestRenderer.create(
+      TextInput(
+        value = "hello"
+      ).withRef { i =>
+        i.clear()
+        clearedValue = true
+      }
+    )))
+
+    assert(clearedValue)
+  }
 }
