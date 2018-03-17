@@ -99,4 +99,14 @@ class NativeComponentRenderTest extends FunSuite {
       )
     )))
   }
+
+  /* react-native-mock-render does not support Slider yet
+  test("Can render a slider") {
+    assert(!js.isUndefined(TestRenderer.create(
+      Slider(
+        value = 0
+      )
+    )))
+  }
+  */
 }
