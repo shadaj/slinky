@@ -14,8 +14,9 @@ case class ItemLayout(length: Int, offset: Int, index: Int)
 case class OnEndReachedInfo(distanceFromEnd: Int)
 case class OnEndReachedEvent(info: OnEndReachedInfo)
 
-case class ViewableItemsChangedInfo(viewableItems: Seq[js.Object], changed: Seq[js.Object])
-case class ViewableItemsChangedEvent(info: ViewableItemsChangedInfo)
+case class ViewToken[T](item: T, key: String, index: js.UndefOr[Int], isViewable: Boolean, section: js.UndefOr[Section[T]])
+case class ViewableItemsChangedInfo[T](viewableItems: Seq[js.Object], changed: Seq[js.Object])
+case class ViewableItemsChangedEvent[T](info: ViewableItemsChangedInfo[T])
 
 case class ScrollToEndParams(animated: js.UndefOr[Boolean] = js.undefined)
 case class ScrollToIndexParams(index: Int,
@@ -46,36 +47,30 @@ trait FlatListInstance[T] extends js.Object {
   def flashScrollIndicators(): Unit = js.native
 }
 
-case class FlatListProps[T](renderItem: (T, Int, Separators) => Unit,
-                            data: Seq[T],
-                            ItemSeparatorComponent: js.UndefOr[ReactComponentClass] = js.undefined,
-                            ListEmptyComponent: js.UndefOr[ReactComponentClass | (() => ReactElement) | ReactElement] = js.undefined,
-                            ListFooterComponent: js.UndefOr[ReactComponentClass | (() => ReactElement) | ReactElement] = js.undefined,
-                            ListHeaderComponent: js.UndefOr[ReactComponentClass | (() => ReactElement) | ReactElement] = js.undefined,
-                            columnWrapperStyle: js.UndefOr[js.Object] = js.undefined,
-                            extraData: js.UndefOr[Any] = js.undefined,
-                            getItemLayout: js.UndefOr[(js.Object, Int) => ItemLayout] = js.undefined,
-                            horizontal: js.UndefOr[Boolean] = js.undefined,
-                            initialNumToRender: js.UndefOr[Int] = js.undefined,
-                            initialScrollIndex: js.UndefOr[Int] = js.undefined,
-                            inverted: js.UndefOr[Boolean] = js.undefined,
-                            keyExtractor: js.UndefOr[(T, Int) => String] = js.undefined,
-                            numColumns: js.UndefOr[Int] = js.undefined,
-                            onEndReached: js.UndefOr[OnEndReachedEvent => Unit] = js.undefined,
-                            onEndReachedThreshold: js.UndefOr[Double] = js.undefined,
-                            onRefresh: js.UndefOr[() => Unit] = js.undefined,
-                            onViewableItemsChanged: js.UndefOr[ViewableItemsChangedEvent => Unit] = js.undefined,
-                            progressViewOffset: js.UndefOr[Double] = js.undefined,
-                            legacyImplementation: js.UndefOr[Boolean] = js.undefined,
-                            refreshing: js.UndefOr[Boolean] = js.undefined,
-                            removeClippedSubviews: js.UndefOr[Boolean] = js.undefined)
-
-object FlatListProps {
-  val anyWriter = implicitly[Writer[FlatListProps[Any]]].asInstanceOf[ExternalPropsWriterProvider]
-}
-
-object FlatList extends ExternalComponentWithRefType[FlatListInstance[js.Object]]()(FlatListProps.anyWriter) {
-  type Props = FlatListProps[Any]
+object FlatList extends ExternalComponentWithRefType[FlatListInstance[Any]] {
+  case class Props(renderItem: (Any, Int, Separators) => ReactElement,
+                   data: Seq[Any],
+                   ItemSeparatorComponent: js.UndefOr[ReactComponentClass] = js.undefined,
+                   ListEmptyComponent: js.UndefOr[ReactComponentClass | (() => ReactElement) | ReactElement] = js.undefined,
+                   ListFooterComponent: js.UndefOr[ReactComponentClass | (() => ReactElement) | ReactElement] = js.undefined,
+                   ListHeaderComponent: js.UndefOr[ReactComponentClass | (() => ReactElement) | ReactElement] = js.undefined,
+                   columnWrapperStyle: js.UndefOr[js.Object] = js.undefined,
+                   extraData: js.UndefOr[Any] = js.undefined,
+                   getItemLayout: js.UndefOr[(js.Object, Int) => ItemLayout] = js.undefined,
+                   horizontal: js.UndefOr[Boolean] = js.undefined,
+                   initialNumToRender: js.UndefOr[Int] = js.undefined,
+                   initialScrollIndex: js.UndefOr[Int] = js.undefined,
+                   inverted: js.UndefOr[Boolean] = js.undefined,
+                   keyExtractor: js.UndefOr[(Any, Int) => String] = js.undefined,
+                   numColumns: js.UndefOr[Int] = js.undefined,
+                   onEndReached: js.UndefOr[OnEndReachedEvent => Unit] = js.undefined,
+                   onEndReachedThreshold: js.UndefOr[Double] = js.undefined,
+                   onRefresh: js.UndefOr[() => Unit] = js.undefined,
+                   onViewableItemsChanged: js.UndefOr[ViewableItemsChangedEvent[Any] => Unit] = js.undefined,
+                   progressViewOffset: js.UndefOr[Double] = js.undefined,
+                   legacyImplementation: js.UndefOr[Boolean] = js.undefined,
+                   refreshing: js.UndefOr[Boolean] = js.undefined,
+                   removeClippedSubviews: js.UndefOr[Boolean] = js.undefined)
 
   @js.native
   @JSImport("react-native", "FlatList")
@@ -83,8 +78,10 @@ object FlatList extends ExternalComponentWithRefType[FlatListInstance[js.Object]
 
   override val component = Component
 
+  private val writer = implicitly[Writer[Props]]
+
   def apply[T](data: Seq[T],
-               renderItem: (T, Int, Separators) => Unit,
+               renderItem: (T, Int, Separators) => ReactElement,
                ItemSeparatorComponent: js.UndefOr[ReactComponentClass] = js.undefined,
                ListEmptyComponent: js.UndefOr[ReactComponentClass | (() => ReactElement) | ReactElement] = js.undefined,
                ListFooterComponent: js.UndefOr[ReactComponentClass | (() => ReactElement) | ReactElement] = js.undefined,
@@ -101,14 +98,14 @@ object FlatList extends ExternalComponentWithRefType[FlatListInstance[js.Object]
                onEndReached: js.UndefOr[OnEndReachedEvent => Unit] = js.undefined,
                onEndReachedThreshold: js.UndefOr[Double] = js.undefined,
                onRefresh: js.UndefOr[() => Unit] = js.undefined,
-               onViewableItemsChanged: js.UndefOr[ViewableItemsChangedEvent => Unit] = js.undefined,
+               onViewableItemsChanged: js.UndefOr[ViewableItemsChangedEvent[T] => Unit] = js.undefined,
                progressViewOffset: js.UndefOr[Double] = js.undefined,
                legacyImplementation: js.UndefOr[Boolean] = js.undefined,
                refreshing: js.UndefOr[Boolean] = js.undefined,
                removeClippedSubviews: js.UndefOr[Boolean] = js.undefined): BuildingComponent[FlatListInstance[T], js.Object] = {
     new BuildingComponent(
       component,
-      FlatListProps.anyWriter.asInstanceOf[Writer[Props]].write(FlatListProps(
+      writer.write(Props(
         renderItem = (o, i, s) => renderItem(o.asInstanceOf[T], i, s),
         data = data,
         ItemSeparatorComponent = ItemSeparatorComponent,
@@ -127,7 +124,7 @@ object FlatList extends ExternalComponentWithRefType[FlatListInstance[js.Object]
         onEndReached = onEndReached,
         onEndReachedThreshold = onEndReachedThreshold,
         onRefresh = onRefresh,
-        onViewableItemsChanged = onViewableItemsChanged,
+        onViewableItemsChanged = onViewableItemsChanged.map(f => (e) => f(e.asInstanceOf[ViewableItemsChangedEvent[T]])),
         progressViewOffset = progressViewOffset,
         legacyImplementation = legacyImplementation,
         refreshing = refreshing,

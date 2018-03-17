@@ -130,4 +130,21 @@ class NativeComponentRenderTest extends FunSuite {
     )))
   }
   */
+
+  /* react-native-mock-render does not support SectionList yet
+  test("Can render a sectionlist") {
+    assert(!js.isUndefined(TestRenderer.create(
+      SectionList(
+        sections = Seq(
+          Section(
+            data = Seq(1, 2, 3),
+            renderItem = (d: Int, index: Int, _: Separators) => {
+              Text(d.toString)
+            }
+          )
+        )
+      )
+    )))
+  }
+  */
 }
