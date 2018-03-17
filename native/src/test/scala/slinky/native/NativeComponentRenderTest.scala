@@ -109,4 +109,12 @@ class NativeComponentRenderTest extends FunSuite {
     )))
   }
   */
+
+  test("Can render a switch") {
+    assert(!js.isUndefined(TestRenderer.create(
+      Switch(
+        value = true
+      )
+    )))
+  }
 }
