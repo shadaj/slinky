@@ -373,7 +373,7 @@ object Magnolia {
           }"""
           )
         }
-      } else {
+      } else if (!typeSymbol.isParameter) {
         c.prefix.tree.tpe.baseClasses
           .find { cls =>
             cls.asType.toType.decl(TermName("fallback")) != NoSymbol
@@ -384,6 +384,8 @@ object Magnolia {
             q"""${c.prefix}.fallback[$genericType]"""
           )
         }
+      } else {
+        None
       }
 
       result.map {

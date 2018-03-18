@@ -31,6 +31,8 @@ case class ScrollToItemParams[T](item: T,
 case class ScrollToOffsetParams(offset: Int,
                                 animated: js.UndefOr[Boolean] = js.undefined)
 
+case class RenderItemInfo[T](item: T, index: Int, separators: Separators)
+
 @js.native
 trait FlatListInstance[T] extends js.Object {
   def scrollToEnd(): Unit = js.native
@@ -48,25 +50,25 @@ trait FlatListInstance[T] extends js.Object {
 }
 
 object FlatList extends ExternalComponentWithRefType[FlatListInstance[Any]] {
-  case class Props(renderItem: (Any, Int, Separators) => ReactElement,
-                   data: Seq[Any],
+  case class Props(data: Seq[Object],
+                   renderItem: RenderItemInfo[Object] => ReactElement,
                    ItemSeparatorComponent: js.UndefOr[ReactComponentClass] = js.undefined,
                    ListEmptyComponent: js.UndefOr[ReactComponentClass | (() => ReactElement) | ReactElement] = js.undefined,
                    ListFooterComponent: js.UndefOr[ReactComponentClass | (() => ReactElement) | ReactElement] = js.undefined,
                    ListHeaderComponent: js.UndefOr[ReactComponentClass | (() => ReactElement) | ReactElement] = js.undefined,
                    columnWrapperStyle: js.UndefOr[js.Object] = js.undefined,
-                   extraData: js.UndefOr[Any] = js.undefined,
+                   extraData: js.UndefOr[Object] = js.undefined,
                    getItemLayout: js.UndefOr[(js.Object, Int) => ItemLayout] = js.undefined,
                    horizontal: js.UndefOr[Boolean] = js.undefined,
                    initialNumToRender: js.UndefOr[Int] = js.undefined,
                    initialScrollIndex: js.UndefOr[Int] = js.undefined,
                    inverted: js.UndefOr[Boolean] = js.undefined,
-                   keyExtractor: js.UndefOr[(Any, Int) => String] = js.undefined,
+                   keyExtractor: js.UndefOr[(Object, Int) => String] = js.undefined,
                    numColumns: js.UndefOr[Int] = js.undefined,
                    onEndReached: js.UndefOr[OnEndReachedEvent => Unit] = js.undefined,
                    onEndReachedThreshold: js.UndefOr[Double] = js.undefined,
                    onRefresh: js.UndefOr[() => Unit] = js.undefined,
-                   onViewableItemsChanged: js.UndefOr[ViewableItemsChangedEvent[Any] => Unit] = js.undefined,
+                   onViewableItemsChanged: js.UndefOr[ViewableItemsChangedEvent[Object] => Unit] = js.undefined,
                    progressViewOffset: js.UndefOr[Double] = js.undefined,
                    legacyImplementation: js.UndefOr[Boolean] = js.undefined,
                    refreshing: js.UndefOr[Boolean] = js.undefined,
@@ -81,7 +83,7 @@ object FlatList extends ExternalComponentWithRefType[FlatListInstance[Any]] {
   private val writer = implicitly[Writer[Props]]
 
   def apply[T](data: Seq[T],
-               renderItem: (T, Int, Separators) => ReactElement,
+               renderItem: RenderItemInfo[T] => ReactElement,
                ItemSeparatorComponent: js.UndefOr[ReactComponentClass] = js.undefined,
                ListEmptyComponent: js.UndefOr[ReactComponentClass | (() => ReactElement) | ReactElement] = js.undefined,
                ListFooterComponent: js.UndefOr[ReactComponentClass | (() => ReactElement) | ReactElement] = js.undefined,
@@ -106,8 +108,8 @@ object FlatList extends ExternalComponentWithRefType[FlatListInstance[Any]] {
     new BuildingComponent(
       component,
       writer.write(Props(
-        renderItem = (o, i, s) => renderItem(o.asInstanceOf[T], i, s),
-        data = data,
+        data = data.asInstanceOf[Seq[Object]],
+        renderItem = o => renderItem(o.asInstanceOf[RenderItemInfo[T]]),
         ItemSeparatorComponent = ItemSeparatorComponent,
         ListEmptyComponent = ListEmptyComponent,
         ListFooterComponent = ListFooterComponent,
