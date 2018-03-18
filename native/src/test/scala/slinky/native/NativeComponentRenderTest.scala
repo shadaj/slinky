@@ -147,4 +147,10 @@ class NativeComponentRenderTest extends FunSuite {
     )))
   }
   */
+
+  test("Can render an activity indicator") {
+    assert(!js.isUndefined(TestRenderer.create(
+      ActivityIndicator()
+    )))
+  }
 }
