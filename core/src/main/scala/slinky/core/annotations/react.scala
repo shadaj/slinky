@@ -16,10 +16,10 @@ class react extends scala.annotation.StaticAnnotation {
             val applyTypes = tparams.map(t => Type.Name(t.name.value))
             val applyValues = caseClassparamss.map(ps => ps.map(p => Term.Name(p.name.value)))
             val caseClassApply = if (applyTypes.isEmpty) {
-              q"""def apply[..$tparams](...$caseClassparamss): slinky.core.KeyAndRefAddingStage[Def] =
+              q"""def apply[..$tparams](...$caseClassparamss): _root_.slinky.core.KeyAndRefAddingStage[Def] =
                     this.apply(${Term.Name("Props")}.apply(...$applyValues))"""
             } else {
-              q"""def apply[..$tparams](...$caseClassparamss): slinky.core.KeyAndRefAddingStage[Def] =
+              q"""def apply[..$tparams](...$caseClassparamss): _root_.slinky.core.KeyAndRefAddingStage[Def] =
                     this.apply(${Term.Name("Props")}.apply[..$applyTypes](...$applyValues))"""
             }
 
@@ -61,7 +61,7 @@ class react extends scala.annotation.StaticAnnotation {
 
       val newClazz =
         if (isErrorBoundary) {
-          q"""class ${clazz.name}(jsProps: scala.scalajs.js.Object) extends slinky.core.DefinitionBase[$propsSelect, $stateSelect](jsProps) with slinky.core.ErrorBoundary {
+          q"""class ${clazz.name}(jsProps: _root_.scala.scalajs.js.Object) extends _root_.slinky.core.DefinitionBase[$propsSelect, $stateSelect](jsProps) with slinky.core.ErrorBoundary {
                 $propsAndStateImport
                 null.asInstanceOf[${Type.Name("Props")}]
                 null.asInstanceOf[${Type.Name("State")}]
@@ -69,7 +69,7 @@ class react extends scala.annotation.StaticAnnotation {
                 ..${clazz.templ.stats.getOrElse(Nil).filterNot(s => s == propsDefinition || s == stateDefinition.orNull)}
               }"""
         } else {
-          q"""class ${clazz.name}(jsProps: scala.scalajs.js.Object) extends slinky.core.DefinitionBase[$propsSelect, $stateSelect](jsProps) {
+          q"""class ${clazz.name}(jsProps: _root_.scala.scalajs.js.Object) extends _root_.slinky.core.DefinitionBase[$propsSelect, $stateSelect](jsProps) {
                 $propsAndStateImport
                 null.asInstanceOf[${Type.Name("Props")}]
                 null.asInstanceOf[${Type.Name("State")}]
@@ -95,14 +95,28 @@ class react extends scala.annotation.StaticAnnotation {
           val applyTypes = tparams.map(t => Type.Name(t.name.value))
           val applyValues = caseClassparamss.map(ps => ps.map(p => Term.Name(p.name.value)))
           val caseClassApply = if (applyTypes.isEmpty) {
-            q"""def apply[..$tparams](...$caseClassparamss): slinky.core.BuildingComponent[Element] =
+            q"""def apply[..$tparams](...$caseClassparamss): _root_.slinky.core.BuildingComponent[Element, RefType] =
                   this.apply(${Term.Name(tname.value)}.apply(...$applyValues))"""
           } else {
-            q"""def apply[..$tparams](...$caseClassparamss): slinky.core.BuildingComponent[Element] =
+            q"""def apply[..$tparams](...$caseClassparamss): _root_.slinky.core.BuildingComponent[Element, RefType] =
                   this.apply(${Term.Name(tname.value)}.apply[..$applyTypes](...$applyValues))"""
           }
 
-          Seq(caseClassApply)
+          if (caseClassparamss.flatten.forall(_.default.isDefined) || caseClassparamss.flatten.isEmpty) {
+            Seq(
+              caseClassApply,
+              q"""def apply(mod: _root_.slinky.core.AttrPair[Element], tagMods: _root_.slinky.core.AttrPair[Element]*): _root_.slinky.core.BuildingComponent[Element, RefType] = {
+                    _root_.slinky.core.BuildingComponent[Element, RefType](component, _root_.scala.scalajs.js.Dynamic.literal(), mods = (mod +: tagMods).asInstanceOf[_root_.scala.collection.immutable.Seq[_root_.slinky.core.AttrPair[Element]]])
+                  }""",
+              q"""def withKey(key: String): _root_.slinky.core.BuildingComponent[Element, RefType] = _root_.slinky.core.BuildingComponent(component, _root_.scala.scalajs.js.Dynamic.literal(), key = key)""",
+              q"""def withRef(ref: RefType => Unit): _root_.slinky.core.BuildingComponent[Element, RefType] = _root_.slinky.core.BuildingComponent(component, _root_.scala.scalajs.js.Dynamic.literal(), ref = ref)""",
+              q"""def apply(children: _root_.slinky.core.facade.ReactElement*): _root_.slinky.core.facade.ReactElement = {
+                    _root_.slinky.core.facade.React.createElement(component, _root_.scala.scalajs.js.Dynamic.literal().asInstanceOf[_root_.scala.scalajs.js.Dictionary[js.Any]], children: _*)
+                  }"""
+            )
+          } else {
+            Seq(caseClassApply)
+          }
         case _ => Seq.empty
       }
     }
@@ -130,7 +144,7 @@ class react extends scala.annotation.StaticAnnotation {
       // companion object does not exists
       case cls @ Defn.Class(_, name, _, ctor, Template(_, Seq(Term.Apply(Ctor.Ref.Name(sc), _)), _, _)) if sc == "Component" || sc == "StatelessComponent" =>
         val (newCls, companionStats) = createBody(cls, name, ctor.paramss, sc == "StatelessComponent")
-        val companion = q"object ${Term.Name(name.value)} extends slinky.core.ComponentWrapper { ..$companionStats }"
+        val companion = q"object ${Term.Name(name.value)} extends _root_.slinky.core.ComponentWrapper { ..$companionStats }"
 
         if (isIntellij) {
           Term.Block(Seq(q"val ${Pat.Var.Term(Term.Name("_" + cls.name.value))} = null", companion))
@@ -146,11 +160,19 @@ class react extends scala.annotation.StaticAnnotation {
         val objStats = createExternalBody(obj) ++ obj.templ.stats.getOrElse(Nil)
         obj.copy(templ = obj.templ.copy(stats = Some(objStats)))
 
+      case obj@Defn.Object(_, _, Template(_, Seq(Term.Apply(Term.ApplyType(Ctor.Ref.Name("ExternalComponentWithRefType"), _), _)), _, _)) =>
+        val objStats = createExternalBody(obj) ++ obj.templ.stats.getOrElse(Nil)
+        obj.copy(templ = obj.templ.copy(stats = Some(objStats)))
+
+      case obj@Defn.Object(_, _, Template(_, Seq(Term.Apply(Term.ApplyType(Ctor.Ref.Name("ExternalComponentWithAttributesWithRefType"), _), _)), _, _)) =>
+        val objStats = createExternalBody(obj) ++ obj.templ.stats.getOrElse(Nil)
+        obj.copy(templ = obj.templ.copy(stats = Some(objStats)))
+
       case Defn.Object(_, _, Template(_, Seq(Term.Apply(Ctor.Ref.Name("ExternalComponentWithAttributes"), _)), _, _)) =>
         abort("ExternalComponentWithAttributes must take a type argument of the target tag type but found none")
 
       case _ =>
-        abort(s"@react must annotate a class that extends Component or an object that extends ExternalComponent(WithAttributes), got ${defn.structure}")
+        abort(s"@react must annotate a class that extends Component or an object that extends ExternalComponent(WithAttributes)(WithRefType), got ${defn.structure}")
     }
   }
 }
