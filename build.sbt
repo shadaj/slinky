@@ -10,6 +10,7 @@ lazy val slinky = project.in(file(".")).aggregate(
   web,
   testRenderer,
   native,
+  vr,
   hot,
   scalajsReactInterop
 ).settings(publishArtifact := false)
@@ -68,6 +69,8 @@ lazy val web = project.settings(
 lazy val testRenderer = project.settings(macroAnnotationSettings).dependsOn(core)
 
 lazy val native = project.settings(macroAnnotationSettings).dependsOn(core, testRenderer % Test)
+
+lazy val vr = project.settings(macroAnnotationSettings).dependsOn(core, testRenderer % Test)
 
 lazy val hot = project.settings(macroAnnotationSettings).dependsOn(core)
 
