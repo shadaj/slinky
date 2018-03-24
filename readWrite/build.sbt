@@ -174,7 +174,7 @@ sourceGenerators in Compile += Def.task {
        |
        |trait Reader[P] {
        |  def read(o: js.Object): P = {
-       |    if (js.typeOf(o) == "object" && o.hasOwnProperty("__")) {
+       |    if (js.typeOf(o) == "object" && o != null && !js.isUndefined(o.asInstanceOf[js.Dynamic].__)) {
        |      o.asInstanceOf[js.Dynamic].__.asInstanceOf[P]
        |    } else {
        |      forceRead(o)
@@ -224,7 +224,7 @@ sourceGenerators in Compile += Def.task {
        |  }
        |
        |  implicit def optionReader[T](implicit reader: Reader[T]): Reader[Option[T]] = s => {
-       |    if (js.isUndefined(s)) {
+       |    if (js.isUndefined(s) || s == null) {
        |      None
        |    } else {
        |      Some(reader.read(s))
@@ -263,8 +263,7 @@ sourceGenerators in Compile += Def.task {
        |  }
        |
        |  def fallback[T]: Reader[T] = v => {
-       |    js.Dynamic.global.bogo = v
-       |    if (!v.hasOwnProperty("__")) {
+       |    if (js.isUndefined(v.asInstanceOf[js.Dynamic].__)) {
        |      throw new IllegalArgumentException("Tried to read opaque Scala.js type that was not written by opaque writer")
        |    } else {
        |      v.asInstanceOf[js.Dynamic].__.asInstanceOf[T]

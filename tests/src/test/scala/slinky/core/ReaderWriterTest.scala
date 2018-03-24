@@ -60,6 +60,12 @@ class ReaderWriterTest extends FunSuite {
     readWrittenSame(undefined)
   }
 
+  test("Read/write - Option") {
+    readWrittenSame[Option[String]](Some("hello"))
+    readWrittenSame[Option[String]](None)
+    assert(implicitly[Reader[Option[String]]].read(null).isEmpty)
+  }
+
   test("Read/write - js.|") {
     readWrittenSame[Int | String](1)
     readWrittenSame[Int | String]("str")
