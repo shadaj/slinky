@@ -4,12 +4,13 @@
 ### Highlights :tada:
 + **Slinky now has support for React Native**, available in the `slinky-native` module. Try it out with [create-react-native-scala-app](https://github.com/shadaj/create-react-native-scala-app.g8)
 + **Slinky now has support for React VR**, available in the `slinky-vr` module. Try it out with [create-react-vr-scala-app](https://github.com/shadaj/create-react-vr-scala-app.g8)
-+ Want to write fancier unit tests for your Slinky app? Slinky now comes with an interface for `react-test-renderer`, available under the `slinky-testrenderer` module.
++ Want to write fancier unit tests for your Slinky app? Slinky now comes with an interface for `react-test-renderer`, available under the `slinky-testrenderer` module. [PR #119](https://github.com/shadaj/slinky/pull/119)
 
 ### Details
-+ The `@react` macro now produces nicer APIs for external components that have default values for all props parameters.
-+ Add more variations for `ExternalComponent` that support providing a statically-typed interface for the component instance: `ExternalComponentWithRefType`, `ExternalComponentWithAttributesWithRefType`, `ExternalComponentNoPropsWithRefType`, `ExternalComponentNoPropsWithAttributesWithRefType`
++ The `@react` macro now produces nicer APIs for external components that have default values for all props parameters. [PR #119](https://github.com/shadaj/slinky/pull/119)
++ Add more variations for `ExternalComponent` that support providing a statically-typed interface for the component instance: `ExternalComponentWithRefType`, `ExternalComponentWithAttributesWithRefType`, `ExternalComponentNoPropsWithRefType`, `ExternalComponentNoPropsWithAttributesWithRefType` [PR #119](https://github.com/shadaj/slinky/pull/119)
 + Fix exceptions when declaring custom tags and attributes in a component class [PR #118](https://github.com/shadaj/slinky/pull/118)
++ Fix exceptions when reading the null-prototype in Node.js [PR #121](https://github.com/shadaj/slinky/pull/121)
 
 ## v0.3.2
 + Improve support for creating custom tags and attributes (see docs for details) [PR #116](https://github.com/shadaj/slinky/pull/116)
