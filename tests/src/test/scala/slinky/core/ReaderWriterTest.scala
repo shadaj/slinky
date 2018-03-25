@@ -1,6 +1,6 @@
 package slinky.core
 
-import slinky.readwrite.{Reader, Writer}
+import slinky.readwrite.{Reader, WithRaw, Writer}
 import org.scalatest.FunSuite
 
 import scala.scalajs.js
@@ -90,6 +90,13 @@ class ReaderWriterTest extends FunSuite {
     val written = implicitly[Writer[CaseClass]].write(CaseClass(1))
     assert(written.asInstanceOf[js.Object].hasOwnProperty("int"))
     assert(!written.asInstanceOf[js.Object].hasOwnProperty("boolean"))
+  }
+
+  test("Read/write - case class with raw") {
+    case class CaseClassWithRaw(int: Int, boolean: Boolean) extends WithRaw
+    val inObj = js.Dynamic.literal(int = 1, boolean = true)
+    val read = implicitly[Reader[CaseClassWithRaw]].read(inObj)
+    assert(read == CaseClassWithRaw(1, true) && read.raw == inObj)
   }
 
   test("Read/write - sealed trait with case objects") {
