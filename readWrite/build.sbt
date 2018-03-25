@@ -161,6 +161,7 @@ sourceGenerators in Compile += Def.task {
 
   out.println(
     s"""package slinky.readwrite
+       |
        |import scala.collection.generic.CanBuildFrom
        |import scala.concurrent.Future
        |import scala.language.experimental.macros
@@ -174,11 +175,17 @@ sourceGenerators in Compile += Def.task {
        |
        |trait Reader[P] {
        |  def read(o: js.Object): P = {
-       |    if (js.typeOf(o) == "object" && o != null && !js.isUndefined(o.asInstanceOf[js.Dynamic].__)) {
+       |    val ret = if (js.typeOf(o) == "object" && o != null && !js.isUndefined(o.asInstanceOf[js.Dynamic].__)) {
        |      o.asInstanceOf[js.Dynamic].__.asInstanceOf[P]
        |    } else {
        |      forceRead(o)
        |    }
+       |
+       |    if (ret.isInstanceOf[WithRaw]) {
+       |      ret.asInstanceOf[js.Dynamic].__slinky_raw = o
+       |    }
+       |
+       |    ret
        |  }
        |
        |  protected def forceRead(o: js.Object): P
