@@ -16,9 +16,11 @@ import japgolly.scalajs.react.vdom.html_<^._
 
 import scala.scalajs.js
 import scala.scalajs.js.JSApp
+import scala.scalajs.js.annotation.JSExportTopLevel
+import scala.scalajs.LinkingInfo
 import org.scalajs.dom.{document, html}
 
-object Main extends JSApp {
+object Main {
   val Hello =
     ScalaComponent.builder[String]("Hello")
       .render_P(name => <.div(
@@ -82,8 +84,12 @@ object Main extends JSApp {
     }
   }
 
+  @JSExportTopLevel("entrypoint.main")
   def main(): Unit = {
-    hot.initialize()
+    if (LinkingInfo.developmentMode) {
+      hot.initialize()
+    }
+    
     if (js.isUndefined(js.Dynamic.global.reactContainer)) {
       js.Dynamic.global.reactContainer = document.createElement("div")
       document.body.appendChild(js.Dynamic.global.reactContainer.asInstanceOf[html.Element])
