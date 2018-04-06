@@ -89,6 +89,7 @@ object DocsTree {
       "Technical Overview" -> "/docs/technical-overview/",
       "Custom Tags and Attributes" -> "/docs/custom-tags-and-attributes/",
       "Fragments and Portals" -> "/docs/fragments-and-portals/",
+      "Context" -> "/docs/context/",
       "Error Boundaries" -> "/docs/error-boundaries/",
       "Scala.js React Interop" -> "/docs/scalajs-react-interop/",
       "Abstracting Over Tags" -> "/docs/abstracting-over-tags/",
