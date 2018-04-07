@@ -56,6 +56,10 @@ object Generator extends App {
           s"""def :=(v: org.scalajs.dom.MouseEvent => Unit) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)
              |def :=(v: () => Unit) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)
            """.stripMargin
+        } else if (a.attributeType == "RefType") {
+          s"""def :=(v: org.scalajs.dom.Element => Unit) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)
+             |def :=(v: slinky.core.facade.ReactRef[org.scalajs.dom.Element]) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)
+           """.stripMargin
         } else {
           s"""def :=(v: ${a.attributeType}) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)"""
         }) + s"\ntype attrType = _${symbolWithoutEscape}_attr.type"

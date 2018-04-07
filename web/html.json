@@ -1371,7 +1371,7 @@
     },
     {
       "attributeName" : "ref",
-      "attributeType" : "scala.Function1[org.scalajs.dom.Element, Unit]",
+      "attributeType" : "RefType",
       "docLines" : [
         ""
       ],
