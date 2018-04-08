@@ -1,20 +1,30 @@
 package slinky.core
 
-import slinky.core.facade.{React, ReactElement}
+import slinky.core.facade.{React, ReactElement, ReactRef}
 import slinky.readwrite.Writer
 
 import scala.language.implicitConversions
 import scala.scalajs.js
 import scala.scalajs.js.|
-
 import scala.language.experimental.macros
 import scala.reflect.macros.blackbox
 
-case class BuildingComponent[E, R <: js.Object](c: String | js.Object, props: js.Object, key: String = null, ref: R => Unit = null, mods: Seq[AttrPair[E]] = Seq.empty) {
-  def apply(tagMod: AttrPair[E], tagMods: AttrPair[E]*): BuildingComponent[E, R] = copy(mods = mods ++ (tagMod +: tagMods))
+class BuildingComponent[E, R <: js.Object](c: String | js.Object, props: js.Object, key: String = null, ref: js.Object = null, mods: Seq[AttrPair[E]] = Seq.empty) {
+  def apply(tagMod: AttrPair[E], tagMods: AttrPair[E]*): BuildingComponent[E, R] = {
+    new BuildingComponent[E, R](c, props, key, ref, mods ++ (tagMod +: tagMods))
+  }
 
-  def withKey(key: String): BuildingComponent[E, R] = copy(key = key)
-  def withRef(ref: R => Unit): BuildingComponent[E, R] = copy(ref = ref)
+  def withKey(newKey: String): BuildingComponent[E, R] = {
+    new BuildingComponent[E, R](c, props, newKey, ref, mods)
+  }
+
+  def withRef(newRef: R => Unit): BuildingComponent[E, R] = {
+    new BuildingComponent[E, R](c, props, key, newRef, mods)
+  }
+
+  def withRef(ref: ReactRef[R]): BuildingComponent[E, R] = {
+    new BuildingComponent[E, R](c, props, key, ref, mods)
+  }
 
   def apply(children: ReactElement*): ReactElement = {
     val written = props.asInstanceOf[js.Dictionary[js.Any]]
@@ -24,7 +34,7 @@ case class BuildingComponent[E, R <: js.Object](c: String | js.Object, props: js
     }
 
     if (ref != null) {
-      written("ref") = ref: js.Function1[R, Unit]
+      written("ref") = ref.asInstanceOf[js.Any]
     }
 
     mods.foreach { m =>
@@ -64,10 +74,12 @@ abstract class ExternalComponent(implicit pw: ExternalPropsWriterProvider) exten
 abstract class ExternalComponentNoPropsWithAttributesWithRefType[E <: TagElement, R <: js.Object] {
   val component: String | js.Object
 
-  def apply(mod: AttrPair[E], tagMods: AttrPair[E]*): BuildingComponent[E, R] = BuildingComponent(component, js.Dynamic.literal(), mods = mod +: tagMods)
+  def apply(mod: AttrPair[E], tagMods: AttrPair[E]*): BuildingComponent[E, R] = {
+    new BuildingComponent(component, js.Dynamic.literal(), mods = mod +: tagMods)
+  }
 
-  def withKey(key: String): BuildingComponent[E, R] = BuildingComponent(component, js.Dynamic.literal(), key = key)
-  def withRef(ref: R => Unit): BuildingComponent[E, R] = BuildingComponent(component, js.Dynamic.literal(), ref = ref)
+  def withKey(key: String): BuildingComponent[E, R] = new BuildingComponent(component, js.Dynamic.literal(), key = key)
+  def withRef(ref: R => Unit): BuildingComponent[E, R] = new BuildingComponent(component, js.Dynamic.literal(), ref = ref)
 
   def apply(children: ReactElement*): ReactElement = {
     React.createElement(component, js.Dynamic.literal().asInstanceOf[js.Dictionary[js.Any]], children: _*)

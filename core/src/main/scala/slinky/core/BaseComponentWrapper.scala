@@ -1,6 +1,6 @@
 package slinky.core
 
-import slinky.core.facade.{React, ReactElement}
+import slinky.core.facade.{React, ReactElement, ReactRef}
 import slinky.readwrite.{Reader, Writer}
 
 import scala.language.experimental.macros
@@ -16,6 +16,11 @@ class KeyAndRefAddingStage[D <: js.Any](val props: js.Dictionary[js.Any], val co
   }
 
   def withRef(ref: D => Unit): KeyAndRefAddingStage[D] = {
+    props("ref") = ref
+    new KeyAndRefAddingStage[D](props, constructor)
+  }
+
+  def withRef(ref: ReactRef[D]): KeyAndRefAddingStage[D] = {
     props("ref") = ref
     new KeyAndRefAddingStage[D](props, constructor)
   }
