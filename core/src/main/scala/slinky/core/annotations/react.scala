@@ -106,10 +106,13 @@ class react extends scala.annotation.StaticAnnotation {
             Seq(
               caseClassApply,
               q"""def apply(mod: _root_.slinky.core.AttrPair[Element], tagMods: _root_.slinky.core.AttrPair[Element]*): _root_.slinky.core.BuildingComponent[Element, RefType] = {
-                    _root_.slinky.core.BuildingComponent[Element, RefType](component, _root_.scala.scalajs.js.Dynamic.literal(), mods = (mod +: tagMods).asInstanceOf[_root_.scala.collection.immutable.Seq[_root_.slinky.core.AttrPair[Element]]])
+                    new _root_.slinky.core.BuildingComponent[Element, RefType](component, _root_.scala.scalajs.js.Dynamic.literal(), mods = (mod +: tagMods).asInstanceOf[_root_.scala.collection.immutable.Seq[_root_.slinky.core.AttrPair[Element]]])
                   }""",
-              q"""def withKey(key: String): _root_.slinky.core.BuildingComponent[Element, RefType] = _root_.slinky.core.BuildingComponent(component, _root_.scala.scalajs.js.Dynamic.literal(), key = key)""",
-              q"""def withRef(ref: RefType => Unit): _root_.slinky.core.BuildingComponent[Element, RefType] = _root_.slinky.core.BuildingComponent(component, _root_.scala.scalajs.js.Dynamic.literal(), ref = ref)""",
+              q"""def withKey(key: String): _root_.slinky.core.BuildingComponent[Element, RefType] = new _root_.slinky.core.BuildingComponent(component, _root_.scala.scalajs.js.Dynamic.literal(), key = key)""",
+              q"""def withRef(ref: RefType => Unit): _root_.slinky.core.BuildingComponent[Element, RefType] = new _root_.slinky.core.BuildingComponent(component, _root_.scala.scalajs.js.Dynamic.literal(), ref = ref)""",
+              q"""def withRef(ref: _root_.slinky.core.facade.ReactRef[RefType]): _root_.slinky.core.BuildingComponent[Element, RefType] = {
+                    new _root_.slinky.core.BuildingComponent[Element, RefType](component, _root_.scala.scalajs.js.Dynamic.literal(), ref = ref)
+                  }""",
               q"""def apply(children: _root_.slinky.core.facade.ReactElement*): _root_.slinky.core.facade.ReactElement = {
                     _root_.slinky.core.facade.React.createElement(component, _root_.scala.scalajs.js.Dynamic.literal().asInstanceOf[_root_.scala.scalajs.js.Dictionary[js.Any]], children: _*)
                   }"""

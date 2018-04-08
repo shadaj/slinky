@@ -9,7 +9,7 @@ import scala.scalajs.js.|
 import scala.language.experimental.macros
 import scala.reflect.macros.blackbox
 
-class BuildingComponent[E, R <: js.Object] private[slinky](c: String | js.Object, props: js.Object, key: String = null, ref: js.Object = null, mods: Seq[AttrPair[E]] = Seq.empty) {
+class BuildingComponent[E, R <: js.Object](c: String | js.Object, props: js.Object, key: String = null, ref: js.Object = null, mods: Seq[AttrPair[E]] = Seq.empty) {
   def apply(tagMod: AttrPair[E], tagMods: AttrPair[E]*): BuildingComponent[E, R] = {
     new BuildingComponent[E, R](c, props, key, ref, mods ++ (tagMod +: tagMods))
   }
