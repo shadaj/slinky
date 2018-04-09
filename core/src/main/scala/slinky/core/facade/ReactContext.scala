@@ -7,6 +7,12 @@ import scala.scalajs.js
 import scala.scalajs.js.annotation.JSName
 import scala.scalajs.js.|
 
+@js.native
+trait ReactContextRaw extends js.Object {
+  val Provider: js.Object = js.native
+  val Consumer: js.Object = js.native
+}
+
 case class ContextProviderProps[T](value: T)
 object ContextProviderProps {
   implicit def writer[T]: Writer[ContextProviderProps[T]] = v => js.Dynamic.literal(
@@ -17,7 +23,7 @@ object ContextProviderProps {
 class ContextProvider[T](orig: ReactContext[T]) {
   private object External extends ExternalComponent()(ContextProviderProps.writer[T].asInstanceOf[ExternalPropsWriterProvider]) {
     override type Props = ContextProviderProps[T]
-    override val component: |[String, js.Object] = orig._Provider
+    override val component: |[String, js.Object] = orig.asInstanceOf[ReactContextRaw].Provider
   }
 
   def apply(value: T): BuildingComponent[Nothing, js.Object] = External(ContextProviderProps(value))
@@ -35,19 +41,14 @@ object ContextConsumerProps {
 class ContextConsumer[T](orig: ReactContext[T]) {
   private object External extends ExternalComponent()(ContextConsumerProps.writer[T].asInstanceOf[ExternalPropsWriterProvider]) {
     override type Props = ContextConsumerProps[T]
-    override val component: |[String, js.Object] = orig._Consumer
+    override val component: |[String, js.Object] = orig.asInstanceOf[ReactContextRaw].Consumer
   }
 
   def apply(children: T => ReactElement): BuildingComponent[Nothing, js.Object] = External(ContextConsumerProps(children))
 }
 
-
 @js.native
-trait ReactContext[T] extends js.Object {
-  @JSName("Provider") private[slinky] val _Provider: js.Object = js.native
-  @JSName("Consumer") private[slinky] val _Consumer: js.Object = js.native
-}
-
+trait ReactContext[T] extends js.Object
 object ReactContext {
   final implicit class RichReactContext[T](private val orig: ReactContext[T]) extends AnyVal {
     def Provider: ContextProvider[T] = new ContextProvider[T](orig)
