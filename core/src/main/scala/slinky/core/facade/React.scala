@@ -1,7 +1,11 @@
 package slinky.core.facade
 
+import slinky.core.{ExternalComponent, ExternalPropsWriterProvider}
+import slinky.readwrite.{ObjectOrWritten, Reader, Writer}
+
 import scala.scalajs.js
 import js.|
+import scala.annotation.unchecked.uncheckedVariance
 import scala.scalajs.js.annotation.{JSImport, JSName}
 import scala.scalajs.js.JSConverters._
 import scala.language.implicitConversions
@@ -49,13 +53,24 @@ trait ReactInstance extends js.Object
 trait ReactChildren extends ReactElement
 
 @js.native
-trait ReactRef[T] extends js.Object {
-  def current: T = js.native
+trait ReactRef[-T] extends js.Object {
+  def current: T @uncheckedVariance  = js.native
+}
+
+class ReactForwardRefComponent[P](comp: js.Object) extends ExternalComponent()(Writer.fallback[P].asInstanceOf[ExternalPropsWriterProvider]) {
+  type Props = P
+  override val component: String | js.Object = comp
+}
+
+@js.native
+trait ReactForwardRef[P] extends js.Object
+object ReactForwardRef {
+  implicit def toExternalComponent[P](r: ReactForwardRef[P]): ReactForwardRefComponent[P] = new ReactForwardRefComponent[P](r)
 }
 
 @js.native
 @JSImport("react", JSImport.Namespace, "React")
-object React extends js.Object {
+private[slinky] object ReactRaw extends js.Object {
   def createElement(elementName: String | js.Object,
                     properties: js.Dictionary[js.Any],
                     contents: ReactElement*): ReactElement = js.native
@@ -64,11 +79,7 @@ object React extends js.Object {
 
   def createRef[T](): ReactRef[T] = js.native
 
-  @js.native
-  class Component(jsProps: js.Object) extends js.Object {
-    def forceUpdate(): Unit = js.native
-    def forceUpdate(callback: js.Function0[Unit]): Unit = js.native
-  }
+  def forwardRef[P](fn: js.Function2[js.Object, ReactRef[Any], ReactElement]): ReactForwardRef[P] = js.native
 
   @js.native
   object Children extends js.Object {
@@ -85,7 +96,60 @@ object React extends js.Object {
     def toArray(children: ReactChildren): js.Array[ReactElement] = js.native
   }
 
-  private[slinky] val Fragment: js.Object = js.native
+  val Fragment: js.Object = js.native
+}
+
+object React {
+  def createElement(elementName: String | js.Object,
+                    properties: js.Dictionary[js.Any],
+                    contents: ReactElement*): ReactElement = ReactRaw.createElement(elementName, properties, contents: _*)
+
+  def createContext[T](name: String): ReactContext[T] = ReactRaw.createContext[T](name)
+
+  def createRef[T]: ReactRef[T] = ReactRaw.createRef[T]()
+
+  def forwardRef[P](fn: (P, ReactRef[Any]) => ReactElement): ReactForwardRef[P] = {
+    ReactRaw.forwardRef[P]((obj, ref) => {
+      fn(Reader.fallback[P].read(obj), ref)
+    })
+  }
+
+  @JSImport("react", "Component", "React.Component")
+  @js.native
+  class Component(jsProps: js.Object) extends js.Object {
+    def forceUpdate(): Unit = js.native
+    def forceUpdate(callback: js.Function0[Unit]): Unit = js.native
+  }
+
+  object Children extends js.Object {
+    def map(children: ReactChildren, transformer: ReactElement => ReactElement): ReactChildren = {
+      ReactRaw.Children.map(children, transformer)
+    }
+
+    def map(children: ReactChildren, transformer: (ReactElement, Int) => ReactElement): ReactChildren = {
+      ReactRaw.Children.map(children, transformer)
+    }
+
+    def forEach(children: ReactChildren, transformer: ReactElement => Unit): Unit = {
+      ReactRaw.Children.forEach(children, transformer)
+    }
+
+    def forEach(children: ReactChildren, transformer: (ReactElement, Int) => Unit): Unit = {
+      ReactRaw.Children.forEach(children, transformer)
+    }
+
+    def only(children: ReactChildren): ReactElement = {
+      ReactRaw.Children.only(children)
+    }
+
+    def count(children: ReactChildren): Int = {
+      ReactRaw.Children.count(children)
+    }
+
+    def toArray(children: ReactChildren): js.Array[ReactElement] = {
+      ReactRaw.Children.toArray(children)
+    }
+  }
 }
 
 @js.native

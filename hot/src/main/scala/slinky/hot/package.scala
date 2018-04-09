@@ -1,7 +1,7 @@
 package slinky
 
 import slinky.core.BaseComponentWrapper
-import slinky.core.facade.React
+import slinky.core.facade.ReactRaw
 
 import scala.scalajs.js
 
@@ -20,7 +20,7 @@ package object hot {
         if (js.isUndefined(js.Dynamic.global.proxies.selectDynamic(componentName))) {
           js.Dynamic.global.proxies.updateDynamic(componentName)(ReactProxy.createProxy(constructor))
         } else {
-          val forceUpdate = ReactProxy.getForceUpdate(React)
+          val forceUpdate = ReactProxy.getForceUpdate(ReactRaw)
           js.Dynamic.global.proxies.selectDynamic(componentName)
             .update(constructor).asInstanceOf[js.Array[js.Object]]
             .foreach(o => forceUpdate(o))

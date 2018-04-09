@@ -8,7 +8,7 @@ To start using the new ref API, first create a ref object, which you can use as 
 To create a ref for use with an HTML tag, type the ref to store an `Element` (from the `scala-js-dom` library).
 
 ```scala
-val myRef = React.createRef[Element]()
+val myRef = React.createRef[Element]
 
 div(ref := myRef)
 
@@ -27,7 +27,7 @@ If you want to place a ref on a Slinky component, type the ref to store the `Def
   ...
 }
 
-val myRef = React.createRef[MyComponent.Def]()
+val myRef = React.createRef[MyComponent.Def]
 
 MyComponent(...).withRef(myRef)
 
