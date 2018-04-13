@@ -54,29 +54,14 @@ class react extends scala.annotation.StaticAnnotation {
         abort("There is no State type defined. If you want to create a stateless component, extend the StatelessComponent class instead.")
       }
 
-      val isErrorBoundary = clazz.templ.stats.getOrElse(Nil).exists {
-        case d: Defn.Def => d.name.value == "componentDidCatch"
-        case _ => false
-      }
-
       val newClazz =
-        if (isErrorBoundary) {
-          q"""class ${clazz.name}(jsProps: _root_.scala.scalajs.js.Object) extends _root_.slinky.core.DefinitionBase[$propsSelect, $stateSelect](jsProps) with slinky.core.ErrorBoundary {
-                $propsAndStateImport
-                null.asInstanceOf[${Type.Name("Props")}]
-                null.asInstanceOf[${Type.Name("State")}]
-                ..${if (stateDefinition.isEmpty) Seq(q"override def initialState: State = ()") else Seq.empty}
-                ..${clazz.templ.stats.getOrElse(Nil).filterNot(s => s == propsDefinition || s == stateDefinition.orNull)}
-              }"""
-        } else {
-          q"""class ${clazz.name}(jsProps: _root_.scala.scalajs.js.Object) extends _root_.slinky.core.DefinitionBase[$propsSelect, $stateSelect](jsProps) {
-                $propsAndStateImport
-                null.asInstanceOf[${Type.Name("Props")}]
-                null.asInstanceOf[${Type.Name("State")}]
-                ..${if (stateDefinition.isEmpty) Seq(q"override def initialState: State = ()") else Seq.empty}
-                ..${clazz.templ.stats.getOrElse(Nil).filterNot(s => s == propsDefinition || s == stateDefinition.orNull)}
-              }"""
-        }
+        q"""class ${clazz.name}(jsProps: _root_.scala.scalajs.js.Object) extends _root_.slinky.core.DefinitionBase[$propsSelect, $stateSelect](jsProps) {
+              $propsAndStateImport
+              null.asInstanceOf[${Type.Name("Props")}]
+              null.asInstanceOf[${Type.Name("State")}]
+              ..${if (stateDefinition.isEmpty) Seq(q"override def initialState: State = ()") else Seq.empty}
+              ..${clazz.templ.stats.getOrElse(Nil).filterNot(s => s == propsDefinition || s == stateDefinition.orNull)}
+            }"""
 
       val originalExtends = clazz.templ.parents.head.asInstanceOf[Term.Apply].fun.asInstanceOf[Ctor.Ref.Name].value
 

@@ -51,6 +51,30 @@ object TestComponentForSetStateCallback extends ComponentWrapper {
     }
   }
 }
+
+object TestComponentForSnapshot extends ComponentWrapper {
+  type Props = Int => Unit
+  type State = Int
+
+  class Def(jsProps: js.Object) extends Definition(jsProps) {
+    override def initialState: Int = 0
+
+    override def componentDidMount(): Unit = forceUpdate()
+
+    override def getSnapshotBeforeUpdate(prevProps: Int => Unit, prevState: Int): Any = {
+      123
+    }
+
+    override def componentDidUpdate(prevProps: Int => Unit, prevState: Int, snapshot: Any): Unit = {
+      props(snapshot.asInstanceOf[Int])
+    }
+
+    override def render(): ReactElement = {
+      null
+    }
+  }
+}
+
 object NoPropsComponent extends ComponentWrapper {
   type Props = Unit
   type State = Int
@@ -94,7 +118,7 @@ object BadComponent extends StatelessComponentWrapper {
 object ErrorBoundaryComponent extends StatelessComponentWrapper {
   case class Props(bad: Boolean, handler: (js.Error, ErrorBoundaryInfo) => Unit)
 
-  class Def(jsProps: js.Object) extends Definition(jsProps) with ErrorBoundary {
+  class Def(jsProps: js.Object) extends Definition(jsProps) {
     override def componentDidCatch(error: js.Error, info: ErrorBoundaryInfo): Unit = {
       props.handler.apply(error, info)
     }
@@ -185,5 +209,16 @@ class ComponentTest extends AsyncFunSuite {
     )
 
     assert(!sawError)
+  }
+
+  test("getSnapshotBeforeUpdate is run and returned value is passed to componentDidUpdate") {
+    val promise: Promise[Assertion] = Promise()
+
+    ReactDOM.render(
+      TestComponentForSnapshot(i => promise.success(assert(i == 123))),
+      dom.document.createElement("div")
+    )
+
+    promise.future
   }
 }
