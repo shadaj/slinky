@@ -109,68 +109,118 @@ abstract class DefinitionBase[Props, State](jsProps: js.Object) extends React.Co
     }, callback)
   }
 
+  @inline private[this] def thisProto: js.Object = this.asInstanceOf[js.Dynamic].__proto__.asInstanceOf[js.Object]
+
   def componentWillMount(): Unit = {}
 
   def componentDidMount(): Unit = {}
 
   def componentWillReceiveProps(nextProps: Props): Unit = {}
 
-  {
-    val orig = this.asInstanceOf[js.Dynamic].componentWillReceiveProps.asInstanceOf[js.Function1[Props, Unit]]
-    this.asInstanceOf[js.Dynamic].componentWillReceiveProps = (props: js.Object) => {
-      orig.call(
-        this,
-        readPropsValue(props).asInstanceOf[js.Any]
-      )
-    }
-  }
-
   def shouldComponentUpdate(nextProps: Props, nextState: State): Boolean = true
-
-  {
-    val orig = this.asInstanceOf[js.Dynamic].shouldComponentUpdate.asInstanceOf[js.Function2[Props, State, Boolean]]
-    this.asInstanceOf[js.Dynamic].shouldComponentUpdate = (nextProps: js.Object, nextState: js.Object) => {
-      orig.call(
-        this,
-        readPropsValue(nextProps).asInstanceOf[js.Any],
-        readStateValue(nextState).asInstanceOf[js.Any]
-      )
-    }
-  }
 
   def componentWillUpdate(nextProps: Props, nextState: State): Unit = {}
 
-  {
-    val orig = this.asInstanceOf[js.Dynamic].componentWillUpdate.asInstanceOf[js.Function2[Props, State, Unit]]
-    this.asInstanceOf[js.Dynamic].componentWillUpdate = (nextProps: js.Object, nextState: js.Object) => {
-      orig.call(
-        this,
-        readPropsValue(nextProps).asInstanceOf[js.Any],
-        readStateValue(nextState).asInstanceOf[js.Any]
-      )
-    }
-  }
+  def getSnapshotBeforeUpdate(prevProps: Props, prevState: State): Any = {}
+
+  private val origComponentDidUpdate = thisProto.asInstanceOf[js.Dynamic].componentDidUpdate.bind(this).asInstanceOf[js.Function3[Props, State, Any, Unit]]
 
   def componentDidUpdate(prevProps: Props, prevState: State): Unit = {}
-
-  {
-    val orig = this.asInstanceOf[js.Dynamic].componentDidUpdate.asInstanceOf[js.Function2[Props, State, Unit]]
-    this.asInstanceOf[js.Dynamic].componentDidUpdate = (prevProps: js.Object, prevState: js.Object) => {
-      orig.call(
-        this,
-        readPropsValue(prevProps).asInstanceOf[js.Any],
-        readStateValue(prevState).asInstanceOf[js.Any]
-      )
-    }
+  def componentDidUpdate(prevProps: Props, prevState: State, snapshot: Any): Unit = {
+    origComponentDidUpdate.asInstanceOf[js.Function2[Props, State, Unit]].apply(prevProps, prevState)
   }
 
   def componentWillUnmount(): Unit = {}
 
+  def componentDidCatch(error: js.Error, info: ErrorBoundaryInfo): Unit = {}
+
   @JSName("render")
   def render(): ReactElement
+
+  if (defaultBase != null) {
+    if (this.asInstanceOf[js.Dynamic].componentWillMount == defaultBase.componentWillMount) {
+      this.asInstanceOf[js.Dynamic].componentWillMount = js.undefined
+    }
+
+    if (this.asInstanceOf[js.Dynamic].componentDidMount == defaultBase.componentDidMount) {
+      this.asInstanceOf[js.Dynamic].componentDidMount = js.undefined
+    }
+
+    if (this.asInstanceOf[js.Dynamic].componentWillReceiveProps != defaultBase.componentWillReceiveProps) {
+      val orig = this.asInstanceOf[js.Dynamic].componentWillReceiveProps.bind(this).asInstanceOf[js.Function1[Props, Unit]]
+      this.asInstanceOf[js.Dynamic].componentWillReceiveProps = (props: js.Object) => {
+        orig(
+          readPropsValue(props)
+        )
+      }
+    } else {
+      this.asInstanceOf[js.Dynamic].componentWillReceiveProps = js.undefined
+    }
+
+    if (this.asInstanceOf[js.Dynamic].shouldComponentUpdate != defaultBase.shouldComponentUpdate) {
+      val orig = this.asInstanceOf[js.Dynamic].shouldComponentUpdate.bind(this).asInstanceOf[js.Function2[Props, State, Unit]]
+      this.asInstanceOf[js.Dynamic].shouldComponentUpdate = (nextProps: js.Object, nextState: js.Object) => {
+        orig(
+          readPropsValue(nextProps),
+          readStateValue(nextState)
+        )
+      }
+    } else {
+      this.asInstanceOf[js.Dynamic].shouldComponentUpdate = js.undefined
+    }
+
+    if (this.asInstanceOf[js.Dynamic].componentWillUpdate != defaultBase.componentWillUpdate) {
+      val orig = this.asInstanceOf[js.Dynamic].componentWillUpdate.bind(this).asInstanceOf[js.Function2[Props, State, Unit]]
+      this.asInstanceOf[js.Dynamic].componentWillUpdate = (nextProps: js.Object, nextState: js.Object) => {
+        orig(
+          readPropsValue(nextProps),
+          readStateValue(nextState)
+        )
+      }
+    } else {
+      this.asInstanceOf[js.Dynamic].componentWillUpdate = js.undefined
+    }
+
+    if (this.asInstanceOf[js.Dynamic].getSnapshotBeforeUpdate != defaultBase.getSnapshotBeforeUpdate) {
+      val orig = this.asInstanceOf[js.Dynamic].getSnapshotBeforeUpdate.bind(this).asInstanceOf[js.Function2[Props, State, Any]]
+      this.asInstanceOf[js.Dynamic].getSnapshotBeforeUpdate = (prevProps: js.Object, prevState: js.Object) => {
+        orig(
+          readPropsValue(prevProps),
+          readStateValue(prevState)
+        )
+      }
+    } else {
+      this.asInstanceOf[js.Dynamic].getSnapshotBeforeUpdate = js.undefined
+    }
+
+    if (this.asInstanceOf[js.Dynamic].componentDidUpdate != defaultBase.componentDidUpdate) {
+      this.asInstanceOf[js.Dynamic].componentDidUpdate = (prevProps: js.Object, prevState: js.Object, snapshot: Any) => {
+        origComponentDidUpdate(
+          readPropsValue(prevProps),
+          readStateValue(prevState),
+          snapshot
+        )
+      }
+    } else {
+      this.asInstanceOf[js.Dynamic].componentDidUpdate = js.undefined
+    }
+
+    if (this.asInstanceOf[js.Dynamic].componentWillUnmount == defaultBase.componentWillUnmount) {
+      this.asInstanceOf[js.Dynamic].componentWillUnmount = js.undefined
+    }
+
+    if (this.asInstanceOf[js.Dynamic].componentDidCatch == defaultBase.componentDidCatch) {
+      this.asInstanceOf[js.Dynamic].componentDidCatch = js.undefined
+    }
+  }
 }
 
 object DefinitionBase {
+  private[DefinitionBase] val defaultBase = new DefinitionBase[Unit, Unit](null) {
+    override def initialState: Unit = ()
+    override def render(): ReactElement = null
+  }.asInstanceOf[js.Dynamic]
+
   private[slinky] final def readWithWrappingAdjustment[T](reader: Reader[T])(value: js.Object): T = {
     val __value = value.asInstanceOf[js.Dynamic].__value
 
@@ -190,8 +240,4 @@ object DefinitionBase {
       js.Dynamic.literal(__value = __value)
     }
   }
-}
-
-trait ErrorBoundary extends React.Component {
-  def componentDidCatch(error: js.Error, info: ErrorBoundaryInfo): Unit
 }

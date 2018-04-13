@@ -24,13 +24,13 @@ To create an error boundary using the `@react` macro annotation, simply define t
 }
 ```
 
-If using the `ComponentWrapper` API, you will need to mix in the `ErrorBoundary` trait to the `Def` class and then implement the `componentDidCatch` method as above.
+If using the `ComponentWrapper` API, you similarly implement the `componentDidCatch` method.
 ```scala
 object ErrorBoundaryComponent extends StatelessComponentWrapper {
   type Props = ReactElement
   case class State(hasError: Boolean)
 
-  class Def(jsProps: js.Object) extends Definition(jsProps) with ErrorBoundary {
+  class Def(jsProps: js.Object) extends Definition(jsProps) {
     def initialState = State(hasError = false)
 
     override def componentDidCatch(error: js.Error, info: ErrorBoundaryInfo): Unit = {

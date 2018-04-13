@@ -4,7 +4,8 @@
 ### Highlights :tada:
 + **Slinky now has support for React 16.3 features**
   + Use the new Context API with a [statically-typed interface](https://slinky.shadaj.me/docs/context/) [PR #125](https://github.com/shadaj/slinky/pull/125)
-  + Use the new Ref API with a [statically-typed interface]() as well! [PR #126](https://github.com/shadaj/slinky/pull/126)
+  + Use the new Ref API with a [statically-typed interface](https://slinky.shadaj.me/docs/refs/) as well! [PR #126](https://github.com/shadaj/slinky/pull/126)
+  + Transition to the new React lifecycle with support for [getSnapshotBeforeUpdate](https://reactjs.org/docs/react-component.html#getsnapshotbeforeupdate) [PR #129](https://github.com/shadaj/slinky/pull/129)
   + Use the `React.forwardRef` API to create new components that forward their refs to children [PR #127](https://github.com/shadaj/slinky/pull/127)
   + Use the `StrictMode` component to enable more runtime checks on your components [PR #128](https://github.com/shadaj/slinky/pull/128)
 + **Slinky now has support for React Native**, available in the `slinky-native` module. Try it out with [create-react-native-scala-app](https://github.com/shadaj/create-react-native-scala-app.g8)
@@ -12,6 +13,7 @@
 + Want to write fancier unit tests for your Slinky app? Slinky now comes with an interface for `react-test-renderer`, available under the `slinky-testrenderer` module. [PR #119](https://github.com/shadaj/slinky/pull/119)
 
 ### Details
++ **BREAKING!**: The `ErrorBoundary` trait has been removed, because it is no longer needed to implement an error boundary component
 + **BREAKING**: The `BuildingComponent` case class has been simplified into a regular class, so the `new` keyword is now required when creating instances
 + **BREAKING**: The `React` object has been refactored to take regular Scala types instead of JS types, so any dependency on the original JS types (`js.FunctionN`) will not work
 + The `@react` macro now produces nicer APIs for external components that have default values for all props parameters. [PR #119](https://github.com/shadaj/slinky/pull/119)
