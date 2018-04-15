@@ -8,6 +8,7 @@ import scala.scalajs.js
 import scala.scalajs.js.ConstructorTag
 import scala.language.implicitConversions
 import scala.reflect.macros.blackbox
+import scala.scalajs.js.annotation.JSExport
 
 class KeyAndRefAddingStage[D <: js.Any](val props: js.Dictionary[js.Any], val constructor: js.Object) {
   def withKey(key: String): KeyAndRefAddingStage[D] = {
@@ -41,6 +42,8 @@ abstract class BaseComponentWrapper(pr: PropsReaderProvider, pw: PropsWriterProv
 
   type Definition <: js.Object
 
+  def getDerivedStateFromProps(nextProps: Props, prevState: State): State = null.asInstanceOf[State]
+
   private[core] val hot_propsReader = pr.asInstanceOf[Reader[Props]]
   private[core] val hot_propsWriter = pw.asInstanceOf[Writer[Props]]
   private[core] val hot_stateReader = sr.asInstanceOf[Reader[State]]
@@ -52,6 +55,30 @@ abstract class BaseComponentWrapper(pr: PropsReaderProvider, pw: PropsWriterProv
     val constructor = constructorTag.constructor
     constructor.displayName = getClass.getSimpleName
     constructor._base = this.asInstanceOf[js.Any]
+
+    if (this.asInstanceOf[js.Dynamic].getDerivedStateFromProps__O__O__O != BaseComponentWrapper.defaultGetDerivedState) {
+      constructor.getDerivedStateFromProps = ((nextProps: js.Object, prevState: js.Object) => {
+        val nextPropsScala = if (js.typeOf(nextProps) == "object" && nextProps.hasOwnProperty("__")) {
+          nextProps.asInstanceOf[js.Dynamic].__.asInstanceOf[Props]
+        } else {
+          DefinitionBase.readWithWrappingAdjustment(propsReader)(nextProps)
+        }
+
+        val prevStateScala = if (js.typeOf(prevState) == "object" && prevState.hasOwnProperty("__")) {
+          prevState.asInstanceOf[js.Dynamic].__.asInstanceOf[State]
+        } else {
+          DefinitionBase.readWithWrappingAdjustment(stateReader)(prevState)
+        }
+
+        val newState = getDerivedStateFromProps(nextPropsScala, prevStateScala)
+
+        if (BaseComponentWrapper.scalaComponentWritingEnabled) {
+          DefinitionBase.writeWithWrappingAdjustment(stateWriter)(newState)
+        } else {
+          js.Dynamic.literal(__ = newState.asInstanceOf[js.Any])
+        }
+      }): js.Function2[js.Object, js.Object, js.Object]
+    }
 
     // we only receive non-null reader/writers here when we generate a full typeclass; otherwise we don't set
     // the reader/writer values since we can just use the fallback ones
@@ -93,6 +120,14 @@ abstract class BaseComponentWrapper(pr: PropsReaderProvider, pw: PropsWriterProv
 }
 
 object BaseComponentWrapper {
+  private[BaseComponentWrapper] val defaultGetDerivedState = {
+    new BaseComponentWrapper(null, null, null, null) {
+      override type Props = Unit
+      override type State = Unit
+      override type Def = Nothing
+    }.asInstanceOf[js.Dynamic].getDerivedStateFromProps__O__O__O
+  }
+
   implicit def proplessKeyAndRef[C <: BaseComponentWrapper { type Props = Unit }](c: C)(implicit stateWriter: Writer[c.State], stateReader: Reader[c.State], constructorTag: ConstructorTag[c.Def]): KeyAndRefAddingStage[c.Def] = {
     c.apply(())
   }

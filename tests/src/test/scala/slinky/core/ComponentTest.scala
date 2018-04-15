@@ -133,6 +133,27 @@ object ErrorBoundaryComponent extends StatelessComponentWrapper {
   }
 }
 
+object DerivedStateComponent extends ComponentWrapper {
+  case class Props(num: Int, onValue: Int => Unit)
+  type State = Int
+
+  override def getDerivedStateFromProps(nextProps: Props, prevState: State): State = {
+    nextProps.num
+  }
+
+  class Def(jsProps: js.Object) extends Definition(jsProps) {
+    override def initialState: Int = 0
+
+    override def render(): ReactElement = {
+      if (state != 0) {
+        props.onValue(state)
+      }
+
+      null
+    }
+  }
+}
+
 class ComponentTest extends AsyncFunSuite {
   test("setState given function is applied") {
     val promise: Promise[Assertion] = Promise()
@@ -216,6 +237,19 @@ class ComponentTest extends AsyncFunSuite {
 
     ReactDOM.render(
       TestComponentForSnapshot(i => promise.success(assert(i == 123))),
+      dom.document.createElement("div")
+    )
+
+    promise.future
+  }
+
+  test("getDerivedStateFromProps results in state being calculated based on props") {
+    val promise: Promise[Assertion] = Promise()
+
+    ReactDOM.render(
+      DerivedStateComponent(DerivedStateComponent.Props(
+        123, i => promise.success(assert(i == 123))
+      )),
       dom.document.createElement("div")
     )
 
