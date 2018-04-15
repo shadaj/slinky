@@ -38,6 +38,8 @@ abstract class BaseComponentWrapper(pr: PropsReaderProvider, pw: PropsWriterProv
 
   type State
 
+  type Snapshot
+
   type Def <: Definition
 
   type Definition <: js.Object

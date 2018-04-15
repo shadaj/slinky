@@ -7,6 +7,7 @@ import scala.scalajs.js
 abstract class Component extends React.Component(null) {
   type Props
   type State
+  type Snapshot
 
   def initialState: State
 

@@ -38,15 +38,30 @@ class react extends scala.annotation.StaticAnnotation {
         }
       }.headOption
 
+      val snapshotDefinition = clazz.templ.stats.getOrElse(Nil).flatMap { t =>
+        t match {
+          case defn@q"type Snapshot = ${_}" =>
+            Some(defn)
+          case defn@q"case class Snapshot[..${_}](...${_}) extends ${_}" =>
+            Some(defn)
+          case _ => None
+        }
+      }.headOption
+
       val definitionClass = q"type Def = ${clazz.name}"
 
       val propsSelect = Type.Select(Term.Name(name.value), Type.Name("Props"))
       val stateSelect = Type.Select(Term.Name(name.value), Type.Name("State"))
+      val snapshotSelect = Type.Select(Term.Name(name.value), Type.Name("Snapshot"))
 
-      val propsAndStateImport = Import(Seq(
+      val propsAndStateAndSnapshotImport = Import(Seq(
         Importer(
           Term.Name(name.value),
-          Seq(Importee.Name(Name.Indeterminate("Props")), Importee.Name(Name.Indeterminate("State")))
+          Seq(
+            Importee.Name(Name.Indeterminate("Props")),
+            Importee.Name(Name.Indeterminate("State")),
+            Importee.Name(Name.Indeterminate("Snapshot"))
+          )
         )
       ))
 
@@ -55,22 +70,23 @@ class react extends scala.annotation.StaticAnnotation {
       }
 
       val newClazz =
-        q"""class ${clazz.name}(jsProps: _root_.scala.scalajs.js.Object) extends _root_.slinky.core.DefinitionBase[$propsSelect, $stateSelect](jsProps) {
-              $propsAndStateImport
+        q"""class ${clazz.name}(jsProps: _root_.scala.scalajs.js.Object) extends _root_.slinky.core.DefinitionBase[$propsSelect, $stateSelect, $snapshotSelect](jsProps) {
+              $propsAndStateAndSnapshotImport
               null.asInstanceOf[${Type.Name("Props")}]
               null.asInstanceOf[${Type.Name("State")}]
+              null.asInstanceOf[${Type.Name("Snapshot")}]
               ..${if (stateDefinition.isEmpty) Seq(q"override def initialState: State = ()") else Seq.empty}
-              ..${clazz.templ.stats.getOrElse(Nil).filterNot(s => s == propsDefinition || s == stateDefinition.orNull)}
+              ..${clazz.templ.stats.getOrElse(Nil).filterNot(s => s == propsDefinition || s == stateDefinition.orNull || s == snapshotDefinition.orNull)}
             }"""
 
       val originalExtends = clazz.templ.parents.head.asInstanceOf[Term.Apply].fun.asInstanceOf[Ctor.Ref.Name].value
 
       (newClazz,
-        q"null.asInstanceOf[${Type.Name(originalExtends)}]" +:
+        (q"null.asInstanceOf[${Type.Name(originalExtends)}]" +:
         propsDefinition +:
           stateDefinition.getOrElse(q"type State = Unit") +:
-          definitionClass +:
-          applyMethods
+          snapshotDefinition.toList) ++
+          (definitionClass +: applyMethods)
       )
     }
 

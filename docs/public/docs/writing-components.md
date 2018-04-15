@@ -110,3 +110,51 @@ object MyComponent extends StatelessComponentWrapper {
   }
 }
 ```
+
+## Lifecycle Methods
+Slinky supports all of the React component lifecycle methods, including the next-generation ones from React 16.3.
+
+```scala
+class Def(jsProps: js.Object) extends Definition(jsProps) {
+  override def componentWillMount() = { ... }
+  override def componentDidMount() = { ... }
+  override def componentWillReceiveProps(nextProps: Props) = { ... }
+  override def shouldComponentUpdate(nextProps: Props, nextState: State): Boolean = { ... }
+  override def componentWillUpdate(nextProps: Props, nextState: State) = { ... }
+  override def componentDidUpdate(prevProps: Props, prevState: State) = { ... }
+  override def componentWillUnount() = { ... }
+  override def componentDidCatch(error: js.Error, info: ErrorBoundaryInfo) = { ... }
+}
+```
+
+### Snapshot-based Lifecycle
+To use the new snapshot based lifecycle from React 16.3, define the `Snapshot` type and implement `getSnapshotBeforeUpdate` and the variant of `componentDidUpdate`.
+
+```scala
+object MyComponent extends ComponentWrapper {
+  case class Props(...)
+  case class State(...)
+  case class Snapshot(...)
+
+  class Def(jsProps: js.Object) extends Definition(jsProps) {
+    override def getSnapshotBeforeUpdate(prevProps: Props, prevState: State): Snapshot = { ... }
+    override def componentDidUpdate(prevProps: Props, prevState: State, snapshot: Snapshot) = { ... }
+    
+    def render = { ... }
+  }
+}
+```
+
+Or with the `@react` API:
+```scala
+@react class MyComponent extends ComponentWrapper {
+  case class Props(...)
+  case class State(...)
+  case class Snapshot(...)
+
+  override def getSnapshotBeforeUpdate(prevProps: Props, prevState: State): Snapshot = { ... }
+  override def componentDidUpdate(prevProps: Props, prevState: State, snapshot: Snapshot) = { ... }
+
+  def render = { ... }
+}
+```
