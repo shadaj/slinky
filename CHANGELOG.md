@@ -6,6 +6,7 @@
   + Use the new Context API with a [statically-typed interface](https://slinky.shadaj.me/docs/context/) [PR #125](https://github.com/shadaj/slinky/pull/125)
   + Use the new Ref API with a [statically-typed interface](https://slinky.shadaj.me/docs/refs/) as well! [PR #126](https://github.com/shadaj/slinky/pull/126)
   + Transition to the new React lifecycle with support for [getSnapshotBeforeUpdate](https://reactjs.org/docs/react-component.html#getsnapshotbeforeupdate) [PR #129](https://github.com/shadaj/slinky/pull/129)
+  + Use the [getDerivedStateFromProps](https://reactjs.org/docs/react-component.html#static-getderivedstatefromprops) API by defining it inside `ComponentWrapper` or the companion object of an annotated component [PR #130](https://github.com/shadaj/slinky/pull/130)
   + Use the `React.forwardRef` API to create new components that forward their refs to children [PR #127](https://github.com/shadaj/slinky/pull/127)
   + Use the `StrictMode` component to enable more runtime checks on your components [PR #128](https://github.com/shadaj/slinky/pull/128)
 + **Slinky now has support for React Native**, available in the `slinky-native` module. Try it out with [create-react-native-scala-app](https://github.com/shadaj/create-react-native-scala-app.g8)

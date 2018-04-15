@@ -141,6 +141,27 @@ object TakeValuesFromCompanionObject {
   }
 }
 
+@react class DerivedStateComponent extends Component {
+  case class Props(num: Int, onValue: Int => Unit)
+  type State = Int
+
+  override def initialState: Int = 0
+
+  override def render(): ReactElement = {
+    if (state != 0) {
+      props.onValue(state)
+    }
+
+    null
+  }
+}
+
+object DerivedStateComponent {
+  override def getDerivedStateFromProps(nextProps: Props, prevState: State): State = {
+    nextProps.num
+  }
+}
+
 class ReactAnnotatedComponentTest extends AsyncFunSuite {
   test("setState given function is applied") {
     val promise: Promise[Assertion] = Promise()
@@ -222,5 +243,18 @@ class ReactAnnotatedComponentTest extends AsyncFunSuite {
     )
 
     assert(!sawError)
+  }
+
+  test("getDerivedStateFromProps results in state being calculated based on props") {
+    val promise: Promise[Assertion] = Promise()
+
+    ReactDOM.render(
+      DerivedStateComponent(
+        123, i => promise.success(assert(i == 123))
+      ),
+      dom.document.createElement("div")
+    )
+
+    promise.future
   }
 }
