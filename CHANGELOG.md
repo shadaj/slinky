@@ -13,10 +13,13 @@
 + **Slinky now has support for React VR**, available in the `slinky-vr` module. Try it out with [create-react-vr-scala-app](https://github.com/shadaj/create-react-vr-scala-app.g8)
 + Want to write fancier unit tests for your Slinky app? Slinky now comes with an interface for `react-test-renderer`, available under the `slinky-testrenderer` module. [PR #119](https://github.com/shadaj/slinky/pull/119)
 
+### Breaking Changes
++ **The `ErrorBoundary` trait has been removed, because it is no longer needed to implement an error boundary component**
++ The `DefinitionBase` class now takes an additional type parameter `Snapshot`, for use with the new snapshot-based lifecycle API 
++ The `BuildingComponent` case class has been simplified into a regular class, so the `new` keyword is now required when creating instances
++ The `React` object has been refactored to take regular Scala types instead of JS types, so any dependency on the original JS types (`js.FunctionN`) will not work
+
 ### Details
-+ **BREAKING!**: The `ErrorBoundary` trait has been removed, because it is no longer needed to implement an error boundary component
-+ **BREAKING**: The `BuildingComponent` case class has been simplified into a regular class, so the `new` keyword is now required when creating instances
-+ **BREAKING**: The `React` object has been refactored to take regular Scala types instead of JS types, so any dependency on the original JS types (`js.FunctionN`) will not work
 + The `@react` macro now produces nicer APIs for external components that have default values for all props parameters. [PR #119](https://github.com/shadaj/slinky/pull/119)
 + Add more variations for `ExternalComponent` that support providing a statically-typed interface for the component instance: `ExternalComponentWithRefType`, `ExternalComponentWithAttributesWithRefType`, `ExternalComponentNoPropsWithRefType`, `ExternalComponentNoPropsWithAttributesWithRefType` [PR #119](https://github.com/shadaj/slinky/pull/119)
 + Bring back the `WithRaw` trait, which makes it possible to access the original object of a read value [PR #122](https://github.com/shadaj/slinky/pull/122)

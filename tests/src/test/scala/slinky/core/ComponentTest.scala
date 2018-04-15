@@ -55,18 +55,19 @@ object TestComponentForSetStateCallback extends ComponentWrapper {
 object TestComponentForSnapshot extends ComponentWrapper {
   type Props = Int => Unit
   type State = Int
+  type Snapshot = Int
 
   class Def(jsProps: js.Object) extends Definition(jsProps) {
     override def initialState: Int = 0
 
     override def componentDidMount(): Unit = forceUpdate()
 
-    override def getSnapshotBeforeUpdate(prevProps: Int => Unit, prevState: Int): Any = {
+    override def getSnapshotBeforeUpdate(prevProps: Int => Unit, prevState: Int): Snapshot = {
       123
     }
 
-    override def componentDidUpdate(prevProps: Int => Unit, prevState: Int, snapshot: Any): Unit = {
-      props(snapshot.asInstanceOf[Int])
+    override def componentDidUpdate(prevProps: Int => Unit, prevState: Int, snapshot: Snapshot): Unit = {
+      props(snapshot)
     }
 
     override def render(): ReactElement = {

@@ -6,7 +6,7 @@ import slinky.readwrite.{Reader, Writer}
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSName
 
-abstract class DefinitionBase[Props, State](jsProps: js.Object) extends React.Component(jsProps) {
+abstract class DefinitionBase[Props, State, Snapshot](jsProps: js.Object) extends React.Component(jsProps) {
   import DefinitionBase._
 
   // we extract out props/state reader/writer from the _base value defined in on the constructor
@@ -109,8 +109,6 @@ abstract class DefinitionBase[Props, State](jsProps: js.Object) extends React.Co
     }, callback)
   }
 
-  @inline private[this] def thisProto: js.Object = this.asInstanceOf[js.Dynamic].__proto__.asInstanceOf[js.Object]
-
   def componentWillMount(): Unit = {}
 
   def componentDidMount(): Unit = {}
@@ -121,12 +119,12 @@ abstract class DefinitionBase[Props, State](jsProps: js.Object) extends React.Co
 
   def componentWillUpdate(nextProps: Props, nextState: State): Unit = {}
 
-  def getSnapshotBeforeUpdate(prevProps: Props, prevState: State): Any = {}
+  def getSnapshotBeforeUpdate(prevProps: Props, prevState: State): Snapshot = null.asInstanceOf[Snapshot]
 
-  private val origComponentDidUpdate = thisProto.asInstanceOf[js.Dynamic].componentDidUpdate.bind(this).asInstanceOf[js.Function3[Props, State, Any, Unit]]
+  private val origComponentDidUpdate = this.asInstanceOf[js.Dynamic].componentDidUpdate.bind(this).asInstanceOf[js.Function3[Props, State, Any, Unit]]
 
   def componentDidUpdate(prevProps: Props, prevState: State): Unit = {}
-  def componentDidUpdate(prevProps: Props, prevState: State, snapshot: Any): Unit = {
+  def componentDidUpdate(prevProps: Props, prevState: State, snapshot: Snapshot): Unit = {
     origComponentDidUpdate.asInstanceOf[js.Function2[Props, State, Unit]].apply(prevProps, prevState)
   }
 
@@ -216,7 +214,7 @@ abstract class DefinitionBase[Props, State](jsProps: js.Object) extends React.Co
 }
 
 object DefinitionBase {
-  private[DefinitionBase] val defaultBase = new DefinitionBase[Unit, Unit](null) {
+  private[DefinitionBase] val defaultBase = new DefinitionBase[Unit, Unit, Unit](null) {
     override def initialState: Unit = ()
     override def render(): ReactElement = null
   }.asInstanceOf[js.Dynamic]

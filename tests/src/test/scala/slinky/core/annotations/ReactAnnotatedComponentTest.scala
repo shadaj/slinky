@@ -141,6 +141,28 @@ object TakeValuesFromCompanionObject {
   }
 }
 
+@react class TestComponentForSnapshot extends Component {
+  type Props = Int => Unit
+  type State = Int
+  type Snapshot = Int
+
+  override def initialState: Int = 0
+
+  override def componentDidMount(): Unit = forceUpdate()
+
+  override def getSnapshotBeforeUpdate(prevProps: Int => Unit, prevState: Int): Snapshot = {
+    123
+  }
+
+  override def componentDidUpdate(prevProps: Int => Unit, prevState: Int, snapshot: Snapshot): Unit = {
+    props(snapshot)
+  }
+
+  override def render(): ReactElement = {
+    null
+  }
+}
+
 @react class DerivedStateComponent extends Component {
   case class Props(num: Int, onValue: Int => Unit)
   type State = Int
@@ -243,6 +265,17 @@ class ReactAnnotatedComponentTest extends AsyncFunSuite {
     )
 
     assert(!sawError)
+  }
+
+  test("getSnapshotBeforeUpdate is run and returned value is passed to componentDidUpdate") {
+    val promise: Promise[Assertion] = Promise()
+
+    ReactDOM.render(
+      TestComponentForSnapshot(i => promise.success(assert(i == 123))),
+      dom.document.createElement("div")
+    )
+
+    promise.future
   }
 
   test("getDerivedStateFromProps results in state being calculated based on props") {
