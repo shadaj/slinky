@@ -12,11 +12,6 @@ object ExternalSimple extends ExternalComponentNoProps {
   override val component = "div"
 }
 
-@react object ExternalSimpleWithProps extends ExternalComponent {
-  case class Props(a: Int)
-  override val component = "div"
-}
-
 object ExternalSimpleWithAttributes extends ExternalComponentNoPropsWithAttributes[div.tag.type] {
   override val component = "div"
 }
@@ -25,8 +20,23 @@ object ExternalSimpleWithWildcardAttributes extends ExternalComponentNoPropsWith
   override val component = "div"
 }
 
+@react object ExternalSimpleWithProps extends ExternalComponent {
+  case class Props(a: Int)
+  override val component = "div"
+}
+
+@react object ExternalDivWithPropsAndAttributes extends ExternalComponentWithAttributes[div.tag.type] {
+  case class Props(id: String)
+  override val component = "div"
+}
+
 @react object ExternalDivWithProps extends ExternalComponent {
   case class Props(id: String)
+  override val component = "div"
+}
+
+@react object ExternalDivWithAllDefaulted extends ExternalComponent {
+  case class Props(id: String = "foo")
   override val component = "div"
 }
 
@@ -38,10 +48,6 @@ class ExternalComponentTest extends FunSuite {
     )
 
     assert(rendered.asInstanceOf[js.Dynamic].id.asInstanceOf[String] == "test")
-  }
-
-  test("Can construct an external component with generated apply") {
-    assertCompiles("""div(ExternalSimpleWithProps(a = 1))""")
   }
 
   test("Implicit macro to shortcut ExternalComponent can be invoked") {
@@ -70,5 +76,13 @@ class ExternalComponentTest extends FunSuite {
 
   test("Can construct an external component taking * attributes") {
     assertCompiles("""ExternalSimpleWithWildcardAttributes(className := "hi", href := "foo")""")
+  }
+
+  test("Can construct an external component with generated apply") {
+    assertCompiles("""div(ExternalSimpleWithProps(a = 1))""")
+  }
+
+  test("Can construct an external component with default parameters") {
+    assertCompiles("""div(ExternalDivWithAllDefaulted())""")
   }
 }
