@@ -123,44 +123,22 @@ object ReactMacrosImpl {
 
     val outs: List[Tree] = annottees.map(_.tree).toList match {
       case Seq(cls @ q"..$_ class $className extends ..$parents { $_ => ..$_}")
-        if parentsContainsType(c)(parents, typeOf[Component]) =>
-        val (newCls, companionStats) = createComponentBody(c)(cls, false)
+        if parentsContainsType(c)(parents, typeOf[Component]) || parentsContainsType(c)(parents, typeOf[StatelessComponent]) =>
+        val (newCls, companionStats) = createComponentBody(c)(cls, parentsContainsType(c)(parents, typeOf[StatelessComponent]))
         List(newCls, q"object ${TermName(className.decodedName.toString)} extends ${typeOf[ComponentWrapper]} { ..$companionStats }")
 
       case Seq(cls @ q"..$_ class $className extends ..$parents { $_ => ..$_}", obj @ q"..$_ object $_ extends ..$_ { $_ => ..$objStats }")
-        if parentsContainsType(c)(parents, typeOf[Component]) =>
-        val (newCls, companionStats) = createComponentBody(c)(cls, false)
-        List(newCls, q"object ${TermName(className.decodedName.toString)} extends ${typeOf[ComponentWrapper]} { ..${objStats ++ companionStats} }")
-
-      case Seq(cls @ q"..$_ class $className extends ..$parents { $_ => ..$_}")
-        if parentsContainsType(c)(parents, typeOf[StatelessComponent]) =>
-        val (newCls, companionStats) = createComponentBody(c)(cls, true)
-        List(newCls, q"object ${TermName(className.decodedName.toString)} extends ${typeOf[ComponentWrapper]} { ..$companionStats }")
-
-      case Seq(cls @ q"..$_ class $className extends ..$parents { $_ => ..$_}", obj @ q"..$_ object $_ extends ..$_ { $_ => ..$objStats }")
-        if parentsContainsType(c)(parents, typeOf[StatelessComponent]) =>
-        val (newCls, companionStats) = createComponentBody(c)(cls, true)
+        if parentsContainsType(c)(parents, typeOf[Component]) || parentsContainsType(c)(parents, typeOf[StatelessComponent]) =>
+        val (newCls, companionStats) = createComponentBody(c)(cls, parentsContainsType(c)(parents, typeOf[StatelessComponent]))
         List(newCls, q"object ${TermName(className.decodedName.toString)} extends ${typeOf[ComponentWrapper]} { ..${objStats ++ companionStats} }")
 
       case Seq(obj @ q"..$_ object $objName extends ..$parents { $_ => ..$objStats}")
-        if parentsContainsType(c)(parents, typeOf[ExternalComponent]) =>
+        if parentsContainsType(c)(parents, typeOf[ExternalComponent]) ||
+           parentsContainsType(c)(parents, typeOf[ExternalComponentWithAttributes[_]]) ||
+           parentsContainsType(c)(parents, typeOf[ExternalComponentWithRefType[_]]) ||
+          parentsContainsType(c)(parents, typeOf[ExternalComponentWithAttributesWithRefType[_, _]]) =>
         val companionStats = createExternalBody(c)(obj)
         List(q"object $objName extends ${typeOf[ExternalComponent]} { ..${objStats ++ companionStats} }")
-
-      case Seq(obj @ q"..$_ object $objName extends ..$parents { $_ => ..$objStats}")
-        if parentsContainsType(c)(parents, typeOf[ExternalComponentWithAttributes[_]]) =>
-        val companionStats = createExternalBody(c)(obj)
-        List(q"object $objName extends ..$parents { ..${objStats ++ companionStats} }")
-
-      case Seq(obj @ q"..$_ object $objName extends ..$parents { $_ => ..$objStats}")
-        if parentsContainsType(c)(parents, typeOf[ExternalComponentWithRefType[_]]) =>
-        val companionStats = createExternalBody(c)(obj)
-        List(q"object $objName extends ..$parents { ..${objStats ++ companionStats} }")
-
-      case Seq(obj @ q"..$_ object $objName extends ..$parents { $_ => ..$objStats}")
-        if parentsContainsType(c)(parents, typeOf[ExternalComponentWithAttributesWithRefType[_, _]]) =>
-        val companionStats = createExternalBody(c)(obj)
-        List(q"object $objName extends ..$parents { ..${objStats ++ companionStats} }")
 
       case defn =>
         c.abort(c.enclosingPosition, s"@react must annotate a class that extends Component or an object that extends ExternalComponent(WithAttributes)(WithRefType), got $defn")
