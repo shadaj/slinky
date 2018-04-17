@@ -41,18 +41,8 @@ addCommandAlias(
 )
 
 lazy val macroAnnotationSettings = Seq(
-  // New-style macro annotations are under active development.  As a result, in
-  // this build we'll be referring to snapshot versions of both scala.meta and
-  // macro paradise.
   resolvers += Resolver.sonatypeRepo("releases"),
-  resolvers += Resolver.bintrayRepo("scalameta", "maven"),
-  // A dependency on macro paradise 3.x is required to both write and expand
-  // new-style macros.  This is similar to how it works for old-style macro
-  // annotations and a dependency on macro paradise 2.x.
-  addCompilerPlugin("org.scalameta" % "paradise" % "3.0.0-M11" cross CrossVersion.full),
-  scalacOptions += "-Xplugin-require:macroparadise",
-  // temporary workaround for https://github.com/scalameta/paradise/issues/10
-  scalacOptions in (Compile, console) := Seq() // macroparadise plugin doesn't work in repl yet.
+  addCompilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.full)
 )
 
 lazy val generator = project
