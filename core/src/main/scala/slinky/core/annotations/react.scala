@@ -128,7 +128,7 @@ object ReactMacrosImpl {
           List(
             caseClassApply,
             q"""def apply(mod: _root_.slinky.core.AttrPair[$elementType], tagMods: _root_.slinky.core.AttrPair[$elementType]*): _root_.slinky.core.BuildingComponent[$elementType, $refType] = {
-                    new _root_.slinky.core.BuildingComponent[Element, $refType](component, _root_.scala.scalajs.js.Dynamic.literal(), mods = (mod +: tagMods).asInstanceOf[_root_.scala.collection.immutable.Seq[_root_.slinky.core.AttrPair[Element]]])
+                    new _root_.slinky.core.BuildingComponent[$elementType, $refType](component, _root_.scala.scalajs.js.Dynamic.literal(), mods = (mod +: tagMods).asInstanceOf[_root_.scala.collection.immutable.Seq[_root_.slinky.core.AttrPair[$elementType]]])
                   }""",
             q"""def withKey(key: String): _root_.slinky.core.BuildingComponent[$elementType, $refType] = new _root_.slinky.core.BuildingComponent(component, _root_.scala.scalajs.js.Dynamic.literal(), key = key)""",
             q"""def withRef(ref: $refType => Unit): _root_.slinky.core.BuildingComponent[$elementType, $refType] = new _root_.slinky.core.BuildingComponent(component, _root_.scala.scalajs.js.Dynamic.literal(), ref = ref)""",
