@@ -5,6 +5,7 @@ import slinky.web.ReactDOM
 import org.scalatest.FunSuite
 import slinky.web.html._
 import org.scalajs.dom
+import slinky.core.facade.React
 
 import scala.scalajs.js
 
@@ -48,6 +49,16 @@ class ExternalComponentTest extends FunSuite {
     )
 
     assert(rendered.asInstanceOf[js.Dynamic].id.asInstanceOf[String] == "test")
+  }
+
+  test("Can use a ref with an macro-based external component") {
+    val ref = React.createRef[js.Object]
+    ReactDOM.render(
+      ExternalDivWithProps(id = "test").withRef(ref),
+      dom.document.createElement("div")
+    )
+
+    assert(ref.current.asInstanceOf[js.Dynamic].id.asInstanceOf[String] == "test")
   }
 
   test("Implicit macro to shortcut ExternalComponent can be invoked") {

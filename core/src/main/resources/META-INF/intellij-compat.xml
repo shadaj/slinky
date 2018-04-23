@@ -1,7 +1,7 @@
 <intellij-compat>
-    <scala-plugin since-version="2018.1.0" until-version="2018.1.8">
+    <scala-plugin since-version="0.0.0" until-version="2018.3.100">
         <psi-injector interface="org.jetbrains.plugins.scala.lang.psi.impl.toplevel.typedef.SyntheticMembersInjector"
-                      implementation="slinky.core.annotations.IntellijSupport">
+                      implementation="slinky.core.annotations.SlinkyInjector">
             <source>META-INF/IntellijSupport.scala</source>
         </psi-injector>
     </scala-plugin>
