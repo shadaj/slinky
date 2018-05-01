@@ -83,7 +83,8 @@ object DocsTree {
       "Why Slinky?" -> "/docs/why-slinky/",
       "The Tag API" -> "/docs/the-tag-api/",
       "Writing Components" -> "/docs/writing-components/",
-      "External Components" -> "/docs/external-components/"
+      "External Components" -> "/docs/external-components/",
+      "React Native and VR" -> "/docs/native-and-vr/"
     ),
     "Advanced Guides" -> List(
       "Technical Overview" -> "/docs/technical-overview/",
