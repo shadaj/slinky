@@ -21,7 +21,7 @@ abstract class DefinitionBase[Props, State, Snapshot](jsProps: js.Object) extend
   def initialState: State
 
   this.asInstanceOf[PrivateComponentClass].stateR = {
-    if (BaseComponentWrapper.scalaComponentWritingEnabled) {
+    if (BaseComponentWrapper.scalaComponentWritingEnabled && defaultBase != null) {
       writeWithWrappingAdjustment(stateWriter)(initialState)
     } else js.Dynamic.literal(__ = initialState.asInstanceOf[js.Any])
   }

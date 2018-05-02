@@ -37,7 +37,11 @@ abstract class Component extends React.Component(null) {
 
   def componentWillUpdate(nextProps: Props, nextState: State): Unit = {}
 
+  def getSnapshotBeforeUpdate(prevProps: Props, prevState: State): Snapshot = null.asInstanceOf[Snapshot]
+
   def componentDidUpdate(prevProps: Props, prevState: State): Unit = {}
+
+  def componentDidUpdate(prevProps: Props, prevState: State, snapshot: Snapshot): Unit = {}
 
   def componentWillUnmount(): Unit = {}
 
