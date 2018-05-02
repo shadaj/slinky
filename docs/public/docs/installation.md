@@ -16,10 +16,10 @@ Since Slinky is distributed just like any other Scala.js library, it's very easy
 
 Add the dependencies that match your application as well as required Scala.js compiler options:
 ```scala
-libraryDependencies += "me.shadaj" %%% "slinky-core" % "0.3.2" // core React functionality, no React DOM
-libraryDependencies += "me.shadaj" %%% "slinky-web" % "0.3.2" // React DOM, HTML and SVG tags
-libraryDependencies += "me.shadaj" %%% "slinky-hot" % "0.3.2" // Hot loading, requires react-proxy package
-libraryDependencies += "me.shadaj" %%% "slinky-scalajsreact-interop" % "0.3.2" // Interop with japgolly/scalajs-react
+libraryDependencies += "me.shadaj" %%% "slinky-core" % "0.4.0" // core React functionality, no React DOM
+libraryDependencies += "me.shadaj" %%% "slinky-web" % "0.4.0" // React DOM, HTML and SVG tags
+libraryDependencies += "me.shadaj" %%% "slinky-hot" % "0.4.0" // Hot loading, requires react-proxy package
+libraryDependencies += "me.shadaj" %%% "slinky-scalajsreact-interop" % "0.4.0" // Interop with japgolly/scalajs-react
 
 scalacOptions += "-P:scalajs:sjsDefinedByDefault"
 

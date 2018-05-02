@@ -1,6 +1,8 @@
 # Changelog
 
 ## vNEXT
+
+## v0.4.0
 ### Highlights :tada:
 + **Slinky now has support for React 16.3 features**
   + Use the new Context API with a [statically-typed interface](https://slinky.shadaj.me/docs/context/) [PR #125](https://github.com/shadaj/slinky/pull/125)
