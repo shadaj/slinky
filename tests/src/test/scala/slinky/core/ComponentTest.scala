@@ -52,6 +52,28 @@ object TestComponentForSetStateCallback extends ComponentWrapper {
   }
 }
 
+object TestComponentForShouldComponentUpdate extends ComponentWrapper {
+  type Props = () => Unit
+  type State = Int
+
+  class Def(jsProps: js.Object) extends Definition(jsProps) {
+    override def initialState: Int = 0
+
+    override def shouldComponentUpdate(nextProps: Props, nextState: State) = {
+      nextState == 123
+    }
+
+    override def componentDidUpdate(prevProps: Props, prevState: State) = {
+      println("component did update?")
+      prevProps.apply()
+    }
+
+    override def render(): ReactElement = {
+      null
+    }
+  }
+}
+
 object TestComponentForSnapshot extends ComponentWrapper {
   type Props = Int => Unit
   type State = Int
@@ -192,6 +214,25 @@ class ComponentTest extends AsyncFunSuite {
     val element: ReactElement = NoPropsComponent.withKey("hi").withRef((r: js.Object) => {})
     assert(element.asInstanceOf[js.Dynamic].key.toString == "hi")
     assert(!js.isUndefined(element.asInstanceOf[js.Dynamic].ref))
+  }
+
+  test("shouldComponentUpdate controls when component is updated") {
+    var called = false
+    var ref: TestComponentForShouldComponentUpdate.Def = null
+
+    ReactDOM.render(
+      TestComponentForShouldComponentUpdate(() => {
+        called = true
+      }).withRef(r => ref = r),
+      dom.document.createElement("div")
+    )
+
+    ref.setState(123)
+    assert(called)
+
+    called = false
+    ref.setState(1)
+    assert(!called)
   }
 
   test("Force updating a component by its ref works") {
