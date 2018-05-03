@@ -1,6 +1,8 @@
 # Changelog
 
 ## vNEXT
+
+## v0.4.1
 + Fix exception when hot-reloading Slinky components [PR #134](https://github.com/shadaj/slinky/pull/134)
 
 ## v0.4.0
