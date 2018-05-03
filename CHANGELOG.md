@@ -1,6 +1,7 @@
 # Changelog
 
 ## vNEXT
++ Fix bug with `shouldComponentUpdate` not being registered correctly on the component [PR #135](https://github.com/shadaj/slinky/pull/135)
 
 ## v0.4.1
 + Fix exception when hot-reloading Slinky components [PR #134](https://github.com/shadaj/slinky/pull/134)

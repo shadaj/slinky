@@ -156,7 +156,7 @@ abstract class DefinitionBase[Props, State, Snapshot](jsProps: js.Object) extend
     }
 
     if (this.asInstanceOf[js.Dynamic].shouldComponentUpdate != defaultBase.shouldComponentUpdate) {
-      val orig = this.asInstanceOf[js.Dynamic].shouldComponentUpdate.bind(this).asInstanceOf[js.Function2[Props, State, Unit]]
+      val orig = this.asInstanceOf[js.Dynamic].shouldComponentUpdate.bind(this).asInstanceOf[js.Function2[Props, State, Boolean]]
       this.asInstanceOf[js.Dynamic].shouldComponentUpdate = (nextProps: js.Object, nextState: js.Object) => {
         orig(
           readPropsValue(nextProps),
