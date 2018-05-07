@@ -75,7 +75,7 @@ private[slinky] object ReactRaw extends js.Object {
                     properties: js.Dictionary[js.Any],
                     contents: ReactElement*): ReactElement = js.native
 
-  def createContext[T](name: String): ReactContext[T] = js.native
+  def createContext[T](defaultValue: T): ReactContext[T] = js.native
 
   def createRef[T](): ReactRef[T] = js.native
 
@@ -105,7 +105,7 @@ object React {
                     properties: js.Dictionary[js.Any],
                     contents: ReactElement*): ReactElement = ReactRaw.createElement(elementName, properties, contents: _*)
 
-  def createContext[T](name: String): ReactContext[T] = ReactRaw.createContext[T](name)
+  def createContext[T](defaultValue: T): ReactContext[T] = ReactRaw.createContext[T](defaultValue)
 
   def createRef[T]: ReactRef[T] = ReactRaw.createRef[T]()
 
