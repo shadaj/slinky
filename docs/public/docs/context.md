@@ -5,7 +5,7 @@ Slinky supports the [new context API](https://reactjs.org/docs/context.html) int
 To start using the new context API, first create a context object, which contains the components needed to provide and consume context. The `createContext` method in Slinky takes a type parameter so that the context value is statically typed.
 
 ```scala
-val myContext = React.createContext[String]("myContextId")
+val myContext = React.createContext[String]("default-context-value")
 ```
 
 ## Providing Context

@@ -16,7 +16,7 @@ trait ReactContextRaw extends js.Object {
 case class ContextProviderProps[T](value: T)
 object ContextProviderProps {
   implicit def writer[T]: Writer[ContextProviderProps[T]] = v => js.Dynamic.literal(
-    value = Writer.fallback[T].write(v.value)
+    value = v.value.asInstanceOf[js.Any]
   )
 }
 
@@ -33,7 +33,7 @@ case class ContextConsumerProps[T](children: T => ReactElement)
 object ContextConsumerProps {
   implicit def writer[T]: Writer[ContextConsumerProps[T]] = v => js.Dynamic.literal(
     children = Writer.function1[T, ReactElement](
-      Reader.fallback[T], Writer.jsAnyWriter[ReactElement]
+      _.asInstanceOf[T], Writer.jsAnyWriter[ReactElement]
     ).write(v.children)
   )
 }

@@ -8,7 +8,7 @@ import slinky.web.html.div
 
 class ContextTest extends FunSuite {
   test("Can provide and read a simple context value") {
-    val context = React.createContext[Int]("myContext")
+    val context = React.createContext(-1)
     var gotValue = 0
 
     ReactDOM.render(
@@ -26,7 +26,7 @@ class ContextTest extends FunSuite {
 
   test("Can provide and read a case class context value") {
     case class Data(foo: Int)
-    val context = React.createContext[Data]("myContext")
+    val context = React.createContext(Data(-1))
     var gotValue = 0
 
     ReactDOM.render(
@@ -36,6 +36,22 @@ class ContextTest extends FunSuite {
           div()
         }
       ),
+      document.createElement("div")
+    )
+
+    assert(gotValue == 3)
+  }
+
+  test("Read a case class context value from default") {
+    case class Data(foo: Int)
+    val context = React.createContext(Data(3))
+    var gotValue = 0
+
+    ReactDOM.render(
+      context.Consumer { value =>
+        gotValue = value.foo
+        div()
+      },
       document.createElement("div")
     )
 
