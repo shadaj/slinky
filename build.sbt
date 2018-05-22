@@ -13,7 +13,25 @@ lazy val slinky = project.in(file(".")).aggregate(
   vr,
   hot,
   scalajsReactInterop
-).settings(publishArtifact := false)
+).settings(
+  publishArtifact := false
+)
+
+lazy val librarySettings = Seq(
+  scalacOptions ++= (if (isSnapshot.value && false) Seq.empty else Seq({
+    val origVersion = version.value
+    val githubVersion = if (origVersion.contains("-")) {
+      origVersion.split('-').last
+    } else {
+      s"v$origVersion"
+    }
+
+    val a = baseDirectory.value.toURI
+    val g = "https://raw.githubusercontent.com/shadaj/slinky"
+    println(baseDirectory.value)
+    s"-P:scalajs:mapSourceURI:$a->$g/${githubVersion}/${baseDirectory.value.getName}/"
+  }))
+)
 
 addCommandAlias(
   "publishSignedAll",
@@ -40,9 +58,9 @@ lazy val macroAnnotationSettings = Seq(
 
 lazy val generator = project
 
-lazy val readWrite = project
+lazy val readWrite = project.settings(librarySettings)
 
-lazy val core = project.settings(macroAnnotationSettings).dependsOn(readWrite)
+lazy val core = project.settings(macroAnnotationSettings, librarySettings).dependsOn(readWrite)
 
 lazy val web = project.settings(
   sourceGenerators in Compile += Def.taskDyn[Seq[File]] {
@@ -63,18 +81,19 @@ lazy val web = project.settings(
     val base  = (sourceManaged  in Compile).value
     val files = (managedSources in Compile).value
     files.map { f => (f, f.relativeTo(base).get.getPath) }
-  }
+  },
+  librarySettings
 ).dependsOn(core)
 
-lazy val testRenderer = project.settings(macroAnnotationSettings).dependsOn(core)
+lazy val testRenderer = project.settings(macroAnnotationSettings, librarySettings).dependsOn(core)
 
-lazy val native = project.settings(macroAnnotationSettings).dependsOn(core, testRenderer % Test)
+lazy val native = project.settings(macroAnnotationSettings, librarySettings).dependsOn(core, testRenderer % Test)
 
-lazy val vr = project.settings(macroAnnotationSettings).dependsOn(core, testRenderer % Test)
+lazy val vr = project.settings(macroAnnotationSettings, librarySettings).dependsOn(core, testRenderer % Test)
 
-lazy val hot = project.settings(macroAnnotationSettings).dependsOn(core)
+lazy val hot = project.settings(macroAnnotationSettings, librarySettings).dependsOn(core)
 
-lazy val scalajsReactInterop = project.settings(macroAnnotationSettings).dependsOn(core)
+lazy val scalajsReactInterop = project.settings(macroAnnotationSettings, librarySettings).dependsOn(core)
 
 lazy val tests = project.settings(macroAnnotationSettings).dependsOn(core, web, hot, scalajsReactInterop)
 
