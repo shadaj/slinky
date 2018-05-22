@@ -28,7 +28,6 @@ lazy val librarySettings = Seq(
 
     val a = baseDirectory.value.toURI
     val g = "https://raw.githubusercontent.com/shadaj/slinky"
-    println(baseDirectory.value)
     s"-P:scalajs:mapSourceURI:$a->$g/${githubVersion}/${baseDirectory.value.getName}/"
   }))
 )
