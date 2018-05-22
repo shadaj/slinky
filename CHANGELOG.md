@@ -2,6 +2,7 @@
 
 ## vNEXT
 + Support storing any type as a default context value [PR #136](https://github.com/shadaj/slinky/pull/136)
++ Set sourcemaps to use GitHub URLs so that they load in other apps [PR #143](https://github.com/shadaj/slinky/pull/143)
 
 ## v0.4.2
 + Fix bug with `shouldComponentUpdate` not being registered correctly on the component [PR #135](https://github.com/shadaj/slinky/pull/135)
