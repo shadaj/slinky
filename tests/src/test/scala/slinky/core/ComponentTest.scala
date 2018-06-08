@@ -64,7 +64,6 @@ object TestComponentForShouldComponentUpdate extends ComponentWrapper {
     }
 
     override def componentDidUpdate(prevProps: Props, prevState: State) = {
-      println("component did update?")
       prevProps.apply()
     }
 
