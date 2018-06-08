@@ -2453,6 +2453,96 @@
         "input"
       ],
       "withDash" : false
+    },
+    {
+      "attributeName" : "onPointerDown",
+      "attributeType" : "MouseEventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onPointerMove",
+      "attributeType" : "MouseEventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onPointerUp",
+      "attributeType" : "MouseEventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onPointerCancel",
+      "attributeType" : "MouseEventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onGotPointerCapture",
+      "attributeType" : "MouseEventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onLostPointerCapture",
+      "attributeType" : "MouseEventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onPointerEnter",
+      "attributeType" : "MouseEventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onPointerLeave",
+      "attributeType" : "MouseEventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onPointerOver",
+      "attributeType" : "MouseEventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onPointerOut",
+      "attributeType" : "MouseEventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
     }
   ]
 }
