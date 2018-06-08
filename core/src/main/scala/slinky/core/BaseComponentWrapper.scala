@@ -174,8 +174,7 @@ object PropsReaderProvider {
   def impl(c: blackbox.Context): c.Expr[PropsReaderProvider] = {
     import c.universe._
     val compName = c.internal.enclosingOwner.owner.asClass
-    val readerType = tq"_root_.slinky.readwrite.Reader[$compName.Props]"
-    val q"val x: $typedReaderType = null" = c.typecheck(q"val x: $readerType = null")
+    val q"$_; val x: $typedReaderType = null" = c.typecheck(q"@_root_.scala.annotation.unchecked.uncheckedStable val comp: $compName = null; val x: _root_.slinky.readwrite.Reader[comp.Props] = null")
     val tpcls = c.inferImplicitValue(typedReaderType.tpe.asInstanceOf[c.Type])
     c.Expr(q"if (_root_.scala.scalajs.LinkingInfo.productionMode) null else $tpcls.asInstanceOf[_root_.slinky.core.PropsReaderProvider]")
   }
@@ -188,8 +187,7 @@ object PropsWriterProvider {
   def impl(c: blackbox.Context): c.Expr[PropsWriterProvider] = {
     import c.universe._
     val compName = c.internal.enclosingOwner.owner.asClass
-    val readerType = tq"_root_.slinky.readwrite.Writer[$compName.Props]"
-    val q"val x: $typedReaderType = null" = c.typecheck(q"val x: $readerType = null")
+    val q"$_; val x: $typedReaderType = null" = c.typecheck(q"@_root_.scala.annotation.unchecked.uncheckedStable val comp: $compName = null; val x: _root_.slinky.readwrite.Writer[comp.Props] = null")
     val tpcls = c.inferImplicitValue(typedReaderType.tpe.asInstanceOf[c.Type])
     c.Expr(q"if (_root_.scala.scalajs.LinkingInfo.productionMode) null else $tpcls.asInstanceOf[_root_.slinky.core.PropsWriterProvider]")
   }
@@ -202,8 +200,7 @@ object StateReaderProvider {
   def impl(c: blackbox.Context): c.Expr[StateReaderProvider] = {
     import c.universe._
     val compName = c.internal.enclosingOwner.owner.asClass
-    val readerType = tq"_root_.slinky.readwrite.Reader[$compName.State]"
-    val q"val x: $typedReaderType = null" = c.typecheck(q"val x: $readerType = null")
+    val q"$_; val x: $typedReaderType = null" = c.typecheck(q"@_root_.scala.annotation.unchecked.uncheckedStable val comp: $compName = null; val x: _root_.slinky.readwrite.Reader[comp.State] = null")
     val tpcls = c.inferImplicitValue(typedReaderType.tpe.asInstanceOf[c.Type])
     c.Expr(q"if (_root_.scala.scalajs.LinkingInfo.productionMode) null else $tpcls.asInstanceOf[_root_.slinky.core.StateReaderProvider]")
   }
@@ -216,8 +213,7 @@ object StateWriterProvider {
   def impl(c: blackbox.Context): c.Expr[StateWriterProvider] = {
     import c.universe._
     val compName = c.internal.enclosingOwner.owner.asClass
-    val readerType = tq"_root_.slinky.readwrite.Writer[$compName.State]"
-    val q"val x: $typedReaderType = null" = c.typecheck(q"val x: $readerType = null")
+    val q"$_; val x: $typedReaderType = null" = c.typecheck(q"@_root_.scala.annotation.unchecked.uncheckedStable val comp: $compName = null; val x: _root_.slinky.readwrite.Writer[comp.State] = null")
     val tpcls = c.inferImplicitValue(typedReaderType.tpe.asInstanceOf[c.Type])
     c.Expr(q"if (_root_.scala.scalajs.LinkingInfo.productionMode) null else $tpcls.asInstanceOf[_root_.slinky.core.StateWriterProvider]")
   }
