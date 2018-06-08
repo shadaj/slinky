@@ -76,7 +76,17 @@ object MDN extends TagsProvider {
     Attr("onTimeUpdate", "EventHandler") -> "",
     Attr("onToggle", "EventHandler") -> "",
     Attr("onVolumeChange", "EventHandler") -> "",
-    Attr("onWaiting", "EventHandler") -> ""
+    Attr("onWaiting", "EventHandler") -> "",
+    Attr("onPointerDown", "MouseEventHandler") -> "",
+    Attr("onPointerMove", "MouseEventHandler") -> "",
+    Attr("onPointerUp", "MouseEventHandler") -> "",
+    Attr("onPointerCancel", "MouseEventHandler") -> "",
+    Attr("onGotPointerCapture", "MouseEventHandler") -> "",
+    Attr("onLostPointerCapture", "MouseEventHandler") -> "",
+    Attr("onPointerEnter", "MouseEventHandler") -> "",
+    Attr("onPointerLeave", "MouseEventHandler") -> "",
+    Attr("onPointerOver", "MouseEventHandler") -> "",
+    Attr("onPointerOut", "MouseEventHandler") -> ""
   )
 
   val supportedAttributes: Set[String] =
