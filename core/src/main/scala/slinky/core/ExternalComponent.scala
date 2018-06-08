@@ -94,13 +94,13 @@ abstract class ExternalComponentNoPropsWithRefType[R <: js.Object]
 
 abstract class ExternalComponentNoProps extends ExternalComponentNoPropsWithAttributes[Nothing]
 
+// same as PropsWriterProvider except it always returns the typeclass instead of nulling it out in fullOpt mode
 trait ExternalPropsWriterProvider extends js.Object
 object ExternalPropsWriterProvider {
   def impl(c: blackbox.Context): c.Expr[ExternalPropsWriterProvider] = {
     import c.universe._
     val compName = c.internal.enclosingOwner.owner.asClass
-    val readerType = tq"_root_.slinky.readwrite.Writer[$compName.Props]"
-    val q"val x: $typedReaderType = null" = c.typecheck(q"val x: $readerType = null")
+    val q"$_; val x: $typedReaderType = null" = c.typecheck(q"@_root_.scala.annotation.unchecked.uncheckedStable val comp: $compName = null; val x: _root_.slinky.readwrite.Writer[comp.Props] = null")
     val tpcls = c.inferImplicitValue(typedReaderType.tpe.asInstanceOf[c.Type])
     c.Expr(q"$tpcls.asInstanceOf[_root_.slinky.core.ExternalPropsWriterProvider]")
   }

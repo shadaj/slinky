@@ -9,8 +9,6 @@ import scala.scalajs.js
 import org.scalajs.dom
 import org.scalajs.dom.MouseEvent
 
-import scala.scalajs.js.annotation.ScalaJSDefined
-
 class InnerClassCustom extends js.Object {
   val customTag = new CustomTag("custom-element")
   val customClass = new CustomAttribute[String]("class")
