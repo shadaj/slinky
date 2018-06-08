@@ -1,6 +1,8 @@
 # Changelog
 
 ## vNEXT
++ Bump Scala.js React version for interop to 1.2.0 [PR #148](https://github.com/shadaj/slinky/pull/148)
++ Fix errors in Reader/Writer provider macros with Scala versions > 2.12.4 [PR #147](https://github.com/shadaj/slinky/pull/147)
 + Support storing any type as a default context value [PR #136](https://github.com/shadaj/slinky/pull/136)
 + Set sourcemaps to use GitHub URLs so that they load in other apps [PR #143](https://github.com/shadaj/slinky/pull/143)
 

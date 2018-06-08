@@ -23,12 +23,12 @@ import org.scalajs.dom.{document, html}
 object Main {
   val Hello =
     ScalaComponent.builder[String]("Hello")
-      .render_P(name => <.div(
+      .render_P(name => vdomElementFromTag(<.div(
         "This is a component from scalajs-react being used in ", name,
         div(
           "and this is from Slinky inside the scalajs-react component!"
         )
-      ))
+      )))
       .build
 
   @react class Foo extends Component {
