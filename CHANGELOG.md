@@ -1,6 +1,8 @@
 # Changelog
 
 ## vNEXT
+
+## v0.4.3
 + Support pointer events that were added in React 16.4 [PR #149](https://github.com/shadaj/slinky/pull/149)
 + Bump Scala.js React version for interop to 1.2.0 [PR #148](https://github.com/shadaj/slinky/pull/148)
 + Fix errors in Reader/Writer provider macros with Scala versions > 2.12.4 [PR #147](https://github.com/shadaj/slinky/pull/147)
