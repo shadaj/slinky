@@ -11,7 +11,7 @@ class InteropTest extends FunSuite {
   test("Can convert Scala.js React node to Slinky") {
     val target = document.createElement("div")
     ReactDOM.render(
-      <.a(),
+      <.a().toSlinky,
       target
     )
 
@@ -22,8 +22,8 @@ class InteropTest extends FunSuite {
     val target = document.createElement("div")
     ReactDOM.render(
       <.a(
-        div("hello!")
-      ),
+        div("hello!").toScalaJSReact
+      ).toSlinky,
       target
     )
 

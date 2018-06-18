@@ -23,12 +23,12 @@ import org.scalajs.dom.{document, html}
 object Main {
   val Hello =
     ScalaComponent.builder[String]("Hello")
-      .render_P(name => vdomElementFromTag(<.div(
+      .render_P(name => <.div(
         "This is a component from scalajs-react being used in ", name,
         div(
           "and this is from Slinky inside the scalajs-react component!"
-        )
-      )))
+        ).toScalaJSReact
+      ))
       .build
 
   @react class Foo extends Component {
@@ -76,10 +76,10 @@ object Main {
           value := state
         ),
         div(className := "foo")(props.name),
-        <.h2(s"this was rendered by scalajs-react!"),
+        <.h2(s"this was rendered by scalajs-react!").toSlinky,
         maybeChild,
         (1 to state.size).map(n => div(key := n.toString)(s"$n - $state")),
-        Hello("slinky")
+        Hello("slinky").toSlinky
       )
     }
   }
