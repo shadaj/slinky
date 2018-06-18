@@ -1,6 +1,8 @@
 # Changelog
 
 ## vNEXT
+### Breaking Changes
++ Interop with Scala.js React now requires using the explicit conversions `.toSlinky` and `.toScalaJSReact` [PR #151](https://github.com/shadaj/slinky/pull/151)
 
 ## v0.4.3
 + Support pointer events that were added in React 16.4 [PR #149](https://github.com/shadaj/slinky/pull/149)
