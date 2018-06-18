@@ -11,6 +11,8 @@ To use this module, simply import the implicit conversions between Slinky and sc
 import slinky.scalajsreact.Converters._
 ```
 
+Then use the converters `.toSlinky` and `.toScalaJSReact` to convert React elements from each library to the other.
+
 This makes it possible to use Slinky components from scalajs-react and vice-versa. For example, the following code can now work:
 
 ```scala
@@ -21,7 +23,7 @@ val ScalajsReactComponent =
       "This is a component from scalajs-react",
       div( // a Slinky tag being used here
         "and this is from Slinky inside the scalajs-react component!"
-      )
+      ).toScalaJSReact
     ))
     .build
     
@@ -29,7 +31,7 @@ val ScalajsReactComponent =
   case class Props(name: String)
 
   def render(): ReactElement = {
-    ScalajsReactComponent(props.name)
+    ScalajsReactComponent(props.name).toSlinky
   }
 }
 
