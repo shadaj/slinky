@@ -108,7 +108,7 @@ sourceGenerators in Compile += Def.task {
        |      val param = ctx.parameters.head
        |      param.typeclass.write(param.dereference(value))
        |    } else if (ctx.isObject) {
-       |      js.Dynamic.literal("_type" -> ctx.typeName)
+       |      js.Dynamic.literal("_type" -> ctx.typeName.full)
        |    } else {
        |      val ret = js.Dynamic.literal()
        |      ctx.parameters.foreach { param =>
@@ -129,7 +129,7 @@ sourceGenerators in Compile += Def.task {
        |    ctx.dispatch(value) { sub =>
        |      val ret = sub.typeclass.write(sub.cast(value))
        |
-       |      ret.asInstanceOf[js.Dynamic].updateDynamic("_type")(sub.label)
+       |      ret.asInstanceOf[js.Dynamic].updateDynamic("_type")(sub.typeName.full)
        |
        |      ret
        |    }
@@ -266,7 +266,7 @@ sourceGenerators in Compile += Def.task {
        |
        |  def dispatch[T](ctx: SealedTrait[Typeclass, T]): Typeclass[T] = o => {
        |    val typeString = o.asInstanceOf[js.Dynamic]._type.asInstanceOf[String]
-       |    ctx.subtypes.find(_.label == typeString).get.typeclass.read(o)
+       |    ctx.subtypes.find(_.typeName.full == typeString).get.typeclass.read(o)
        |  }
        |
        |  def fallback[T]: Reader[T] = v => {
