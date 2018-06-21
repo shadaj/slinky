@@ -267,12 +267,12 @@ object Magnolia {
           primaryFactoryMethod.foreach(_.asMethod.typeSignature)
 
           val indexedConstructorParams = plist.zipWithIndex
-          indexedConstructorParams.map {
-            case (p, idx) =>
-              if (p.isParamWithDefault) {
-                val method = TermName("apply$default$" + (idx + 1))
-                q"$scalaPkg.Some($companionRef.$method)"
-              } else q"$scalaPkg.None"
+          indexedConstructorParams.map { case (p, idx) =>
+            // Causes Scala compiler to crash
+            /*if (p.isParamWithDefault) {
+              val method = TermName("apply$default$" + (idx + 1))
+              q"$scalaPkg.Some($companionRef.$method)"
+            } else*/ q"$scalaPkg.None"
           }
         } getOrElse List(q"$scalaPkg.None")
 
