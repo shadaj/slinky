@@ -28,7 +28,6 @@ sourceGenerators in Compile += Def.task {
 
   out.println(
     s"""package slinky.readwrite
-       |import scala.collection.generic.CanBuildFrom
        |import scala.concurrent.Future
        |import scala.language.experimental.macros
        |import scala.language.{higherKinds, implicitConversions}
@@ -89,9 +88,8 @@ sourceGenerators in Compile += Def.task {
        |    _.map(v => writer.write(v)).getOrElse(js.undefined.asInstanceOf[js.Object])
        |
        |  implicit def collectionWriter[T, C[_]](implicit writer: Writer[T],
-       |                                         cbf: CanBuildFrom[Nothing, T, Seq[T]],
        |                                         ev: C[T] <:< Iterable[T]): Writer[C[T]] = s => {
-       |    js.Array(s.to[Seq](cbf).map(v => writer.write(v)): _*).asInstanceOf[js.Object]
+       |    js.Array(s.toSeq.map(v => writer.write(v)): _*).asInstanceOf[js.Object]
        |  }
        |
        |  implicit def futureWriter[O](implicit oWriter: Writer[O]): Writer[Future[O]] = s => {
@@ -162,7 +160,7 @@ sourceGenerators in Compile += Def.task {
   out.println(
     s"""package slinky.readwrite
        |
-       |import scala.collection.generic.CanBuildFrom
+       |import scala.collection.Factory
        |import scala.concurrent.Future
        |import scala.language.experimental.macros
        |import scala.language.{higherKinds, implicitConversions}
@@ -238,10 +236,9 @@ sourceGenerators in Compile += Def.task {
        |    }
        |  }
        |
-       |  implicit def collectionReader[T, C[_]](implicit reader: Reader[T],
-       |                                         cbf: CanBuildFrom[Nothing, T, C[T]],
-       |                                         ev: C[T] <:< Iterable[T]): Reader[C[T]] =
-       |    _.asInstanceOf[js.Array[js.Object]].map(o => reader.read(o)).to[C]
+       |  implicit def collectionReader[T, C[T] <: Iterable[T]](implicit reader: Reader[T],
+       |                                         bf: Factory[T, C[T]]): Reader[C[T]] =
+       |    c => bf.fromSpecific(c.asInstanceOf[js.Array[js.Object]].map(o => reader.read(o)))
        |
        |  implicit def futureReader[O](implicit oReader: Reader[O]): Reader[Future[O]] =
        |    _.asInstanceOf[js.Promise[js.Object]].toFuture.map { v =>

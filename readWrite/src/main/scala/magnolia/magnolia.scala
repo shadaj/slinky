@@ -153,8 +153,13 @@ object Magnolia {
     }
 
     def directInferImplicit(genericType: Type, typeConstructor: Type): Option[Tree] = {
+<<<<<<< HEAD
       val genericTypeName = genericType.typeSymbol.name.decodedName.toString.toLowerCase
       val assignedName = TermName(c.freshName(s"${genericTypeName}Typeclass"))
+=======
+      val genericTypeName = genericType.typeSymbol.name.encodedName.toString.toLowerCase
+      val assignedName = TermName(c.freshName(s"${genericTypeName}Typeclass")).encodedName.toTermName
+>>>>>>> [WIP] Support Scala 2.13
       val typeSymbol = genericType.typeSymbol
       val classType = if (typeSymbol.isClass) Some(typeSymbol.asClass) else None
       val isCaseClass = classType.exists(_.isCaseClass)
@@ -319,7 +324,7 @@ object Magnolia {
         }})}))
           }""")
       } else if (isSealedTrait) {
-        val genericSubtypes = classType.get.knownDirectSubclasses.to[List]
+        val genericSubtypes = classType.get.knownDirectSubclasses.to(List)
         val subtypes = genericSubtypes.map { sub =>
           val subType = sub.asType.toType // FIXME: Broken for path dependent types
           val typeParams = sub.asType.typeParams

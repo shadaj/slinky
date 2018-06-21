@@ -1,6 +1,6 @@
 organization in ThisBuild := "me.shadaj"
 
-scalaVersion in ThisBuild := "2.12.6"
+scalaVersion in ThisBuild := "2.13.0-M4"
 
 scalacOptions in ThisBuild ++= Seq("-feature", "-deprecation")
 
@@ -11,8 +11,8 @@ lazy val slinky = project.in(file(".")).aggregate(
   testRenderer,
   native,
   vr,
-  hot,
-  scalajsReactInterop
+  hot/*,
+  scalajsReactInterop*/
 ).settings(
   publishArtifact := false
 )
@@ -42,10 +42,11 @@ addCommandAlias(
 
 lazy val macroAnnotationSettings = Seq(
   resolvers += Resolver.sonatypeRepo("releases"),
-  addCompilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.full)
+//  addCompilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.full)
+  scalacOptions += "-Ymacro-annotations"
 )
 
-lazy val generator = project
+lazy val generator = project.settings(scalaVersion := "2.12.6")
 
 lazy val readWrite = project.settings(librarySettings)
 
@@ -82,12 +83,12 @@ lazy val vr = project.settings(macroAnnotationSettings, librarySettings).depends
 
 lazy val hot = project.settings(macroAnnotationSettings, librarySettings).dependsOn(core)
 
-lazy val scalajsReactInterop = project.settings(macroAnnotationSettings, librarySettings).dependsOn(core)
+//lazy val scalajsReactInterop = project.settings(macroAnnotationSettings, librarySettings).dependsOn(core)
 
-lazy val tests = project.settings(macroAnnotationSettings).dependsOn(core, web, hot, scalajsReactInterop)
+lazy val tests = project.settings(macroAnnotationSettings).dependsOn(core, web, hot)
 
-lazy val example = project.settings(macroAnnotationSettings).dependsOn(web, hot, scalajsReactInterop)
+lazy val example = project.settings(macroAnnotationSettings).dependsOn(web, hot/*, scalajsReactInterop*/)
 
-lazy val docsMacros = project.settings(macroAnnotationSettings).dependsOn(web, hot, scalajsReactInterop)
-
-lazy val docs = project.settings(macroAnnotationSettings).dependsOn(web, hot, scalajsReactInterop, docsMacros)
+//lazy val docsMacros = project.settings(macroAnnotationSettings).dependsOn(web, hot)
+//
+//lazy val docs = project.settings(macroAnnotationSettings).dependsOn(web, hot, docsMacros)

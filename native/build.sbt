@@ -5,7 +5,7 @@ import org.scalajs.jsenv.nodejs.NodeJSEnv
 
 name := "slinky-native"
 
-libraryDependencies += "org.scalatest" %%% "scalatest" % "3.0.3" % Test
+libraryDependencies += "org.scalatest" %%% "scalatest" % "3.0.6-SNAP1" % Test
 
 scalacOptions += "-P:scalajs:sjsDefinedByDefault"
 scalacOptions += "-Ywarn-unused-import"
