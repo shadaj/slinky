@@ -1,6 +1,6 @@
 organization in ThisBuild := "me.shadaj"
 
-scalaVersion in ThisBuild := "2.13.0-M4"
+scalaVersion in ThisBuild := "2.12.6"
 
 scalacOptions in ThisBuild ++= Seq("-feature", "-deprecation")
 
@@ -11,10 +11,29 @@ lazy val slinky = project.in(file(".")).aggregate(
   testRenderer,
   native,
   vr,
-  hot/*,
-  scalajsReactInterop*/
+  hot,
+  scalajsReactInterop
 ).settings(
   publishArtifact := false
+)
+
+lazy val crossScalaSettings = Seq(
+  crossScalaVersions := Seq("2.12.6", "2.13.0-M4"),
+  unmanagedSourceDirectories in Compile += {
+    val sourceDir = (sourceDirectory in Compile).value
+    CrossVersion.partialVersion(scalaVersion.value) match {
+      case Some((2, n)) if n >= 13 => sourceDir / "scala-2.13+"
+      case _                       => sourceDir / "scala-2.13-"
+    }
+  },
+  unmanagedSourceDirectories in Test += {
+    val sourceDir = (sourceDirectory in Test).value
+    CrossVersion.partialVersion(scalaVersion.value) match {
+      case Some((2, n)) if n >= 13 => sourceDir / "scala-2.13+"
+      case _                       => sourceDir / "scala-2.13-"
+    }
+  },
+  libraryDependencies += "org.scala-lang.modules" %%% "scala-collection-compat" % "0.1.1"
 )
 
 lazy val librarySettings = Seq(
@@ -42,15 +61,21 @@ addCommandAlias(
 
 lazy val macroAnnotationSettings = Seq(
   resolvers += Resolver.sonatypeRepo("releases"),
-//  addCompilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.full)
-  scalacOptions += "-Ymacro-annotations"
+  scalacOptions ++= {
+    if (scalaVersion.value == "2.13.0-M4") Seq("-Ymacro-annotations")
+    else Seq.empty
+  },
+  libraryDependencies ++= {
+    if (scalaVersion.value == "2.13.0-M4") Seq.empty
+    else Seq(compilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.full))
+  }
 )
 
-lazy val generator = project.settings(scalaVersion := "2.12.6")
+lazy val generator = project
 
-lazy val readWrite = project.settings(librarySettings)
+lazy val readWrite = project.settings(librarySettings, crossScalaSettings)
 
-lazy val core = project.settings(macroAnnotationSettings, librarySettings).dependsOn(readWrite)
+lazy val core = project.settings(macroAnnotationSettings, librarySettings, crossScalaSettings).dependsOn(readWrite)
 
 lazy val web = project.settings(
   sourceGenerators in Compile += Def.taskDyn[Seq[File]] {
@@ -72,23 +97,24 @@ lazy val web = project.settings(
     val files = (managedSources in Compile).value
     files.map { f => (f, f.relativeTo(base).get.getPath) }
   },
-  librarySettings
+  librarySettings,
+  crossScalaSettings
 ).dependsOn(core)
 
-lazy val testRenderer = project.settings(macroAnnotationSettings, librarySettings).dependsOn(core)
+lazy val testRenderer = project.settings(macroAnnotationSettings, librarySettings, crossScalaSettings).dependsOn(core)
 
-lazy val native = project.settings(macroAnnotationSettings, librarySettings).dependsOn(core, testRenderer % Test)
+lazy val native = project.settings(macroAnnotationSettings, librarySettings, crossScalaSettings).dependsOn(core, testRenderer % Test)
 
-lazy val vr = project.settings(macroAnnotationSettings, librarySettings).dependsOn(core, testRenderer % Test)
+lazy val vr = project.settings(macroAnnotationSettings, librarySettings, crossScalaSettings).dependsOn(core, testRenderer % Test)
 
-lazy val hot = project.settings(macroAnnotationSettings, librarySettings).dependsOn(core)
+lazy val hot = project.settings(macroAnnotationSettings, librarySettings, crossScalaSettings).dependsOn(core)
 
-//lazy val scalajsReactInterop = project.settings(macroAnnotationSettings, librarySettings).dependsOn(core)
+lazy val scalajsReactInterop = project.settings(macroAnnotationSettings, librarySettings).dependsOn(core, web % Test)
 
-lazy val tests = project.settings(macroAnnotationSettings).dependsOn(core, web, hot)
+lazy val tests = project.settings(macroAnnotationSettings, crossScalaSettings).dependsOn(core, web, hot)
 
-lazy val example = project.settings(macroAnnotationSettings).dependsOn(web, hot/*, scalajsReactInterop*/)
+lazy val example = project.settings(macroAnnotationSettings).dependsOn(web, hot, scalajsReactInterop)
 
-//lazy val docsMacros = project.settings(macroAnnotationSettings).dependsOn(web, hot)
-//
-//lazy val docs = project.settings(macroAnnotationSettings).dependsOn(web, hot, docsMacros)
+lazy val docsMacros = project.settings(macroAnnotationSettings).dependsOn(web, hot)
+
+lazy val docs = project.settings(macroAnnotationSettings).dependsOn(web, hot, docsMacros)

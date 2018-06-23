@@ -8,9 +8,9 @@ install:
   - nvm install stable
   - cd native; npm install; cd ..
 script:
-  - sbt tests/test native/test
+  - sbt ";+ tests/test;+ native/test"
   - sbt docs/compile example/compile
-  - sbt ";set scalaJSStage in Global := FullOptStage; tests/test; native/test"
+  - sbt ";set scalaJSStage in Global := FullOptStage; + tests/test; + native/test"
 after_success:
   - 'if [ "$TRAVIS_BRANCH" = "master" ] && [ "$TRAVIS_PULL_REQUEST" = "false" ]; then bash ./publish.sh; fi'
   - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ] && [ -n "$TRAVIS_TAG" ]; then bash ./publish.sh; fi'

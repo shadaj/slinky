@@ -5,6 +5,8 @@ import scala.language.existentials
 import scala.language.higherKinds
 import scala.reflect.macros._
 
+import scala.collection.compat._
+
 /** the object which defines the Magnolia macro */
 object Magnolia {
   import CompileTimeState._
@@ -153,13 +155,8 @@ object Magnolia {
     }
 
     def directInferImplicit(genericType: Type, typeConstructor: Type): Option[Tree] = {
-<<<<<<< HEAD
-      val genericTypeName = genericType.typeSymbol.name.decodedName.toString.toLowerCase
-      val assignedName = TermName(c.freshName(s"${genericTypeName}Typeclass"))
-=======
       val genericTypeName = genericType.typeSymbol.name.encodedName.toString.toLowerCase
       val assignedName = TermName(c.freshName(s"${genericTypeName}Typeclass")).encodedName.toTermName
->>>>>>> [WIP] Support Scala 2.13
       val typeSymbol = genericType.typeSymbol
       val classType = if (typeSymbol.isClass) Some(typeSymbol.asClass) else None
       val isCaseClass = classType.exists(_.isCaseClass)

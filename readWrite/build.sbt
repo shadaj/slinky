@@ -160,7 +160,7 @@ sourceGenerators in Compile += Def.task {
   out.println(
     s"""package slinky.readwrite
        |
-       |import scala.collection.Factory
+       |import scala.collection.compat._
        |import scala.concurrent.Future
        |import scala.language.experimental.macros
        |import scala.language.{higherKinds, implicitConversions}

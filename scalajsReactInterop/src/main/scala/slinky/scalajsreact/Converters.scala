@@ -7,8 +7,6 @@ import japgolly.scalajs.react.vdom.html_<^._
 
 import slinky.core.facade.ReactElement
 
-import scala.language.implicitConversions
-
 object Converters {
   implicit class UnmountedToInstance(unmounted: UnmountedRaw) {
     def toSlinky: ReactElement = {
