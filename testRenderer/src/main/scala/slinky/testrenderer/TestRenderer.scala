@@ -25,11 +25,11 @@ object TestRenderer extends js.Object {
 @js.native
 trait TestInstance extends js.Object {
   def find(test: js.Function1[TestInstance, Boolean]): TestInstance = js.native
-  def findByType(`type`: ReactComponentClass): TestInstance = js.native
+  def findByType(`type`: ReactComponentClass[_]): TestInstance = js.native
   def findByProps(props: js.Object): TestInstance = js.native
 
   def findAll(test: js.Function1[TestInstance, Boolean]): js.Array[TestInstance] = js.native
-  def findAllByType(`type`: ReactComponentClass): js.Array[TestInstance] = js.native
+  def findAllByType(`type`: ReactComponentClass[_]): js.Array[TestInstance] = js.native
   def findAllByProps(props: js.Object): js.Array[TestInstance] = js.native
 
   val instance: js.Object = js.native

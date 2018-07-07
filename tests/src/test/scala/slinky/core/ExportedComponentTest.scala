@@ -34,7 +34,7 @@ class ExportedComponentTest extends FunSuite {
   test("Can construct an instance of an exported component with JS-provided props") {
     val container = document.createElement("div")
     ReactDOM.render(React.createElement(
-      TestExportedComponentWithState: ReactComponentClass,
+      TestExportedComponentWithState: ReactComponentClass[_],
       js.Dictionary(
         "name" -> "lol"
       )
@@ -46,7 +46,7 @@ class ExportedComponentTest extends FunSuite {
   test("Can construct an instance of a stateless exported component with JS-provided props") {
     val container = document.createElement("div")
     ReactDOM.render(React.createElement(
-      TestExportedComponentStateless: ReactComponentClass,
+      TestExportedComponentStateless: ReactComponentClass[_],
       js.Dictionary(
         "name" -> "lol"
       )
