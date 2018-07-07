@@ -15,7 +15,10 @@ final class CustomTag(private val name: String) extends Tag {
   override type tagType = Nothing
 
   @inline override def apply(mod: AttrPair[Nothing], remainingMods: AttrPair[Nothing]*): WithAttrs = {
-    new WithAttrs(name, js.Dictionary((mod +: remainingMods).map(m => m.name -> m.value): _*))
+    val dictionary = js.Dictionary.empty[js.Any]
+    dictionary(mod.name) = mod.value
+    remainingMods.foreach(m => dictionary(m.name) = m.value)
+    new WithAttrs(name, dictionary)
   }
 
   @inline override def apply(elems: ReactElement*): ReactElement = {
