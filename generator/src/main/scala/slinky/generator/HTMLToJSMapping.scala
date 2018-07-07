@@ -152,7 +152,12 @@ object HTMLToJSMapping {
     "translate" -> Attr("translate"),
     "ping" -> Attr("ping")
   ).withDefault { k =>
-    println(s""""$k" -> Attr("${k.replace("-", "_")}", "js.Any"),""")
-    Attr(k.replace("-", "_"), "js.Any")
+    println(s""""$k" -> Attr("${dashToCamelCase(k)}", "js.Any"),""")
+    Attr(dashToCamelCase(k), "js.Any")
+  }
+
+  def dashToCamelCase(dashed: String) = {
+    val splitName = dashed.split('-')
+    (splitName.head +: splitName.tail.map(s => s.head.toUpper + s.tail)).mkString
   }
 }
