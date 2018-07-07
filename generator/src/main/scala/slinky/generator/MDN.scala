@@ -8,9 +8,6 @@ object MDN extends TagsProvider {
   val browser = JsoupBrowser()
 
   val extraAttributes = List(
-    Attr("key") -> "",
-    Attr("ref", "scala.Function1[org.scalajs.dom.Element, Unit]") -> "",
-    Attr("dangerouslySetInnerHTML", "js.Object") -> "",
     Attr("suppressContentEditableWarning", "Boolean") -> "",
     Attr("defaultChecked", "Boolean") -> "",
     Attr("aria") -> "",

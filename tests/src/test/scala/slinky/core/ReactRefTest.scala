@@ -14,7 +14,7 @@ class ReactRefTest extends AsyncFunSuite {
   test("Can pass in a ref object to an HTML tag and use it") {
     val elemRef = React.createRef[Element]
     ReactDOM.render(
-      div(ref := elemRef)("hello!"),
+      div(ref = elemRef)("hello!"),
       dom.document.createElement("div")
     )
 
@@ -37,7 +37,7 @@ class ReactRefTest extends AsyncFunSuite {
 
   test("Can use forwardRef to pass down a ref to a lower element") {
     val forwarded = React.forwardRef[String]((props, rf) => {
-      div(ref := rf)(props)
+      div(ref = rf)(props)
     })
 
     val divRef = React.createRef[Any]

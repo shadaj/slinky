@@ -11,6 +11,7 @@ object Generator extends App {
   val providerName :: out :: pkg :: Nil = args.toList
 
   val outFolder = new File(out)
+  println(outFolder)
   if (!outFolder.exists()) {
     outFolder.mkdirs()
 
@@ -36,10 +37,27 @@ object Generator extends App {
       val symbolWithoutEscapeFixed = if (symbolWithoutEscape == "*") "star" else symbolWithoutEscape
 
       val tagsGen = tags.map { t =>
+        val associatedAttributes = extracted.attributes.filter(attr => attr.compatibleTags.forall(_.contains(t.tagName)))
+        val attributeParams = associatedAttributes.map { attr =>
+          val attributeType = attr.attributeType match {
+            case "EventHandler" => "org.scalajs.dom.Event => Unit"
+            case "MouseEventHandler" => "org.scalajs.dom.MouseEvent => Unit"
+            case "RefType" => "js.|[js.Function1[org.scalajs.dom.Element, Unit], slinky.core.facade.ReactRef[org.scalajs.dom.Element]]"
+            case o => o
+          }
+          s"${Utils.identifierFor(attr.attributeName)}: js.UndefOr[$attributeType] = js.undefined"
+        }.mkString(", ")
+
+        val attributePassIn = associatedAttributes.map { attr =>
+          s""""${attr.attributeName}" -> ${Utils.identifierFor(attr.attributeName)}.asInstanceOf[js.Any]"""
+        }.mkString(", ")
+
         s"""type tagType = tag.type
+           |@inline def apply($attributeParams): WithAttrs[tag.type] = new WithAttrs[tag.type]("${t.tagName}", js.Dictionary($attributePassIn))
            |/**
            | * ${t.docLines.map(_.replace("*", "&#47;")).mkString("\n * ")}
            | */
+           |@deprecated("Use `=` when specifying attributes instead for better types and completion", "Slinky 0.5.0")
            |@inline def apply(mod: AttrPair[tag.type], remainingMods: AttrPair[tag.type]*) = new WithAttrs("${t.tagName}", js.Dictionary((mod +: remainingMods).map(m => m.name -> m.value): _*))
            |/**
            | * ${t.docLines.map(_.replace("*", "&#47;")).mkString("\n * ")}
@@ -75,7 +93,7 @@ object Generator extends App {
 
       val attrToTagImplicits = attrs.toList.flatMap { a =>
         a.compatibleTags.getOrElse(extracted.tags.map(_.tagName)).map { t =>
-          val fixedT = if (t == "*") "star" else t
+          val fixedT = if (t == "*") "star" else HTMLToJSMapping.dashToCamelCase(t)
           s"""implicit def to${fixedT}Applied(pair: AttrPair[_${symbolWithoutEscape}_attr.type]) = pair.asInstanceOf[AttrPair[${Utils.identifierFor(t)}.tag.type]]"""
         }
       }

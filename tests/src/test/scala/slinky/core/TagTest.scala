@@ -34,6 +34,22 @@ class TagTest extends FunSuite {
     assertCompiles("div(Seq(div(), a()))")
   }
 
+  test("Can create empty tag") {
+    a()
+  }
+
+  test("Can provide string attributes through method API") {
+    val instance: ReactElement = a(href = "abc", id = "def")
+    assert(instance.asInstanceOf[js.Dynamic].props.href.asInstanceOf[String] == "abc")
+    assert(instance.asInstanceOf[js.Dynamic].props.id.asInstanceOf[String] == "def")
+  }
+
+  test("Can add dynamic attributes after method API") {
+    val instance: ReactElement = a(href = "abc").withDynamicAttributes(id := "def")
+    assert(instance.asInstanceOf[js.Dynamic].props.href.asInstanceOf[String] == "abc")
+    assert(instance.asInstanceOf[js.Dynamic].props.id.asInstanceOf[String] == "def")
+  }
+
   test("Can provide a custom tag, which is supported by all components") {
     val customHref = new CustomAttribute[String]("href")
 
@@ -41,8 +57,8 @@ class TagTest extends FunSuite {
     assert(instance.asInstanceOf[js.Dynamic].props.href.asInstanceOf[String] == "foo")
   }
 
-  test("Can use Boolean attribute by itself providing a value") {
-    val instance: ReactElement = input(disabled := false)
+  test("Can use Boolean attribute by providing a value") {
+    val instance: ReactElement = input(disabled = false)
     assert(!instance.asInstanceOf[js.Dynamic].props.disabled.asInstanceOf[Boolean])
   }
 

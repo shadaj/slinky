@@ -4,9 +4,10 @@ object Utils {
   val keywords = Set("var", "for", "object", "val", "type")
 
   def identifierFor(name: String): String = {
-    if (Utils.keywords.contains(name)) {
-      "`" + name + "`"
-    } else name
+    val camelCased = HTMLToJSMapping.dashToCamelCase(name)
+    if (Utils.keywords.contains(camelCased)) {
+      "`" + camelCased + "`"
+    } else camelCased
   }
 }
 
