@@ -37,10 +37,17 @@ object Generator extends App {
 
       val tagsGen = tags.map { t =>
         s"""type tagType = tag.type
+           |
            |/**
            | * ${t.docLines.map(_.replace("*", "&#47;")).mkString("\n * ")}
            | */
-           |@inline def apply(mod: AttrPair[tag.type], remainingMods: AttrPair[tag.type]*) = new WithAttrs("${t.tagName}", js.Dictionary((mod +: remainingMods).map(m => m.name -> m.value): _*))
+           |@inline def apply(mod: AttrPair[tag.type], remainingMods: AttrPair[tag.type]*) = {
+           |  val dictionary = js.Dictionary.empty[js.Any]
+           |  dictionary(mod.name) = mod.value
+           |  remainingMods.foreach(m => dictionary(m.name) = m.value)
+           |  new WithAttrs("${t.tagName}", dictionary)
+           |}
+           |
            |/**
            | * ${t.docLines.map(_.replace("*", "&#47;")).mkString("\n * ")}
            | */
@@ -49,26 +56,26 @@ object Generator extends App {
 
       val attrsGen = attrs.toList.flatMap { a =>
         val base = (if (a.attributeType == "EventHandler") {
-          s"""def :=(v: org.scalajs.dom.Event => Unit) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)
-             |def :=(v: () => Unit) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)
+          s"""@inline def :=(v: org.scalajs.dom.Event => Unit) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)
+             |@inline def :=(v: () => Unit) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)
            """.stripMargin
         } else if (a.attributeType == "MouseEventHandler") {
-          s"""def :=(v: org.scalajs.dom.MouseEvent => Unit) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)
-             |def :=(v: () => Unit) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)
+          s"""@inline def :=(v: org.scalajs.dom.MouseEvent => Unit) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)
+             |@inline def :=(v: () => Unit) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)
            """.stripMargin
         } else if (a.attributeType == "RefType") {
-          s"""def :=(v: org.scalajs.dom.Element => Unit) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)
-             |def :=(v: slinky.core.facade.ReactRef[org.scalajs.dom.Element]) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)
+          s"""@inline def :=(v: org.scalajs.dom.Element => Unit) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)
+             |@inline def :=(v: slinky.core.facade.ReactRef[org.scalajs.dom.Element]) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)
            """.stripMargin
         } else {
-          s"""def :=(v: ${a.attributeType}) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)"""
+          s"""@inline def :=(v: ${a.attributeType}) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)"""
         }) + s"\ntype attrType = _${symbolWithoutEscape}_attr.type"
 
         if (a.withDash) {
           Seq(
             base,
-            s"""class WithDash(val sub: String) { def :=(v: ${a.attributeType}) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}-" + sub, v) }
-               |def -(sub: String) = new WithDash(sub)""".stripMargin
+            s"""final class WithDash(val sub: String) extends AnyVal { @inline def :=(v: ${a.attributeType}) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}-" + sub, v) }
+               |@inline def -(sub: String) = new WithDash(sub)""".stripMargin
           )
         } else Seq(base)
       }
