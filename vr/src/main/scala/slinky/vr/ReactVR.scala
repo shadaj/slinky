@@ -19,12 +19,11 @@ object NativeSyntheticEvent {
   }
 }
 
-
 @js.native
 trait Asset extends js.Object
 
 @js.native
-@JSImport("react-vr", JSImport.Namespace)
-object ReactVR extends js.Object {
+@JSImport("react-360", JSImport.Namespace)
+object React360 extends js.Object {
   def asset(path: String): Asset = js.native
 }

@@ -23,7 +23,7 @@ import scala.scalajs.js.annotation.JSImport
                    style: js.UndefOr[js.Object] = js.undefined)
 
   @js.native
-  @JSImport("react-vr", "VrButton")
+  @JSImport("react-360", "VrButton")
   object Component extends js.Object
 
   override val component = Component

@@ -28,7 +28,7 @@ case class LayoutEvent(layout: Layout)
                    testID: js.UndefOr[String] = js.undefined)
 
   @js.native
-  @JSImport("react-vr", "View")
+  @JSImport("react-360", "View")
   object Component extends js.Object
 
   override val component = Component

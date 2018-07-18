@@ -6,11 +6,11 @@ import slinky.core.annotations.react
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSImport
 
-@react object Pano extends ExternalComponent {
-  case class Props(source: Asset)
+@react object Image extends ExternalComponent {
+  case class Props(source: js.Object)
 
   @js.native
-  @JSImport("react-vr", "Pano")
+  @JSImport("react-360", "Image")
   object Component extends js.Object
 
   override val component = Component
