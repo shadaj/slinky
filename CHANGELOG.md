@@ -6,6 +6,7 @@
 + Switch from React VR package to React 360 [PR #141](https://github.com/shadaj/slinky/pull/141)
 
 ### Breaking Changes
++ React VR components are no longer supported, the `slinky-vr` module now points to React 360 [PR #141](https://github.com/shadaj/slinky/pull/141)
 + `ReactComponentClass` now takes a type parameter of the `Props` type to improve type safety with higher-order components. Existing uses can be safely replaced with `ReactComponentClass[_]` [PR #157](https://github.com/shadaj/slinky/pull/157)
 + Interop with Scala.js React now requires using the explicit conversions `.toSlinky` and `.toScalaJSReact` [PR #151](https://github.com/shadaj/slinky/pull/151)
 
