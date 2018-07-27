@@ -1,0 +1,13 @@
+<intellij-compat>
+    <name>Slinky support</name>
+    <description>This provides type inference for Slinky macros</description>
+    <version>3.2.2-1</version>
+    <vendor>JetBrains</vendor>
+    <ideaVersion since-build="2018.2.0" until-build="2018.3.0">
+        <extension interface="org.jetbrains.plugins.scala.lang.psi.impl.toplevel.typedef.SyntheticMembersInjector"
+                   implementation="me.shadaj.slinky.core.SlinkyInjector">
+            <name>Slinky IntelliJ Support</name>
+            <description>Support for @react macro annotation</description>
+        </extension>
+    </ideaVersion>
+</intellij-compat>

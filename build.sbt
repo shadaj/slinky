@@ -12,10 +12,13 @@ lazy val slinky = project.in(file(".")).aggregate(
   native,
   vr,
   hot,
-  scalajsReactInterop
+  scalajsReactInterop,
+  coreIntellijSupport
 ).settings(
-  publishArtifact := false
-)
+  publishArtifact := false,
+  publish := {},
+  publishLocal := {}
+).disablePlugins(SbtIdeaPlugin)
 
 lazy val librarySettings = Seq(
   scalacOptions ++= (if (isSnapshot.value && false) Seq.empty else Seq({
@@ -45,11 +48,11 @@ lazy val macroAnnotationSettings = Seq(
   addCompilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.full)
 )
 
-lazy val generator = project
+lazy val generator = project.disablePlugins(SbtIdeaPlugin)
 
-lazy val readWrite = project.settings(librarySettings)
+lazy val readWrite = project.settings(librarySettings).disablePlugins(SbtIdeaPlugin)
 
-lazy val core = project.settings(macroAnnotationSettings, librarySettings).dependsOn(readWrite)
+lazy val core = project.settings(macroAnnotationSettings, librarySettings).dependsOn(readWrite).disablePlugins(SbtIdeaPlugin)
 
 lazy val web = project.settings(
   sourceGenerators in Compile += Def.taskDyn[Seq[File]] {
@@ -72,22 +75,24 @@ lazy val web = project.settings(
     files.map { f => (f, f.relativeTo(base).get.getPath) }
   },
   librarySettings
-).dependsOn(core)
+).dependsOn(core).disablePlugins(SbtIdeaPlugin)
 
-lazy val testRenderer = project.settings(macroAnnotationSettings, librarySettings).dependsOn(core)
+lazy val testRenderer = project.settings(macroAnnotationSettings, librarySettings).dependsOn(core).disablePlugins(SbtIdeaPlugin)
 
-lazy val native = project.settings(macroAnnotationSettings, librarySettings).dependsOn(core, testRenderer % Test)
+lazy val native = project.settings(macroAnnotationSettings, librarySettings).dependsOn(core, testRenderer % Test).disablePlugins(SbtIdeaPlugin)
 
-lazy val vr = project.settings(macroAnnotationSettings, librarySettings).dependsOn(core, testRenderer % Test)
+lazy val vr = project.settings(macroAnnotationSettings, librarySettings).dependsOn(core, testRenderer % Test).disablePlugins(SbtIdeaPlugin)
 
-lazy val hot = project.settings(macroAnnotationSettings, librarySettings).dependsOn(core)
+lazy val hot = project.settings(macroAnnotationSettings, librarySettings).dependsOn(core).disablePlugins(SbtIdeaPlugin)
 
-lazy val scalajsReactInterop = project.settings(macroAnnotationSettings, librarySettings).dependsOn(core)
+lazy val scalajsReactInterop = project.settings(macroAnnotationSettings, librarySettings).dependsOn(core).disablePlugins(SbtIdeaPlugin)
 
-lazy val tests = project.settings(macroAnnotationSettings).dependsOn(core, web, hot, scalajsReactInterop)
+lazy val tests = project.settings(macroAnnotationSettings).dependsOn(core, web, hot, scalajsReactInterop).disablePlugins(SbtIdeaPlugin)
 
-lazy val example = project.settings(macroAnnotationSettings).dependsOn(web, hot, scalajsReactInterop)
+lazy val example = project.settings(macroAnnotationSettings).dependsOn(web, hot, scalajsReactInterop).disablePlugins(SbtIdeaPlugin)
 
-lazy val docsMacros = project.settings(macroAnnotationSettings).dependsOn(web, hot, scalajsReactInterop)
+lazy val docsMacros = project.settings(macroAnnotationSettings).dependsOn(web, hot, scalajsReactInterop).disablePlugins(SbtIdeaPlugin)
 
-lazy val docs = project.settings(macroAnnotationSettings).dependsOn(web, hot, scalajsReactInterop, docsMacros)
+lazy val docs = project.settings(macroAnnotationSettings).dependsOn(web, hot, scalajsReactInterop, docsMacros).disablePlugins(SbtIdeaPlugin)
+
+lazy val coreIntellijSupport = project
