@@ -1,182 +1,178 @@
 package slinky.core.annotations
 
+import slinky.core._
+
 import scala.annotation.compileTimeOnly
-import scala.collection.immutable.Seq
-import scala.meta._
+import scala.language.experimental.macros
+import scala.reflect.macros.whitebox
+import scala.scalajs.js
 
-@compileTimeOnly("enable macro paradise to expand macro annotations")
+@compileTimeOnly("Enable macro paradise to expand the @react macro annotation")
 class react extends scala.annotation.StaticAnnotation {
-  inline def apply(defn: Any): Any = meta {
-    def createBody(clazz: Defn.Class, name: Type.Name, paramss: Seq[Seq[Term.Param]], isStatelessComponent: Boolean): (Defn.Class, Seq[Stat]) = {
-      val (propsDefinition, applyMethods) = clazz.templ.stats.getOrElse(Nil).flatMap { t =>
-        t match {
-          case defn@q"type Props = ${_}" =>
-            Some((defn, Seq()))
-          case defn@q"case class Props[..$tparams](...$caseClassparamss) extends ${_}" =>
-            val applyTypes = tparams.map(t => Type.Name(t.name.value))
-            val applyValues = caseClassparamss.map(ps => ps.map(p => Term.Name(p.name.value)))
-            val caseClassApply = if (applyTypes.isEmpty) {
-              q"""def apply[..$tparams](...$caseClassparamss): _root_.slinky.core.KeyAndRefAddingStage[Def] =
-                    this.apply(${Term.Name("Props")}.apply(...$applyValues))"""
-            } else {
-              q"""def apply[..$tparams](...$caseClassparamss): _root_.slinky.core.KeyAndRefAddingStage[Def] =
-                    this.apply(${Term.Name("Props")}.apply[..$applyTypes](...$applyValues))"""
-            }
+  def macroTransform(annottees: Any*): Any = macro ReactMacrosImpl.reactImpl
+}
 
-            Some((defn, Seq(caseClassApply)))
-          case _ => None
-        }
-      }.headOption.getOrElse(abort("Components must define a Props type or case class, but none was found."))
+object ReactMacrosImpl {
+  private def parentsContainsType(c: whitebox.Context)(parents: Seq[c.Tree], tpe: c.Type) = {
+    parents.exists { p =>
+      c.typecheck(p, mode = c.TYPEmode).tpe.typeSymbol == tpe.typeSymbol
+    }
+  }
 
-      val stateDefinition = clazz.templ.stats.getOrElse(Nil).flatMap { t =>
-        t match {
-          case defn@q"type State = ${_}" =>
-            Some(defn)
-          case defn@q"case class State[..${_}](...${_}) extends ${_}" =>
-            Some(defn)
-          case _ => None
-        }
-      }.headOption
+  def createComponentBody(c: whitebox.Context)(cls: c.Tree, isStatelessComponent: Boolean): (c.Tree, List[c.Tree]) = {
+    import c.universe._
+    val q"..$_ class ${className: Name} extends ..$parents { $self => ..$stats}" = cls
+    val (propsDefinition, applyMethods) = stats.flatMap {
+      case defn@q"type Props = ${_}" =>
+        Some((defn, Seq()))
 
-      val snapshotDefinition = clazz.templ.stats.getOrElse(Nil).flatMap { t =>
-        t match {
-          case defn@q"type Snapshot = ${_}" =>
-            Some(defn)
-          case defn@q"case class Snapshot[..${_}](...${_}) extends ${_}" =>
-            Some(defn)
-          case _ => None
-        }
-      }.headOption
+      case defn@q"case class Props[..$tparams](...$caseClassparamss) extends ..$_" =>
+        val applyValues = caseClassparamss.map(ps => ps.map(_.name))
+        val caseClassApply =
+          q"""def apply[..$tparams](...$caseClassparamss): _root_.slinky.core.KeyAndRefAddingStage[Def] =
+                  this.apply(Props.apply[..$tparams](...$applyValues))"""
 
-      val definitionClass = q"type Def = ${clazz.name}"
+        Some((defn, Seq(caseClassApply)))
 
-      val propsSelect = Type.Select(Term.Name(name.value), Type.Name("Props"))
-      val stateSelect = Type.Select(Term.Name(name.value), Type.Name("State"))
-      val snapshotSelect = Type.Select(Term.Name(name.value), Type.Name("Snapshot"))
+      case defn => None
+    }.headOption.getOrElse(c.abort(c.enclosingPosition, "Components must define a Props type or case class, but none was found."))
 
-      val propsAndStateAndSnapshotImport = Import(Seq(
-        Importer(
-          Term.Name(name.value),
-          Seq(
-            Importee.Name(Name.Indeterminate("Props")),
-            Importee.Name(Name.Indeterminate("State")),
-            Importee.Name(Name.Indeterminate("Snapshot"))
-          )
-        )
-      ))
+    val stateDefinition = stats.flatMap {
+      case defn@q"type State = ${_}" =>
+        Some(defn)
+      case defn@q"case class State[..$_](...$_) extends ..$_" =>
+        Some(defn)
+      case _ => None
+    }.headOption
 
-      if (stateDefinition.isEmpty && !isStatelessComponent) {
-        abort("There is no State type defined. If you want to create a stateless component, extend the StatelessComponent class instead.")
-      }
+    val snapshotDefinition = stats.flatMap {
+      case defn@q"type Snapshot = ${_}" =>
+        Some(defn)
+      case defn@q"case class Snapshot[..$_](...$_) extends ..$_" =>
+        Some(defn)
+      case _ => None
+    }.headOption
 
-      val newClazz =
-        q"""class ${clazz.name}(jsProps: _root_.scala.scalajs.js.Object) extends _root_.slinky.core.DefinitionBase[$propsSelect, $stateSelect, $snapshotSelect](jsProps) {
-              $propsAndStateAndSnapshotImport
-              null.asInstanceOf[${Type.Name("Props")}]
-              null.asInstanceOf[${Type.Name("State")}]
-              null.asInstanceOf[${Type.Name("Snapshot")}]
+    val clazz = TypeName(className.asInstanceOf[Name].toString)
+    val companion = TermName(className.asInstanceOf[Name].toString)
+
+    val definitionClass = q"type Def = $clazz"
+
+    val propsAndStateAndSnapshotImport = Seq(
+      q"import $companion.Props",
+      q"import $companion.State",
+      q"import $companion.Snapshot"
+    )
+
+    if (stateDefinition.isEmpty && !isStatelessComponent) {
+      c.abort(c.enclosingPosition, "There is no State type defined. If you want to create a stateless component, extend the StatelessComponent class instead.")
+    }
+
+    val newClazz =
+      q"""class $clazz(jsProps: _root_.scala.scalajs.js.Object) extends _root_.slinky.core.DefinitionBase[$companion.Props, $companion.State, $companion.Snapshot](jsProps) {
+              ..$propsAndStateAndSnapshotImport
+              null.asInstanceOf[Props]
+              null.asInstanceOf[State]
+              null.asInstanceOf[Snapshot]
               ..${if (stateDefinition.isEmpty) Seq(q"override def initialState: State = ()") else Seq.empty}
-              ..${clazz.templ.stats.getOrElse(Nil).filterNot(s => s == propsDefinition || s == stateDefinition.orNull || s == snapshotDefinition.orNull)}
+              ..${stats.filterNot(s => s == propsDefinition || s == stateDefinition.orNull || s == snapshotDefinition.orNull)}
             }"""
 
-      val originalExtends = clazz.templ.parents.head.asInstanceOf[Term.Apply].fun.asInstanceOf[Ctor.Ref.Name].value
-
-      (newClazz,
-        (q"null.asInstanceOf[${Type.Name(originalExtends)}]" +:
+    (newClazz,
+      ((q"null.asInstanceOf[${parents.head}]" +:
         propsDefinition +:
-          stateDefinition.getOrElse(q"type State = Unit") +:
-          snapshotDefinition.toList) ++
-          (definitionClass +: applyMethods)
-      )
+        stateDefinition.getOrElse(q"type State = Unit") +:
+        snapshotDefinition.toList) ++
+        (definitionClass +: applyMethods)).asInstanceOf[List[c.Tree]]
+    )
+  }
+
+  def createExternalBody(c: whitebox.Context)(obj: c.Tree): List[c.Tree] = {
+    import c.universe._
+
+    val q"..$_ object ${objectName: Name} extends ..$parents { $self => ..$stats}" = obj
+
+    val typecheckedParent = c.typecheck(parents.head.asInstanceOf[c.universe.Tree], mode = c.TYPEmode)
+    val refType = if (parentsContainsType(c)(parents.asInstanceOf[Seq[c.Tree]], typeOf[ExternalComponent])) {
+      typeOf[js.Object]
+    } else if (parentsContainsType(c)(parents.asInstanceOf[Seq[c.Tree]], typeOf[ExternalComponentWithAttributes[_]])) {
+      typeOf[js.Object]
+    } else if (parentsContainsType(c)(parents.asInstanceOf[Seq[c.Tree]], typeOf[ExternalComponentWithRefType[_]])) {
+      typecheckedParent.tpe.typeArgs.head
+    } else if (parentsContainsType(c)(parents.asInstanceOf[Seq[c.Tree]], typeOf[ExternalComponentWithAttributesWithRefType[_, _]])) {
+      typecheckedParent.tpe.typeArgs(1)
+    } else {
+      null
     }
 
-    def createExternalBody(obj: Defn.Object): Seq[Stat] = {
-      obj.templ.stats.getOrElse(Nil).flatMap {
-        case q"case class $tname[..$tparams](...$caseClassparamss) extends ${_}" if tname.value == "Props" =>
-          val applyTypes = tparams.map(t => Type.Name(t.name.value))
-          val applyValues = caseClassparamss.map(ps => ps.map(p => Term.Name(p.name.value)))
-          val caseClassApply = if (applyTypes.isEmpty) {
-            q"""def apply[..$tparams](...$caseClassparamss): _root_.slinky.core.BuildingComponent[Element, RefType] =
-                  this.apply(${Term.Name(tname.value)}.apply(...$applyValues))"""
-          } else {
-            q"""def apply[..$tparams](...$caseClassparamss): _root_.slinky.core.BuildingComponent[Element, RefType] =
-                  this.apply(${Term.Name(tname.value)}.apply[..$applyTypes](...$applyValues))"""
-          }
+    val elementType = if (parentsContainsType(c)(parents.asInstanceOf[Seq[c.Tree]], typeOf[ExternalComponent])) {
+      typeOf[Nothing]
+    } else if (parentsContainsType(c)(parents.asInstanceOf[Seq[c.Tree]], typeOf[ExternalComponentWithAttributes[_]])) {
+      typecheckedParent.tpe.typeArgs.head
+    } else if (parentsContainsType(c)(parents.asInstanceOf[Seq[c.Tree]], typeOf[ExternalComponentWithRefType[_]])) {
+      typeOf[Nothing]
+    } else if (parentsContainsType(c)(parents.asInstanceOf[Seq[c.Tree]], typeOf[ExternalComponentWithAttributesWithRefType[_, _]])) {
+      typecheckedParent.tpe.typeArgs.head
+    } else {
+      null
+    }
 
-          if (caseClassparamss.flatten.forall(_.default.isDefined) || caseClassparamss.flatten.isEmpty) {
-            Seq(
-              caseClassApply,
-              q"""def apply(mod: _root_.slinky.core.AttrPair[Element], tagMods: _root_.slinky.core.AttrPair[Element]*): _root_.slinky.core.BuildingComponent[Element, RefType] = {
-                    new _root_.slinky.core.BuildingComponent[Element, RefType](component, _root_.scala.scalajs.js.Dynamic.literal(), mods = (mod +: tagMods).asInstanceOf[_root_.scala.collection.immutable.Seq[_root_.slinky.core.AttrPair[Element]]])
+    stats.flatMap {
+      case q"case class Props[..$tparams](...$caseClassparamss) extends ..$_" =>
+        val applyValues = caseClassparamss.map(ps => ps.map(_.name))
+        val caseClassApply =
+          q"""def apply[..$tparams](...$caseClassparamss): _root_.slinky.core.BuildingComponent[$elementType, $refType] =
+                  this.apply(Props.apply[..$tparams](...$applyValues)).asInstanceOf[_root_.slinky.core.BuildingComponent[$elementType, $refType]]"""
+
+        if (caseClassparamss.flatten.forall(_.rhs.nonEmpty) || caseClassparamss.flatten.isEmpty) {
+          List(
+            caseClassApply,
+            q"""def apply(mod: _root_.slinky.core.AttrPair[$elementType], tagMods: _root_.slinky.core.AttrPair[$elementType]*): _root_.slinky.core.BuildingComponent[$elementType, $refType] = {
+                    new _root_.slinky.core.BuildingComponent[$elementType, $refType](component, _root_.scala.scalajs.js.Dynamic.literal(), mods = (mod +: tagMods).asInstanceOf[_root_.scala.collection.immutable.Seq[_root_.slinky.core.AttrPair[$elementType]]])
                   }""",
-              q"""def withKey(key: String): _root_.slinky.core.BuildingComponent[Element, RefType] = new _root_.slinky.core.BuildingComponent(component, _root_.scala.scalajs.js.Dynamic.literal(), key = key)""",
-              q"""def withRef(ref: RefType => Unit): _root_.slinky.core.BuildingComponent[Element, RefType] = new _root_.slinky.core.BuildingComponent(component, _root_.scala.scalajs.js.Dynamic.literal(), ref = ref)""",
-              q"""def withRef(ref: _root_.slinky.core.facade.ReactRef[RefType]): _root_.slinky.core.BuildingComponent[Element, RefType] = {
-                    new _root_.slinky.core.BuildingComponent[Element, RefType](component, _root_.scala.scalajs.js.Dynamic.literal(), ref = ref)
+            q"""def withKey(key: String): _root_.slinky.core.BuildingComponent[$elementType, $refType] = new _root_.slinky.core.BuildingComponent(component, _root_.scala.scalajs.js.Dynamic.literal(), key = key)""",
+            q"""def withRef(ref: $refType => Unit): _root_.slinky.core.BuildingComponent[$elementType, $refType] = new _root_.slinky.core.BuildingComponent(component, _root_.scala.scalajs.js.Dynamic.literal(), ref = ref)""",
+            q"""def withRef(ref: _root_.slinky.core.facade.ReactRef[$refType]): _root_.slinky.core.BuildingComponent[$elementType, $refType] = {
+                    new _root_.slinky.core.BuildingComponent[$elementType, $refType](component, _root_.scala.scalajs.js.Dynamic.literal(), ref = ref)
                   }""",
-              q"""def apply(children: _root_.slinky.core.facade.ReactElement*): _root_.slinky.core.facade.ReactElement = {
+            q"""def apply(children: _root_.slinky.core.facade.ReactElement*): _root_.slinky.core.facade.ReactElement = {
                     _root_.slinky.core.facade.React.createElement(component, _root_.scala.scalajs.js.Dynamic.literal().asInstanceOf[_root_.scala.scalajs.js.Dictionary[js.Any]], children: _*)
                   }"""
-            )
-          } else {
-            Seq(caseClassApply)
-          }
-        case _ => Seq.empty
-      }
-    }
-
-    val isIntellij = try {
-      Class.forName("scala.meta.intellij.IDEAContext")
-      true
-    } catch {
-      case _: ClassNotFoundException => false
-    }
-
-    defn match {
-      case Term.Block(Seq(cls @ Defn.Class(_, name, _, ctor, Template(_, Seq(Term.Apply(Ctor.Ref.Name(sc), _)), _, _)), companion: Defn.Object)) if sc == "Component" || sc == "StatelessComponent" =>
-        val (newCls, companionStats) = createBody(cls, name, ctor.paramss, sc == "StatelessComponent")
-        val templateStats: Seq[Stat] =
-          companionStats ++ companion.templ.stats.getOrElse(Nil)
-        val newCompanion = q"object ${Term.Name(name.value)} extends slinky.core.ComponentWrapper { ..$templateStats }"
-
-        if (isIntellij) {
-          Term.Block(Seq(q"val ${Pat.Var.Term(Term.Name("_" + cls.name.value))} = null", newCompanion))
+          )
         } else {
-          Term.Block(Seq(newCls, newCompanion))
+          List(caseClassApply)
         }
+      case _ => List.empty
+    }.asInstanceOf[List[c.Tree]]
+  }
 
-      // companion object does not exists
-      case cls @ Defn.Class(_, name, _, ctor, Template(_, Seq(Term.Apply(Ctor.Ref.Name(sc), _)), _, _)) if sc == "Component" || sc == "StatelessComponent" =>
-        val (newCls, companionStats) = createBody(cls, name, ctor.paramss, sc == "StatelessComponent")
-        val companion = q"object ${Term.Name(name.value)} extends _root_.slinky.core.ComponentWrapper { ..$companionStats }"
 
-        if (isIntellij) {
-          Term.Block(Seq(q"val ${Pat.Var.Term(Term.Name("_" + cls.name.value))} = null", companion))
-        } else {
-          Term.Block(Seq(newCls, companion))
-        }
+  def reactImpl(c: whitebox.Context)(annottees: c.Expr[Any]*): c.Expr[Any] = {
+    import c.universe._
 
-      case obj@Defn.Object(_, _, Template(_, Seq(Term.Apply(Ctor.Ref.Name("ExternalComponent"), _)), _, _)) =>
-        val objStats = createExternalBody(obj) ++ obj.templ.stats.getOrElse(Nil)
-        obj.copy(templ = obj.templ.copy(stats = Some(objStats)))
+    val outs: List[Tree] = annottees.map(_.tree).toList match {
+      case Seq(cls @ q"..$_ class $className extends ..$parents { $_ => ..$_}")
+        if parentsContainsType(c)(parents, typeOf[Component]) || parentsContainsType(c)(parents, typeOf[StatelessComponent]) =>
+        val (newCls, companionStats) = createComponentBody(c)(cls, parentsContainsType(c)(parents, typeOf[StatelessComponent]))
+        List(newCls, q"object ${TermName(className.decodedName.toString)} extends ${typeOf[ComponentWrapper]} { ..$companionStats }")
 
-      case obj@Defn.Object(_, _, Template(_, Seq(Term.Apply(Term.ApplyType(Ctor.Ref.Name("ExternalComponentWithAttributes"), _), _)), _, _)) =>
-        val objStats = createExternalBody(obj) ++ obj.templ.stats.getOrElse(Nil)
-        obj.copy(templ = obj.templ.copy(stats = Some(objStats)))
+      case Seq(cls @ q"..$_ class $className extends ..$parents { $_ => ..$_}", obj @ q"..$_ object $_ extends ..$_ { $_ => ..$objStats }")
+        if parentsContainsType(c)(parents, typeOf[Component]) || parentsContainsType(c)(parents, typeOf[StatelessComponent]) =>
+        val (newCls, companionStats) = createComponentBody(c)(cls, parentsContainsType(c)(parents, typeOf[StatelessComponent]))
+        List(newCls, q"object ${TermName(className.decodedName.toString)} extends ${typeOf[ComponentWrapper]} { ..${objStats ++ companionStats} }")
 
-      case obj@Defn.Object(_, _, Template(_, Seq(Term.Apply(Term.ApplyType(Ctor.Ref.Name("ExternalComponentWithRefType"), _), _)), _, _)) =>
-        val objStats = createExternalBody(obj) ++ obj.templ.stats.getOrElse(Nil)
-        obj.copy(templ = obj.templ.copy(stats = Some(objStats)))
+      case Seq(obj @ q"..$_ object $objName extends ..$parents { $_ => ..$objStats}")
+        if parentsContainsType(c)(parents, typeOf[ExternalComponent]) ||
+           parentsContainsType(c)(parents, typeOf[ExternalComponentWithAttributes[_]]) ||
+           parentsContainsType(c)(parents, typeOf[ExternalComponentWithRefType[_]]) ||
+          parentsContainsType(c)(parents, typeOf[ExternalComponentWithAttributesWithRefType[_, _]]) =>
+        val companionStats = createExternalBody(c)(obj)
+        List(q"object $objName extends ${typeOf[ExternalComponent]} { ..${objStats ++ companionStats} }")
 
-      case obj@Defn.Object(_, _, Template(_, Seq(Term.Apply(Term.ApplyType(Ctor.Ref.Name("ExternalComponentWithAttributesWithRefType"), _), _)), _, _)) =>
-        val objStats = createExternalBody(obj) ++ obj.templ.stats.getOrElse(Nil)
-        obj.copy(templ = obj.templ.copy(stats = Some(objStats)))
-
-      case Defn.Object(_, _, Template(_, Seq(Term.Apply(Ctor.Ref.Name("ExternalComponentWithAttributes"), _)), _, _)) =>
-        abort("ExternalComponentWithAttributes must take a type argument of the target tag type but found none")
-
-      case _ =>
-        abort(s"@react must annotate a class that extends Component or an object that extends ExternalComponent(WithAttributes)(WithRefType), got ${defn.structure}")
+      case defn =>
+        c.abort(c.enclosingPosition, s"@react must annotate a class that extends Component or an object that extends ExternalComponent(WithAttributes)(WithRefType), got $defn")
     }
+
+    c.Expr[Any](Block(outs, Literal(Constant(()))))
   }
 }

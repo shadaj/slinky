@@ -39,8 +39,8 @@ import scala.scalajs.js
   override def componentDidMount(): Unit = {
     setState((s, p) => {
       s + 1
-    }, new Function0[Unit] {
-      override def apply(): Unit = props.apply(state)
+    }, () => {
+      props.apply(state)
     })
   }
 
@@ -49,8 +49,7 @@ import scala.scalajs.js
   }
 }
 
-@react
-class TestComponentStateCaseClass extends Component {
+@react class TestComponentStateCaseClass extends Component {
   type Props = Unit
   case class State()
 
@@ -61,8 +60,7 @@ class TestComponentStateCaseClass extends Component {
   }
 }
 
-@react
-class TestComponentCaseClass extends Component {
+@react class TestComponentCaseClass extends Component {
   case class Props(a: Int)
   type State = Int
 
