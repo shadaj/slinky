@@ -26,7 +26,7 @@ object ReactMacrosImpl {
       case defn@q"type Props = ${_}" =>
         Some((defn, Seq()))
 
-      case defn@q"case class Props[..$tparams](...$caseClassparamss) extends ..$_" =>
+      case defn@q"case class Props[..$tparams](...$caseClassparamss) extends ..$_ { $_ => ..$_ }" =>
         val applyValues = caseClassparamss.map(ps => ps.map(_.name))
         val caseClassApply =
           q"""def apply[..$tparams](...$caseClassparamss): _root_.slinky.core.KeyAndRefAddingStage[Def] =
@@ -40,7 +40,7 @@ object ReactMacrosImpl {
     val stateDefinition = stats.flatMap {
       case defn@q"type State = ${_}" =>
         Some(defn)
-      case defn@q"case class State[..$_](...$_) extends ..$_" =>
+      case defn@q"case class State[..$_](...$_) extends ..$_ { $_ => ..$_ }" =>
         Some(defn)
       case _ => None
     }.headOption
@@ -48,7 +48,7 @@ object ReactMacrosImpl {
     val snapshotDefinition = stats.flatMap {
       case defn@q"type Snapshot = ${_}" =>
         Some(defn)
-      case defn@q"case class Snapshot[..$_](...$_) extends ..$_" =>
+      case defn@q"case class Snapshot[..$_](...$_) extends ..$_ { $_ => ..$_ }" =>
         Some(defn)
       case _ => None
     }.headOption
