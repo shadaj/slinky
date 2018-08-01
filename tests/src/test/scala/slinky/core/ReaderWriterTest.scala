@@ -80,6 +80,11 @@ class ReaderWriterTest extends FunSuite {
     readWrittenSame(CaseClass(1, true))
   }
 
+  test("Read/write - recursive case class") {
+    case class RecursiveCaseClass(int: Int, recurse: Option[RecursiveCaseClass])
+    readWrittenSame(RecursiveCaseClass(1, Some(RecursiveCaseClass(2, None))))
+  }
+
   test("Read/write - case class with default js.undefined") {
     case class CaseClass(int: Int, boolean: js.UndefOr[Boolean] = js.undefined)
     readWrittenSame(CaseClass(1))
