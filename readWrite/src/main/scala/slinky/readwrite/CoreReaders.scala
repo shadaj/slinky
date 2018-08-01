@@ -160,7 +160,7 @@ object MacroReadersImpl {
               }
 
               ${TermName(retName)}
-           }"""
+            }"""
           }
         } else {
           q"_root_.slinky.readwrite.Reader.fallback[${tTag.tpe}]"

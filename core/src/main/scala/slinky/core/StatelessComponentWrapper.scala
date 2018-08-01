@@ -8,8 +8,7 @@ abstract class StatelessDefinition[Props, Snapshot](jsProps: js.Object) extends 
   override def initialState: Unit = ()
 }
 
-abstract class StatelessComponentWrapper(implicit pr: PropsReaderProvider, pw: PropsWriterProvider) extends BaseComponentWrapper(
-  pr, pw,
+abstract class StatelessComponentWrapper extends BaseComponentWrapper(
   Reader.unitReader.asInstanceOf[StateReaderProvider],
   Writer.unitWriter.asInstanceOf[StateWriterProvider]
 ) {

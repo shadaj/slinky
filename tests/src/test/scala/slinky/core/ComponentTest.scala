@@ -176,15 +176,6 @@ object DerivedStateComponent extends ComponentWrapper {
   }
 }
 
-object Test extends StatelessComponentWrapper {
-  sealed trait Props
-  case object PropsA extends Props
-
-  class Def(jsProps: js.Object) extends Definition(jsProps) {
-    override def render(): ReactElement = ???
-  }
-}
-
 class ComponentTest extends AsyncFunSuite {
   test("setState given function is applied") {
     val promise: Promise[Assertion] = Promise()
