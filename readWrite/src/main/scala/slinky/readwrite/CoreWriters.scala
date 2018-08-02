@@ -8,9 +8,11 @@ import scala.reflect.ClassTag
 import scala.scalajs.js
 import scala.scalajs.js.|
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.language.experimental.macros
 import scala.reflect.api.Symbols
 import scala.reflect.macros.whitebox
+
+import scala.language.experimental.macros
+import scala.language.higherKinds
 
 @compileTimeOnly("Deferred writers are used to handle recursive structures")
 final class DeferredWriter[T, Term] extends Writer[T] {
@@ -26,14 +28,28 @@ trait MacroWriters {
 }
 
 object MacroWritersImpl {
-  private val derivationMemo = new ThreadLocal[mutable.Map[reflect.api.Symbols#Symbol, Option[String]]] {
-    override def initialValue(): mutable.Map[Symbols#Symbol, Option[String]] = mutable.Map.empty
+  private val derivationMemo = new ThreadLocal[mutable.Map[String, Option[String]]] {
+    override def initialValue(): mutable.Map[String, Option[String]] = mutable.Map.empty
   }
 
   def derive[T](c: whitebox.Context)(implicit tTag: c.WeakTypeTag[T]): c.Tree = {
     import c.universe._
     val currentMemo = derivationMemo.get()
     val symbol = tTag.tpe.typeSymbol
+
+    def withMemoValue[T](symbol: Symbol, value: Option[String])(thunk: => T): T = {
+      val orig = currentMemo.get(symbol.fullName)
+      currentMemo(symbol.fullName) = value
+      try {
+        thunk
+      } finally {
+        if (orig.isDefined) {
+          currentMemo(symbol.fullName) = orig.get
+        } else {
+          currentMemo.remove(symbol.fullName)
+        }
+      }
+    }
 
     val replaceDeferred = new Transformer {
       override def transform(tree: Tree): Tree = tree match {
@@ -44,73 +60,78 @@ object MacroWritersImpl {
       }
     }
 
-    if (currentMemo.get(symbol).contains(None)) {
+    if (currentMemo.get(symbol.fullName).contains(None)) {
       c.abort(c.enclosingPosition, "Skipping derivation macro when getting regular implicit")
-    } else if (currentMemo.get(symbol).flatten.isDefined) {
-      q"new _root_.slinky.readwrite.DeferredWriter[${tTag.tpe}, ${c.internal.constantType(Constant(currentMemo(symbol).get))}]"
+    } else if (currentMemo.get(symbol.fullName).flatten.isDefined) {
+      q"new _root_.slinky.readwrite.DeferredWriter[${tTag.tpe}, ${c.internal.constantType(Constant(currentMemo(symbol.fullName).get))}]"
+    } else if (symbol.isParameter) {
+      c.abort(c.enclosingPosition, "")
     } else {
-      currentMemo(symbol) = None
-      val regularImplicit = c.inferImplicitValue(
-        c.typecheck(tq"_root_.slinky.readwrite.Writer[${tTag.tpe}]", mode = c.TYPEmode).tpe,
-        silent = true
-      )
-      currentMemo.remove(symbol)
+      val regularImplicit = withMemoValue(symbol, None) {
+        c.inferImplicitValue(
+          c.typecheck(tq"_root_.slinky.readwrite.Writer[${tTag.tpe}]", mode = c.TYPEmode).tpe,
+          silent = true
+        )
+      }
 
       if (regularImplicit.isEmpty) {
         if (symbol.isClass && symbol.asClass.isCaseClass) {
           val constructor = symbol.asClass.primaryConstructor
           val paramsLists = constructor.asMethod.paramLists
           val retName = c.freshName()
-          currentMemo(symbol) = Some(retName)
-          val ret = q"""{
+          val substituteMap = symbol.asClass.typeParams.zip(tTag.tpe.typeArgs).toMap
+
+          withMemoValue(symbol, Some(retName)) {
+            q"""{
               var ${TermName(retName)}: _root_.slinky.readwrite.Writer[${tTag.tpe}] = null
               ${TermName(retName)} = new _root_.slinky.readwrite.Writer[${tTag.tpe}] {
                 def write(v: ${tTag.tpe}): _root_.scala.scalajs.js.Object = {
                   val ret = _root_.scala.scalajs.js.Dynamic.literal()
 
-                  ..${paramsLists.flatten.map { s =>
-                    val paramWriter = c.untypecheck(replaceDeferred.transform(
-                      c.inferImplicitValue(c.typecheck(tq"_root_.slinky.readwrite.Writer[${s.typeSignature}]", mode = c.TYPEmode).tpe)
-                    ))
-                    q"""{
-                       val writtenParam = $paramWriter.write(v.${s.name.toTermName})
-                       if (!_root_.scala.scalajs.js.isUndefined(writtenParam)) {
-                         ret.${TermName(s.name.encodedName.toString)} = writtenParam
-                       }
-                     }"""
-                  }}
+                  ..${
+                    paramsLists.flatten.map { s =>
+                      val paramWriter = c.untypecheck(replaceDeferred.transform(
+                        c.inferImplicitValue(c.typecheck(
+                          tq"_root_.slinky.readwrite.Writer[${substituteMap.getOrElse(s.typeSignature.typeSymbol, s.typeSignature)}]", mode = c.TYPEmode
+                        ).tpe)
+                      ))
+                      q"""{
+                            val writtenParam = $paramWriter.write(v.${s.name.toTermName})
+                            if (!_root_.scala.scalajs.js.isUndefined(writtenParam)) {
+                              ret.${TermName(s.name.encodedName.toString)} = writtenParam
+                            }
+                          }"""
+                    }
+                  }
 
                   ret
                 }
               }
               ${TermName(retName)}
             }"""
-
-          currentMemo.remove(symbol)
-          ret
+          }
         } else if (symbol.isClass && tTag.tpe <:< typeOf[AnyVal]) {
           val actualValue = symbol.asClass.primaryConstructor.asMethod.paramLists.head.head
 
           val retName = c.freshName()
-          currentMemo(symbol) = Some(retName)
-          val ret = q"""{
-             var ${TermName(retName)}: _root_.slinky.readwrite.Writer[${tTag.tpe}] = null
-             ${TermName(retName)} = new _root_.slinky.readwrite.Writer[${tTag.tpe}] {
-               def write(v: ${tTag.tpe}) = {
-                 ${c.untypecheck(replaceDeferred.transform(
-                     c.inferImplicitValue(c.typecheck(tq"_root_.slinky.readwrite.Writer[${actualValue.typeSignature}]", mode = c.TYPEmode).tpe)
-                 ))}.write(
-                   v.${actualValue.name.toTermName}
-                 )
-               }
-             }
 
-             ${TermName(retName)}
-           }"""
+          withMemoValue(symbol, Some(retName)) {
+            q"""{
+              var ${TermName(retName)}: _root_.slinky.readwrite.Writer[${tTag.tpe}] = null
+              ${TermName(retName)} = new _root_.slinky.readwrite.Writer[${tTag.tpe}] {
+                def write(v: ${tTag.tpe}) = {
+                  ${c.untypecheck(replaceDeferred.transform(
+                    c.inferImplicitValue(c.typecheck(tq"_root_.slinky.readwrite.Writer[${actualValue.typeSignature}]", mode = c.TYPEmode).tpe)
+                  ))}.write(
+                    v.${actualValue.name.toTermName}
+                  )
+                }
+              }
 
-          currentMemo.remove(symbol)
-          ret
-        } else if (symbol.isClass && symbol.asClass.isSealed) {
+              ${TermName(retName)}
+            }"""
+          }
+        } else if (symbol.isClass && symbol.asClass.isSealed && symbol.asType.toType.typeArgs.isEmpty) {
           def getSubclasses(clazz: ClassSymbol): Set[Symbol] = {
             // from magnolia
             val children = clazz.knownDirectSubclasses
@@ -120,37 +141,36 @@ object MacroWritersImpl {
           }
 
           val retName = c.freshName()
-          currentMemo(symbol) = Some(retName)
 
-          val ret = q"""{
-             var ${TermName(retName)}: _root_.slinky.readwrite.Writer[${tTag.tpe}] = null
-             ${TermName(retName)} = new _root_.slinky.readwrite.Writer[${tTag.tpe}] {
-               def write(v: ${tTag.tpe}) = {
-                 v match {
-                   case ..${getSubclasses(symbol.asClass).map { sub =>
-                     cq"""
-                        (value: $sub) =>
-                          val ret = ${c.untypecheck(replaceDeferred.transform(
-                            c.inferImplicitValue(c.typecheck(tq"_root_.slinky.readwrite.Writer[$sub]", mode = c.TYPEmode).tpe)
-                          ))}.write(
-                            value
-                          )
+          withMemoValue(symbol, Some(retName)) {
+            q"""{
+               var ${TermName(retName)}: _root_.slinky.readwrite.Writer[${tTag.tpe}] = null
+               ${TermName(retName)} = new _root_.slinky.readwrite.Writer[${tTag.tpe}] {
+                 def write(v: ${tTag.tpe}) = {
+                   v match {
+                     case ..${getSubclasses(symbol.asClass).map { sub =>
+                       cq"""
+                          (value: $sub) =>
+                            val ret = ${c.untypecheck(replaceDeferred.transform(
+                              c.inferImplicitValue(c.typecheck(tq"_root_.slinky.readwrite.Writer[$sub]", mode = c.TYPEmode).tpe)
+                            ))}.write(
+                              value
+                            )
 
-                          ret.asInstanceOf[_root_.scala.scalajs.js.Dynamic]._type = ${sub.name.toString}
+                            ret.asInstanceOf[_root_.scala.scalajs.js.Dynamic]._type = ${sub.name.toString}
 
-                          ret
-                      """
-                   }}
+                            ret
+                        """
+                     }}
+
+                     case o => _root_.slinky.readwrite.Writer.fallback[${tTag.tpe}].write(o)
+                   }
                  }
                }
-             }
 
-             ${TermName(retName)}
-           }"""
-
-          currentMemo.remove(symbol)
-
-          ret
+               ${TermName(retName)}
+             }"""
+          }
         } else {
           q"_root_.slinky.readwrite.Writer.fallback[${tTag.tpe}]"
         }
@@ -205,6 +225,14 @@ trait CoreWriters extends MacroWriters with FallbackWriters {
 
   implicit def optionWriter[T](implicit writer: Writer[T]): Writer[Option[T]] =
     _.map(v => writer.write(v)).getOrElse(js.undefined.asInstanceOf[js.Object])
+
+  implicit def eitherWriter[A, B](implicit aWriter: Writer[A], bWriter: Writer[B]): Writer[Either[A, B]] = { v =>
+    val written = v.fold(aWriter.write, bWriter.write)
+    js.Dynamic.literal(
+      isLeft = v.isLeft,
+      value = written
+    )
+  }
 
   implicit def collectionWriter[T, C[_]](implicit writer: Writer[T],
                                          cbf: CanBuildFrom[Nothing, T, Seq[T]],

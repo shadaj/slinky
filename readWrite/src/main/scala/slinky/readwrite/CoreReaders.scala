@@ -4,13 +4,14 @@ import scala.annotation.compileTimeOnly
 import scala.collection.generic.CanBuildFrom
 import scala.collection.mutable
 import scala.concurrent.Future
-import scala.reflect.ClassTag
 import scala.scalajs.js
 import scala.scalajs.js.|
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.language.experimental.macros
 import scala.reflect.api.Symbols
 import scala.reflect.macros.whitebox
+
+import scala.language.experimental.macros
+import scala.language.higherKinds
 
 @compileTimeOnly("Deferred readers are used to handle recursive structures")
 final class DeferredReader[T, Term] extends Reader[T] {
@@ -32,8 +33,8 @@ trait MacroReaders {
 }
 
 object MacroReadersImpl {
-  private val derivationMemo = new ThreadLocal[mutable.Map[reflect.api.Symbols#Symbol, Option[String]]] {
-    override def initialValue(): mutable.Map[Symbols#Symbol, Option[String]] = mutable.Map.empty
+  private val derivationMemo = new ThreadLocal[mutable.Map[String, Option[String]]] {
+    override def initialValue(): mutable.Map[String, Option[String]] = mutable.Map.empty
   }
 
   def derive[T](c: whitebox.Context)(implicit tTag: c.WeakTypeTag[T]): c.Tree = {
@@ -42,16 +43,17 @@ object MacroReadersImpl {
     val symbol = tTag.tpe.typeSymbol
 
     def withMemoValue[T](symbol: Symbol, value: Option[String])(thunk: => T): T = {
-      val orig = currentMemo.get(symbol)
-      currentMemo(symbol) = value
-      val ret = thunk
-      if (orig.isDefined) {
-        currentMemo(symbol) = orig.get
-      } else {
-        currentMemo.remove(symbol)
+      val orig = currentMemo.get(symbol.fullName)
+      currentMemo(symbol.fullName) = value
+      try {
+        thunk
+      } finally {
+        if (orig.isDefined) {
+          currentMemo(symbol.fullName) = orig.get
+        } else {
+          currentMemo.remove(symbol.fullName)
+        }
       }
-
-      ret
     }
 
     val replaceDeferred = new Transformer {
@@ -63,12 +65,14 @@ object MacroReadersImpl {
       }
     }
 
-    if (currentMemo.get(symbol).contains(None)) {
+    if (currentMemo.get(symbol.fullName).contains(None)) {
       c.abort(c.enclosingPosition, "Skipping derivation macro when getting regular implicit")
-    } else if (currentMemo.get(symbol).flatten.isDefined) {
-      q"new _root_.slinky.readwrite.DeferredReader[${tTag.tpe}, ${c.internal.constantType(Constant(currentMemo(symbol).get))}]"
+    } else if (currentMemo.get(symbol.fullName).flatten.isDefined) {
+      q"new _root_.slinky.readwrite.DeferredReader[${tTag.tpe}, ${c.internal.constantType(Constant(currentMemo(symbol.fullName).get))}]"
+    } else if (symbol.isParameter) {
+      c.abort(c.enclosingPosition, "")
     } else {
-      val regularImplicit = withMemoValue(symbol, None){
+      val regularImplicit = withMemoValue(symbol, None) {
         c.inferImplicitValue(
           c.typecheck(tq"_root_.slinky.readwrite.Reader[${tTag.tpe}]", mode = c.TYPEmode).tpe,
           silent = true
@@ -79,13 +83,14 @@ object MacroReadersImpl {
         if (symbol.isModuleClass) {
           q"""new _root_.slinky.readwrite.Reader[${tTag.tpe}] {
                 def forceRead(o: _root_.scala.scalajs.js.Object): ${tTag.tpe} = {
-                  ${symbol.asClass.module}
+                  ${c.parse(symbol.asClass.module.fullName)}
                 }
               }"""
         } else if (symbol.isClass && symbol.asClass.isCaseClass) {
           val constructor = symbol.asClass.primaryConstructor
           val paramsLists = constructor.asMethod.paramLists
           val retName = c.freshName()
+          val substituteMap = symbol.asClass.typeParams.zip(tTag.tpe.typeArgs).toMap
           withMemoValue(symbol, Some(retName)) {
             q"""{
               var ${TermName(retName)}: _root_.slinky.readwrite.Reader[${tTag.tpe}] = null
@@ -96,7 +101,7 @@ object MacroReadersImpl {
                       paramsLists.map { pl =>
                         pl.map { p =>
                           val paramReader = c.untypecheck(replaceDeferred.transform(
-                            c.inferImplicitValue(c.typecheck(tq"_root_.slinky.readwrite.Reader[${p.typeSignature}]", mode = c.TYPEmode).tpe)
+                            c.inferImplicitValue(c.typecheck(tq"_root_.slinky.readwrite.Reader[${substituteMap.getOrElse(p.typeSignature.typeSymbol, p.typeSignature)}]", mode = c.TYPEmode).tpe)
                           ))
                           q"$paramReader.read(o.asInstanceOf[_root_.scala.scalajs.js.Dynamic].${p.name.toTermName}.asInstanceOf[_root_.scala.scalajs.js.Object])"
                         }
@@ -128,7 +133,7 @@ object MacroReadersImpl {
               ${TermName(retName)}
             }"""
           }
-        } else if (symbol.isClass && symbol.asClass.isSealed) {
+        } else if (symbol.isClass && symbol.asClass.isSealed && symbol.asType.toType.typeArgs.isEmpty) {
           def getSubclasses(clazz: ClassSymbol): Set[Symbol] = {
             // from magnolia
             val children = clazz.knownDirectSubclasses
@@ -155,6 +160,8 @@ object MacroReadersImpl {
                           )
                       """
                     }}
+
+                    case _ => _root_.slinky.readwrite.Reader.fallback[${tTag.tpe}].read(o)
                   }
                 }
               }
@@ -216,6 +223,14 @@ trait CoreReaders extends MacroReaders with FallbackReaders {
       None
     } else {
       Some(reader.read(s))
+    }
+  }
+
+  implicit def eitherReader[A, B](implicit aReader: Reader[A], bReader: Reader[B]): Reader[Either[A, B]] = o => {
+    if (o.asInstanceOf[js.Dynamic].isLeft.asInstanceOf[Boolean]) {
+      Left(aReader.read(o.asInstanceOf[js.Dynamic].value.asInstanceOf[js.Object]))
+    } else {
+      Right(bReader.read(o.asInstanceOf[js.Dynamic].value.asInstanceOf[js.Object]))
     }
   }
 

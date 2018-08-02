@@ -1,13 +1,13 @@
 package slinky.core
 
 import slinky.core.facade.{React, ReactElement, ReactRef}
-import slinky.readwrite.{Reader, Writer}
+import slinky.readwrite.{MacroReadersImpl, Reader, Writer}
 
 import scala.language.experimental.macros
 import scala.scalajs.js
 import scala.scalajs.js.ConstructorTag
 import scala.language.implicitConversions
-import scala.reflect.macros.blackbox
+import scala.reflect.macros.{blackbox, whitebox}
 
 class KeyAndRefAddingStage[D <: js.Any](val props: js.Dictionary[js.Any], val constructor: js.Object) {
   def withKey(key: String): KeyAndRefAddingStage[D] = {
@@ -169,6 +169,14 @@ object StateReaderProvider {
     val compName = c.internal.enclosingOwner.owner.asClass
     val q"$_; val x: $typedReaderType = null" = c.typecheck(q"@_root_.scala.annotation.unchecked.uncheckedStable val comp: $compName = null; val x: _root_.slinky.readwrite.Reader[comp.State] = null")
     val tpcls = c.inferImplicitValue(typedReaderType.tpe.asInstanceOf[c.Type])
+
+    if (tpcls.isEmpty) {
+      val whiteboxContext = c.asInstanceOf[whitebox.Context]
+      val q"$_; val x: $innerType = $_" = c.typecheck(q"@_root_.scala.annotation.unchecked.uncheckedStable val comp: $compName = null; val x: comp.State = null")
+      val tree = MacroReadersImpl.derive(whiteboxContext)(whiteboxContext.WeakTypeTag(innerType.tpe.asInstanceOf[whiteboxContext.Type])).asInstanceOf[c.Tree]
+      println(tree)
+    }
+
     c.Expr(q"if (_root_.scala.scalajs.LinkingInfo.productionMode) null else $tpcls.asInstanceOf[_root_.slinky.core.StateReaderProvider]")
   }
 

@@ -9,6 +9,11 @@ import scala.scalajs.js.|
 // cannot be a local class
 class ValueClass(val int: Int) extends AnyVal
 
+sealed trait MySealedTrait
+case class SubTypeA(int: Int) extends MySealedTrait
+case class SubTypeB(boolean: Boolean) extends MySealedTrait
+case object SubTypeC extends MySealedTrait
+
 class ReaderWriterTest extends FunSuite {
   private def readWrittenSame[T](v: T, isOpaque: Boolean = false)(implicit reader: Reader[T], writer: Writer[T]) = {
     val written = writer.write(v)
@@ -64,6 +69,16 @@ class ReaderWriterTest extends FunSuite {
     readWrittenSame[Option[String]](Some("hello"))
     readWrittenSame[Option[String]](None)
     assert(implicitly[Reader[Option[String]]].read(null).isEmpty)
+    assert(implicitly[Writer[Option[String]]].write(None) == ())
+  }
+
+  test("Read/write - Either") {
+    readWrittenSame[Either[Int, String]](Left(1))
+    readWrittenSame[Either[Int, String]](Right("hello"))
+  }
+
+  test("Read/write - tuple") {
+    readWrittenSame((1, "hello", "bye"))
   }
 
   test("Read/write - js.|") {
@@ -105,11 +120,6 @@ class ReaderWriterTest extends FunSuite {
   }
 
   test("Read/write - sealed trait with case objects") {
-    sealed trait MySealedTrait
-    case class SubTypeA(int: Int) extends MySealedTrait
-    case class SubTypeB(boolean: Boolean) extends MySealedTrait
-    case object SubTypeC extends MySealedTrait
-
     readWrittenSame[MySealedTrait](SubTypeA(-1))
     readWrittenSame[MySealedTrait](SubTypeB(true))
     readWrittenSame[MySealedTrait](SubTypeC)
