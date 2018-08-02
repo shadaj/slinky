@@ -8,7 +8,6 @@ import scala.reflect.ClassTag
 import scala.scalajs.js
 import scala.scalajs.js.|
 import scala.concurrent.ExecutionContext.Implicits.global
-import scala.reflect.api.Symbols
 import scala.reflect.macros.whitebox
 
 import scala.language.experimental.macros
