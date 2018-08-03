@@ -28,14 +28,15 @@ trait MacroWriters {
 class MacroWritersImpl(_c: whitebox.Context) extends GenericDeriveImpl(_c) {
   import c.universe._
 
-  def constructTypeclassType(forType: Type) =
-    tq"_root_.slinky.readwrite.Writer[$forType]"
+  val typeclassType: c.universe.Type = typeOf[Writer[_]]
 
   def deferredInstance(forType: Type, constantType: Type) =
     q"new _root_.slinky.readwrite.DeferredWriter[$forType, $constantType]"
 
   def maybeExtractDeferred(tree: Tree): Option[Tree] = {
     tree match {
+      case q"new _root_.slinky.readwrite.DeferredWriter[$_, $t]()" =>
+        Some(t)
       case q"new slinky.readwrite.DeferredWriter[$_, $t]()" =>
         Some(t)
       case _ => None

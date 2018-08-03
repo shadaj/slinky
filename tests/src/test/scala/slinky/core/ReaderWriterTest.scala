@@ -125,6 +125,13 @@ class ReaderWriterTest extends FunSuite {
     readWrittenSame[MySealedTrait](SubTypeC)
   }
 
+  test("Read/write - case class with shared type in reader and writer position") {
+    case class TypeA()
+    case class ComplexClass(a: TypeA, b: TypeA => Int)
+
+    readWrittenSame(ComplexClass(TypeA(), _ => 1))
+  }
+
   test("Read/write - value class") {
     readWrittenSame(new ValueClass(1))
 

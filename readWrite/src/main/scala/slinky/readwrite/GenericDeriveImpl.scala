@@ -8,7 +8,7 @@ abstract class GenericDeriveImpl(val c: whitebox.Context) {
 
   case class Param(name: Name, tpe: Type)
 
-  def constructTypeclassType(forType: Type): Tree
+  val typeclassType: Type
   def deferredInstance(forType: Type, constantType: Type): Tree
   def maybeExtractDeferred(tree: Tree): Option[Tree]
   def createModuleTypeclass(tpe: Type, moduleReference: Tree): Tree
@@ -17,11 +17,15 @@ abstract class GenericDeriveImpl(val c: whitebox.Context) {
   def createSealedTraitTypeclass(traitType: Type, subclasses: Seq[Symbol]): Tree
   def createFallback(forType: Type): Tree
 
-  def replaceDeferred: Transformer = {
+  private lazy val typeclassSymbol = typeclassType.typeSymbol
+
+  private def replaceDeferred(saveReferencesTo: mutable.Set[String]): Transformer = {
     new Transformer {
       override def transform(tree: Tree): Tree = maybeExtractDeferred(tree) match {
         case Some(t) =>
-          q"${TermName(t.tpe.asInstanceOf[ConstantType].value.value.asInstanceOf[String])}"
+          val referenced = t.tpe.asInstanceOf[ConstantType].value.value.asInstanceOf[String]
+          saveReferencesTo.add(referenced)
+          q"${TermName(referenced)}"
         case None =>
           super.transform(tree)
       }
@@ -29,85 +33,85 @@ abstract class GenericDeriveImpl(val c: whitebox.Context) {
   }
 
   def getTypeclass(forType: Type): Tree = {
-    c.untypecheck(replaceDeferred.transform(
-      c.inferImplicitValue(c.typecheck(constructTypeclassType(forType), mode = c.TYPEmode).tpe)
-    ))
+    c.inferImplicitValue(appliedType(typeclassSymbol, forType))
   }
 
-  private def currentMemo = {
+  private val currentMemo = {
     GenericDeriveImpl.derivationMemo.get().getOrElseUpdate(
       this.getClass.getSimpleName, mutable.Map.empty
     )
   }
 
-  def withMemoValue[T](symbol: Symbol, value: Option[String])(thunk: => T): T = {
-    val orig = currentMemo.get(symbol.fullName)
-    currentMemo(symbol.fullName) = value
+  private val currentOrder = {
+    GenericDeriveImpl.derivationOrder.get().getOrElseUpdate(
+      this.getClass.getSimpleName, mutable.Queue.empty
+    )
+  }
+
+  private def withMemoNone[T](tpe: Type)(thunk: => T): T = {
+    val orig = currentMemo.get(tpe.toString)
+    currentMemo(tpe.toString) = None
     try {
       thunk
     } finally {
       if (orig.isDefined) {
-        currentMemo(symbol.fullName) = orig.get
+        currentMemo(tpe.toString) = orig.get
       } else {
-        currentMemo.remove(symbol.fullName)
+        currentMemo.remove(tpe.toString)
       }
     }
   }
 
-  def derive[T](implicit tTag: WeakTypeTag[T]): Tree = {
+  private def memoTree[T](tpe: Type, symbol: Symbol)(tree: => Tree): Tree = {
+    val fresh = c.freshName()
+    currentMemo(tpe.toString) = Some(fresh)
+    currentOrder.enqueue((fresh, tpe, tree))
+    deferredInstance(
+      tpe,
+      c.internal.constantType(Constant(fresh))
+    )
+  }
+
+  final def derive[T](implicit tTag: WeakTypeTag[T]): Tree = {
     val symbol = tTag.tpe.typeSymbol
 
-    if (currentMemo.get(symbol.fullName).contains(None)) {
+    if (currentMemo.get(tTag.tpe.toString).contains(None)) {
       c.abort(c.enclosingPosition, "Skipping derivation macro when getting regular implicit")
-    } else if (currentMemo.get(symbol.fullName).flatten.isDefined) {
+    } else if (currentMemo.get(tTag.tpe.toString).flatten.isDefined) {
       deferredInstance(
         tTag.tpe,
-        c.internal.constantType(Constant(currentMemo(symbol.fullName).get))
+        c.internal.constantType(Constant(currentMemo(tTag.tpe.toString).get))
       )
     } else if (symbol.isParameter) {
       c.abort(c.enclosingPosition, "")
     } else {
-      val regularImplicit = withMemoValue(symbol, None) {
+      val isRoot = currentMemo.isEmpty
+      val regularImplicit = withMemoNone(tTag.tpe) {
         c.inferImplicitValue(
-          c.typecheck(constructTypeclassType(tTag.tpe), mode = c.TYPEmode).tpe,
+          appliedType(typeclassSymbol, tTag.tpe),
           silent = true
         )
       }
 
-      if (regularImplicit.isEmpty) {
+      val deriveTree = if (regularImplicit.isEmpty) {
         if (symbol.isModuleClass) {
           createModuleTypeclass(tTag.tpe, c.parse(symbol.asClass.module.fullName))
         } else if (symbol.isClass && symbol.asClass.isCaseClass) {
           val constructor = symbol.asClass.primaryConstructor
           val paramsLists = constructor.asMethod.paramLists
-          val retName = c.freshName()
-          val substituteMap = symbol.asClass.typeParams.zip(tTag.tpe.typeArgs).toMap
-          withMemoValue(symbol, Some(retName)) {
+          memoTree(tTag.tpe, symbol) {
             val params: Seq[Seq[Param]] = paramsLists.map(_.map { p =>
-              Param(p.name, substituteMap.getOrElse(p.typeSignature.typeSymbol, p.typeSignature))
+              val transformedValueType = p.typeSignatureIn(tTag.tpe).resultType
+              Param(p.name, transformedValueType.substituteTypes(symbol.asType.typeParams, tTag.tpe.typeArgs))
             })
 
-            q"""{
-              var ${TermName(retName)}: ${constructTypeclassType(tTag.tpe)} = null
-              ${TermName(retName)} = ${createCaseClassTypeclass(tTag.tpe, params)}
-              ${TermName(retName)}
-            }"""
+            createCaseClassTypeclass(tTag.tpe, params)
           }
         } else if (symbol.isClass && tTag.tpe <:< typeOf[AnyVal]) {
           val actualValue = symbol.asClass.primaryConstructor.asMethod.paramLists.head.head
-          val retName = c.freshName()
-          val substituteMap = symbol.asClass.typeParams.zip(tTag.tpe.typeArgs).toMap
+          val param = Param(actualValue.name, actualValue.typeSignatureIn(tTag.tpe).resultType)
 
-          val param = Param(actualValue.name, substituteMap.getOrElse(actualValue.typeSignature.typeSymbol, actualValue.typeSignature))
-
-          withMemoValue(symbol, Some(retName)) {
-            q"""{
-              var ${TermName(retName)}: ${constructTypeclassType(tTag.tpe)} = null
-              ${TermName(retName)} = ${createValueClassTypeclass(tTag.tpe, param)}
-
-              ${TermName(retName)}
-            }"""
-          }
+          memoTree(tTag.tpe, symbol)(createValueClassTypeclass(tTag.tpe, param))
         } else if (symbol.isClass && symbol.asClass.isSealed && symbol.asType.toType.typeArgs.isEmpty) {
           def getSubclasses(clazz: ClassSymbol): Set[Symbol] = {
             // from magnolia
@@ -117,28 +121,61 @@ abstract class GenericDeriveImpl(val c: whitebox.Context) {
             abstractTypes.map(_.asClass).flatMap(getSubclasses(_)) ++ concreteTypes
           }
 
-          val retName = c.freshName()
-
-          withMemoValue(symbol, Some(retName)) {
-            q"""{
-              var ${TermName(retName)}: ${constructTypeclassType(tTag.tpe)} = null
-              ${TermName(retName)} = ${createSealedTraitTypeclass(tTag.tpe, getSubclasses(symbol.asClass).toSeq)}
-
-              ${TermName(retName)}
-            }"""
+          memoTree(tTag.tpe, symbol) {
+            createSealedTraitTypeclass(tTag.tpe, getSubclasses(symbol.asClass).toSeq)
           }
         } else {
-          createFallback(tTag.tpe)
+          memoTree(tTag.tpe, symbol) {
+            createFallback(tTag.tpe)
+          }
         }
       } else {
-        regularImplicit
+        if (isRoot) {
+          regularImplicit
+        } else {
+          memoTree(tTag.tpe, symbol) {
+            regularImplicit
+          }
+        }
+      }
+
+      if (isRoot) {
+        val saveReferences = mutable.Set.empty[String]
+        val unwrappedOrder = currentOrder.dequeueAll(_ => true).map { case (name, tpe, t) =>
+          val typeclassTree = c.untypecheck(replaceDeferred(saveReferences).transform(t.asInstanceOf[Tree]))
+          if (saveReferences.contains(name)) {
+            (
+              Some(q"var ${TermName(name)}: ${appliedType(typeclassSymbol, tpe.asInstanceOf[Type])} = null"),
+              q"${TermName(name)} = $typeclassTree"
+            )
+          } else {
+            (
+              None,
+              q"val ${TermName(name)}: ${appliedType(typeclassSymbol, tpe.asInstanceOf[Type])} = $typeclassTree"
+            )
+          }
+        }
+
+        currentMemo.clear()
+
+        q"{ ..${unwrappedOrder.flatMap(_._1)}; ..${unwrappedOrder.map(_._2)}; ${replaceDeferred(saveReferences).transform(deriveTree)} }"
+      } else {
+        deriveTree
       }
     }
   }
 }
 
 object GenericDeriveImpl {
-  private[GenericDeriveImpl] val derivationMemo = new ThreadLocal[mutable.Map[String, mutable.Map[String, Option[String]]]] {
-    override def initialValue(): mutable.Map[String, mutable.Map[String, Option[String]]] = mutable.Map.empty
+  private[GenericDeriveImpl] val derivationMemo = {
+    new ThreadLocal[mutable.Map[String, mutable.Map[String, Option[String]]]] {
+      override def initialValue() = mutable.Map.empty
+    }
+  }
+
+  private[GenericDeriveImpl] val derivationOrder = {
+    new ThreadLocal[mutable.Map[String, mutable.Queue[(String, whitebox.Context#Type, whitebox.Context#Tree)]]] {
+      override def initialValue() = mutable.Map.empty
+    }
   }
 }

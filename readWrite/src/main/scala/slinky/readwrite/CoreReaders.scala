@@ -33,13 +33,15 @@ trait MacroReaders {
 class MacroReadersImpl(_c: whitebox.Context) extends GenericDeriveImpl(_c) {
   import c.universe._
 
-  def constructTypeclassType(forType: c.universe.Type) = tq"_root_.slinky.readwrite.Reader[$forType]"
+  val typeclassType: c.universe.Type = typeOf[Reader[_]]
 
   def deferredInstance(forType: c.universe.Type, constantType: c.universe.Type) =
     q"new _root_.slinky.readwrite.DeferredReader[$forType, $constantType]"
 
   def maybeExtractDeferred(tree: c.Tree): Option[c.Tree] = {
     tree match {
+      case q"new _root_.slinky.readwrite.DeferredReader[$_, $t]()" =>
+        Some(t)
       case q"new slinky.readwrite.DeferredReader[$_, $t]()" =>
         Some(t)
       case _ => None
