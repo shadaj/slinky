@@ -169,14 +169,6 @@ object StateReaderProvider {
     val compName = c.internal.enclosingOwner.owner.asClass
     val q"$_; val x: $typedReaderType = null" = c.typecheck(q"@_root_.scala.annotation.unchecked.uncheckedStable val comp: $compName = null; val x: _root_.slinky.readwrite.Reader[comp.State] = null")
     val tpcls = c.inferImplicitValue(typedReaderType.tpe.asInstanceOf[c.Type])
-
-    if (tpcls.isEmpty) {
-      val whiteboxContext = c.asInstanceOf[whitebox.Context]
-      val q"$_; val x: $innerType = $_" = c.typecheck(q"@_root_.scala.annotation.unchecked.uncheckedStable val comp: $compName = null; val x: comp.State = null")
-      val tree = MacroReadersImpl.derive(whiteboxContext)(whiteboxContext.WeakTypeTag(innerType.tpe.asInstanceOf[whiteboxContext.Type])).asInstanceOf[c.Tree]
-      println(tree)
-    }
-
     c.Expr(q"if (_root_.scala.scalajs.LinkingInfo.productionMode) null else $tpcls.asInstanceOf[_root_.slinky.core.StateReaderProvider]")
   }
 

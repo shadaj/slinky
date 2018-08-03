@@ -2,7 +2,6 @@ package slinky.readwrite
 
 import scala.annotation.compileTimeOnly
 import scala.collection.generic.CanBuildFrom
-import scala.collection.mutable
 import scala.concurrent.Future
 import scala.scalajs.js
 import scala.scalajs.js.|
@@ -31,151 +30,66 @@ trait MacroReaders {
   implicit def deriveReader[T]: Reader[T] = macro MacroReadersImpl.derive[T]
 }
 
-object MacroReadersImpl {
-  private val derivationMemo = new ThreadLocal[mutable.Map[String, Option[String]]] {
-    override def initialValue(): mutable.Map[String, Option[String]] = mutable.Map.empty
-  }
+class MacroReadersImpl(_c: whitebox.Context) extends GenericDeriveImpl(_c) {
+  import c.universe._
 
-  def derive[T](c: whitebox.Context)(implicit tTag: c.WeakTypeTag[T]): c.Tree = {
-    import c.universe._
-    val currentMemo = derivationMemo.get()
-    val symbol = tTag.tpe.typeSymbol
+  def constructTypeclassType(forType: c.universe.Type) = tq"_root_.slinky.readwrite.Reader[$forType]"
 
-    def withMemoValue[T](symbol: Symbol, value: Option[String])(thunk: => T): T = {
-      val orig = currentMemo.get(symbol.fullName)
-      currentMemo(symbol.fullName) = value
-      try {
-        thunk
-      } finally {
-        if (orig.isDefined) {
-          currentMemo(symbol.fullName) = orig.get
-        } else {
-          currentMemo.remove(symbol.fullName)
-        }
-      }
-    }
+  def deferredInstance(forType: c.universe.Type, constantType: c.universe.Type) =
+    q"new _root_.slinky.readwrite.DeferredReader[$forType, $constantType]"
 
-    val replaceDeferred = new Transformer {
-      override def transform(tree: Tree): Tree = tree match {
-        case q"new slinky.readwrite.DeferredReader[$_, $t]()" =>
-          q"${TermName(t.tpe.asInstanceOf[ConstantType].value.value.asInstanceOf[String])}"
-        case o =>
-          super.transform(o)
-      }
-    }
-
-    if (currentMemo.get(symbol.fullName).contains(None)) {
-      c.abort(c.enclosingPosition, "Skipping derivation macro when getting regular implicit")
-    } else if (currentMemo.get(symbol.fullName).flatten.isDefined) {
-      q"new _root_.slinky.readwrite.DeferredReader[${tTag.tpe}, ${c.internal.constantType(Constant(currentMemo(symbol.fullName).get))}]"
-    } else if (symbol.isParameter) {
-      c.abort(c.enclosingPosition, "")
-    } else {
-      val regularImplicit = withMemoValue(symbol, None) {
-        c.inferImplicitValue(
-          c.typecheck(tq"_root_.slinky.readwrite.Reader[${tTag.tpe}]", mode = c.TYPEmode).tpe,
-          silent = true
-        )
-      }
-
-      if (regularImplicit.isEmpty) {
-        if (symbol.isModuleClass) {
-          q"""new _root_.slinky.readwrite.Reader[${tTag.tpe}] {
-                def forceRead(o: _root_.scala.scalajs.js.Object): ${tTag.tpe} = {
-                  ${c.parse(symbol.asClass.module.fullName)}
-                }
-              }"""
-        } else if (symbol.isClass && symbol.asClass.isCaseClass) {
-          val constructor = symbol.asClass.primaryConstructor
-          val paramsLists = constructor.asMethod.paramLists
-          val retName = c.freshName()
-          val substituteMap = symbol.asClass.typeParams.zip(tTag.tpe.typeArgs).toMap
-          withMemoValue(symbol, Some(retName)) {
-            q"""{
-              var ${TermName(retName)}: _root_.slinky.readwrite.Reader[${tTag.tpe}] = null
-              ${TermName(retName)} = new _root_.slinky.readwrite.Reader[${tTag.tpe}] {
-                def forceRead(o: _root_.scala.scalajs.js.Object): ${tTag.tpe} = {
-                  new ${tTag.tpe}(
-                    ...${
-                      paramsLists.map { pl =>
-                        pl.map { p =>
-                          val paramReader = c.untypecheck(replaceDeferred.transform(
-                            c.inferImplicitValue(c.typecheck(tq"_root_.slinky.readwrite.Reader[${substituteMap.getOrElse(p.typeSignature.typeSymbol, p.typeSignature)}]", mode = c.TYPEmode).tpe)
-                          ))
-                          q"$paramReader.read(o.asInstanceOf[_root_.scala.scalajs.js.Dynamic].${p.name.toTermName}.asInstanceOf[_root_.scala.scalajs.js.Object])"
-                        }
-                      }
-                    }
-                  )
-                }
-              }
-              ${TermName(retName)}
-            }"""
-          }
-        } else if (symbol.isClass && tTag.tpe <:< typeOf[AnyVal]) {
-          val actualValue = symbol.asClass.primaryConstructor.asMethod.paramLists.head.head
-          val retName = c.freshName()
-
-          withMemoValue(symbol, Some(retName)) {
-            q"""{
-              var ${TermName(retName)}: _root_.slinky.readwrite.Reader[${tTag.tpe}] = null
-              ${TermName(retName)} = new _root_.slinky.readwrite.Reader[${tTag.tpe}] {
-                def forceRead(o: _root_.scala.scalajs.js.Object): ${tTag.tpe} = {
-                  new ${tTag.tpe}(${c.untypecheck(replaceDeferred.transform(
-                    c.inferImplicitValue(c.typecheck(tq"_root_.slinky.readwrite.Reader[${actualValue.typeSignature}]", mode = c.TYPEmode).tpe)
-                  ))}.read(
-                    o
-                  ))
-                }
-              }
-
-              ${TermName(retName)}
-            }"""
-          }
-        } else if (symbol.isClass && symbol.asClass.isSealed && symbol.asType.toType.typeArgs.isEmpty) {
-          def getSubclasses(clazz: ClassSymbol): Set[Symbol] = {
-            // from magnolia
-            val children = clazz.knownDirectSubclasses
-            val (abstractTypes, concreteTypes) = children.partition(_.isAbstract)
-
-            abstractTypes.map(_.asClass).flatMap(getSubclasses(_)) ++ concreteTypes
-          }
-
-          val retName = c.freshName()
-
-          withMemoValue(symbol, Some(retName)) {
-            q"""{
-              var ${TermName(retName)}: _root_.slinky.readwrite.Reader[${tTag.tpe}] = null
-              ${TermName(retName)} = new _root_.slinky.readwrite.Reader[${tTag.tpe}] {
-                def forceRead(o: _root_.scala.scalajs.js.Object): ${tTag.tpe} = {
-                  o.asInstanceOf[_root_.scala.scalajs.js.Dynamic]._type.asInstanceOf[_root_.java.lang.String] match {
-                    case ..${getSubclasses(symbol.asClass).map { sub =>
-                      cq"""
-                        ${sub.name.toString} =>
-                          ${c.untypecheck(replaceDeferred.transform(
-                            c.inferImplicitValue(c.typecheck(tq"_root_.slinky.readwrite.Reader[$sub]", mode = c.TYPEmode).tpe)
-                          ))}.read(
-                            o
-                          )
-                      """
-                    }}
-
-                    case _ => _root_.slinky.readwrite.Reader.fallback[${tTag.tpe}].read(o)
-                  }
-                }
-              }
-
-              ${TermName(retName)}
-            }"""
-          }
-        } else {
-          q"_root_.slinky.readwrite.Reader.fallback[${tTag.tpe}]"
-        }
-      } else {
-        regularImplicit
-      }
+  def maybeExtractDeferred(tree: c.Tree): Option[c.Tree] = {
+    tree match {
+      case q"new slinky.readwrite.DeferredReader[$_, $t]()" =>
+        Some(t)
+      case _ => None
     }
   }
+
+  def createModuleTypeclass(tpe: c.universe.Type, moduleReference: c.Tree): c.Tree = {
+    q"""new _root_.slinky.readwrite.Reader[$tpe] {
+          def forceRead(o: _root_.scala.scalajs.js.Object): $tpe = {
+            $moduleReference
+          }
+        }"""
+  }
+
+  def createCaseClassTypeclass(clazz: c.Type, params: Seq[Seq[Param]]): c.Tree = {
+    val paramsTrees = params.map(_.map { p =>
+      q"${getTypeclass(p.tpe)}.read(o.asInstanceOf[_root_.scala.scalajs.js.Dynamic].${p.name.toTermName}.asInstanceOf[_root_.scala.scalajs.js.Object])"
+    })
+
+    q"""new _root_.slinky.readwrite.Reader[$clazz] {
+          def forceRead(o: _root_.scala.scalajs.js.Object): $clazz = {
+            new $clazz(...$paramsTrees)
+          }
+        }"""
+  }
+
+  def createValueClassTypeclass(clazz: c.Type, param: Param): c.Tree = {
+    q"""new _root_.slinky.readwrite.Reader[$clazz] {
+          def forceRead(o: _root_.scala.scalajs.js.Object): $clazz = {
+            new $clazz(${getTypeclass(param.tpe)}.read(o))
+          }
+        }"""
+  }
+
+  def createSealedTraitTypeclass(traitType: c.Type, subclasses: Seq[c.Symbol]): c.Tree = {
+    val cases = subclasses.map { sub =>
+      cq"""${sub.name.toString} => ${getTypeclass(sub.asType.toType)}.read(o)"""
+    }
+
+    q"""new _root_.slinky.readwrite.Reader[$traitType] {
+          def forceRead(o: _root_.scala.scalajs.js.Object): $traitType = {
+            o.asInstanceOf[_root_.scala.scalajs.js.Dynamic]._type.asInstanceOf[_root_.java.lang.String] match {
+              case ..$cases
+              case _ => _root_.slinky.readwrite.Reader.fallback[$traitType].read(o)
+            }
+          }
+        }"""
+  }
+
+  def createFallback(forType: c.Type) = q"_root_.slinky.readwrite.Reader.fallback[$forType]"
 }
 
 trait CoreReaders extends MacroReaders with FallbackReaders {
