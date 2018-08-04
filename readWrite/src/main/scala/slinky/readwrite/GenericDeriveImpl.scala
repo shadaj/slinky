@@ -126,6 +126,7 @@ abstract class GenericDeriveImpl(val c: whitebox.Context) {
           }
         } else {
           memoTree(tTag.tpe, symbol) {
+            c.echo(c.enclosingPosition, s"Using fallback derivation for type ${tTag.tpe} (derivation: ${getClass.getSimpleName})")
             createFallback(tTag.tpe)
           }
         }
