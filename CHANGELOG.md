@@ -1,7 +1,16 @@
 # Changelog
 
 ## vNEXT
+### Highlights :tada:
++ Magnolia has been replaced with a custom implementation tuned for Slinky, resulting in smaller bundles [PR #159](https://github.com/shadaj/slinky/pull/159)
++ Readers and writers for props are no longer needed for hot-reloading components, resulting in **up to 2x drops** in bundle size in `fastOptJS` mode [PR #159](https://github.com/shadaj/slinky/pull/159)
++ React element construction is now more aggressively inlined, resulting in smaller bundle sizes (5% drop in the docs project) [PR #156](https://github.com/shadaj/slinky/pull/156)
++ Switch from React VR package to React 360 [PR #141](https://github.com/shadaj/slinky/pull/141)
+
 ### Breaking Changes
++ Scalameta is no longer used for the `@react` macro, and Macro Paradise is used instead. See the docs for updated installation instructions for adding the Macro Paradise compiler plugin [PR #132](https://github.com/shadaj/slinky/pull/132)
++ React VR components are no longer supported, the `slinky-vr` module now points to React 360 [PR #141](https://github.com/shadaj/slinky/pull/141)
++ `ReactComponentClass` now takes a type parameter of the `Props` type to improve type safety with higher-order components. Existing uses can be safely replaced with `ReactComponentClass[_]` [PR #157](https://github.com/shadaj/slinky/pull/157)
 + Interop with Scala.js React now requires using the explicit conversions `.toSlinky` and `.toScalaJSReact` [PR #151](https://github.com/shadaj/slinky/pull/151)
 
 ## v0.4.3

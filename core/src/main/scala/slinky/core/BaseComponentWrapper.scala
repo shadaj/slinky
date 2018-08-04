@@ -1,14 +1,13 @@
 package slinky.core
 
 import slinky.core.facade.{React, ReactElement, ReactRef}
-import slinky.readwrite.{Reader, Writer}
+import slinky.readwrite.{MacroReadersImpl, Reader, Writer}
 
 import scala.language.experimental.macros
 import scala.scalajs.js
 import scala.scalajs.js.ConstructorTag
 import scala.language.implicitConversions
-import scala.reflect.macros.blackbox
-import scala.scalajs.js.annotation.JSExport
+import scala.reflect.macros.{blackbox, whitebox}
 
 class KeyAndRefAddingStage[D <: js.Any](val props: js.Dictionary[js.Any], val constructor: js.Object) {
   def withKey(key: String): KeyAndRefAddingStage[D] = {
@@ -33,7 +32,7 @@ object KeyAndRefAddingStage {
   }
 }
 
-abstract class BaseComponentWrapper(pr: PropsReaderProvider, pw: PropsWriterProvider, sr: StateReaderProvider, sw: StateWriterProvider) {
+abstract class BaseComponentWrapper(sr: StateReaderProvider, sw: StateWriterProvider) {
   type Props
 
   type State
@@ -46,8 +45,6 @@ abstract class BaseComponentWrapper(pr: PropsReaderProvider, pw: PropsWriterProv
 
   def getDerivedStateFromProps(nextProps: Props, prevState: State): State = null.asInstanceOf[State]
 
-  private[core] val hot_propsReader = pr.asInstanceOf[Reader[Props]]
-  private[core] val hot_propsWriter = pw.asInstanceOf[Writer[Props]]
   private[core] val hot_stateReader = sr.asInstanceOf[Reader[State]]
   private[core] val hot_stateWriter = sw.asInstanceOf[Writer[State]]
 
@@ -95,16 +92,12 @@ abstract class BaseComponentWrapper(pr: PropsReaderProvider, pw: PropsWriterProv
   private var componentConstructorInstance: js.Object = null
 
   def apply(p: Props)(implicit constructorTag: ConstructorTag[Def]): KeyAndRefAddingStage[Def] = {
-    val propsObj = if (BaseComponentWrapper.scalaComponentWritingEnabled) {
-      DefinitionBase.writeWithWrappingAdjustment(hot_propsWriter)(p).asInstanceOf[js.Dictionary[js.Any]]
-    } else {
-      js.Dictionary("__" -> p.asInstanceOf[js.Any])
-    }
+    val propsObj = js.Dictionary("__" -> p.asInstanceOf[js.Any])
 
     if (componentConstructorInstance == null) {
       componentConstructorInstance =
         componentConstructor(
-          hot_propsReader,
+          null,
           hot_stateWriter, hot_stateReader,
           constructorTag
         )
@@ -123,7 +116,7 @@ abstract class BaseComponentWrapper(pr: PropsReaderProvider, pw: PropsWriterProv
 
 object BaseComponentWrapper {
   private[BaseComponentWrapper] val defaultGetDerivedState = {
-    new BaseComponentWrapper(null, null, null, null) {
+    new BaseComponentWrapper(null, null) {
       override type Props = Unit
       override type State = Unit
       override type Def = Nothing
@@ -169,39 +162,13 @@ object BaseComponentWrapper {
   }
 }
 
-trait PropsReaderProvider extends js.Object
-object PropsReaderProvider {
-  def impl(c: blackbox.Context): c.Expr[PropsReaderProvider] = {
-    import c.universe._
-    val compName = c.internal.enclosingOwner.owner.asClass
-    val q"$_; val x: $typedReaderType = null" = c.typecheck(q"@_root_.scala.annotation.unchecked.uncheckedStable val comp: $compName = null; val x: _root_.slinky.readwrite.Reader[comp.Props] = null")
-    val tpcls = c.inferImplicitValue(typedReaderType.tpe.asInstanceOf[c.Type])
-    c.Expr(q"if (_root_.scala.scalajs.LinkingInfo.productionMode) null else $tpcls.asInstanceOf[_root_.slinky.core.PropsReaderProvider]")
-  }
-
-  implicit def get: PropsReaderProvider = macro impl
-}
-
-trait PropsWriterProvider extends js.Object
-object PropsWriterProvider {
-  def impl(c: blackbox.Context): c.Expr[PropsWriterProvider] = {
-    import c.universe._
-    val compName = c.internal.enclosingOwner.owner.asClass
-    val q"$_; val x: $typedReaderType = null" = c.typecheck(q"@_root_.scala.annotation.unchecked.uncheckedStable val comp: $compName = null; val x: _root_.slinky.readwrite.Writer[comp.Props] = null")
-    val tpcls = c.inferImplicitValue(typedReaderType.tpe.asInstanceOf[c.Type])
-    c.Expr(q"if (_root_.scala.scalajs.LinkingInfo.productionMode) null else $tpcls.asInstanceOf[_root_.slinky.core.PropsWriterProvider]")
-  }
-
-  implicit def get: PropsWriterProvider = macro impl
-}
-
 trait StateReaderProvider extends js.Object
 object StateReaderProvider {
   def impl(c: blackbox.Context): c.Expr[StateReaderProvider] = {
     import c.universe._
     val compName = c.internal.enclosingOwner.owner.asClass
     val q"$_; val x: $typedReaderType = null" = c.typecheck(q"@_root_.scala.annotation.unchecked.uncheckedStable val comp: $compName = null; val x: _root_.slinky.readwrite.Reader[comp.State] = null")
-    val tpcls = c.inferImplicitValue(typedReaderType.tpe.asInstanceOf[c.Type])
+    val tpcls = c.inferImplicitValue(typedReaderType.tpe.asInstanceOf[c.Type], silent = false)
     c.Expr(q"if (_root_.scala.scalajs.LinkingInfo.productionMode) null else $tpcls.asInstanceOf[_root_.slinky.core.StateReaderProvider]")
   }
 
@@ -214,7 +181,7 @@ object StateWriterProvider {
     import c.universe._
     val compName = c.internal.enclosingOwner.owner.asClass
     val q"$_; val x: $typedReaderType = null" = c.typecheck(q"@_root_.scala.annotation.unchecked.uncheckedStable val comp: $compName = null; val x: _root_.slinky.readwrite.Writer[comp.State] = null")
-    val tpcls = c.inferImplicitValue(typedReaderType.tpe.asInstanceOf[c.Type])
+    val tpcls = c.inferImplicitValue(typedReaderType.tpe.asInstanceOf[c.Type], silent = false)
     c.Expr(q"if (_root_.scala.scalajs.LinkingInfo.productionMode) null else $tpcls.asInstanceOf[_root_.slinky.core.StateWriterProvider]")
   }
 
