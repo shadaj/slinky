@@ -15,7 +15,7 @@ case class SubTypeB(boolean: Boolean) extends MySealedTrait
 case object SubTypeC extends MySealedTrait
 
 class ReaderWriterTest extends FunSuite {
-  private def readWrittenSame[T](v: T, isOpaque: Boolean = false)(implicit reader: Reader[T], writer: Writer[T]) = {
+  private def readWrittenSame[T](v: T, isOpaque: Boolean = false, beSame: Boolean = true)(implicit reader: Reader[T], writer: Writer[T]) = {
     val written = writer.write(v)
     if (!isOpaque) {
       assert(js.isUndefined(written) || js.isUndefined(written.asInstanceOf[js.Dynamic].__))
@@ -23,7 +23,9 @@ class ReaderWriterTest extends FunSuite {
       assert(!js.isUndefined(written.asInstanceOf[js.Dynamic].__))
     }
 
-    assert(reader.read(written) == v)
+    if (beSame) {
+      assert(reader.read(written) == v)
+    }
   }
 
   test("Read/write - byte") {
@@ -129,7 +131,7 @@ class ReaderWriterTest extends FunSuite {
     case class TypeA()
     case class ComplexClass(a: TypeA, b: TypeA => Int)
 
-    readWrittenSame(ComplexClass(TypeA(), _ => 1))
+    readWrittenSame(ComplexClass(TypeA(), _ => 1), beSame = false)
   }
 
   test("Read/write - value class") {
