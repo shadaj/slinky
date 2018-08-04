@@ -9,8 +9,13 @@ import scala.scalajs.js.|
 // cannot be a local class
 class ValueClass(val int: Int) extends AnyVal
 
+sealed trait MySealedTrait
+case class SubTypeA(int: Int) extends MySealedTrait
+case class SubTypeB(boolean: Boolean) extends MySealedTrait
+case object SubTypeC extends MySealedTrait
+
 class ReaderWriterTest extends FunSuite {
-  private def readWrittenSame[T](v: T, isOpaque: Boolean = false)(implicit reader: Reader[T], writer: Writer[T]) = {
+  private def readWrittenSame[T](v: T, isOpaque: Boolean = false, beSame: Boolean = true)(implicit reader: Reader[T], writer: Writer[T]) = {
     val written = writer.write(v)
     if (!isOpaque) {
       assert(js.isUndefined(written) || js.isUndefined(written.asInstanceOf[js.Dynamic].__))
@@ -18,7 +23,9 @@ class ReaderWriterTest extends FunSuite {
       assert(!js.isUndefined(written.asInstanceOf[js.Dynamic].__))
     }
 
-    assert(reader.read(written) == v)
+    if (beSame) {
+      assert(reader.read(written) == v)
+    }
   }
 
   test("Read/write - byte") {
@@ -64,6 +71,16 @@ class ReaderWriterTest extends FunSuite {
     readWrittenSame[Option[String]](Some("hello"))
     readWrittenSame[Option[String]](None)
     assert(implicitly[Reader[Option[String]]].read(null).isEmpty)
+    assert(implicitly[Writer[Option[String]]].write(None) == ())
+  }
+
+  test("Read/write - Either") {
+    readWrittenSame[Either[Int, String]](Left(1))
+    readWrittenSame[Either[Int, String]](Right("hello"))
+  }
+
+  test("Read/write - tuple") {
+    readWrittenSame((1, "hello", "bye"))
   }
 
   test("Read/write - js.|") {
@@ -78,6 +95,11 @@ class ReaderWriterTest extends FunSuite {
   test("Read/write - case class") {
     case class CaseClass(int: Int, boolean: Boolean)
     readWrittenSame(CaseClass(1, true))
+  }
+
+  test("Read/write - recursive case class") {
+    case class RecursiveCaseClass(int: Int, recurse: Option[RecursiveCaseClass])
+    readWrittenSame(RecursiveCaseClass(1, Some(RecursiveCaseClass(2, None))))
   }
 
   test("Read/write - case class with default js.undefined") {
@@ -100,14 +122,16 @@ class ReaderWriterTest extends FunSuite {
   }
 
   test("Read/write - sealed trait with case objects") {
-    sealed trait MySealedTrait
-    case class SubTypeA(int: Int) extends MySealedTrait
-    case class SubTypeB(boolean: Boolean) extends MySealedTrait
-    case object SubTypeC extends MySealedTrait
-
     readWrittenSame[MySealedTrait](SubTypeA(-1))
     readWrittenSame[MySealedTrait](SubTypeB(true))
     readWrittenSame[MySealedTrait](SubTypeC)
+  }
+
+  test("Read/write - case class with shared type in reader and writer position") {
+    case class TypeA()
+    case class ComplexClass(a: TypeA, b: TypeA => Int)
+
+    readWrittenSame(ComplexClass(TypeA(), _ => 1), beSame = false)
   }
 
   test("Read/write - value class") {

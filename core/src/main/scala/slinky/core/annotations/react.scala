@@ -26,7 +26,7 @@ object ReactMacrosImpl {
       case defn@q"type Props = ${_}" =>
         Some((defn, Seq()))
 
-      case defn@q"case class Props[..$tparams](...$caseClassparamss) extends ..$_" =>
+      case defn@q"case class Props[..$tparams](...$caseClassparamss) extends ..$_ { $_ => ..$_ }" =>
         val applyValues = caseClassparamss.map(ps => ps.map(_.name))
         val caseClassApply =
           q"""def apply[..$tparams](...$caseClassparamss): _root_.slinky.core.KeyAndRefAddingStage[Def] =
@@ -40,7 +40,7 @@ object ReactMacrosImpl {
     val stateDefinition = stats.flatMap {
       case defn@q"type State = ${_}" =>
         Some(defn)
-      case defn@q"case class State[..$_](...$_) extends ..$_" =>
+      case defn@q"case class State[..$_](...$_) extends ..$_ { $_ => ..$_ }" =>
         Some(defn)
       case _ => None
     }.headOption
@@ -48,7 +48,7 @@ object ReactMacrosImpl {
     val snapshotDefinition = stats.flatMap {
       case defn@q"type Snapshot = ${_}" =>
         Some(defn)
-      case defn@q"case class Snapshot[..$_](...$_) extends ..$_" =>
+      case defn@q"case class Snapshot[..$_](...$_) extends ..$_ { $_ => ..$_ }" =>
         Some(defn)
       case _ => None
     }.headOption
@@ -87,7 +87,7 @@ object ReactMacrosImpl {
     )
   }
 
-  def createExternalBody(c: whitebox.Context)(obj: c.Tree): List[c.Tree] = {
+  def createExternalBody(c: whitebox.Context)(obj: c.Tree): (List[c.Tree], c.Type, c.Type) = {
     import c.universe._
 
     val q"..$_ object ${objectName: Name} extends ..$parents { $self => ..$stats}" = obj
@@ -117,7 +117,7 @@ object ReactMacrosImpl {
       null
     }
 
-    stats.flatMap {
+    val body = stats.flatMap {
       case q"case class Props[..$tparams](...$caseClassparamss) extends ..$_" =>
         val applyValues = caseClassparamss.map(ps => ps.map(_.name))
         val caseClassApply =
@@ -144,6 +144,8 @@ object ReactMacrosImpl {
         }
       case _ => List.empty
     }.asInstanceOf[List[c.Tree]]
+
+    (body, refType, elementType)
   }
 
 
@@ -166,8 +168,8 @@ object ReactMacrosImpl {
            parentsContainsType(c)(parents, typeOf[ExternalComponentWithAttributes[_]]) ||
            parentsContainsType(c)(parents, typeOf[ExternalComponentWithRefType[_]]) ||
           parentsContainsType(c)(parents, typeOf[ExternalComponentWithAttributesWithRefType[_, _]]) =>
-        val companionStats = createExternalBody(c)(obj)
-        List(q"object $objName extends ${typeOf[ExternalComponent]} { ..${objStats ++ companionStats} }")
+        val (companionStats, refType, elementType) = createExternalBody(c)(obj)
+        List(q"object $objName extends _root_.slinky.core.ExternalComponentWithAttributesWithRefType[$elementType, $refType] { ..${objStats ++ companionStats} }")
 
       case defn =>
         c.abort(c.enclosingPosition, s"@react must annotate a class that extends Component or an object that extends ExternalComponent(WithAttributes)(WithRefType), got $defn")

@@ -15,7 +15,6 @@ lazy val slinky = project.in(file(".")).aggregate(
   scalajsReactInterop,
   coreIntellijSupport
 ).settings(
-  publishArtifact := false,
   publish := {},
   publishLocal := {}
 ).disablePlugins(SbtIdeaPlugin)
