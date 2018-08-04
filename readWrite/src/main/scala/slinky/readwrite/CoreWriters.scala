@@ -153,9 +153,8 @@ trait CoreWriters extends MacroWriters with FallbackWriters {
   }
 
   implicit def collectionWriter[T, C[_]](implicit writer: Writer[T],
-                                         cbf: CanBuildFrom[Nothing, T, Seq[T]],
                                          ev: C[T] <:< Iterable[T]): Writer[C[T]] = s => {
-    js.Array(s.to[Seq](cbf).map(v => writer.write(v)): _*).asInstanceOf[js.Object]
+    js.Array(s.toSeq.map(v => writer.write(v)): _*).asInstanceOf[js.Object]
   }
 
   implicit def futureWriter[O](implicit oWriter: Writer[O]): Writer[Future[O]] = s => {

@@ -109,11 +109,11 @@ lazy val native = project.settings(macroAnnotationSettings, librarySettings, cro
 
 lazy val vr = project.settings(macroAnnotationSettings, librarySettings, crossScalaSettings).dependsOn(core, testRenderer % Test).disablePlugins(SbtIdeaPlugin)
 
-lazy val hot = project.settings(macroAnnotationSettings, librarySettings).dependsOn(core).disablePlugins(SbtIdeaPlugin)
+lazy val hot = project.settings(macroAnnotationSettings, librarySettings, crossScalaSettings).dependsOn(core).disablePlugins(SbtIdeaPlugin)
 
 lazy val scalajsReactInterop = project.settings(macroAnnotationSettings, librarySettings).dependsOn(core).disablePlugins(SbtIdeaPlugin)
 
-lazy val tests = project.settings(macroAnnotationSettings, crossScalaSettings).dependsOn(core, web, hot, scalajsReactInterop).disablePlugins(SbtIdeaPlugin)
+lazy val tests = project.settings(macroAnnotationSettings, crossScalaSettings).dependsOn(core, web, hot).disablePlugins(SbtIdeaPlugin)
 
 lazy val example = project.settings(macroAnnotationSettings).dependsOn(web, hot, scalajsReactInterop).disablePlugins(SbtIdeaPlugin)
 
