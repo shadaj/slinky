@@ -1,6 +1,6 @@
-addSbtPlugin("org.scala-js" % "sbt-scalajs" % "0.6.22")
+addSbtPlugin("org.scala-js" % "sbt-scalajs" % "0.6.23")
 
-addSbtPlugin("ch.epfl.scala" % "sbt-scalajs-bundler" % "0.10.0")
+addSbtPlugin("ch.epfl.scala" % "sbt-scalajs-bundler" % "0.13.0")
 
 addSbtPlugin("com.jsuereth" % "sbt-pgp" % "1.1.0")
 

@@ -1,7 +1,7 @@
 package slinky.readwrite
 
 import scala.annotation.compileTimeOnly
-import scala.collection.generic.CanBuildFrom
+import scala.collection.compat._
 import scala.concurrent.Future
 import scala.scalajs.js
 import scala.scalajs.js.|
@@ -149,10 +149,9 @@ trait CoreReaders extends MacroReaders with FallbackReaders {
     }
   }
 
-  implicit def collectionReader[T, C[_]](implicit reader: Reader[T],
-                                         cbf: CanBuildFrom[Nothing, T, C[T]],
-                                         ev: C[T] <:< Iterable[T]): Reader[C[T]] =
-    _.asInstanceOf[js.Array[js.Object]].map(o => reader.read(o)).to[C]
+  implicit def collectionReader[T, C[T] <: Iterable[T]](implicit reader: Reader[T],
+                                                        bf: Factory[T, C[T]]): Reader[C[T]] =
+    c => bf.fromSpecific(c.asInstanceOf[js.Array[js.Object]].map(o => reader.read(o)))
 
   implicit def futureReader[O](implicit oReader: Reader[O]): Reader[Future[O]] =
     _.asInstanceOf[js.Promise[js.Object]].toFuture.map { v =>
