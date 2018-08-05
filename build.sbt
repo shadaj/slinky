@@ -57,7 +57,7 @@ addCommandAlias(
   "publishSignedAll",
   (slinky: ProjectDefinition[ProjectReference])
     .aggregate
-    .map(p => s"${p.asInstanceOf[LocalProject].project}/publishSigned")
+    .map(p => s"+ ${p.asInstanceOf[LocalProject].project}/publishSigned")
     .mkString(";", ";", "")
 )
 
