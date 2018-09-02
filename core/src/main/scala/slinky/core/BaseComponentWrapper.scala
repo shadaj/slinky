@@ -1,13 +1,13 @@
 package slinky.core
 
 import slinky.core.facade.{React, ReactElement, ReactRef}
-import slinky.readwrite.{MacroReadersImpl, Reader, Writer}
+import slinky.readwrite.{Reader, Writer}
 
 import scala.language.experimental.macros
 import scala.scalajs.js
 import scala.scalajs.js.ConstructorTag
 import scala.language.implicitConversions
-import scala.reflect.macros.{blackbox, whitebox}
+import scala.reflect.macros.blackbox
 
 class KeyAndRefAddingStage[D <: js.Any](val props: js.Dictionary[js.Any], val constructor: js.Object) {
   def withKey(key: String): KeyAndRefAddingStage[D] = {

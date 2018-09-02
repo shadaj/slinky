@@ -182,6 +182,14 @@ object DerivedStateComponent {
   }
 }
 
+@react class ComponentWithChildren extends StatelessComponent {
+  case class Props(int: Int, children: ReactElement*)
+
+  override def render(): ReactElement = {
+    props.children.head
+  }
+}
+
 class ReactAnnotatedComponentTest extends AsyncFunSuite {
   test("setState given function is applied") {
     val promise: Promise[Assertion] = Promise()
@@ -287,5 +295,15 @@ class ReactAnnotatedComponentTest extends AsyncFunSuite {
     )
 
     promise.future
+  }
+
+  test("Can use curried apply for components with children") {
+    val targetNode = dom.document.createElement("div")
+    ReactDOM.render(
+      ComponentWithChildren(0)("hello"),
+      targetNode
+    )
+
+    assert(targetNode.innerHTML == "hello")
   }
 }

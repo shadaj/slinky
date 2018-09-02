@@ -1,6 +1,7 @@
 package slinky.core.annotations
 
 import slinky.core._
+import slinky.core.facade.ReactElement
 
 import scala.annotation.compileTimeOnly
 import scala.language.experimental.macros
@@ -26,15 +27,24 @@ object ReactMacrosImpl {
       case defn@q"type Props = ${_}" =>
         Some((defn, Seq()))
 
-      case defn@q"case class Props[..$tparams](...$caseClassparamss) extends ..$_ { $_ => ..$_ }" =>
+      case defn@q"case class Props[..$tparams](...${caseClassparamssRaw}) extends ..$_ { $_ => ..$_ }" =>
+        val caseClassparamss = caseClassparamssRaw.asInstanceOf[Seq[Seq[ValDef]]]
+        val childrenParam = caseClassparamss.flatten.find(_.name.toString == "children")
+
+        val paramssWithoutChildren = caseClassparamss.map(_.filterNot(childrenParam.contains))
         val applyValues = caseClassparamss.map(ps => ps.map(_.name))
-        val caseClassApply =
-          q"""def apply[..$tparams](...$caseClassparamss): _root_.slinky.core.KeyAndRefAddingStage[Def] =
-                  this.apply(Props.apply[..$tparams](...$applyValues))"""
+
+        val caseClassApply = if (childrenParam.isDefined) {
+          q"""def apply[..$tparams](...$paramssWithoutChildren)(${childrenParam.get}): _root_.slinky.core.KeyAndRefAddingStage[Def] =
+                this.apply(Props.apply[..$tparams](...$applyValues))"""
+        } else {
+          q"""def apply[..$tparams](...$paramssWithoutChildren): _root_.slinky.core.KeyAndRefAddingStage[Def] =
+                this.apply(Props.apply[..$tparams](...$applyValues))"""
+        }
 
         Some((defn, Seq(caseClassApply)))
 
-      case defn => None
+      case _ => None
     }.headOption.getOrElse(c.abort(c.enclosingPosition, "Components must define a Props type or case class, but none was found."))
 
     val stateDefinition = stats.flatMap {
