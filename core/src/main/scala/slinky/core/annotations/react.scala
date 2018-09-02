@@ -1,7 +1,6 @@
 package slinky.core.annotations
 
 import slinky.core._
-import slinky.core.facade.ReactElement
 
 import scala.annotation.compileTimeOnly
 import scala.language.experimental.macros
@@ -32,11 +31,26 @@ object ReactMacrosImpl {
         val childrenParam = caseClassparamss.flatten.find(_.name.toString == "children")
 
         val paramssWithoutChildren = caseClassparamss.map(_.filterNot(childrenParam.contains))
+          .filterNot(_.isEmpty)
         val applyValues = caseClassparamss.map(ps => ps.map(_.name))
 
         val caseClassApply = if (childrenParam.isDefined) {
+          // from https://groups.google.com/forum/#!topic/scala-user/dUOonrP_5K4
+          val body = c.typecheck(childrenParam.get.tpt, c.TYPEmode).tpe match {
+            case TypeRef(_, sym, _) if sym == definitions.RepeatedParamClass =>
+              val applyValuesChildrenVararg = caseClassparamss.map(ps => ps.map { ps =>
+                if (ps == childrenParam.get) {
+                  q"${ps.name}: _*"
+                } else q"${ps.name}"
+              })
+
+              q"this.apply(Props.apply[..$tparams](...$applyValuesChildrenVararg))"
+            case _ =>
+              q"this.apply(Props.apply[..$tparams](...$applyValues))"
+          }
+
           q"""def apply[..$tparams](...$paramssWithoutChildren)(${childrenParam.get}): _root_.slinky.core.KeyAndRefAddingStage[Def] =
-                this.apply(Props.apply[..$tparams](...$applyValues))"""
+                $body"""
         } else {
           q"""def apply[..$tparams](...$paramssWithoutChildren): _root_.slinky.core.KeyAndRefAddingStage[Def] =
                 this.apply(Props.apply[..$tparams](...$applyValues))"""

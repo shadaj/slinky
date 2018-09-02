@@ -186,7 +186,23 @@ object DerivedStateComponent {
   case class Props(int: Int, children: ReactElement*)
 
   override def render(): ReactElement = {
-    props.children.head
+    props.children
+  }
+}
+
+@react class ComponentWithOnlyChildren extends StatelessComponent {
+  case class Props(children: Int*)
+
+  override def render(): ReactElement = {
+    props.children.map(_.toString)
+  }
+}
+
+@react class ComponentWithNonVarargChildren extends StatelessComponent {
+  case class Props(int: Int, children: List[String])
+
+  override def render(): ReactElement = {
+    props.children
   }
 }
 
@@ -300,10 +316,30 @@ class ReactAnnotatedComponentTest extends AsyncFunSuite {
   test("Can use curried apply for components with children") {
     val targetNode = dom.document.createElement("div")
     ReactDOM.render(
-      ComponentWithChildren(0)("hello"),
+      ComponentWithChildren(0)("hello", "bye"),
       targetNode
     )
 
-    assert(targetNode.innerHTML == "hello")
+    assert(targetNode.innerHTML == "hellobye")
+  }
+
+  test("Can use direct apply for components with only a children prop") {
+    val targetNode = dom.document.createElement("div")
+    ReactDOM.render(
+      ComponentWithOnlyChildren(0, 1, 2),
+      targetNode
+    )
+
+    assert(targetNode.innerHTML == "012")
+  }
+
+  test("Can use curried apply for components with non-vararg children") {
+    val targetNode = dom.document.createElement("div")
+    ReactDOM.render(
+      ComponentWithNonVarargChildren(0)(List("a", "b", "c")),
+      targetNode
+    )
+
+    assert(targetNode.innerHTML == "abc")
   }
 }
