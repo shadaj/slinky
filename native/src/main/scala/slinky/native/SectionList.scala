@@ -2,7 +2,7 @@ package slinky.native
 
 import slinky.core._
 import slinky.core.facade.ReactElement
-import slinky.readwrite.{ObjectOrWritten, Writer}
+import slinky.readwrite.ObjectOrWritten
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSImport
@@ -65,8 +65,6 @@ object SectionList extends ExternalComponentWithRefType[SectionListInstance[Any]
 
   override val component = Component
 
-  private val writer = implicitly[Writer[Props]]
-
   def apply[T](sections: Seq[Section[T]],
                initialNumToRender: js.UndefOr[Int] = js.undefined,
                keyExtractor: js.UndefOr[(T, Int) => String] = js.undefined,
@@ -88,34 +86,30 @@ object SectionList extends ExternalComponentWithRefType[SectionListInstance[Any]
                renderSectionHeader: js.UndefOr[RenderSectionInfo[T] => ReactElement] = js.undefined,
                SectionSeparatorComponent: js.UndefOr[ReactComponentClass[_]] = js.undefined,
                stickySectionHeadersEnabled: js.UndefOr[Boolean] = js.undefined,
-               getItemLayout: js.UndefOr[(T, Int) => ItemLayout] = js.undefined): BuildingComponent[SectionListInstance[T], js.Object] = {
-    new BuildingComponent(
-      component,
-      writer.write(Props(
-        sections = sections.asInstanceOf[Seq[Section[Any]]],
-        initialNumToRender = initialNumToRender,
-        keyExtractor = keyExtractor.map(f => (a, i) => f(a.asInstanceOf[T], i)),
-        renderItem = renderItem.map(f => o => f(o.asInstanceOf[SectionRenderItemInfo[T]])),
-        onEndReached = onEndReached,
-        extraData = extraData,
-        ItemSeparatorComponent = ItemSeparatorComponent,
-        inverted = inverted,
-        ListFooterComponent = ListFooterComponent,
-        legacyImplementation = legacyImplementation,
-        ListEmptyComponent = ListEmptyComponent,
-        onEndReachedThreshold = onEndReachedThreshold,
-        onRefresh = onRefresh,
-        onViewableItemsChanged = onViewableItemsChanged.asInstanceOf[js.UndefOr[ViewableItemsChangedEvent[Any] => Unit]],
-        refreshing = refreshing,
-        removeClippedSubviews = removeClippedSubviews,
-        ListHeaderComponent = ListHeaderComponent,
-        renderSectionFooter = renderSectionFooter.asInstanceOf[js.UndefOr[RenderSectionInfo[Any] => ReactElement]],
-        renderSectionHeader = renderSectionHeader.asInstanceOf[js.UndefOr[RenderSectionInfo[Any] => ReactElement]],
-        SectionSeparatorComponent = SectionSeparatorComponent,
-        stickySectionHeadersEnabled = stickySectionHeadersEnabled,
-        getItemLayout = getItemLayout.map(f => (v, i) => f(v.asInstanceOf[T], i))
-      )),
-      null, null, Seq.empty
-    )
+               getItemLayout: js.UndefOr[(T, Int) => ItemLayout] = js.undefined): BuildingComponent[Nothing, SectionListInstance[T]] = {
+    apply(Props(
+      sections = sections.asInstanceOf[Seq[Section[Any]]],
+      initialNumToRender = initialNumToRender,
+      keyExtractor = keyExtractor.map(f => (a, i) => f(a.asInstanceOf[T], i)),
+      renderItem = renderItem.map(f => o => f(o.asInstanceOf[SectionRenderItemInfo[T]])),
+      onEndReached = onEndReached,
+      extraData = extraData,
+      ItemSeparatorComponent = ItemSeparatorComponent,
+      inverted = inverted,
+      ListFooterComponent = ListFooterComponent,
+      legacyImplementation = legacyImplementation,
+      ListEmptyComponent = ListEmptyComponent,
+      onEndReachedThreshold = onEndReachedThreshold,
+      onRefresh = onRefresh,
+      onViewableItemsChanged = onViewableItemsChanged.asInstanceOf[js.UndefOr[ViewableItemsChangedEvent[Any] => Unit]],
+      refreshing = refreshing,
+      removeClippedSubviews = removeClippedSubviews,
+      ListHeaderComponent = ListHeaderComponent,
+      renderSectionFooter = renderSectionFooter.asInstanceOf[js.UndefOr[RenderSectionInfo[Any] => ReactElement]],
+      renderSectionHeader = renderSectionHeader.asInstanceOf[js.UndefOr[RenderSectionInfo[Any] => ReactElement]],
+      SectionSeparatorComponent = SectionSeparatorComponent,
+      stickySectionHeadersEnabled = stickySectionHeadersEnabled,
+      getItemLayout = getItemLayout.map(f => (v, i) => f(v.asInstanceOf[T], i))
+    )).asInstanceOf[BuildingComponent[Nothing, SectionListInstance[T]]]
   }
 }
