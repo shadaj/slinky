@@ -4,6 +4,8 @@ import org.jetbrains.plugins.scala.lang.psi.types.ScParameterizedType
 import org.jetbrains.plugins.scala.lang.psi.impl.toplevel.typedef.{SyntheticMembersInjector, TypeDefinitionMembers}
 import org.jetbrains.plugins.scala.lang.psi.api.toplevel.typedef._
 import org.jetbrains.plugins.scala.lang.psi.api.statements.ScTypeAliasDefinition
+import org.jetbrains.plugins.scala.lang.psi.types.api.designator.ScDesignatorType
+import org.jetbrains.plugins.scala.lang.psi.types.api.{ParameterizedType, StdType}
 
 class SlinkyInjector extends SyntheticMembersInjector {
   sealed trait InjectType
@@ -24,9 +26,20 @@ class SlinkyInjector extends SyntheticMembersInjector {
         case propsCls: ScClass if propsCls.isCase =>
           ((propsCls.getText, Type), {
             val paramList = propsCls.constructor.get.parameterList
-            Seq(
-              s"def apply${paramList.getText}: slinky.core.KeyAndRefAddingStage[${cls.getQualifiedName}] = ???" -> Function
-            )
+            val caseClassparamss = paramList.params
+            val childrenParam = caseClassparamss.find(_.name == "children")
+
+            val paramssWithoutChildren = caseClassparamss.filterNot(childrenParam.contains)
+
+            if (childrenParam.isDefined) {
+              Seq(
+                s"def apply(${paramssWithoutChildren.map(_.getText).mkString(",")})(${childrenParam.get.getText}): slinky.core.KeyAndRefAddingStage[${cls.getQualifiedName}] = ???" -> Function
+              )
+            } else {
+              Seq(
+                s"def apply(${paramssWithoutChildren.map(_.getText).mkString(",")}): slinky.core.KeyAndRefAddingStage[${cls.getQualifiedName}] = ???" -> Function
+              )
+            }
           })
       }
     }.getOrElse(("", Type), Seq.empty)

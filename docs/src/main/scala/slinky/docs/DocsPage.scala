@@ -200,9 +200,8 @@ import DocsTree._
               tree.keys.toList.map { group =>
                 DocsGroup(
                   name = group,
-                  isOpen = group == state.selectedGroup,
-                  children = tree(group)
-                ).withKey(group)
+                  isOpen = group == state.selectedGroup
+                )(tree(group)).withKey(group)
               }
             )
           )
