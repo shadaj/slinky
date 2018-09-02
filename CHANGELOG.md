@@ -3,8 +3,8 @@
 ## vNEXT
 ### Highlights :tada:
 + Slinky now supports **Scala 2.13.0-M4** [PR #153](https://github.com/shadaj/slinky/pull/153)!
-+ Magnolia has been replaced with a custom implementation tuned for Slinky, resulting in smaller bundles [PR #159](https://github.com/shadaj/slinky/pull/159) 
-+ Readers and writers for props are no longer needed for hot-reloading components, resulting in **up to 2x drops** in bundle size in `fastOptJS` mode [PR #159](https://github.com/shadaj/slinky/pull/159)
++ Magnolia has been replaced with a custom implementation tuned for Slinky, resulting in smaller bundles and faster compilation [PR #159](https://github.com/shadaj/slinky/pull/159), [PR #159](https://github.com/shadaj/slinky/pull/159) 
++ Readers and writers for props are no longer needed for hot-reloading components, resulting in **up to 2x drops** in bundle size in `fastOptJS` mode [PR #162](https://github.com/shadaj/slinky/pull/162)
 + React element construction is now more aggressively inlined, resulting in smaller bundle sizes (5% drop in the docs project) [PR #156](https://github.com/shadaj/slinky/pull/156)
 + Switch from React VR package to React 360 [PR #141](https://github.com/shadaj/slinky/pull/141)
 
