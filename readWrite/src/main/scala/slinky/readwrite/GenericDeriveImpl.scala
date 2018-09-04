@@ -6,7 +6,21 @@ import scala.reflect.macros.whitebox
 abstract class GenericDeriveImpl(val c: whitebox.Context) { self =>
   import c.universe._
 
-  case class Param(name: Name, tpe: Type)
+  case class Param(name: Name, origTpe: Type) {
+    val tpe: Type = origTpe match {
+      case TypeRef(_, sym, args) if sym == definitions.RepeatedParamClass =>
+        appliedType(symbolOf[Seq[_]], args)
+      case _ => origTpe
+    }
+
+    def transformIfVarArg(tree: Tree): Tree = {
+      origTpe match {
+        case TypeRef(_, sym, _) if sym == definitions.RepeatedParamClass =>
+          q"$tree: _*"
+        case _ => tree
+      }
+    }
+  }
 
   val typeclassType: Type
   def deferredInstance(forType: Type, constantType: Type): Tree
@@ -78,8 +92,6 @@ abstract class GenericDeriveImpl(val c: whitebox.Context) { self =>
         tTag.tpe,
         c.internal.constantType(Constant(currentMemo((getClass.getSimpleName, tTag.tpe.toString)).get))
       )
-    } else if (symbol.isParameter) {
-      c.abort(c.enclosingPosition, "Cannot derive a typeclass for a type parameter")
     } else {
       val isRoot = currentMemo.isEmpty
       val regularImplicit = withMemoNone(tTag.tpe) {
@@ -90,7 +102,9 @@ abstract class GenericDeriveImpl(val c: whitebox.Context) { self =>
       }
 
       val deriveTree = if (regularImplicit.isEmpty) {
-        if (symbol.isModuleClass) {
+        if (symbol.isParameter) {
+          c.abort(c.enclosingPosition, "Cannot derive a typeclass for a type parameter")
+        } else if (symbol.isModuleClass) {
           createModuleTypeclass(tTag.tpe, c.parse(symbol.asClass.module.fullName))
         } else if (symbol.isClass && symbol.asClass.isCaseClass) {
           val constructor = symbol.asClass.primaryConstructor

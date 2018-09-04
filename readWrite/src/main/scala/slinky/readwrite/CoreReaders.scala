@@ -58,7 +58,9 @@ class MacroReadersImpl(_c: whitebox.Context) extends GenericDeriveImpl(_c) {
 
   def createCaseClassTypeclass(clazz: c.Type, params: Seq[Seq[Param]]): c.Tree = {
     val paramsTrees = params.map(_.map { p =>
-      q"${getTypeclass(p.tpe)}.read(o.asInstanceOf[_root_.scala.scalajs.js.Dynamic].${p.name.toTermName}.asInstanceOf[_root_.scala.scalajs.js.Object])"
+      p.transformIfVarArg {
+        q"${getTypeclass(p.tpe)}.read(o.asInstanceOf[_root_.scala.scalajs.js.Dynamic].${p.name.toTermName}.asInstanceOf[_root_.scala.scalajs.js.Object])"
+      }
     })
 
     q"""new _root_.slinky.readwrite.Reader[$clazz] {
@@ -152,6 +154,21 @@ trait CoreReaders extends MacroReaders with FallbackReaders {
   implicit def collectionReader[T, C[T] <: Iterable[T]](implicit reader: Reader[T],
                                                         bf: Factory[T, C[T]]): Reader[C[T]] =
     c => bf.fromSpecific(c.asInstanceOf[js.Array[js.Object]].map(o => reader.read(o)))
+
+  implicit def mapReader[A, B](implicit abReader: Reader[(A, B)]): Reader[Map[A, B]] = o => {
+    collectionReader[(A, B), Iterable].read(o).toMap
+  }
+
+  implicit val rangeReader: Reader[Range] = o => {
+    val dyn = o.asInstanceOf[js.Dynamic]
+    if (dyn.inclusive.asInstanceOf[Boolean]) {
+      dyn.start.asInstanceOf[Int] to dyn.end.asInstanceOf[Int] by dyn.step.asInstanceOf[Int]
+    } else {
+      dyn.start.asInstanceOf[Int] until dyn.end.asInstanceOf[Int] by dyn.step.asInstanceOf[Int]
+    }
+  }
+
+  implicit val inclusiveRangeReader: Reader[Range.Inclusive] = rangeReader.asInstanceOf[Reader[Range.Inclusive]]
 
   implicit def futureReader[O](implicit oReader: Reader[O]): Reader[Future[O]] =
     _.asInstanceOf[js.Promise[js.Object]].toFuture.map { v =>

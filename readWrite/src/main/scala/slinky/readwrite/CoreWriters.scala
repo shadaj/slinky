@@ -157,6 +157,17 @@ trait CoreWriters extends MacroWriters with FallbackWriters {
     js.Array(s.toSeq.map(v => writer.write(v)): _*).asInstanceOf[js.Object]
   }
 
+  implicit def mapWriter[A, B](implicit abWriter: Writer[(A, B)]): Writer[Map[A, B]] = s => {
+    collectionWriter[(A, B), Iterable].write(s)
+  }
+
+  implicit val rangeWriter: Writer[Range] = r => {
+    js.Dynamic.literal(start = r.start, end = r.end, step = r.step, inclusive = r.isInclusive)
+  }
+
+  implicit val inclusiveRangeWriter: Writer[Range.Inclusive] =
+    rangeWriter.asInstanceOf[Writer[Range.Inclusive]]
+
   implicit def futureWriter[O](implicit oWriter: Writer[O]): Writer[Future[O]] = s => {
     import scala.scalajs.js.JSConverters._
     s.map(v => oWriter.write(v)).toJSPromise.asInstanceOf[js.Object]
