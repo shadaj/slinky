@@ -62,3 +62,19 @@ NavLink(to = "/somepage/")(
 ```
 
 If you have an external component that takes attributes but no special props, you can use the `ExternalComponentNoPropsWithAttributes` type, which handles a combination of the above two cases.
+
+## External Components with Ref Types
+Some external components also offer an imperative API available on the constructed component instance, which can be accessed by using `ref`s. To enable stronger typing of these ref APIs, Slinky includes `WithRefType` variants of `ExternalComponent` that take an additional type parameter for the `@js.native` facade that should be used to access the ref APIs.
+
+For example:
+```scala
+@js.native trait MyRefApi extends js.Object {
+  def someFunction(): Unit = js.native
+}
+
+@react object MyExternalComponent extends ExternalComponentWithRefType[MyRefApi] { ... }
+
+MyExternalComponent(...).withRef(ref => {
+  ref.someFunction()
+})
+```
