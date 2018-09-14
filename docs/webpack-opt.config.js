@@ -1,19 +1,21 @@
-var webpack = require("webpack");
-var path = require("path");
+const webpack = require("webpack");
+const path = require("path");
 
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var CopyWebpackPlugin = require('copy-webpack-plugin');
-var StaticSiteGeneratorPlugin = require('static-site-generator-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const StaticSiteGeneratorPlugin = require('static-site-generator-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const jsdom = require('jsdom');
 const { JSDOM } = jsdom;
 const dom = new JSDOM();
 
 module.exports = {
-  "entry": {
+  mode: "production",
+  entry: {
     "docs-opt": [ path.resolve(__dirname, "./opt-launcher.js") ]
   },
-  "output": {
+  output: {
     "path": path.resolve(__dirname, "../../../../build"),
     publicPath: '/',
     "filename": "[name]-bundle.js",
@@ -53,7 +55,6 @@ module.exports = {
         NODE_ENV: JSON.stringify('production')
       }
     }),
-    new webpack.optimize.UglifyJsPlugin(),
     new StaticSiteGeneratorPlugin({
       crawl: true,
       globals: {

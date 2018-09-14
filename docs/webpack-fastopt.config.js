@@ -4,8 +4,8 @@ var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: {
-    "docs-fastopt": ["./docs-fastopt-entrypoint.js"],
-    "launcher": ["./hot-launcher.js"]
+    "dependencies": ["./docs-fastopt-entrypoint.js"],
+    "docs-fastopt": ["./hot-launcher.js"]
   },
   output: {
     path: __dirname,

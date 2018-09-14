@@ -5,7 +5,6 @@ import slinky.core.annotations.react
 import slinky.core.facade.{Fragment, ReactElement}
 import slinky.remarkreact.{ReactRenderer, Remark}
 import slinky.web.html._
-
 import org.scalajs.dom
 import org.scalajs.dom.raw.XMLHttpRequest
 
@@ -101,6 +100,17 @@ object DocsTree {
 
 import DocsTree._
 
+object TrackSSRDocs {
+  var publicSSR: js.Dictionary[String] = js.Dictionary.empty[String]
+
+  def getPublic(page: String): String = {
+    val pageLocation = "../../../../public" + page
+    val ret = js.Dynamic.global.fs.readFileSync(pageLocation, "UTF-8").asInstanceOf[String]
+    publicSSR(page) = ret
+    ret
+  }
+}
+
 @react class DocsPage extends Component {
   type Props = js.Dynamic
   case class State(selectedGroup: String, document: Option[String])
@@ -114,8 +124,8 @@ import DocsTree._
     val matchString = props.selectDynamic("match").params.selectDynamic("0").toString
     val group = tree.find(_._2.exists(_._2 == s"/docs/$matchString")).get._1
 
-    if (js.typeOf(js.Dynamic.global.window.getPublic) != "undefined") {
-      State(group, Some(js.Dynamic.global.window.getPublic(docsFilePath(props)).asInstanceOf[String]))
+    if (Main.isSSR) {
+      State(group, Some(TrackSSRDocs.getPublic(docsFilePath(props))))
     } else if (js.typeOf(js.Dynamic.global.window.publicSSR) != "undefined") {
       State(group, js.Dynamic.global.window.publicSSR.asInstanceOf[js.Dictionary[String]].get(docsFilePath(props)))
     } else {

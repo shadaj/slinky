@@ -3,7 +3,6 @@ package slinky.docs
 import scala.scalajs.js
 import scala.scalajs.js.annotation.{JSExportTopLevel, JSImport}
 import scala.scalajs.LinkingInfo
-
 import slinky.docs.homepage.Homepage
 import slinky.history.History
 import slinky.web.{ReactDOM, ReactDOMServer}
@@ -11,9 +10,9 @@ import slinky.hot
 import slinky.reactrouter._
 import slinky.universalanalytics.UniversalAnalytics
 import slinky.web.html.{div, style}
-
 import org.scalajs.dom
 import org.scalajs.dom.History
+import slinky.core.facade.ReactElement
 
 @JSImport("resources/index.css", JSImport.Default)
 @js.native
@@ -36,6 +35,21 @@ object Main {
     history
   }
 
+  def insideRouter: ReactElement = {
+    div(
+      Navbar(),
+      div(style := js.Dynamic.literal(
+        marginTop = "60px"
+      ))(
+        Switch(
+          Route("/", Homepage, exact = true),
+          Route("/docs/*", DocsPage),
+          Route("*", Homepage)
+        )
+      )
+    )
+  }
+
   @JSExportTopLevel("entrypoint.main")
   def main(): Unit = {
     if (LinkingInfo.developmentMode) {
@@ -53,41 +67,44 @@ object Main {
 
     ReactDOM.render(
       Router(history = setupAnalytics())(
-        div(
-          Navbar(),
-          div(style := js.Dynamic.literal(
-            marginTop = "60px"
-          ))(
-            Switch(
-              Route("/", Homepage, exact = true),
-              Route("/docs/*", DocsPage),
-              Route("*", Homepage)
-            )
-          )
-        )
+        insideRouter
       ),
       container
     )
   }
 
+  var isSSR = false
+
   @JSExportTopLevel("entrypoint.ssr")
   def ssr(path: String): String = {
-    ReactDOMServer.renderToString(
+    isSSR = true
+    TrackSSRDocs.publicSSR = js.Dictionary.empty
+
+    val reactTree = ReactDOMServer.renderToString(
       StaticRouter(location = path, context = js.Dynamic.literal())(
-        div(
-          Navbar(),
-          div(style := js.Dynamic.literal(
-            marginTop = "60px"
-          ))(
-            Switch(
-              Route("/", Homepage, exact = true),
-              Route("/docs/*", DocsPage),
-              Route("*", Homepage)
-            )
-          )
-        )
+        insideRouter
       )
     )
+
+    s"""<!DOCTYPE html>
+       |<html>
+       |  <head>
+       |    <meta charset="utf-8">
+       |    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+       |    <meta name="theme-color" content="#000000">
+       |    <link rel="manifest" href="/manifest.json">
+       |    <link rel="shortcut icon" href="/favicon.ico">
+       |    <title>Slinky</title>
+       |    ${dom.document.getElementsByTagName("head")(0).innerHTML}
+       |  </head>
+       |  <body>
+       |    <div id="root">
+       |      $reactTree
+       |    </div>
+       |    <script type="text/javascript">window.publicSSR = ${js.JSON.stringify(TrackSSRDocs.publicSSR)}</script>
+       |    <script async src="/docs-opt-bundle.js"></script>
+       |  </body>
+       |</html>""".stripMargin
   }
 
   @JSExportTopLevel("entrypoint.hydrate")
@@ -98,18 +115,7 @@ object Main {
 
     ReactDOM.hydrate(
       Router(history = setupAnalytics())(
-        div(
-          Navbar(),
-          div(style := js.Dynamic.literal(
-            marginTop = "60px"
-          ))(
-            Switch(
-              Route("/", Homepage, exact = true),
-              Route("/docs/*", DocsPage),
-              Route("*", Homepage)
-            )
-          )
-        )
+        insideRouter
       ),
       container
     )
