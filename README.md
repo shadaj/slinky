@@ -13,4 +13,20 @@
   </a>
 </p>
 
-# [Docs at slinky.shadaj.me](https://slinky.shadaj.me)
+# Get started at [slinky.shadaj.me](https://slinky.shadaj.me)
+
+## Contributing
+Slinky is split up into several submodules:
++ `core` contains the React.js facades and APIs for creating components and interfaces to external components
++ `web` contains bindings to React DOM and definitions for the HTML/SVG tag API
++ `native` contains bindings to React Native and external component definitions for native UI elements
++ `vr` contains bindings to React 360 and external component definitions for VR UI elements
++ `readWrite` contains the `Reader` and `Writer` typeclasses used to persist state for hot reloading
++ `hot` contains the entrypoint for enabling hot-reloading
++ `scalajsReactInterop` implements automatic conversions between Slinky and Scala.js React types
++ `testRenderer` contains bindings to `react-test-renderer` for unit testing components
++ `coreIntellijSupport` contains IntelliJ-specific support for the `@react` macro annotation
++ `tests` contains the unit tests for the above modules (except native and vr which have local tests)
++ `docs` and `docsMacros` contains the documentation site, which is a Slinky app itself
+
+To run the main unit tests, run `sbt tests/test`.

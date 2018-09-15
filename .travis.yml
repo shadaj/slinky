@@ -10,7 +10,7 @@ install:
 script:
   - sbt ";scalajsReactInterop/test; + tests/test; + native/test"
   - sbt ";set scalaJSStage in Global := FullOptStage; scalajsReactInterop/test; + tests/test; + native/test"
-  - sbt docs/compile example/compile
+  - sbt docs/compile
   - sbt coreIntellijSupport/updateIdea coreIntellijSupport/compile
 after_success:
   - 'if [ "$TRAVIS_BRANCH" = "master" ] && [ "$TRAVIS_PULL_REQUEST" = "false" ]; then bash ./publish.sh; fi'

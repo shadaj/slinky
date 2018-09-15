@@ -115,8 +115,6 @@ lazy val scalajsReactInterop = project.settings(macroAnnotationSettings, library
 
 lazy val tests = project.settings(macroAnnotationSettings, crossScalaSettings).dependsOn(core, web, hot).disablePlugins(SbtIdeaPlugin)
 
-lazy val example = project.settings(macroAnnotationSettings).dependsOn(web, hot, scalajsReactInterop).disablePlugins(SbtIdeaPlugin)
-
 lazy val docsMacros = project.settings(macroAnnotationSettings).dependsOn(web, hot).disablePlugins(SbtIdeaPlugin)
 
 lazy val docs = project.settings(macroAnnotationSettings).dependsOn(web, hot, docsMacros).disablePlugins(SbtIdeaPlugin)
