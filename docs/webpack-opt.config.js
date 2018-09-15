@@ -4,7 +4,6 @@ const path = require("path");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const StaticSiteGeneratorPlugin = require('static-site-generator-webpack-plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const jsdom = require('jsdom');
 const { JSDOM } = jsdom;
@@ -66,11 +65,5 @@ module.exports = {
         __dirname: __dirname
       }
     })
-  ],
-  node: {
-    console: true,
-    fs: 'empty',
-    net: 'empty',
-    tls: 'empty'
-  }
+  ]
 };

@@ -8,7 +8,7 @@ import slinky.history.History
 import slinky.web.{ReactDOM, ReactDOMServer}
 import slinky.hot
 import slinky.reactrouter._
-import slinky.universalanalytics.UniversalAnalytics
+import slinky.analytics.ReactGA
 import slinky.web.html.{div, style}
 import org.scalajs.dom
 import org.scalajs.dom.History
@@ -22,14 +22,13 @@ object Main {
   val css = IndexCSS
 
   def setupAnalytics(): History = {
-    val visitor = UniversalAnalytics("UA-54128141-3", js.Dynamic.literal(https = true))
+    ReactGA.initialize("UA-54128141-3")
     val history = History.createBrowserHistory()
-    visitor.pageview(js.Dynamic.literal(
-      dp = dom.window.location.pathname,
-      dr = dom.document.referrer
-    )).send()
+
+    ReactGA.pageview(dom.window.location.pathname)
+
     history.listen(() => {
-      visitor.pageview(dom.window.location.pathname).send()
+      ReactGA.pageview(dom.window.location.pathname)
     })
 
     history
@@ -62,8 +61,6 @@ object Main {
       dom.document.body.appendChild(elem)
       elem
     }
-
-    setupAnalytics()
 
     ReactDOM.render(
       Router(history = setupAnalytics())(
@@ -110,8 +107,6 @@ object Main {
   @JSExportTopLevel("entrypoint.hydrate")
   def hydrate(): Unit = {
     val container = dom.document.getElementById("root")
-
-    setupAnalytics()
 
     ReactDOM.hydrate(
       Router(history = setupAnalytics())(

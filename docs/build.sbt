@@ -1,8 +1,6 @@
 enablePlugins(ScalaJSBundlerPlugin)
 
-name := "docs"
-
-libraryDependencies += "com.lihaoyi" %%% "sourcecode" % "0.1.4"
+name := "slinky-docs"
 
 npmDependencies in Compile += "react" -> "16.4.0"
 npmDependencies in Compile += "react-dom" -> "16.4.0"
@@ -12,17 +10,15 @@ npmDependencies in Compile += "react-router-dom" -> "4.2.2"
 npmDependencies in Compile += "react-syntax-highlighter" -> "6.0.4"
 npmDependencies in Compile += "remark" -> "8.0.0"
 npmDependencies in Compile += "remark-react" -> "4.0.1"
-npmDependencies in Compile += "universal-analytics" -> "0.4.16"
+npmDependencies in Compile += "react-ga" -> "2.5.3"
 npmDependencies in Compile += "history" -> "4.7.2"
 
 npmDevDependencies in Compile += "url-loader" -> "0.6.2"
-npmDevDependencies in Compile += "file-loader" -> "1.1.5"
 npmDevDependencies in Compile += "style-loader" -> "0.19.0"
 npmDevDependencies in Compile += "css-loader" -> "0.28.7"
 npmDevDependencies in Compile += "html-webpack-plugin" -> "3.2.0"
 npmDevDependencies in Compile += "copy-webpack-plugin" -> "4.5.1"
 npmDevDependencies in Compile += "static-site-generator-webpack-plugin" -> "3.4.1"
-npmDevDependencies in Compile += "webpack-bundle-analyzer" -> "3.0.2"
 npmDevDependencies in Compile += "jsdom" -> "11.5.1"
 
 version in webpack := "4.5.0"
