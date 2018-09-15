@@ -15,6 +15,15 @@
 
 # Get started at [slinky.shadaj.me](https://slinky.shadaj.me)
 
+## What is Slinky?
+Slinky is a framework for writing React apps in Scala with an experience just like using ES6.
+
+Slinky lets you:
++ Write React components in Scala with an API that mirrors vanilla React
++ Implement interfaces to other React libraries with automatic conversions between Scala and JS types
++ Write apps for React Native and React 360, including the ability to share code with web apps
++ Develop apps iteratively with included hot-reloading support
+
 ## Contributing
 Slinky is split up into several submodules:
 + `core` contains the React.js facades and APIs for creating components and interfaces to external components
