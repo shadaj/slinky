@@ -39,7 +39,7 @@ lazy val crossScalaSettings = Seq(
 )
 
 lazy val librarySettings = Seq(
-  scalacOptions ++= (if (isSnapshot.value && false) Seq.empty else Seq({
+  scalacOptions += {
     val origVersion = version.value
     val githubVersion = if (origVersion.contains("-")) {
       origVersion.split('-').last
@@ -49,8 +49,8 @@ lazy val librarySettings = Seq(
 
     val a = baseDirectory.value.toURI
     val g = "https://raw.githubusercontent.com/shadaj/slinky"
-    s"-P:scalajs:mapSourceURI:$a->$g/${githubVersion}/${baseDirectory.value.getName}/"
-  }))
+    s"-P:scalajs:mapSourceURI:$a->$g/$githubVersion/${baseDirectory.value.getName}/"
+  }
 )
 
 addCommandAlias(
@@ -114,8 +114,6 @@ lazy val hot = project.settings(macroAnnotationSettings, librarySettings, crossS
 lazy val scalajsReactInterop = project.settings(macroAnnotationSettings, librarySettings).dependsOn(core, web % Test).disablePlugins(SbtIdeaPlugin)
 
 lazy val tests = project.settings(macroAnnotationSettings, crossScalaSettings).dependsOn(core, web, hot).disablePlugins(SbtIdeaPlugin)
-
-lazy val example = project.settings(macroAnnotationSettings).dependsOn(web, hot, scalajsReactInterop).disablePlugins(SbtIdeaPlugin)
 
 lazy val docsMacros = project.settings(macroAnnotationSettings).dependsOn(web, hot).disablePlugins(SbtIdeaPlugin)
 

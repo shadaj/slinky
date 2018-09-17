@@ -16,4 +16,4 @@ ReactDOM.render(
 ``` 
 
 ## Slinky Modules
-Slinky is split up into many modules, which make it flexible to support a large variety of projects and environments. Here, we are using two modules: `core`, which contains wrappers around React and provides the base classes for creating components, and `web`, which has wrappers around ReactDOM and provides the tags API (covered in detailed [here](/docs/tag-api/)) for constructing HTML trees.
+Slinky is split up into many modules, which make it flexible to support a large variety of projects and environments. Here, we are using two modules: `core`, which contains wrappers around React and provides the base classes for creating components, and `web`, which has wrappers around ReactDOM and provides the tags API (covered in detailed [here](/docs/the-tag-api/)) for constructing HTML trees.

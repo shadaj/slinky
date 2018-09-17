@@ -3,17 +3,18 @@ package slinky.docs
 import scala.scalajs.js
 import scala.scalajs.js.annotation.{JSExportTopLevel, JSImport}
 import scala.scalajs.LinkingInfo
-
 import slinky.docs.homepage.Homepage
 import slinky.history.History
 import slinky.web.{ReactDOM, ReactDOMServer}
 import slinky.hot
 import slinky.reactrouter._
-import slinky.universalanalytics.UniversalAnalytics
-import slinky.web.html.{div, style}
-
+import slinky.analytics.ReactGA
+import slinky.web.html._
 import org.scalajs.dom
 import org.scalajs.dom.History
+import slinky.core.CustomAttribute
+import slinky.core.facade.ReactElement
+import slinky.reacthelmet.{Helmet, ReactHelmet}
 
 @JSImport("resources/index.css", JSImport.Default)
 @js.native
@@ -23,17 +24,41 @@ object Main {
   val css = IndexCSS
 
   def setupAnalytics(): History = {
-    val visitor = UniversalAnalytics("UA-54128141-3", js.Dynamic.literal(https = true))
+    ReactGA.initialize("UA-54128141-3")
     val history = History.createBrowserHistory()
-    visitor.pageview(js.Dynamic.literal(
-      dp = dom.window.location.pathname,
-      dr = dom.document.referrer
-    )).send()
+
+    ReactGA.pageview(dom.window.location.pathname)
+
     history.listen(() => {
-      visitor.pageview(dom.window.location.pathname).send()
+      ReactGA.pageview(dom.window.location.pathname)
     })
 
     history
+  }
+
+  def insideRouter: ReactElement = {
+    val charSet = new CustomAttribute[String]("charSet")
+    div(
+      Helmet(
+        meta(charSet := "utf-8"),
+        meta(name := "viewport", content := "width=device-width, initial-scale=1, shrink-to-fit=no"),
+        meta(name := "theme-color", content := "#000000"),
+        link(rel := "manifest", href := "/manifest.json"),
+        link(rel := "shortcut icon", href := "/favicon.ico"),
+        title(s"Slinky - Write React apps in Scala just like ES6"),
+        style(`type` := "text/css")(IndexCSS.toString)
+      ),
+      Navbar(),
+      div(style := js.Dynamic.literal(
+        marginTop = "60px"
+      ))(
+        Switch(
+          Route("/", Homepage, exact = true),
+          Route("/docs/*", DocsPage),
+          Route("*", Homepage)
+        )
+      )
+    )
   }
 
   @JSExportTopLevel("entrypoint.main")
@@ -49,67 +74,54 @@ object Main {
       elem
     }
 
-    setupAnalytics()
-
     ReactDOM.render(
       Router(history = setupAnalytics())(
-        div(
-          Navbar(),
-          div(style := js.Dynamic.literal(
-            marginTop = "60px"
-          ))(
-            Switch(
-              Route("/", Homepage, exact = true),
-              Route("/docs/*", DocsPage),
-              Route("*", Homepage)
-            )
-          )
-        )
+        insideRouter
       ),
       container
     )
   }
 
+  var isSSR = false
+
   @JSExportTopLevel("entrypoint.ssr")
   def ssr(path: String): String = {
-    ReactDOMServer.renderToString(
+    isSSR = true
+    TrackSSRDocs.publicSSR = js.Dictionary.empty
+
+    val reactTree = ReactDOMServer.renderToString(
       StaticRouter(location = path, context = js.Dynamic.literal())(
-        div(
-          Navbar(),
-          div(style := js.Dynamic.literal(
-            marginTop = "60px"
-          ))(
-            Switch(
-              Route("/", Homepage, exact = true),
-              Route("/docs/*", DocsPage),
-              Route("*", Homepage)
-            )
-          )
-        )
+        insideRouter
       )
     )
+
+    val helmetContent = ReactHelmet.Helmet.renderStatic()
+
+    s"""<!DOCTYPE html>
+       |<html>
+       |  <head>
+       |    ${helmetContent.title.toString}
+       |    ${helmetContent.meta.toString}
+       |    ${helmetContent.link.toString}
+       |    ${helmetContent.style.toString}
+       |  </head>
+       |  <body>
+       |    <div id="root">
+       |      $reactTree
+       |    </div>
+       |    <script type="text/javascript">window.publicSSR = ${js.JSON.stringify(TrackSSRDocs.publicSSR)}</script>
+       |    <script async src="/slinky-docs-opt-bundle.js"></script>
+       |  </body>
+       |</html>""".stripMargin
   }
 
   @JSExportTopLevel("entrypoint.hydrate")
   def hydrate(): Unit = {
     val container = dom.document.getElementById("root")
 
-    setupAnalytics()
-
     ReactDOM.hydrate(
       Router(history = setupAnalytics())(
-        div(
-          Navbar(),
-          div(style := js.Dynamic.literal(
-            marginTop = "60px"
-          ))(
-            Switch(
-              Route("/", Homepage, exact = true),
-              Route("/docs/*", DocsPage),
-              Route("*", Homepage)
-            )
-          )
-        )
+        insideRouter
       ),
       container
     )

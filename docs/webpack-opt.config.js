@@ -1,19 +1,16 @@
-var webpack = require("webpack");
-var path = require("path");
+const webpack = require("webpack");
+const path = require("path");
 
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var CopyWebpackPlugin = require('copy-webpack-plugin');
-var StaticSiteGeneratorPlugin = require('static-site-generator-webpack-plugin');
-
-const jsdom = require('jsdom');
-const { JSDOM } = jsdom;
-const dom = new JSDOM();
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const StaticSiteGeneratorPlugin = require('static-site-generator-webpack-plugin');
 
 module.exports = {
-  "entry": {
-    "docs-opt": [ path.resolve(__dirname, "./opt-launcher.js") ]
+  mode: "production",
+  entry: {
+    "slinky-docs-opt": [ path.resolve(__dirname, "./opt-launcher.js") ]
   },
-  "output": {
+  output: {
     "path": path.resolve(__dirname, "../../../../build"),
     publicPath: '/',
     "filename": "[name]-bundle.js",
@@ -28,7 +25,10 @@ module.exports = {
     rules: [
       {
         test: /\.css$/,
-        use: [ 'style-loader', 'css-loader' ]
+        use: [ {
+          loader: 'css-loader',
+          options: { minimize: true }
+        } ]
       },
       // url loader for svg
       {
@@ -53,23 +53,14 @@ module.exports = {
         NODE_ENV: JSON.stringify('production')
       }
     }),
-    new webpack.optimize.UglifyJsPlugin(),
     new StaticSiteGeneratorPlugin({
       crawl: true,
       globals: {
-        window: dom.window,
-        document: dom.window.document,
-        navigator: dom.window.navigator,
+        window: {},
         ssr: true,
         fs: require('fs'),
         __dirname: __dirname
       }
     })
-  ],
-  node: {
-    console: true,
-    fs: 'empty',
-    net: 'empty',
-    tls: 'empty'
-  }
+  ]
 };

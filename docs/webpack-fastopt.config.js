@@ -1,11 +1,12 @@
-var path = require("path");
-var HtmlWebpackPlugin = require('html-webpack-plugin');
-var CopyWebpackPlugin = require('copy-webpack-plugin');
+const path = require("path");
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
+  mode: "development",
   entry: {
-    "docs-fastopt": ["./docs-fastopt-entrypoint.js"],
-    "launcher": ["./hot-launcher.js"]
+    "dependencies": ["./slinky-docs-fastopt-entrypoint.js"],
+    "slinky-docs-fastopt": ["./hot-launcher.js"]
   },
   output: {
     path: __dirname,
@@ -24,7 +25,7 @@ module.exports = {
     rules: [
       {
         test: /\.css$/,
-        use: [ 'style-loader', 'css-loader' ]
+        use: [ 'css-loader' ]
       },
       // url loader for svg
       {
@@ -53,11 +54,5 @@ module.exports = {
     historyApiFallback: {
       index: '404.html'
     }
-  },
-  node: {
-    console: true,
-    fs: 'empty',
-    net: 'empty',
-    tls: 'empty'
   }
-}
+};
