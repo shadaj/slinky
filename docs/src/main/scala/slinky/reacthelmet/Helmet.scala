@@ -20,6 +20,7 @@ trait HelmetStatic extends js.Object {
   val title: js.Object = js.native
   val meta: js.Object = js.native
   val link: js.Object = js.native
+  val style: js.Object = js.native
 }
 
 object Helmet extends ExternalComponentNoProps {

@@ -14,7 +14,7 @@ import org.scalajs.dom
 import org.scalajs.dom.History
 import slinky.core.CustomAttribute
 import slinky.core.facade.ReactElement
-import slinky.reacthelmet.Helmet
+import slinky.reacthelmet.{Helmet, ReactHelmet}
 
 @JSImport("resources/index.css", JSImport.Default)
 @js.native
@@ -95,10 +95,15 @@ object Main {
       )
     )
 
+    val helmetContent = ReactHelmet.Helmet.renderStatic()
+
     s"""<!DOCTYPE html>
        |<html>
        |  <head>
-       |    ${dom.document.getElementsByTagName("head")(0).innerHTML}
+       |    ${helmetContent.title.toString}
+       |    ${helmetContent.meta.toString}
+       |    ${helmetContent.link.toString}
+       |    ${helmetContent.style.toString}
        |  </head>
        |  <body>
        |    <div id="root">

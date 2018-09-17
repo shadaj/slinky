@@ -5,10 +5,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const StaticSiteGeneratorPlugin = require('static-site-generator-webpack-plugin');
 
-const jsdom = require('jsdom');
-const { JSDOM } = jsdom;
-const dom = new JSDOM();
-
 module.exports = {
   mode: "production",
   entry: {
@@ -60,9 +56,7 @@ module.exports = {
     new StaticSiteGeneratorPlugin({
       crawl: true,
       globals: {
-        window: dom.window,
-        document: dom.window.document,
-        navigator: dom.window.navigator,
+        window: {},
         ssr: true,
         fs: require('fs'),
         __dirname: __dirname
