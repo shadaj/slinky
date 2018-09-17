@@ -2,7 +2,7 @@
   "bundlesize": [
     {
       "path": "docs/build/slinky-docs-opt-bundle.js",
-      "maxSize": "700 kB"
+      "maxSize": "200 kB"
     }
   ]
 }
