@@ -39,7 +39,7 @@ lazy val crossScalaSettings = Seq(
 )
 
 lazy val librarySettings = Seq(
-  scalacOptions ++= (if (isSnapshot.value && false) Seq.empty else Seq({
+  scalacOptions += {
     val origVersion = version.value
     val githubVersion = if (origVersion.contains("-")) {
       origVersion.split('-').last
@@ -49,8 +49,8 @@ lazy val librarySettings = Seq(
 
     val a = baseDirectory.value.toURI
     val g = "https://raw.githubusercontent.com/shadaj/slinky"
-    s"-P:scalajs:mapSourceURI:$a->$g/${githubVersion}/${baseDirectory.value.getName}/"
-  }))
+    s"-P:scalajs:mapSourceURI:$a->$g/$githubVersion/${baseDirectory.value.getName}/"
+  }
 )
 
 addCommandAlias(

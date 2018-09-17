@@ -3,9 +3,10 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
+  mode: "development",
   entry: {
-    "dependencies": ["./docs-fastopt-entrypoint.js"],
-    "docs-fastopt": ["./hot-launcher.js"]
+    "dependencies": ["./slinky-docs-fastopt-entrypoint.js"],
+    "slinky-docs-fastopt": ["./hot-launcher.js"]
   },
   output: {
     path: __dirname,
@@ -24,7 +25,7 @@ module.exports = {
     rules: [
       {
         test: /\.css$/,
-        use: [ 'style-loader', 'css-loader' ]
+        use: [ 'css-loader' ]
       },
       // url loader for svg
       {

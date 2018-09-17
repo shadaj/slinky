@@ -7,6 +7,7 @@ import slinky.remarkreact.{ReactRenderer, Remark}
 import slinky.web.html._
 import org.scalajs.dom
 import org.scalajs.dom.raw.XMLHttpRequest
+import slinky.reacthelmet.Helmet
 
 import scala.scalajs.js
 import js.Dynamic.literal
@@ -54,6 +55,21 @@ import js.Dynamic.literal
     } else {
       code(props.children.head)
     }
+  }
+}
+
+@react class RemarkH1 extends StatelessComponent {
+  case class Props(children: Seq[ReactElement])
+
+  override def render(): ReactElement = {
+    Fragment(
+      props.children.headOption.map { head =>
+        Helmet(
+          title(s"$head | Slinky - Write React apps in Scala just like ES6")
+        )
+      },
+      h1(props.children: _*)
+    )
   }
 }
 
@@ -178,6 +194,7 @@ object TrackSSRDocs {
             state.document.map { t =>
               Remark().use(ReactRenderer, literal(
                 remarkReactComponents = literal(
+                  h1 = RemarkH1.componentConstructor,
                   h2 = RemarkH2.componentConstructor,
                   code = RemarkCode.componentConstructor
                 )

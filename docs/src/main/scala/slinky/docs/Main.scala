@@ -9,10 +9,12 @@ import slinky.web.{ReactDOM, ReactDOMServer}
 import slinky.hot
 import slinky.reactrouter._
 import slinky.analytics.ReactGA
-import slinky.web.html.{div, style}
+import slinky.web.html._
 import org.scalajs.dom
 import org.scalajs.dom.History
+import slinky.core.CustomAttribute
 import slinky.core.facade.ReactElement
+import slinky.reacthelmet.Helmet
 
 @JSImport("resources/index.css", JSImport.Default)
 @js.native
@@ -35,7 +37,17 @@ object Main {
   }
 
   def insideRouter: ReactElement = {
+    val charSet = new CustomAttribute[String]("charSet")
     div(
+      Helmet(
+        meta(charSet := "utf-8"),
+        meta(name := "viewport", content := "width=device-width, initial-scale=1, shrink-to-fit=no"),
+        meta(name := "theme-color", content := "#000000"),
+        link(rel := "manifest", href := "/manifest.json"),
+        link(rel := "shortcut icon", href := "/favicon.ico"),
+        title(s"Slinky - Write React apps in Scala just like ES6"),
+        style(`type` := "text/css")(IndexCSS.toString)
+      ),
       Navbar(),
       div(style := js.Dynamic.literal(
         marginTop = "60px"
@@ -86,12 +98,6 @@ object Main {
     s"""<!DOCTYPE html>
        |<html>
        |  <head>
-       |    <meta charset="utf-8">
-       |    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-       |    <meta name="theme-color" content="#000000">
-       |    <link rel="manifest" href="/manifest.json">
-       |    <link rel="shortcut icon" href="/favicon.ico">
-       |    <title>Slinky</title>
        |    ${dom.document.getElementsByTagName("head")(0).innerHTML}
        |  </head>
        |  <body>
@@ -99,7 +105,7 @@ object Main {
        |      $reactTree
        |    </div>
        |    <script type="text/javascript">window.publicSSR = ${js.JSON.stringify(TrackSSRDocs.publicSSR)}</script>
-       |    <script async src="/docs-opt-bundle.js"></script>
+       |    <script async src="/slinky-docs-opt-bundle.js"></script>
        |  </body>
        |</html>""".stripMargin
   }

@@ -12,7 +12,7 @@ const dom = new JSDOM();
 module.exports = {
   mode: "production",
   entry: {
-    "docs-opt": [ path.resolve(__dirname, "./opt-launcher.js") ]
+    "slinky-docs-opt": [ path.resolve(__dirname, "./opt-launcher.js") ]
   },
   output: {
     "path": path.resolve(__dirname, "../../../../build"),
@@ -29,7 +29,10 @@ module.exports = {
     rules: [
       {
         test: /\.css$/,
-        use: [ 'style-loader', 'css-loader' ]
+        use: [ {
+          loader: 'css-loader',
+          options: { minimize: true }
+        } ]
       },
       // url loader for svg
       {
