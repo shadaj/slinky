@@ -7,10 +7,12 @@ install:
   - . $HOME/.nvm/nvm.sh
   - nvm install stable
   - cd native; npm install; cd ..
+  - npm install -g bundlesize
 script:
   - sbt ";scalajsReactInterop/test; + tests/test; + native/test"
   - sbt ";set scalaJSStage in Global := FullOptStage; scalajsReactInterop/test; + tests/test; + native/test"
-  - sbt docs/compile
+  - sbt docs/fullOptJS::webpack
+  - bundlesize -f "docs/build/slinky-docs-opt-bundle.js" -s 700kB
   - sbt coreIntellijSupport/updateIdea coreIntellijSupport/compile
 after_success:
   - 'if [ "$TRAVIS_BRANCH" = "master" ] && [ "$TRAVIS_PULL_REQUEST" = "false" ]; then bash ./publish.sh; fi'
