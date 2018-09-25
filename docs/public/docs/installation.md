@@ -25,6 +25,8 @@ scalacOptions += "-P:scalajs:sjsDefinedByDefault"
 
 // optional, but recommended; enables the @react macro annotation API
 addCompilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.full)
+// if using Scala 2.13.0-M4, instead use
+scalacOptions += "-Ymacro-annotations"
 ```
 
 Slinky supports loading React via either CommonJS or as a global object. If loading as a global object, make sure React is available
