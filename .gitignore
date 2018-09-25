@@ -6,5 +6,3 @@ node_modules/
 package-lock.json
 docs/build
 idea/
-credentials.sbt
-*.asc

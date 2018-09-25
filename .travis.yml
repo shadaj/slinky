@@ -12,7 +12,7 @@ script:
   - sbt ";scalajsReactInterop/test; + tests/test; + native/test"
   - sbt ";set scalaJSStage in Global := FullOptStage; scalajsReactInterop/test; + tests/test; + native/test"
   - sbt docs/fullOptJS::webpack
-  - bundlesize
+  - bundlesize && git checkout package.json
   - sbt coreIntellijSupport/updateIdea coreIntellijSupport/compile
 after_success:
   - 'if [ "$TRAVIS_BRANCH" = "master" ] && [ "$TRAVIS_PULL_REQUEST" = "false" ]; then bash ./publish.sh; fi'
