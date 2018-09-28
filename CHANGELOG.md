@@ -1,6 +1,8 @@
 # Changelog
 
 ## vNEXT
+
+## v0.5.0
 ### Highlights :tada:
 + Slinky now supports **Scala 2.13.0-M4** [PR #153](https://github.com/shadaj/slinky/pull/153)!
 + Magnolia has been replaced with a custom implementation tuned for Slinky, resulting in smaller bundles and faster compilation [PR #159](https://github.com/shadaj/slinky/pull/159), [PR #159](https://github.com/shadaj/slinky/pull/159) 
