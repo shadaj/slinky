@@ -976,7 +976,8 @@
         "meter",
         "option",
         "param",
-        "progress"
+        "progress",
+        "select"
       ],
       "withDash" : false
     },
