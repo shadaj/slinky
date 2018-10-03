@@ -1,6 +1,8 @@
 # Changelog
 
 ## vNEXT
+## Details
++ Bump Scala version to 2.12.7 and SBT/plugin versions as well [PR #176](https://github.com/shadaj/slinky/pull/176)
 
 ## v0.5.0
 ### Highlights :tada:
