@@ -1,6 +1,8 @@
 # Changelog
 
 ## vNEXT
+## Details
++ Fix the `value` attribute not being available on the `select` tag [PR #177](https://github.com/shadaj/slinky/pull/177)
 
 ## v0.5.0
 ### Highlights :tada:
