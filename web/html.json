@@ -977,7 +977,8 @@
         "option",
         "param",
         "progress",
-        "select"
+        "select",
+        "textarea"
       ],
       "withDash" : false
     },
