@@ -2,7 +2,7 @@
 
 ## vNEXT
 ## Details
-+ Fix the `value` attribute not being available on the `select` tag [PR #177](https://github.com/shadaj/slinky/pull/177)
++ Fix the `value` attribute not being available on the `select` and `textarea` tags [PR #177](https://github.com/shadaj/slinky/pull/177)
 + Bump Scala version to 2.12.7 and SBT/plugin versions as well [PR #176](https://github.com/shadaj/slinky/pull/176)
 
 ## v0.5.0
