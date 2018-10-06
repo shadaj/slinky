@@ -20,6 +20,16 @@ div(
 )
 ```
 
+To pass in keys and refs, use `withKey` and `withRef`:
+
+```scala
+div(
+  HelloName(name = "World").withKey("my-hello-name-key").withRef(componentInstance => {
+    println(componentInstance.state)
+  })
+)
+```
+
 ## Adding State
 To make your component stateful, extend the `Component` class (instead of `StatelessComponent`) and define your state type and initial state
 ```scala
