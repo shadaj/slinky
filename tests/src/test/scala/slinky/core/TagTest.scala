@@ -1,6 +1,6 @@
 package slinky.core
 
-import slinky.core.facade.ReactElement
+import slinky.core.facade.{React, ReactElement}
 import slinky.web.ReactDOM
 import org.scalatest.FunSuite
 import slinky.web.html._
@@ -89,5 +89,27 @@ class TagTest extends FunSuite {
 
   test("Can construct a custom tag with custom attributes inside another class") {
     (new InnerClassCustom).run()
+  }
+
+  test("Can specify defaultValue on a select tag") {
+    val selectRef = React.createRef[dom.Element]
+    ReactDOM.render(
+      select(defaultValue := "item-1", ref := selectRef)(
+        option(value := "item-1")("Item 1")
+      ),
+      dom.document.createElement("div")
+    )
+
+    assert(selectRef.current.asInstanceOf[dom.html.Select].value == "item-1")
+  }
+
+  test("Can specify defaultChecked on a checkbox") {
+    val inputRef = React.createRef[dom.Element]
+    ReactDOM.render(
+      input(`type` := "checkbox", defaultChecked, ref := inputRef),
+      dom.document.createElement("div")
+    )
+
+    assert(inputRef.current.asInstanceOf[dom.html.Input].checked)
   }
 }
