@@ -124,9 +124,13 @@ ideaExternalPlugins in ThisBuild := Seq.empty
 updateIdea in ThisBuild := {}
 
 lazy val coreIntellijSupport = project.enablePlugins(SbtIdeaPlugin).settings(
-  org.jetbrains.sbtidea.Keys.buildSettings: _*
+  org.jetbrains.sbtidea.Keys.buildSettings
 ).settings(
-  ideaBuild := "182.3684.101",
+  ideaBuild := "182.4505.22",
   ideaExternalPlugins += IdeaPlugin.Id("Scala", "org.intellij.scala", None),
   crossPaths := false
+)
+
+lazy val coreIntellijSupportRunner = createRunnerProject(coreIntellijSupport, "coreIntellijSupportRunner").settings(
+  org.jetbrains.sbtidea.Keys.projectSettings
 )
