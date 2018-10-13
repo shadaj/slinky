@@ -50,7 +50,15 @@ abstract class Component extends React.Component(null) {
   def render(): ReactElement
 }
 
+object Component {
+  type Wrapper = ComponentWrapper
+}
+
 abstract class StatelessComponent extends Component {
   type State = Unit
   def initialState: State = ()
+}
+
+object StatelessComponent {
+  type Wrapper = StatelessComponentWrapper
 }

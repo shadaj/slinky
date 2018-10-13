@@ -12,6 +12,10 @@ class react extends scala.annotation.StaticAnnotation {
   def macroTransform(annottees: Any*): Any = macro ReactMacrosImpl.reactImpl
 }
 
+object react {
+  @inline def bump(thunk: => Unit): Unit = {}
+}
+
 object ReactMacrosImpl {
   private def parentsContainsType(c: whitebox.Context)(parents: Seq[c.Tree], tpe: c.Type) = {
     parents.exists { p =>
@@ -19,7 +23,7 @@ object ReactMacrosImpl {
     }
   }
 
-  def createComponentBody(c: whitebox.Context)(cls: c.Tree, isStatelessComponent: Boolean): (c.Tree, List[c.Tree]) = {
+  def createComponentBody(c: whitebox.Context)(cls: c.Tree): (c.Tree, List[c.Tree]) = {
     import c.universe._
     val q"..$_ class ${className: Name} extends ..$parents { $self => ..$stats}" = cls
     val (propsDefinition, applyMethods) = stats.flatMap {
@@ -82,31 +86,22 @@ object ReactMacrosImpl {
 
     val definitionClass = q"type Def = $clazz"
 
-    val propsAndStateAndSnapshotImport = Seq(
-      q"import $companion.Props",
-      q"import $companion.State",
-      q"import $companion.Snapshot"
-    )
-
-    if (stateDefinition.isEmpty && !isStatelessComponent) {
-      c.abort(c.enclosingPosition, "There is no State type defined. If you want to create a stateless component, extend the StatelessComponent class instead.")
-    }
-
     val newClazz =
-      q"""class $clazz(jsProps: _root_.scala.scalajs.js.Object) extends _root_.slinky.core.DefinitionBase[$companion.Props, $companion.State, $companion.Snapshot](jsProps) {
-              ..$propsAndStateAndSnapshotImport
-              null.asInstanceOf[Props]
-              null.asInstanceOf[State]
-              null.asInstanceOf[Snapshot]
-              ..${if (stateDefinition.isEmpty) Seq(q"override def initialState: State = ()") else Seq.empty}
+      q"""class $clazz(jsProps: _root_.scala.scalajs.js.Object) extends ${clazz.toTermName}.Definition(jsProps) {
+              import $companion.{Props, State, Snapshot}
+              _root_.slinky.core.annotations.react.bump({
+                null.asInstanceOf[Props]
+                null.asInstanceOf[State]
+                null.asInstanceOf[Snapshot]
+              })
               ..${stats.filterNot(s => s == propsDefinition || s == stateDefinition.orNull || s == snapshotDefinition.orNull)}
             }"""
 
     (newClazz,
       ((q"null.asInstanceOf[${parents.head}]" +:
         propsDefinition +:
-        stateDefinition.getOrElse(q"type State = Unit") +:
-        snapshotDefinition.toList) ++
+        stateDefinition.toList) ++
+        snapshotDefinition.toList ++
         (definitionClass +: applyMethods)).asInstanceOf[List[c.Tree]]
     )
   }
@@ -177,15 +172,15 @@ object ReactMacrosImpl {
     import c.universe._
 
     val outs: List[Tree] = annottees.map(_.tree).toList match {
-      case Seq(cls @ q"..$_ class $className extends ..$parents { $_ => ..$_}")
-        if parentsContainsType(c)(parents, typeOf[Component]) || parentsContainsType(c)(parents, typeOf[StatelessComponent]) =>
-        val (newCls, companionStats) = createComponentBody(c)(cls, parentsContainsType(c)(parents, typeOf[StatelessComponent]))
-        List(newCls, q"object ${TermName(className.decodedName.toString)} extends ${typeOf[ComponentWrapper]} { ..$companionStats }")
+      case Seq(cls @ q"..$_ class $className extends ..$parents { $_ => ..$_}") =>
+        val (newCls, companionStats) = createComponentBody(c)(cls)
+        val parent = tq"${TermName(parents.head.toString)}.Wrapper"
+        List(newCls, q"object ${TermName(className.decodedName.toString)} extends $parent { ..$companionStats }")
 
-      case Seq(cls @ q"..$_ class $className extends ..$parents { $_ => ..$_}", obj @ q"..$_ object $_ extends ..$_ { $_ => ..$objStats }")
-        if parentsContainsType(c)(parents, typeOf[Component]) || parentsContainsType(c)(parents, typeOf[StatelessComponent]) =>
-        val (newCls, companionStats) = createComponentBody(c)(cls, parentsContainsType(c)(parents, typeOf[StatelessComponent]))
-        List(newCls, q"object ${TermName(className.decodedName.toString)} extends ${typeOf[ComponentWrapper]} { ..${objStats ++ companionStats} }")
+      case Seq(cls @ q"..$_ class $className extends ..$parents { $_ => ..$_}", obj @ q"..$_ object $_ extends ..$_ { $_ => ..$objStats }") =>
+        val (newCls, companionStats) = createComponentBody(c)(cls)
+        val parent = tq"${TermName(parents.head.toString)}.Wrapper"
+        List(newCls, q"object ${TermName(className.decodedName.toString)} extends $parent { ..${objStats ++ companionStats} }")
 
       case Seq(obj @ q"..$_ object $objName extends ..$parents { $_ => ..$objStats}")
         if parentsContainsType(c)(parents, typeOf[ExternalComponent]) ||
@@ -196,7 +191,7 @@ object ReactMacrosImpl {
         List(q"object $objName extends _root_.slinky.core.ExternalComponentWithAttributesWithRefType[$elementType, $refType] { ..${objStats ++ companionStats} }")
 
       case defn =>
-        c.abort(c.enclosingPosition, s"@react must annotate a class that extends Component or an object that extends ExternalComponent(WithAttributes)(WithRefType), got $defn")
+        c.abort(c.enclosingPosition, s"@react must annotate a class that extends (Stateless)Component or an object that extends ExternalComponent(WithAttributes)(WithRefType), got $defn")
     }
 
     c.Expr[Any](Block(outs, Literal(Constant(()))))
