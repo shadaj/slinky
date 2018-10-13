@@ -17,7 +17,11 @@ case object SubTypeC extends MySealedTrait
 case class ClassWithVararg(a: Int, bs: String*)
 
 class ReaderWriterTest extends FunSuite {
-  private def readWrittenSame[T](v: T, isOpaque: Boolean = false, beSame: Boolean = true)(implicit reader: Reader[T], writer: Writer[T]) = {
+  private def readWrittenSame[T](v: T,
+                                 isOpaque: Boolean = false,
+                                 beSame: Boolean = true,
+                                 equality: (T, T) => Boolean = ((a: T, b: T) => a == b))
+                                (implicit reader: Reader[T], writer: Writer[T]) = {
     val written = writer.write(v)
     if (!isOpaque) {
       assert(js.isUndefined(written) || js.isUndefined(written.asInstanceOf[js.Dynamic].__))
@@ -26,7 +30,7 @@ class ReaderWriterTest extends FunSuite {
     }
 
     if (beSame) {
-      assert(reader.read(written) == v)
+      assert(equality(reader.read(written), v))
     }
   }
 
@@ -149,6 +153,10 @@ class ReaderWriterTest extends FunSuite {
 
   test("Read/write - sequences") {
     readWrittenSame(List(1, 2))
+  }
+
+  test("Read/write - arrays") {
+    readWrittenSame(Array(1, 2), equality = ((a: Array[Int], b: Array[Int]) => a.toList == b.toList))
   }
 
   test("Read/write - maps") {

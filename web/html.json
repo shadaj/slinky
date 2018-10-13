@@ -1741,7 +1741,22 @@
       "docLines" : [
         ""
       ],
-      "compatibleTags" : null,
+      "compatibleTags" : [
+        "input"
+      ],
+      "withDash" : false
+    },
+    {
+      "attributeName" : "defaultValue",
+      "attributeType" : "String",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : [
+        "input",
+        "select",
+        "textarea"
+      ],
       "withDash" : false
     },
     {
