@@ -71,7 +71,6 @@ import scala.scalajs.js
   }
 }
 
-
 @react class NoPropsComponent extends Component {
   type Props = Unit
   type State = Int
