@@ -32,9 +32,15 @@ class SlinkyInjector extends SyntheticMembersInjector {
             val paramssWithoutChildren = caseClassparamss.filterNot(childrenParam.contains)
 
             if (childrenParam.isDefined) {
-              Seq(
-                s"def apply(${paramssWithoutChildren.map(_.getText).mkString(",")})(${childrenParam.get.getText}): slinky.core.KeyAndRefAddingStage[${cls.getQualifiedName}] = ???" -> Function
-              )
+              if (paramssWithoutChildren.isEmpty) {
+                Seq(
+                  s"def apply(${childrenParam.get.getText}): slinky.core.KeyAndRefAddingStage[${cls.getQualifiedName}] = ???" -> Function
+                )
+              } else {
+                Seq(
+                  s"def apply(${paramssWithoutChildren.map(_.getText).mkString(",")})(${childrenParam.get.getText}): slinky.core.KeyAndRefAddingStage[${cls.getQualifiedName}] = ???" -> Function
+                )
+              }
             } else {
               Seq(
                 s"def apply(${paramssWithoutChildren.map(_.getText).mkString(",")}): slinky.core.KeyAndRefAddingStage[${cls.getQualifiedName}] = ???" -> Function
