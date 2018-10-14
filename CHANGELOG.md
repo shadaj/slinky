@@ -2,6 +2,7 @@
 
 ## vNEXT
 ## Details
++ Fix how the IntelliJ extensions handles components that have a `children` prop but no other props [PR #189](https://github.com/shadaj/slinky/pull/189)
 + Support reading and writing `scala.Array` [PR #187](https://github.com/shadaj/slinky/pull/187)
 + Support the `defaultValue` attribute for specifying a default form value without overriding user inputs [PR #186](https://github.com/shadaj/slinky/pull/186)
 + Fix the `value` attribute not being available on the `select` and `textarea` tags [PR #177](https://github.com/shadaj/slinky/pull/177)
