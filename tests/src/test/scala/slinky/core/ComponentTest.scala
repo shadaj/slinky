@@ -182,8 +182,8 @@ object TestUnderivable {
   case class UnDerivable private(private val a: Int)
 
   object UnDerivableReaderWriter {
-    implicit val nonNegReader: Reader[UnDerivable] = null
-    implicit val nonNegWriter: Writer[UnDerivable] = null
+    implicit val unDerivableReader: Reader[UnDerivable] = null
+    implicit val unDerivableWriter: Writer[UnDerivable] = null
   }
 
   import UnDerivableReaderWriter._
