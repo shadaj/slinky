@@ -7,7 +7,7 @@ import scala.language.implicitConversions
 import scala.scalajs.js
 import scala.scalajs.js.|
 import scala.language.experimental.macros
-import scala.reflect.macros.blackbox
+import scala.reflect.macros.whitebox
 
 class BuildingComponent[E, R <: js.Object](c: String | js.Object, props: js.Object, key: String = null, ref: js.Object = null, mods: Seq[AttrPair[E]] = Seq.empty) {
   def apply(tagMod: AttrPair[E], tagMods: AttrPair[E]*): BuildingComponent[E, R] = {
@@ -97,7 +97,7 @@ abstract class ExternalComponentNoProps extends ExternalComponentNoPropsWithAttr
 // same as PropsWriterProvider except it always returns the typeclass instead of nulling it out in fullOpt mode
 trait ExternalPropsWriterProvider extends js.Object
 object ExternalPropsWriterProvider {
-  def impl(c: blackbox.Context): c.Expr[ExternalPropsWriterProvider] = {
+  def impl(c: whitebox.Context): c.Expr[ExternalPropsWriterProvider] = {
     import c.universe._
     val compName = c.internal.enclosingOwner.owner.asClass
     val q"$_; val x: $typedReaderType = null" = c.typecheck(q"@_root_.scala.annotation.unchecked.uncheckedStable val comp: $compName = null; val x: _root_.slinky.readwrite.Writer[comp.Props] = null")

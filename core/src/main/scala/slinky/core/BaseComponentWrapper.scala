@@ -7,7 +7,7 @@ import scala.language.experimental.macros
 import scala.scalajs.js
 import scala.scalajs.js.ConstructorTag
 import scala.language.implicitConversions
-import scala.reflect.macros.blackbox
+import scala.reflect.macros.whitebox
 
 class KeyAndRefAddingStage[D <: js.Any](val props: js.Dictionary[js.Any], val constructor: js.Object) {
   def withKey(key: String): KeyAndRefAddingStage[D] = {
@@ -164,7 +164,7 @@ object BaseComponentWrapper {
 
 trait StateReaderProvider extends js.Object
 object StateReaderProvider {
-  def impl(c: blackbox.Context): c.Expr[StateReaderProvider] = {
+  def impl(c: whitebox.Context): c.Expr[StateReaderProvider] = {
     import c.universe._
     val compName = c.internal.enclosingOwner.owner.asClass
     val q"$_; val x: $typedReaderType = null" = c.typecheck(q"@_root_.scala.annotation.unchecked.uncheckedStable val comp: $compName = null; val x: _root_.slinky.readwrite.Reader[comp.State] = null")
@@ -177,7 +177,7 @@ object StateReaderProvider {
 
 trait StateWriterProvider extends js.Object
 object StateWriterProvider {
-  def impl(c: blackbox.Context): c.Expr[StateWriterProvider] = {
+  def impl(c: whitebox.Context): c.Expr[StateWriterProvider] = {
     import c.universe._
     val compName = c.internal.enclosingOwner.owner.asClass
     val q"$_; val x: $typedReaderType = null" = c.typecheck(q"@_root_.scala.annotation.unchecked.uncheckedStable val comp: $compName = null; val x: _root_.slinky.readwrite.Writer[comp.State] = null")

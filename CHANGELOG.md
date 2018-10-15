@@ -2,6 +2,7 @@
 
 ## vNEXT
 ## Details
++ Fix `ComponentWrapper`s not picking up manually defined Reader/Writers for the `State` type [PR #190](https://github.com/shadaj/slinky/pull/190)
 + Fix how the IntelliJ extensions handles components that have a `children` prop but no other props [PR #189](https://github.com/shadaj/slinky/pull/189)
 + Fix errors when using the `@react` macro annotation with `Component`/`StatelessComponent` imported locally [PR #188](https://github.com/shadaj/slinky/pull/188)
 + Support reading and writing `scala.Array` [PR #187](https://github.com/shadaj/slinky/pull/187)

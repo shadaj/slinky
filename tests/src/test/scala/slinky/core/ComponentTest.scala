@@ -4,6 +4,7 @@ import slinky.core.facade.{ErrorBoundaryInfo, ReactElement}
 import slinky.web.ReactDOM
 import org.scalajs.dom
 import org.scalatest.{Assertion, AsyncFunSuite}
+import slinky.readwrite.{Reader, Writer}
 
 import scala.concurrent.Promise
 import scala.scalajs.js
@@ -173,6 +174,23 @@ object DerivedStateComponent extends ComponentWrapper {
 
       null
     }
+  }
+}
+
+// compilation test: state providers for underivable type
+object TestUnderivable {
+  case class UnDerivable private(private val a: Int)
+
+  object UnDerivableReaderWriter {
+    implicit val nonNegReader: Reader[UnDerivable] = null
+    implicit val nonNegWriter: Writer[UnDerivable] = null
+  }
+
+  import UnDerivableReaderWriter._
+
+  object App extends ComponentWrapper {
+    type Props = Unit
+    type State = UnDerivable
   }
 }
 
