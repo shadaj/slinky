@@ -17,7 +17,7 @@ lazy val slinky = project.in(file(".")).aggregate(
 ).settings(
   publish := {},
   publishLocal := {}
-).disablePlugins(SbtIdeaPlugin)
+)
 
 lazy val crossScalaSettings = Seq(
   crossScalaVersions := Seq("2.12.6", "2.13.0-M4"),
@@ -73,11 +73,11 @@ lazy val macroAnnotationSettings = Seq(
   }
 )
 
-lazy val generator = project.disablePlugins(SbtIdeaPlugin)
+lazy val generator = project
 
-lazy val readWrite = project.settings(librarySettings, crossScalaSettings).disablePlugins(SbtIdeaPlugin)
+lazy val readWrite = project.settings(librarySettings, crossScalaSettings)
 
-lazy val core = project.settings(macroAnnotationSettings, librarySettings, crossScalaSettings).dependsOn(readWrite).disablePlugins(SbtIdeaPlugin)
+lazy val core = project.settings(macroAnnotationSettings, librarySettings, crossScalaSettings).dependsOn(readWrite)
 
 lazy val web = project.settings(
   sourceGenerators in Compile += Def.taskDyn[Seq[File]] {
@@ -101,22 +101,36 @@ lazy val web = project.settings(
   },
   librarySettings,
   crossScalaSettings
-).dependsOn(core).disablePlugins(SbtIdeaPlugin)
+).dependsOn(core)
 
-lazy val testRenderer = project.settings(macroAnnotationSettings, librarySettings, crossScalaSettings).dependsOn(core).disablePlugins(SbtIdeaPlugin)
+lazy val testRenderer = project.settings(macroAnnotationSettings, librarySettings, crossScalaSettings).dependsOn(core)
 
-lazy val native = project.settings(macroAnnotationSettings, librarySettings, crossScalaSettings).dependsOn(core, testRenderer % Test).disablePlugins(SbtIdeaPlugin)
+lazy val native = project.settings(macroAnnotationSettings, librarySettings, crossScalaSettings).dependsOn(core, testRenderer % Test)
 
-lazy val vr = project.settings(macroAnnotationSettings, librarySettings, crossScalaSettings).dependsOn(core, testRenderer % Test).disablePlugins(SbtIdeaPlugin)
+lazy val vr = project.settings(macroAnnotationSettings, librarySettings, crossScalaSettings).dependsOn(core, testRenderer % Test)
 
-lazy val hot = project.settings(macroAnnotationSettings, librarySettings, crossScalaSettings).dependsOn(core).disablePlugins(SbtIdeaPlugin)
+lazy val hot = project.settings(macroAnnotationSettings, librarySettings, crossScalaSettings).dependsOn(core)
 
-lazy val scalajsReactInterop = project.settings(macroAnnotationSettings, librarySettings).dependsOn(core, web % Test).disablePlugins(SbtIdeaPlugin)
+lazy val scalajsReactInterop = project.settings(macroAnnotationSettings, librarySettings).dependsOn(core, web % Test)
 
-lazy val tests = project.settings(macroAnnotationSettings, crossScalaSettings).dependsOn(core, web, hot).disablePlugins(SbtIdeaPlugin)
+lazy val tests = project.settings(macroAnnotationSettings, crossScalaSettings).dependsOn(core, web, hot)
 
-lazy val docsMacros = project.settings(macroAnnotationSettings).dependsOn(web, hot).disablePlugins(SbtIdeaPlugin)
+lazy val docsMacros = project.settings(macroAnnotationSettings).dependsOn(web, hot)
 
-lazy val docs = project.settings(macroAnnotationSettings).dependsOn(web, hot, docsMacros).disablePlugins(SbtIdeaPlugin)
+lazy val docs = project.settings(macroAnnotationSettings).dependsOn(web, hot, docsMacros)
 
-lazy val coreIntellijSupport = project
+dumpDependencyStructure in ThisBuild := null
+ideaExternalPlugins in ThisBuild := Seq.empty
+updateIdea in ThisBuild := {}
+
+lazy val coreIntellijSupport = project.enablePlugins(SbtIdeaPlugin).settings(
+  org.jetbrains.sbtidea.Keys.buildSettings
+).settings(
+  ideaBuild := "182.4505.22",
+  ideaExternalPlugins += IdeaPlugin.Id("Scala", "org.intellij.scala", None),
+  crossPaths := false
+)
+
+lazy val coreIntellijSupportRunner = createRunnerProject(coreIntellijSupport, "coreIntellijSupportRunner").settings(
+  org.jetbrains.sbtidea.Keys.projectSettings
+)
