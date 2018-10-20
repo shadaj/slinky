@@ -1710,6 +1710,32 @@
       "withDash" : false
     },
     {
+      "attributeName" : "colspan",
+      "attributeType" : "String",
+      "docLines" : [
+        "td - This attribute contains a positive integer indicating the number of consecutive columns the <code>&lt;td&gt;</code> element spans. If not present, its default value is <code>1</code>.",
+        "th - This attribute contains a positive integer indicating the number of consecutive columns the <code>&lt;th&gt;</code> element spans. If not present, its default value is <code>1</code>."
+      ],
+      "compatibleTags" : [
+        "td",
+        "th"
+      ],
+      "withDash" : false
+    },
+    {
+      "attributeName" : "rowspan",
+      "attributeType" : "String",
+      "docLines" : [
+        "td - This attribute contains a positive integer indicating the number of consecutive rows the <code>&lt;td&gt;</code> element spans. If not present, its default value is <code>1</code>.",
+        "th - This attribute contains a positive integer indicating the number of consecutive rows the <code>&lt;th&gt;</code> element spans. If not present, its default value is <code>1</code>."
+      ],
+      "compatibleTags" : [
+        "td",
+        "th"
+      ],
+      "withDash" : false
+    },
+    {
       "attributeName" : "onLoadedMetadata",
       "attributeType" : "EventHandler",
       "docLines" : [
