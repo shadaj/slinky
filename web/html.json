@@ -1698,7 +1698,7 @@
     },
     {
       "attributeName" : "span",
-      "attributeType" : "String",
+      "attributeType" : "Int",
       "docLines" : [
         "col - This attribute contains a positive integer indicating the number of consecutive columns the <code>&lt;col&gt;</code> element spans. If not present, its default value is <code>1</code>.",
         "colgroup - This attribute contains a positive integer indicating the number of consecutive columns the <code>&lt;colgroup&gt;</code> element spans. If not present, its default value is <code>1</code>. <div class=\"note\"> <strong>Note: </strong>This attribute is applied on the attributes of the column group, it has no effect on the CSS styling rules associated with it or, even more, to the cells of the column's members of the group.  <ul>   <li>The <code>span</code> attribute may not be present if there are one or more <code>&lt;col&gt;</code> elements within the <code>&lt;colgroup&gt;</code>.</li>  </ul> </div>"
@@ -1706,6 +1706,32 @@
       "compatibleTags" : [
         "col",
         "colgroup"
+      ],
+      "withDash" : false
+    },
+    {
+      "attributeName" : "colspan",
+      "attributeType" : "Int",
+      "docLines" : [
+        "td - This attribute contains a positive integer indicating the number of consecutive columns the <code>&lt;td&gt;</code> element spans. If not present, its default value is <code>1</code>.",
+        "th - This attribute contains a positive integer indicating the number of consecutive columns the <code>&lt;th&gt;</code> element spans. If not present, its default value is <code>1</code>."
+      ],
+      "compatibleTags" : [
+        "td",
+        "th"
+      ],
+      "withDash" : false
+    },
+    {
+      "attributeName" : "rowspan",
+      "attributeType" : "Int",
+      "docLines" : [
+        "td - This attribute contains a positive integer indicating the number of consecutive rows the <code>&lt;td&gt;</code> element spans. If not present, its default value is <code>1</code>.",
+        "th - This attribute contains a positive integer indicating the number of consecutive rows the <code>&lt;th&gt;</code> element spans. If not present, its default value is <code>1</code>."
+      ],
+      "compatibleTags" : [
+        "td",
+        "th"
       ],
       "withDash" : false
     },
