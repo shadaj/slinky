@@ -1,12 +1,15 @@
 # Changelog
 
 ## vNEXT
-## Details
+## Features
++ Support reading and writing `scala.Array` [PR #187](https://github.com/shadaj/slinky/pull/187)
++ Support the `defaultValue` attribute for specifying a default form value without overriding user inputs [PR #186](https://github.com/shadaj/slinky/pull/186)
+
+## Bug Fixes
++ Prevent crashes with components that store an `Option` of an opaque type in their `State` [PR #198](https://github.com/shadaj/slinky/pull/198)
 + Fix `ComponentWrapper`s not picking up manually defined Reader/Writers for the `State` type [PR #190](https://github.com/shadaj/slinky/pull/190)
 + Fix how the IntelliJ extensions handles components that have a `children` prop but no other props [PR #189](https://github.com/shadaj/slinky/pull/189)
 + Fix errors when using the `@react` macro annotation with `Component`/`StatelessComponent` imported locally [PR #188](https://github.com/shadaj/slinky/pull/188)
-+ Support reading and writing `scala.Array` [PR #187](https://github.com/shadaj/slinky/pull/187)
-+ Support the `defaultValue` attribute for specifying a default form value without overriding user inputs [PR #186](https://github.com/shadaj/slinky/pull/186)
 + Fix the `value` attribute not being available on the `select` and `textarea` tags [PR #177](https://github.com/shadaj/slinky/pull/177)
 + Bump Scala version to 2.12.7 and SBT/plugin versions as well [PR #176](https://github.com/shadaj/slinky/pull/176)
 

@@ -78,6 +78,11 @@ sourceGenerators in Compile += Def.task {
        |  protected def forceRead(o: js.Object): P
        |}
        |
+       |trait AlwaysReadReader[P] extends Reader[P] {
+       |  override def read(o: js.Object): P = forceRead(o)
+       |  protected def forceRead(o: js.Object): P
+       |}
+       |
        |object Reader extends CoreReaders {
        |  ${gens.mkString("\n")}
        |}""".stripMargin)

@@ -176,6 +176,13 @@ class ReaderWriterTest extends FunSuite {
     readWrittenSame(new OpaqueClass(1), true)
   }
 
+  test("Read/write - option of opaque class") {
+    class OpaqueClass(int: Int)
+    assert(implicitly[Reader[Option[OpaqueClass]]].read(
+      implicitly[Writer[Option[OpaqueClass]]].write(Some(new OpaqueClass(1)))
+    ).get != null)
+  }
+
   // compilation test: can use derivation macro with type parameter when typeclass is available
   {
     def deriveReaderTypeclass[T: Reader]: Reader[T] = {

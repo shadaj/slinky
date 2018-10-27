@@ -137,13 +137,13 @@ trait CoreReaders extends MacroReaders with FallbackReaders {
     }
   }
 
-  implicit def optionReader[T](implicit reader: Reader[T]): Reader[Option[T]] = s => {
+  implicit def optionReader[T](implicit reader: Reader[T]): Reader[Option[T]] = (s => {
     if (js.isUndefined(s) || s == null) {
       None
     } else {
       Some(reader.read(s))
     }
-  }
+  }): AlwaysReadReader[Option[T]]
 
   implicit def eitherReader[A, B](implicit aReader: Reader[A], bReader: Reader[B]): Reader[Either[A, B]] = o => {
     if (o.asInstanceOf[js.Dynamic].isLeft.asInstanceOf[Boolean]) {
