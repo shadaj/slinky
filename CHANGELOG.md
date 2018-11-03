@@ -1,6 +1,8 @@
 # Changelog
 
 ## vNEXT
+
+## v0.5.1
 ## Features
 + Support reading and writing `scala.Array` [PR #187](https://github.com/shadaj/slinky/pull/187)
 + Support the `defaultValue` attribute for specifying a default form value without overriding user inputs [PR #186](https://github.com/shadaj/slinky/pull/186)
