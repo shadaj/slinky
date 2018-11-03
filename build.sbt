@@ -34,8 +34,7 @@ lazy val crossScalaSettings = Seq(
       case Some((2, n)) if n >= 13 => sourceDir / "scala-2.13+"
       case _                       => sourceDir / "scala-2.13-"
     }
-  },
-  libraryDependencies += "org.scala-lang.modules" %%% "scala-collection-compat" % "0.2.1"
+  }
 )
 
 lazy val librarySettings = Seq(

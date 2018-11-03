@@ -1,7 +1,7 @@
 package slinky.readwrite
 
 import scala.annotation.compileTimeOnly
-import scala.collection.compat._
+import CompatUtil._
 import scala.concurrent.Future
 import scala.scalajs.js
 import scala.scalajs.js.|
