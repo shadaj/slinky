@@ -43,7 +43,8 @@ abstract class BaseComponentWrapper(sr: StateReaderProvider, sw: StateWriterProv
 
   type Definition <: js.Object
 
-  def getDerivedStateFromProps(nextProps: Props, prevState: State): State = null.asInstanceOf[State]
+  def getDerivedStateFromProps(props: Props, state: State): State = null.asInstanceOf[State]
+  def getDerivedStateFromError(error: js.Error): State = null.asInstanceOf[State]
 
   private[core] val hot_stateReader = sr.asInstanceOf[Reader[State]]
   private[core] val hot_stateWriter = sw.asInstanceOf[Writer[State]]
@@ -56,20 +57,20 @@ abstract class BaseComponentWrapper(sr: StateReaderProvider, sw: StateWriterProv
     constructor._base = this.asInstanceOf[js.Any]
 
     if (this.asInstanceOf[js.Dynamic].getDerivedStateFromProps__O__O__O != BaseComponentWrapper.defaultGetDerivedState) {
-      constructor.getDerivedStateFromProps = ((nextProps: js.Object, prevState: js.Object) => {
-        val nextPropsScala = if (js.typeOf(nextProps) == "object" && nextProps.hasOwnProperty("__")) {
-          nextProps.asInstanceOf[js.Dynamic].__.asInstanceOf[Props]
+      constructor.getDerivedStateFromProps = ((props: js.Object, state: js.Object) => {
+        val propsScala = if (js.typeOf(props) == "object" && props.hasOwnProperty("__")) {
+          props.asInstanceOf[js.Dynamic].__.asInstanceOf[Props]
         } else {
-          DefinitionBase.readWithWrappingAdjustment(propsReader)(nextProps)
+          DefinitionBase.readWithWrappingAdjustment(propsReader)(props)
         }
 
-        val prevStateScala = if (js.typeOf(prevState) == "object" && prevState.hasOwnProperty("__")) {
-          prevState.asInstanceOf[js.Dynamic].__.asInstanceOf[State]
+        val stateScala = if (js.typeOf(state) == "object" && state.hasOwnProperty("__")) {
+          state.asInstanceOf[js.Dynamic].__.asInstanceOf[State]
         } else {
-          DefinitionBase.readWithWrappingAdjustment(stateReader)(prevState)
+          DefinitionBase.readWithWrappingAdjustment(stateReader)(state)
         }
 
-        val newState = getDerivedStateFromProps(nextPropsScala, prevStateScala)
+        val newState = getDerivedStateFromProps(propsScala, stateScala)
 
         if (BaseComponentWrapper.scalaComponentWritingEnabled) {
           DefinitionBase.writeWithWrappingAdjustment(stateWriter)(newState)
@@ -77,6 +78,18 @@ abstract class BaseComponentWrapper(sr: StateReaderProvider, sw: StateWriterProv
           js.Dynamic.literal(__ = newState.asInstanceOf[js.Any])
         }
       }): js.Function2[js.Object, js.Object, js.Object]
+    }
+
+    if (this.asInstanceOf[js.Dynamic].getDerivedStateFromError__O__O != BaseComponentWrapper.defaultGetDerivedStateFromError) {
+      constructor.getDerivedStateFromError = ((error: js.Object) => {
+        val newState = getDerivedStateFromError(error)
+
+        if (BaseComponentWrapper.scalaComponentWritingEnabled) {
+          DefinitionBase.writeWithWrappingAdjustment(stateWriter)(newState)
+        } else {
+          js.Dynamic.literal(__ = newState.asInstanceOf[js.Any])
+        }
+      }): js.Function2[js.Object, js.Object]
     }
 
     // we only receive non-null reader/writers here when we generate a full typeclass; otherwise we don't set
@@ -115,12 +128,20 @@ abstract class BaseComponentWrapper(sr: StateReaderProvider, sw: StateWriterProv
 }
 
 object BaseComponentWrapper {
-  private[BaseComponentWrapper] val defaultGetDerivedState = {
+  private[BaseComponentWrapper] val defaultGetDerivedStateFromProps = {
     new BaseComponentWrapper(null, null) {
       override type Props = Unit
       override type State = Unit
       override type Def = Nothing
     }.asInstanceOf[js.Dynamic].getDerivedStateFromProps__O__O__O
+  }
+
+  private[BaseComponentWrapper] val defaultGetDerivedStateFromError = {
+    new BaseComponentWrapper(null, null) {
+      override type Props = Unit
+      override type State = Unit
+      override type Def = Nothing
+    }.asInstanceOf[js.Dynamic].getDerivedStateFromError__O__O
   }
 
   implicit def proplessKeyAndRef[C <: BaseComponentWrapper { type Props = Unit }](c: C)(implicit stateWriter: Writer[c.State], stateReader: Reader[c.State], constructorTag: ConstructorTag[c.Def]): KeyAndRefAddingStage[c.Def] = {
