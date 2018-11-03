@@ -73,11 +73,6 @@ lazy val macroAnnotationSettings = Seq(
   }
 )
 
-scalacOptions in ThisBuild ++= {
-  if (scalaVersion.value == "2.13.0-M5") Seq("-Ywarn-unused:imports")
-  else Seq("-Ywarn-unused-import")
-}
-
 lazy val generator = project
 
 lazy val readWrite = project.settings(librarySettings, crossScalaSettings)
