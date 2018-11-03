@@ -64,11 +64,11 @@ addCommandAlias(
 lazy val macroAnnotationSettings = Seq(
   resolvers += Resolver.sonatypeRepo("releases"),
   scalacOptions ++= {
-    if (scalaVersion.value == "2.13.0-M4") Seq("-Ymacro-annotations")
+    if (scalaVersion.value == "2.13.0-M5") Seq("-Ymacro-annotations")
     else Seq.empty
   },
   libraryDependencies ++= {
-    if (scalaVersion.value == "2.13.0-M4") Seq.empty
+    if (scalaVersion.value == "2.13.0-M5") Seq.empty
     else Seq(compilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.full))
   }
 )
