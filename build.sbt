@@ -20,7 +20,7 @@ lazy val slinky = project.in(file(".")).aggregate(
 )
 
 lazy val crossScalaSettings = Seq(
-  crossScalaVersions := Seq("2.12.6", "2.13.0-M4"),
+  crossScalaVersions := Seq("2.12.6", "2.13.0-M5"),
   unmanagedSourceDirectories in Compile += {
     val sourceDir = (sourceDirectory in Compile).value
     CrossVersion.partialVersion(scalaVersion.value) match {
@@ -35,7 +35,7 @@ lazy val crossScalaSettings = Seq(
       case _                       => sourceDir / "scala-2.13-"
     }
   },
-  libraryDependencies += "org.scala-lang.modules" %%% "scala-collection-compat" % "0.1.1"
+  libraryDependencies += "org.scala-lang.modules" %%% "scala-collection-compat" % "0.2.1"
 )
 
 lazy val librarySettings = Seq(
