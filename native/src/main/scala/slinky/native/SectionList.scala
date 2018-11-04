@@ -8,14 +8,14 @@ import scala.scalajs.js
 import scala.scalajs.js.annotation.JSImport
 import scala.scalajs.js.|
 
-case class SectionRenderItemInfo[T](item: T, index: Int, section: Section[Any], separators: Separators)
+case class SectionRenderItemInfo[T](item: T, index: Int, section: Section[T], separators: Separators)
 
 case class Section[T](data: Seq[T],
                       key: js.UndefOr[String] = js.undefined,
                       renderItem: js.UndefOr[SectionRenderItemInfo[T] => ReactElement] = js.undefined,
                       ItemSeparatorComponent: js.UndefOr[ReactComponentClass[_]] = js.undefined,
                       keyExtractor: js.UndefOr[(T, Int) => String] = js.undefined,
-                      extraData: js.UndefOr[Any] = js.undefined)
+                      extraData: js.Any = js.undefined)
 
 case class RenderSectionInfo[T](section: Section[T])
 
@@ -35,13 +35,13 @@ trait SectionListInstance[T] extends js.Object {
   def flashScrollIndicators(): Unit = js.native
 }
 
-object SectionList extends ExternalComponentWithRefType[SectionListInstance[Any]] {
-  case class Props(sections: Seq[Section[Any]],
+object SectionList extends ExternalComponentWithRefType[SectionListInstance[js.Any]] {
+  case class Props(sections: Seq[Section[js.Any]],
                    initialNumToRender: js.UndefOr[Int] = js.undefined,
-                   keyExtractor: js.UndefOr[(Any, Int) => String] = js.undefined,
-                   renderItem: js.UndefOr[SectionRenderItemInfo[Any] => ReactElement] = js.undefined,
+                   keyExtractor: js.UndefOr[(js.Any, Int) => String] = js.undefined,
+                   renderItem: js.UndefOr[SectionRenderItemInfo[js.Any] => ReactElement] = js.undefined,
                    onEndReached: js.UndefOr[OnEndReachedEvent => Unit] = js.undefined,
-                   extraData: js.UndefOr[Any] = js.undefined,
+                   extraData: js.Any = js.undefined,
                    ItemSeparatorComponent: js.UndefOr[ReactComponentClass[_]] = js.undefined,
                    inverted: js.UndefOr[Boolean] = js.undefined,
                    ListFooterComponent: js.UndefOr[ReactComponentClass[_] | (() => ReactElement) | ReactElement] = js.undefined,
@@ -49,15 +49,15 @@ object SectionList extends ExternalComponentWithRefType[SectionListInstance[Any]
                    ListEmptyComponent: js.UndefOr[ReactComponentClass[_] | (() => ReactElement) | ReactElement] = js.undefined,
                    onEndReachedThreshold: js.UndefOr[Double] = js.undefined,
                    onRefresh: js.UndefOr[() => Unit] = js.undefined,
-                   onViewableItemsChanged: js.UndefOr[ViewableItemsChangedEvent[Any] => Unit] = js.undefined,
+                   onViewableItemsChanged: js.UndefOr[ViewableItemsChangedEvent[js.Any] => Unit] = js.undefined,
                    refreshing: js.UndefOr[Boolean] = js.undefined,
                    removeClippedSubviews: js.UndefOr[Boolean] = js.undefined,
                    ListHeaderComponent: js.UndefOr[ReactComponentClass[_] | (() => ReactElement) | ReactElement] = js.undefined,
-                   renderSectionFooter: js.UndefOr[RenderSectionInfo[Any] => ReactElement] = js.undefined,
-                   renderSectionHeader: js.UndefOr[RenderSectionInfo[Any] => ReactElement] = js.undefined,
+                   renderSectionFooter: js.UndefOr[RenderSectionInfo[js.Any] => ReactElement] = js.undefined,
+                   renderSectionHeader: js.UndefOr[RenderSectionInfo[js.Any] => ReactElement] = js.undefined,
                    SectionSeparatorComponent: js.UndefOr[ReactComponentClass[_]] = js.undefined,
                    stickySectionHeadersEnabled: js.UndefOr[Boolean] = js.undefined,
-                   getItemLayout: js.UndefOr[(Any, Int) => ItemLayout] = js.undefined)
+                   getItemLayout: js.UndefOr[(js.Any, Int) => ItemLayout] = js.undefined)
 
   @js.native
   @JSImport("react-native", "SectionList")
@@ -70,7 +70,7 @@ object SectionList extends ExternalComponentWithRefType[SectionListInstance[Any]
                keyExtractor: js.UndefOr[(T, Int) => String] = js.undefined,
                renderItem: js.UndefOr[SectionRenderItemInfo[T] => ReactElement] = js.undefined,
                onEndReached: js.UndefOr[OnEndReachedEvent => Unit] = js.undefined,
-               extraData: js.UndefOr[Any] = js.undefined,
+               extraData: js.Any = js.undefined,
                ItemSeparatorComponent: js.UndefOr[ReactComponentClass[_]] = js.undefined,
                inverted: js.UndefOr[Boolean] = js.undefined,
                ListFooterComponent: js.UndefOr[ReactComponentClass[_] | (() => ReactElement) | ReactElement] = js.undefined,
@@ -88,7 +88,7 @@ object SectionList extends ExternalComponentWithRefType[SectionListInstance[Any]
                stickySectionHeadersEnabled: js.UndefOr[Boolean] = js.undefined,
                getItemLayout: js.UndefOr[(T, Int) => ItemLayout] = js.undefined): BuildingComponent[Nothing, SectionListInstance[T]] = {
     apply(Props(
-      sections = sections.asInstanceOf[Seq[Section[Any]]],
+      sections = sections.asInstanceOf[Seq[Section[js.Any]]],
       initialNumToRender = initialNumToRender,
       keyExtractor = keyExtractor.map(f => (a, i) => f(a.asInstanceOf[T], i)),
       renderItem = renderItem.map(f => o => f(o.asInstanceOf[SectionRenderItemInfo[T]])),
@@ -101,12 +101,12 @@ object SectionList extends ExternalComponentWithRefType[SectionListInstance[Any]
       ListEmptyComponent = ListEmptyComponent,
       onEndReachedThreshold = onEndReachedThreshold,
       onRefresh = onRefresh,
-      onViewableItemsChanged = onViewableItemsChanged.asInstanceOf[js.UndefOr[ViewableItemsChangedEvent[Any] => Unit]],
+      onViewableItemsChanged = onViewableItemsChanged.asInstanceOf[js.UndefOr[ViewableItemsChangedEvent[js.Any] => Unit]],
       refreshing = refreshing,
       removeClippedSubviews = removeClippedSubviews,
       ListHeaderComponent = ListHeaderComponent,
-      renderSectionFooter = renderSectionFooter.asInstanceOf[js.UndefOr[RenderSectionInfo[Any] => ReactElement]],
-      renderSectionHeader = renderSectionHeader.asInstanceOf[js.UndefOr[RenderSectionInfo[Any] => ReactElement]],
+      renderSectionFooter = renderSectionFooter.asInstanceOf[js.UndefOr[RenderSectionInfo[js.Any] => ReactElement]],
+      renderSectionHeader = renderSectionHeader.asInstanceOf[js.UndefOr[RenderSectionInfo[js.Any] => ReactElement]],
       SectionSeparatorComponent = SectionSeparatorComponent,
       stickySectionHeadersEnabled = stickySectionHeadersEnabled,
       getItemLayout = getItemLayout.map(f => (v, i) => f(v.asInstanceOf[T], i))
