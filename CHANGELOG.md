@@ -4,11 +4,11 @@
 + Slinky support for Scala 2.13 is now built with **2.13.0-M5** [PR #202](https://github.com/shadaj/slinky/pull/202)
 
 ## v0.5.1
-## Features
+### Features
 + Support reading and writing `scala.Array` [PR #187](https://github.com/shadaj/slinky/pull/187)
 + Support the `defaultValue` attribute for specifying a default form value without overriding user inputs [PR #186](https://github.com/shadaj/slinky/pull/186)
 
-## Bug Fixes
+### Bug Fixes
 + Prevent crashes with components that store an `Option` of an opaque type in their `State` [PR #198](https://github.com/shadaj/slinky/pull/198)
 + Fix `ComponentWrapper`s not picking up manually defined Reader/Writers for the `State` type [PR #190](https://github.com/shadaj/slinky/pull/190)
 + Fix how the IntelliJ extensions handles components that have a `children` prop but no other props [PR #189](https://github.com/shadaj/slinky/pull/189)
