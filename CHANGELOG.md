@@ -4,6 +4,7 @@
 
 ## v0.5.1
 ## Features
++ Slinky support for Scala 2.13 is now built with **2.13.0-M5** [PR #202](https://github.com/shadaj/slinky/pull/202)
 + Support reading and writing `scala.Array` [PR #187](https://github.com/shadaj/slinky/pull/187)
 + Support the `defaultValue` attribute for specifying a default form value without overriding user inputs [PR #186](https://github.com/shadaj/slinky/pull/186)
 
