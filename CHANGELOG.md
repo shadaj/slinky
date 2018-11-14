@@ -1,7 +1,11 @@
 # Changelog
 
 ## vNEXT
+### Highlights
 + Slinky support for Scala 2.13 is now built with **2.13.0-M5** [PR #202](https://github.com/shadaj/slinky/pull/202)
+
+### Bug Fixes
++ Fix compilation errors in generating `Reader`/`Writer` when private objects are involved [PR #205](https://github.com/shadaj/slinky/pull/205)
 
 ## v0.5.1
 ### Features

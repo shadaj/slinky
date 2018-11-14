@@ -16,6 +16,13 @@ case object SubTypeC extends MySealedTrait
 
 case class ClassWithVararg(a: Int, bs: String*)
 
+object ContainingPrivateType {
+  sealed trait ToRead
+  private[ContainingPrivateType] object Test extends ToRead
+
+  val TestInstance = Test
+}
+
 class ReaderWriterTest extends FunSuite {
   private def readWrittenSame[T](v: T,
                                  isOpaque: Boolean = false,
@@ -181,6 +188,10 @@ class ReaderWriterTest extends FunSuite {
     assert(implicitly[Reader[Option[OpaqueClass]]].read(
       implicitly[Writer[Option[OpaqueClass]]].write(Some(new OpaqueClass(1)))
     ).get != null)
+  }
+
+  test("Read/write - private type defaults to opaque") {
+    readWrittenSame[ContainingPrivateType.ToRead](ContainingPrivateType.TestInstance, true)
   }
 
   // compilation test: can use derivation macro with type parameter when typeclass is available
