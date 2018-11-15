@@ -104,7 +104,7 @@ abstract class GenericDeriveImpl(val c: whitebox.Context) { self =>
       val deriveTree = if (regularImplicit.isEmpty) {
         if (symbol.isParameter) {
           c.abort(c.enclosingPosition, "Cannot derive a typeclass for a type parameter")
-        } else if (symbol.isModuleClass) {
+        } else if (symbol.isModuleClass && c.typecheck(c.parse(symbol.asClass.module.fullName), silent = true).nonEmpty) {
           createModuleTypeclass(tTag.tpe, c.parse(symbol.asClass.module.fullName))
         } else if (symbol.isClass && symbol.asClass.isCaseClass) {
           val constructor = symbol.asClass.primaryConstructor
