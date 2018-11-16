@@ -56,7 +56,7 @@ abstract class BaseComponentWrapper(sr: StateReaderProvider, sw: StateWriterProv
     constructor.displayName = getClass.getSimpleName
     constructor._base = this.asInstanceOf[js.Any]
 
-    if (this.asInstanceOf[js.Dynamic].getDerivedStateFromProps__O__O__O != BaseComponentWrapper.defaultGetDerivedState) {
+    if (this.asInstanceOf[js.Dynamic].getDerivedStateFromProps__O__O__O != BaseComponentWrapper.defaultGetDerivedStateFromProps) {
       constructor.getDerivedStateFromProps = ((props: js.Object, state: js.Object) => {
         val propsScala = if (js.typeOf(props) == "object" && props.hasOwnProperty("__")) {
           props.asInstanceOf[js.Dynamic].__.asInstanceOf[Props]
@@ -80,8 +80,8 @@ abstract class BaseComponentWrapper(sr: StateReaderProvider, sw: StateWriterProv
       }): js.Function2[js.Object, js.Object, js.Object]
     }
 
-    if (this.asInstanceOf[js.Dynamic].getDerivedStateFromError__O__O != BaseComponentWrapper.defaultGetDerivedStateFromError) {
-      constructor.getDerivedStateFromError = ((error: js.Object) => {
+    if (this.asInstanceOf[js.Dynamic].getDerivedStateFromError__sjs_js_Error__O != BaseComponentWrapper.defaultGetDerivedStateFromError) {
+      constructor.getDerivedStateFromError = ((error: js.Error) => {
         val newState = getDerivedStateFromError(error)
 
         if (BaseComponentWrapper.scalaComponentWritingEnabled) {
@@ -89,7 +89,7 @@ abstract class BaseComponentWrapper(sr: StateReaderProvider, sw: StateWriterProv
         } else {
           js.Dynamic.literal(__ = newState.asInstanceOf[js.Any])
         }
-      }): js.Function2[js.Object, js.Object]
+      }): js.Function1[js.Error, js.Object]
     }
 
     // we only receive non-null reader/writers here when we generate a full typeclass; otherwise we don't set
@@ -141,7 +141,7 @@ object BaseComponentWrapper {
       override type Props = Unit
       override type State = Unit
       override type Def = Nothing
-    }.asInstanceOf[js.Dynamic].getDerivedStateFromError__O__O
+    }.asInstanceOf[js.Dynamic].getDerivedStateFromError__sjs_js_Error__O
   }
 
   implicit def proplessKeyAndRef[C <: BaseComponentWrapper { type Props = Unit }](c: C)(implicit stateWriter: Writer[c.State], stateReader: Reader[c.State], constructorTag: ConstructorTag[c.Def]): KeyAndRefAddingStage[c.Def] = {
