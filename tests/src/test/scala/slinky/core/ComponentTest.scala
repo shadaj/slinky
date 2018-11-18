@@ -177,6 +177,28 @@ object DerivedStateComponent extends ComponentWrapper {
   }
 }
 
+object DerivedStateFromErrorComponent extends ComponentWrapper {
+  case class Props(onValue: Int => Unit)
+  type State = Int
+
+  override def getDerivedStateFromError(e: js.Error): State = {
+    123
+  }
+
+  class Def(jsProps: js.Object) extends Definition(jsProps) {
+    override def initialState: Int = 0
+
+    override def render(): ReactElement = {
+      if (state != 0) {
+        props.onValue(state)
+        null
+      } else {
+        BadComponent()
+      }
+    }
+  }
+}
+
 // compilation test: state providers for underivable type
 object TestUnderivable {
   case class UnDerivable private(private val a: Int)
@@ -308,6 +330,19 @@ class ComponentTest extends AsyncFunSuite {
     ReactDOM.render(
       DerivedStateComponent(DerivedStateComponent.Props(
         123, i => promise.success(assert(i == 123))
+      )),
+      dom.document.createElement("div")
+    )
+
+    promise.future
+  }
+
+  test("getDerivedStateFromError results in state being calculated based on error") {
+    val promise: Promise[Assertion] = Promise()
+
+    ReactDOM.render(
+      DerivedStateFromErrorComponent(DerivedStateFromErrorComponent.Props(
+        i => promise.success(assert(i == 123))
       )),
       dom.document.createElement("div")
     )

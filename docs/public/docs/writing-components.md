@@ -122,7 +122,7 @@ object MyComponent extends StatelessComponentWrapper {
 ```
 
 ## Lifecycle Methods
-Slinky supports all of the React component lifecycle methods, including the next-generation ones from React 16.3.
+Slinky supports all of the React component lifecycle methods, including the next-generation ones from React 16.
 
 ```scala
 class Def(jsProps: js.Object) extends Definition(jsProps) {
@@ -134,6 +134,9 @@ class Def(jsProps: js.Object) extends Definition(jsProps) {
   override def componentDidUpdate(prevProps: Props, prevState: State) = { ... }
   override def componentWillUnount() = { ... }
   override def componentDidCatch(error: js.Error, info: ErrorBoundaryInfo) = { ... }
+
+  override def getDerivedStateFromProps(nextProps: Props, prevState: State): State = { ... }
+  override def getDerivedStateFromError(error: js.Error): State = { ... }
 }
 ```
 
