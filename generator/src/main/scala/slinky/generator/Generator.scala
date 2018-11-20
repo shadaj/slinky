@@ -63,6 +63,10 @@ object Generator extends App {
           s"""@inline def :=(v: org.scalajs.dom.MouseEvent => Unit) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)
              |@inline def :=(v: () => Unit) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)
            """.stripMargin
+        } else if (a.attributeType == "TouchEventHandler") {
+          s"""@inline def :=(v: org.scalajs.dom.TouchEvent => Unit) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)
+             |@inline def :=(v: () => Unit) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)
+           """.stripMargin
         } else if (a.attributeType == "RefType") {
           s"""@inline def :=(v: org.scalajs.dom.Element => Unit) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)
              |@inline def :=(v: slinky.core.facade.ReactRef[org.scalajs.dom.Element]) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)
