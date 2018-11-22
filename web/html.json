@@ -2586,6 +2586,42 @@
       ],
       "compatibleTags" : null,
       "withDash" : false
+    },
+    {
+      "attributeName" : "onTouchStart",
+      "attributeType" : "TouchEventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onTouchEnd",
+      "attributeType" : "TouchEventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onTouchCancel",
+      "attributeType" : "TouchEventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onTouchMove",
+      "attributeType" : "TouchEventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
     }
   ]
 }
