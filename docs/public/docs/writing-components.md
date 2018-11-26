@@ -134,7 +134,36 @@ class Def(jsProps: js.Object) extends Definition(jsProps) {
   override def componentDidUpdate(prevProps: Props, prevState: State) = { ... }
   override def componentWillUnount() = { ... }
   override def componentDidCatch(error: js.Error, info: ErrorBoundaryInfo) = { ... }
+}
+```
 
+### Static Lifecycle Methods
+To use lifecycle methods defined in a static context, override the lifecycle method inside the companion object if using `@react` style or directly inside `ComponentWrapper` if using the non-annotation style.
+
+```scala
+object MyComponent extends ComponentWrapper {
+  case class Props(...)
+  case class State(...)
+  
+  override def getDerivedStateFromProps(nextProps: Props, prevState: State): State = { ... }
+  override def getDerivedStateFromError(error: js.Error): State = { ... }
+
+  class Def(jsProps: js.Object) extends Definition(jsProps) {
+    def render = { ... }
+  }
+}
+```
+
+Or with the `@react` API:
+```scala
+@react class MyComponent extends Component {
+  case class Props(...)
+  case class State(...)
+
+  def render = { ... }
+}
+
+object MyComponent {
   override def getDerivedStateFromProps(nextProps: Props, prevState: State): State = { ... }
   override def getDerivedStateFromError(error: js.Error): State = { ... }
 }
@@ -160,7 +189,7 @@ object MyComponent extends ComponentWrapper {
 
 Or with the `@react` API:
 ```scala
-@react class MyComponent extends ComponentWrapper {
+@react class MyComponent extends Component {
   case class Props(...)
   case class State(...)
   case class Snapshot(...)
