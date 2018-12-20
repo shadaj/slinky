@@ -3,7 +3,7 @@ package me.shadaj.slinky.core
 import org.jetbrains.plugins.scala.lang.psi.types.ScParameterizedType
 import org.jetbrains.plugins.scala.lang.psi.impl.toplevel.typedef.{SyntheticMembersInjector, TypeDefinitionMembers}
 import org.jetbrains.plugins.scala.lang.psi.api.toplevel.typedef._
-import org.jetbrains.plugins.scala.lang.psi.api.statements.ScTypeAliasDefinition
+import org.jetbrains.plugins.scala.lang.psi.api.statements.{ScTypeAliasDeclaration, ScTypeAliasDefinition}
 import org.jetbrains.plugins.scala.lang.psi.types.api.designator.ScDesignatorType
 import org.jetbrains.plugins.scala.lang.psi.types.api.{ParameterizedType, StdType}
 
@@ -19,12 +19,12 @@ class SlinkyInjector extends SyntheticMembersInjector {
 
   def createComponentBody(cls: ScTypeDefinition): Seq[(String, InjectType)] = {
     val types = TypeDefinitionMembers.getTypes(cls)
-    val (propsDefinition, applyMethods) = types.get("Props").map { buf =>
-      buf.head._1 match {
+    val (propsDefinition, applyMethods) = types.forName("Props")._1.iterator.toSeq.headOption.flatMap { elm =>
+      elm._1 match {
         case alias: ScTypeAliasDefinition =>
-          ((alias.getText, Member), Seq.empty[(String, InjectType)])
+          Some(((alias.getText, Member), Seq.empty[(String, InjectType)]))
         case propsCls: ScClass if propsCls.isCase =>
-          ((propsCls.getText, Type), {
+          Some(((propsCls.getText, Type), {
             val paramList = propsCls.constructor.get.parameterList
             val caseClassparamss = paramList.params
             val childrenParam = caseClassparamss.find(_.name == "children")
@@ -46,25 +46,28 @@ class SlinkyInjector extends SyntheticMembersInjector {
                 s"def apply(${paramssWithoutChildren.map(_.getText).mkString(",")}): slinky.core.KeyAndRefAddingStage[${cls.getQualifiedName}] = ???" -> Function
               )
             }
-          })
+          }))
+        case _ => None
       }
     }.getOrElse(("", Type), Seq.empty)
 
-    val stateDefinition: Option[(String, InjectType)] = types.get("State").map { buf =>
-      buf.head._1 match {
+    val stateDefinition: Option[(String, InjectType)] = types.forName("State")._1.iterator.toSeq.headOption.flatMap { elm =>
+      elm._1 match {
         case alias: ScTypeAliasDefinition =>
-          (alias.getText, Member)
+          Some((alias.getText, Member))
         case propsCls: ScClass if propsCls.isCase =>
-          (propsCls.getText, Type)
+          Some((propsCls.getText, Type))
+        case _ => None
       }
     }
 
-    val snapshotDefinition: Option[(String, InjectType)] = types.get("Snapshot").map { buf =>
-      buf.head._1 match {
+    val snapshotDefinition: Option[(String, InjectType)] = types.forName("Snapshot")._1.iterator.toSeq.headOption.flatMap { elm =>
+      elm._1 match {
         case alias: ScTypeAliasDefinition =>
-          (alias.getText, Member)
+          Some((alias.getText, Member))
         case propsCls: ScClass if propsCls.isCase =>
-          (propsCls.getText, Type)
+          Some((propsCls.getText, Type))
+        case _ => None
       }
     }
 

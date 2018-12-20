@@ -1,0 +1,29 @@
+<idea-plugin>
+    <id>me.shadaj.slinky.core.SlinkyInjector</id>
+    <name>Slinky Library Extenstion</name>
+    <version>1.0</version>
+    <vendor url="http://www.jetbrains.com">JetBrains</vendor>
+
+    <description>Type inferencing for the Slinky @react annotation</description>
+
+    <idea-version since-build="143.0"/>
+
+    <depends>org.intellij.scala</depends>
+
+    <application-components>
+        <!-- TODO put your components here -->
+    </application-components>
+
+    <project-components>
+        <!-- TODO put your components here -->
+    </project-components>
+
+    <extensions defaultExtensionNs="org.intellij.scala">
+        <syntheticMemberInjector implementation="me.shadaj.slinky.core.SlinkyInjector"/>
+    </extensions>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- TODO put your extensions here -->
+    </extensions>
+
+</idea-plugin>
