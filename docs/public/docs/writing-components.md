@@ -44,7 +44,7 @@ So a full component would look something like this:
 
 ```scala
 @react class MyComponent extends Component {
-  type Props = Unit // no props
+  case class Props() // no props
   case class State(buttonPresses: Int)
   
   def initialState = State(0)

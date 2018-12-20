@@ -6,7 +6,7 @@ Slinky supports the special fragment and portal element types that were introduc
 
 ```scala
 @react class MyComponent extends StatelessComponent {
-  trait Props = Unit
+  case class Props()
   
   def render = {
     List(
@@ -24,7 +24,7 @@ Additionally, Slinky supports the `Fragment` component [introduced in React 16.2
 import slinky.core.facade.Fragment
 
 @react class MyComponent extends StatelessComponent {
-  trait Props = Unit
+  case class Props()
   
   def render = {
     Fragment(
