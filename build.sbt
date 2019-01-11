@@ -1,6 +1,6 @@
 organization in ThisBuild := "me.shadaj"
 
-scalaVersion in ThisBuild := "2.12.7"
+scalaVersion in ThisBuild := "2.12.8"
 
 scalacOptions in ThisBuild ++= Seq("-feature", "-deprecation")
 
@@ -20,7 +20,7 @@ lazy val slinky = project.in(file(".")).aggregate(
 )
 
 lazy val crossScalaSettings = Seq(
-  crossScalaVersions := Seq("2.12.6", "2.13.0-M5"),
+  crossScalaVersions := Seq("2.12.8", "2.13.0-M5"),
   unmanagedSourceDirectories in Compile += {
     val sourceDir = (sourceDirectory in Compile).value
     CrossVersion.partialVersion(scalaVersion.value) match {
