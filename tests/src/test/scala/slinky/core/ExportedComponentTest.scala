@@ -30,11 +30,6 @@ object TestExportedComponentStateless extends StatelessComponentWrapper {
   }
 }
 
-case class FunctionalProps(name: String)
-object TestExportedFunctionalComponent extends FunctionalComponent[FunctionalProps](p => {
-  p.name
-})
-
 class ExportedComponentTest extends FunSuite {
   test("Can construct an instance of an exported component with JS-provided props") {
     val container = document.createElement("div")
@@ -61,6 +56,11 @@ class ExportedComponentTest extends FunSuite {
   }
 
   test("Can construct an instance of an exported functional component with JS-provided props") {
+    case class FunctionalProps(name: String)
+    val TestExportedFunctionalComponent = FunctionalComponent((p: FunctionalProps) => {
+      p.name
+    })
+
     val container = document.createElement("div")
     ReactDOM.render(React.createElement(
       TestExportedFunctionalComponent: ReactComponentClass[_],

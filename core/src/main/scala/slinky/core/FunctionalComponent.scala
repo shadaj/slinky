@@ -23,21 +23,31 @@ object KeyAddingStage {
   }
 }
 
-class FunctionalComponent[P](fn: P => ReactElement)(implicit fnCompName: FunctionalComponentName) {
-  private val component = ((obj: js.Object) => {
-    fn(obj.asInstanceOf[js.Dynamic].__.asInstanceOf[P])
-  }): js.Function1[js.Object, ReactElement]
+class FunctionalComponent[P] private[core](private[core] val component: js.Object) {
+  def this(fn: P => ReactElement)(implicit fnCompName: FunctionalComponentName) = {
+    this({
+      var ret: js.Function1[js.Object, ReactElement] = null
+      ret = ((obj: js.Object) => {
+        if (!js.isUndefined(obj.asInstanceOf[js.Dynamic].__)) {
+          fn(obj.asInstanceOf[js.Dynamic].__.asInstanceOf[P])
+        } else {
+          fn(ret.asInstanceOf[js.Dynamic].__propsReader.asInstanceOf[Reader[P]].read(obj))
+        }
+      })
+      ret.asInstanceOf[js.Dynamic].displayName = fnCompName.name
+      ret
+    }.asInstanceOf[js.Object])
+  }
 
-  private[core] def componentWithReader(propsReader: Reader[P]) = ((obj: js.Object) => {
-    fn(propsReader.read(obj))
-  }): js.Function1[js.Object, ReactElement]
-
-  component.asInstanceOf[js.Dynamic].displayName = fnCompName.name
+  private[core] def componentWithReader(propsReader: Reader[P]) = {
+    component.asInstanceOf[js.Dynamic].__propsReader = propsReader.asInstanceOf[js.Object]
+    component
+  }
 
   final def apply(props: P): KeyAddingStage = {
     new KeyAddingStage(js.Dynamic.literal(
       __ = props.asInstanceOf[js.Any]
-    ).asInstanceOf[js.Dictionary[js.Any]], component.asInstanceOf[js.Object])
+    ).asInstanceOf[js.Dictionary[js.Any]], component)
   }
 }
 
