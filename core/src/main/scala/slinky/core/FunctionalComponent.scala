@@ -1,5 +1,6 @@
 package slinky.core
 
+import slinky.readwrite.Reader
 import slinky.core.facade.{React, ReactElement}
 import scala.scalajs.js
 
@@ -25,6 +26,10 @@ object KeyAddingStage {
 class FunctionalComponent[P](fn: P => ReactElement)(implicit fnCompName: FunctionalComponentName) {
   private val component = ((obj: js.Object) => {
     fn(obj.asInstanceOf[js.Dynamic].__.asInstanceOf[P])
+  }): js.Function1[js.Object, ReactElement]
+
+  private[core] def componentWithReader(propsReader: Reader[P]) = ((obj: js.Object) => {
+    fn(propsReader.read(obj))
   }): js.Function1[js.Object, ReactElement]
 
   component.asInstanceOf[js.Dynamic].displayName = fnCompName.name
