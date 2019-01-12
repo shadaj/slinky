@@ -28,7 +28,7 @@ class FunctionalComponent[P] private[core](private[core] val component: js.Objec
     this({
       var ret: js.Function1[js.Object, ReactElement] = null
       ret = ((obj: js.Object) => {
-        if (!js.isUndefined(obj.asInstanceOf[js.Dynamic].__)) {
+        if (obj.hasOwnProperty("__")) {
           fn(obj.asInstanceOf[js.Dynamic].__.asInstanceOf[P])
         } else {
           fn(ret.asInstanceOf[js.Dynamic].__propsReader.asInstanceOf[Reader[P]].read(obj))
