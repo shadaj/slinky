@@ -99,6 +99,7 @@ object DocsTree {
       "The Tag API" -> "/docs/the-tag-api/",
       "Writing Components" -> "/docs/writing-components/",
       "External Components" -> "/docs/external-components/",
+      "Functional Components" -> "/docs/functional-components/",
       "React Native and VR" -> "/docs/native-and-vr/"
     ),
     "Advanced Guides" -> List(
@@ -108,6 +109,7 @@ object DocsTree {
       "Context" -> "/docs/context/",
       "Refs" -> "/docs/refs/",
       "Error Boundaries" -> "/docs/error-boundaries/",
+      "Exporting Components" -> "/docs/exporting-components/",
       "Scala.js React Interop" -> "/docs/scalajs-react-interop/",
       "Abstracting Over Tags" -> "/docs/abstracting-over-tags/",
     )
