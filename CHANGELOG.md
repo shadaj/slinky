@@ -1,6 +1,8 @@
 # Changelog
 
 ## vNEXT
+### Highlights :tada:
++ Add support for writing functional components, see [the docs](https://slinky.shadaj.me/docs/functional-components/) for more details [PR #217](https://github.com/shadaj/slinky/pull/217)
 
 ## v0.5.2
 ### Highlights :tada:
