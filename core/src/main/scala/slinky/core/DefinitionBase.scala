@@ -21,9 +21,14 @@ abstract class DefinitionBase[Props, State, Snapshot](jsProps: js.Object) extend
   def initialState: State
 
   this.asInstanceOf[PrivateComponentClass].stateR = {
+    val initialStateValue: State = initialState
+    val stateWithExtraApplyFix = if (initialStateValue.getClass == null) {
+      initialStateValue.asInstanceOf[js.Function0[State]].apply()
+    } else initialStateValue
+
     if (BaseComponentWrapper.scalaComponentWritingEnabled && defaultBase != null) {
-      writeWithWrappingAdjustment(stateWriter)(initialState)
-    } else js.Dynamic.literal(__ = initialState.asInstanceOf[js.Any])
+      writeWithWrappingAdjustment(stateWriter)(stateWithExtraApplyFix)
+    } else js.Dynamic.literal(__ = stateWithExtraApplyFix.asInstanceOf[js.Any])
   }
 
   @inline private final def readPropsValue(value: js.Object): Props = {
