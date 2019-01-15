@@ -32,6 +32,29 @@ object TestComponent extends ComponentWrapper {
   }
 }
 
+object TestComponentExtraApply extends ComponentWrapper {
+  type Props = Int => Unit
+  type State = Int
+
+  class Def(jsProps: js.Object) extends Definition(jsProps) {
+    override def initialState(): Int = 0
+
+    override def componentWillUpdate(nextProps: Props, nextState: Int): Unit = {
+      props.apply(nextState)
+    }
+
+    override def componentDidMount(): Unit = {
+      setState((s, p) => {
+        s + 1
+      })
+    }
+
+    override def render(): ReactElement = {
+      null
+    }
+  }
+}
+
 object TestComponentForSetStateCallback extends ComponentWrapper {
   type Props = Int => Unit
   type State = Int
@@ -233,6 +256,17 @@ class ComponentTest extends AsyncFunSuite {
 
     ReactDOM.render(
       TestComponent(i => promise.success(assert(i == 1))),
+      dom.document.createElement("div")
+    )
+
+    promise.future
+  }
+
+  test("initialState works with empty parentheses") {
+    val promise: Promise[Assertion] = Promise()
+
+    ReactDOM.render(
+      TestComponentExtraApply(i => promise.success(assert(i == 1))),
       dom.document.createElement("div")
     )
 

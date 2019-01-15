@@ -1,16 +1,17 @@
 # Changelog
 
 ## vNEXT
-### Highlights
+### Highlights :tada:
 + Slinky support for Scala 2.13 is now built with **2.13.0-M5** [PR #202](https://github.com/shadaj/slinky/pull/202)
 + Add support for `getDerivedStateFromProps` from React 16.6 [PR #206](https://github.com/shadaj/slinky/pull/206)
 + Add support for the `Suspense` component from React 16.6 [PR #216](https://github.com/shadaj/slinky/pull/216)
 
 ### Bug Fixes
++ Fix runtime crash when `initialState()` is defined with the extra parentheses [PR #218](https://github.com/shadaj/slinky/pull/218)
 + Fix compilation errors in generating `Reader`/`Writer` when private objects are involved [PR #205](https://github.com/shadaj/slinky/pull/205)
 
 ## v0.5.1
-### Features
+### Highlights :tada:
 + Support reading and writing `scala.Array` [PR #187](https://github.com/shadaj/slinky/pull/187)
 + Support the `defaultValue` attribute for specifying a default form value without overriding user inputs [PR #186](https://github.com/shadaj/slinky/pull/186)
 
