@@ -76,7 +76,22 @@ lazy val generator = project
 
 lazy val readWrite = project.settings(librarySettings, crossScalaSettings)
 
-lazy val core = project.settings(macroAnnotationSettings, librarySettings, crossScalaSettings).dependsOn(readWrite)
+lazy val core = project.settings(
+  resourceGenerators in Compile += Def.task {
+    val rootFolder = (resourceManaged in Compile).value / "META-INF"
+    rootFolder.mkdirs()
+
+    IO.write(
+      rootFolder / "intellij-compat.json",
+      s"""{
+         |  "artifact": "me.shadaj % slinky-core-ijext_2.12 % ${version.value}"
+         |}""".stripMargin
+    )
+
+    Seq(rootFolder / "intellij-compat.json")
+  },
+  macroAnnotationSettings, librarySettings, crossScalaSettings
+).dependsOn(readWrite)
 
 lazy val web = project.settings(
   sourceGenerators in Compile += Def.taskDyn[Seq[File]] {
@@ -126,8 +141,7 @@ lazy val coreIntellijSupport = project.enablePlugins(SbtIdeaPlugin).settings(
   org.jetbrains.sbtidea.Keys.buildSettings
 ).settings(
   ideaBuild := "183.4886.37",
-  ideaExternalPlugins += IdeaPlugin.Id("Scala", "org.intellij.scala", None),
-  crossPaths := false
+  ideaExternalPlugins += IdeaPlugin.Id("Scala", "org.intellij.scala", None)
 )
 
 lazy val coreIntellijSupportRunner = createRunnerProject(coreIntellijSupport, "coreIntellijSupportRunner").settings(
