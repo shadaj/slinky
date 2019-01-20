@@ -71,6 +71,14 @@ import scala.scalajs.js
   }
 }
 
+@react class TestComponentOverrideType extends StatelessComponent {
+  override type Props = Int
+
+  override def render(): ReactElement = {
+    null
+  }
+}
+
 @react class NoPropsComponent extends Component {
   type Props = Unit
   type State = Int

@@ -27,7 +27,7 @@ object ReactMacrosImpl {
     import c.universe._
     val q"..$_ class ${className: Name} extends ..$parents { $self => ..$stats}" = cls
     val (propsDefinition, applyMethods) = stats.flatMap {
-      case defn@q"type Props = ${_}" =>
+      case defn@q"..$_ type Props = ${_}" =>
         Some((defn, Seq()))
 
       case defn@q"case class Props[..$tparams](...${caseClassparamssRaw}) extends ..$_ { $_ => ..$_ }" =>
@@ -66,7 +66,7 @@ object ReactMacrosImpl {
     }.headOption.getOrElse(c.abort(c.enclosingPosition, "Components must define a Props type or case class, but none was found."))
 
     val stateDefinition = stats.flatMap {
-      case defn@q"type State = ${_}" =>
+      case defn@q"..$_ type State = ${_}" =>
         Some(defn)
       case defn@q"case class State[..$_](...$_) extends ..$_ { $_ => ..$_ }" =>
         Some(defn)
