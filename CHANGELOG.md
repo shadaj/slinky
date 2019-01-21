@@ -7,6 +7,7 @@
 + Add support for the `Suspense` component from React 16.6 [PR #216](https://github.com/shadaj/slinky/pull/216)
 
 ### Bug Fixes
++ Fix compile errors when overriding the `Props` or `State` type [PR #220](https://github.com/shadaj/slinky/pull/219)
 + Update library injector setup to support IntelliJ 2018.3 and newer [PR #219](https://github.com/shadaj/slinky/pull/219)
 + Fix runtime crash when `initialState()` is defined with the extra parentheses [PR #218](https://github.com/shadaj/slinky/pull/218)
 + Fix compilation errors in generating `Reader`/`Writer` when private objects are involved [PR #205](https://github.com/shadaj/slinky/pull/205)
