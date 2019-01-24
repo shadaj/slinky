@@ -16,6 +16,8 @@ case object SubTypeC extends MySealedTrait
 
 case class ClassWithVararg(a: Int, bs: String*)
 
+case class ClassWithDefault(a: Int = 5)
+
 object ContainingPrivateType {
   sealed trait ToRead
   private[ContainingPrivateType] object Test extends ToRead
@@ -192,6 +194,10 @@ class ReaderWriterTest extends FunSuite {
 
   test("Read/write - private type defaults to opaque") {
     readWrittenSame[ContainingPrivateType.ToRead](ContainingPrivateType.TestInstance, true)
+  }
+
+  test("Reading empty object uses default parameter values when available") {
+    assert(implicitly[Reader[ClassWithDefault]].read(js.Dynamic.literal()).a == 5)
   }
 
   // compilation test: can use derivation macro with type parameter when typeclass is available

@@ -61,7 +61,11 @@ class MacroReadersImpl(_c: whitebox.Context) extends GenericDeriveImpl(_c) {
   def createCaseClassTypeclass(clazz: c.Type, params: Seq[Seq[Param]]): c.Tree = {
     val paramsTrees = params.map(_.map { p =>
       p.transformIfVarArg {
-        q"${getTypeclass(p.tpe)}.read(o.asInstanceOf[_root_.scala.scalajs.js.Dynamic].${p.name.toTermName}.asInstanceOf[_root_.scala.scalajs.js.Object])"
+        p.default.map { d =>
+          q"if (_root_.scala.scalajs.js.isUndefined(o.asInstanceOf[_root_.scala.scalajs.js.Dynamic].${p.name.toTermName})) $d else ${getTypeclass(p.tpe)}.read(o.asInstanceOf[_root_.scala.scalajs.js.Dynamic].${p.name.toTermName}.asInstanceOf[_root_.scala.scalajs.js.Object])"
+        }.getOrElse {
+          q"${getTypeclass(p.tpe)}.read(o.asInstanceOf[_root_.scala.scalajs.js.Dynamic].${p.name.toTermName}.asInstanceOf[_root_.scala.scalajs.js.Object])"
+        }
       }
     })
 
