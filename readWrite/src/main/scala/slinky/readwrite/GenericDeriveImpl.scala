@@ -6,7 +6,7 @@ import scala.reflect.macros.whitebox
 abstract class GenericDeriveImpl(val c: whitebox.Context) { self =>
   import c.universe._
 
-  case class Param(name: Name, origTpe: Type) {
+  case class Param(name: Name, origTpe: Type, default: Option[Tree]) {
     val tpe: Type = origTpe match {
       case TypeRef(_, sym, args) if sym == definitions.RepeatedParamClass =>
         appliedType(symbolOf[Seq[_]], args)
@@ -108,18 +108,30 @@ abstract class GenericDeriveImpl(val c: whitebox.Context) { self =>
           createModuleTypeclass(tTag.tpe, c.parse(symbol.asClass.module.fullName))
         } else if (symbol.isClass && symbol.asClass.isCaseClass) {
           val constructor = symbol.asClass.primaryConstructor
+          val companion = symbol.asClass.companion
+          if (companion != NoSymbol) {
+            companion.info.decl(TermName("apply")).alternatives.foreach(_.asMethod.typeSignature)
+          }
+
           val paramsLists = constructor.asMethod.paramLists
           memoTree(tTag.tpe, symbol) {
-            val params: Seq[Seq[Param]] = paramsLists.map(_.map { p =>
+            val params: Seq[Seq[Param]] = paramsLists.map(_.zipWithIndex.map { case (p, i) =>
               val transformedValueType = p.typeSignatureIn(tTag.tpe).resultType
-              Param(p.name, transformedValueType.substituteTypes(symbol.asType.typeParams, tTag.tpe.typeArgs))
+              Param(
+                p.name,
+                transformedValueType.substituteTypes(symbol.asType.typeParams, tTag.tpe.typeArgs),
+                if (p.asTerm.isParamWithDefault && companion != NoSymbol) {
+                  val defaultTermName = "apply$default$" + (i + 1)
+                  Some(q"${c.parse(companion.fullName)}.${TermName(defaultTermName)}")
+                } else None
+              )
             })
 
             createCaseClassTypeclass(tTag.tpe, params)
           }
         } else if (symbol.isClass && tTag.tpe <:< typeOf[AnyVal]) {
           val actualValue = symbol.asClass.primaryConstructor.asMethod.paramLists.head.head
-          val param = Param(actualValue.name, actualValue.typeSignatureIn(tTag.tpe).resultType)
+          val param = Param(actualValue.name, actualValue.typeSignatureIn(tTag.tpe).resultType, None)
 
           memoTree(tTag.tpe, symbol)(createValueClassTypeclass(tTag.tpe, param))
         } else if (symbol.isClass && symbol.asClass.isSealed && symbol.asType.toType.typeArgs.isEmpty) {
