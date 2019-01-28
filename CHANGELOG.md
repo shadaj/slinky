@@ -1,6 +1,8 @@
 # Changelog
 
 ## vNEXT
+
+## v0.5.2
 ### Highlights :tada:
 + Slinky support for Scala 2.13 is now built with **2.13.0-M5** [PR #202](https://github.com/shadaj/slinky/pull/202)
 + Add support for `getDerivedStateFromProps` from React 16.6 [PR #206](https://github.com/shadaj/slinky/pull/206)
