@@ -62,9 +62,9 @@ class MacroReadersImpl(_c: whitebox.Context) extends GenericDeriveImpl(_c) {
     val paramsTrees = params.map(_.map { p =>
       p.transformIfVarArg {
         p.default.map { d =>
-          q"${p.name.toTermName} = if (_root_.scala.scalajs.js.isUndefined(o.asInstanceOf[_root_.scala.scalajs.js.Dynamic].${p.name.toTermName})) $d else ${getTypeclass(p.tpe)}.read(o.asInstanceOf[_root_.scala.scalajs.js.Dynamic].${p.name.toTermName}.asInstanceOf[_root_.scala.scalajs.js.Object])"
+          q"if (_root_.scala.scalajs.js.isUndefined(o.asInstanceOf[_root_.scala.scalajs.js.Dynamic].${p.name.toTermName})) $d else ${getTypeclass(p.tpe)}.read(o.asInstanceOf[_root_.scala.scalajs.js.Dynamic].${p.name.toTermName}.asInstanceOf[_root_.scala.scalajs.js.Object])"
         }.getOrElse {
-          q"${p.name.toTermName} = ${getTypeclass(p.tpe)}.read(o.asInstanceOf[_root_.scala.scalajs.js.Dynamic].${p.name.toTermName}.asInstanceOf[_root_.scala.scalajs.js.Object])"
+          q"${getTypeclass(p.tpe)}.read(o.asInstanceOf[_root_.scala.scalajs.js.Dynamic].${p.name.toTermName}.asInstanceOf[_root_.scala.scalajs.js.Object])"
         }
       }
     })

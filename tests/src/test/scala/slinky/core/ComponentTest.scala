@@ -239,6 +239,19 @@ object TestUnderivable {
   }
 }
 
+object DefaultStateParamsComponent extends ComponentWrapper {
+  type Props = Unit
+  case class State(a: Int = 1)
+
+  class Def(jsProps: js.Object) extends Definition(jsProps) {
+    override def initialState = null
+
+    override def render(): ReactElement = {
+      null
+    }
+  }
+}
+
 class ComponentTest extends AsyncFunSuite {
   test("setState given function is applied") {
     val promise: Promise[Assertion] = Promise()
