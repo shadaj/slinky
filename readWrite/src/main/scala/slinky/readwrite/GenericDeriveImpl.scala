@@ -122,7 +122,7 @@ abstract class GenericDeriveImpl(val c: whitebox.Context) { self =>
                 transformedValueType.substituteTypes(symbol.asType.typeParams, tTag.tpe.typeArgs),
                 if (p.asTerm.isParamWithDefault && companion != NoSymbol) {
                   val defaultTermName = "apply$default$" + (i + 1)
-                  Some(q"${c.parse(companion.fullName)}.${TermName(defaultTermName)}")
+                  Some(q"$companion.${TermName(defaultTermName)}")
                 } else None
               )
             })
