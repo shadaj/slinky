@@ -4,6 +4,9 @@
 ### Highlights :tada:
 + Add support for writing functional components, see [the docs](https://slinky.shadaj.me/docs/functional-components/) for more details [PR #217](https://github.com/shadaj/slinky/pull/217)
 
+### Breaking Changes :warning:
++ Components will no longer have their `displayName` when built in `fullOptJS` mode, this matches behavior with JS where names are obfuscated in production builds [PR #217](https://github.com/shadaj/slinky/pull/217)
+
 ## v0.5.2
 ### Highlights :tada:
 + Slinky support for Scala 2.13 is now built with **2.13.0-M5** [PR #202](https://github.com/shadaj/slinky/pull/202)

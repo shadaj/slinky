@@ -34,7 +34,11 @@ class FunctionalComponent[P] private[core](private[core] val component: js.Objec
           fn(ret.asInstanceOf[js.Dynamic].__propsReader.asInstanceOf[Reader[P]].read(obj))
         }
       })
-      ret.asInstanceOf[js.Dynamic].displayName = fnCompName.name
+
+      if (!scala.scalajs.LinkingInfo.productionMode) {
+        ret.asInstanceOf[js.Dynamic].displayName = fnCompName.name
+      }
+
       ret
     }.asInstanceOf[js.Object])
   }
