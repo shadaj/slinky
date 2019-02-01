@@ -190,6 +190,53 @@ object ReactMacrosImpl {
         val (companionStats, refType, elementType) = createExternalBody(c)(obj)
         List(q"object $objName extends _root_.slinky.core.ExternalComponentWithAttributesWithRefType[$elementType, $refType] { ..${objStats ++ companionStats} }")
 
+      case Seq(obj @ q"$pre object $objName extends ..$parents { $self => ..$objStats }") if (objStats.exists {
+        case q"val component: $_ = $_" => true
+        case _ => false
+      }) =>
+        val applyMethods = objStats.flatMap {
+          case defn@q"case class Props[..$tparams](...${caseClassparamssRaw}) extends ..$_ { $_ => ..$_ }" =>
+            val caseClassparamss = caseClassparamssRaw.asInstanceOf[Seq[Seq[ValDef]]]
+            val childrenParam = caseClassparamss.flatten.find(_.name.toString == "children")
+    
+            val paramssWithoutChildren = caseClassparamss.map(_.filterNot(childrenParam.contains))
+              .filterNot(_.isEmpty)
+            val applyValues = caseClassparamss.map(ps => ps.map(_.name))
+    
+            val caseClassApply = if (childrenParam.isDefined) {
+              // from https://groups.google.com/forum/#!topic/scala-user/dUOonrP_5K4
+              val body = c.typecheck(childrenParam.get.tpt, c.TYPEmode).tpe match {
+                case TypeRef(_, sym, _) if sym == definitions.RepeatedParamClass =>
+                  val applyValuesChildrenVararg = caseClassparamss.map(ps => ps.map { ps =>
+                    if (ps == childrenParam.get) {
+                      q"${ps.name}: _*"
+                    } else q"${ps.name}"
+                  })
+    
+                  q"component.apply(Props.apply(...$applyValuesChildrenVararg))"
+                case _ =>
+                  q"component.apply(Props.apply(...$applyValues))"
+              }
+    
+              q"""def apply[..$tparams](...$paramssWithoutChildren)(${childrenParam.get}): _root_.slinky.core.KeyAddingStage =
+                    $body"""
+            } else {
+              q"""def apply[..$tparams](...$paramssWithoutChildren): _root_.slinky.core.KeyAddingStage =
+                    component.apply(Props.apply(...$applyValues))"""
+            }
+    
+            Some(Seq(caseClassApply))
+    
+          case _ => None
+        }.headOption.getOrElse[Seq[Tree]] {
+          c.warning(c.enclosingPosition, "Props case class was not found. The component's simple apply method will still be added to the object.")
+          Seq.empty
+        } ++ Seq(
+          q"def apply(props: component.Props): _root_.slinky.core.KeyAddingStage = component.apply(props)"
+        )
+
+        List(q"$pre object $objName extends ..$parents { $self => ..${objStats ++ applyMethods} }")
+
       case defn =>
         c.abort(c.enclosingPosition, s"@react must annotate a class that extends (Stateless)Component or an object that extends ExternalComponent(WithAttributes)(WithRefType), got $defn")
     }

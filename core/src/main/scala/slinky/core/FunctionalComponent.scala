@@ -24,6 +24,8 @@ object KeyAddingStage {
 }
 
 class FunctionalComponent[P] private[core](private[core] val component: js.Object) {
+  type Props = P
+  
   def this(fn: P => ReactElement)(implicit fnCompName: FunctionalComponentName) = {
     this({
       var ret: js.Function1[js.Object, ReactElement] = null
