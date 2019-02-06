@@ -7,10 +7,13 @@
 ### Breaking Changes :warning:
 + Components will no longer have their `displayName` when built in `fullOptJS` mode, this matches behavior with JS where names are obfuscated in production builds [PR #217](https://github.com/shadaj/slinky/pull/217)
 
+### Bug Fixes
++ Fix capitalization of `rowSpan`/`colSpan` attribute (used to be `rowspan`/`colspan`) [PR #224](https://github.com/shadaj/slinky/pull/224)
+
 ## v0.5.2
 ### Highlights :tada:
 + Slinky support for Scala 2.13 is now built with **2.13.0-M5** [PR #202](https://github.com/shadaj/slinky/pull/202)
-+ Add support for `getDerivedStateFromProps` from React 16.6 [PR #206](https://github.com/shadaj/slinky/pull/206)
++ Add support for `getDerivedStateFromError` from React 16.6 [PR #206](https://github.com/shadaj/slinky/pull/206)
 + Add support for the `Suspense` component from React 16.6 [PR #216](https://github.com/shadaj/slinky/pull/216)
 + Use default parameters to fill in missing props on exported components [PR #221](https://github.com/shadaj/slinky/pull/221)
 
