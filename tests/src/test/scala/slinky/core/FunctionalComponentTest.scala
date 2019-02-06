@@ -28,7 +28,7 @@ class FunctionalComponentTest extends FunSuite {
     ReactDOM.render(component(inProps), container)
     assert(container.innerHTML == "1")
     assert(renderCount == 1)
-    
+
     ReactDOM.render(component(inProps), container)
     assert(container.innerHTML == "1")
     assert(renderCount == 1)
@@ -47,7 +47,7 @@ class FunctionalComponentTest extends FunSuite {
     ReactDOM.render(component(inProps), container)
     assert(container.innerHTML == "1")
     assert(renderCount == 1)
-    
+
     ReactDOM.render(component(inProps.copy(a = 2)), container)
     assert(container.innerHTML == "2")
     assert(renderCount == 2)

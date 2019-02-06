@@ -13,16 +13,16 @@ import scala.concurrent.Promise
 import scala.scalajs.js
 
 @react object SimpleFunctionalComponent {
-  case class Props[T](lol: Seq[T])  
+  case class Props[T](in: Seq[T])
 
-  val component = FunctionalComponent[Props[_]] { case Props(lol) =>
-    lol.mkString(" ")
+  val component = FunctionalComponent[Props[_]] { case Props(in) =>
+    in.mkString(" ")
   }
 }
 
 @react object FunctionalComponentJustReExpose {
-  val component = FunctionalComponent[Int] { lol =>
-    lol.toString
+  val component = FunctionalComponent[Int] { in =>
+    in.toString
   }
 }
 
@@ -30,7 +30,7 @@ class ReactAnnotatedFunctionalComponentTest extends AsyncFunSuite {
   test("Simple component has generated apply") {
     val container = dom.document.createElement("div")
     ReactDOM.render(
-      SimpleFunctionalComponent(lol = Seq(1, 2, 3)),
+      SimpleFunctionalComponent(in = Seq(1, 2, 3)),
       container
     )
 

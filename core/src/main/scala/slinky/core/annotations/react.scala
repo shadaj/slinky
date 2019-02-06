@@ -198,7 +198,7 @@ object ReactMacrosImpl {
           case defn@q"case class Props[..$tparams](...${caseClassparamssRaw}) extends ..$_ { $_ => ..$_ }" =>
             val caseClassparamss = caseClassparamssRaw.asInstanceOf[Seq[Seq[ValDef]]]
             val childrenParam = caseClassparamss.flatten.find(_.name.toString == "children")
-    
+
             val paramssWithoutChildren = caseClassparamss.map(_.filterNot(childrenParam.contains))
               .filterNot(_.isEmpty)
             val applyValues = caseClassparamss.map(ps => ps.map(_.name))
@@ -212,21 +212,21 @@ object ReactMacrosImpl {
                       q"${ps.name}: _*"
                     } else q"${ps.name}"
                   })
-    
+
                   q"component.apply(Props.apply(...$applyValuesChildrenVararg))"
                 case _ =>
                   q"component.apply(Props.apply(...$applyValues))"
               }
-    
+
               q"""def apply[..$tparams](...$paramssWithoutChildren)(${childrenParam.get}): _root_.slinky.core.KeyAddingStage =
                     $body"""
             } else {
               q"""def apply[..$tparams](...$paramssWithoutChildren): _root_.slinky.core.KeyAddingStage =
                     component.apply(Props.apply(...$applyValues))"""
             }
-    
+
             Some(Seq(caseClassApply))
-    
+
           case _ => None
         }.headOption.getOrElse[Seq[Tree]] {
           c.warning(c.enclosingPosition, "Props case class was not found. The component's simple apply method will still be added to the object.")
