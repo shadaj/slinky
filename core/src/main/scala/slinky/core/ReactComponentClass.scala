@@ -16,4 +16,8 @@ object ReactComponentClass {
                                                          ctag: ConstructorTag[wrapper.Def]): ReactComponentClass[wrapper.Props] = {
     wrapper.componentConstructor(propsReader, wrapper.hot_stateWriter, wrapper.hot_stateReader, ctag).asInstanceOf[ReactComponentClass[wrapper.Props]]
   }
+
+  implicit def functionalComponentToClass[P](component: FunctionalComponent[P])(implicit propsReader: Reader[P]): ReactComponentClass[P] = {
+    component.componentWithReader(propsReader).asInstanceOf[ReactComponentClass[P]]
+  }
 }

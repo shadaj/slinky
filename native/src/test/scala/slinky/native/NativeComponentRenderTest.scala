@@ -118,18 +118,16 @@ class NativeComponentRenderTest extends FunSuite {
     )))
   }
 
-  /* react-native-mock-render does not support FlatList yet
   test("Can render a flatlist") {
     assert(!js.isUndefined(TestRenderer.create(
       FlatList[Int](
         data = Seq(1, 2),
-        renderItem = (d, index, _) => {
+        renderItem = { case RenderItemInfo(d, index, _) =>
           Text(d.toString)
         }
       )
     )))
   }
-  */
 
   /* react-native-mock-render does not support SectionList yet
   test("Can render a sectionlist") {

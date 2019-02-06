@@ -1,6 +1,6 @@
 package slinky.core.facade
 
-import slinky.core.{ExternalComponent, ExternalPropsWriterProvider}
+import slinky.core.{ExternalComponent, ExternalPropsWriterProvider, FunctionalComponent}
 import slinky.readwrite.{ObjectOrWritten, Reader, Writer}
 
 import scala.scalajs.js
@@ -81,6 +81,8 @@ private[slinky] object ReactRaw extends js.Object {
 
   def forwardRef[P](fn: js.Function2[js.Object, ReactRef[Any], ReactElement]): ReactForwardRef[P] = js.native
 
+  def memo(fn: js.Object): js.Object = js.native
+
   @js.native
   object Children extends js.Object {
     def map(children: ReactChildren, transformer: js.Function1[ReactElement, ReactElement]): ReactChildren = js.native
@@ -114,6 +116,10 @@ object React {
     ReactRaw.forwardRef[P]((obj, ref) => {
       fn(Reader.fallback[P].read(obj), ref)
     })
+  }
+
+  def memo[P](component: FunctionalComponent[P]): FunctionalComponent[P] = {
+    new FunctionalComponent(ReactRaw.memo(component.component))
   }
 
   @JSImport("react", "Component", "React.Component")

@@ -54,4 +54,21 @@ class ExportedComponentTest extends FunSuite {
 
     assert(container.innerHTML == "lol")
   }
+
+  test("Can construct an instance of an exported functional component with JS-provided props") {
+    case class FunctionalProps(name: String)
+    val TestExportedFunctionalComponent = FunctionalComponent((p: FunctionalProps) => {
+      p.name
+    })
+
+    val container = document.createElement("div")
+    ReactDOM.render(React.createElement(
+      TestExportedFunctionalComponent: ReactComponentClass[_],
+      js.Dictionary(
+        "name" -> "lol"
+      )
+    ), container)
+
+    assert(container.innerHTML == "lol")
+  }
 }

@@ -53,7 +53,10 @@ abstract class BaseComponentWrapper(sr: StateReaderProvider, sw: StateWriterProv
                            stateWriter: Writer[State], stateReader: Reader[State],
                            constructorTag: ConstructorTag[Def]): js.Object = {
     val constructor = constructorTag.constructor
-    constructor.displayName = getClass.getSimpleName
+    if (!scala.scalajs.LinkingInfo.productionMode) {
+      constructor.displayName = getClass.getSimpleName
+    }
+
     constructor._base = this.asInstanceOf[js.Any]
 
     if (this.asInstanceOf[js.Dynamic].getDerivedStateFromProps__O__O__O != BaseComponentWrapper.defaultGetDerivedStateFromProps) {
