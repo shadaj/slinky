@@ -1710,7 +1710,7 @@
       "withDash" : false
     },
     {
-      "attributeName" : "colspan",
+      "attributeName" : "colSpan",
       "attributeType" : "Int",
       "docLines" : [
         "td - This attribute contains a positive integer indicating the number of consecutive columns the <code>&lt;td&gt;</code> element spans. If not present, its default value is <code>1</code>.",
@@ -1723,7 +1723,7 @@
       "withDash" : false
     },
     {
-      "attributeName" : "rowspan",
+      "attributeName" : "rowSpan",
       "attributeType" : "Int",
       "docLines" : [
         "td - This attribute contains a positive integer indicating the number of consecutive rows the <code>&lt;td&gt;</code> element spans. If not present, its default value is <code>1</code>.",
