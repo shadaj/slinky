@@ -1,6 +1,10 @@
 # Changelog
 
 ## vNEXT
+### Highlights :tada:
+
+### Bug Fixes
++ **BREAKING** Fix capitalization of `rowSpan`/`colSpan` attribute (used to be `rowspan`/`colspan`) [PR #224](https://github.com/shadaj/slinky/pull/224)
 
 ## v0.5.2
 ### Highlights :tada:
