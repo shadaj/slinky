@@ -23,7 +23,7 @@ object MyComponent extends FunctionalComponent[Props]({ props =>
 To generate a friendly `.apply` method like with the `@react class` style, you can place the `@react` annotation on an object that contains a `case class Props` and property `val component` which is a functional component.
 
 ```scala
-object MyComponent {
+@react object MyComponent {
   case class Props(name: String)
   val component = FunctionalComponent[Props] { props =>
     h1(s"Hello, ${props.name}!")
