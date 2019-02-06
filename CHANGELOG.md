@@ -5,7 +5,7 @@
 + Add support for writing functional components, see [the docs](https://slinky.shadaj.me/docs/functional-components/) for more details [PR #217](https://github.com/shadaj/slinky/pull/217)
 
 ### Breaking Changes :warning:
-+ Components will no longer have their `displayName` when built in `fullOptJS` mode, this matches behavior with JS where names are obfuscated in production builds [PR #217](https://github.com/shadaj/slinky/pull/217)
++ Components will no longer have their `displayName` when built in `fullOptJS` mode, this results in a ~2.5% decrease in bundle size and matches behavior with JS where names are obfuscated in production builds  [PR #217](https://github.com/shadaj/slinky/pull/217)
 
 ### Bug Fixes
 + Fix capitalization of `rowSpan`/`colSpan` attribute (used to be `rowspan`/`colspan`) [PR #224](https://github.com/shadaj/slinky/pull/224)
