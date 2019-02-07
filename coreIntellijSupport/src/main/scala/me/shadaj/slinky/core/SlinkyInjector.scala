@@ -3,7 +3,7 @@ package me.shadaj.slinky.core
 import org.jetbrains.plugins.scala.lang.psi.types.ScParameterizedType
 import org.jetbrains.plugins.scala.lang.psi.impl.toplevel.typedef.{SyntheticMembersInjector, TypeDefinitionMembers}
 import org.jetbrains.plugins.scala.lang.psi.api.toplevel.typedef._
-import org.jetbrains.plugins.scala.lang.psi.api.statements.{ScTypeAliasDeclaration, ScTypeAliasDefinition}
+import org.jetbrains.plugins.scala.lang.psi.api.statements.{ScTypeAliasDeclaration, ScTypeAliasDefinition, ScValueDeclaration, ScPatternDefinition}
 import org.jetbrains.plugins.scala.lang.psi.types.api.designator.ScDesignatorType
 import org.jetbrains.plugins.scala.lang.psi.types.api.{ParameterizedType, StdType}
 
@@ -128,6 +128,46 @@ class SlinkyInjector extends SyntheticMembersInjector {
     applyMethods
   }
 
+  def createFunctionalComponentBody(cls: ScTypeDefinition): Seq[(String, InjectType)] = {
+    val applyMethods = cls.extendsBlock.members.collect {
+      case td: ScTypeDefinition => td
+    }.find(_.name == "Props").flatMap { elm =>
+      elm match {
+        case alias: ScTypeAliasDefinition =>
+          Some(Seq(
+            s"def apply(props: Props): slinky.core.KeyAddingStage = ???" -> Function
+          ))
+        case propsCls: ScClass if propsCls.isCase =>
+          Some {
+            val paramList = propsCls.constructor.get.parameterList
+            val caseClassparamss = paramList.params
+            val childrenParam = caseClassparamss.find(_.name == "children")
+
+            val paramssWithoutChildren = caseClassparamss.filterNot(childrenParam.contains)
+
+            if (childrenParam.isDefined) {
+              if (paramssWithoutChildren.isEmpty) {
+                Seq(
+                  s"def apply(${childrenParam.get.getText}): slinky.core.KeyAddingStage = ???" -> Function
+                )
+              } else {
+                Seq(
+                  s"def apply(${paramssWithoutChildren.map(_.getText).mkString(",")})(${childrenParam.get.getText}): slinky.core.KeyAddingStage = ???" -> Function
+                )
+              }
+            } else {
+              Seq(
+                s"def apply(${paramssWithoutChildren.map(_.getText).mkString(",")}): slinky.core.KeyAddingStage = ???" -> Function
+              )
+            }
+          }
+        case _ => None
+      }
+    }.getOrElse(Seq.empty)
+
+    applyMethods
+  }
+
   def isSlinky(tpe: ScTypeDefinition): Boolean = {
     tpe.findAnnotationNoAliases("slinky.core.annotations.react") != null
   }
@@ -147,10 +187,22 @@ class SlinkyInjector extends SyntheticMembersInjector {
     }
   }
 
+  def isFunctionalComponent(tpe: ScTypeDefinition): Boolean = {
+    isSlinky(tpe) && tpe.extendsBlock.members.exists {
+      case td: ScValueDeclaration if td.getName == "component" => true
+      case pd: ScPatternDefinition =>
+        pd.bindings.exists(_.getName == "component")
+      case _ => false
+    }
+  }
+
   override def injectFunctions(source: ScTypeDefinition): Seq[String] = {
     (source match {
       case obj: ScObject if isExternal(obj) =>
         createExternalBody(obj)
+
+      case obj: ScObject if isFunctionalComponent(obj) =>
+        createFunctionalComponentBody(obj)
 
       case obj: ScObject =>
         obj.fakeCompanionClassOrCompanionClass match {
@@ -180,6 +232,9 @@ class SlinkyInjector extends SyntheticMembersInjector {
     (source match {
       case obj: ScObject if isExternal(obj) =>
         createExternalBody(obj)
+
+      case obj: ScObject if isFunctionalComponent(obj) =>
+        createFunctionalComponentBody(obj)
 
       case obj: ScObject =>
         obj.fakeCompanionClassOrCompanionClass match {
