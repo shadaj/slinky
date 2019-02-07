@@ -1762,6 +1762,18 @@
       "withDash" : false
     },
     {
+      "attributeName" : "autoComplete",
+      "attributeType" : "String",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : [
+        "input",
+        "form"
+      ],
+      "withDash" : false
+    },
+    {
       "attributeName" : "defaultChecked",
       "attributeType" : "Boolean",
       "docLines" : [

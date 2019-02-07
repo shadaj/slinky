@@ -8,6 +8,7 @@
 + Components will no longer have their `displayName` when built in `fullOptJS` mode, this results in a **~2.5% decrease in bundle size** and matches behavior with JS where names are obfuscated in production builds  [PR #217](https://github.com/shadaj/slinky/pull/217)
 
 ### Bug Fixes
++ Support autoComplete attr for input and form elements [PR #225](https://github.com/shadaj/slinky/pull/225)
 + Fix capitalization of `rowSpan`/`colSpan` attribute (used to be `rowspan`/`colspan`) [PR #224](https://github.com/shadaj/slinky/pull/224)
 
 ## v0.5.2
