@@ -101,6 +101,8 @@ private[slinky] object ReactRaw extends js.Object {
   val Fragment: js.Object = js.native
   val StrictMode: js.Object = js.native
   val Suspense: js.Object = js.native
+
+  def useState[T](default: T): js.Tuple2[T, js.Function1[T, Unit]] = js.native
 }
 
 object React {
@@ -157,6 +159,58 @@ object React {
     def toArray(children: ReactChildren): js.Array[ReactElement] = {
       ReactRaw.Children.toArray(children)
     }
+  }
+}
+
+final class SetStateHookCallback[T](private val origFunction: js.Function1[js.Any, Unit]) extends AnyVal {
+  def apply(newState: T): Unit = {
+    origFunction.apply(newState.asInstanceOf[js.Any])
+  }
+
+  def apply(transformState: T => T): Unit = {
+    origFunction.apply(transformState: js.Function1[T, T])
+  }
+}
+
+@js.native
+@JSImport("react", JSImport.Namespace, "React")
+private[slinky] object HooksRaw extends js.Object {
+  def useState[T](default: T | js.Function0[T]): js.Tuple2[T, js.Function1[js.Any, Unit]] = js.native
+  def useEffect(thunk: js.Function0[EffectCallbackReturn]): Unit = js.native
+  def useEffect(thunk: js.Function0[EffectCallbackReturn], watchedObjects: js.Array[js.Any]): Unit = js.native
+}
+
+@js.native trait EffectCallbackReturn extends js.Object
+object EffectCallbackReturn {
+  implicit def fromFunction[T](fn: () => T): EffectCallbackReturn = {
+    (fn: js.Function0[T]).asInstanceOf[EffectCallbackReturn]
+  }
+
+  implicit def fromAny[T](value: T): EffectCallbackReturn = {
+    js.undefined.asInstanceOf[EffectCallbackReturn]
+  }
+}
+
+object Hooks {
+  def useState[T](default: T): (T, SetStateHookCallback[T]) = {
+    val call = HooksRaw.useState[T](default)
+    (call._1, new SetStateHookCallback[T](call._2))
+  }
+
+  def useState[T](lazyDefault: () => T): (T, SetStateHookCallback[T]) = {
+    val call = HooksRaw.useState[T](lazyDefault: js.Function0[T])
+    (call._1, new SetStateHookCallback[T](call._2))
+  }
+
+  def useEffect[T](thunk: () => T)(implicit conv: T => EffectCallbackReturn): Unit = {
+    HooksRaw.useEffect(() => { conv(thunk()) })
+  }
+
+  def useEffect[T](thunk: () => T, watchedObjects: Seq[Any])(implicit conv: T => EffectCallbackReturn): Unit = {
+    HooksRaw.useEffect(
+      () => { conv(thunk()) },
+      watchedObjects.toJSArray.asInstanceOf[js.Array[js.Any]]
+    )
   }
 }
 
