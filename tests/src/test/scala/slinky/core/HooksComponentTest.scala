@@ -130,4 +130,20 @@ class HooksComponentTest extends AsyncFunSuite {
 
     promise.future
   }
+
+  test("useContext hook gets context value") {
+    val container = document.createElement("div")
+    val context = React.createContext("")
+    val component = FunctionalComponent[Unit] { props =>
+      val ctx = useContext(context)
+      ctx
+    }
+
+    ReactDOM.render(
+      context.Provider("hello from context!")(component()),
+      container
+    )
+
+    assert(container.innerHTML == "hello from context!")
+  }
 }

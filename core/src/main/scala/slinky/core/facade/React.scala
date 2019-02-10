@@ -168,6 +168,7 @@ private[slinky] object HooksRaw extends js.Object {
   def useState[T](default: T | js.Function0[T]): js.Tuple2[T, js.Function1[js.Any, Unit]] = js.native
   def useEffect(thunk: js.Function0[EffectCallbackReturn]): Unit = js.native
   def useEffect(thunk: js.Function0[EffectCallbackReturn], watchedObjects: js.Array[js.Any]): Unit = js.native
+  def useContext[T](context: ReactContext[T]): T = js.native
 }
 
 @js.native trait EffectCallbackReturn extends js.Object
@@ -212,6 +213,8 @@ object Hooks {
       watchedObjects.toJSArray.asInstanceOf[js.Array[js.Any]]
     )
   }
+
+  @inline def useContext[T](context: ReactContext[T]): T = HooksRaw.useContext(context)
 }
 
 @js.native
