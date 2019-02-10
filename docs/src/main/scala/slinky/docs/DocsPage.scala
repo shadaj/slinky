@@ -15,6 +15,21 @@ import js.Dynamic.literal
 
 @react object RemarkCode {
   case class Props(children: Seq[String])
+  
+  val component = FunctionalComponent[Props] { props =>
+    if (props.children.head.contains('\n')) {
+      div(className := "code-block", style := literal(
+        borderRadius = "10px",
+        overflow = "hidden"
+      ))(
+        SyntaxHighlighter(language = "scala", style = prismColors)(
+          props.children.head
+        )
+      )
+    } else {
+      code(props.children.head)
+    }
+  }
 
   // from the reactjs.org theme
   val prismColors = js.Dictionary[js.Object](
@@ -42,21 +57,6 @@ import js.Dynamic.literal
       color = "#ffffff"
     )
   )
-
-  val component = FunctionalComponent[Props] { props =>
-    if (props.children.head.contains('\n')) {
-      div(className := "code-block", style := literal(
-        borderRadius = "10px",
-        overflow = "hidden"
-      ))(
-        SyntaxHighlighter(language = "scala", style = prismColors)(
-          props.children.head
-        )
-      )
-    } else {
-      code(props.children.head)
-    }
-  }
 }
 
 @react object RemarkH1 {
@@ -92,7 +92,7 @@ import js.Dynamic.literal
 }
 
 object DocsTree {
-  val tree: Map[String, List[(String, String)]] = Map(
+  val tree: List[(String, List[(String, String)])] = List(
     "Core Concepts" -> List(
       "Installation" -> "/docs/installation/",
       "Hello World!" -> "/docs/hello-world/",
@@ -117,8 +117,6 @@ object DocsTree {
   )
 }
 
-import DocsTree._
-
 object TrackSSRDocs {
   var publicSSR: js.Dictionary[String] = js.Dictionary.empty[String]
 
@@ -138,7 +136,7 @@ object TrackSSRDocs {
 
   val component = FunctionalComponent[js.Dynamic] { props =>
     val matchString = props.selectDynamic("match").params.selectDynamic("0").toString
-    val selectedGroup = tree.find(_._2.exists(_._2 == s"/docs/$matchString")).get._1
+    val selectedGroup = DocsTree.tree.find(_._2.exists(_._2 == s"/docs/$matchString")).get._1
     val (document, setDocument) = useState(() =>{
         if (Main.isSSR) {
         Some(TrackSSRDocs.getPublic(docsFilePath(props)))
@@ -203,11 +201,11 @@ object TrackSSRDocs {
               paddingLeft = "20px",
               width = "300px"
             ))(
-              tree.keys.toList.map { group =>
+              DocsTree.tree.map { case (group, value) =>
                 DocsGroup(
                   name = group,
                   isOpen = group == selectedGroup
-                )(tree(group)).withKey(group)
+                )(value).withKey(group)
               }
             )
           )

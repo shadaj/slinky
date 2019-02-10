@@ -162,16 +162,6 @@ object React {
   }
 }
 
-final class SetStateHookCallback[T](private val origFunction: js.Function1[js.Any, Unit]) extends AnyVal {
-  @inline def apply(newState: T): Unit = {
-    origFunction.apply(newState.asInstanceOf[js.Any])
-  }
-
-  @inline def apply(transformState: T => T): Unit = {
-    origFunction.apply(transformState: js.Function1[T, T])
-  }
-}
-
 @js.native
 @JSImport("react", JSImport.Namespace, "React")
 private[slinky] object HooksRaw extends js.Object {
@@ -182,12 +172,22 @@ private[slinky] object HooksRaw extends js.Object {
 
 @js.native trait EffectCallbackReturn extends js.Object
 object EffectCallbackReturn {
-  implicit def fromFunction[T](fn: () => T): EffectCallbackReturn = {
+  @inline implicit def fromFunction[T](fn: () => T): EffectCallbackReturn = {
     (fn: js.Function0[T]).asInstanceOf[EffectCallbackReturn]
   }
 
-  implicit def fromAny[T](value: T): EffectCallbackReturn = {
+  @inline implicit def fromAny[T](value: T): EffectCallbackReturn = {
     js.undefined.asInstanceOf[EffectCallbackReturn]
+  }
+}
+
+final class SetStateHookCallback[T](private val origFunction: js.Function1[js.Any, Unit]) extends AnyVal {
+  @inline def apply(newState: T): Unit = {
+    origFunction.apply(newState.asInstanceOf[js.Any])
+  }
+
+  @inline def apply(transformState: T => T): Unit = {
+    origFunction.apply(transformState: js.Function1[T, T])
   }
 }
 
@@ -206,7 +206,7 @@ object Hooks {
     HooksRaw.useEffect(() => { conv(thunk()) })
   }
 
-  @inline def useEffect[T](thunk: () => T, watchedObjects: Seq[Any])(implicit conv: T => EffectCallbackReturn): Unit = {
+  @inline def useEffect[T](thunk: () => T, watchedObjects: Iterable[Any])(implicit conv: T => EffectCallbackReturn): Unit = {
     HooksRaw.useEffect(
       () => { conv(thunk()) },
       watchedObjects.toJSArray.asInstanceOf[js.Array[js.Any]]

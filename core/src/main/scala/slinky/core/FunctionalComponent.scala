@@ -13,7 +13,7 @@ final class KeyAddingStage(private[KeyAddingStage] val props: js.Dictionary[js.A
                      private[KeyAddingStage] val constructor: js.Object) {
   @inline def withKey(key: String): ReactElement = {
     props("key") = key
-    React.createElement(constructor, props)
+    KeyAddingStage.build(this)
   }
 }
 
@@ -39,7 +39,7 @@ final class FunctionalComponent[P] private[core](private[core] val component: js
 }
 
 object FunctionalComponent {
-  @inline def apply[P](fn: P => ReactElement)(implicit name: FunctionalComponentName) = new FunctionalComponent[P]({
+  def apply[P](fn: P => ReactElement)(implicit name: FunctionalComponentName) = new FunctionalComponent[P]({
     var ret: js.Function1[js.Object, ReactElement] = null
     ret = ((obj: js.Object) => {
       if (obj.hasOwnProperty("__")) {
