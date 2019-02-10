@@ -54,14 +54,14 @@ object Main {
       ))(
         Switch(
           Route("/", Homepage, exact = true),
-          Route("/docs/*", DocsPage),
+          Route("/docs/*", DocsPage.component),
           Route("*", Homepage)
         )
       )
     )
   }
 
-  @JSExportTopLevel("entrypoint.main")
+  @JSExportTopLevel("main")
   def main(): Unit = {
     if (LinkingInfo.developmentMode) {
       hot.initialize()
@@ -84,7 +84,7 @@ object Main {
 
   var isSSR = false
 
-  @JSExportTopLevel("entrypoint.ssr")
+  @JSExportTopLevel("ssr")
   def ssr(path: String): String = {
     isSSR = true
     TrackSSRDocs.publicSSR = js.Dictionary.empty
@@ -115,7 +115,7 @@ object Main {
        |</html>""".stripMargin
   }
 
-  @JSExportTopLevel("entrypoint.hydrate")
+  @JSExportTopLevel("hydrate")
   def hydrate(): Unit = {
     val container = dom.document.getElementById("root")
 

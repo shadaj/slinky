@@ -9,48 +9,29 @@ import scala.language.experimental.macros
 
 import scala.language.implicitConversions
 
-class KeyAddingStage(private[KeyAddingStage] val props: js.Dictionary[js.Any],
+final class KeyAddingStage(private[KeyAddingStage] val props: js.Dictionary[js.Any],
                      private[KeyAddingStage] val constructor: js.Object) {
-  def withKey(key: String): ReactElement = {
+  @inline def withKey(key: String): ReactElement = {
     props("key") = key
-    KeyAddingStage.build(this)
+    React.createElement(constructor, props)
   }
 }
 
 object KeyAddingStage {
-  implicit def build(stage: KeyAddingStage): ReactElement = {
+  @inline implicit def build(stage: KeyAddingStage): ReactElement = {
     React.createElement(stage.constructor, stage.props)
   }
 }
 
-class FunctionalComponent[P] private[core](private[core] val component: js.Object) {
+final class FunctionalComponent[P] private[core](private[core] val component: js.Object) extends AnyVal {
   type Props = P
-
-  def this(fn: P => ReactElement)(implicit fnCompName: FunctionalComponentName) = {
-    this({
-      var ret: js.Function1[js.Object, ReactElement] = null
-      ret = ((obj: js.Object) => {
-        if (obj.hasOwnProperty("__")) {
-          fn(obj.asInstanceOf[js.Dynamic].__.asInstanceOf[P])
-        } else {
-          fn(ret.asInstanceOf[js.Dynamic].__propsReader.asInstanceOf[Reader[P]].read(obj))
-        }
-      })
-
-      if (!scala.scalajs.LinkingInfo.productionMode) {
-        ret.asInstanceOf[js.Dynamic].displayName = fnCompName.name
-      }
-
-      ret
-    }.asInstanceOf[js.Object])
-  }
 
   private[core] def componentWithReader(propsReader: Reader[P]) = {
     component.asInstanceOf[js.Dynamic].__propsReader = propsReader.asInstanceOf[js.Object]
     component
   }
 
-  final def apply(props: P): KeyAddingStage = {
+  @inline final def apply(props: P): KeyAddingStage = {
     new KeyAddingStage(js.Dynamic.literal(
       __ = props.asInstanceOf[js.Any]
     ).asInstanceOf[js.Dictionary[js.Any]], component)
@@ -58,7 +39,22 @@ class FunctionalComponent[P] private[core](private[core] val component: js.Objec
 }
 
 object FunctionalComponent {
-  def apply[P](fn: P => ReactElement)(implicit name: FunctionalComponentName) = new FunctionalComponent[P](fn)
+  @inline def apply[P](fn: P => ReactElement)(implicit name: FunctionalComponentName) = new FunctionalComponent[P]({
+    var ret: js.Function1[js.Object, ReactElement] = null
+    ret = ((obj: js.Object) => {
+      if (obj.hasOwnProperty("__")) {
+        fn(obj.asInstanceOf[js.Dynamic].__.asInstanceOf[P])
+      } else {
+        fn(ret.asInstanceOf[js.Dynamic].__propsReader.asInstanceOf[Reader[P]].read(obj))
+      }
+    })
+
+    if (!scala.scalajs.LinkingInfo.productionMode) {
+      ret.asInstanceOf[js.Dynamic].displayName = name.name
+    }
+
+    ret
+  }.asInstanceOf[js.Object])
 }
 
 final class FunctionalComponentName(val name: String) extends AnyVal
@@ -72,13 +68,15 @@ object FunctionalComponentNameMacros {
 
     // from lihaoyi/sourcecode
     def isSyntheticName(name: String) = {
-      name == "<init>" || (name.startsWith("<local ") && name.endsWith(">"))
+      name == "<init>" || (name.startsWith("<local ") && name.endsWith(">")) || name == "component"
     }
 
     def findNonSyntheticOwner(current: Symbol): Symbol = {
-      if (isSyntheticName(current.name.decodedName.toString)) {
+      if (isSyntheticName(current.name.decodedName.toString.trim)) {
         findNonSyntheticOwner(current.owner)
-      } else current
+      } else {
+        current
+      }
     }
 
     c.Expr(q"new _root_.slinky.core.FunctionalComponentName(${findNonSyntheticOwner(c.internal.enclosingOwner).name.decodedName.toString})")

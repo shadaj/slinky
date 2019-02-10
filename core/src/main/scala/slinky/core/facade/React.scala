@@ -163,11 +163,11 @@ object React {
 }
 
 final class SetStateHookCallback[T](private val origFunction: js.Function1[js.Any, Unit]) extends AnyVal {
-  def apply(newState: T): Unit = {
+  @inline def apply(newState: T): Unit = {
     origFunction.apply(newState.asInstanceOf[js.Any])
   }
 
-  def apply(transformState: T => T): Unit = {
+  @inline def apply(transformState: T => T): Unit = {
     origFunction.apply(transformState: js.Function1[T, T])
   }
 }
@@ -192,21 +192,21 @@ object EffectCallbackReturn {
 }
 
 object Hooks {
-  def useState[T](default: T): (T, SetStateHookCallback[T]) = {
+  @inline def useState[T](default: T): (T, SetStateHookCallback[T]) = {
     val call = HooksRaw.useState[T](default)
     (call._1, new SetStateHookCallback[T](call._2))
   }
 
-  def useState[T](lazyDefault: () => T): (T, SetStateHookCallback[T]) = {
+  @inline def useState[T](lazyDefault: () => T): (T, SetStateHookCallback[T]) = {
     val call = HooksRaw.useState[T](lazyDefault: js.Function0[T])
     (call._1, new SetStateHookCallback[T](call._2))
   }
 
-  def useEffect[T](thunk: () => T)(implicit conv: T => EffectCallbackReturn): Unit = {
+  @inline def useEffect[T](thunk: () => T)(implicit conv: T => EffectCallbackReturn): Unit = {
     HooksRaw.useEffect(() => { conv(thunk()) })
   }
 
-  def useEffect[T](thunk: () => T, watchedObjects: Seq[Any])(implicit conv: T => EffectCallbackReturn): Unit = {
+  @inline def useEffect[T](thunk: () => T, watchedObjects: Seq[Any])(implicit conv: T => EffectCallbackReturn): Unit = {
     HooksRaw.useEffect(
       () => { conv(thunk()) },
       watchedObjects.toJSArray.asInstanceOf[js.Array[js.Any]]

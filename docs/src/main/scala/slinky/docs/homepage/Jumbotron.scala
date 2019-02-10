@@ -1,6 +1,6 @@
 package slinky.docs.homepage
 
-import slinky.core.{Component, StatelessComponent}
+import slinky.core.FunctionalComponent
 import slinky.core.annotations.react
 import slinky.core.facade.ReactElement
 import slinky.reactrouter.Link
@@ -8,10 +8,8 @@ import slinky.web.html._
 
 import scala.scalajs.js.Dynamic.literal
 
-@react class Jumbotron extends StatelessComponent {
-  type Props = Unit
-
-  override def render(): ReactElement = {
+@react object Jumbotron {
+  val component = FunctionalComponent[Unit](_ => {
     div(style := literal(
       marginTop = "60px",
       width = "100%",
@@ -56,5 +54,5 @@ import scala.scalajs.js.Dynamic.literal
         )
       )
     )
-  }
+  })
 }

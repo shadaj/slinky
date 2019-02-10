@@ -29,7 +29,7 @@ object SlinkyLogo extends js.Object
   def render() = {
     div(
       Jumbotron(),
-      MainPageContent(
+      MainPageContent(Seq(
         div(style := literal(
           width = "100%",
           overflow = "auto",
@@ -67,7 +67,7 @@ object SlinkyLogo extends js.Object
           marginTop = "40px"
         )),
         Examples()
-      )
+      ))
     )
   }
 }

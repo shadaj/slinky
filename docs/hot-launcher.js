@@ -1,4 +1,4 @@
-require("./slinky-docs-fastopt.js").entrypoint.main();
+require("./slinky-docs-fastopt.js").main();
 
 if (module.hot) {
     module.hot.accept();
