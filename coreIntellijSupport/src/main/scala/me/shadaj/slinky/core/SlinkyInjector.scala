@@ -135,7 +135,7 @@ class SlinkyInjector extends SyntheticMembersInjector {
       elm match {
         case alias: ScTypeAliasDefinition =>
           Some(Seq(
-            s"def apply(props: Props): slinky.core.KeyAddingStage = ???" -> Function
+            s"def apply(props: Props): slinky.core.KeyAndRefAddingStage[scala.scalajs.js.Object] = ???" -> Function
           ))
         case propsCls: ScClass if propsCls.isCase =>
           Some {
@@ -148,16 +148,16 @@ class SlinkyInjector extends SyntheticMembersInjector {
             if (childrenParam.isDefined) {
               if (paramssWithoutChildren.isEmpty) {
                 Seq(
-                  s"def apply(${childrenParam.get.getText}): slinky.core.KeyAddingStage = ???" -> Function
+                  s"def apply(${childrenParam.get.getText}): slinky.core.KeyAndRefAddingStage[scala.scalajs.js.Object] = ???" -> Function
                 )
               } else {
                 Seq(
-                  s"def apply(${paramssWithoutChildren.map(_.getText).mkString(",")})(${childrenParam.get.getText}): slinky.core.KeyAddingStage = ???" -> Function
+                  s"def apply(${paramssWithoutChildren.map(_.getText).mkString(",")})(${childrenParam.get.getText}): slinky.core.KeyAndRefAddingStage[scala.scalajs.js.Object] = ???" -> Function
                 )
               }
             } else {
               Seq(
-                s"def apply(${paramssWithoutChildren.map(_.getText).mkString(",")}): slinky.core.KeyAddingStage = ???" -> Function
+                s"def apply(${paramssWithoutChildren.map(_.getText).mkString(",")}): slinky.core.KeyAndRefAddingStage[scala.scalajs.js.Object] = ???" -> Function
               )
             }
           }

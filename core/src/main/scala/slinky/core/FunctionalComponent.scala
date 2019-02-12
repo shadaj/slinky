@@ -9,20 +9,6 @@ import scala.language.experimental.macros
 
 import scala.language.implicitConversions
 
-final class KeyAddingStage(private[KeyAddingStage] val props: js.Dictionary[js.Any],
-                           private[KeyAddingStage] val constructor: js.Object) {
-  @inline def withKey(key: String): ReactElement = {
-    props("key") = key
-    KeyAddingStage.build(this)
-  }
-}
-
-object KeyAddingStage {
-  @inline implicit def build(stage: KeyAddingStage): ReactElement = {
-    React.createElement(stage.constructor, stage.props)
-  }
-}
-
 final class FunctionalComponent[P] private[core](private[core] val component: js.Object) extends AnyVal {
   type Props = P
 
@@ -31,8 +17,8 @@ final class FunctionalComponent[P] private[core](private[core] val component: js
     component
   }
 
-  @inline final def apply(props: P): KeyAddingStage = {
-    new KeyAddingStage(js.Dynamic.literal(
+  @inline final def apply(props: P): KeyAndRefAddingStage[js.Object] = {
+    new KeyAndRefAddingStage(js.Dynamic.literal(
       __ = props.asInstanceOf[js.Any]
     ).asInstanceOf[js.Dictionary[js.Any]], component)
   }
