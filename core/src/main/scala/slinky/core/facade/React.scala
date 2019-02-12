@@ -166,9 +166,14 @@ object React {
 @JSImport("react", JSImport.Namespace, "React")
 private[slinky] object HooksRaw extends js.Object {
   def useState[T](default: T | js.Function0[T]): js.Tuple2[T, js.Function1[js.Any, Unit]] = js.native
+  
   def useEffect(thunk: js.Function0[EffectCallbackReturn]): Unit = js.native
   def useEffect(thunk: js.Function0[EffectCallbackReturn], watchedObjects: js.Array[js.Any]): Unit = js.native
+  
   def useContext[T](context: ReactContext[T]): T = js.native
+
+  def useReducer[T, A](reducer: js.Function2[T, A, T], initialState: T): js.Tuple2[T, js.Function1[A, Unit]] = js.native
+  def useReducer[T, I, A](reducer: js.Function2[T, A, T], initialState: I, init: js.Function1[I, T]): js.Tuple2[T, js.Function1[A, Unit]] = js.native
 }
 
 @js.native trait EffectCallbackReturn extends js.Object
@@ -215,6 +220,16 @@ object Hooks {
   }
 
   @inline def useContext[T](context: ReactContext[T]): T = HooksRaw.useContext(context)
+
+  @inline def useReducer[T, A](reducer: (T, A) => T, initialState: T): (T, A => Unit) = {
+    val ret = HooksRaw.useReducer[T, A](reducer, initialState)
+    (ret._1, ret._2)
+  }
+
+  @inline def useReducer[T, I, A](reducer: (T, A) => T, initialState: I, init: I => T): (T, A => Unit) = {
+    val ret = HooksRaw.useReducer[T, I, A](reducer, initialState, init)
+    (ret._1, ret._2)
+  }
 }
 
 @js.native

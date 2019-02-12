@@ -146,4 +146,52 @@ class HooksComponentTest extends AsyncFunSuite {
 
     assert(container.innerHTML == "hello from context!")
   }
+
+  test("useReducer gets reducer value and dispatch works") {
+    val container = document.createElement("div")
+    var doDispatch: Int => Unit = null
+    val promise: Promise[Assertion] = Promise()
+
+    val component = FunctionalComponent[Unit] { props =>
+      val (state, dispatch) = useReducer((s: String, a: Int) => {
+        a.toString
+      }, "")
+
+      doDispatch = dispatch
+
+      if (state == "123") {
+        promise.success(assert(true))
+      }
+
+      state
+    }
+
+    ReactDOM.render(
+      component(),
+      container
+    )
+    
+    doDispatch(123)
+
+    promise.future
+  }
+
+  test("useReducer can have lazy init") {
+    val container = document.createElement("div")
+
+    val component = FunctionalComponent[Unit] { props =>
+      val (state, dispatch) = useReducer((s: String, a: Int) => {
+        a.toString
+      }, 123, (init: Int) => init.toString)
+
+      state
+    }
+
+    ReactDOM.render(
+      component(),
+      container
+    )
+
+    assert(container.innerHTML == "123")
+  }
 }
