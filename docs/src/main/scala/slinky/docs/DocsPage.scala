@@ -100,7 +100,7 @@ object DocsTree {
       "The Tag API" -> "/docs/the-tag-api/",
       "Writing Components" -> "/docs/writing-components/",
       "External Components" -> "/docs/external-components/",
-      "Functional Components" -> "/docs/functional-components/",
+      "Functional Components and Hooks" -> "/docs/functional-components-and-hooks/",
       "React Native and VR" -> "/docs/native-and-vr/"
     ),
     "Advanced Guides" -> List(
