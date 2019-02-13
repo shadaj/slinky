@@ -194,4 +194,27 @@ class HooksComponentTest extends AsyncFunSuite {
 
     assert(container.innerHTML == "123")
   }
+
+  test("useCallback produces callable function") {
+    val container = document.createElement("div")
+
+    var called = false
+    
+    val component = FunctionalComponent[Unit] { props =>
+      val callback = useCallback(() => {
+        called = true
+      }, Seq.empty)
+
+      callback()
+
+      ""
+    }
+
+    ReactDOM.render(
+      component(),
+      container
+    )
+
+    assert(called)
+  }
 }
