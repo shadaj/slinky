@@ -1,5 +1,5 @@
-# Functional Components
-Slinky supports writing components as functional components, where the definition is simply a function from props to the elements to render. This style is also the foundation for [React Hooks](https://reactjs.org/docs/hooks-intro.html), an upcoming style of writing components that significantly reduces the boilerplate involved.
+# Functional Components and Hooks
+Slinky supports writing components as functional components, where the definition is simply a function from props to the elements to render. This style is also the foundation for [React Hooks](https://reactjs.org/docs/hooks-intro.html), an new style of writing components that significantly reduces the boilerplate involved.
 
 ## Writing a Functional Component
 To write a functional component, create an instance of the `FunctionalComponent` class.
@@ -24,4 +24,27 @@ To generate a friendly `.apply` method like with the `@react class` style, you c
 // ...
 
 MyComponent(name = ...)
+```
+
+## Using React Hooks
+Slinky supports all the React Hooks, with APIs that are almost identical versions of the ones included in React with additional typesafety. To learn more about the available hooks, take a look at the [official React docs](https://reactjs.org/docs/hooks-intro.html). The purpose of this section is to highlight the differences between the React and Slinky APIs.
+
+To use hooks, import them from the `Hooks` object and use them in your functional component just like you would in regular React code:
+
+```scala
+import slinky.core.facade.Hooks._
+
+val component = FunctionalComponent[Props] { props =>
+  val (state, updateState) = useState(0)
+  // ...
+}
+```
+
+Some hooks, like `useEffect`, `useCallback`, `useMemo`, and `useLayoutEffect`, can take an extra list of objects that determines whether values should be recalculated. In Slinky, this list can be any iterable Scala collection, such as a `Seq`. For example, the usage of `useEffect` with watched values would look like:
+
+```scala
+useEffect(
+  () => { ... },
+  Seq(watchedValueA, watchedValueB)
+)
 ```
