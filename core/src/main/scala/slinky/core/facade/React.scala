@@ -170,6 +170,8 @@ private[slinky] object HooksRaw extends js.Object {
 
   def useLayoutEffect(thunk: js.Function0[EffectCallbackReturn]): Unit = js.native
   def useLayoutEffect(thunk: js.Function0[EffectCallbackReturn], watchedObjects: js.Array[js.Any]): Unit = js.native
+
+  def useDebugValue(value: String): Unit = js.native
 }
 
 @js.native trait EffectCallbackReturn extends js.Object
@@ -253,6 +255,8 @@ object Hooks {
       watchedObjects.toJSArray.asInstanceOf[js.Array[js.Any]]
     )
   }
+
+  @inline def useDebugValue(value: String): Unit = HooksRaw.useDebugValue(value)
 }
 
 @js.native
