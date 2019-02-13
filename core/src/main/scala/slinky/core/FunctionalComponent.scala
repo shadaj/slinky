@@ -1,13 +1,26 @@
 package slinky.core
 
 import slinky.readwrite.Reader
-import slinky.core.facade.{React, ReactElement}
+import slinky.core.facade.{React, ReactElement, ReactRef}
 import scala.scalajs.js
 
 import scala.reflect.macros.whitebox
 import scala.language.experimental.macros
 
 import scala.language.implicitConversions
+
+final class KeyAddingStage(val props: js.Dictionary[js.Any], val constructor: js.Object) {
+  def withKey(key: String): KeyAddingStage = {
+    props("key") = key
+    new KeyAddingStage(props, constructor)
+  }
+}
+
+object KeyAddingStage {
+  implicit def build[D <: js.Any](stage: KeyAddingStage): ReactElement = {
+    React.createElement(stage.constructor, stage.props)
+  }
+}
 
 final class FunctionalComponent[P] private[core](private[core] val component: js.Object) extends AnyVal {
   type Props = P
@@ -17,8 +30,38 @@ final class FunctionalComponent[P] private[core](private[core] val component: js
     component
   }
 
-  @inline final def apply(props: P): KeyAndRefAddingStage[js.Object] = {
-    new KeyAndRefAddingStage(js.Dynamic.literal(
+  @inline final def apply(props: P): KeyAddingStage = {
+    new KeyAddingStage(js.Dynamic.literal(
+      __ = props.asInstanceOf[js.Any]
+    ).asInstanceOf[js.Dictionary[js.Any]], component)
+  }
+}
+
+final class FunctionalComponentTakingRef[P, R] private[core](private[core] val component: js.Object) extends AnyVal {
+  type Props = P
+
+  private[core] def componentWithReader(propsReader: Reader[P]) = {
+    component.asInstanceOf[js.Dynamic].__propsReader = propsReader.asInstanceOf[js.Object]
+    component
+  }
+
+  @inline final def apply(props: P): KeyAddingStage = {
+    new KeyAddingStage(js.Dynamic.literal(
+      __ = props.asInstanceOf[js.Any]
+    ).asInstanceOf[js.Dictionary[js.Any]], component)
+  }
+}
+
+final class FunctionalComponentForwardedRef[P, R] private[core](private[core] val component: js.Object) extends AnyVal {
+  type Props = P
+
+  private[core] def componentWithReader(propsReader: Reader[P]) = {
+    component.asInstanceOf[js.Dynamic].__propsReader = propsReader.asInstanceOf[js.Object]
+    component
+  }
+
+  @inline final def apply(props: P): KeyAndRefAddingStage[R] = {
+    new KeyAndRefAddingStage[R](js.Dynamic.literal(
       __ = props.asInstanceOf[js.Any]
     ).asInstanceOf[js.Dictionary[js.Any]], component)
   }
@@ -32,6 +75,23 @@ object FunctionalComponent {
         fn(obj.asInstanceOf[js.Dynamic].__.asInstanceOf[P])
       } else {
         fn(ret.asInstanceOf[js.Dynamic].__propsReader.asInstanceOf[Reader[P]].read(obj))
+      }
+    })
+
+    if (!scala.scalajs.LinkingInfo.productionMode) {
+      ret.asInstanceOf[js.Dynamic].displayName = name.name
+    }
+
+    ret
+  }.asInstanceOf[js.Object])
+
+  def apply[P, R](fn: (P, ReactRef[R]) => ReactElement)(implicit name: FunctionalComponentName) = new FunctionalComponentTakingRef[P, R]({
+    var ret: js.Function2[js.Object, ReactRef[R], ReactElement] = null
+    ret = ((obj: js.Object, ref: ReactRef[R]) => {
+      if (obj.hasOwnProperty("__")) {
+        fn(obj.asInstanceOf[js.Dynamic].__.asInstanceOf[P], ref)
+      } else {
+        fn(ret.asInstanceOf[js.Dynamic].__propsReader.asInstanceOf[Reader[P]].read(obj), ref)
       }
     })
 

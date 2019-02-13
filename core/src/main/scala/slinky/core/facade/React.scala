@@ -1,6 +1,6 @@
 package slinky.core.facade
 
-import slinky.core.{ExternalComponent, ExternalPropsWriterProvider, FunctionalComponent}
+import slinky.core._
 import slinky.readwrite.{ObjectOrWritten, Reader, Writer}
 
 import scala.scalajs.js
@@ -57,17 +57,6 @@ trait ReactRef[T] extends js.Object {
   var current: T @uncheckedVariance  = js.native
 }
 
-class ReactForwardRefComponent[P](comp: js.Object) extends ExternalComponent()(Writer.fallback[P].asInstanceOf[ExternalPropsWriterProvider]) {
-  type Props = P
-  override val component: String | js.Object = comp
-}
-
-@js.native
-trait ReactForwardRef[P] extends js.Object
-object ReactForwardRef {
-  implicit def toExternalComponent[P](r: ReactForwardRef[P]): ReactForwardRefComponent[P] = new ReactForwardRefComponent[P](r)
-}
-
 @js.native
 @JSImport("react", JSImport.Namespace, "React")
 private[slinky] object ReactRaw extends js.Object {
@@ -79,7 +68,7 @@ private[slinky] object ReactRaw extends js.Object {
 
   def createRef[T](): ReactRef[T] = js.native
 
-  def forwardRef[P](fn: js.Function2[js.Object, ReactRef[Any], ReactElement]): ReactForwardRef[P] = js.native
+  def forwardRef[P](fn: js.Object): js.Object = js.native
 
   def memo(fn: js.Object): js.Object = js.native
 
@@ -112,10 +101,8 @@ object React {
 
   def createRef[T]: ReactRef[T] = ReactRaw.createRef[T]()
 
-  def forwardRef[P](fn: (P, ReactRef[Any]) => ReactElement): ReactForwardRef[P] = {
-    ReactRaw.forwardRef[P]((obj, ref) => {
-      fn(Reader.fallback[P].read(obj), ref)
-    })
+  def forwardRef[P, R](component: FunctionalComponentTakingRef[P, R]): FunctionalComponentForwardedRef[P, R] = {
+    new FunctionalComponentForwardedRef(ReactRaw.forwardRef(component.component))
   }
 
   def memo[P](component: FunctionalComponent[P]): FunctionalComponent[P] = {
@@ -178,6 +165,8 @@ private[slinky] object HooksRaw extends js.Object {
   def useMemo[T](callback: js.Function0[T], watchedObjects: js.Array[js.Any]): T = js.native
 
   def useRef[T](initialValue: T): ReactRef[T] = js.native
+
+  def useImperativeHandle[R](ref: ReactRef[R], value: js.Function0[R]): Unit = js.native
 }
 
 @js.native trait EffectCallbackReturn extends js.Object
@@ -245,6 +234,10 @@ object Hooks {
 
   @inline def useRef[T](initialValue: T): ReactRef[T] = {
     HooksRaw.useRef[T](initialValue)
+  }
+
+  @inline def useImperativeHandle[R](ref: ReactRef[R], value: () => R): Unit = {
+    HooksRaw.useImperativeHandle[R](ref, value)
   }
 }
 

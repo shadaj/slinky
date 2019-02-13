@@ -257,4 +257,25 @@ class HooksComponentTest extends AsyncFunSuite {
     ReactDOM.render(component("second"), container)
     assert(container.innerHTML == "first")
   }
+
+  test("useImperativeHandle allows for customizing ref") {
+    val container = document.createElement("div")
+
+    trait RefHandle {
+      def foo: Int
+    }
+
+    val component = React.forwardRef(FunctionalComponent[String, RefHandle] { (props, ref) =>
+      useImperativeHandle(ref, () => {
+        new RefHandle {
+          def foo = 123
+        }
+      })
+      ""
+    })
+
+    val refReceiver = React.createRef[RefHandle]
+    ReactDOM.render(component("first").withRef(refReceiver), container)
+    assert(refReceiver.current.foo == 123)
+  }
 }

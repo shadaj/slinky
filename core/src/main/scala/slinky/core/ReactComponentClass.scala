@@ -20,4 +20,12 @@ object ReactComponentClass {
   implicit def functionalComponentToClass[P](component: FunctionalComponent[P])(implicit propsReader: Reader[P]): ReactComponentClass[P] = {
     component.componentWithReader(propsReader).asInstanceOf[ReactComponentClass[P]]
   }
+
+  implicit def functionalComponentTakingRefToClass[P, R <: js.Any](component: FunctionalComponentTakingRef[P, R])(implicit propsReader: Reader[P]): ReactComponentClass[P] = {
+    component.componentWithReader(propsReader).asInstanceOf[ReactComponentClass[P]]
+  }
+
+  implicit def functionalComponentForwardedRefToClass[P, R <: js.Any](component: FunctionalComponentForwardedRef[P, R])(implicit propsReader: Reader[P]): ReactComponentClass[P] = {
+    component.componentWithReader(propsReader).asInstanceOf[ReactComponentClass[P]]
+  }
 }
