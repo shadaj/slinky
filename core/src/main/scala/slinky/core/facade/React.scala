@@ -167,6 +167,9 @@ private[slinky] object HooksRaw extends js.Object {
   def useRef[T](initialValue: T): ReactRef[T] = js.native
 
   def useImperativeHandle[R](ref: ReactRef[R], value: js.Function0[R]): Unit = js.native
+
+  def useLayoutEffect(thunk: js.Function0[EffectCallbackReturn]): Unit = js.native
+  def useLayoutEffect(thunk: js.Function0[EffectCallbackReturn], watchedObjects: js.Array[js.Any]): Unit = js.native
 }
 
 @js.native trait EffectCallbackReturn extends js.Object
@@ -238,6 +241,17 @@ object Hooks {
 
   @inline def useImperativeHandle[R](ref: ReactRef[R], value: () => R): Unit = {
     HooksRaw.useImperativeHandle[R](ref, value)
+  }
+
+  @inline def useLayoutEffect[T](thunk: () => T)(implicit conv: T => EffectCallbackReturn): Unit = {
+    HooksRaw.useLayoutEffect(() => { conv(thunk()) })
+  }
+
+  @inline def useLayoutEffect[T](thunk: () => T, watchedObjects: Iterable[Any])(implicit conv: T => EffectCallbackReturn): Unit = {
+    HooksRaw.useLayoutEffect(
+      () => { conv(thunk()) },
+      watchedObjects.toJSArray.asInstanceOf[js.Array[js.Any]]
+    )
   }
 }
 

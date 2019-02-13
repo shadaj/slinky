@@ -2,10 +2,12 @@ package slinky.core
 
 import org.scalatest.AsyncFunSuite
 import org.scalajs.dom.document
+import org.scalajs.dom.Element
 
 import slinky.core.facade.{React, SetStateHookCallback}
 import slinky.core.facade.Hooks._
 import slinky.web.ReactDOM
+import slinky.web.html._
 
 import org.scalatest.Assertion
 import scala.concurrent.Promise
@@ -277,5 +279,23 @@ class HooksComponentTest extends AsyncFunSuite {
     val refReceiver = React.createRef[RefHandle]
     ReactDOM.render(component("first").withRef(refReceiver), container)
     assert(refReceiver.current.foo == 123)
+  }
+
+  test("useLayoutEffect hook fires after mount") {
+    val container = document.createElement("div")
+
+    val promise: Promise[Assertion] = Promise()
+    val component = FunctionalComponent[Int] { props =>
+      val divRef = useRef[Element](null)
+      useLayoutEffect(() => {
+        promise.success(assert(divRef.current.innerHTML == "hello"))
+      })
+
+      div(ref := divRef)("hello")
+    }
+    
+    ReactDOM.render(component(1), container)
+
+    promise.future
   }
 }
