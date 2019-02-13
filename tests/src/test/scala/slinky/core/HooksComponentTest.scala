@@ -239,4 +239,22 @@ class HooksComponentTest extends AsyncFunSuite {
     ReactDOM.render(component(2), container)
     assert(container.innerHTML == "third")
   }
+
+  test("useRef allows a ref to be tracked across renders") {
+    val container = document.createElement("div")
+
+    val component = FunctionalComponent[String] { props =>
+      val ref = useRef[String]("")
+
+      if (ref.current == "") ref.current = props
+
+      ref.current
+    }
+    
+    ReactDOM.render(component("first"), container)
+    assert(container.innerHTML == "first")
+
+    ReactDOM.render(component("second"), container)
+    assert(container.innerHTML == "first")
+  }
 }

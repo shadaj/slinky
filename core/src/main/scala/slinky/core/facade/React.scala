@@ -53,8 +53,8 @@ trait ReactInstance extends js.Object
 trait ReactChildren extends ReactElement
 
 @js.native
-trait ReactRef[-T] extends js.Object {
-  def current: T @uncheckedVariance  = js.native
+trait ReactRef[T] extends js.Object {
+  var current: T @uncheckedVariance  = js.native
 }
 
 class ReactForwardRefComponent[P](comp: js.Object) extends ExternalComponent()(Writer.fallback[P].asInstanceOf[ExternalPropsWriterProvider]) {
@@ -101,8 +101,6 @@ private[slinky] object ReactRaw extends js.Object {
   val Fragment: js.Object = js.native
   val StrictMode: js.Object = js.native
   val Suspense: js.Object = js.native
-
-  def useState[T](default: T): js.Tuple2[T, js.Function1[T, Unit]] = js.native
 }
 
 object React {
@@ -178,6 +176,8 @@ private[slinky] object HooksRaw extends js.Object {
   def useCallback(callback: js.Function0[Unit], watchedObjects: js.Array[js.Any]): js.Function0[Unit] = js.native
 
   def useMemo[T](callback: js.Function0[T], watchedObjects: js.Array[js.Any]): T = js.native
+
+  def useRef[T](initialValue: T): ReactRef[T] = js.native
 }
 
 @js.native trait EffectCallbackReturn extends js.Object
@@ -223,7 +223,7 @@ object Hooks {
     )
   }
 
-  @inline def useContext[T](context: ReactContext[T]): T = HooksRaw.useContext(context)
+  @inline def useContext[T](context: ReactContext[T]): T = HooksRaw.useContext[T](context)
 
   @inline def useReducer[T, A](reducer: (T, A) => T, initialState: T): (T, A => Unit) = {
     val ret = HooksRaw.useReducer[T, A](reducer, initialState)
@@ -240,7 +240,11 @@ object Hooks {
   }
 
   @inline def useMemo[T](memoValue: () => T, watchedObjects: Iterable[Any]): T = {
-    HooksRaw.useMemo(memoValue, watchedObjects.toJSArray.asInstanceOf[js.Array[js.Any]])
+    HooksRaw.useMemo[T](memoValue, watchedObjects.toJSArray.asInstanceOf[js.Array[js.Any]])
+  }
+
+  @inline def useRef[T](initialValue: T): ReactRef[T] = {
+    HooksRaw.useRef[T](initialValue)
   }
 }
 
