@@ -217,4 +217,26 @@ class HooksComponentTest extends AsyncFunSuite {
 
     assert(called)
   }
+
+  test("useMemo only recalculates when watched objects change") {
+    val container = document.createElement("div")
+
+    var memoedValue = "first"
+    val component = FunctionalComponent[Int] { props =>
+      useMemo(() => {
+        memoedValue
+      }, Seq(props))
+    }
+    
+    ReactDOM.render(component(1), container)
+    assert(container.innerHTML == "first")
+
+    memoedValue = "second"
+    ReactDOM.render(component(1), container)
+    assert(container.innerHTML == "first")
+
+    memoedValue = "third"
+    ReactDOM.render(component(2), container)
+    assert(container.innerHTML == "third")
+  }
 }

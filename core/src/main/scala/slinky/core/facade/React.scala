@@ -176,6 +176,8 @@ private[slinky] object HooksRaw extends js.Object {
   def useReducer[T, I, A](reducer: js.Function2[T, A, T], initialState: I, init: js.Function1[I, T]): js.Tuple2[T, js.Function1[A, Unit]] = js.native
 
   def useCallback(callback: js.Function0[Unit], watchedObjects: js.Array[js.Any]): js.Function0[Unit] = js.native
+
+  def useMemo[T](callback: js.Function0[T], watchedObjects: js.Array[js.Any]): T = js.native
 }
 
 @js.native trait EffectCallbackReturn extends js.Object
@@ -235,6 +237,10 @@ object Hooks {
 
   @inline def useCallback(callback: () => Unit, watchedObjects: Iterable[Any]): () => Unit = {
     HooksRaw.useCallback(callback, watchedObjects.toJSArray.asInstanceOf[js.Array[js.Any]])
+  }
+
+  @inline def useMemo[T](memoValue: () => T, watchedObjects: Iterable[Any]): T = {
+    HooksRaw.useMemo(memoValue, watchedObjects.toJSArray.asInstanceOf[js.Array[js.Any]])
   }
 }
 
