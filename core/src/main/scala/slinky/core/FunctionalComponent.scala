@@ -17,7 +17,7 @@ final class KeyAddingStage(val props: js.Dictionary[js.Any], val constructor: js
 }
 
 object KeyAddingStage {
-  implicit def build[D <: js.Any](stage: KeyAddingStage): ReactElement = {
+  implicit def build(stage: KeyAddingStage): ReactElement = {
     React.createElement(stage.constructor, stage.props)
   }
 }

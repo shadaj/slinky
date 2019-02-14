@@ -48,3 +48,42 @@ useEffect(
   Seq(watchedValueA, watchedValueB)
 )
 ```
+
+## Forwarding Refs
+React includes the `React.forwardRef` function to allow functional components to take refs. In Slinky, `forwardRef` can be used by calling it on a `FunctionalComponentTakingRef`, a special version of `FunctionalComponent` that can be created by passing in a function taking two parameters -- the regular props parameter as well as the ref (of type `ReactRef`).
+
+```scala
+React.forwardRef(FunctionalComponent[
+  Int /* type of props */,
+  Any /* type of the data stored in the ref */
+]((props: Int, ref: ReactRef[Any]) => {
+  ...
+}))
+```
+
+When using hooks, `forwardRef` can be used to expose an imperative API with the `useImperativeHandle` hook. The ref type passed into `FunctionalComponent[...]` determines what APIs will be available on the ref, so Scala traits work well here to expose custom imperative functions. For example, to expose a `.bump()` method on the ref of a functional component:
+
+```scala
+trait BumpHandle {
+  // increases the internal bumpableState by one
+  def bump(): Unit
+}
+
+val component = React.forwardRef(FunctionalComponent((props: Int, ref: ReactRef[BumpHandle]) => {
+  val (bumpableState, updateBumpableState) = useState(0)
+  useImperativeHandle(ref, () => {
+    // this object will be used when a ref is requested
+    new BumpHandle {
+      def bump(): Unit = {
+        updateBumpableState(bumpableState + 1)
+      }
+    }
+  })
+}))
+
+// to use the component and the imperative functions...
+
+div(
+  component(123).withRef(ref => ref.bump())
+)
+```

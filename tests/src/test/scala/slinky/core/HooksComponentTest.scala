@@ -4,7 +4,7 @@ import org.scalatest.AsyncFunSuite
 import org.scalajs.dom.document
 import org.scalajs.dom.Element
 
-import slinky.core.facade.{React, SetStateHookCallback}
+import slinky.core.facade.{React, SetStateHookCallback, ReactRef}
 import slinky.core.facade.Hooks._
 import slinky.web.ReactDOM
 import slinky.web.html._
@@ -267,7 +267,7 @@ class HooksComponentTest extends AsyncFunSuite {
       def foo: Int
     }
 
-    val component = React.forwardRef(FunctionalComponent[String, RefHandle] { (props, ref) =>
+    val component = React.forwardRef(FunctionalComponent { (props: String, ref: ReactRef[RefHandle]) =>
       useImperativeHandle(ref, () => {
         new RefHandle {
           def foo = 123
