@@ -9,7 +9,7 @@ import scala.language.experimental.macros
 
 import scala.language.implicitConversions
 
-final class KeyAddingStage(val props: js.Dictionary[js.Any], val constructor: js.Object) {
+final class KeyAddingStage(private val props: js.Dictionary[js.Any], private val constructor: js.Object) {
   def withKey(key: String): KeyAddingStage = {
     props("key") = key
     new KeyAddingStage(props, constructor)
@@ -24,6 +24,7 @@ object KeyAddingStage {
 
 final class FunctionalComponent[P] private[core](private[core] val component: js.Object) extends AnyVal {
   type Props = P
+  type Result = KeyAddingStage
 
   private[core] def componentWithReader(propsReader: Reader[P]) = {
     component.asInstanceOf[js.Dynamic].__propsReader = propsReader.asInstanceOf[js.Object]
@@ -39,6 +40,7 @@ final class FunctionalComponent[P] private[core](private[core] val component: js
 
 final class FunctionalComponentTakingRef[P, R] private[core](private[core] val component: js.Object) extends AnyVal {
   type Props = P
+  type Result = KeyAddingStage
 
   private[core] def componentWithReader(propsReader: Reader[P]) = {
     component.asInstanceOf[js.Dynamic].__propsReader = propsReader.asInstanceOf[js.Object]
@@ -54,6 +56,7 @@ final class FunctionalComponentTakingRef[P, R] private[core](private[core] val c
 
 final class FunctionalComponentForwardedRef[P, R] private[core](private[core] val component: js.Object) extends AnyVal {
   type Props = P
+  type Result = KeyAndRefAddingStage[R]
 
   private[core] def componentWithReader(propsReader: Reader[P]) = {
     component.asInstanceOf[js.Dynamic].__propsReader = propsReader.asInstanceOf[js.Object]

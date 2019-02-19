@@ -9,7 +9,7 @@ import scala.scalajs.js.ConstructorTag
 import scala.language.implicitConversions
 import scala.reflect.macros.whitebox
 
-class KeyAndRefAddingStage[D](val props: js.Dictionary[js.Any], val constructor: js.Object) {
+class KeyAndRefAddingStage[D](private val props: js.Dictionary[js.Any], private val constructor: js.Object) {
   def withKey(key: String): KeyAndRefAddingStage[D] = {
     props("key") = key
     new KeyAndRefAddingStage[D](props, constructor)

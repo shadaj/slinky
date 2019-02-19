@@ -130,12 +130,13 @@ class SlinkyInjector extends SyntheticMembersInjector {
 
   def createFunctionalComponentBody(cls: ScTypeDefinition): Seq[(String, InjectType)] = {
     val applyMethods = cls.extendsBlock.members.collect {
-      case td: ScTypeDefinition => td
+      case td: ScClass => td
+      case td: ScTypeAliasDefinition => td
     }.find(_.name == "Props").flatMap { elm =>
       elm match {
         case alias: ScTypeAliasDefinition =>
           Some(Seq(
-            s"def apply(props: Props): slinky.core.KeyAndRefAddingStage[scala.scalajs.js.Object] = ???" -> Function
+            s"def apply(props: ${cls.name}.Props): ${cls.name}.component.Result = ???" -> Function
           ))
         case propsCls: ScClass if propsCls.isCase =>
           Some {
@@ -148,16 +149,16 @@ class SlinkyInjector extends SyntheticMembersInjector {
             if (childrenParam.isDefined) {
               if (paramssWithoutChildren.isEmpty) {
                 Seq(
-                  s"def apply(${childrenParam.get.getText}): slinky.core.KeyAndRefAddingStage[scala.scalajs.js.Object] = ???" -> Function
+                  s"def apply(${childrenParam.get.getText}): ${cls.name}.component.Result = ???" -> Function
                 )
               } else {
                 Seq(
-                  s"def apply(${paramssWithoutChildren.map(_.getText).mkString(",")})(${childrenParam.get.getText}): slinky.core.KeyAndRefAddingStage[scala.scalajs.js.Object] = ???" -> Function
+                  s"def apply(${paramssWithoutChildren.map(_.getText).mkString(",")})(${childrenParam.get.getText}): ${cls.name}.component.Result = ???" -> Function
                 )
               }
             } else {
               Seq(
-                s"def apply(${paramssWithoutChildren.map(_.getText).mkString(",")}): slinky.core.KeyAndRefAddingStage[scala.scalajs.js.Object] = ???" -> Function
+                s"def apply(${paramssWithoutChildren.map(_.getText).mkString(",")}): ${cls.name}.component.Result = ???" -> Function
               )
             }
           }
