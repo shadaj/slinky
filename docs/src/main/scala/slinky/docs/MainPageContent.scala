@@ -2,11 +2,13 @@ package slinky.docs
 
 import slinky.web.html.{className, div, style}
 import slinky.core.facade.ReactElement
+import slinky.core.annotations.react
+import slinky.core.FunctionalComponent
 
 import scala.scalajs.js.Dynamic.literal
 
-object MainPageContent {
-  def apply(children: ReactElement*): ReactElement = {
+@react object MainPageContent {
+  val component = FunctionalComponent[Seq[ReactElement]] { children =>
     div(className := "article", style := literal(
       maxWidth = "1400px",
       marginLeft = "auto",

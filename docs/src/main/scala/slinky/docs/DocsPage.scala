@@ -1,8 +1,9 @@
 package slinky.docs
 
-import slinky.core.{Component, StatelessComponent}
+import slinky.core.{Component, StatelessComponent, FunctionalComponent, ReactComponentClass}
 import slinky.core.annotations.react
 import slinky.core.facade.{Fragment, ReactElement}
+import slinky.core.facade.Hooks._
 import slinky.remarkreact.{ReactRenderer, Remark}
 import slinky.web.html._
 import org.scalajs.dom
@@ -12,8 +13,23 @@ import slinky.reacthelmet.Helmet
 import scala.scalajs.js
 import js.Dynamic.literal
 
-@react class RemarkCode extends StatelessComponent {
+@react object RemarkCode {
   case class Props(children: Seq[String])
+  
+  val component = FunctionalComponent[Props] { props =>
+    if (props.children.head.contains('\n')) {
+      div(className := "code-block", style := literal(
+        borderRadius = "10px",
+        overflow = "hidden"
+      ))(
+        SyntaxHighlighter(language = "scala", style = prismColors)(
+          props.children.head
+        )
+      )
+    } else {
+      code(props.children.head)
+    }
+  }
 
   // from the reactjs.org theme
   val prismColors = js.Dictionary[js.Object](
@@ -41,27 +57,12 @@ import js.Dynamic.literal
       color = "#ffffff"
     )
   )
-
-  override def render(): ReactElement = {
-    if (props.children.head.contains('\n')) {
-      div(className := "code-block", style := literal(
-        borderRadius = "10px",
-        overflow = "hidden"
-      ))(
-        SyntaxHighlighter(language = "scala", style = prismColors)(
-          props.children.head
-        )
-      )
-    } else {
-      code(props.children.head)
-    }
-  }
 }
 
-@react class RemarkH1 extends StatelessComponent {
+@react object RemarkH1 {
   case class Props(children: Seq[ReactElement])
 
-  override def render(): ReactElement = {
+  val component = FunctionalComponent[Props] { props =>
     Fragment(
       props.children.headOption.map { head =>
         Helmet(
@@ -73,10 +74,10 @@ import js.Dynamic.literal
   }
 }
 
-@react class RemarkH2 extends StatelessComponent {
+@react object RemarkH2 {
   case class Props(children: Seq[String])
 
-  override def render(): ReactElement = {
+  val component = FunctionalComponent[Props] { props =>
     Fragment(
       hr(style := literal(
         height = "1px",
@@ -91,7 +92,7 @@ import js.Dynamic.literal
 }
 
 object DocsTree {
-  val tree: Map[String, List[(String, String)]] = Map(
+  val tree: List[(String, List[(String, String)])] = List(
     "Core Concepts" -> List(
       "Installation" -> "/docs/installation/",
       "Hello World!" -> "/docs/hello-world/",
@@ -99,7 +100,7 @@ object DocsTree {
       "The Tag API" -> "/docs/the-tag-api/",
       "Writing Components" -> "/docs/writing-components/",
       "External Components" -> "/docs/external-components/",
-      "Functional Components" -> "/docs/functional-components/",
+      "Functional Components and Hooks" -> "/docs/functional-components-and-hooks/",
       "React Native and VR" -> "/docs/native-and-vr/"
     ),
     "Advanced Guides" -> List(
@@ -116,8 +117,6 @@ object DocsTree {
   )
 }
 
-import DocsTree._
-
 object TrackSSRDocs {
   var publicSSR: js.Dictionary[String] = js.Dictionary.empty[String]
 
@@ -129,57 +128,33 @@ object TrackSSRDocs {
   }
 }
 
-@react class DocsPage extends Component {
-  type Props = js.Dynamic
-  case class State(selectedGroup: String, document: Option[String])
-
+@react object DocsPage {
   def docsFilePath(props: js.Dynamic) = {
     val matchString = props.selectDynamic("match").params.selectDynamic("0").toString
     s"/docs/${matchString.reverse.dropWhile(_ == '/').reverse}.md"
   }
 
-  override def initialState: State = {
+  val component = FunctionalComponent[js.Dynamic] { props =>
     val matchString = props.selectDynamic("match").params.selectDynamic("0").toString
-    val group = tree.find(_._2.exists(_._2 == s"/docs/$matchString")).get._1
+    val selectedGroup = DocsTree.tree.find(_._2.exists(_._2 == s"/docs/$matchString")).get._1
+    val (document, setDocument) = useState(() =>{
+        if (Main.isSSR) {
+        Some(TrackSSRDocs.getPublic(docsFilePath(props)))
+      } else if (js.typeOf(js.Dynamic.global.window.publicSSR) != "undefined") {
+        js.Dynamic.global.window.publicSSR.asInstanceOf[js.Dictionary[String]].get(docsFilePath(props))
+      } else None
+    })
 
-    if (Main.isSSR) {
-      State(group, Some(TrackSSRDocs.getPublic(docsFilePath(props))))
-    } else if (js.typeOf(js.Dynamic.global.window.publicSSR) != "undefined") {
-      State(group, js.Dynamic.global.window.publicSSR.asInstanceOf[js.Dictionary[String]].get(docsFilePath(props)))
-    } else {
-      State(group, None)
-    }
-  }
-
-  override def componentDidMount(): Unit = {
-    if (state.document.isEmpty) {
+    useEffect(() => {
       val xhr = new XMLHttpRequest
       xhr.onload = _ => {
-        setState(state.copy(document = Some(xhr.responseText)))
+        setDocument(Some(xhr.responseText))
       }
 
       xhr.open("GET", docsFilePath(props))
       xhr.send()
-    }
-  }
+    }, Seq(docsFilePath(props)))
 
-  override def componentDidUpdate(prevProps: Props, prevState: State): Unit = {
-    if (docsFilePath(props) != docsFilePath(prevProps)) {
-      val matchString = props.selectDynamic("match").params.selectDynamic("0").toString
-      val group = tree.find(_._2.exists(_._2 == s"/docs/$matchString")).get._1
-
-      val xhr = new XMLHttpRequest
-      xhr.onload = _ => {
-        dom.window.scrollTo(0, 0)
-        setState(State(group, Some(xhr.responseText)))
-      }
-
-      xhr.open("GET", docsFilePath(props))
-      xhr.send()
-    }
-  }
-
-  override def render(): ReactElement = {
     div(className := "article fill-right", style := literal(
       marginTop = "40px",
       paddingLeft = "15px",
@@ -193,12 +168,12 @@ object TrackSSRDocs {
           width = "calc(100% - 300px)"
         ), className := "docs-content")(
           div(style := literal(maxWidth = "1400px"))(
-            state.document.map { t =>
+            document.map { t =>
               Remark().use(ReactRenderer, literal(
                 remarkReactComponents = literal(
-                  h1 = RemarkH1.componentConstructor,
-                  h2 = RemarkH2.componentConstructor,
-                  code = RemarkCode.componentConstructor
+                  h1 = RemarkH1.component: ReactComponentClass[_],
+                  h2 = RemarkH2.component: ReactComponentClass[_],
+                  code = RemarkCode.component: ReactComponentClass[_]
                 )
               )).processSync(t).contents
             }
@@ -226,11 +201,11 @@ object TrackSSRDocs {
               paddingLeft = "20px",
               width = "300px"
             ))(
-              tree.keys.toList.map { group =>
+              DocsTree.tree.map { case (group, value) =>
                 DocsGroup(
                   name = group,
-                  isOpen = group == state.selectedGroup
-                )(tree(group)).withKey(group)
+                  isOpen = group == selectedGroup
+                )(value).withKey(group)
               }
             )
           )

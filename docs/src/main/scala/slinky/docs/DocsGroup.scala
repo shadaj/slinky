@@ -1,6 +1,6 @@
 package slinky.docs
 
-import slinky.core.StatelessComponent
+import slinky.core.FunctionalComponent
 import slinky.core.annotations.react
 import slinky.core.facade.ReactElement
 import slinky.reactrouter.NavLink
@@ -8,10 +8,10 @@ import slinky.web.html._
 
 import scala.scalajs.js.Dynamic.literal
 
-@react class DocsGroup extends StatelessComponent {
+@react object DocsGroup {
   case class Props(name: String, isOpen: Boolean, children: List[(String, String)])
 
-  override def render(): ReactElement = {
+  val component = FunctionalComponent[Props] { props =>
     div(style := literal(width = "100%"))(
       button(style := literal(
         backgroundColor = "transparent",

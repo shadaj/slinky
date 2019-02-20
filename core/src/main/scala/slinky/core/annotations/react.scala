@@ -218,10 +218,10 @@ object ReactMacrosImpl {
                   q"component.apply(Props.apply(...$applyValues))"
               }
 
-              q"""def apply[..$tparams](...$paramssWithoutChildren)(${childrenParam.get}): _root_.slinky.core.KeyAddingStage =
+              q"""def apply[..$tparams](...$paramssWithoutChildren)(${childrenParam.get}) =
                     $body"""
             } else {
-              q"""def apply[..$tparams](...$paramssWithoutChildren): _root_.slinky.core.KeyAddingStage =
+              q"""def apply[..$tparams](...$paramssWithoutChildren) =
                     component.apply(Props.apply(...$applyValues))"""
             }
 
@@ -232,7 +232,7 @@ object ReactMacrosImpl {
           c.warning(c.enclosingPosition, "Props case class was not found. The component's simple apply method will still be added to the object.")
           Seq.empty
         } ++ Seq(
-          q"def apply(props: component.Props): _root_.slinky.core.KeyAddingStage = component.apply(props)"
+          q"def apply(props: component.Props) = component.apply(props)"
         )
 
         List(q"$pre object $objName extends ..$parents { $self => ..${objStats ++ applyMethods} }")

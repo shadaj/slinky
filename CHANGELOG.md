@@ -2,9 +2,12 @@
 
 ## vNEXT
 ### Highlights :tada:
-+ Add support for writing functional components, see [the docs](https://slinky.shadaj.me/docs/functional-components/) for more details [PR #217](https://github.com/shadaj/slinky/pull/217)
++ Support **React Hooks for functional components**, see [the docs](https://slinky.shadaj.me/docs/functional-components-and-hooks/) for more details [PR #227](https://github.com/shadaj/slinky/pull/227)
++ Add support for **writing functional components**, see [the docs](https://slinky.shadaj.me/docs/functional-components-and-hooks/) for more details [PR #217](https://github.com/shadaj/slinky/pull/217)
 
 ### Breaking Changes :warning:
++ The `React.forwardRef` function now takes a `FunctionalComponentTakingRef`, which can be creating by creating a functional component that takes an additional ref parameter: `FunctionalComponent((props, ref) => ...)` [PR #227](https://github.com/shadaj/slinky/pull/227)
++ The `ReactRef` type is no longer variant in its type parameters to increase type safety [PR #227](https://github.com/shadaj/slinky/pull/227)
 + Components will no longer have their `displayName` when built in `fullOptJS` mode, this results in a **~2.5% decrease in bundle size** and matches behavior with JS where names are obfuscated in production builds  [PR #217](https://github.com/shadaj/slinky/pull/217)
 
 ### Bug Fixes

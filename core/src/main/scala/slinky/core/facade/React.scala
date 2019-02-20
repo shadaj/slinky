@@ -1,6 +1,6 @@
 package slinky.core.facade
 
-import slinky.core.{ExternalComponent, ExternalPropsWriterProvider, FunctionalComponent}
+import slinky.core._
 import slinky.readwrite.{ObjectOrWritten, Reader, Writer}
 
 import scala.scalajs.js
@@ -53,19 +53,8 @@ trait ReactInstance extends js.Object
 trait ReactChildren extends ReactElement
 
 @js.native
-trait ReactRef[-T] extends js.Object {
-  def current: T @uncheckedVariance  = js.native
-}
-
-class ReactForwardRefComponent[P](comp: js.Object) extends ExternalComponent()(Writer.fallback[P].asInstanceOf[ExternalPropsWriterProvider]) {
-  type Props = P
-  override val component: String | js.Object = comp
-}
-
-@js.native
-trait ReactForwardRef[P] extends js.Object
-object ReactForwardRef {
-  implicit def toExternalComponent[P](r: ReactForwardRef[P]): ReactForwardRefComponent[P] = new ReactForwardRefComponent[P](r)
+trait ReactRef[T] extends js.Object {
+  var current: T @uncheckedVariance  = js.native
 }
 
 @js.native
@@ -79,7 +68,7 @@ private[slinky] object ReactRaw extends js.Object {
 
   def createRef[T](): ReactRef[T] = js.native
 
-  def forwardRef[P](fn: js.Function2[js.Object, ReactRef[Any], ReactElement]): ReactForwardRef[P] = js.native
+  def forwardRef[P](fn: js.Object): js.Object = js.native
 
   def memo(fn: js.Object): js.Object = js.native
 
@@ -112,10 +101,8 @@ object React {
 
   def createRef[T]: ReactRef[T] = ReactRaw.createRef[T]()
 
-  def forwardRef[P](fn: (P, ReactRef[Any]) => ReactElement): ReactForwardRef[P] = {
-    ReactRaw.forwardRef[P]((obj, ref) => {
-      fn(Reader.fallback[P].read(obj), ref)
-    })
+  def forwardRef[P, R](component: FunctionalComponentTakingRef[P, R]): FunctionalComponentForwardedRef[P, R] = {
+    new FunctionalComponentForwardedRef(ReactRaw.forwardRef(component.component))
   }
 
   def memo[P](component: FunctionalComponent[P]): FunctionalComponent[P] = {
@@ -158,6 +145,118 @@ object React {
       ReactRaw.Children.toArray(children)
     }
   }
+}
+
+@js.native
+@JSImport("react", JSImport.Namespace, "React")
+private[slinky] object HooksRaw extends js.Object {
+  def useState[T](default: T | js.Function0[T]): js.Tuple2[T, js.Function1[js.Any, Unit]] = js.native
+  
+  def useEffect(thunk: js.Function0[EffectCallbackReturn]): Unit = js.native
+  def useEffect(thunk: js.Function0[EffectCallbackReturn], watchedObjects: js.Array[js.Any]): Unit = js.native
+  
+  def useContext[T](context: ReactContext[T]): T = js.native
+
+  def useReducer[T, A](reducer: js.Function2[T, A, T], initialState: T): js.Tuple2[T, js.Function1[A, Unit]] = js.native
+  def useReducer[T, I, A](reducer: js.Function2[T, A, T], initialState: I, init: js.Function1[I, T]): js.Tuple2[T, js.Function1[A, Unit]] = js.native
+
+  def useCallback(callback: js.Function0[Unit], watchedObjects: js.Array[js.Any]): js.Function0[Unit] = js.native
+
+  def useMemo[T](callback: js.Function0[T], watchedObjects: js.Array[js.Any]): T = js.native
+
+  def useRef[T](initialValue: T): ReactRef[T] = js.native
+
+  def useImperativeHandle[R](ref: ReactRef[R], value: js.Function0[R]): Unit = js.native
+
+  def useLayoutEffect(thunk: js.Function0[EffectCallbackReturn]): Unit = js.native
+  def useLayoutEffect(thunk: js.Function0[EffectCallbackReturn], watchedObjects: js.Array[js.Any]): Unit = js.native
+
+  def useDebugValue(value: String): Unit = js.native
+}
+
+@js.native trait EffectCallbackReturn extends js.Object
+object EffectCallbackReturn {
+  @inline implicit def fromFunction[T](fn: () => T): EffectCallbackReturn = {
+    (fn: js.Function0[T]).asInstanceOf[EffectCallbackReturn]
+  }
+
+  @inline implicit def fromAny[T](value: T): EffectCallbackReturn = {
+    js.undefined.asInstanceOf[EffectCallbackReturn]
+  }
+}
+
+final class SetStateHookCallback[T](private val origFunction: js.Function1[js.Any, Unit]) extends AnyVal {
+  @inline def apply(newState: T): Unit = {
+    origFunction.apply(newState.asInstanceOf[js.Any])
+  }
+
+  @inline def apply(transformState: T => T): Unit = {
+    origFunction.apply(transformState: js.Function1[T, T])
+  }
+}
+
+object Hooks {
+  @inline def useState[T](default: T): (T, SetStateHookCallback[T]) = {
+    val call = HooksRaw.useState[T](default)
+    (call._1, new SetStateHookCallback[T](call._2))
+  }
+
+  @inline def useState[T](lazyDefault: () => T): (T, SetStateHookCallback[T]) = {
+    val call = HooksRaw.useState[T](lazyDefault: js.Function0[T])
+    (call._1, new SetStateHookCallback[T](call._2))
+  }
+
+  @inline def useEffect[T](thunk: () => T)(implicit conv: T => EffectCallbackReturn): Unit = {
+    HooksRaw.useEffect(() => { conv(thunk()) })
+  }
+
+  @inline def useEffect[T](thunk: () => T, watchedObjects: Iterable[Any])(implicit conv: T => EffectCallbackReturn): Unit = {
+    HooksRaw.useEffect(
+      () => { conv(thunk()) },
+      watchedObjects.toJSArray.asInstanceOf[js.Array[js.Any]]
+    )
+  }
+
+  @inline def useContext[T](context: ReactContext[T]): T = HooksRaw.useContext[T](context)
+
+  @inline def useReducer[T, A](reducer: (T, A) => T, initialState: T): (T, A => Unit) = {
+    val ret = HooksRaw.useReducer[T, A](reducer, initialState)
+    (ret._1, ret._2)
+  }
+
+  @inline def useReducer[T, I, A](reducer: (T, A) => T, initialState: I, init: I => T): (T, A => Unit) = {
+    val ret = HooksRaw.useReducer[T, I, A](reducer, initialState, init)
+    (ret._1, ret._2)
+  }
+
+  @inline def useCallback(callback: () => Unit, watchedObjects: Iterable[Any]): () => Unit = {
+    HooksRaw.useCallback(callback, watchedObjects.toJSArray.asInstanceOf[js.Array[js.Any]])
+  }
+
+  @inline def useMemo[T](memoValue: () => T, watchedObjects: Iterable[Any]): T = {
+    HooksRaw.useMemo[T](memoValue, watchedObjects.toJSArray.asInstanceOf[js.Array[js.Any]])
+  }
+
+  @inline def useRef[T](initialValue: T): ReactRef[T] = {
+    HooksRaw.useRef[T](initialValue)
+  }
+
+  @inline def useImperativeHandle[R](ref: ReactRef[R], value: () => R): Unit = {
+    HooksRaw.useImperativeHandle[R](ref, value)
+  }
+
+  @inline def useLayoutEffect[T](thunk: () => T)(implicit conv: T => EffectCallbackReturn): Unit = {
+    HooksRaw.useLayoutEffect(() => { conv(thunk()) })
+  }
+
+  @inline def useLayoutEffect[T](thunk: () => T, watchedObjects: Iterable[Any])(implicit conv: T => EffectCallbackReturn): Unit = {
+    HooksRaw.useLayoutEffect(
+      () => { conv(thunk()) },
+      watchedObjects.toJSArray.asInstanceOf[js.Array[js.Any]]
+    )
+  }
+
+  @inline def useDebugValue(value: String): Unit = HooksRaw.useDebugValue(value)
 }
 
 @js.native

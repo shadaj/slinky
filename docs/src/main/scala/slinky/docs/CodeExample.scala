@@ -1,6 +1,6 @@
 package slinky.docs
 
-import slinky.core.StatelessComponent
+import slinky.core.FunctionalComponent
 import slinky.core.annotations.react
 import slinky.core.facade.ReactElement
 import slinky.web.html._
@@ -9,7 +9,7 @@ import scala.scalajs.js
 import scala.scalajs.js.Dynamic.literal
 import scala.language.experimental.macros
 
-@react class CodeExampleInternal extends StatelessComponent {
+@react object CodeExampleInternal {
   case class Props(codeText: String, demoElement: ReactElement)
 
   // from the reactjs.org theme
@@ -36,7 +36,7 @@ import scala.language.experimental.macros
     )
   )
 
-  override def render(): ReactElement = {
+  val component = FunctionalComponent[Props] { props =>
     div(style := literal(
       width = "100%",
       display = "flex",

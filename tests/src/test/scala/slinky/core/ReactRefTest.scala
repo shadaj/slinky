@@ -36,11 +36,11 @@ class ReactRefTest extends AsyncFunSuite {
   }
 
   test("Can use forwardRef to pass down a ref to a lower element") {
-    val forwarded = React.forwardRef[String]((props, rf) => {
+    val forwarded = React.forwardRef[String, Element](FunctionalComponent((props, rf) => {
       div(ref := rf)(props)
-    })
+    }))
 
-    val divRef = React.createRef[Any]
+    val divRef = React.createRef[Element]
     ReactDOM.render(
       forwarded("hello").withRef(divRef),
       dom.document.createElement("div")

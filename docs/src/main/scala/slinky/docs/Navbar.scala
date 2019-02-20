@@ -1,6 +1,6 @@
 package slinky.docs
 
-import slinky.core.StatelessComponent
+import slinky.core.FunctionalComponent
 import slinky.core.annotations.react
 import slinky.core.facade.ReactElement
 import slinky.docs.homepage.SlinkyHorizontalLogo
@@ -9,9 +9,7 @@ import slinky.web.html._
 
 import scala.scalajs.js
 
-@react class Navbar extends StatelessComponent {
-  type Props = Unit
-
+@react object Navbar {
   val linkStyle = js.Dynamic.literal(
     color = "white",
     fontSize = "21px",
@@ -29,7 +27,7 @@ import scala.scalajs.js
     textDecoration = "none"
   )
 
-  def render(): ReactElement = {
+  val component = FunctionalComponent[Unit](_ => {
     header(style := js.Dynamic.literal(
       width = "100%",
       position = "fixed",
@@ -110,5 +108,5 @@ import scala.scalajs.js
         )
       )
     )
-  }
+  })
 }
