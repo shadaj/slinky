@@ -10,9 +10,9 @@ import scala.language.experimental.macros
 import scala.language.implicitConversions
 
 final class KeyAddingStage(private val props: js.Dictionary[js.Any], private val constructor: js.Object) {
-  def withKey(key: String): KeyAddingStage = {
+  def withKey(key: String): ReactElement = {
     props("key") = key
-    new KeyAddingStage(props, constructor)
+    KeyAddingStage.build(this)
   }
 }
 
