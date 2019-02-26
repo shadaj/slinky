@@ -35,6 +35,40 @@ as `window.React` and React DOM as `window.ReactDOM`.
 
 While Slinky can be in a simple Scala.js app with no bundler, we highly recommend that you use [webpack](https://webpack.js.org/) for bundling your application with its dependencies. The SBT plugin [scalajs-bundler](https://scalacenter.github.io/scalajs-bundler/) automates much of the process around configuring webpack, and is very useful for adding webpack to an SBT build setup.
 
+For example, If you're using scalajs-bundler, add the following to your build.sbt:
+```
+  enablePlugins(ScalaJSPlugin)
+
+  enablePlugins(ScalaJSBundlerPlugin)
+
+  libraryDependencies += "com.github.japgolly.scalajs-react" %%% "core" % "1.4.0"
+
+  npmDependencies in Compile ++= Seq(
+    "react" -> "16.7.0",
+    "react-dom" -> "16.7.0")
+```
+If you are using `jsDependencies` you should add, instead:
+```
+// React JS itself (Note the filenames, adjust as needed, eg. to remove addons.)
+jsDependencies ++= Seq(
+  "org.webjars.npm" % "react" % "16.7.0"
+    /        "umd/react.development.js"
+    minified "umd/react.production.min.js"
+    commonJSName "React",
+
+  "org.webjars.npm" % "react-dom" % "16.7.0"
+    /         "umd/react-dom.development.js"
+    minified  "umd/react-dom.production.min.js"
+    dependsOn "umd/react.development.js"
+    commonJSName "ReactDOM",
+
+  "org.webjars.npm" % "react-dom" % "16.7.0"
+    /         "umd/react-dom-server.browser.development.js"
+    minified  "umd/react-dom-server.browser.production.min.js"
+    dependsOn "umd/react-dom.development.js"
+    commonJSName "ReactDOMServer"),
+```
+
 ## IntelliJ Support
 Starting with Slinky 0.5.0, the `@react` macro annotation is implemented with Macro Paradise to ensure compatibility with future versions of Scala, so a small extra step is required to enable IDE support in IntelliJ (version 2018.3 or higher is required). After loading, your project, uncheck `Enable loading external extensions` in `Settings > Languages & Frameworks > Scala > Extensions`, hit apply, re-check it, and hit apply again. After applying these settings and refreshing your SBT project again, IntelliJ will pop up with a request to enable Slinky support.
 
