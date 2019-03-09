@@ -2,672 +2,785 @@
   "tags" : [
     {
       "tagName" : "a",
+      "scalaJSType": "org.scalajs.dom.Element",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "<span class=\"seoSummary\">The <strong>HTML <code>&lt;a&gt;</code> element</strong> (or <em>anchor</em> element) creates a hyperlink to other web pages, files, locations within the same page, email addresses, or any other URL.</span>"
       ]
     },
     {
       "tagName" : "abbr",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;abbr&gt;</code> element</strong> represents an abbreviation and optionally provides a full description for it. If present, the <code><a href=\"/en-US/docs/Web/HTML/Global_attributes#attr-title\">title</a></code> attribute must contain this full description and nothing else."
       ]
     },
     {
       "tagName" : "address",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "<span class=\"seoSummary\">The <strong>HTML&nbsp;<code>&lt;address&gt;</code> element</strong> supplies contact information for its nearest <a title=\"The HTML <article> element represents a self-contained composition in a document, page, application, or site, which is intended to be independently distributable or reusable (e.g., in syndication). Examples include: a forum post, a magazine or newspaper article, or a blog entry.\" href=\"/en-US/docs/Web/HTML/Element/article\"><code>&lt;article&gt;</code></a> or <a title=\"The HTML <body> Element represents the content of an HTML&nbsp;document. There can be only one <body> element in a document.\" href=\"/en-US/docs/Web/HTML/Element/body\"><code>&lt;body&gt;</code></a> ancestor; in the latter case, it applies to the whole document.</span>"
       ]
     },
     {
       "tagName" : "area",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;area&gt;</code> element</strong> defines a hot-spot region on an image, and optionally associates it with a <a title=\"hypertext link: Hyperlinks connect webpages or data items to one another. In HTML, <a> elements define hyperlinks from a spot on a webpage (like a text string or image) to another spot on some other webpage (or even on the same page).\" class=\"glossaryLink\" href=\"/en-US/docs/Glossary/Hyperlink\">hypertext link</a>. This element is used only within a <a title=\"The HTML <map> element is used with <area> elements to define an image map (a clickable link area).\" href=\"/en-US/docs/Web/HTML/Element/map\"><code>&lt;map&gt;</code></a> element."
       ]
     },
     {
       "tagName" : "article",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;article&gt;</code> element</strong> represents a self-contained composition in a document, page, application, or site, which is intended to be independently distributable or reusable (e.g., in syndication). Examples include: a forum post, a magazine or newspaper article, or a blog entry."
       ]
     },
     {
       "tagName" : "aside",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;aside&gt;</code> element</strong> represents a section of a document with content connected tangentially to the main content of the document (often presented as a sidebar)."
       ]
     },
     {
       "tagName" : "audio",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "<span class=\"seoSummary\">The <strong>HTML <code>&lt;audio&gt;</code> element</strong> is used to embed sound content in documents. It may contain one or more audio sources, represented using the <code>src</code> attribute or the <a title=\"The HTML <source> element specifies multiple media resources for either the <picture>, the <audio> or the <video> element. It is an empty element. It is commonly used to serve the same media content in multiple formats supported by different browsers.\" href=\"/en-US/docs/Web/HTML/Element/source\"><code>&lt;source&gt;</code></a> element:&nbsp;the browser will choose the most suitable one. It can also be the destination for streamed media, using a <a title=\"The MediaStream interface represents a stream of media content. A stream consists of several tracks such as&nbsp;video or audio tracks. Each track is specified as an instance of MediaStreamTrack.\" href=\"/en-US/docs/Web/API/MediaStream\"><code>MediaStream</code></a>.</span>"
       ]
     },
     {
       "tagName" : "b",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;b&gt;</code> element</strong> represents a span of text stylistically different from normal text, without conveying any special importance or relevance, and that is typically rendered in boldface."
       ]
     },
     {
       "tagName" : "base",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;base&gt;</code> element</strong> specifies the base URL to use for all relative URLs contained within a document. There can be only one <code>&lt;base&gt;</code> element in a document.&nbsp;"
       ]
     },
     {
       "tagName" : "bdi",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;bdi&gt;</code> element</strong> (<em>bidirectional isolation</em>) isolates a span of text that might be formatted in a different direction from other text outside it."
       ]
     },
     {
       "tagName" : "bdo",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;bdo&gt;</code> element</strong> (<em>bidirectional override</em>) is used to override the current directionality of text. It causes the directionality of the characters to be ignored in favor of the specified directionality."
       ]
     },
     {
       "tagName" : "big",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The HTML Big Element (<code>&lt;big&gt;</code>)&nbsp;makes the text <em>font size</em> one size bigger (for example, from small to medium, or from large to x-large) up to the browser's maximum font size."
       ]
     },
     {
       "tagName" : "blockquote",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;blockquote&gt;</code> Element</strong> (or <em>HTML Block Quotation Element</em>) indicates that the enclosed text is an extended quotation. Usually, this is rendered visually by indentation (see <a href=\"/en-US/docs/HTML/Element/blockquote#Notes\">Notes</a> for how to change it). A URL for the source of the quotation may be given using the <strong>cite</strong> attribute, while a text representation of the source can be given using the <a title=\"The HTML <cite> element represents a reference to a creative work. It must include the title of a work or a URL reference, which may be in an abbreviated form according to the conventions used for the addition of citation metadata.\" href=\"/en-US/docs/Web/HTML/Element/cite\"><code>&lt;cite&gt;</code></a> element."
       ]
     },
     {
       "tagName" : "body",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;body&gt;</code> Element</strong> represents the content of an HTML&nbsp;document. There can be only one <code>&lt;body&gt;</code> element in a document."
       ]
     },
     {
       "tagName" : "br",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;br&gt;</code> element</strong> produces a line break in text (carriage-return). It is useful for writing a poem or an address, where the division of lines is significant."
       ]
     },
     {
       "tagName" : "button",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;button&gt;</code> element</strong> represents a clickable button."
       ]
     },
     {
       "tagName" : "canvas",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "Use the <strong>HTML <code>&lt;canvas&gt;</code> element</strong> with the <a href=\"/en-US/docs/Web/API/Canvas_API\">canvas scripting API </a>to draw graphics and animations."
       ]
     },
     {
       "tagName" : "caption",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;caption&gt;</code> element</strong> represents the title of a table. Though it is always the first descendant of a <a title=\"The HTML <table> element represents tabular data — that is, information expressed via a two-dimensional data table.\" href=\"/en-US/docs/Web/HTML/Element/table\"><code>&lt;table&gt;</code></a>, its styling, using CSS, may place it elsewhere, relative to the table."
       ]
     },
     {
       "tagName" : "cite",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML &lt;cite&gt; element</strong> represents a reference to a creative work. It must include the title of a work or a URL reference, which may be in an abbreviated form according to the conventions used for the addition of citation metadata."
       ]
     },
     {
       "tagName" : "code",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;code&gt;</code> element</strong> represents a fragment of computer code. By default, it is displayed in the browser's default monospace font."
       ]
     },
     {
       "tagName" : "col",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;col&gt;</code> element</strong> defines a column within a table and is used for defining common semantics on all common cells. It is generally found within a <a title=\"The HTML <colgroup> element defines a group of columns within a table.\" href=\"/en-US/docs/Web/HTML/Element/colgroup\"><code>&lt;colgroup&gt;</code></a> element."
       ]
     },
     {
       "tagName" : "colgroup",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;colgroup&gt;</code> element</strong> defines a group of columns within a table."
       ]
     },
     {
       "tagName" : "data",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;data&gt;</code> element</strong> links a given content with a machine-readable translation. If the content is time- or date-related, the <a title=\"The HTML <time> element represents either a time on a 24-hour clock or a precise date in the Gregorian calendar (with optional time and timezone information).\" href=\"/en-US/docs/Web/HTML/Element/time\"><code>&lt;time&gt;</code></a> element must be used."
       ]
     },
     {
       "tagName" : "datalist",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;datalist&gt;</code> element</strong> contains a set of <a title=\"The HTML <option> element is used to define an item contained in a <select>, an <optgroup>, or a <datalist>&nbsp;element. As such,&nbsp;<option>&nbsp;can represent menu items in popups and other lists of items in an HTML document.\" href=\"/en-US/docs/Web/HTML/Element/option\"><code>&lt;option&gt;</code></a> elements that represent the values available for other controls."
       ]
     },
     {
       "tagName" : "dd",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The&nbsp;<strong>HTML <code>&lt;dd&gt;</code> element</strong> indicates the description of a term in a description list (<a title=\"The HTML <dl>&nbsp;element represents a description list.&nbsp;The element encloses a list of groups of terms and descriptions. Common uses for this element are to implement a glossary or to display metadata (a list of key-value pairs).\" href=\"/en-US/docs/Web/HTML/Element/dl\"><code>&lt;dl&gt;</code></a>)."
       ]
     },
     {
       "tagName" : "del",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;del&gt;</code> element</strong> represents a range of text that has been deleted from a document. This element is often (but need not be) rendered with strike-through text."
       ]
     },
     {
       "tagName" : "details",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;details&gt;</code> element</strong> is used as a disclosure widget from which the user can retrieve additional information."
       ]
     },
     {
       "tagName" : "dfn",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML &lt;dfn&gt; element</strong> represents the defining instance of a term."
       ]
     },
     {
       "tagName" : "dialog",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;dialog&gt;</code> element</strong> represents a dialog box or other interactive component, such as an inspector or window."
       ]
     },
     {
       "tagName" : "div",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;div&gt;</code> element</strong> is the generic container for flow content and does not inherently represent anything. Use it to group elements for purposes such as styling (using the <code><a href=\"/en-US/docs/Web/HTML/Global_attributes#attr-class\">class</a></code> or <code><a href=\"/en-US/docs/Web/HTML/Global_attributes#attr-id\">id</a></code> attributes), marking a section of a document in a different language (using the <code><a href=\"/en-US/docs/Web/HTML/Global_attributes#attr-lang\">lang</a></code> attribute), and so on."
       ]
     },
     {
       "tagName" : "dl",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;dl&gt;</code>&nbsp;</strong>element represents a description list.<strong>&nbsp;</strong>The element encloses a list of groups of terms and descriptions. Common uses for this element are to implement a glossary or to display metadata (a list of key-value pairs)."
       ]
     },
     {
       "tagName" : "dt",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;dt&gt;</code> element</strong> identifies a term in a description list. This element can occur only as a child element of a <a title=\"The HTML <dl>&nbsp;element represents a description list.&nbsp;The element encloses a list of groups of terms and descriptions. Common uses for this element are to implement a glossary or to display metadata (a list of key-value pairs).\" href=\"/en-US/docs/Web/HTML/Element/dl\"><code>&lt;dl&gt;</code></a>. It is usually followed by a <a title=\"The&nbsp;HTML <dd> element indicates the description of a term in a description list (<dl>).\" href=\"/en-US/docs/Web/HTML/Element/dd\"><code>&lt;dd&gt;</code></a> element; however, multiple <code>&lt;dt&gt;</code> elements in a row indicate several terms that are all defined by the immediate next <a title=\"The&nbsp;HTML <dd> element indicates the description of a term in a description list (<dl>).\" href=\"/en-US/docs/Web/HTML/Element/dd\"><code>&lt;dd&gt;</code></a> element."
       ]
     },
     {
       "tagName" : "em",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;em&gt;</code> element</strong>&nbsp;marks text that has stress emphasis. The <code>&lt;em&gt;</code> element can be nested, with each level of nesting indicating a greater degree of emphasis."
       ]
     },
     {
       "tagName" : "embed",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;embed&gt;</code> element</strong> represents an integration point for an external application or interactive content (in other words, a plug-in)."
       ]
     },
     {
       "tagName" : "fieldset",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;fieldset&gt;</code> element</strong> is used to group several controls as well as labels (<a href=\"/en-US/docs/Web/HTML/Element/label\" title=\"The HTML <label> element represents a caption for an item in a user interface.\"><code>&lt;label&gt;</code></a>) within a web form."
       ]
     },
     {
       "tagName" : "figcaption",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;figcaption&gt;</code> element</strong> represents a caption or a legend associated with a figure or an illustration described by the rest of the data of the <a title=\"The HTML <figure> element represents self-contained content, frequently with a caption (<figcaption>), and is typically referenced as a single unit.\" href=\"/en-US/docs/Web/HTML/Element/figure\"><code>&lt;figure&gt;</code></a> element which is its immediate ancestor."
       ]
     },
     {
       "tagName" : "figure",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;figure&gt;</code> element</strong> represents self-contained content, frequently with a caption (<a title=\"The HTML <figcaption> element represents a caption or a legend associated with a figure or an illustration described by the rest of the data of the <figure> element which is its immediate ancestor.\" href=\"/en-US/docs/Web/HTML/Element/figcaption\"><code>&lt;figcaption&gt;</code></a>), and is typically referenced as a single unit."
       ]
     },
     {
       "tagName" : "footer",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The<strong> HTML <code>&lt;footer&gt;</code> element</strong> represents a footer for its nearest <a href=\"/en-US/docs/Web/Guide/HTML/Sections_and_Outlines_of_an_HTML5_document#Defining_Sections_in_HTML5\">sectioning content</a> or <a title=\"Sections and Outlines of an HTML5 document#Sectioning root\" href=\"/en-US/docs/Web/Guide/HTML/Sections_and_Outlines_of_an_HTML5_document#Sectioning_root\">sectioning root</a> element. A footer typically contains information about the author of the section, copyright data or links to related documents."
       ]
     },
     {
       "tagName" : "form",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;form&gt;</code> element</strong> represents a document section that contains interactive controls to submit information to a web server."
       ]
     },
     {
       "tagName" : "h1",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "A header element"
       ]
     },
     {
       "tagName" : "h2",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "A header element"
       ]
     },
     {
       "tagName" : "h3",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "A header element"
       ]
     },
     {
       "tagName" : "h4",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "A header element"
       ]
     },
     {
       "tagName" : "h5",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "A header element"
       ]
     },
     {
       "tagName" : "h6",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "A header element"
       ]
     },
     {
       "tagName" : "head",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;head&gt;</code> element</strong> provides general information (metadata) about the document, including its title and links to its&nbsp;scripts and style sheets."
       ]
     },
     {
       "tagName" : "header",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;header&gt;</code> element</strong> represents introductory content, typically a group of introductory or navigational aids. It may contain some heading elements but also other elements like a logo, a search form, an author name, and so on."
       ]
     },
     {
       "tagName" : "hr",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;hr&gt;</code> element</strong> represents a thematic break between paragraph-level elements (for example, a change of scene in a story, or a shift of topic with a section). In previous versions of HTML, it represented a horizontal rule. It may still be displayed as a horizontal rule in visual browsers, but is now defined in semantic terms, rather than presentational terms."
       ]
     },
     {
       "tagName" : "html",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;html&gt;</code> element</strong> represents the root (top-level element) of an HTML document, so it is also referred to as the <em>root element</em>. All other elements must be descendants of this element."
       ]
     },
     {
       "tagName" : "i",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;i&gt;</code> element</strong> represents a range of text that is set off from the normal text for some reason, for example, technical terms, foreign language phrases, or fictional character thoughts. It is typically displayed in italic type."
       ]
     },
     {
       "tagName" : "iframe",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;iframe&gt;</code>&nbsp;element</strong>&nbsp;represents a nested browsing context, effectively embedding another HTML page into the current page. In HTML 4.01, a document may contain a <code>head</code> and a <code>body</code> or a <code>head</code> and a <code>frameset</code>, but not both a <code>body</code> and a <code>frameset</code>. However, an <code>&lt;iframe&gt;</code> can be used within a normal document body. Each browsing context has its own session history and active document. The browsing context that contains the embedded content is called the <dfn>parent</dfn> browsing context. The <dfn>top-level</dfn> browsing context (which has no parent) is typically the browser window."
       ]
     },
     {
       "tagName" : "img",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;img&gt;</code> element</strong> represents an image in the document."
       ]
     },
     {
       "tagName" : "input",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;input&gt;</code> element</strong> is used to create interactive controls for web-based forms in order to accept data from the user."
       ]
     },
     {
       "tagName" : "ins",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;ins&gt;</code> element</strong> represents a range of text that has been added to a document."
       ]
     },
     {
       "tagName" : "kbd",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;kbd&gt;</code> element</strong> represents user input and produces an inline element displayed in the browser's default monospace font."
       ]
     },
     {
       "tagName" : "keygen",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The HTML <code>&lt;keygen&gt;</code> element exists to facilitate generation of key material, and submission of the public key as part of an <a href=\"/en-US/docs/Web/Guide/HTML/Forms\">HTML form</a>. This mechanism is designed for use with Web-based certificate management systems. It is expected that the <code>&lt;keygen&gt;</code> element will be used in an HTML form along with other information needed to construct a certificate request, and that the result of the process will be a signed certificate."
       ]
     },
     {
       "tagName" : "label",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;label&gt;</code> element</strong> represents a caption for an item in a user interface."
       ]
     },
     {
       "tagName" : "legend",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;legend&gt;</code> element</strong> represents a caption for the content of its parent <a title=\"The HTML <fieldset> element is used to group several controls as well as labels (<label>) within a web form.\" href=\"/en-US/docs/Web/HTML/Element/fieldset\"><code>&lt;fieldset&gt;</code></a>."
       ]
     },
     {
       "tagName" : "li",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;li&gt;</code> element</strong> is used to represent an item in a list. It must be contained in a parent element: an ordered list (<a title=\"The HTML <ol> element represents an ordered list of items, typically rendered as a numbered list.\" href=\"/en-US/docs/Web/HTML/Element/ol\"><code>&lt;ol&gt;</code></a>), an unordered list (<a title=\"The HTML <ul> element represents an unordered list of items, typically rendered as a bulleted list.\" href=\"/en-US/docs/Web/HTML/Element/ul\"><code>&lt;ul&gt;</code></a>), or a menu (<a title=\"The HTML <menu> element represents a group of commands that a user can perform or activate. This includes both list menus, which might appear across the top of a screen, as well as context menus, such as those that might appear underneath a button after it has been clicked.\" href=\"/en-US/docs/Web/HTML/Element/menu\"><code>&lt;menu&gt;</code></a>). In menus and unordered lists, list items are usually displayed using bullet points. In ordered lists, they are usually displayed with an ascending counter on the left, such as a number or letter."
       ]
     },
     {
       "tagName" : "link",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;link&gt;</code> element</strong> specifies relationships between the current document and an external resource. Possible uses for this element include defining a relational framework for navigation. This element is most used to link to <a title=\"Cascading Style Sheets\" href=\"/en-US/docs/Glossary/CSS\">style sheets</a>."
       ]
     },
     {
       "tagName" : "main",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;main&gt;</code> element</strong> represents the main content of&nbsp;the <a title=\"The HTML <body> Element represents the content of an HTML&nbsp;document. There can be only one <body> element in a document.\" href=\"/en-US/docs/Web/HTML/Element/body\"><code>&lt;body&gt;</code></a> of a document, portion of a document, or application. The main content area consists of content that is directly related to, or expands upon the central topic of, a document or the central functionality of an application."
       ]
     },
     {
       "tagName" : "map",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;map&gt;</code> element</strong> is used with <a title=\"The HTML <area> element defines a hot-spot region on an image, and optionally associates it with a hypertext link. This element is used only within a <map> element.\" href=\"/en-US/docs/Web/HTML/Element/area\"><code>&lt;area&gt;</code></a> elements to define an image map (a clickable link area)."
       ]
     },
     {
       "tagName" : "mark",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "<span class=\"seoSummary\">The <strong>HTML <code>&lt;mark&gt;</code> element</strong> represents highlighted text, i.e., a run of text marked for reference purpose, due to its <em>relevance</em> in a particular context.</span> For example it can be used in a page showing search results to highlight every instance of the searched-for word."
       ]
     },
     {
       "tagName" : "menu",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;menu&gt;</code> element</strong> represents a group of commands that a user can perform or activate. This includes both list menus, which might appear across the top of a screen, as well as context menus, such as those that might appear underneath a button after it has been clicked."
       ]
     },
     {
       "tagName" : "menuitem",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;menuitem&gt;</code> element</strong> represents a command that a user is able to invoke through a popup menu. This includes context menus, as well as menus that might be attached to a menu button."
       ]
     },
     {
       "tagName" : "meta",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;meta&gt;</code> element</strong> represents <a title=\"metadata: Metadata is — in its very simplest definition — data that describes data. For example, an HTML document is data, but HTML can also contain metadata in its <head> element that describes the document — for example who wrote it, and its summary.\" class=\"glossaryLink\" href=\"/en-US/docs/Glossary/Metadata\">metadata</a> that cannot be represented by other HTML meta-related elements, like <a title=\"The HTML <base> element specifies the base URL to use for all relative URLs contained within a document. There can be only one <base> element in a document.\" href=\"/en-US/docs/Web/HTML/Element/base\"><code>&lt;base&gt;</code></a>, <a title=\"The HTML <link> element specifies relationships between the current document and an external resource. Possible uses for this element include defining a relational framework for navigation. This element is most used to link to style sheets.\" href=\"/en-US/docs/Web/HTML/Element/link\"><code>&lt;link&gt;</code></a>, <a title=\"The HTML <script> element is used to embed or reference an executable script.\" href=\"/en-US/docs/Web/HTML/Element/script\"><code>&lt;script&gt;</code></a>, <a title=\"The HTML <style> element contains style information for a document, or part of a document. By default, the style instructions written inside that element are expected to be CSS.\" href=\"/en-US/docs/Web/HTML/Element/style\"><code>&lt;style&gt;</code></a> or <a title=\"The HTML <title> element defines the title of the document, shown in a browser's title bar or on the page's tab. It can only contain text, and any contained tags are ignored.\" href=\"/en-US/docs/Web/HTML/Element/title\"><code>&lt;title&gt;</code></a>."
       ]
     },
     {
       "tagName" : "meter",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;meter&gt;</code> element</strong> represents either a scalar value within a known range or a fractional value."
       ]
     },
     {
       "tagName" : "nav",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "<span class=\"seoSummary\">The <strong>HTML <code>&lt;nav&gt;</code> element</strong> represents a section of a page whose purpose is to provide navigation links, either within the current document or to other documents. Common examples of navigation sections are menus, tables of contents, and indexes.</span>"
       ]
     },
     {
       "tagName" : "noscript",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;noscript&gt;</code> element</strong> defines a section of HTML to be inserted if a script type on the page is unsupported or if scripting is currently turned off in the browser."
       ]
     },
     {
       "tagName" : "object",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;object&gt;</code> element</strong> represents an external resource, which can be treated as an image, a nested browsing context, or a resource to be handled by a plugin."
       ]
     },
     {
       "tagName" : "ol",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;ol&gt;</code> element</strong> represents an ordered list of items, typically rendered as a numbered list."
       ]
     },
     {
       "tagName" : "optgroup",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;optgroup&gt;</code> element</strong> creates a grouping of options within a <a title=\"The HTML <select> element represents a control that provides a menu of options:\" href=\"/en-US/docs/Web/HTML/Element/select\"><code>&lt;select&gt;</code></a> element."
       ]
     },
     {
       "tagName" : "option",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "<span class=\"seoSummary\">The <strong>HTML <code>&lt;option&gt;</code> element</strong> is used to define an item contained in a <a title=\"The HTML <select> element represents a control that provides a menu of options:\" href=\"/en-US/docs/Web/HTML/Element/select\"><code>&lt;select&gt;</code></a>, an <a title=\"The HTML <optgroup> element creates a grouping of options within a <select> element.\" href=\"/en-US/docs/Web/HTML/Element/optgroup\"><code>&lt;optgroup&gt;</code></a>, or a <a title=\"The HTML <datalist> element contains a set of <option> elements that represent the values available for other controls.\" href=\"/en-US/docs/Web/HTML/Element/datalist\"><code>&lt;datalist&gt;</code></a>&nbsp;element. As such,&nbsp;<code>&lt;option&gt;</code>&nbsp;can represent menu items in popups and other lists of items in an HTML document.</span>"
       ]
     },
     {
       "tagName" : "output",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;output&gt;</code> element</strong> represents the result of a calculation or user action."
       ]
     },
     {
       "tagName" : "p",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "<span class=\"seoSummary\">The <strong>HTML <code>&lt;p&gt;</code> element</strong> represents a paragraph of text.</span> Paragraphs are usually represented in visual media as blocks of text that are separated from adjacent blocks by vertical blank space and/or first-line indentation.&nbsp;Paragraphs are <a href=\"/en-US/docs/Web/HTML/Block-level_elements\">block-level elements</a>."
       ]
     },
     {
       "tagName" : "param",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;param&gt;</code> element</strong> defines parameters for an <a title=\"The HTML <object> element represents an external resource, which can be treated as an image, a nested browsing context, or a resource to be handled by a plugin.\" href=\"/en-US/docs/Web/HTML/Element/object\"><code>&lt;object&gt;</code></a> element."
       ]
     },
     {
       "tagName" : "picture",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;picture&gt;</code> element</strong> is a container used to specify multiple <a title=\"The HTML <source> element specifies multiple media resources for either the <picture>, the <audio> or the <video> element. It is an empty element. It is commonly used to serve the same media content in multiple formats supported by different browsers.\" href=\"/en-US/docs/Web/HTML/Element/source\"><code>&lt;source&gt;</code></a> elements for a specific <a title=\"The HTML <img> element represents an image in the document.\" href=\"/en-US/docs/Web/HTML/Element/img\"><code>&lt;img&gt;</code></a> contained in it. The browser will choose the most suitable source according to the current layout of the page (the constraints of the box the image will appear in) and the device it will be displayed on (e.g. a normal or hiDPI device.)"
       ]
     },
     {
       "tagName" : "pre",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;pre&gt;</code> element</strong> represents preformatted text. Text within this element is typically displayed in a non-proportional (\"<a href=\"/en-US/docs/XUL/Style/monospace\">monospace</a>\") font exactly as it is laid out in the file. Whitespace inside this element is displayed as typed."
       ]
     },
     {
       "tagName" : "progress",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;progress&gt;</code> element</strong> represents the completion progress of a task, typically displayed as a progress bar."
       ]
     },
     {
       "tagName" : "q",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;q&gt;</code> element </strong> indicates that the enclosed text is a short inline quotation. This element is intended for short quotations that don't require paragraph breaks; for long quotations use the <a title=\"The HTML <blockquote> Element (or HTML Block Quotation Element) indicates that the enclosed text is an extended quotation. Usually, this is rendered visually by indentation (see Notes for how to change it). A URL for the source of the quotation may be given using the cite attribute, while a text representation of the source can be given using the <cite> element.\" href=\"/en-US/docs/Web/HTML/Element/blockquote\"><code>&lt;blockquote&gt;</code></a> element."
       ]
     },
     {
       "tagName" : "rp",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;rp&gt;</code> element</strong> is used to provide fall-back parentheses for browsers that do not support display of ruby annotations using the <a title=\"The HTML <ruby> element represents a ruby annotation. Ruby annotations are for showing pronunciation of East Asian characters.\" href=\"/en-US/docs/Web/HTML/Element/ruby\"><code>&lt;ruby&gt;</code></a> element."
       ]
     },
     {
       "tagName" : "rt",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;rt&gt;</code> element</strong> embraces pronunciation of characters presented in a ruby annotations, which are used to describe the pronunciation of East Asian characters. This element is always used inside a <a title=\"The HTML <ruby> element represents a ruby annotation. Ruby annotations are for showing pronunciation of East Asian characters.\" href=\"/en-US/docs/Web/HTML/Element/ruby\"><code>&lt;ruby&gt;</code></a> element."
       ]
     },
     {
       "tagName" : "ruby",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;ruby&gt;</code> element</strong> represents a ruby annotation. Ruby annotations are for showing pronunciation of East Asian characters."
       ]
     },
     {
       "tagName" : "s",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;s&gt;</code> element</strong> renders text with a strikethrough, or a line through it. Use the <code>&lt;s&gt;</code> element to represent things that are no longer relevant or no longer accurate. However, <code>&lt;s&gt;</code> is not appropriate when indicating document edits; for that, use the <a title=\"The HTML <del> element represents a range of text that has been deleted from a document. This element is often (but need not be) rendered with strike-through text.\" href=\"/en-US/docs/Web/HTML/Element/del\"><code>&lt;del&gt;</code></a> and <a title=\"The HTML <ins> element represents a range of text that has been added to a document.\" href=\"/en-US/docs/Web/HTML/Element/ins\"><code>&lt;ins&gt;</code></a> elements, as appropriate."
       ]
     },
     {
       "tagName" : "samp",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;samp&gt;</code> element</strong> is an element intended to identify sample output from a computer program. It is usually displayed in the browser's default monotype font (such as Lucida Console)."
       ]
     },
     {
       "tagName" : "script",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;script&gt;</code> element</strong> is used to embed or reference an executable script."
       ]
     },
     {
       "tagName" : "section",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;section&gt;</code> element</strong> represents a standalone section of functionality contained within an HTML document, typically with a heading, which doesn't have a more specific semantic element to represent it."
       ]
     },
     {
       "tagName" : "select",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "<span class=\"seoSummary\">The <strong>HTML <code>&lt;select&gt;</code> element</strong> represents a control that provides a menu of options:</span>"
       ]
     },
     {
       "tagName" : "small",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;small&gt;</code></strong> <strong>element </strong>makes the text <em>font size</em> one size smaller (for example, from large to medium, or from small to x-small) down to the browser's minimum font size.&nbsp; In HTML5, this element is repurposed to represent side-comments and small print, including copyright and legal text, independent of its styled presentation."
       ]
     },
     {
       "tagName" : "source",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;source&gt;</code> element</strong> specifies multiple media resources for either the <a title=\"The HTML <picture> element is a container used to specify multiple <source> elements for a specific <img> contained in it. The browser will choose the most suitable source according to the current layout of the page (the constraints of the box the image will appear in) and the device it will be displayed on (e.g. a normal or hiDPI device.)\" href=\"/en-US/docs/Web/HTML/Element/picture\"><code>&lt;picture&gt;</code></a>, the <a title=\"The HTML <audio> element is used to embed sound content in documents. It may contain one or more audio sources, represented using the src attribute or the <source> element:&nbsp;the browser will choose the most suitable one. It can also be the destination for streamed media, using a MediaStream.\" href=\"/en-US/docs/Web/HTML/Element/audio\"><code>&lt;audio&gt;</code></a> or the <a title=\"Use the HTML <video> element to embed video content in a document.\" href=\"/en-US/docs/Web/HTML/Element/video\"><code>&lt;video&gt;</code></a> element. It is an empty element. It is commonly used to serve the same media content in <a href=\"/en-US/docs/Media_formats_supported_by_the_audio_and_video_elements\">multiple formats supported by different browsers</a>."
       ]
     },
     {
       "tagName" : "span",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "<span class=\"seoSummary\">The <strong>HTML <code>&lt;span&gt;</code> element</strong> is a generic inline container for phrasing content, which does not inherently represent anything. It can be used to group elements for styling purposes (using the <code>class</code> or <code>id</code> attributes), or because they share attribute values, such as <code>lang</code>.</span> It should be used only when no other semantic element is appropriate. <code>&lt;span&gt;</code> is very much like a <a title=\"The HTML <div> element is the generic container for flow content and does not inherently represent anything. Use it to group elements for purposes such as styling (using the class or id attributes), marking a section of a document in a different language (using the lang attribute), and so on.\" href=\"/en-US/docs/Web/HTML/Element/div\"><code>&lt;div&gt;</code></a> element, but <a title=\"The HTML <div> element is the generic container for flow content and does not inherently represent anything. Use it to group elements for purposes such as styling (using the class or id attributes), marking a section of a document in a different language (using the lang attribute), and so on.\" href=\"/en-US/docs/Web/HTML/Element/div\"><code>&lt;div&gt;</code></a> is a <a href=\"/en-US/docs/HTML/Block-level_elements\">block-level element</a> whereas a <code>&lt;span&gt;</code> is an<a href=\"/en-US/docs/HTML/Inline_elements\"> inline element</a>."
       ]
     },
     {
       "tagName" : "strong",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML </strong><code><strong>&lt;strong&gt;</strong></code><strong> element</strong> gives text strong importance, and is typically displayed in bold."
       ]
     },
     {
       "tagName" : "style",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;style&gt;</code> element</strong> contains style information for a document, or part of a document. By default, the style instructions written inside that element are expected to be <a href=\"/en-US/docs/Web/CSS\">CSS</a>."
       ]
     },
     {
       "tagName" : "sub",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;sub&gt;</code> element</strong> defines a span of text that should be displayed, for typographic reasons, lower, and often smaller, than the main span of text."
       ]
     },
     {
       "tagName" : "summary",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;summary&gt;</code> element</strong> is used as a summary, caption, or legend for the content of a <a title=\"The HTML <details> element is used as a disclosure widget from which the user can retrieve additional information.\" href=\"/en-US/docs/Web/HTML/Element/details\"><code>&lt;details&gt;</code></a> element."
       ]
     },
     {
       "tagName" : "sup",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;sup&gt;</code> element</strong> defines a span of text that should be displayed, for typographic reasons, higher, and often smaller, than the main span of text."
       ]
     },
     {
       "tagName" : "table",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;table&gt;</code> element</strong> represents tabular data — that is, information expressed via a two-dimensional data table."
       ]
     },
     {
       "tagName" : "tbody",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;tbody&gt;</code> element</strong> groups one or more <a title=\"The HTML <tr> element specifies that the markup contained inside the <tr> block comprises one row of a table, inside which the <th> and <td> elements create header and data cells, respectively, within the row.\" href=\"/en-US/docs/Web/HTML/Element/tr\"><code>&lt;tr&gt;</code></a> elements as the body of a <a title=\"The HTML <table> element represents tabular data — that is, information expressed via a two-dimensional data table.\" href=\"/en-US/docs/Web/HTML/Element/table\"><code>&lt;table&gt;</code></a> element."
       ]
     },
     {
       "tagName" : "td",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;td&gt;</code> element</strong> defines a cell of a table that contains data. It participates in the <em>table model</em>."
       ]
     },
     {
       "tagName" : "textarea",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;textarea&gt;</code> element</strong> represents a multi-line plain-text editing control."
       ]
     },
     {
       "tagName" : "tfoot",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;tfoot&gt;</code> element</strong> defines a set of rows summarizing the columns of the table."
       ]
     },
     {
       "tagName" : "th",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "<span class=\"seoSummary\">The <strong>HTML <code>&lt;th&gt;</code> element</strong> defines a cell as header of a group of table cells. The exact nature of this group is defined by the <code><a href=\"/en-US/docs/Web/HTML/Element/th#attr-scope\">scope</a></code> and <code><a href=\"/en-US/docs/Web/HTML/Element/th#attr-headers\">headers</a></code> attributes.</span>"
       ]
     },
     {
       "tagName" : "thead",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;thead&gt;</code> element</strong> defines a set of rows defining the head of the columns of the table."
       ]
     },
     {
       "tagName" : "time",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;time&gt;</code> element</strong> represents either a time on a 24-hour clock or a precise date in the <a class=\"external\" href=\"https://en.wikipedia.org/wiki/Gregorian_calendar\">Gregorian calendar</a> (with optional time and timezone information)."
       ]
     },
     {
       "tagName" : "title",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;title&gt;</code> element</strong> defines the title of the document, shown in a browser's title bar or on the page's tab. It can only contain text, and any contained tags are ignored."
       ]
     },
     {
       "tagName" : "tr",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;tr&gt;</code> element</strong> defines a row of cells in a table. Those can be a mix of <a title=\"The HTML <td> element defines a cell of a table that contains data. It participates in the table model.\" href=\"/en-US/docs/Web/HTML/Element/td\"><code>&lt;td&gt;</code></a> and <a title=\"The HTML <th> element defines a cell as header of a group of table cells. The exact nature of this group is defined by the scope and headers attributes.\" href=\"/en-US/docs/Web/HTML/Element/th\"><code>&lt;th&gt;</code></a> elements."
       ]
     },
     {
       "tagName" : "track",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;track&gt;</code> element</strong> is used as a child of the media elements <a title=\"The HTML <audio> element is used to embed sound content in documents. It may contain one or more audio sources, represented using the src attribute or the <source> element:&nbsp;the browser will choose the most suitable one. It can also be the destination for streamed media, using a MediaStream.\" href=\"/en-US/docs/Web/HTML/Element/audio\"><code>&lt;audio&gt;</code></a> and <a title=\"Use the HTML <video> element to embed video content in a document.\" href=\"/en-US/docs/Web/HTML/Element/video\"><code>&lt;video&gt;</code></a>. It lets you specify timed text tracks (or time-based data), for example to automatically handle subtitles. The tracks are formatted in <a href=\"/en-US/docs/Web/API/Web_Video_Text_Tracks_Format\">WebVTT format</a> (<code>.vtt</code> files) — Web Video Text Tracks."
       ]
     },
     {
       "tagName" : "u",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;u&gt;</code> element</strong> renders text with an underline, a line under the baseline of its content. In HTML5, this element represents a span of text with an unarticulated, though explicitly rendered, non-textual annotation, such as labeling the text as being a proper name in Chinese text (a Chinese proper name mark), or labeling the text as being misspelled."
       ]
     },
     {
       "tagName" : "ul",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The<strong> HTML <code>&lt;ul&gt;</code> element</strong> represents an unordered list of items, typically rendered as a bulleted list."
       ]
     },
     {
       "tagName" : "var",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;var&gt;</code> element</strong> represents a variable in a mathematical expression or a programming context."
       ]
     },
     {
       "tagName" : "video",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "Use the <strong>HTML <code>&lt;video&gt;</code> element</strong> to embed video content in a document."
       ]
     },
     {
       "tagName" : "wbr",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <strong>HTML <code>&lt;wbr&gt;</code> element</strong> represents a word break opportunity—a position within text where the browser may optionally break a line, though its line-breaking rules would not otherwise create a break at that location."
       ]
@@ -677,6 +790,7 @@
     {
       "attributeName" : "preload",
       "attributeType" : "String",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "audio - This enumerated attribute is intended to provide a hint to the browser about what the author thinks will lead to the best user experience. It may have one of the following values: <ul>  <li><code>none</code>: indicates that the audio should not be preloaded;</li>  <li><code>metadata</code>: indicates that only audio metadata (e.g. length) is fetched;</li>  <li><code>auto</code>: indicates that the whole audio file could be downloaded, even if the user is not expected to use it;</li>  <li>the <em>empty string</em>: synonym of the <code>auto</code> value.</li> </ul> <p>If not set, its default value is browser-defined (i.e. each browser may have its own default value). The spec advises it to be set to <code>metadata</code>.</p> <div class=\"note\"> <strong>Usage notes:</strong>  <ul>   <li>The <code>autoplay</code> attribute has precedence over&nbsp;<code>preload</code>. If <code>autoplay</code> is specified, the browser would obviously need to start downloading the audio for playback.</li>   <li>The browser is not forced by the specification to follow the value of this attribute; it is a mere hint.</li>  </ul> </div>",
         "video - This enumerated attribute is intended to provide a hint to the browser about what the author thinks will lead to the best user experience. It may have one of the following values: <ul>  <li><code>none</code>: indicates that the video should not be preloaded.</li>  <li><code>metadata</code>: indicates that only video metadata (e.g. length) is fetched.</li>  <li><code>auto</code>: indicates that the whole video file could be downloaded, even if the user is not expected to use it.</li>  <li>the <em>empty string</em>: synonym of the <code>auto</code> value.</li> </ul> <p>If not set, its default value is browser-defined (i.e. each browser may have its default value). The spec advises it to be set to <code>metadata</code>.</p> <div class=\"note\"> <strong>Usage notes:</strong>  <ul>   <li>The <code>autoplay</code> attribute has precedence over <code>preload</code>. If <code>autoplay</code> is specified, the browser would obviously need to start downloading the video for playback.</li>   <li>The specification does not force the browser to follow the value of this attribute; it is a mere hint.</li>  </ul> </div>"
@@ -690,6 +804,7 @@
     {
       "attributeName" : "onToggle",
       "attributeType" : "EventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -699,6 +814,7 @@
     {
       "attributeName" : "download",
       "attributeType" : "Boolean",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "area - This attribute, if present, indicates that the author intends the hyperlink to be used for downloading a resource. See <a title=\"The HTML <a> element (or anchor element) creates a hyperlink to other web pages, files, locations within the same page, email addresses, or any other URL.\" href=\"/en-US/docs/Web/HTML/Element/a\"><code>&lt;a&gt;</code></a> for a full description of the <code><a href=\"/en-US/docs/Web/HTML/Element/a#attr-download\">download</a></code> attribute.",
         "a - This attribute instructs browsers to download a URL instead of navigating to it, so the user will be prompted to save it as a local file. If the attribute has a value, it is used as the pre-filled file name in the Save prompt (the user can still change the file name if they want). There are no restrictions on allowed values, though <code>/</code> and <code>\\</code> are converted to underscores. Most file systems limit some punctuation in file names, and browsers will adjust the suggested name accordingly. <div class=\"note\"> <strong>Notes:</strong>  <ul>   <li>This attribute only works for <a href=\"/en-US/docs/Web/Security/Same-origin_policy\">same-origin URLs</a>.</li>   <li>This attribute can be used with <a href=\"/en-US/docs/Web/API/URL.createObjectURL\"><code>blob:</code> URLs</a> and <a href=\"/en-US/docs/Web/HTTP/Basics_of_HTTP/Data_URIs\"><code>data:</code> URLs</a> to download content generated by JavaScript, such as pictures created in an image-editor Web app.</li>   <li>If the HTTP header <a href=\"/en-US/docs/Web/HTTP/Headers/Content-Disposition\"><code>Content-Disposition:</code></a> gives a different filename than this attribute, the HTTP header takes priority over this attribute.</li>   <li>If <code>Content-Disposition:</code> is set to <code>inline</code>, Firefox prioritizes <code>Content-Disposition</code>, like the filename case, while Chrome prioritizes the <code>download</code> attribute.</li>  </ul> </div>"
@@ -712,6 +828,7 @@
     {
       "attributeName" : "onClose",
       "attributeType" : "EventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -721,6 +838,7 @@
     {
       "attributeName" : "src",
       "attributeType" : "String",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "track - Address of the track (<code>.vtt</code> file). Must be a valid URL. This attribute must be defined.",
         "source - Required for <a title=\"The HTML <audio> element is used to embed sound content in documents. It may contain one or more audio sources, represented using the src attribute or the <source> element:&nbsp;the browser will choose the most suitable one. It can also be the destination for streamed media, using a MediaStream.\" href=\"/en-US/docs/Web/HTML/Element/audio\"><code>&lt;audio&gt;</code></a> and <a title=\"Use the HTML <video> element to embed video content in a document.\" href=\"/en-US/docs/Web/HTML/Element/video\"><code>&lt;video&gt;</code></a>, address of the media resource. The value of this attribute is ignored when the <code>&lt;source&gt;</code> element is placed inside a <a title=\"The HTML <picture> element is a container used to specify multiple <source> elements for a specific <img> contained in it. The browser will choose the most suitable source according to the current layout of the page (the constraints of the box the image will appear in) and the device it will be displayed on (e.g. a normal or hiDPI device.)\" href=\"/en-US/docs/Web/HTML/Element/picture\"><code>&lt;picture&gt;</code></a> element.",
@@ -748,6 +866,7 @@
     {
       "attributeName" : "action",
       "attributeType" : "String",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The URI of a program that processes the form information. This value can be overridden by a <code><a href=\"/en-US/docs/Web/HTML/Element/button#attr-formaction\">formaction</a></code> attribute on a <a title=\"The HTML <button> element represents a clickable button.\" href=\"/en-US/docs/Web/HTML/Element/button\"><code>&lt;button&gt;</code></a> or <a title=\"The HTML <input> element is used to create interactive controls for web-based forms in order to accept data from the user.\" href=\"/en-US/docs/Web/HTML/Element/input\"><code>&lt;input&gt;</code></a> element."
       ],
@@ -759,6 +878,7 @@
     {
       "attributeName" : "onPlaying",
       "attributeType" : "EventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -768,6 +888,7 @@
     {
       "attributeName" : "poster",
       "attributeType" : "String",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "A URL indicating a poster frame to show until the user plays or seeks. If this attribute isn't specified, nothing is displayed until the first frame is available; then the first frame is shown as the poster frame."
       ],
@@ -779,6 +900,7 @@
     {
       "attributeName" : "onTimeUpdate",
       "attributeType" : "EventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -788,6 +910,7 @@
     {
       "attributeName" : "onSubmit",
       "attributeType" : "EventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -797,6 +920,7 @@
     {
       "attributeName" : "step",
       "attributeType" : "String",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "Works with the <strong>min</strong> and <strong>max</strong> attributes to limit the increments at which a numeric or date-time value can be set. It can be the string <code>any</code> or a positive floating point number. If this attribute is not set to <code>any</code>, the control accepts only values at multiples of the step value greater than the minimum."
       ],
@@ -808,6 +932,7 @@
     {
       "attributeName" : "onLoad",
       "attributeType" : "EventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -817,6 +942,7 @@
     {
       "attributeName" : "default",
       "attributeType" : "Boolean",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "menuitem - This Boolean attribute indicates use of the same command as the menu's subject element (such as a <code>button</code> or <code>input</code>).",
         "track - This attribute indicates that the track should be enabled unless the user's preferences indicate that another track is more appropriate. This may only be used on one <code>track</code> element per media element."
@@ -830,6 +956,7 @@
     {
       "attributeName" : "type",
       "attributeType" : "String",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "style - This attribute defines the styling language as a MIME type (charset should not be specified). This attribute is optional and defaults to <code>text/css</code> if it's missing.",
         "object - The <a href=\"/en-US/docs/Glossary/Content_type\">content type</a> of the resource specified by <strong>data</strong>. At least one of <strong>data</strong> and <strong>type</strong> must be defined.",
@@ -871,6 +998,7 @@
     {
       "attributeName" : "onDragEnd",
       "attributeType" : "EventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -880,6 +1008,7 @@
     {
       "attributeName" : "onFocus",
       "attributeType" : "EventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -889,6 +1018,7 @@
     {
       "attributeName" : "draggable",
       "attributeType" : "String",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "Is an enumerated attribute indicating whether the element can be dragged, using the \n<a href=\"/en-us/docs/DragDrop/Drag_and_Drop\">Drag and Drop API</a>. It can have the following values: \n<ul> \n <li><code>true</code>, which indicates that the element may be dragged</li> \n <li><code>false</code>, which indicates that the element may not be dragged.</li> \n</ul>"
       ],
@@ -898,6 +1028,7 @@
     {
       "attributeName" : "onWaiting",
       "attributeType" : "EventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -907,6 +1038,7 @@
     {
       "attributeName" : "max",
       "attributeType" : "String",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "meter - The upper numeric bound of the measured range. This must be greater than the minimum value (<code>min</code> attribute), if specified. If unspecified, the maximum value is 1.",
         "progress - This attribute describes how much work the task indicated by the <code>progress</code> element requires. The <code>max</code> attribute, if present, must have a value greater than zero and be a valid floating point number. The default value is 1.",
@@ -922,6 +1054,7 @@
     {
       "attributeName" : "onError",
       "attributeType" : "EventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -931,6 +1064,7 @@
     {
       "attributeName" : "onDragExit",
       "attributeType" : "EventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -940,6 +1074,7 @@
     {
       "attributeName" : "onLoadStart",
       "attributeType" : "EventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -949,6 +1084,7 @@
     {
       "attributeName" : "onAutoComplete",
       "attributeType" : "EventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -958,6 +1094,7 @@
     {
       "attributeName" : "value",
       "attributeType" : "String",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "meter - The current numeric value. This must be between the minimum and maximum values (<code>min</code> attribute and <code>max</code> attribute) if they are specified. If unspecified or malformed, the value is 0. If specified, but not within the range given by the <code>min</code> attribute and <code>max</code> attribute, the value is equal to the nearest end of the range. <div class=\"note\"> <strong>Usage note: </strong>Unless the  <code>value</code> attribute is between  <code>0</code> and  <code>1</code> (inclusive), the  <code>min</code> and  <code>max</code> attributes should define the range so that the  <code>value</code> attribute's value is within it.</div>",
         "input - The initial value of the control. This attribute is optional except when the value of the <strong>type</strong> attribute is <code>radio</code> or <code>checkbox</code>.<br> Note that when reloading the page, Gecko and IE <a class=\"external link-https\" href=\"https://bugzilla.mozilla.org/show_bug.cgi?id=46845#c186\">will ignore the value specified in the HTML source</a>, if the value was changed before the reload.",
@@ -985,6 +1122,7 @@
     {
       "attributeName" : "onContextMenu",
       "attributeType" : "EventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -994,6 +1132,7 @@
     {
       "attributeName" : "headers",
       "attributeType" : "String",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "th - This attribute contains&nbsp;a list of space-separated strings, each corresponding to the <code>id</code> attributes of other <a title=\"The HTML <th> element defines a cell as header of a group of table cells. The exact nature of this group is defined by the scope and headers attributes.\" href=\"/en-US/docs/Web/HTML/Element/th\"><code>&lt;th&gt;</code></a> elements that relate to this element.",
         "td - This attribute contains a list of space-separated strings, each corresponding to the <strong>id</strong> attribute of the <a title=\"The HTML <th> element defines a cell as header of a group of table cells. The exact nature of this group is defined by the scope and headers attributes.\" href=\"/en-US/docs/Web/HTML/Element/th\"><code>&lt;th&gt;</code></a> elements that apply to this element."
@@ -1007,6 +1146,7 @@
     {
       "attributeName" : "alt",
       "attributeType" : "String",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "img - This attribute defines the alternative text describing the image. Users will see this text displayed if the image URL is wrong, the image is not in one of the <a href=\"#Supported_image_formats\">supported formats</a>, or if the image is not yet downloaded. <div class=\"note\">  <p>Browsers do not always display the image referenced by the element. This is the case for non-graphical browsers (including those used by people with vision impairments), if the user chooses not to display images, or if the browser cannot display the image because it is invalid or an <a href=\"#Supported_image_formats\">unsupported type</a>. In these cases, the browser may replace the image with the text defined in this element's <code>alt</code> attribute. You should, for these reasons and others, provide a useful value for <code>alt</code> whenever possible.</p> </div> <div class=\"note\">  <p>Omitting this attribute altogether&nbsp;indicates that the image is a key part of the content, and no textual equivalent is available. Setting this attribute to an empty string (<code>alt=\"\")</code> indicates that this image is <em>not</em> a key part of the content, and that&nbsp;non-visual browsers may omit it from rendering.</p> </div>",
         "area - A text string alternative to display on browsers that do not display images. The text should be phrased so that it presents the user with the same kind of choice as the image would offer when displayed without the alternative text. In HTML4, this attribute is required, but may be the empty string (\"\"). In HTML5, this attribute is required only if the <strong>href</strong> attribute is used."
@@ -1020,6 +1160,7 @@
     {
       "attributeName" : "onScroll",
       "attributeType" : "EventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -1029,6 +1170,7 @@
     {
       "attributeName" : "method",
       "attributeType" : "String",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The <a href=\"/en-US/docs/Web/HTTP\">HTTP</a> method that the browser uses to submit the form. Possible values are: <ul>  <li><code>post</code>: Corresponds to the HTTP <a class=\"external\" href=\"https://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html#sec9.5\">POST method</a> ; form data are included in the body of the form and sent to the server.</li>  <li><code>get</code>: Corresponds to the HTTP <a class=\"external\" href=\"https://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html#sec9.3\">GET method</a>; form data are appended to the <code>action</code> attribute URI with a '?' as separator, and the resulting URI is sent to the server. Use this method when the form has no side-effects and contains only ASCII characters.</li> </ul> <p>This value can be overridden by a <code><a href=\"/en-US/docs/Web/HTML/Element/button#attr-formmethod\">formmethod</a></code> attribute on a <a title=\"The HTML <button> element represents a clickable button.\" href=\"/en-US/docs/Web/HTML/Element/button\"><code>&lt;button&gt;</code></a> or <a title=\"The HTML <input> element is used to create interactive controls for web-based forms in order to accept data from the user.\" href=\"/en-US/docs/Web/HTML/Element/input\"><code>&lt;input&gt;</code></a> element.</p>"
       ],
@@ -1040,6 +1182,7 @@
     {
       "attributeName" : "dangerouslySetInnerHTML",
       "attributeType" : "js.Object",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -1049,6 +1192,7 @@
     {
       "attributeName" : "title",
       "attributeType" : "String",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "a, abbr, address, area, article, aside, audio, b, base, bdi, bdo, big, blockquote, body, br, button, canvas, caption, cite, code, col, colgroup, data, datalist, dd, del, details, dfn, dialog, div, dl, dt, em, embed, fieldset, figcaption, figure, footer, form, h1, h2, h3, h4, h5, h6, head, header, hr, html, i, iframe, img, input, ins, kbd, keygen, label, legend, li, link, main, map, mark, menu, menuitem, meta, meter, nav, noscript, object, ol, optgroup, option, output, p, param, picture, pre, progress, q, rp, rt, ruby, s, samp, script, section, select, small, source, span, strong, style, sub, summary, sup, table, tbody, td, textarea, tfoot, th, thead, time, title, tr, track, u, ul, var, video, wbr - Contains a text representing advisory information related to the element it belongs to. Such information can typically, but not necessarily, be presented to the user as a tooltip.",
         "style - Specifies alternative style sheet sets.",
@@ -1060,6 +1204,7 @@
     {
       "attributeName" : "onInput",
       "attributeType" : "EventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -1069,6 +1214,7 @@
     {
       "attributeName" : "optimum",
       "attributeType" : "String",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "This attribute indicates the optimal numeric value. It must be within the range (as defined by the <code>min</code> attribute and <code>max</code> attribute). When used with the <code>low</code> attribute and <code>high</code> attribute, it gives an indication where along the range is considered preferable. For example, if it is between the <code>min</code> attribute and the <code>low</code> attribute, then the lower range is considered preferred."
       ],
@@ -1080,6 +1226,7 @@
     {
       "attributeName" : "pattern",
       "attributeType" : "String",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "A regular expression that the control's value is checked against. The pattern must match the entire value, not just some subset. Use the <strong>title</strong> attribute to describe the pattern to help the user. This attribute applies when the value of the <strong>type</strong> attribute is <code>text</code>, <code>search</code>, <code>tel</code>, <code>url</code>, <code>email</code>, or <code>password</code>,&nbsp;otherwise it is ignored. The regular expression language is the same as JavaScript <a title=\"The RegExp constructor creates a regular expression object for matching text with a pattern.\" href=\"/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp\"><code>RegExp</code></a> algorithm, with the <code>'u'</code> parameter that makes it treat the pattern as a sequence of unicode code points. The pattern is not surrounded by forward slashes."
       ],
@@ -1091,6 +1238,7 @@
     {
       "attributeName" : "rel",
       "attributeType" : "String",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "area - For anchors containing the <strong>href</strong> attribute, this attribute specifies the relationship of the target object to the link object. The value is a comma-separated list of <a href=\"/en-US/docs/Web/HTML/Link_types\">link types values</a>. The values and their semantics will be registered by some authority that might have meaning to the document author. The default relationship, if no other is given, is void. Use this attribute only if the <strong>href</strong> attribute is present.",
         "link - This attribute names a relationship of the linked document to the current document. The attribute must be a space-separated list of the <a href=\"/en-US/docs/Web/HTML/Link_types\">link types values</a>. The most common use of this attribute is to specify a link to an external style sheet: the <strong>rel</strong> attribute is set to <code>stylesheet</code>, and the <strong>href</strong> attribute is set to the URL of an external style sheet to format the page. WebTV also supports the use of the value <code>next</code> for <strong>rel</strong> to preload the next page in a document series.",
@@ -1106,6 +1254,7 @@
     {
       "attributeName" : "onCanPlay",
       "attributeType" : "EventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -1115,6 +1264,7 @@
     {
       "attributeName" : "hidden",
       "attributeType" : "Boolean",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "Is a Boolean attribute indicates that the element is not yet, or is no longer, \n<em>relevant</em>. For example, it can be used to hide elements of the page that can't be used until the login process has been completed. The browser won't render such elements. This attribute must not be used to hide content that could legitimately be shown."
       ],
@@ -1124,6 +1274,7 @@
     {
       "attributeName" : "onClick",
       "attributeType" : "EventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -1133,6 +1284,7 @@
     {
       "attributeName" : "onLoadedData",
       "attributeType" : "EventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -1142,6 +1294,7 @@
     {
       "attributeName" : "lang",
       "attributeType" : "String",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "Participates in defining the language of the element, the language that non-editable elements are written in or the language that editable elements should be written in. The tag contains one single entry value in the format defined&nbsp;in the \n<a class=\"external\" href=\"https://www.ietf.org/rfc/bcp/bcp47.txt\"><em>Tags for Identifying Languages (BCP47)</em></a> IETF document. \n<a href=\"#attr-xml:lang\"><strong>xml:lang</strong></a> has priority over it."
       ],
@@ -1151,6 +1304,7 @@
     {
       "attributeName" : "shape",
       "attributeType" : "String",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "a - This attribute was used to define a region for hyperlinks to create an image map. The values are <code>circle</code>, <code>default</code>, <code>polygon</code>, and <code>rect</code>. The format of the <strong>coords</strong> attribute depends on the value of shape. For <code>circle</code>, the value is <code>x,y,r</code> where <code>x</code> and <code>y</code> are the pixel coordinates for the center of the circle and <code>r</code> is the radius value in pixels. For <code>rect</code>, the <strong>coords</strong> attribute should be <code>x,y,w,h</code>. The <code>x,y</code> values define the upper-left-hand corner of the rectangle, while <code>w</code> and <code>h</code> define the width and height respectively. A value of <code>polygon</code> for <strong>shape</strong> requires <code>x1,y1,x2,y2,...</code> values for <strong>coords</strong>. Each of the <code>x,y</code> pairs defines a point in the polygon, with successive points being joined by straight lines and the last point joined to the first. The value <code>default</code> for shape requires that the entire enclosed area, typically an image, be used. <div class=\"note\"> <strong>Note:</strong> Use the  <a href=\"/en-US/docs/Web/HTML/Element/img#attr-usemap\"><code>usemap</code> attribute</a> for the  <a title=\"The HTML <img> element represents an image in the document.\" href=\"/en-US/docs/Web/HTML/Element/img\"><code>&lt;img&gt;</code></a> element and the associated  <a title=\"The HTML <map> element is used with <area> elements to define an image map (a clickable link area).\" href=\"/en-US/docs/Web/HTML/Element/map\"><code>&lt;map&gt;</code></a> element to define hotspots instead of the  <code>shape</code> attribute.</div>",
         "area - The shape of the associated hot spot. The specifications for HTML 5 and HTML 4 define the values <code>rect</code>, which defines a rectangular region; <code>circle</code>, which defines a circular region; <code>poly</code>, which defines a polygon; and <code>default</code>, which indicates the entire region beyond any defined shapes. Many browsers, notably Internet Explorer 4 and higher, support <code>circ</code>, <code>polygon</code>, and <code>rectangle</code> as valid values for <strong>shape</strong>; these values are <span title=\"This API has not been standardized.\"><i class=\"icon-warning-sign\"> </i></span>."
@@ -1164,6 +1318,7 @@
     {
       "attributeName" : "summary",
       "attributeType" : "String",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "This attribute defines an alternative text that summarizes the content of the table. Typically, it allows visually impaired people&nbsp;who are browsing the web with&nbsp;a Braille screen, to acquire information about the table. If the information added by&nbsp;this attribute is also&nbsp;useful to people who are not visually impaired, consider using the <a title=\"The HTML <caption> element represents the title of a table. Though it is always the first descendant of a <table>, its styling, using CSS, may place it elsewhere, relative to the table.\" href=\"/en-US/docs/Web/HTML/Element/caption\"><code>&lt;caption&gt;</code></a> instead. The summary attribute is not mandatory and may be omitted when a <a title=\"The HTML <caption> element represents the title of a table. Though it is always the first descendant of a <table>, its styling, using CSS, may place it elsewhere, relative to the table.\" href=\"/en-US/docs/Web/HTML/Element/caption\"><code>&lt;caption&gt;</code></a> element fulfills its role. <div class=\"note\"> <strong>Usage Note: </strong>Do not use this attribute, as it has been deprecated. Instead, choose one of these methods to add a description of a table:  <ul>   <li>Use&nbsp;prose&nbsp;around&nbsp;the table (this method is less&nbsp;semantic).</li>   <li>Add a description in the table's <a title=\"The HTML <caption> element represents the title of a table. Though it is always the first descendant of a <table>, its styling, using CSS, may place it elsewhere, relative to the table.\" href=\"/en-US/docs/Web/HTML/Element/caption\"><code>&lt;caption&gt;</code></a> element.</li>   <li>Add a description in a <a title=\"The HTML <details> element is used as a disclosure widget from which the user can retrieve additional information.\" href=\"/en-US/docs/Web/HTML/Element/details\"><code>&lt;details&gt;</code></a> element, inside the table's <a title=\"The HTML <caption> element represents the title of a table. Though it is always the first descendant of a <table>, its styling, using CSS, may place it elsewhere, relative to the table.\" href=\"/en-US/docs/Web/HTML/Element/caption\"><code>&lt;caption&gt;</code></a> element.</li>   <li>Include the <a title=\"The HTML <table> element represents tabular data — that is, information expressed via a two-dimensional data table.\" href=\"/en-US/docs/Web/HTML/Element/table\"><code>&lt;table&gt;</code></a> element in a <a title=\"The HTML <figure> element represents self-contained content, frequently with a caption (<figcaption>), and is typically referenced as a single unit.\" href=\"/en-US/docs/Web/HTML/Element/figure\"><code>&lt;figure&gt;</code></a> element and add the description in prose next to it.</li>   <li>Include the <a title=\"The HTML <table> element represents tabular data — that is, information expressed via a two-dimensional data table.\" href=\"/en-US/docs/Web/HTML/Element/table\"><code>&lt;table&gt;</code></a> element in a <a title=\"The HTML <figure> element represents self-contained content, frequently with a caption (<figcaption>), and is typically referenced as a single unit.\" href=\"/en-US/docs/Web/HTML/Element/figure\"><code>&lt;figure&gt;</code></a> element and add the description in prose inside a <a title=\"The HTML <figcaption> element represents a caption or a legend associated with a figure or an illustration described by the rest of the data of the <figure> element which is its immediate ancestor.\" href=\"/en-US/docs/Web/HTML/Element/figcaption\"><code>&lt;figcaption&gt;</code></a> element.</li>   <li>Adjust the table so that a description is not&nbsp;needed (e.g.&nbsp;use&nbsp;<a title=\"The HTML <th> element defines a cell as header of a group of table cells. The exact nature of this group is defined by the scope and headers attributes.\" href=\"/en-US/docs/Web/HTML/Element/th\"><code>&lt;th&gt;</code></a> and <a title=\"The HTML <thead> element defines a set of rows defining the head of the columns of the table.\" href=\"/en-US/docs/Web/HTML/Element/thead\"><code>&lt;thead&gt;</code></a> elements).</li>  </ul> </div>"
       ],
@@ -1175,6 +1330,7 @@
     {
       "attributeName" : "onShow",
       "attributeType" : "EventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -1184,6 +1340,7 @@
     {
       "attributeName" : "onSort",
       "attributeType" : "EventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -1193,6 +1350,7 @@
     {
       "attributeName" : "content",
       "attributeType" : "String",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "This attribute contains the value for the <code><a href=\"/en-US/docs/Web/HTML/Element/meta#attr-http-equiv\">http-equiv</a></code> or <code><a href=\"/en-US/docs/Web/HTML/Element/meta#attr-name\">name</a></code> attribute, depending on which was used."
       ],
@@ -1204,6 +1362,7 @@
     {
       "attributeName" : "onMouseUp",
       "attributeType" : "MouseEventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -1213,6 +1372,7 @@
     {
       "attributeName" : "onCueChange",
       "attributeType" : "EventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -1222,6 +1382,7 @@
     {
       "attributeName" : "onInvalid",
       "attributeType" : "EventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -1231,6 +1392,7 @@
     {
       "attributeName" : "cite",
       "attributeType" : "String",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "ins - This attribute defines the URI of a resource that explains the change, such as a link to meeting minutes or a ticket in a troubleshooting sytem.",
         "q - The value of this attribute is a URL that designates a source document or message for the information quoted. This attribute is intended to point to information explaining the context or the reference for the quote.",
@@ -1248,6 +1410,7 @@
     {
       "attributeName" : "name",
       "attributeType" : "String",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "param - Name of the parameter.",
         "a - This attribute was required for anchors defining a possible target location within a page. In HTML 4.01, <code>id</code> and <code>name</code> could be used simultaneously on a <code>&lt;a&gt;</code> element as long as they have identical values. <div class=\"note\">  <p><strong>Usage note:</strong> This attribute is obsolete in HTML5, use the <a href=\"/en-US/docs/HTML/Global_attributes#attr-id\">global attribute <code>id</code></a> instead.</p> </div>",
@@ -1288,6 +1451,7 @@
     {
       "attributeName" : "onKeyUp",
       "attributeType" : "EventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -1297,6 +1461,7 @@
     {
       "attributeName" : "style",
       "attributeType" : "js.Dynamic",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "Contains \n<a href=\"/en-US/docs/Web/CSS\">CSS</a> styling declarations to be applied to the element. Note that it is recommended for styles to be defined in a separate file or files. This attribute and the \n<a title=\"The HTML <style> element contains style information for a document, or part of a document. By default, the style instructions written inside that element are expected to be CSS.\" href=\"/en-US/docs/Web/HTML/Element/style\"><code>&lt;style&gt;</code></a> element have mainly the purpose of allowing for quick styling, for example for testing purposes."
       ],
@@ -1306,6 +1471,7 @@
     {
       "attributeName" : "open",
       "attributeType" : "Boolean",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "dialog - Indicates that the dialog is active and available for interaction. When the open attribute is not set, it shouldn't be shown to the user.",
         "details - This Boolean attribute indicates whether the details will be shown to the user on page load. Default is <code>false</code> and so details will be hidden."
@@ -1319,6 +1485,7 @@
     {
       "attributeName" : "coords",
       "attributeType" : "String",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "a - For use with the below <code>shape</code> attribute, this attribute used a comma-separated list of numbers to define the coordinates of the link on the page.",
         "area - A set of values specifying the coordinates of the hot-spot region. The number and meaning of the values depend upon the value specified for the <strong>shape</strong> attribute. For a <code>rect</code> or rectangle shape, the <strong>coords</strong> value is two x,y pairs: left, top, right, and bottom. For a <code>circle</code> shape, the value is <code>x,y,r</code> where <code>x,y</code> is a pair specifying the center of the circle and <code>r</code> is a value for the radius. For a <code>poly</code> or polygon&nbsp;shape, the value is a set of x,y pairs for each point in the polygon: <code>x1,y1,x2,y2,x3,y3,</code> and so on. In HTML4, the values are numbers of pixels or percentages, if a percent sign (%) is appended; in HTML5, the values are numbers of CSS&nbsp;pixels."
@@ -1332,6 +1499,7 @@
     {
       "attributeName" : "low",
       "attributeType" : "String",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The upper numeric bound of the low end of the measured range. This must be greater than the minimum value (<code>min</code> attribute), and it also must be less than the high value and maximum value (<code>high</code> attribute and <code>max</code> attribute, respectively), if any are specified. If unspecified, or if less than the minimum value, the <code>low</code> value is equal to the minimum value."
       ],
@@ -1343,6 +1511,7 @@
     {
       "attributeName" : "checked",
       "attributeType" : "Boolean",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "menuitem - Boolean attribute which indicates whether the command is selected. May only be used when the <code>type</code> attribute is <code>checkbox</code> or <code>radio</code>.",
         "input - <p>When the value of the <strong>type</strong> attribute is <code>radio</code> or <code>checkbox</code>, the presence of this Boolean attribute indicates that the control is selected by default,&nbsp;otherwise it is ignored.</p> <p>Unlike other browsers, Firefox will by default <a class=\"external\" href=\"https://stackoverflow.com/questions/5985839/bug-with-firefox-disabled-attribute-of-input-not-resetting-when-refreshing\">persist the dynamic checked state</a> of an <code>&lt;input&gt;</code> across page loads. Use the <code><a href=\"/en-US/docs/Web/HTML/Element/input#attr-autocomplete\">autocomplete</a></code> attribute to control this feature.</p>"
@@ -1356,6 +1525,7 @@
     {
       "attributeName" : "onSelect",
       "attributeType" : "EventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -1365,6 +1535,7 @@
     {
       "attributeName" : "onResize",
       "attributeType" : "EventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -1374,6 +1545,7 @@
     {
       "attributeName" : "ref",
       "attributeType" : "RefType",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -1383,6 +1555,7 @@
     {
       "attributeName" : "onDrag",
       "attributeType" : "EventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -1392,6 +1565,7 @@
     {
       "attributeName" : "list",
       "attributeType" : "String",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "Identifies a list of pre-defined options to suggest to the user. The value must be the <strong>id</strong> of a <a title=\"The HTML <datalist> element contains a set of <option> elements that represent the values available for other controls.\" href=\"/en-US/docs/Web/HTML/Element/datalist\"><code>&lt;datalist&gt;</code></a> element in the same document. The browser displays only options that are valid values for this input element. This attribute is ignored when the <strong>type</strong> attribute's value is <code>hidden</code>, <code>checkbox</code>, <code>radio</code>, <code>file</code>, or a button type."
       ],
@@ -1403,6 +1577,7 @@
     {
       "attributeName" : "scoped",
       "attributeType" : "Boolean",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "Specifies that the styles only apply to this element's parent element and that element's child elements."
       ],
@@ -1414,6 +1589,7 @@
     {
       "attributeName" : "integrity",
       "attributeType" : "String",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "script - Contains inline metadata that a user agent can use to verify that a fetched resource has been delivered free of unexpected manipulation. See <a href=\"/en-US/docs/Web/Security/Subresource_Integrity\">Subresource Integrity</a>.",
         "link - Contains inline metadata, a base64-encoded&nbsp;cryptographic hash of a resource (file) you’re telling the browser to fetch,&nbsp;that a user agent can use to verify that a fetched resource has been delivered free of unexpected manipulation. See <a href=\"/en-US/docs/Web/Security/Subresource_Integrity\">Subresource Integrity</a>."
@@ -1427,6 +1603,7 @@
     {
       "attributeName" : "icon",
       "attributeType" : "String",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "Image URL, used to provide a picture to represent the command."
       ],
@@ -1438,6 +1615,7 @@
     {
       "attributeName" : "onMouseMove",
       "attributeType" : "MouseEventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -1447,6 +1625,7 @@
     {
       "attributeName" : "onMouseDown",
       "attributeType" : "MouseEventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -1456,6 +1635,7 @@
     {
       "attributeName" : "onPause",
       "attributeType" : "EventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -1465,6 +1645,7 @@
     {
       "attributeName" : "controls",
       "attributeType" : "Boolean",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "audio - If this attribute is present, the browser will offer controls to allow the user to control audio playback, including volume, seeking, and pause/resume playback.",
         "video - If this attribute is present, the browser will offer controls to allow the user to control video playback, including volume, seeking, and pause/resume playback."
@@ -1478,6 +1659,7 @@
     {
       "attributeName" : "wrap",
       "attributeType" : "String",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "textarea - Indicates how the control wraps text. Possible values are: <ul>  <li><code>hard</code>: The browser automatically inserts line breaks (CR+LF) so that each line has no more than the width of the control; the <code>cols</code> attribute must be specified.</li>  <li><code>soft</code>: The browser ensures that all line breaks in the value consist of a CR+LF pair, but does not insert any additional line breaks.</li>  <li><code>off</code>: <span title=\"This API has not been standardized.\"><i class=\"icon-warning-sign\"> </i></span> Like <code>soft</code> but changes appearance to <code>white-space: pre</code> so line segments exceeding <code>cols</code> are not wrapped and area becomes horizontally scrollable.</li> </ul> <p>If this attribute is not specified, <code>soft</code> is its default value.</p>",
         "pre - Is a <em>hint</em> indicating how the overflow must happen. In modern browser this hint is ignored and no visual effect results in its present; to achieve such an effect, use CSS <a title=\"The white-space CSS property determines how whitespace inside an element is handled. To make words break within themselves, use overflow-wrap, word-break, or hyphens instead.\" href=\"/en-US/docs/Web/CSS/white-space\"><code>white-space</code></a> instead."
@@ -1491,6 +1673,7 @@
     {
       "attributeName" : "onMouseEnter",
       "attributeType" : "MouseEventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -1500,6 +1683,7 @@
     {
       "attributeName" : "onDrop",
       "attributeType" : "EventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -1509,6 +1693,7 @@
     {
       "attributeName" : "onEnded",
       "attributeType" : "EventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -1518,6 +1703,7 @@
     {
       "attributeName" : "capture",
       "attributeType" : "Boolean",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "<p>When the value of the <strong>type</strong> attribute is <code>file</code>, the presence of this Boolean attribute indicates that capture of media directly from the device's environment using a <a class=\"external\" href=\"https://www.w3.org/TR/html-media-capture/#dfn-media-capture-mechanism\">media capture mechanism</a> is preferred.</p>"
       ],
@@ -1529,6 +1715,7 @@
     {
       "attributeName" : "scrolling",
       "attributeType" : "String",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "Enumerated attribute indicating when the browser should provide a scroll bar (or other scrolling device) for the frame: <ul>  <li><code>auto</code>: Only when needed.</li>  <li><code>yes</code>: Always provide a scroll bar.</li>  <li><code>no</code>: Never provide a scroll bar.</li> </ul>"
       ],
@@ -1540,6 +1727,7 @@
     {
       "attributeName" : "disabled",
       "attributeType" : "Boolean",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "option - If this Boolean attribute is set, this option is not checkable. Often browsers grey out such control and it won't receive any browsing event, like mouse clicks or focus-related ones. If this attribute is not set, the element can still be disabled if one of its ancestors is a disabled <a title=\"The HTML <optgroup> element creates a grouping of options within a <select> element.\" href=\"/en-US/docs/Web/HTML/Element/optgroup\"><code>&lt;optgroup&gt;</code></a> element.",
         "textarea - This Boolean attribute indicates that the user cannot interact with the control. (If this attribute is not specified, the control inherits its setting from the containing element, for example <a title=\"The HTML <fieldset> element is used to group several controls as well as labels (<label>) within a web form.\" href=\"/en-US/docs/Web/HTML/Element/fieldset\"><code>&lt;fieldset&gt;</code></a>; if there is no containing element with the <code>disabled</code> attribute set, then the control is enabled.)",
@@ -1569,6 +1757,7 @@
     {
       "attributeName" : "async",
       "attributeType" : "Boolean",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "A boolean attribute indicating that the browser should, if possible, execute the script asynchronously. This attribute must not be used if the <code>src</code> attribute is absent (i.e. for inline scripts). If it is included&nbsp;in this case it will have no effect.&nbsp;<br> <br> Dynamically inserted scripts execute asynchronously by default, so to turn on synchronous execution (i.e. scripts execute in the order they were loaded) set `async=false` See <a href=\"#Browser_compatibility\">Browser compatibility</a> for notes on browser support. See also <a href=\"/en-US/docs/Games/Techniques/Async_scripts\">Async scripts for asm.js</a>."
       ],
@@ -1580,6 +1769,7 @@
     {
       "attributeName" : "muted",
       "attributeType" : "Boolean",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "audio - A Boolean attribute which indicates whether the audio will be initially silenced. Its default value is false.",
         "video - A Boolean attribute which indicates the default setting of the audio contained in the video. If set, the audio will be initially silenced. Its default value is false, meaning that the audio will be played when the video is played."
@@ -1593,6 +1783,7 @@
     {
       "attributeName" : "placeholder",
       "attributeType" : "String",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "textarea - A hint to the user of what can be entered in the control. Carriage returns or line-feeds within the placeholder text must be treated as line breaks when rendering the hint.",
         "input - A hint to the user of what can be entered in the control . The placeholder text must not contain carriage returns or line-feeds.&nbsp; <div class=\"note\"> <strong>Note:</strong> Do not use the  <code>placeholder</code> attribute instead of a  <a title=\"The HTML <label> element represents a caption for an item in a user interface.\" href=\"/en-US/docs/Web/HTML/Element/label\"><code>&lt;label&gt;</code></a> element, their purposes are different. The  <a title=\"The HTML <label> element represents a caption for an item in a user interface.\" href=\"/en-US/docs/Web/HTML/Element/label\"><code>&lt;label&gt;</code></a> attribute describes the role of the form element (i.e.&nbsp;it indicates what kind of information is expected), and the  <code>placeholder</code> attribute is a hint about the format that the content should take. There are cases in which the  <code>placeholder</code> attribute is never displayed to the user, so the form must be understandable without it.</div>"
@@ -1606,6 +1797,7 @@
     {
       "attributeName" : "onEmptied",
       "attributeType" : "EventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -1615,6 +1807,7 @@
     {
       "attributeName" : "selected",
       "attributeType" : "Boolean",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "If present, this Boolean attribute indicates that the option is initially selected. If the <code>&lt;option&gt;</code> element is the descendant of a <a title=\"The HTML <select> element represents a control that provides a menu of options:\" href=\"/en-US/docs/Web/HTML/Element/select\"><code>&lt;select&gt;</code></a> element whose <code><a href=\"/en-US/docs/Web/HTML/Element/select#attr-multiple\">multiple</a></code> attribute is not set, only one single <code>&lt;option&gt;</code> of this <a title=\"The HTML <select> element represents a control that provides a menu of options:\" href=\"/en-US/docs/Web/HTML/Element/select\"><code>&lt;select&gt;</code></a> element may have the <code>selected</code> attribute."
       ],
@@ -1626,6 +1819,7 @@
     {
       "attributeName" : "className",
       "attributeType" : "String",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "Is a space-separated list of the classes of the element. Classes allows CSS and JavaScript to select and access specific elements via the \n<a href=\"/en-US/docs/Web/CSS/Class_selectors\">class selectors</a> or functions like the method \n<a title=\"Returns an array-like object of all child elements which have all of the given class names. When called on the document object, the complete document is searched, including the root node. You may also call getElementsByClassName() on any element; it will return only elements which are descendants of the specified root element with the given class names.\" href=\"/en-US/docs/Web/API/Document/getElementsByClassName\"><code>Document.getElementsByClassName()</code></a>."
       ],
@@ -1635,6 +1829,7 @@
     {
       "attributeName" : "onMouseOver",
       "attributeType" : "MouseEventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -1644,6 +1839,7 @@
     {
       "attributeName" : "onCanPlayThrough",
       "attributeType" : "EventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -1653,6 +1849,7 @@
     {
       "attributeName" : "defer",
       "attributeType" : "Boolean",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "This Boolean attribute is set to indicate to a browser that the script is meant to be executed after the document has been parsed, but before firing&nbsp;<code><a title=\"/en-US/docs/Web/Events/DOMContentLoaded\" href=\"/en-US/docs/Web/Events/DOMContentLoaded\">DOMContentLoaded</a></code>. This attribute must not be used if the <code>src</code> attribute is absent (i.e. for inline scripts), in this case it would have no effect. To achieve a similar effect for dynamically inserted scripts use <code>async=false</code> instead. Scripts with the <code>defer</code> attribute will execute in the order in which they appear in the document."
       ],
@@ -1664,6 +1861,7 @@
     {
       "attributeName" : "onAbort",
       "attributeType" : "EventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -1673,6 +1871,7 @@
     {
       "attributeName" : "htmlFor",
       "attributeType" : "String",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "label - The ID of a <a href=\"/en-US/docs/Web/Guide/HTML/Content_categories#Form_labelable\">labelable</a> form-related element in the same document as the label element. The first such element in the document with an ID matching the value of the <code>for</code> attribute is the <em>labeled control </em>for this label element.<br> &nbsp; <div class=\"note\"> A label element can have both a  <code>for</code> attribute and a contained control element, as long as the  <code>for</code> attribute points to the contained control element.</div>",
         "output - A list of IDs of other elements, indicating that those elements contributed input values to (or otherwise affected) the calculation."
@@ -1686,6 +1885,7 @@
     {
       "attributeName" : "nonce",
       "attributeType" : "String",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "style - A cryptographic nonce (number used once) to whitelist inline styles in a <a href=\"/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/style-src\">style-src Content-Security-Policy</a>. The server must generate a unique nonce value each time it transmits a policy.&nbsp;It is critical to provide an unguessable nonce, as bypassing a resource’s policy is otherwise trivial.",
         "script - A cryptographic nonce (number used once) to whitelist inline scripts in a <a href=\"/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/script-src\">script-src Content-Security-Policy</a>. The server must generate a unique nonce value each time it transmits a policy.&nbsp;It is critical to provide an unguessable nonce, as bypassing a resource’s policy is otherwise trivial."
@@ -1699,6 +1899,7 @@
     {
       "attributeName" : "span",
       "attributeType" : "Int",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "col - This attribute contains a positive integer indicating the number of consecutive columns the <code>&lt;col&gt;</code> element spans. If not present, its default value is <code>1</code>.",
         "colgroup - This attribute contains a positive integer indicating the number of consecutive columns the <code>&lt;colgroup&gt;</code> element spans. If not present, its default value is <code>1</code>. <div class=\"note\"> <strong>Note: </strong>This attribute is applied on the attributes of the column group, it has no effect on the CSS styling rules associated with it or, even more, to the cells of the column's members of the group.  <ul>   <li>The <code>span</code> attribute may not be present if there are one or more <code>&lt;col&gt;</code> elements within the <code>&lt;colgroup&gt;</code>.</li>  </ul> </div>"
@@ -1712,6 +1913,7 @@
     {
       "attributeName" : "colSpan",
       "attributeType" : "Int",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "td - This attribute contains a positive integer indicating the number of consecutive columns the <code>&lt;td&gt;</code> element spans. If not present, its default value is <code>1</code>.",
         "th - This attribute contains a positive integer indicating the number of consecutive columns the <code>&lt;th&gt;</code> element spans. If not present, its default value is <code>1</code>."
@@ -1725,6 +1927,7 @@
     {
       "attributeName" : "rowSpan",
       "attributeType" : "Int",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "td - This attribute contains a positive integer indicating the number of consecutive rows the <code>&lt;td&gt;</code> element spans. If not present, its default value is <code>1</code>.",
         "th - This attribute contains a positive integer indicating the number of consecutive rows the <code>&lt;th&gt;</code> element spans. If not present, its default value is <code>1</code>."
@@ -1738,6 +1941,7 @@
     {
       "attributeName" : "onLoadedMetadata",
       "attributeType" : "EventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -1747,6 +1951,7 @@
     {
       "attributeName" : "href",
       "attributeType" : "String",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "a - Contains a URL or a URL fragment that the hyperlink points to. A URL fragment is a name preceded by a hash mark (<code>#</code>), which specifies an internal target location (an <a href=\"/en-US/docs/HTML/Global_attributes#attr-id\">ID</a> of an HTML element) within the current document. URLs are not restricted to Web (HTTP)-based documents, but can use any protocol supported by the browser. For example, <a class=\"external\" href=\"https://en.wikipedia.org/wiki/File_URI_scheme\"><code>file:</code></a>, <code>ftp:</code>, and <code>mailto:</code> work in most browsers. This attribute may be omitted (as of HTML5) to create a placeholder link. A placeholder link resembles a traditional hyperlink, but does not lead anywhere. <div class=\"note\">  <p><strong>Note:</strong> You can use <code>href=\"#top\"</code> or the empty fragment <code>href=\"#\"</code> to link to the top of the current page. <a class=\"external\" href=\"https://www.w3.org/TR/html5/single-page.html#scroll-to-fragid\">This behavior is specified by HTML5</a>.</p> </div>",
         "area - The hyperlink target for the area. Its value is a valid URL. In HTML4, either this attribute or the <strong>nohref</strong> attribute must be present in the element. In HTML5, this attribute may be omitted; if so, the area element does not represent a hyperlink.",
@@ -1764,6 +1969,7 @@
     {
       "attributeName" : "autoComplete",
       "attributeType" : "String",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -1776,6 +1982,7 @@
     {
       "attributeName" : "defaultChecked",
       "attributeType" : "Boolean",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -1787,6 +1994,7 @@
     {
       "attributeName" : "defaultValue",
       "attributeType" : "String",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -1800,6 +2008,7 @@
     {
       "attributeName" : "onPlay",
       "attributeType" : "EventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -1809,6 +2018,7 @@
     {
       "attributeName" : "required",
       "attributeType" : "Boolean",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "textarea - This attribute specifies that the user must fill in a value before submitting a form.",
         "select - A Boolean attribute indicating that an option with a non-empty string value must be selected.",
@@ -1824,6 +2034,7 @@
     {
       "attributeName" : "target",
       "attributeType" : "String",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "a - Specifies where to display the linked URL. It is a name of, or keyword for, a <em>browsing context</em>: a tab, window, or <code>&lt;iframe&gt;</code>. The following keywords have special meanings: <ul>  <li><code>_self</code>: Load the URL into the same browsing context as the current one. This is the default behavior.</li>  <li><code>_blank</code>: Load the URL into a new browsing context. This is usually a tab, but users can configure browsers to use new windows instead.</li>  <li><code>_parent</code>: Load the URL into the parent browsing context of the current one. If there is no parent, this behaves the same way as <code>_self</code>.</li>  <li><code>_top</code>: Load the URL into the top-level browsing context (that is, the \"highest\" browsing context that is an ancestor of the current one, and has no parent). If there is no parent,&nbsp;this behaves the same way as <code>_self</code>.</li> </ul> <div class=\"note\">  <p><strong>Note:</strong> When using <code>target</code>, consider adding <code>rel=\"noopener noreferrer\"</code> to avoid exploitation of the <code>window.opener</code> API.</p> </div>",
         "base - A name or keyword indicating the default location to display the result when hyperlinks or forms cause navigation, for elements that do not have an explicit target reference. It is a name of, or keyword for, a <em>browsing context</em> (for example: tab, window, or inline frame). The following keywords have special meanings: <ul>  <li><code>_self</code>: Load the result into the same browsing context&nbsp;as the current one. This value is the default if the attribute is not specified.</li>  <li><code>_blank</code>: Load the result into a new unnamed browsing context.</li>  <li><code>_parent</code>: Load the result into the parent browsing context of the current one. If there is no parent, this option behaves the same way as <code>_self</code>.</li>  <li><code>_top</code>: Load the result into the top-level browsing context (that is, the browsing context that is an ancestor of the current one, and has no parent). If there is no parent, this option behaves the same way as <code>_self</code>.</li> </ul>",
@@ -1843,6 +2054,7 @@
     {
       "attributeName" : "reversed",
       "attributeType" : "Boolean",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "This Boolean attribute specifies that the items of the list are specified in reversed order."
       ],
@@ -1854,6 +2066,7 @@
     {
       "attributeName" : "onProgress",
       "attributeType" : "EventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -1863,6 +2076,7 @@
     {
       "attributeName" : "onCancel",
       "attributeType" : "EventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -1872,6 +2086,7 @@
     {
       "attributeName" : "onReset",
       "attributeType" : "EventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -1881,6 +2096,7 @@
     {
       "attributeName" : "media",
       "attributeType" : "String",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "source - <a class=\"internal\" href=\"/en-US/docs/CSS/Media_queries\">Media query</a> of the resource's intended media; this should be used only in a <a title=\"The HTML <picture> element is a container used to specify multiple <source> elements for a specific <img> contained in it. The browser will choose the most suitable source according to the current layout of the page (the constraints of the box the image will appear in) and the device it will be displayed on (e.g. a normal or hiDPI device.)\" href=\"/en-US/docs/Web/HTML/Element/picture\"><code>&lt;picture&gt;</code></a> element.",
         "style - This attribute&nbsp;defines which media the style should apply to. Its value is a <a href=\"/en-US/docs/Web/Guide/CSS/Media_queries\">media query</a>, which defaults to <code>all</code> if the attribute is missing.",
@@ -1898,6 +2114,7 @@
     {
       "attributeName" : "start",
       "attributeType" : "String",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "This integer attribute specifies the start value for numbering the individual list items. Although the ordering type of list elements might be Roman numerals, such as XXXI, or letters, the value of start is always represented as a number. To start numbering elements from the letter \"C\", use <code>&lt;ol start=\"3\"&gt;</code>. <div class=\"note\"> <strong>Note</strong>: This attribute was deprecated in HTML4, but reintroduced in HTML5.</div>"
       ],
@@ -1909,6 +2126,7 @@
     {
       "attributeName" : "onKeyDown",
       "attributeType" : "EventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -1918,6 +2136,7 @@
     {
       "attributeName" : "profile",
       "attributeType" : "String",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The URIs of one or more metadata profiles, separated by white space."
       ],
@@ -1929,6 +2148,7 @@
     {
       "attributeName" : "onStalled",
       "attributeType" : "EventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -1938,6 +2158,7 @@
     {
       "attributeName" : "label",
       "attributeType" : "String",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "menuitem - The name of the command as shown to the user. Required when a <code>command</code> attribute is not present.",
         "optgroup - The name of the group of options, which the browser can use when labeling the options in the user interface. This attribute is mandatory if this element is used.",
@@ -1957,6 +2178,7 @@
     {
       "attributeName" : "sandbox",
       "attributeType" : "String",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "If specified as an empty string, this attribute enables extra restrictions on the content that can appear in the inline frame. The value of the attribute can either be an empty string (all the restrictions are applied), or a space-separated list of tokens that lift particular restrictions. Valid tokens are: <ul>  <li><code>allow-forms</code>: Allows the embedded browsing context to submit forms. If this keyword is not used, this operation is not allowed.</li>  <li><code>allow-modals</code>: Allows the embedded browsing context to open modal windows.</li>  <li><code>allow-orientation-lock</code>: Allows the embedded browsing context to disable the ability to lock the screen orientation.</li>  <li><code>allow-pointer-lock</code>: Allows the embedded browsing context to use the <a href=\"/en-US/docs/WebAPI/Pointer_Lock\">Pointer Lock API</a>.</li>  <li><code>allow-popups</code>: Allows popups (like from <code>window.open</code>, <code>target=\"_blank\"</code>, <code>showModalDialog</code>). If this keyword is not used, that functionality will silently fail.</li>  <li><code>allow-popups-to-escape-sandbox</code>:&nbsp; Allows a sandboxed document to open new windows without forcing the sandboxing flags upon them. This will allow, for example, a third-party advertisement to be safely sandboxed without forcing the same restrictions upon a landing page.</li>  <li><code>allow-presentation</code>: Allows embedders to have control over whether an iframe can start a presentation session.</li>  <li><code>allow-same-origin</code>: Allows the content to be treated as being from its normal origin. If this keyword is not used, the embedded content is treated as being from a unique origin.</li>  <li><code>allow-scripts</code>: Allows the embedded browsing context to run scripts (but not create pop-up windows). If this keyword is not used, this operation is not allowed.</li>  <li><code>allow-top-navigation</code>: Allows the embedded browsing context to navigate (load) content to the top-level browsing context. If this keyword is not used, this operation is not allowed.</li>  <li><code>allow-top-navigation-by-user-activation</code>: Allows the embedded browsing context to navigate (load) content to the top-level browsing context only when initiated by a user gesture. If this keyword is not used, this operation is not allowed.</li> </ul> <div class=\"note\">  <p><strong>Note:</strong></p>  <ul>   <li>When the embedded document has the same origin as the main page, it is strongly discouraged to use both <code>allow-scripts</code> and <code>allow-same-origin</code> at the same time, as that allows the embedded document to programmatically remove the <code>sandbox</code> attribute. Although it is accepted, this case is no more secure than not using the <code>sandbox</code> attribute.</li>   <li>Sandboxing in general is only of minimal help if the attacker can arrange for the potentially hostile content to be displayed in the user's browser outside a sandboxed <code>iframe</code>. It is recommended that such content should be served from a <em>separate dedicated domain</em>, to limit the potential damage.</li>   <li>The <code>sandbox</code> attribute is not supported in Internet Explorer 9 and earlier versions.</li>  </ul> </div>"
       ],
@@ -1968,6 +2190,7 @@
     {
       "attributeName" : "width",
       "attributeType" : "String",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "th - This attribute is used to define a recommended cell width. &nbsp;Additional space can be added with the&nbsp;<a href=\"/en-US/docs/Web/API/HTMLTableElement/cellSpacing\">cellspacing</a> and <a href=\"/en-US/docs/Web/API/HTMLTableElement/cellPadding\">cellpadding</a>&nbsp;properties and the width of the <a title=\"The HTML <col> element defines a column within a table and is used for defining common semantics on all common cells. It is generally found within a <colgroup> element.\" href=\"/en-US/docs/Web/HTML/Element/col\"><code>&lt;col&gt;</code></a>&nbsp;element can also create extra width.&nbsp;But, if a column's width is too narrow to show a particular cell properly, it will be widened when&nbsp;displayed. <div class=\"note\"> <strong>Usage Note: </strong>Do not use this attribute in the latest standard: use the CSS  <a title=\"The width property specifies the width of an element. By default, the property defines the width of the content area. If box-sizing is set to border-box, it instead determines the width of the border area.\" href=\"/en-US/docs/Web/CSS/width\"><code>width</code></a> property instead.</div>",
         "object - The width of the display resource, in <a class=\"external\" href=\"https://drafts.csswg.org/css-values/#px\">CSS pixels</a>. &nbsp;-- (Absolute values&nbsp;only. &nbsp;<a class=\"external\" href=\"https://html.spec.whatwg.org/multipage/embedded-content.html#dimension-attributes\">NO&nbsp;percentages</a>)",
@@ -2004,6 +2227,7 @@
     {
       "attributeName" : "onMouseLeave",
       "attributeType" : "MouseEventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -2013,6 +2237,7 @@
     {
       "attributeName" : "id",
       "attributeType" : "String",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "Defines a unique identifier (ID) which must be unique in the whole document. Its purpose is to identify the element when linking (using a fragment identifier), scripting, or styling (with CSS)."
       ],
@@ -2022,6 +2247,7 @@
     {
       "attributeName" : "accept",
       "attributeType" : "String",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "form - A comma-separated list of content types that the server accepts. <div class=\"note\"> <strong>Usage note:</strong> This attribute has been removed in HTML5 and should no longer be used. Instead, use the  <code><a href=\"/en-US/docs/Web/HTML/Element/input#attr-accept\">accept</a></code> attribute of the specific  <a title=\"The HTML <input> element is used to create interactive controls for web-based forms in order to accept data from the user.\" href=\"/en-US/docs/Web/HTML/Element/input\"><code>&lt;input&gt;</code></a> element.</div>",
         "input - If the value of the <strong>type</strong> attribute is <code>file</code>, then this attribute will indicate&nbsp;the types of files that the server accepts,&nbsp;otherwise it will be&nbsp;ignored. The value must be a comma-separated list of unique content type specifiers: <ul>  <li>A file extension starting with the STOP character (U+002E). (e.g.&nbsp;.jpg, .png, .doc).</li>  <li>A valid MIME type with no extensions.</li>  <li><code>audio/*</code> representing sound files. <span class=\"inlineIndicator htmlVer htmlVerInline\"><a href=\"/en-US/docs/HTML/HTML5\">HTML5</a></span></li>  <li><code>video/*</code> representing video files. <span class=\"inlineIndicator htmlVer htmlVerInline\"><a href=\"/en-US/docs/HTML/HTML5\">HTML5</a></span></li>  <li><code>image/*</code> representing image files. <span class=\"inlineIndicator htmlVer htmlVerInline\"><a href=\"/en-US/docs/HTML/HTML5\">HTML5</a></span></li> </ul>"
@@ -2035,6 +2261,7 @@
     {
       "attributeName" : "multiple",
       "attributeType" : "Boolean",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "input - This Boolean attribute indicates whether the user can enter more than one value. This attribute applies when the <strong>type</strong> attribute is set to <code>email</code>&nbsp;or <code>file</code>,&nbsp;otherwise it is ignored.",
         "select - This Boolean attribute indicates that multiple options can be selected in the list. If it is not specified, then only one option can be selected at a time."
@@ -2048,6 +2275,7 @@
     {
       "attributeName" : "onDragOver",
       "attributeType" : "EventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -2057,6 +2285,7 @@
     {
       "attributeName" : "onDoubleClick",
       "attributeType" : "EventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -2066,6 +2295,7 @@
     {
       "attributeName" : "key",
       "attributeType" : "String",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -2075,6 +2305,7 @@
     {
       "attributeName" : "loop",
       "attributeType" : "Boolean",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "video - A Boolean attribute; if specified, we will, upon reaching the end of the video, automatically seek back to the start.",
         "audio - A Boolean attribute:&nbsp;if specified, will&nbsp;automatically seek back to the start&nbsp;upon reaching the end of the audio."
@@ -2088,6 +2319,7 @@
     {
       "attributeName" : "onAutoCompleteError",
       "attributeType" : "EventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -2097,6 +2329,7 @@
     {
       "attributeName" : "size",
       "attributeType" : "String",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "select - If the control is presented as a scrolled list box, this attribute represents the number of rows in the list that should be visible at one time. Browsers are not required to present a select element as a scrolled list box. The default value is 0.",
         "input - The initial size of the control. This value is in pixels unless the value of the <strong>type</strong> attribute is <code>text</code> or <code>password</code>, in which case&nbsp;it is an integer number of characters. Starting in HTML5, this attribute applies only when the <strong>type</strong> attribute is set to <code>text</code>, <code>search</code>, <code>tel</code>, <code>url</code>, <code>email</code>, or <code>password</code>, otherwise it is ignored. In addition, the size must be greater than zero. If you do not specify a size, a default value of 20 is used. HTML5 simply states&nbsp;\"the user agent should ensure that at least that many characters are visible\", but different characters can have different widths in certain&nbsp;fonts.&nbsp;In some browsers, a certain string with <em>x</em> characters will not be entirely visible even if size is defined to at least <em>x</em>.",
@@ -2112,6 +2345,7 @@
     {
       "attributeName" : "dir",
       "attributeType" : "String",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "bdo - Text direction in this element. Possible values are: <ul>  <li><code>ltr</code>: Indicates that the text should go in a left-to-right direction.</li>  <li><code>rtl</code>: Indicates that the text should go in a right-to-left direction.</li> </ul>",
         "a, abbr, address, area, article, aside, audio, b, base, bdi, bdo, big, blockquote, body, br, button, canvas, caption, cite, code, col, colgroup, data, datalist, dd, del, details, dfn, dialog, div, dl, dt, em, embed, fieldset, figcaption, figure, footer, form, h1, h2, h3, h4, h5, h6, head, header, hr, html, i, iframe, img, input, ins, kbd, keygen, label, legend, li, link, main, map, mark, menu, menuitem, meta, meter, nav, noscript, object, ol, optgroup, option, output, p, param, picture, pre, progress, q, rp, rt, ruby, s, samp, script, section, select, small, source, span, strong, style, sub, summary, sup, table, tbody, td, textarea, tfoot, th, thead, time, title, tr, track, u, ul, var, video, wbr - Is an enumerated attribute indicating the directionality of the element's text. It can have the following values: \n<ul> \n <li><code>ltr</code>, which means <em>left to right </em>and is to be used for languages that are written from the left to the right (like English);</li> \n <li><code>rtl</code>, which means <em>right to left</em> and is to be used for languages that are written from the right to the left (like Arabic);</li> \n <li><code>auto</code>, which let the user agent decides. It uses a basic algorithm as it parses the characters inside the element until it finds a character with a strong directionality, then apply that directionality to the whole element.</li> \n</ul>"
@@ -2122,6 +2356,7 @@
     {
       "attributeName" : "height",
       "attributeType" : "String",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "img - The intrinsic height of the image in&nbsp;pixels.&nbsp;In <span class=\"inlineIndicator htmlVer htmlVerInline\"><a href=\"/en-US/docs/HTML\">HTML 4</a></span>, the height could be defined&nbsp;pixels or as a percentage. In&nbsp;<span class=\"inlineIndicator htmlVer htmlVerInline\"><a href=\"/en-US/docs/HTML/HTML5\">HTML5</a></span>, however, the value must be in pixels.",
         "embed - The displayed height of the resource, in <a class=\"external\" href=\"https://drafts.csswg.org/css-values/#px\">CSS pixels</a>. &nbsp;-- (Absolute values&nbsp;only. &nbsp;<a class=\"external\" href=\"https://html.spec.whatwg.org/multipage/embedded-content.html#dimension-attributes\">NO&nbsp;percentages</a>)",
@@ -2145,6 +2380,7 @@
     {
       "attributeName" : "high",
       "attributeType" : "String",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The lower numeric bound of the high end of the measured range. This must be less than the maximum value (<code>max</code> attribute), and it also must be greater than the low value and minimum value (<code>low</code> attribute and <strong>min</strong> attribute, respectively), if any are specified. If unspecified, or if greater than the maximum value, the <code>high</code> value is equal to the maximum value."
       ],
@@ -2156,6 +2392,7 @@
     {
       "attributeName" : "onDragStart",
       "attributeType" : "EventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -2165,6 +2402,7 @@
     {
       "attributeName" : "scope",
       "attributeType" : "String",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "th - This enumerated attribute defines the cells that the header (defined in the <a title=\"The HTML <th> element defines a cell as header of a group of table cells. The exact nature of this group is defined by the scope and headers attributes.\" href=\"/en-US/docs/Web/HTML/Element/th\"><code>&lt;th&gt;</code></a>) element relates to. It may have the following values: <ul>  <li><code>row</code>:&nbsp; The header relates to all cells of the row it belongs to.</li>  <li><code>col</code>: The header relates to all cells of the column&nbsp;it belongs to.</li>  <li><code>rowgroup</code>: The header belongs to a rowgroup and relates to all of its cells. These cells can be placed to the right or the left of the header, depending on&nbsp;the value of the <code><a href=\"/en-US/docs/Web/HTML/Global_attributes/dir\">dir</a></code> attribute in&nbsp;the <a title=\"The HTML <table> element represents tabular data — that is, information expressed via a two-dimensional data table.\" href=\"/en-US/docs/Web/HTML/Element/table\"><code>&lt;table&gt;</code></a> element.</li>  <li><code>colgroup</code>: The header belongs to a colgroup and relates to all of its cells.</li>  <li><code>auto</code></li> </ul>",
         "td - &nbsp;"
@@ -2178,6 +2416,7 @@
     {
       "attributeName" : "onSuspend",
       "attributeType" : "EventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -2187,6 +2426,7 @@
     {
       "attributeName" : "kind",
       "attributeType" : "String",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "How the text track is meant to be used. If omitted the default kind is <code>subtitles</code>. If the attribute is not present, it will use the <code>subtitles</code>. If the attribute contains an invalid value, it will use <code>metadata</code>. (Versions of Chrome earlier than 52 treated an invalid value as <code>subtitles</code>.)&nbsp;The following keywords are allowed: <ul>  <li><code>subtitles</code>   <ul>    <li>Subtitles provide translation of content that cannot be understood by the viewer. For example dialogue or text that is not English in an English language film.</li>    <li>Subtitles may contain additional content, usually extra background information. For example the text at the beginning of the Star Wars films, or the date, time, and location of a scene.</li>   </ul> </li>  <li><code>captions</code>   <ul>    <li>Closed captions provide a transcription and possibly a translation of audio.</li>    <li>It may include important non-verbal information such as music cues or sound effects. It may indicate the cue's source (e.g. music, text, character).</li>    <li>Suitable for users who are deaf or when the sound is muted.</li>   </ul> </li>  <li><code>descriptions</code>   <ul>    <li>Textual description of the video content.</li>    <li>Suitable for users who are blind or where the video cannot be seen.</li>   </ul> </li>  <li><code>chapters</code>   <ul>    <li>Chapter titles are intended to be used when the user is navigating the media resource.</li>   </ul> </li>  <li><code>metadata</code>   <ul>    <li>Tracks used by scripts. Not visible to the user.</li>   </ul> </li> </ul>"
       ],
@@ -2198,6 +2438,7 @@
     {
       "attributeName" : "onSeeked",
       "attributeType" : "EventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -2207,6 +2448,7 @@
     {
       "attributeName" : "onMouseOut",
       "attributeType" : "MouseEventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -2216,6 +2458,7 @@
     {
       "attributeName" : "onMouseWheel",
       "attributeType" : "MouseEventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -2225,6 +2468,7 @@
     {
       "attributeName" : "aria",
       "attributeType" : "String",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -2234,6 +2478,7 @@
     {
       "attributeName" : "onSeeking",
       "attributeType" : "EventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -2243,6 +2488,7 @@
     {
       "attributeName" : "onChange",
       "attributeType" : "EventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -2252,6 +2498,7 @@
     {
       "attributeName" : "onBlur",
       "attributeType" : "EventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -2261,6 +2508,7 @@
     {
       "attributeName" : "onKeyPress",
       "attributeType" : "EventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -2270,6 +2518,7 @@
     {
       "attributeName" : "min",
       "attributeType" : "String",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "input - The minimum (numeric or date-time) value for this item, which must not be greater than its maximum (<strong>max</strong> attribute) value.",
         "meter - The lower numeric bound of the measured range. This must be less than the maximum value (<code>max</code> attribute), if specified. If unspecified, the minimum value is 0."
@@ -2283,6 +2532,7 @@
     {
       "attributeName" : "onDragLeave",
       "attributeType" : "EventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -2292,6 +2542,7 @@
     {
       "attributeName" : "onDragEnter",
       "attributeType" : "EventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -2301,6 +2552,7 @@
     {
       "attributeName" : "manifest",
       "attributeType" : "String",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "Specifies the URI of a resource manifest indicating resources that should be cached locally. See <a href=\"/en-US/docs/Web/HTML/Using_the_application_cache\">Using the application cache</a> for details."
       ],
@@ -2312,6 +2564,7 @@
     {
       "attributeName" : "data",
       "attributeType" : "String",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "object - The address of the resource as a valid URL. At least one of <strong>data</strong> and <strong>type</strong> must be defined.",
         "a, abbr, address, area, article, aside, audio, b, base, bdi, bdo, big, blockquote, body, br, button, canvas, caption, cite, code, col, colgroup, data, datalist, dd, del, details, dfn, dialog, div, dl, dt, em, embed, fieldset, figcaption, figure, footer, form, h1, h2, h3, h4, h5, h6, head, header, hr, html, i, iframe, img, input, ins, kbd, keygen, label, legend, li, link, main, map, mark, menu, menuitem, meta, meter, nav, noscript, object, ol, optgroup, option, output, p, param, picture, pre, progress, q, rp, rt, ruby, s, samp, script, section, select, small, source, span, strong, style, sub, summary, sup, table, tbody, td, textarea, tfoot, th, thead, time, title, tr, track, u, ul, var, video, wbr - Forms a class of attributes, called custom data attributes, that allow proprietary information to be exchanged between the \n<a href=\"/en-US/docs/Web/HTML\">HTML</a> and its \n<a href=\"/en-US/docs/Glossary/DOM\">DOM</a> representation that may be used by scripts. All such custom data are available via the \n<a title=\"The HTMLElement interface represents any HTML element. Some elements directly implement this interface, others implement it via an interface that inherits it.\" href=\"/en-US/docs/Web/API/HTMLElement\"><code>HTMLElement</code></a> interface of the element the attribute is set on. The \n<a title=\"The HTMLElement.dataset property allows access, both in reading and writing mode, to all the custom data attributes (data-*) set on the element, either in HTML or in the DOM. &nbsp;It is a map of DOMString, one entry for each custom data attribute. &nbsp;Note that the&nbsp;dataset&nbsp;property itself can be read, but not&nbsp;directly written. &nbsp;Instead, all writes must be&nbsp;to its &quot;properties&quot;, which in turn represent the data attributes. &nbsp; Note also that an HTML data-attribute&nbsp;and its&nbsp;corresponding DOM&nbsp;dataset.property&nbsp;do not share the same name, but they are always similar:\" href=\"/en-US/docs/Web/API/HTMLElement/dataset\"><code>HTMLElement.dataset</code></a> property gives access to them."
@@ -2322,6 +2575,7 @@
     {
       "attributeName" : "onVolumeChange",
       "attributeType" : "EventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -2331,6 +2585,7 @@
     {
       "attributeName" : "sizes",
       "attributeType" : "String",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "img - A list of one or more strings separated by commas indicating a set of source sizes. Each source size consists of: <ol>  <li>a media condition. This must be omitted for the last item.</li>  <li>a source size value.</li> </ol> <p>Source size values specify the intended display size of the image. User agents use the current source size to select one of the sources supplied by the <code>srcset</code> attribute, when those sources are described using width ('<code>w</code>') descriptors. The selected source size affects the intrinsic size of the image (the image’s display size if no CSS styling is applied). If the <code>srcset</code> attribute is absent, or contains no values with a width (<code>w</code>) descriptor, then the <code>sizes</code> attribute has no effect.</p>",
         "source - Is a list of source sizes that describes the final rendered width of the image represented by the source. Each source size consists of a comma-separated list of media condition-length pairs. This information is used by the browser to determine, before laying the page out, which image defined in <code><a href=\"/en-US/docs/Web/HTML/Element/source#attr-srcset\">srcset</a></code> to use.<br> The <code>sizes</code> attribute has an effect only when the <a title=\"The HTML <source> element specifies multiple media resources for either the <picture>, the <audio> or the <video> element. It is an empty element. It is commonly used to serve the same media content in multiple formats supported by different browsers.\" href=\"/en-US/docs/Web/HTML/Element/source\"><code>&lt;source&gt;</code></a> element is the direct child of a <a title=\"The HTML <picture> element is a container used to specify multiple <source> elements for a specific <img> contained in it. The browser will choose the most suitable source according to the current layout of the page (the constraints of the box the image will appear in) and the device it will be displayed on (e.g. a normal or hiDPI device.)\" href=\"/en-US/docs/Web/HTML/Element/picture\"><code>&lt;picture&gt;</code></a> element.",
@@ -2346,6 +2601,7 @@
     {
       "attributeName" : "onDurationChange",
       "attributeType" : "EventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -2355,6 +2611,7 @@
     {
       "attributeName" : "rows",
       "attributeType" : "String",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "The number of visible text lines for the control."
       ],
@@ -2366,6 +2623,7 @@
     {
       "attributeName" : "challenge",
       "attributeType" : "String",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "A challenge string that is submitted along with the public key. Defaults to an empty string if not specified."
       ],
@@ -2377,6 +2635,7 @@
     {
       "attributeName" : "form",
       "attributeType" : "String",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "select - This attribute lets you specify the form element to&nbsp;which&nbsp;the select element is associated&nbsp;(that is, its \"form owner\"). If this attribute is specified, its value must be the ID of a form element in the same document. This enables you to place select elements anywhere within a document, not just as descendants of their form elements.",
         "object - The form element, if any, that the object element is associated with (its <em>form owner</em>). The value of the attribute must be an ID of a <a title=\"The HTML <form> element represents a document section that contains interactive controls to submit information to a web server.\" href=\"/en-US/docs/Web/HTML/Element/form\"><code>&lt;form&gt;</code></a> element in the same document.",
@@ -2406,6 +2665,7 @@
     {
       "attributeName" : "suppressContentEditableWarning",
       "attributeType" : "Boolean",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -2415,6 +2675,7 @@
     {
       "attributeName" : "cols",
       "attributeType" : "String",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         "pre - Contains the <em>preferred</em> count of characters that a line should have. It was a non-standard synonym of <code><a href=\"/en-US/docs/Web/HTML/Element/pre#attr-width\">width</a></code>. To achieve such an effect, use CSS <a title=\"The width property specifies the width of an element. By default, the property defines the width of the content area. If box-sizing is set to border-box, it instead determines the width of the border area.\" href=\"/en-US/docs/Web/CSS/width\"><code>width</code></a> instead.",
         "textarea - The visible width of the text control, in average character widths. If it is specified, it must be a positive integer. If it is not specified, the default value is <code>20</code> (HTML5)."
@@ -2428,6 +2689,7 @@
     {
       "attributeName" : "onRateChange",
       "attributeType" : "EventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -2437,6 +2699,7 @@
     {
       "attributeName": "spellCheck",
       "attributeType": "Boolean",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines": [],
       "compatibleTags": null,
       "withDash": false
@@ -2444,6 +2707,7 @@
     {
       "attributeName": "contentEditable",
       "attributeType": "Boolean",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines": [],
       "compatibleTags": null,
       "withDash": false
@@ -2451,6 +2715,7 @@
     {
       "attributeName": "tabIndex",
       "attributeType": "Int",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines": [],
       "compatibleTags": null,
       "withDash": false
@@ -2458,6 +2723,7 @@
     {
       "attributeName": "readOnly",
       "attributeType": "Boolean",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines": [],
       "compatibleTags": [
         "input"
@@ -2467,6 +2733,7 @@
     {
       "attributeName": "on",
       "attributeType": "String",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines": [],
       "compatibleTags": null,
       "withDash": false
@@ -2474,6 +2741,7 @@
     {
       "attributeName" : "onCopy",
       "attributeType" : "EventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -2483,6 +2751,7 @@
     {
       "attributeName" : "onCut",
       "attributeType" : "EventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -2492,6 +2761,7 @@
     {
       "attributeName" : "onPaste",
       "attributeType" : "EventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -2501,6 +2771,7 @@
     {
       "attributeName" : "autoFocus",
       "attributeType" : "Boolean",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -2512,6 +2783,7 @@
     {
       "attributeName" : "onPointerDown",
       "attributeType" : "MouseEventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -2521,6 +2793,7 @@
     {
       "attributeName" : "onPointerMove",
       "attributeType" : "MouseEventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -2530,6 +2803,7 @@
     {
       "attributeName" : "onPointerUp",
       "attributeType" : "MouseEventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -2539,6 +2813,7 @@
     {
       "attributeName" : "onPointerCancel",
       "attributeType" : "MouseEventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -2548,6 +2823,7 @@
     {
       "attributeName" : "onGotPointerCapture",
       "attributeType" : "MouseEventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -2557,6 +2833,7 @@
     {
       "attributeName" : "onLostPointerCapture",
       "attributeType" : "MouseEventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -2566,6 +2843,7 @@
     {
       "attributeName" : "onPointerEnter",
       "attributeType" : "MouseEventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -2575,6 +2853,7 @@
     {
       "attributeName" : "onPointerLeave",
       "attributeType" : "MouseEventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -2584,6 +2863,7 @@
     {
       "attributeName" : "onPointerOver",
       "attributeType" : "MouseEventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -2593,6 +2873,7 @@
     {
       "attributeName" : "onPointerOut",
       "attributeType" : "MouseEventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -2602,6 +2883,7 @@
     {
       "attributeName" : "onTouchStart",
       "attributeType" : "TouchEventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -2611,6 +2893,7 @@
     {
       "attributeName" : "onTouchEnd",
       "attributeType" : "TouchEventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -2620,6 +2903,7 @@
     {
       "attributeName" : "onTouchCancel",
       "attributeType" : "TouchEventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],
@@ -2629,6 +2913,7 @@
     {
       "attributeName" : "onTouchMove",
       "attributeType" : "TouchEventHandler",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
         ""
       ],

@@ -1,9 +1,9 @@
 package slinky.docs.homepage //nodisplay
 
-import slinky.core.{Component, StatelessComponent}  //nodisplay
+import slinky.core.{Component, StatelessComponent, SyntheticEvent}  //nodisplay
 import slinky.core.annotations.react //nodisplay
 import slinky.web.html._ //nodisplay
-import org.scalajs.dom.raw.{Event, HTMLInputElement} //nodisplay
+import org.scalajs.dom.raw.{Element, Event, HTMLInputElement} //nodisplay
 
 import scala.scalajs.js.Date //nodisplay
 
@@ -15,13 +15,13 @@ case class TodoItem(text: String, id: Long)
 
   override def initialState = State(Seq.empty, "")
 
-  def handleChange(e: Event): Unit = {
+  def handleChange(e: SyntheticEvent[Element, Event]): Unit = {
     val eventValue =
       e.target.asInstanceOf[HTMLInputElement].value
     setState(_.copy(text = eventValue))
   }
 
-  def handleSubmit(e: Event): Unit = {
+  def handleSubmit(e: SyntheticEvent[Element, Event]): Unit = {
     e.preventDefault()
 
     if (state.text.nonEmpty) {

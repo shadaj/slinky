@@ -12,7 +12,7 @@ object Utils {
 
 case class TagsModel(tags: Seq[Tag], attributes: Seq[Attribute])
 
-case class Tag(tagName: String, docLines: Seq[String])
+case class Tag(tagName: String, scalaJSType: String, docLines: Seq[String])
 
 case class Attribute(attributeName: String,
                      attributeType: String,

@@ -7,7 +7,7 @@ import slinky.web.html._
 
 import scala.scalajs.js
 import org.scalajs.dom
-import org.scalajs.dom.MouseEvent
+import org.scalajs.dom.{Element, Event, MouseEvent}
 
 class InnerClassCustom extends js.Object {
   val customTag = new CustomTag("custom-element")
@@ -27,11 +27,11 @@ class TagTest extends FunSuite {
   }
 
   test("Sequence of different tag types can be typed to TagComponent[Any]") {
-    assertCompiles("val foo: Seq[ReactElement] = Seq(div(), a())")
+    val foo: Seq[ReactElement] = Seq(div(), a())
   }
 
   test("Sequence of different tag types can used as child of tag") {
-    assertCompiles("div(Seq(div(), a()))")
+    div(Seq(div(), a()))
   }
 
   test("Can provide a custom tag, which is supported by all components") {
@@ -111,5 +111,11 @@ class TagTest extends FunSuite {
     )
 
     assert(inputRef.current.asInstanceOf[dom.html.Input].checked)
+  }
+
+  test("Can grab the target for an input event listener") {
+    input(onInput := (v => v.target))(
+      "body"
+    )
   }
 }

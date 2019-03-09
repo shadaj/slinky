@@ -17,7 +17,7 @@ object Generator extends App {
     // we add a * tag which is supported by all attributes
     val extractedWithoutStar = decode[TagsModel](Source.fromFile(providerName).getLines().mkString("\n")).right.get
     val extracted = extractedWithoutStar.copy(
-      tags = extractedWithoutStar.tags :+ Tag("*", Seq.empty),
+      tags = extractedWithoutStar.tags :+ Tag("*", "Any", Seq.empty),
       attributes = extractedWithoutStar.attributes.map(a =>
         a.copy(compatibleTags = a.compatibleTags.map(_ :+ "*")))
     )
@@ -38,27 +38,19 @@ object Generator extends App {
       val tagsGen = tags.map { t =>
         s"""type tagType = tag.type
            |
-           |/**
-           | * ${t.docLines.map(_.replace("*", "&#47;")).mkString("\n * ")}
-           | */
-           |@inline def apply(mod: AttrPair[tag.type], remainingMods: AttrPair[tag.type]*) = {
-           |  val dictionary = js.Dictionary.empty[js.Any]
-           |  dictionary(mod.name) = mod.value
-           |  remainingMods.foreach(m => dictionary(m.name) = m.value)
-           |  new WithAttrs("${t.tagName}", dictionary)
-           |}
-           |
-           |/**
-           | * ${t.docLines.map(_.replace("*", "&#47;")).mkString("\n * ")}
-           | */
-           |@inline def apply(elems: ReactElement*) = React.createElement("${t.tagName}", js.Dictionary.empty[js.Any], elems: _*)"""
+           |@inline def apply(mods: TagMod[tag.type]*) = {
+           |  new WithAttrs("${t.tagName}", js.Dictionary.empty, js.Array()).apply(mods: _*)
+           |}"""
       }
 
       val attrsGen = attrs.toList.flatMap { a =>
+        val compatibles = a.compatibleTags.map(ts => ts.map(n => extracted.tags.find(_.tagName == n).get)).getOrElse(extracted.tags)
         val base = (if (a.attributeType == "EventHandler") {
-          s"""@inline def :=(v: org.scalajs.dom.Event => Unit) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)
-             |@inline def :=(v: () => Unit) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)
-           """.stripMargin
+          val noEvent = s"""@inline def :=(v: () => Unit) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)""".stripMargin
+          compatibles.map { t =>
+            s"""@inline def :=(v: slinky.core.SyntheticEvent[${t.scalaJSType}, org.scalajs.dom.Event] => Unit)(implicit _imp: ${Utils.identifierFor(t.tagName)}.tag.type) =
+               |  new AttrPair[${Utils.identifierFor(t.tagName)}.tag.type]("${a.attributeName}", v)""".stripMargin
+          }.mkString("", "\n", "\n") + noEvent
         } else if (a.attributeType == "MouseEventHandler") {
           s"""@inline def :=(v: org.scalajs.dom.MouseEvent => Unit) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)
              |@inline def :=(v: () => Unit) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)
@@ -102,16 +94,16 @@ object Generator extends App {
       out.println(
         s"""package $pkg
            |
-           |import slinky.core.{AttrPair, TagElement, Tag, Attr, WithAttrs}
+           |import slinky.core.{AttrPair, TagElement, Tag, Attr, WithAttrs, TagMod}
            |import slinky.core.facade.{React, ReactElement}
            |import scala.scalajs.js
            |import scala.language.implicitConversions
            |
            |/**
-           | * ${attrs.map(_.docLines.map(_.replace("*", "&#47;")).mkString("\n * ")).getOrElse("")}
+           | * ${(tags.map(_.docLines) ++ attrs.map(_.docLines)).map(_.map(_.replace("*", "&#47;")).mkString("\n * "))}
            | */
            |object $symbol $symbolExtends {
-           |object tag extends TagElement
+           |implicit object tag extends TagElement
            |${tagsGen.mkString("\n")}
            |${attrsGen.mkString("\n")}
            |}
