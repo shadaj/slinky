@@ -64,6 +64,8 @@ private[slinky] object ReactRaw extends js.Object {
                     properties: js.Dictionary[js.Any],
                     contents: ReactElement*): ReactElement = js.native
 
+  val createElement: js.Dynamic = js.native // used for WithAttrs
+
   def createContext[T](defaultValue: T): ReactContext[T] = js.native
 
   def createRef[T](): ReactRef[T] = js.native

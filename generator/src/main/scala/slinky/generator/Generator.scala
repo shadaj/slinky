@@ -38,8 +38,8 @@ object Generator extends App {
       val tagsGen = tags.map { t =>
         s"""type tagType = tag.type
            |
-           |@inline def apply(mods: TagMod[tag.type]*) = {
-           |  new WithAttrs("${t.tagName}", js.Dictionary.empty, js.Array()).apply(mods: _*)
+           |@inline def apply(mods: TagMod[tag.type]*): WithAttrs[tagType] = {
+           |  new WithAttrs(js.Array("${t.tagName}", js.Dictionary.empty[js.Any])).apply(mods: _*)
            |}"""
       }
 

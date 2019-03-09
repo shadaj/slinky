@@ -1,6 +1,6 @@
 package slinky.core
 
-import slinky.core.facade.{React, ReactElement}
+import slinky.core.facade.{React, ReactRaw, ReactElement}
 
 import scala.language.implicitConversions
 import scala.scalajs.js
@@ -37,7 +37,7 @@ final class CustomTag(private val name: String) extends Tag {
   override type tagType = Nothing
 
   def apply(mods: TagMod[tagType]*): WithAttrs[tagType] = {
-    new WithAttrs[tagType](name, js.Dictionary.empty, js.Array()).apply(mods: _*)
+    new WithAttrs[tagType](js.Array(name, js.Dictionary.empty[js.Any])).apply(mods: _*)
   }
 }
 
@@ -53,12 +53,12 @@ final class CustomAttribute[T](private val name: String) {
 }
 
 trait TagMod[-A] extends Any {
-  def applyTo(dictionary: js.Dictionary[js.Any], children: js.Array[ReactElement]): Unit
+  def applyTo(args: js.Array[js.Any]): Unit
 }
 
 final class ReactElementMod(private val elem: ReactElement) extends AnyVal with TagMod[Any] {
-  @inline def applyTo(dictionary: Dictionary[js.Any], children: js.Array[ReactElement]): Unit = {
-    children.push(elem)
+  @inline def applyTo(args: js.Array[js.Any]): Unit = {
+    args.asInstanceOf[js.Array[ReactElement]].push(elem)
   }
 }
 
@@ -71,22 +71,21 @@ object TagMod {
 }
 
 class AttrPair[-A](@inline final val name: String, @inline final val value: js.Any) extends TagMod[A] {
-  @inline def applyTo(dictionary: Dictionary[js.Any], children: js.Array[ReactElement]): Unit = {
-    dictionary(name) = value
+  @inline def applyTo(args: js.Array[js.Any]): Unit = {
+    args(1).asInstanceOf[js.Dictionary[js.Any]](name) = value
   }
 }
 
-final class WithAttrs[A](@inline private[WithAttrs] val name: String,
-                         @inline private[WithAttrs] val attrs: js.Dictionary[js.Any],
-                         @inline private[WithAttrs] val children: js.Array[ReactElement]) {
+final class WithAttrs[A](@inline private val args: js.Array[js.Any]) extends AnyVal {
   @inline def apply(mods: TagMod[A]*): WithAttrs[A] = {
-    mods.foreach(_.applyTo(attrs, children))
+    mods.foreach(_.applyTo(args))
     this
   }
 }
 
 object WithAttrs {
   @inline implicit def shortCut(withAttrs: WithAttrs[_]): ReactElement = {
-    React.createElement(withAttrs.name, withAttrs.attrs, withAttrs.children: _*)
+    ReactRaw.createElement
+      .applyDynamic("apply")(ReactRaw, withAttrs.args).asInstanceOf[ReactElement]
   }
 }
