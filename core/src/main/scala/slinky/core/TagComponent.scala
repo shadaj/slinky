@@ -54,10 +54,7 @@ trait TagMod[-A] extends js.Object
 
 object TagMod {
   @inline implicit def elemToTagMod[E](elem: E)(implicit ev: E => ReactElement): TagMod[Any] =
-    ev(elem).asInstanceOf[ReactElementMod]
-
-  @inline implicit def elemsToTagMods[C[+_]](elems: C[ReactElement]): C[TagMod[Any]] =
-    elems.asInstanceOf[C[ReactElementMod]]
+    ev(elem)
 }
 
 @js.native trait ReactElementMod extends TagMod[Any]
