@@ -70,7 +70,7 @@ object Generator extends App {
         if (a.withDash) {
           Seq(
             base,
-            s"""final class WithDash(val sub: String) extends AnyVal { @inline def :=(v: ${a.attributeType}) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}-" + sub, v) }
+            s"""final class WithDash(@inline private val sub: String) extends AnyVal { @inline def :=(v: ${a.attributeType}) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}-" + sub, v) }
                |@inline def -(sub: String) = new WithDash(sub)""".stripMargin
           )
         } else Seq(base)

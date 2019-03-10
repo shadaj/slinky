@@ -10,14 +10,14 @@ import scala.language.experimental.macros
 import scala.language.implicitConversions
 
 final class KeyAddingStage(private val args: js.Array[js.Any]) extends AnyVal {
-  def withKey(key: String): ReactElement = {
+  @inline def withKey(key: String): ReactElement = {
     args(1).asInstanceOf[js.Dictionary[js.Any]]("key") = key
     KeyAddingStage.build(this)
   }
 }
 
 object KeyAddingStage {
-  implicit def build(stage: KeyAddingStage): ReactElement = {
+  @inline implicit def build(stage: KeyAddingStage): ReactElement = {
     ReactRaw.createElement
       .applyDynamic("apply")(ReactRaw, stage.args).asInstanceOf[ReactElement]
   }
@@ -32,7 +32,7 @@ final class FunctionalComponent[P] private[core](private[core] val component: js
     component
   }
 
-  def apply(props: P): KeyAddingStage = {
+  @inline def apply(props: P): KeyAddingStage = {
     new KeyAddingStage(js.Array(component, js.Dynamic.literal(
       __ = props.asInstanceOf[js.Any]
     )))
@@ -48,7 +48,7 @@ final class FunctionalComponentTakingRef[P, R] private[core](private[core] val c
     component
   }
 
-  def apply(props: P): KeyAddingStage = {
+  @inline def apply(props: P): KeyAddingStage = {
     new KeyAddingStage(js.Array(component, js.Dynamic.literal(
       __ = props.asInstanceOf[js.Any]
     )))
@@ -64,7 +64,7 @@ final class FunctionalComponentForwardedRef[P, R] private[core](private[core] va
     component
   }
 
-  def apply(props: P): KeyAndRefAddingStage[R] = {
+  @inline def apply(props: P): KeyAndRefAddingStage[R] = {
     new KeyAndRefAddingStage[R](js.Array(
       component,
       js.Dynamic.literal(

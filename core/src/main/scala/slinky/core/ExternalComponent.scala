@@ -40,7 +40,7 @@ final class BuildingComponent[E, R <: js.Object](private val args: js.Array[js.A
 }
 
 object BuildingComponent {
-  implicit def make[E, R <: js.Object](comp: BuildingComponent[E, R]): ReactElement = {
+  @inline implicit def make[E, R <: js.Object](comp: BuildingComponent[E, R]): ReactElement = {
     ReactRaw.createElement
       .applyDynamic("apply")(ReactRaw, comp.args).asInstanceOf[ReactElement]
   }

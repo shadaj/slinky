@@ -10,24 +10,24 @@ import scala.language.implicitConversions
 import scala.reflect.macros.whitebox
 
 final class KeyAndRefAddingStage[D](private val args: js.Array[js.Any]) extends AnyVal {
-  def withKey(key: String): KeyAndRefAddingStage[D] = {
+  @inline def withKey(key: String): KeyAndRefAddingStage[D] = {
     args(1).asInstanceOf[js.Dictionary[js.Any]]("key") = key
     this
   }
 
-  def withRef(ref: D => Unit): KeyAndRefAddingStage[D] = {
+  @inline def withRef(ref: D => Unit): KeyAndRefAddingStage[D] = {
     args(1).asInstanceOf[js.Dictionary[js.Any]]("ref") = ref
     this
   }
 
-  def withRef(ref: ReactRef[D]): KeyAndRefAddingStage[D] = {
+  @inline def withRef(ref: ReactRef[D]): KeyAndRefAddingStage[D] = {
     args(1).asInstanceOf[js.Dictionary[js.Any]]("ref") = ref
     this
   }
 }
 
 object KeyAndRefAddingStage {
-  implicit def build[D](stage: KeyAndRefAddingStage[D]): ReactElement = {
+  @inline implicit def build[D](stage: KeyAndRefAddingStage[D]): ReactElement = {
     ReactRaw.createElement
       .applyDynamic("apply")(ReactRaw, stage.args).asInstanceOf[ReactElement]
   }
