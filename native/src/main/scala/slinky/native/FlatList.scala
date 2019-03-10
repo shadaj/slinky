@@ -105,8 +105,8 @@ object FlatList extends ExternalComponentWithRefType[FlatListInstance[Any]] {
                legacyImplementation: js.UndefOr[Boolean] = js.undefined,
                refreshing: js.UndefOr[Boolean] = js.undefined,
                removeClippedSubviews: js.UndefOr[Boolean] = js.undefined): BuildingComponent[FlatListInstance[T], js.Object] = {
-    new BuildingComponent(
-      component,
+    new BuildingComponent(js.Array(
+      component.asInstanceOf[js.Any],
       writer.write(Props(
         data = data.asInstanceOf[Seq[Object]],
         renderItem = o => renderItem(o.asInstanceOf[RenderItemInfo[T]]),
@@ -131,8 +131,7 @@ object FlatList extends ExternalComponentWithRefType[FlatListInstance[Any]] {
         legacyImplementation = legacyImplementation,
         refreshing = refreshing,
         removeClippedSubviews = removeClippedSubviews
-      )),
-      null, null, Seq.empty
-    )
+      ))
+    ))
   }
 }
