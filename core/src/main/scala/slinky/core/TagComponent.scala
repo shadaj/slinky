@@ -7,6 +7,8 @@ import scala.scalajs.js
 import scala.scalajs.js.Dictionary
 import scala.scalajs.js.annotation.JSName
 
+import scala.language.higherKinds
+
 @js.native trait SyntheticEvent[TargetType, EventType] extends js.Object {
   val bubbles: Boolean = js.native
   val cancelable: Boolean = js.native
@@ -29,14 +31,10 @@ trait Tag extends Any {
   def apply(mods: TagMod[tagType]*): WithAttrs[tagType]
 }
 
-object Tag {
-  implicit object ApplyReactElements
-}
-
-final class CustomTag(private val name: String) extends Tag {
+final class CustomTag(private val name: String) extends AnyVal with Tag {
   override type tagType = Nothing
 
-  def apply(mods: TagMod[tagType]*): WithAttrs[tagType] = {
+  @inline def apply(mods: TagMod[tagType]*): WithAttrs[tagType] = {
     new WithAttrs[tagType](js.Array(name, js.Dictionary.empty[js.Any])).apply(mods: _*)
   }
 }
@@ -58,13 +56,14 @@ object TagMod {
   @inline implicit def elemToTagMod[E](elem: E)(implicit ev: E => ReactElement): TagMod[Any] =
     ev(elem).asInstanceOf[ReactElementMod]
 
-  @inline implicit def elemsToTagMods(elems: Seq[ReactElement]): Seq[TagMod[Any]] =
-    elems.asInstanceOf[Seq[ReactElementMod]]
+  @inline implicit def elemsToTagMods[C[+_]](elems: C[ReactElement]): C[TagMod[Any]] =
+    elems.asInstanceOf[C[ReactElementMod]]
 }
 
 @js.native trait ReactElementMod extends TagMod[Any]
 
-final class AttrPair[-A](val name: String, val value: js.Any) extends TagMod[A]
+final class AttrPair[-A](private[slinky] final val name: String,
+                         private[slinky] final val value: js.Any) extends TagMod[A]
 
 final class WithAttrs[A](private val args: js.Array[js.Any]) extends AnyVal {
   def apply(mods: TagMod[A]*): WithAttrs[A] = {
@@ -82,7 +81,7 @@ final class WithAttrs[A](private val args: js.Array[js.Any]) extends AnyVal {
 }
 
 object WithAttrs {
-  @inline implicit def shortCut(withAttrs: WithAttrs[_]): ReactElement = {
+  implicit def build(withAttrs: WithAttrs[_]): ReactElement = {
     ReactRaw.createElement
       .applyDynamic("apply")(ReactRaw, withAttrs.args).asInstanceOf[ReactElement]
   }

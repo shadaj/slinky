@@ -23,24 +23,24 @@ final class BuildingComponent[E, R <: js.Object](private val args: js.Array[js.A
     this
   }
 
-  @inline def withKey(newKey: String): BuildingComponent[E, R] = {
+  def withKey(newKey: String): BuildingComponent[E, R] = {
     args(1).asInstanceOf[js.Dictionary[js.Any]]("key") = newKey
     this
   }
 
-  @inline def withRef(newRef: R => Unit): BuildingComponent[E, R] = {
+  def withRef(newRef: R => Unit): BuildingComponent[E, R] = {
     args(1).asInstanceOf[js.Dictionary[js.Any]]("ref") = (newRef: js.Function1[R, Unit])
     this
   }
 
-  @inline def withRef(ref: ReactRef[R]): BuildingComponent[E, R] = {
+  def withRef(ref: ReactRef[R]): BuildingComponent[E, R] = {
     args(1).asInstanceOf[js.Dictionary[js.Any]]("ref") = ref
     this
   }
 }
 
 object BuildingComponent {
-  @inline implicit def make[E, R <: js.Object](comp: BuildingComponent[E, R]): ReactElement = {
+  implicit def make[E, R <: js.Object](comp: BuildingComponent[E, R]): ReactElement = {
     ReactRaw.createElement
       .applyDynamic("apply")(ReactRaw, comp.args).asInstanceOf[ReactElement]
   }
