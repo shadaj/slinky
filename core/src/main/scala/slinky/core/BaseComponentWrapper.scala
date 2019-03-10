@@ -1,6 +1,6 @@
 package slinky.core
 
-import slinky.core.facade.{React, ReactElement, ReactRef}
+import slinky.core.facade.{React, ReactRaw, ReactElement, ReactRef}
 import slinky.readwrite.{Reader, Writer}
 
 import scala.language.experimental.macros
@@ -9,26 +9,27 @@ import scala.scalajs.js.ConstructorTag
 import scala.language.implicitConversions
 import scala.reflect.macros.whitebox
 
-class KeyAndRefAddingStage[D](private val props: js.Dictionary[js.Any], private val constructor: js.Object) {
+final class KeyAndRefAddingStage[D](private val args: js.Array[js.Any]) extends AnyVal {
   def withKey(key: String): KeyAndRefAddingStage[D] = {
-    props("key") = key
-    new KeyAndRefAddingStage[D](props, constructor)
+    args(1).asInstanceOf[js.Dictionary[js.Any]]("key") = key
+    this
   }
 
   def withRef(ref: D => Unit): KeyAndRefAddingStage[D] = {
-    props("ref") = ref
-    new KeyAndRefAddingStage[D](props, constructor)
+    args(1).asInstanceOf[js.Dictionary[js.Any]]("ref") = ref
+    this
   }
 
   def withRef(ref: ReactRef[D]): KeyAndRefAddingStage[D] = {
-    props("ref") = ref
-    new KeyAndRefAddingStage[D](props, constructor)
+    args(1).asInstanceOf[js.Dictionary[js.Any]]("ref") = ref
+    this
   }
 }
 
 object KeyAndRefAddingStage {
   implicit def build[D](stage: KeyAndRefAddingStage[D]): ReactElement = {
-    React.createElement(stage.constructor, stage.props)
+    ReactRaw.createElement
+      .applyDynamic("apply")(ReactRaw, stage.args).asInstanceOf[ReactElement]
   }
 }
 
@@ -119,10 +120,10 @@ abstract class BaseComponentWrapper(sr: StateReaderProvider, sw: StateWriterProv
         )
     }
 
-    new KeyAndRefAddingStage(
-      propsObj,
-      componentConstructorInstance
-    )
+    new KeyAndRefAddingStage(js.Array(
+      componentConstructorInstance,
+      propsObj
+    ))
   }
 
   def apply()(implicit ev: Unit =:= Props, constructorTag: ConstructorTag[Def]): KeyAndRefAddingStage[Def] = {

@@ -54,8 +54,6 @@ final class CustomAttribute[T](private val name: String) {
 
 trait TagMod[-A] extends js.Object
 
-@js.native trait ReactElementMod extends TagMod[Any]
-
 object TagMod {
   @inline implicit def elemToTagMod[E](elem: E)(implicit ev: E => ReactElement): TagMod[Any] =
     ev(elem).asInstanceOf[ReactElementMod]
@@ -64,10 +62,12 @@ object TagMod {
     elems.asInstanceOf[Seq[ReactElementMod]]
 }
 
-final class AttrPair[-A](@inline val name: String, @inline val value: js.Any) extends TagMod[A]
+@js.native trait ReactElementMod extends TagMod[Any]
 
-final class WithAttrs[A](@inline private val args: js.Array[js.Any]) extends AnyVal {
-  @inline def apply(mods: TagMod[A]*): WithAttrs[A] = {
+final class AttrPair[-A](val name: String, val value: js.Any) extends TagMod[A]
+
+final class WithAttrs[A](private val args: js.Array[js.Any]) extends AnyVal {
+  def apply(mods: TagMod[A]*): WithAttrs[A] = {
     mods.foreach { m =>
       m match {
         case a: AttrPair[_] =>

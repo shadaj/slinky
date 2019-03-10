@@ -80,7 +80,7 @@ object Generator extends App {
         a.compatibleTags.getOrElse(extracted.tags.map(_.tagName)).flatMap { t =>
           val fixedT = if (t == "*") "star" else t
           Seq(
-            s"""implicit def to${fixedT}Applied(pair: AttrPair[_${symbolWithoutEscape}_attr.type]) = pair.asInstanceOf[AttrPair[${Utils.identifierFor(t)}.tag.type]]"""
+            s"""@inline implicit def to${fixedT}Applied(pair: AttrPair[_${symbolWithoutEscape}_attr.type]) = pair.asInstanceOf[AttrPair[${Utils.identifierFor(t)}.tag.type]]"""
           )
         }
       }
@@ -89,7 +89,7 @@ object Generator extends App {
         a.compatibleTags.getOrElse(extracted.tags.map(_.tagName)).flatMap { t =>
           val fixedT = if (t == "*") "star" else t
           if (attrs.isDefined && attrs.get.attributeType == "Boolean") {
-            Seq(s"""implicit def boolToPair${fixedT}Applied(attrObj: this.type) = new AttrPair[${Utils.identifierFor(t)}.tag.type]("${attrs.get.attributeName}", true)""")
+            Seq(s"""@inline implicit def boolToPair${fixedT}Applied(attrObj: this.type) = new AttrPair[${Utils.identifierFor(t)}.tag.type]("${attrs.get.attributeName}", true)""")
           } else Seq.empty
         }
       }

@@ -64,9 +64,12 @@ final class FunctionalComponentForwardedRef[P, R] private[core](private[core] va
   }
 
   @inline final def apply(props: P): KeyAndRefAddingStage[R] = {
-    new KeyAndRefAddingStage[R](js.Dynamic.literal(
-      __ = props.asInstanceOf[js.Any]
-    ).asInstanceOf[js.Dictionary[js.Any]], component)
+    new KeyAndRefAddingStage[R](js.Array(
+      component,
+      js.Dynamic.literal(
+        __ = props.asInstanceOf[js.Any]
+      ).asInstanceOf[js.Dictionary[js.Any]]
+    ))
   }
 }
 

@@ -146,16 +146,25 @@ object ReactMacrosImpl {
         if (caseClassparamss.flatten.forall(_.rhs.nonEmpty) || caseClassparamss.flatten.isEmpty) {
           List(
             caseClassApply,
-            q"""def apply(mod: _root_.slinky.core.AttrPair[$elementType], tagMods: _root_.slinky.core.AttrPair[$elementType]*): _root_.slinky.core.BuildingComponent[$elementType, $refType] = {
-                    new _root_.slinky.core.BuildingComponent[$elementType, $refType](component, _root_.scala.scalajs.js.Dynamic.literal(), mods = (mod +: tagMods).asInstanceOf[_root_.scala.collection.immutable.Seq[_root_.slinky.core.AttrPair[$elementType]]])
+            q"""def apply(mods: _root_.slinky.core.TagMod[$elementType]*): _root_.slinky.core.BuildingComponent[$elementType, $refType] = {
+                    new _root_.slinky.core.BuildingComponent[$elementType, $refType](
+                      _root_.scala.scalajs.js.Array(component.asInstanceOf[js.Any], _root_.scala.scalajs.js.Dictionary.empty)
+                    ).apply(mods: _*)
                   }""",
-            q"""def withKey(key: String): _root_.slinky.core.BuildingComponent[$elementType, $refType] = new _root_.slinky.core.BuildingComponent(component, _root_.scala.scalajs.js.Dynamic.literal(), key = key)""",
-            q"""def withRef(ref: $refType => Unit): _root_.slinky.core.BuildingComponent[$elementType, $refType] = new _root_.slinky.core.BuildingComponent(component, _root_.scala.scalajs.js.Dynamic.literal(), ref = ref)""",
+            q"""def withKey(key: String): _root_.slinky.core.BuildingComponent[$elementType, $refType] = {
+                  new _root_.slinky.core.BuildingComponent[$elementType, $refType](
+                    _root_.scala.scalajs.js.Array(component.asInstanceOf[js.Any], _root_.scala.scalajs.js.Dictionary.empty)
+                  ).withKey(key)
+                }""",
+            q"""def withRef(ref: $refType => Unit): _root_.slinky.core.BuildingComponent[$elementType, $refType] = {
+                  new _root_.slinky.core.BuildingComponent[$elementType, $refType](
+                    _root_.scala.scalajs.js.Array(component.asInstanceOf[js.Any], _root_.scala.scalajs.js.Dictionary.empty)
+                  ).withRef(ref)
+                }""",
             q"""def withRef(ref: _root_.slinky.core.facade.ReactRef[$refType]): _root_.slinky.core.BuildingComponent[$elementType, $refType] = {
-                    new _root_.slinky.core.BuildingComponent[$elementType, $refType](component, _root_.scala.scalajs.js.Dynamic.literal(), ref = ref)
-                  }""",
-            q"""def apply(children: _root_.slinky.core.facade.ReactElement*): _root_.slinky.core.facade.ReactElement = {
-                    _root_.slinky.core.facade.React.createElement(component, _root_.scala.scalajs.js.Dynamic.literal().asInstanceOf[_root_.scala.scalajs.js.Dictionary[js.Any]], children: _*)
+                    new _root_.slinky.core.BuildingComponent[$elementType, $refType](
+                      _root_.scala.scalajs.js.Array(component.asInstanceOf[js.Any], _root_.scala.scalajs.js.Dictionary.empty)
+                    ).withRef(ref)
                   }"""
           )
         } else {
