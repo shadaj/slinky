@@ -11,7 +11,7 @@ import scala.scalajs.js.JSConverters._
 import scala.language.implicitConversions
 
 @js.native
-trait ReactElement extends js.Object with TagMod[Any]
+trait ReactElement extends js.Object with ReactElementMod
 
 object ReactElement {
   @inline implicit def stringToElement(s: String): ReactElement = {

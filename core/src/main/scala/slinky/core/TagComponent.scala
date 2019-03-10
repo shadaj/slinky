@@ -35,7 +35,7 @@ final class CustomTag(@inline private val name: String) extends Tag {
   override type tagType = Nothing
 
   @inline def apply(mods: TagMod[tagType]*): WithAttrs[tagType] = {
-    new WithAttrs[tagType](js.Array(name, js.Dictionary.empty[js.Any])).apply(mods: _*)
+    WithAttrs[tagType](name, mods)
   }
 }
 
@@ -66,21 +66,27 @@ final class AttrPair[-A](@inline private[slinky] final val name: String,
                          @inline private[slinky] final val value: js.Any) extends TagMod[A]
 
 final class WithAttrs[A](@inline private val args: js.Array[js.Any]) extends AnyVal {
-  @inline def apply(mods: TagMod[A]*): WithAttrs[A] = {
-    mods.foreach { m =>
-      m match {
-        case a: AttrPair[_] =>
-          args(1).asInstanceOf[js.Dictionary[js.Any]](a.name) = a.value
-        case r =>
-          args.push(r.asInstanceOf[ReactElementMod])
-      }
-    }
-
-    this
+  @inline def apply(children: ReactElement*): ReactElement = {
+    children.foreach(c => args.push(c))
+    ReactRaw.createElement
+      .applyDynamic("apply")(ReactRaw, args).asInstanceOf[ReactElement]
   }
 }
 
 object WithAttrs {
+  @inline def apply[A](component: js.Any, mods: Seq[TagMod[A]]) = {
+    val inst = new WithAttrs[A](js.Array(component, js.Dynamic.literal()))
+    mods.foreach { m =>
+      m match {
+        case a: AttrPair[_] =>
+          inst.args(1).asInstanceOf[js.Dictionary[js.Any]](a.name) = a.value
+        case r =>
+          inst.args.push(r.asInstanceOf[ReactElementMod])
+      }
+    }
+    inst
+  }
+
   @inline implicit def build(withAttrs: WithAttrs[_]): ReactElement = {
     ReactRaw.createElement
       .applyDynamic("apply")(ReactRaw, withAttrs.args).asInstanceOf[ReactElement]

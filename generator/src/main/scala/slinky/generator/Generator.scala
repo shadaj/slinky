@@ -39,7 +39,7 @@ object Generator extends App {
         s"""type tagType = tag.type
            |
            |@inline def apply(mods: TagMod[tag.type]*): WithAttrs[tagType] = {
-           |  new WithAttrs(js.Array("${t.tagName}", js.Dictionary.empty[js.Any])).apply(mods: _*)
+           |  WithAttrs("${t.tagName}", mods)
            |}"""
       }
 
