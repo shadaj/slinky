@@ -77,15 +77,24 @@ object Generator extends App {
       }
 
       val attrToTagImplicits = attrs.toList.flatMap { a =>
-        a.compatibleTags.getOrElse(extracted.tags.map(_.tagName)).map { t =>
+        a.compatibleTags.getOrElse(extracted.tags.map(_.tagName)).flatMap { t =>
           val fixedT = if (t == "*") "star" else t
-          s"""implicit def to${fixedT}Applied(pair: AttrPair[_${symbolWithoutEscape}_attr.type]) = pair.asInstanceOf[AttrPair[${Utils.identifierFor(t)}.tag.type]]"""
+          Seq(
+            s"""implicit def to${fixedT}Applied(pair: AttrPair[_${symbolWithoutEscape}_attr.type]) = pair.asInstanceOf[AttrPair[${Utils.identifierFor(t)}.tag.type]]"""
+          )
         }
       }
 
-      val symbolExtendsList = (if (attrs.isDefined && attrs.get.attributeType == "Boolean") {
-        Seq(s"""AttrPair[_${symbolWithoutEscape}_attr.type]("${attrs.get.attributeName}", true)""")
-      } else Seq.empty) ++ (if (tags.nonEmpty) Seq("Tag") else Seq.empty) ++ (if (attrs.isDefined) Seq("Attr") else Seq.empty)
+      val booleanImplicits = attrs.toList.flatMap { a =>
+        a.compatibleTags.getOrElse(extracted.tags.map(_.tagName)).flatMap { t =>
+          val fixedT = if (t == "*") "star" else t
+          if (attrs.isDefined && attrs.get.attributeType == "Boolean") {
+            Seq(s"""implicit def boolToPair${fixedT}Applied(attrObj: this.type) = new AttrPair[${Utils.identifierFor(t)}.tag.type]("${attrs.get.attributeName}", true)""")
+          } else Seq.empty
+        }
+      }
+
+      val symbolExtendsList = (if (tags.nonEmpty) Seq("Tag") else Seq.empty) ++ (if (attrs.isDefined) Seq("Attr") else Seq.empty)
 
       val symbolExtends = if (symbolExtendsList.isEmpty) "" else symbolExtendsList.mkString("extends ", " with ", "")
 
@@ -106,6 +115,7 @@ object Generator extends App {
            |implicit object tag extends TagElement
            |${tagsGen.mkString("\n")}
            |${attrsGen.mkString("\n")}
+           |${booleanImplicits.mkString("\n")}
            |}
            |
            |object _${symbolWithoutEscapeFixed}_attr {

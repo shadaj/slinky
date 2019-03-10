@@ -52,33 +52,31 @@ final class CustomAttribute[T](private val name: String) {
   @inline def :=(v: T) = new AttrPair[Any](name, v.asInstanceOf[js.Any])
 }
 
-trait TagMod[-A] extends Any {
-  def applyTo(args: js.Array[js.Any]): Unit
-}
+trait TagMod[-A] extends js.Object
 
-final class ReactElementMod(private val elem: ReactElement) extends AnyVal with TagMod[Any] {
-  @inline def applyTo(args: js.Array[js.Any]): Unit = {
-    args.asInstanceOf[js.Array[ReactElement]].push(elem)
-  }
-}
+@js.native trait ReactElementMod extends TagMod[Any]
 
 object TagMod {
   @inline implicit def elemToTagMod[E](elem: E)(implicit ev: E => ReactElement): TagMod[Any] =
-    new ReactElementMod(ev(elem))
+    ev(elem).asInstanceOf[ReactElementMod]
 
   @inline implicit def elemsToTagMods(elems: Seq[ReactElement]): Seq[TagMod[Any]] =
-    elems.map(elemToTagMod(_)(identity))
+    elems.asInstanceOf[Seq[ReactElementMod]]
 }
 
-class AttrPair[-A](@inline final val name: String, @inline final val value: js.Any) extends TagMod[A] {
-  @inline def applyTo(args: js.Array[js.Any]): Unit = {
-    args(1).asInstanceOf[js.Dictionary[js.Any]](name) = value
-  }
-}
+final class AttrPair[-A](@inline val name: String, @inline val value: js.Any) extends TagMod[A]
 
 final class WithAttrs[A](@inline private val args: js.Array[js.Any]) extends AnyVal {
   @inline def apply(mods: TagMod[A]*): WithAttrs[A] = {
-    mods.foreach(_.applyTo(args))
+    mods.foreach { m =>
+      m match {
+        case a: AttrPair[_] =>
+          args(1).asInstanceOf[js.Dictionary[js.Any]](a.name) = a.value
+        case r =>
+          args.push(r.asInstanceOf[ReactElementMod])
+      }
+    }
+
     this
   }
 }
