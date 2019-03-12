@@ -59,8 +59,8 @@ object TagMod {
 
 @js.native trait ReactElementMod extends TagMod[Any]
 
-final class AttrPair[-A](@inline private[slinky] final val name: String,
-                         @inline private[slinky] final val value: js.Any) extends TagMod[A]
+final class AttrPair[-A](@inline final val name: String,
+                         @inline final val value: js.Any) extends TagMod[A]
 
 final class WithAttrs[A](@inline private val args: js.Array[js.Any]) extends AnyVal {
   @inline def apply(children: ReactElement*): ReactElement = {
