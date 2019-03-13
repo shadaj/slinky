@@ -1,8 +1,9 @@
 package slinky.core
 
-import slinky.core.facade.{React, ReactElement}
-import slinky.web.ReactDOM
 import org.scalatest.FunSuite
+
+import slinky.core.facade.{React, ReactElement}
+import slinky.web.{ReactDOM, SyntheticMouseEvent}
 import slinky.web.html._
 
 import scala.scalajs.js
@@ -56,7 +57,7 @@ class TagTest extends FunSuite {
   }
 
   test("Mouse events can be given a function taking a MouseEvent") {
-    assertCompiles("div(onMouseOver := ((v: MouseEvent) => {}))")
+    assertCompiles("div(onMouseOver := ((v: SyntheticMouseEvent[Element]) => {}))")
   }
 
   test("Can construct tag with abstraction over element type") {
