@@ -6,7 +6,7 @@ import scala.scalajs.js
 import org.scalajs.dom.{TouchEvent, TouchList}
 
 // https://reactjs.org/docs/events.html?#touch-events
-@js.native trait SyntheticTouchEvent[TargetType] extends SyntheticEvent[TargetType, TouchEvent] {
+@js.native trait SyntheticTouchEvent[+TargetType] extends SyntheticEvent[TargetType, TouchEvent] {
   val altKey: Boolean = js.native
   val changedTouches: TouchList = js.native
   val ctrlKey: Boolean = js.native

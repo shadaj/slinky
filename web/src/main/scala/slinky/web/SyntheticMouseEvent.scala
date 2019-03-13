@@ -6,7 +6,7 @@ import scala.scalajs.js
 import org.scalajs.dom.{MouseEvent, EventTarget}
 
 // https://reactjs.org/docs/events.html#mouse-events
-@js.native trait SyntheticMouseEvent[TargetType] extends SyntheticEvent[TargetType, MouseEvent] {
+@js.native trait SyntheticMouseEvent[+TargetType] extends SyntheticEvent[TargetType, MouseEvent] {
   val altKey: Boolean = js.native
   val button: Int = js.native
   val buttons: Int = js.native

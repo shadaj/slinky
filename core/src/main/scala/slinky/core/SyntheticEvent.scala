@@ -3,7 +3,7 @@ package slinky.core
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSName
 
-@js.native trait SyntheticEvent[TargetType, EventType] extends js.Object {
+@js.native trait SyntheticEvent[+TargetType, +EventType] extends js.Object {
   val bubbles: Boolean = js.native
   val cancelable: Boolean = js.native
   val currentTarget: TargetType = js.native

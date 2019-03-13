@@ -6,7 +6,7 @@ import scala.scalajs.js
 import org.scalajs.dom.{PointerEvent, EventTarget}
 
 // https://reactjs.org/docs/events.html#pointer-events
-@js.native trait SyntheticPointerEvent[TargetType] extends SyntheticEvent[TargetType, PointerEvent] {
+@js.native trait SyntheticPointerEvent[+TargetType] extends SyntheticEvent[TargetType, PointerEvent] {
   val pointerId: Int = js.native
   val width: Double = js.native
   val height: Double = js.native

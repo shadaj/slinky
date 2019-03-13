@@ -6,7 +6,7 @@ import scala.scalajs.js
 import org.scalajs.dom.KeyboardEvent
 
 // https://reactjs.org/docs/events.html?#keyboard-events
-@js.native trait SyntheticKeyboardEvent[TargetType] extends SyntheticEvent[TargetType, KeyboardEvent] {
+@js.native trait SyntheticKeyboardEvent[+TargetType] extends SyntheticEvent[TargetType, KeyboardEvent] {
   val altKey: Boolean = js.native
   val charCode: Int = js.native
   val ctrlKey: Boolean = js.native
