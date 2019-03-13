@@ -10,6 +10,12 @@ import scala.io.Source
 object Generator extends App {
   val providerName :: out :: pkg :: Nil = args.toList
 
+  val eventToSynthetic = Map[String, String => String](
+    "EventHandler" -> (t => s"slinky.core.SyntheticEvent[$t, org.scalajs.dom.Event]"),
+    "ClipboardEventHandler" -> (t => s"slinky.web.SyntheticClipboardEvent[$t]"),
+    "MouseEventHandler" -> (t => s"slinky.web.SyntheticMouseEvent[$t]")
+  )
+
   val outFolder = new File(out)
   if (!outFolder.exists()) {
     outFolder.mkdirs()
@@ -45,16 +51,13 @@ object Generator extends App {
 
       val attrsGen = attrs.toList.flatMap { a =>
         val compatibles = a.compatibleTags.map(ts => ts.map(n => extracted.tags.find(_.tagName == n).get)).getOrElse(extracted.tags)
-        val base = (if (a.attributeType == "EventHandler") {
-          val noEvent = s"""@inline def :=(v: () => Unit) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)""".stripMargin
+        val noEvent = s"""@inline def :=(v: () => Unit) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)""".stripMargin
+        val base = (if (eventToSynthetic.contains(a.attributeType)) {
+          val eventTypeForTagType = eventToSynthetic(a.attributeType)
           compatibles.map { t =>
-            s"""@inline def :=(v: slinky.core.SyntheticEvent[${t.scalaJSType}, org.scalajs.dom.Event] => Unit)(implicit _imp: ${Utils.identifierFor(t.tagName)}.tag.type) =
+            s"""@inline def :=(v: ${eventTypeForTagType(t.scalaJSType)} => Unit)(implicit _imp: ${Utils.identifierFor(t.tagName)}.tag.type) =
                |  new AttrPair[${Utils.identifierFor(t.tagName)}.tag.type]("${a.attributeName}", v)""".stripMargin
           }.mkString("", "\n", "\n") + noEvent
-        } else if (a.attributeType == "MouseEventHandler") {
-          s"""@inline def :=(v: org.scalajs.dom.MouseEvent => Unit) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)
-             |@inline def :=(v: () => Unit) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)
-           """.stripMargin
         } else if (a.attributeType == "TouchEventHandler") {
           s"""@inline def :=(v: org.scalajs.dom.TouchEvent => Unit) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)
              |@inline def :=(v: () => Unit) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)
