@@ -14,8 +14,15 @@ object Generator extends App {
     "EventHandler" -> (t => s"slinky.core.SyntheticEvent[$t, org.scalajs.dom.Event]"),
     "ClipboardEventHandler" -> (t => s"slinky.web.SyntheticClipboardEvent[$t]"),
     "CompositionEventHandler" -> (t => s"slinky.web.SyntheticCompositionEvent[$t]"),
+    "KeyboardEventHandler" -> (t => s"slinky.web.SyntheticKeyboardEvent[$t]"),
+    "FocusEventHandler" -> (t => s"slinky.web.SyntheticFocusEvent[$t]"),
     "MouseEventHandler" -> (t => s"slinky.web.SyntheticMouseEvent[$t]"),
-    "TouchEventHandler" -> (t => s"slinky.web.SyntheticTouchEvent[$t]")
+    "PointerEventHandler" -> (t => s"slinky.web.SyntheticPointerEvent[$t]"),
+    "TouchEventHandler" -> (t => s"slinky.web.SyntheticTouchEvent[$t]"),
+    "UIEventHandler" -> (t => s"slinky.web.SyntheticUIEvent[$t]"),
+    "WheelEventHandler" -> (t => s"slinky.web.SyntheticWheelEvent[$t]"),
+    "AnimationEventHandler" -> (t => s"slinky.web.SyntheticAnimationEvent[$t]"),
+    "TransitionEventHandler" -> (t => s"slinky.web.SyntheticTransitionEvent[$t]")
   )
 
   val outFolder = new File(out)

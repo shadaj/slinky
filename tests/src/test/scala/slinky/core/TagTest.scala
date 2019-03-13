@@ -56,7 +56,7 @@ class TagTest extends FunSuite {
     assertDoesNotCompile("input(href)")
   }
 
-  test("Mouse events can be given a function taking a MouseEvent") {
+  test("Mouse events can be given a function taking a SyntheticMouseEvent") {
     assertCompiles("div(onMouseOver := ((v: SyntheticMouseEvent[Element]) => {}))")
   }
 

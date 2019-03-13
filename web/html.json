@@ -2096,7 +2096,7 @@
     // Keyboard Events
     {
       "attributeName" : "onKeyDown",
-      "attributeType" : "EventHandler",
+      "attributeType" : "KeyboardEventHandler",
       "docLines" : [
         ""
       ],
@@ -2105,7 +2105,7 @@
     },
     {
       "attributeName" : "onKeyPress",
-      "attributeType" : "EventHandler",
+      "attributeType" : "KeyboardEventHandler",
       "docLines" : [
         ""
       ],
@@ -2114,7 +2114,7 @@
     },
     {
       "attributeName" : "onKeyUp",
-      "attributeType" : "EventHandler",
+      "attributeType" : "KeyboardEventHandler",
       "docLines" : [
         ""
       ],
@@ -2125,7 +2125,7 @@
     // Focus Events
     {
       "attributeName" : "onFocus",
-      "attributeType" : "EventHandler",
+      "attributeType" : "FocusEventHandler",
       "docLines" : [
         ""
       ],
@@ -2134,7 +2134,7 @@
     },
     {
       "attributeName" : "onBlur",
-      "attributeType" : "EventHandler",
+      "attributeType" : "FocusEventHandler",
       "docLines" : [
         ""
       ],
@@ -2347,7 +2347,7 @@
     // Pointer Events
     {
       "attributeName" : "onPointerDown",
-      "attributeType" : "EventHandler",
+      "attributeType" : "PointerEventHandler",
       "docLines" : [
         ""
       ],
@@ -2356,7 +2356,7 @@
     },
     {
       "attributeName" : "onPointerMove",
-      "attributeType" : "EventHandler",
+      "attributeType" : "PointerEventHandler",
       "docLines" : [
         ""
       ],
@@ -2365,7 +2365,7 @@
     },
     {
       "attributeName" : "onPointerUp",
-      "attributeType" : "EventHandler",
+      "attributeType" : "PointerEventHandler",
       "docLines" : [
         ""
       ],
@@ -2374,7 +2374,7 @@
     },
     {
       "attributeName" : "onPointerCancel",
-      "attributeType" : "EventHandler",
+      "attributeType" : "PointerEventHandler",
       "docLines" : [
         ""
       ],
@@ -2383,7 +2383,7 @@
     },
     {
       "attributeName" : "onGotPointerCapture",
-      "attributeType" : "EventHandler",
+      "attributeType" : "PointerEventHandler",
       "docLines" : [
         ""
       ],
@@ -2392,7 +2392,7 @@
     },
     {
       "attributeName" : "onLostPointerCapture",
-      "attributeType" : "EventHandler",
+      "attributeType" : "PointerEventHandler",
       "docLines" : [
         ""
       ],
@@ -2401,7 +2401,7 @@
     },
     {
       "attributeName" : "onPointerEnter",
-      "attributeType" : "EventHandler",
+      "attributeType" : "PointerEventHandler",
       "docLines" : [
         ""
       ],
@@ -2410,7 +2410,7 @@
     },
     {
       "attributeName" : "onPointerLeave",
-      "attributeType" : "EventHandler",
+      "attributeType" : "PointerEventHandler",
       "docLines" : [
         ""
       ],
@@ -2419,7 +2419,7 @@
     },
     {
       "attributeName" : "onPointerOver",
-      "attributeType" : "EventHandler",
+      "attributeType" : "PointerEventHandler",
       "docLines" : [
         ""
       ],
@@ -2428,7 +2428,7 @@
     },
     {
       "attributeName" : "onPointerOut",
-      "attributeType" : "EventHandler",
+      "attributeType" : "PointerEventHandler",
       "docLines" : [
         ""
       ],
@@ -2488,7 +2488,7 @@
     // UI Events
     {
       "attributeName" : "onScroll",
-      "attributeType" : "EventHandler",
+      "attributeType" : "UIEventHandler",
       "docLines" : [
         ""
       ],
@@ -2499,7 +2499,7 @@
     // Wheel Events
     {
       "attributeName" : "onWheel",
-      "attributeType" : "EventHandler",
+      "attributeType" : "WheelEventHandler",
       "docLines" : [
         ""
       ],
@@ -2730,7 +2730,7 @@
     // Animation Events
     {
       "attributeName" : "onAnimationStart",
-      "attributeType" : "EventHandler",
+      "attributeType" : "AnimationEventHandler",
       "docLines" : [
         ""
       ],
@@ -2739,7 +2739,7 @@
     },
     {
       "attributeName" : "onAnimationEnd",
-      "attributeType" : "EventHandler",
+      "attributeType" : "AnimationEventHandler",
       "docLines" : [
         ""
       ],
@@ -2748,7 +2748,7 @@
     },
     {
       "attributeName" : "onAnimationIteration",
-      "attributeType" : "EventHandler",
+      "attributeType" : "AnimationEventHandler",
       "docLines" : [
         ""
       ],
@@ -2759,7 +2759,7 @@
     // Transition Events
     {
       "attributeName" : "onTransitionEnd",
-      "attributeType" : "EventHandler",
+      "attributeType" : "TransitionEventHandler",
       "docLines" : [
         ""
       ],
