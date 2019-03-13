@@ -13,7 +13,9 @@ object Generator extends App {
   val eventToSynthetic = Map[String, String => String](
     "EventHandler" -> (t => s"slinky.core.SyntheticEvent[$t, org.scalajs.dom.Event]"),
     "ClipboardEventHandler" -> (t => s"slinky.web.SyntheticClipboardEvent[$t]"),
-    "MouseEventHandler" -> (t => s"slinky.web.SyntheticMouseEvent[$t]")
+    "CompositionEventHandler" -> (t => s"slinky.web.SyntheticCompositionEvent[$t]"),
+    "MouseEventHandler" -> (t => s"slinky.web.SyntheticMouseEvent[$t]"),
+    "TouchEventHandler" -> (t => s"slinky.web.SyntheticTouchEvent[$t]")
   )
 
   val outFolder = new File(out)
@@ -21,7 +23,10 @@ object Generator extends App {
     outFolder.mkdirs()
 
     // we add a * tag which is supported by all attributes
-    val extractedWithoutStar = decode[TagsModel](Source.fromFile(providerName).getLines().mkString("\n")).right.get
+    val extractedWithoutStar = decode[TagsModel](
+      Source.fromFile(providerName).getLines()
+        .filterNot(l => l.trim.isEmpty || l.trim.startsWith("//")).mkString("\n")
+      ).right.get
     val extracted = extractedWithoutStar.copy(
       tags = extractedWithoutStar.tags :+ Tag("*", "Any", Seq.empty),
       attributes = extractedWithoutStar.attributes.map(a =>
@@ -58,14 +63,13 @@ object Generator extends App {
             s"""@inline def :=(v: ${eventTypeForTagType(t.scalaJSType)} => Unit)(implicit _imp: ${Utils.identifierFor(t.tagName)}.tag.type) =
                |  new AttrPair[${Utils.identifierFor(t.tagName)}.tag.type]("${a.attributeName}", v)""".stripMargin
           }.mkString("", "\n", "\n") + noEvent
-        } else if (a.attributeType == "TouchEventHandler") {
-          s"""@inline def :=(v: org.scalajs.dom.TouchEvent => Unit) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)
-             |@inline def :=(v: () => Unit) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)
-           """.stripMargin
         } else if (a.attributeType == "RefType") {
-          s"""@inline def :=(v: org.scalajs.dom.Element => Unit) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)
-             |@inline def :=(v: slinky.core.facade.ReactRef[org.scalajs.dom.Element]) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)
-           """.stripMargin
+          compatibles.map { t =>
+            s"""@inline def :=(v: ${t.scalaJSType} => Unit)(implicit _imp: ${Utils.identifierFor(t.tagName)}.tag.type) =
+               |  new AttrPair[${Utils.identifierFor(t.tagName)}.tag.type]("${a.attributeName}", v)
+               |@inline def :=(v: slinky.core.facade.ReactRef[${t.scalaJSType}])(implicit _imp: ${Utils.identifierFor(t.tagName)}.tag.type) =
+               |  new AttrPair[${Utils.identifierFor(t.tagName)}.tag.type]("${a.attributeName}", v)""".stripMargin
+          }.mkString("", "\n", "\n")
         } else {
           s"""@inline def :=(v: ${a.attributeType}) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)"""
         }) + s"\ntype attrType = _${symbolWithoutEscape}_attr.type"
