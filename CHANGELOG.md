@@ -4,6 +4,7 @@
 ### Highlights :tada:
 + Support **React Hooks for functional components**, see [the docs](https://slinky.shadaj.me/docs/functional-components-and-hooks/) for more details [PR #227](https://github.com/shadaj/slinky/pull/227)
 + Add support for **writing functional components**, see [the docs](https://slinky.shadaj.me/docs/functional-components-and-hooks/) for more details [PR #217](https://github.com/shadaj/slinky/pull/217)
++ Casting event targets is **no longer needed**! Now all event handlers are statically typed based on the tag they are being placed on [PR #243](https://github.com/shadaj/slinky/pull/243)
 
 ### Breaking Changes :warning:
 + The `React.forwardRef` function now takes a `FunctionalComponentTakingRef`, which can be creating by creating a functional component that takes an additional ref parameter: `FunctionalComponent((props, ref) => ...)` [PR #227](https://github.com/shadaj/slinky/pull/227)

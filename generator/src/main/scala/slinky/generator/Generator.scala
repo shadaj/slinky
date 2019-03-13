@@ -74,7 +74,7 @@ object Generator extends App {
           compatibles.map { t =>
             s"""@inline def :=(v: ${t.scalaJSType} => Unit)(implicit _imp: ${Utils.identifierFor(t.tagName)}.tag.type) =
                |  new AttrPair[${Utils.identifierFor(t.tagName)}.tag.type]("${a.attributeName}", v)
-               |@inline def :=(v: slinky.core.facade.ReactRef[${t.scalaJSType}])(implicit _imp: ${Utils.identifierFor(t.tagName)}.tag.type) =
+               |@inline def :=[E >: ${t.scalaJSType}](v: slinky.core.facade.ReactRef[E])(implicit _imp: ${Utils.identifierFor(t.tagName)}.tag.type) =
                |  new AttrPair[${Utils.identifierFor(t.tagName)}.tag.type]("${a.attributeName}", v)""".stripMargin
           }.mkString("", "\n", "\n")
         } else {
@@ -123,7 +123,7 @@ object Generator extends App {
            |import scala.language.implicitConversions
            |
            |/**
-           | * ${(tags.map(_.docLines) ++ attrs.map(_.docLines)).map(_.map(_.replace("*", "&#47;")).mkString("\n * "))}
+           | * ${(tags.map(_.docLines) ++ attrs.map(_.docLines)).flatten.map(_.replace("*", "&#47;")).mkString("\n * ")}
            | */
            |object $symbol $symbolExtends {
            |implicit object tag extends TagElement
