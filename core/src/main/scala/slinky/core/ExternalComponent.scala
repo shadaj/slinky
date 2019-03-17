@@ -1,6 +1,6 @@
 package slinky.core
 
-import slinky.core.facade.{React, ReactElement, ReactRef}
+import slinky.core.facade.{React, ReactRaw, ReactElement, ReactRef}
 import slinky.readwrite.Writer
 
 import scala.language.implicitConversions
@@ -9,44 +9,41 @@ import scala.scalajs.js.|
 import scala.language.experimental.macros
 import scala.reflect.macros.whitebox
 
-class BuildingComponent[E, R <: js.Object](c: String | js.Object, props: js.Object, key: String = null, ref: js.Object = null, mods: Seq[AttrPair[E]] = Seq.empty) {
-  def apply(tagMod: AttrPair[E], tagMods: AttrPair[E]*): BuildingComponent[E, R] = {
-    new BuildingComponent[E, R](c, props, key, ref, mods ++ (tagMod +: tagMods))
+final class BuildingComponent[E, R <: js.Object](private val args: js.Array[js.Any]) extends AnyVal {
+  def apply(mods: TagMod[E]*): BuildingComponent[E, R] = {
+    mods.foreach { m =>
+      m match {
+        case a: AttrPair[_] =>
+          args(1).asInstanceOf[js.Dictionary[js.Any]](a.name) = a.value
+        case r =>
+          args.push(r.asInstanceOf[ReactElementMod])
+      }
+    }
+
+    this
   }
 
   def withKey(newKey: String): BuildingComponent[E, R] = {
-    new BuildingComponent[E, R](c, props, newKey, ref, mods)
+    args(1).asInstanceOf[js.Dictionary[js.Any]]("key") = newKey
+    this
   }
 
   def withRef(newRef: R => Unit): BuildingComponent[E, R] = {
-    new BuildingComponent[E, R](c, props, key, newRef, mods)
+    args(1).asInstanceOf[js.Dictionary[js.Any]]("ref") = (newRef: js.Function1[R, Unit])
+    this
   }
 
   def withRef(ref: ReactRef[R]): BuildingComponent[E, R] = {
-    new BuildingComponent[E, R](c, props, key, ref, mods)
-  }
-
-  def apply(children: ReactElement*): ReactElement = {
-    val written = props.asInstanceOf[js.Dictionary[js.Any]]
-
-    if (key != null) {
-      written("key") = key
-    }
-
-    if (ref != null) {
-      written("ref") = ref.asInstanceOf[js.Any]
-    }
-
-    mods.foreach { m =>
-      written(m.name) = m.value
-    }
-
-    React.createElement(c, written, children: _*)
+    args(1).asInstanceOf[js.Dictionary[js.Any]]("ref") = ref
+    this
   }
 }
 
 object BuildingComponent {
-  implicit def make[E, R <: js.Object]: BuildingComponent[E, R] => ReactElement = _.apply(Seq.empty: _*)
+  @inline implicit def make[E, R <: js.Object](comp: BuildingComponent[E, R]): ReactElement = {
+    ReactRaw.createElement
+      .applyDynamic("apply")(ReactRaw, comp.args).asInstanceOf[ReactElement]
+  }
 }
 
 abstract class ExternalComponentWithAttributesWithRefType[E <: TagElement, R <: js.Object](implicit pw: ExternalPropsWriterProvider) {
@@ -60,7 +57,7 @@ abstract class ExternalComponentWithAttributesWithRefType[E <: TagElement, R <: 
 
   def apply(p: Props): BuildingComponent[E, R] = {
     // no need to take key or ref here because those can be passed in through attributes
-    new BuildingComponent(component, writer.write(p), null, null, Seq.empty)
+    new BuildingComponent(js.Array(component.asInstanceOf[js.Any], writer.write(p)))
   }
 }
 
@@ -74,12 +71,16 @@ abstract class ExternalComponent(implicit pw: ExternalPropsWriterProvider) exten
 abstract class ExternalComponentNoPropsWithAttributesWithRefType[E <: TagElement, R <: js.Object] {
   val component: String | js.Object
 
-  def apply(mod: AttrPair[E], tagMods: AttrPair[E]*): BuildingComponent[E, R] = {
-    new BuildingComponent(component, js.Dynamic.literal(), mods = mod +: tagMods)
+  def apply(mods: TagMod[E]*): BuildingComponent[E, R] = {
+    new BuildingComponent(js.Array(component.asInstanceOf[js.Any], js.Dictionary.empty)).apply(mods: _*)
   }
 
-  def withKey(key: String): BuildingComponent[E, R] = new BuildingComponent(component, js.Dynamic.literal(), key = key)
-  def withRef(ref: R => Unit): BuildingComponent[E, R] = new BuildingComponent(component, js.Dynamic.literal(), ref = ref)
+  def withKey(key: String): BuildingComponent[E, R] =
+    new BuildingComponent(js.Array(component.asInstanceOf[js.Any], js.Dictionary.empty)).withKey(key)
+  def withRef(ref: R => Unit): BuildingComponent[E, R] =
+  new BuildingComponent(js.Array(component.asInstanceOf[js.Any], js.Dictionary.empty)).withRef(ref)
+  def withRef(ref: ReactRef[R]): BuildingComponent[E, R] =
+  new BuildingComponent(js.Array(component.asInstanceOf[js.Any], js.Dictionary.empty)).withRef(ref)
 
   def apply(children: ReactElement*): ReactElement = {
     React.createElement(component, js.Dynamic.literal().asInstanceOf[js.Dictionary[js.Any]], children: _*)

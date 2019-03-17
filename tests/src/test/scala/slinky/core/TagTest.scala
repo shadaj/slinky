@@ -1,13 +1,14 @@
 package slinky.core
 
-import slinky.core.facade.{React, ReactElement}
-import slinky.web.ReactDOM
 import org.scalatest.FunSuite
+
+import slinky.core.facade.{React, ReactElement}
+import slinky.web.{ReactDOM, SyntheticMouseEvent}
 import slinky.web.html._
 
 import scala.scalajs.js
 import org.scalajs.dom
-import org.scalajs.dom.MouseEvent
+import org.scalajs.dom.{Element, html, Event, MouseEvent}
 
 class InnerClassCustom extends js.Object {
   val customTag = new CustomTag("custom-element")
@@ -27,11 +28,11 @@ class TagTest extends FunSuite {
   }
 
   test("Sequence of different tag types can be typed to TagComponent[Any]") {
-    assertCompiles("val foo: Seq[ReactElement] = Seq(div(), a())")
+    val foo: Seq[ReactElement] = Seq(div(), a())
   }
 
   test("Sequence of different tag types can used as child of tag") {
-    assertCompiles("div(Seq(div(), a()))")
+    div(Seq(div(), a()))
   }
 
   test("Can provide a custom tag, which is supported by all components") {
@@ -55,8 +56,8 @@ class TagTest extends FunSuite {
     assertDoesNotCompile("input(href)")
   }
 
-  test("Mouse events can be given a function taking a MouseEvent") {
-    assertCompiles("div(onMouseOver := ((v: MouseEvent) => {}))")
+  test("Mouse events can be given a function taking a SyntheticMouseEvent") {
+    assertCompiles("div(onMouseOver := ((v: SyntheticMouseEvent[Element]) => {}))")
   }
 
   test("Can construct tag with abstraction over element type") {
@@ -92,7 +93,7 @@ class TagTest extends FunSuite {
   }
 
   test("Can specify defaultValue on a select tag") {
-    val selectRef = React.createRef[dom.Element]
+    val selectRef = React.createRef[dom.html.Select]
     ReactDOM.render(
       select(defaultValue := "item-1", ref := selectRef)(
         option(value := "item-1")("Item 1")
@@ -100,16 +101,27 @@ class TagTest extends FunSuite {
       dom.document.createElement("div")
     )
 
-    assert(selectRef.current.asInstanceOf[dom.html.Select].value == "item-1")
+    assert(selectRef.current.value == "item-1")
   }
 
   test("Can specify defaultChecked on a checkbox") {
-    val inputRef = React.createRef[dom.Element]
+    val inputRef = React.createRef[dom.html.Input]
     ReactDOM.render(
       input(`type` := "checkbox", defaultChecked, ref := inputRef),
       dom.document.createElement("div")
     )
 
-    assert(inputRef.current.asInstanceOf[dom.html.Input].checked)
+    assert(inputRef.current.checked)
+  }
+
+  test("Can grab the target for an input event listener and use input properties") {
+    input(onInput := (v => v.target.value))(
+      "body"
+    )
+  }
+
+  test("Can get the ref to a div as an HTMLElement") {
+    val myRef = React.createRef[html.Element]
+    div(ref := myRef)
   }
 }

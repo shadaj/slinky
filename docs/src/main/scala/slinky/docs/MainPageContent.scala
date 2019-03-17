@@ -15,7 +15,7 @@ import scala.scalajs.js.Dynamic.literal
       marginRight = "auto",
       marginBottom = "15px",
       padding = "5px"
-    ))(
+    )).apply(
       children: _*
     )
   }

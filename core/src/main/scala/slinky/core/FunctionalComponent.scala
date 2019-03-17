@@ -1,7 +1,7 @@
 package slinky.core
 
 import slinky.readwrite.Reader
-import slinky.core.facade.{React, ReactElement, ReactRef}
+import slinky.core.facade.{React, ReactRaw, ReactElement, ReactRef}
 import scala.scalajs.js
 
 import scala.reflect.macros.whitebox
@@ -9,16 +9,17 @@ import scala.language.experimental.macros
 
 import scala.language.implicitConversions
 
-final class KeyAddingStage(private val props: js.Dictionary[js.Any], private val constructor: js.Object) {
-  def withKey(key: String): ReactElement = {
-    props("key") = key
+final class KeyAddingStage(private val args: js.Array[js.Any]) extends AnyVal {
+  @inline def withKey(key: String): ReactElement = {
+    args(1).asInstanceOf[js.Dictionary[js.Any]]("key") = key
     KeyAddingStage.build(this)
   }
 }
 
 object KeyAddingStage {
-  implicit def build(stage: KeyAddingStage): ReactElement = {
-    React.createElement(stage.constructor, stage.props)
+  @inline implicit def build(stage: KeyAddingStage): ReactElement = {
+    ReactRaw.createElement
+      .applyDynamic("apply")(ReactRaw, stage.args).asInstanceOf[ReactElement]
   }
 }
 
@@ -31,10 +32,10 @@ final class FunctionalComponent[P] private[core](private[core] val component: js
     component
   }
 
-  @inline final def apply(props: P): KeyAddingStage = {
-    new KeyAddingStage(js.Dynamic.literal(
+  @inline def apply(props: P): KeyAddingStage = {
+    new KeyAddingStage(js.Array(component, js.Dynamic.literal(
       __ = props.asInstanceOf[js.Any]
-    ).asInstanceOf[js.Dictionary[js.Any]], component)
+    )))
   }
 }
 
@@ -47,10 +48,10 @@ final class FunctionalComponentTakingRef[P, R] private[core](private[core] val c
     component
   }
 
-  @inline final def apply(props: P): KeyAddingStage = {
-    new KeyAddingStage(js.Dynamic.literal(
+  @inline def apply(props: P): KeyAddingStage = {
+    new KeyAddingStage(js.Array(component, js.Dynamic.literal(
       __ = props.asInstanceOf[js.Any]
-    ).asInstanceOf[js.Dictionary[js.Any]], component)
+    )))
   }
 }
 
@@ -63,10 +64,13 @@ final class FunctionalComponentForwardedRef[P, R] private[core](private[core] va
     component
   }
 
-  @inline final def apply(props: P): KeyAndRefAddingStage[R] = {
-    new KeyAndRefAddingStage[R](js.Dynamic.literal(
-      __ = props.asInstanceOf[js.Any]
-    ).asInstanceOf[js.Dictionary[js.Any]], component)
+  @inline def apply(props: P): KeyAndRefAddingStage[R] = {
+    new KeyAndRefAddingStage[R](js.Array(
+      component,
+      js.Dynamic.literal(
+        __ = props.asInstanceOf[js.Any]
+      )
+    ))
   }
 }
 

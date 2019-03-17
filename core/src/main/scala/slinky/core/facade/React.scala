@@ -11,7 +11,7 @@ import scala.scalajs.js.JSConverters._
 import scala.language.implicitConversions
 
 @js.native
-trait ReactElement extends js.Object
+trait ReactElement extends js.Object with ReactElementMod
 
 object ReactElement {
   @inline implicit def stringToElement(s: String): ReactElement = {
@@ -63,6 +63,8 @@ private[slinky] object ReactRaw extends js.Object {
   def createElement(elementName: String | js.Object,
                     properties: js.Dictionary[js.Any],
                     contents: ReactElement*): ReactElement = js.native
+
+  val createElement: js.Dynamic = js.native // used for WithAttrs
 
   def createContext[T](defaultValue: T): ReactContext[T] = js.native
 

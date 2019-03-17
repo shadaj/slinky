@@ -1,28 +1,23 @@
 package slinky.core
 
-import slinky.core.facade.{React, ReactElement}
+import slinky.core.facade.{React, ReactRaw, ReactElement}
 
 import scala.language.implicitConversions
 import scala.scalajs.js
+import scala.scalajs.js.Dictionary
+
+import scala.language.higherKinds
 
 trait Tag extends Any {
   type tagType <: TagElement
-  def apply(mod: AttrPair[tagType], remainingMods: AttrPair[tagType]*): WithAttrs
-  def apply(elems: ReactElement*): ReactElement
+  def apply(mods: TagMod[tagType]*): WithAttrs[tagType]
 }
 
-final class CustomTag(private val name: String) extends Tag {
+final class CustomTag(@inline private val name: String) extends Tag {
   override type tagType = Nothing
 
-  @inline override def apply(mod: AttrPair[Nothing], remainingMods: AttrPair[Nothing]*): WithAttrs = {
-    val dictionary = js.Dictionary.empty[js.Any]
-    dictionary(mod.name) = mod.value
-    remainingMods.foreach(m => dictionary(m.name) = m.value)
-    new WithAttrs(name, dictionary)
-  }
-
-  @inline override def apply(elems: ReactElement*): ReactElement = {
-    React.createElement(name, js.Dictionary.empty[js.Any], elems: _*)
+  @inline def apply(mods: TagMod[tagType]*): WithAttrs[tagType] = {
+    WithAttrs[tagType](name, mods)
   }
 }
 
@@ -33,16 +28,46 @@ trait Attr {
 
 abstract class TagElement
 
-final class CustomAttribute[T](private val name: String) {
+final class CustomAttribute[T](@inline private val name: String) {
   @inline def :=(v: T) = new AttrPair[Any](name, v.asInstanceOf[js.Any])
 }
 
-class AttrPair[-A](@inline final val name: String, @inline final val value: js.Any)
+trait TagMod[-A] extends js.Object
 
-final class WithAttrs(@inline private[this] val name: String, @inline private[this] val attrs: js.Dictionary[js.Any]) {
-  @inline def apply(children: ReactElement*): ReactElement = React.createElement(name, attrs, children: _*)
+object TagMod {
+  @inline implicit def elemToTagMod[E](elem: E)(implicit ev: E => ReactElement): TagMod[Any] =
+    ev(elem)
+}
+
+@js.native trait ReactElementMod extends TagMod[Any]
+
+final class AttrPair[-A](@inline final val name: String,
+                         @inline final val value: js.Any) extends TagMod[A]
+
+final class WithAttrs[A](@inline private val args: js.Array[js.Any]) extends AnyVal {
+  @inline def apply(children: ReactElement*): ReactElement = {
+    children.foreach(c => args.push(c))
+    ReactRaw.createElement
+      .applyDynamic("apply")(ReactRaw, args).asInstanceOf[ReactElement]
+  }
 }
 
 object WithAttrs {
-  @inline implicit def shortCut(withAttrs: WithAttrs): ReactElement = withAttrs.apply()
+  @inline def apply[A](component: js.Any, mods: Seq[TagMod[A]]) = {
+    val inst = new WithAttrs[A](js.Array(component, js.Dynamic.literal()))
+    mods.foreach { m =>
+      m match {
+        case a: AttrPair[_] =>
+          inst.args(1).asInstanceOf[js.Dictionary[js.Any]](a.name) = a.value
+        case r =>
+          inst.args.push(r.asInstanceOf[ReactElementMod])
+      }
+    }
+    inst
+  }
+
+  @inline implicit def build(withAttrs: WithAttrs[_]): ReactElement = {
+    ReactRaw.createElement
+      .applyDynamic("apply")(ReactRaw, withAttrs.args).asInstanceOf[ReactElement]
+  }
 }

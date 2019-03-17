@@ -80,7 +80,7 @@ object SVG extends TagsProvider {
       .stripMargin.split('\n').flatMap(_.split(' ')).toSet ++ MDN.supportedAttributes
 
   def extract: (Seq[Tag], Seq[Attribute]) = {
-    val allTags = supportedTags.map(t => Tag(t, Seq.empty))
+    val allTags = supportedTags.map(t => Tag(t, "Any", Seq.empty))
 
     val attributes = allAttributes.map(SVGToJSMapping.convert).flatMap { converted =>
       if (supportedAttributes.contains(converted.name)) {

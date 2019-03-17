@@ -2,366 +2,439 @@
   "tags" : [
     {
       "tagName" : "a",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "altGlyph",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "altGlyphDef",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "altGlyphItem",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "animate",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "animateColor",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "animateMotion",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "animateTransform",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "circle",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "clipPath",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "cursor",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "defs",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "desc",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "ellipse",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "feBlend",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "feColorMatrix",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "feComponentTransfer",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "feComposite",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "feConvolveMatrix",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "feDiffuseLighting",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "feDisplacementMap",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "feDistantLight",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "feFlood",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "feFuncA",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "feFuncB",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "feFuncG",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "feFuncR",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "feGaussianBlur",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "feImage",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "feMerge",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "feMergeNode",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "feMorphology",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "feOffset",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "fePointLight",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "feSpecularLighting",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "feSpotLight",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "feTile",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "feTurbulence",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "filter",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "font",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "foreignObject",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "g",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "glyph",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "glyphRef",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "hkern",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "image",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "line",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "linearGradient",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "marker",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "mask",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "metadata",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "mpath",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "path",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "pattern",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "polygon",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "polyline",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "radialGradient",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "rect",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "script",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "set",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "stop",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "style",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "svg",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "switch",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "symbol",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "text",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "textPath",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "title",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "tref",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "tspan",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "use",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "view",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     },
     {
       "tagName" : "vkern",
+      "scalaJSType": "org.scalajs.dom.Element",
       "docLines" : [
       ]
     }
