@@ -15,7 +15,7 @@
 + The `Option` writer now emits `null` instead of `js.undefined` for a value of `None` [PR #247](https://github.com/shadaj/slinky/pull/247)
 
 ### Bug Fixes
-+ Make the static lifecycle functions `getDerivedStateFromProps` and `getDerivedStateFromError` not working in `fullOptJS` mode [PR #248](https://github.com/shadaj/slinky/pull/248)
++ Make the static lifecycle functions `getDerivedStateFromProps` and `getDerivedStateFromError` work correctly in `fullOptJS` mode [PR #248](https://github.com/shadaj/slinky/pull/248)
 + Fix issues around state not updating when setting an `Option` to `None` in hot reloading mode [PR #247](https://github.com/shadaj/slinky/pull/247)
 + Fix the `js.|` reader/writer implementations to work correctly in `fullOptJS` mode [PR #248](https://github.com/shadaj/slinky/pull/248)
 + Support autoComplete attr for input and form elements [PR #225](https://github.com/shadaj/slinky/pull/225)
