@@ -33,7 +33,7 @@ class ReaderWriterTest extends FunSuite {
                                 (implicit reader: Reader[T], writer: Writer[T]) = {
     val written = writer.write(v)
     if (!isOpaque) {
-      assert(js.isUndefined(written) || js.isUndefined(written.asInstanceOf[js.Dynamic].__))
+      assert(js.isUndefined(written) || (written == null) || js.isUndefined(written.asInstanceOf[js.Dynamic].__))
     } else {
       assert(!js.isUndefined(written.asInstanceOf[js.Dynamic].__))
     }
@@ -86,7 +86,8 @@ class ReaderWriterTest extends FunSuite {
     readWrittenSame[Option[String]](Some("hello"))
     readWrittenSame[Option[String]](None)
     assert(implicitly[Reader[Option[String]]].read(null).isEmpty)
-    assert(implicitly[Writer[Option[String]]].write(None) == ())
+    assert(implicitly[Reader[Option[String]]].read(js.undefined.asInstanceOf[js.Object]).isEmpty)
+    assert(implicitly[Writer[Option[String]]].write(None) == null)
   }
 
   test("Read/write - Either") {
