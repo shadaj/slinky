@@ -142,7 +142,7 @@ trait CoreWriters extends MacroWriters with FallbackWriters {
   }
 
   implicit def optionWriter[T](implicit writer: Writer[T]): Writer[Option[T]] =
-    _.map(v => writer.write(v)).getOrElse(js.undefined.asInstanceOf[js.Object])
+    _.map(v => writer.write(v)).orNull
 
   implicit def eitherWriter[A, B](implicit aWriter: Writer[A], bWriter: Writer[B]): Writer[Either[A, B]] = { v =>
     val written = v.fold(aWriter.write, bWriter.write)

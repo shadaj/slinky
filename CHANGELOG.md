@@ -11,8 +11,10 @@
 + The `React.forwardRef` function now takes a `FunctionalComponentTakingRef`, which can be creating by creating a functional component that takes an additional ref parameter: `FunctionalComponent((props, ref) => ...)` [PR #227](https://github.com/shadaj/slinky/pull/227)
 + The `ReactRef` type is no longer variant in its type parameters to increase type safety [PR #227](https://github.com/shadaj/slinky/pull/227)
 + Components will no longer have their `displayName` when built in `fullOptJS` mode, this results in a **~2.5% decrease in bundle size** and matches behavior with JS where names are obfuscated in production builds  [PR #217](https://github.com/shadaj/slinky/pull/217)
++ The `Option` writer now emits `null` instead of `js.undefined` for a value of `None` [PR #247](https://github.com/shadaj/slinky/pull/247)
 
 ### Bug Fixes
++ Fix issues around state not updating when setting an `Option` to `None` in hot reloading mode [PR #247](https://github.com/shadaj/slinky/pull/247)
 + Support autoComplete attr for input and form elements [PR #225](https://github.com/shadaj/slinky/pull/225)
 + Fix capitalization of `rowSpan`/`colSpan` attribute (used to be `rowspan`/`colspan`) [PR #224](https://github.com/shadaj/slinky/pull/224)
 
