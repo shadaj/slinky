@@ -126,18 +126,10 @@ trait CoreWriters extends MacroWriters with FallbackWriters {
     _.map(v => writer.write(v)).getOrElse(js.undefined.asInstanceOf[js.Object])
 
   implicit def unionWriter[A: ClassTag, B: ClassTag](implicit aWriter: Writer[A], bWriter: Writer[B]): Writer[A | B] = { v =>
-    try {
+    if (implicitly[ClassTag[A]].runtimeClass.isInstance(v)) {
       aWriter.write(v.asInstanceOf[A])
-    } catch {
-      case e: Throwable =>
-        try {
-          bWriter.write(v.asInstanceOf[B])
-        } catch {
-          case e2: Throwable =>
-            println("Neither writer for the union worked.")
-            e.printStackTrace()
-            throw e2
-        }
+    } else {
+      bWriter.write(v.asInstanceOf[B])
     }
   }
 

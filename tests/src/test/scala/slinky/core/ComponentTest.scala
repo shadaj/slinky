@@ -183,7 +183,7 @@ object DerivedStateComponent extends ComponentWrapper {
   case class Props(num: Int, onValue: Int => Unit)
   type State = Int
 
-  override def getDerivedStateFromProps(nextProps: Props, prevState: State): State = {
+  override val getDerivedStateFromProps = (nextProps: Props, prevState: State) => {
     nextProps.num
   }
 
@@ -204,7 +204,7 @@ object DerivedStateFromErrorComponent extends ComponentWrapper {
   case class Props(onValue: Int => Unit)
   type State = Int
 
-  override def getDerivedStateFromError(e: js.Error): State = {
+  override val getDerivedStateFromError = (e: js.Error) => {
     123
   }
 

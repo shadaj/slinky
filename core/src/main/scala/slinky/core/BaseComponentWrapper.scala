@@ -3,9 +3,11 @@ package slinky.core
 import slinky.core.facade.{React, ReactRaw, ReactElement, ReactRef}
 import slinky.readwrite.{Reader, Writer}
 
-import scala.language.experimental.macros
 import scala.scalajs.js
 import scala.scalajs.js.ConstructorTag
+import scala.scalajs.js.annotation.JSExport
+
+import scala.language.experimental.macros
 import scala.language.implicitConversions
 import scala.reflect.macros.whitebox
 
@@ -44,8 +46,9 @@ abstract class BaseComponentWrapper(sr: StateReaderProvider, sw: StateWriterProv
 
   type Definition <: js.Object
 
-  def getDerivedStateFromProps(props: Props, state: State): State = null.asInstanceOf[State]
-  def getDerivedStateFromError(error: js.Error): State = null.asInstanceOf[State]
+  val getDerivedStateFromProps: (Props, State) => State = null
+  
+  val getDerivedStateFromError: js.Error => State = null
 
   private[core] val hot_stateReader = sr.asInstanceOf[Reader[State]]
   private[core] val hot_stateWriter = sw.asInstanceOf[Writer[State]]
@@ -60,7 +63,7 @@ abstract class BaseComponentWrapper(sr: StateReaderProvider, sw: StateWriterProv
 
     constructor._base = this.asInstanceOf[js.Any]
 
-    if (this.asInstanceOf[js.Dynamic].getDerivedStateFromProps__O__O__O != BaseComponentWrapper.defaultGetDerivedStateFromProps) {
+    if (this.getDerivedStateFromProps != null) {
       constructor.getDerivedStateFromProps = ((props: js.Object, state: js.Object) => {
         val propsScala = if (js.typeOf(props) == "object" && props.hasOwnProperty("__")) {
           props.asInstanceOf[js.Dynamic].__.asInstanceOf[Props]
@@ -84,7 +87,7 @@ abstract class BaseComponentWrapper(sr: StateReaderProvider, sw: StateWriterProv
       }): js.Function2[js.Object, js.Object, js.Object]
     }
 
-    if (this.asInstanceOf[js.Dynamic].getDerivedStateFromError__sjs_js_Error__O != BaseComponentWrapper.defaultGetDerivedStateFromError) {
+    if (this.getDerivedStateFromError != null) {
       constructor.getDerivedStateFromError = ((error: js.Error) => {
         val newState = getDerivedStateFromError(error)
 
@@ -132,22 +135,6 @@ abstract class BaseComponentWrapper(sr: StateReaderProvider, sw: StateWriterProv
 }
 
 object BaseComponentWrapper {
-  private[BaseComponentWrapper] val defaultGetDerivedStateFromProps = {
-    new BaseComponentWrapper(null, null) {
-      override type Props = Unit
-      override type State = Unit
-      override type Def = Nothing
-    }.asInstanceOf[js.Dynamic].getDerivedStateFromProps__O__O__O
-  }
-
-  private[BaseComponentWrapper] val defaultGetDerivedStateFromError = {
-    new BaseComponentWrapper(null, null) {
-      override type Props = Unit
-      override type State = Unit
-      override type Def = Nothing
-    }.asInstanceOf[js.Dynamic].getDerivedStateFromError__sjs_js_Error__O
-  }
-
   implicit def proplessKeyAndRef[C <: BaseComponentWrapper { type Props = Unit }](c: C)(implicit stateWriter: Writer[c.State], stateReader: Reader[c.State], constructorTag: ConstructorTag[c.Def]): KeyAndRefAddingStage[c.Def] = {
     c.apply(())
   }
