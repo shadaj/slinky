@@ -8,13 +8,16 @@
 
 ### Breaking Changes :warning:
 + The tags API has seen some major changes, please take a look at the separate section below for more details [PR #243](https://github.com/shadaj/slinky/pull/243)
++ Components using the static lifecycle functions `getDerivedStateFromProps` and `getDerivedStateFromError` must now override the functions with a `val` [PR #248](https://github.com/shadaj/slinky/pull/248)
 + The `React.forwardRef` function now takes a `FunctionalComponentTakingRef`, which can be creating by creating a functional component that takes an additional ref parameter: `FunctionalComponent((props, ref) => ...)` [PR #227](https://github.com/shadaj/slinky/pull/227)
 + The `ReactRef` type is no longer variant in its type parameters to increase type safety [PR #227](https://github.com/shadaj/slinky/pull/227)
 + Components will no longer have their `displayName` when built in `fullOptJS` mode, this results in a **~2.5% decrease in bundle size** and matches behavior with JS where names are obfuscated in production builds  [PR #217](https://github.com/shadaj/slinky/pull/217)
 + The `Option` writer now emits `null` instead of `js.undefined` for a value of `None` [PR #247](https://github.com/shadaj/slinky/pull/247)
 
 ### Bug Fixes
++ Make the static lifecycle functions `getDerivedStateFromProps` and `getDerivedStateFromError` work correctly in `fullOptJS` mode [PR #248](https://github.com/shadaj/slinky/pull/248)
 + Fix issues around state not updating when setting an `Option` to `None` in hot reloading mode [PR #247](https://github.com/shadaj/slinky/pull/247)
++ Fix the `js.|` reader/writer implementations to work correctly in `fullOptJS` mode [PR #248](https://github.com/shadaj/slinky/pull/248)
 + Support autoComplete attr for input and form elements [PR #225](https://github.com/shadaj/slinky/pull/225)
 + Fix capitalization of `rowSpan`/`colSpan` attribute (used to be `rowspan`/`colspan`) [PR #224](https://github.com/shadaj/slinky/pull/224)
 

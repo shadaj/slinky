@@ -107,23 +107,77 @@ trait CoreReaders extends MacroReaders with FallbackReaders {
 
   implicit val unitReader: Reader[Unit] = _ => ()
 
-  implicit val stringReader: Reader[String] = _.asInstanceOf[String]
+  implicit val stringReader: Reader[String] = v => {
+    if (js.typeOf(v) == "string") {
+      v.asInstanceOf[String]
+    } else {
+      throw new IllegalArgumentException(s"The value $v is not a string")
+    }
+  }
 
-  implicit val charReader: Reader[Char] = _.asInstanceOf[String].head
+  implicit val charReader: Reader[Char] = v => {
+    if (js.typeOf(v) == "string") {
+      v.asInstanceOf[String].head
+    } else {
+      throw new IllegalArgumentException(s"The value $v is not a string (trying to get a char)")
+    }
+  }
 
-  implicit val byteReader: Reader[Byte] = _.asInstanceOf[Byte]
+  implicit val byteReader: Reader[Byte] = v => {
+    if (js.typeOf(v) == "number") {
+      v.asInstanceOf[Byte]
+    } else {
+      throw new IllegalArgumentException(s"The value $v is not a number")
+    }
+  }
 
-  implicit val shortReader: Reader[Short] = _.asInstanceOf[Short]
+  implicit val shortReader: Reader[Short] = v => {
+    if (js.typeOf(v) == "number") {
+      v.asInstanceOf[Short]
+    } else {
+      throw new IllegalArgumentException(s"The value $v is not a number")
+    }
+  }
 
-  implicit val intReader: Reader[Int] = _.asInstanceOf[Int]
+  implicit val intReader: Reader[Int] = v => {
+    if (js.typeOf(v) == "number") {
+      v.asInstanceOf[Int]
+    } else {
+      throw new IllegalArgumentException(s"The value $v is not a number")
+    }
+  }
 
-  implicit val longReader: Reader[Long] = _.asInstanceOf[String].toLong
+  implicit val longReader: Reader[Long] = v => {
+    if (js.typeOf(v) == "string") {
+      v.asInstanceOf[String].toLong
+    } else {
+      throw new IllegalArgumentException(s"The value $v is not a string (trying to get a long)")
+    }
+  }
 
-  implicit val booleanReader: Reader[Boolean] = _.asInstanceOf[Boolean]
+  implicit val booleanReader: Reader[Boolean] = v => {
+    if (js.typeOf(v) == "boolean") {
+      v.asInstanceOf[Boolean]
+    } else {
+      throw new IllegalArgumentException(s"The value $v is not a boolean")
+    }
+  }
 
-  implicit val doubleReader: Reader[Double] = _.asInstanceOf[Double]
+  implicit val doubleReader: Reader[Double] = v => {
+    if (js.typeOf(v) == "number") {
+      v.asInstanceOf[Double]
+    } else {
+      throw new IllegalArgumentException(s"The value $v is not a number")
+    }
+  }
 
-  implicit val floatReader: Reader[Float] = _.asInstanceOf[Float]
+  implicit val floatReader: Reader[Float] = v => {
+    if (js.typeOf(v) == "number") {
+      v.asInstanceOf[Float]
+    } else {
+      throw new IllegalArgumentException(s"The value $v is not a number")
+    }
+  }
 
   implicit def undefOrReader[T](implicit reader: Reader[T]): Reader[js.UndefOr[T]] = s => {
     if (js.isUndefined(s)) {

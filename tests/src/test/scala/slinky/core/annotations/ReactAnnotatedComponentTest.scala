@@ -184,7 +184,7 @@ object TakeValuesFromCompanionObject {
 }
 
 object DerivedStateComponent {
-  override def getDerivedStateFromProps(nextProps: Props, prevState: State): State = {
+  override val getDerivedStateFromProps = (nextProps: Props, prevState: State) => {
     nextProps.num
   }
 }

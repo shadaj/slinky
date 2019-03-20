@@ -138,15 +138,17 @@ class Def(jsProps: js.Object) extends Definition(jsProps) {
 ```
 
 ### Static Lifecycle Methods
-To use lifecycle methods defined in a static context, override the lifecycle method inside the companion object if using `@react` style or directly inside `ComponentWrapper` if using the non-annotation style.
+To use lifecycle methods defined in a static context, override the lifecycle function inside the companion object if using `@react` style or directly inside `ComponentWrapper` if using the non-annotation style.
+
+**Note:** for the static lifecycle methods, you must override with a `val`, not with a `def`.
 
 ```scala
 object MyComponent extends ComponentWrapper {
   case class Props(...)
   case class State(...)
   
-  override def getDerivedStateFromProps(nextProps: Props, prevState: State): State = { ... }
-  override def getDerivedStateFromError(error: js.Error): State = { ... }
+  override val getDerivedStateFromProps = (nextProps: Props, prevState: State) => { ... }
+  override val getDerivedStateFromError = (error: js.Error) => { ... }
 
   class Def(jsProps: js.Object) extends Definition(jsProps) {
     def render = { ... }
@@ -164,8 +166,8 @@ Or with the `@react` API:
 }
 
 object MyComponent {
-  override def getDerivedStateFromProps(nextProps: Props, prevState: State): State = { ... }
-  override def getDerivedStateFromError(error: js.Error): State = { ... }
+  override val getDerivedStateFromProps = (nextProps: Props, prevState: State) => { ... }
+  override val getDerivedStateFromError = (error: js.Error) => { ... }
 }
 ```
 
