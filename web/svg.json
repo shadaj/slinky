@@ -2350,7 +2350,7 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : true
     },
     {
       "attributeName" : "onAbort",
