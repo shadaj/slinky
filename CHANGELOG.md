@@ -17,6 +17,7 @@
 ### Bug Fixes
 + Make the static lifecycle functions `getDerivedStateFromProps` and `getDerivedStateFromError` work correctly in `fullOptJS` mode [PR #248](https://github.com/shadaj/slinky/pull/248)
 + Fix issues around state not updating when setting an `Option` to `None` in hot reloading mode [PR #247](https://github.com/shadaj/slinky/pull/247)
++ Handle `null` return values in derived state functions to not update the state [PR #249](https://github.com/shadaj/slinky/pull/249)
 + Fix the `js.|` reader/writer implementations to work correctly in `fullOptJS` mode [PR #248](https://github.com/shadaj/slinky/pull/248)
 + Support autoComplete attr for input and form elements [PR #225](https://github.com/shadaj/slinky/pull/225)
 + Fix capitalization of `rowSpan`/`colSpan` attribute (used to be `rowspan`/`colspan`) [PR #224](https://github.com/shadaj/slinky/pull/224)

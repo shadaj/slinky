@@ -79,10 +79,12 @@ abstract class BaseComponentWrapper(sr: StateReaderProvider, sw: StateWriterProv
 
         val newState = getDerivedStateFromProps(propsScala, stateScala)
 
-        if (BaseComponentWrapper.scalaComponentWritingEnabled) {
-          DefinitionBase.writeWithWrappingAdjustment(stateWriter)(newState)
-        } else {
-          js.Dynamic.literal(__ = newState.asInstanceOf[js.Any])
+        if (newState == null) null else {
+          if (BaseComponentWrapper.scalaComponentWritingEnabled) {
+            DefinitionBase.writeWithWrappingAdjustment(stateWriter)(newState)
+          } else {
+            js.Dynamic.literal(__ = newState.asInstanceOf[js.Any])
+          }
         }
       }): js.Function2[js.Object, js.Object, js.Object]
     }
@@ -91,10 +93,12 @@ abstract class BaseComponentWrapper(sr: StateReaderProvider, sw: StateWriterProv
       constructor.getDerivedStateFromError = ((error: js.Error) => {
         val newState = getDerivedStateFromError(error)
 
-        if (BaseComponentWrapper.scalaComponentWritingEnabled) {
-          DefinitionBase.writeWithWrappingAdjustment(stateWriter)(newState)
-        } else {
-          js.Dynamic.literal(__ = newState.asInstanceOf[js.Any])
+        if (newState == null) null else {
+          if (BaseComponentWrapper.scalaComponentWritingEnabled) {
+            DefinitionBase.writeWithWrappingAdjustment(stateWriter)(newState)
+          } else {
+            js.Dynamic.literal(__ = newState.asInstanceOf[js.Any])
+          }
         }
       }): js.Function1[js.Error, js.Object]
     }
