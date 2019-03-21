@@ -36,7 +36,12 @@ h1(className := "header")(
   "Header child element 1",
   "Header child element 2"
 )
-``` 
+```
+
+When using the `data-` and `aria-` attributes, you can pass in the suffix as a string immediately following the `-`. For example, you could pass in a `data-columns` attribute as:
+```scala
+div(data-"columns" := "3")
+```
 
 ### Event Listeners
 To add event listeners to elements, you can pass in an attribute pair assigning an event to a handler function. In Slinky, the event value is based on a type from the [Scala.js DOM](https://github.com/scala-js/scala-js-dom) library (this may change in the near future, see [PR #53](https://github.com/shadaj/slinky/pull/53)).
