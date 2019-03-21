@@ -200,6 +200,23 @@ object DerivedStateComponent extends ComponentWrapper {
   }
 }
 
+object DerivedStateReturnNullComponent extends ComponentWrapper {
+  case class Props(returnNull: Boolean, value: Int)
+  case class State(value: Int)
+
+  override val getDerivedStateFromProps = (nextProps: Props, prevState: State) => {
+    if (nextProps.returnNull) null else State(nextProps.value)
+  }
+
+  class Def(jsProps: js.Object) extends Definition(jsProps) {
+    override def initialState = State(0)
+
+    override def render(): ReactElement = {
+      state.value.toString
+    }
+  }
+}
+
 object DerivedStateFromErrorComponent extends ComponentWrapper {
   case class Props(onValue: Int => Unit)
   type State = Int
@@ -382,6 +399,28 @@ class ComponentTest extends AsyncFunSuite {
     )
 
     promise.future
+  }
+
+  test("getDerivedStateFromProps doesn't update state when null is returned") {
+    val container = dom.document.createElement("div")
+
+    ReactDOM.render(
+      DerivedStateReturnNullComponent(DerivedStateReturnNullComponent.Props(
+        false, 123
+      )),
+      container
+    )
+
+    assert(container.innerHTML == "123")
+
+    ReactDOM.render(
+      DerivedStateReturnNullComponent(DerivedStateReturnNullComponent.Props(
+        true, 456
+      )),
+      container
+    )
+
+    assert(container.innerHTML == "123")
   }
 
   test("getDerivedStateFromError results in state being calculated based on error") {
