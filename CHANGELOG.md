@@ -8,6 +8,7 @@
 
 ### Breaking Changes :warning:
 + The tags API has seen some major changes, please take a look at the separate section below for more details [PR #243](https://github.com/shadaj/slinky/pull/243)
++ Half-built components and tags, which have some props provided but have not yet been converted to a `ReactElement`, cannot be reused. Doing this will result in a runtime exception pointing out where the reuse occured [PR #253](https://github.com/shadaj/slinky/pull/253)
 + Components using the static lifecycle functions `getDerivedStateFromProps` and `getDerivedStateFromError` must now override the functions with a `val` [PR #248](https://github.com/shadaj/slinky/pull/248)
 + The `React.forwardRef` function now takes a `FunctionalComponentTakingRef`, which can be creating by creating a functional component that takes an additional ref parameter: `FunctionalComponent((props, ref) => ...)` [PR #227](https://github.com/shadaj/slinky/pull/227)
 + The `ReactRef` type is no longer variant in its type parameters to increase type safety [PR #227](https://github.com/shadaj/slinky/pull/227)

@@ -11,6 +11,10 @@ import scala.reflect.macros.whitebox
 
 final class BuildingComponent[E, R <: js.Object](private val args: js.Array[js.Any]) extends AnyVal {
   def apply(mods: TagMod[E]*): BuildingComponent[E, R] = {
+    if (args(0) == null) {
+      throw new IllegalStateException("This component has already been built into a ReactElement, and cannot be reused")
+    }
+
     mods.foreach { m =>
       m match {
         case a: AttrPair[_] =>
@@ -24,16 +28,28 @@ final class BuildingComponent[E, R <: js.Object](private val args: js.Array[js.A
   }
 
   def withKey(newKey: String): BuildingComponent[E, R] = {
+    if (args(0) == null) {
+      throw new IllegalStateException("This component has already been built into a ReactElement, and cannot be reused")
+    }
+
     args(1).asInstanceOf[js.Dictionary[js.Any]]("key") = newKey
     this
   }
 
   def withRef(newRef: R => Unit): BuildingComponent[E, R] = {
+    if (args(0) == null) {
+      throw new IllegalStateException("This component has already been built into a ReactElement, and cannot be reused")
+    }
+
     args(1).asInstanceOf[js.Dictionary[js.Any]]("ref") = (newRef: js.Function1[R, Unit])
     this
   }
 
   def withRef(ref: ReactRef[R]): BuildingComponent[E, R] = {
+    if (args(0) == null) {
+      throw new IllegalStateException("This component has already been built into a ReactElement, and cannot be reused")
+    }
+
     args(1).asInstanceOf[js.Dictionary[js.Any]]("ref") = ref
     this
   }
@@ -41,8 +57,16 @@ final class BuildingComponent[E, R <: js.Object](private val args: js.Array[js.A
 
 object BuildingComponent {
   @inline implicit def make[E, R <: js.Object](comp: BuildingComponent[E, R]): ReactElement = {
-    ReactRaw.createElement
+    if (comp.args(0) == null) {
+      throw new IllegalStateException("This component has already been built into a ReactElement, and cannot be reused")
+    }
+
+    val ret = ReactRaw.createElement
       .applyDynamic("apply")(ReactRaw, comp.args).asInstanceOf[ReactElement]
+
+    comp.args(0) = null
+
+    ret
   }
 }
 

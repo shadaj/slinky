@@ -46,9 +46,12 @@ final class AttrPair[-A](@inline final val name: String,
 
 final class WithAttrs[A](@inline private val args: js.Array[js.Any]) extends AnyVal {
   @inline def apply(children: ReactElement*): ReactElement = {
+    if (args(0) == null) {
+      throw new IllegalStateException("This tag has already been built into a ReactElement, and cannot be reused")
+    }
+
     children.foreach(c => args.push(c))
-    ReactRaw.createElement
-      .applyDynamic("apply")(ReactRaw, args).asInstanceOf[ReactElement]
+    WithAttrs.build(this)
   }
 }
 
@@ -67,7 +70,15 @@ object WithAttrs {
   }
 
   @inline implicit def build(withAttrs: WithAttrs[_]): ReactElement = {
-    ReactRaw.createElement
+    if (withAttrs.args(0) == null) {
+      throw new IllegalStateException("This tag has already been built into a ReactElement, and cannot be reused")
+    }
+
+    val ret = ReactRaw.createElement
       .applyDynamic("apply")(ReactRaw, withAttrs.args).asInstanceOf[ReactElement]
+
+    withAttrs.args(0) = null
+
+    ret
   }
 }

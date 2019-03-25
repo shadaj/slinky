@@ -3,7 +3,7 @@ package slinky.core
 import org.scalatest.FunSuite
 import org.scalajs.dom.document
 
-import slinky.core.facade.React
+import slinky.core.facade.{React, ReactElement}
 import slinky.web.ReactDOM
 
 class FunctionalComponentTest extends FunSuite {
@@ -51,5 +51,15 @@ class FunctionalComponentTest extends FunSuite {
     ReactDOM.render(component(inProps.copy(a = 2)), container)
     assert(container.innerHTML == "2")
     assert(renderCount == 2)
+  }
+
+  test("Cannot reuse half-built functional component") {
+    val component = FunctionalComponent[Int](_.toString)
+    val halfBuilt = component(1)
+    val fullyBuilt: ReactElement = halfBuilt.withKey("abc")
+
+    assertThrows[IllegalStateException] {
+      val fullyBuilt2: ReactElement = halfBuilt.withKey("abc2")
+    }
   }
 }

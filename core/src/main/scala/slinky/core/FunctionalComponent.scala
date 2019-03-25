@@ -11,6 +11,10 @@ import scala.language.implicitConversions
 
 final class KeyAddingStage(private val args: js.Array[js.Any]) extends AnyVal {
   @inline def withKey(key: String): ReactElement = {
+    if (args(0) == null) {
+      throw new IllegalStateException("This component has already been built into a ReactElement, and cannot be reused")
+    }
+
     args(1).asInstanceOf[js.Dictionary[js.Any]]("key") = key
     KeyAddingStage.build(this)
   }
@@ -18,8 +22,16 @@ final class KeyAddingStage(private val args: js.Array[js.Any]) extends AnyVal {
 
 object KeyAddingStage {
   @inline implicit def build(stage: KeyAddingStage): ReactElement = {
-    ReactRaw.createElement
+    if (stage.args(0) == null) {
+      throw new IllegalStateException("This component has already been built into a ReactElement, and cannot be reused")
+    }
+
+    val ret = ReactRaw.createElement
       .applyDynamic("apply")(ReactRaw, stage.args).asInstanceOf[ReactElement]
+
+    stage.args(0) = null
+
+    ret
   }
 }
 

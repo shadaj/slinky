@@ -319,6 +319,15 @@ class ComponentTest extends AsyncFunSuite {
     assert(!js.isUndefined(element.asInstanceOf[js.Dynamic].ref))
   }
 
+  test("Cannot reuse half-built component") {
+    val halfBuilt = NoPropsComponent()
+    val fullyBuilt: ReactElement = halfBuilt.withKey("abc")
+
+    assertThrows[IllegalStateException] {
+      val fullyBuilt2: ReactElement = halfBuilt.withKey("abc2")
+    }
+  }
+
   test("shouldComponentUpdate controls when component is updated") {
     var called = false
     var ref: TestComponentForShouldComponentUpdate.Def = null
