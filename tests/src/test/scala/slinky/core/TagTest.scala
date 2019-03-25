@@ -124,4 +124,13 @@ class TagTest extends FunSuite {
     val myRef = React.createRef[html.Element]
     div(ref := myRef)
   }
+
+  test("Cannot reuse half-built tag") {
+    val halfBuilt = div(id := "1")
+    val fullyBuilt: ReactElement = halfBuilt("hi")
+
+    assertThrows[IllegalStateException] {
+      val fullyBuilt2: ReactElement = halfBuilt("hi2")
+    }
+  }
 }

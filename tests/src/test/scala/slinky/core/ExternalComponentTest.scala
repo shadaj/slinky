@@ -1,13 +1,14 @@
 package slinky.core
 
-import slinky.core.annotations.react
-import slinky.web.ReactDOM
-import org.scalatest.FunSuite
-import slinky.web.html._
-import org.scalajs.dom
-import slinky.core.facade.React
-
 import scala.scalajs.js
+import org.scalajs.dom
+
+import slinky.core.annotations.react
+import slinky.core.facade.{React, ReactElement}
+import slinky.web.ReactDOM
+import slinky.web.html._
+
+import org.scalatest.FunSuite
 
 object ExternalSimple extends ExternalComponentNoProps {
   override val component = "div"
@@ -59,6 +60,15 @@ class ExternalComponentTest extends FunSuite {
     )
 
     assert(ref.current.asInstanceOf[js.Dynamic].id.asInstanceOf[String] == "test")
+  }
+
+  test("Cannot reuse half-built external component") {
+    val halfBuilt = ExternalDivWithProps(id = "test")
+    val fullyBuilt: ReactElement = halfBuilt.withKey("abc")
+
+    assertThrows[IllegalStateException] {
+      val fullyBuilt2: ReactElement = halfBuilt.withKey("abc2")
+    }
   }
 
   test("Implicit macro to shortcut ExternalComponent can be invoked") {
