@@ -42,9 +42,9 @@ case class TodoItem(text: String, id: Long)
     div(
       h3("TODO"),
       TodoList(items = state.items),
-      form(onSubmit := handleSubmit _)(
+      form(onSubmit := (handleSubmit(_)))(
         input(
-          onChange := handleChange _,
+          onChange := (handleChange(_)),
           value := state.text
         ),
         button(s"Add #${state.items.size + 1}")

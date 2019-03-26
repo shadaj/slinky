@@ -61,8 +61,8 @@ class TagTest extends FunSuite {
   }
 
   test("Can construct tag with abstraction over element type") {
-    def constructTag[T <: Tag: className.supports](tag: T): ReactElement = {
-      tag.apply(className := "foo")("hello!")
+    def constructTag[T <: Tag: className.supports: onClick.supports](tag: T): ReactElement = {
+      tag.apply(className := "foo", onClick := (e => e.target))("hello!")
     }
 
     val divContainer = dom.document.createElement("div")

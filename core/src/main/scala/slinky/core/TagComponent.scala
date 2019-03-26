@@ -26,7 +26,9 @@ trait Attr {
   type supports[T <: Tag] = AttrPair[attrType] => AttrPair[T#tagType]
 }
 
-abstract class TagElement
+abstract class TagElement {
+  type EventTargetType
+}
 
 final class CustomAttribute[T](@inline private val name: String) {
   @inline def :=(v: T) = new AttrPair[Any](name, v.asInstanceOf[js.Any])
