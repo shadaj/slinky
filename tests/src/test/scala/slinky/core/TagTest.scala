@@ -57,7 +57,7 @@ class TagTest extends FunSuite {
   }
 
   test("Mouse events can be given a function taking a SyntheticMouseEvent") {
-    assertCompiles("div(onMouseOver := ((v: SyntheticMouseEvent[Element]) => {}))")
+    assertCompiles("div(onMouseOver := (v => { (v: SyntheticMouseEvent[Element]) }))")
   }
 
   test("Can construct tag with abstraction over element type") {
