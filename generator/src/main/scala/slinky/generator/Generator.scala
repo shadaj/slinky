@@ -66,17 +66,14 @@ object Generator extends App {
         val noEvent = s"""@inline def :=(v: () => Unit) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)""".stripMargin
         val base = (if (eventToSynthetic.contains(a.attributeType)) {
           val eventTypeForTagType = eventToSynthetic(a.attributeType)
-          compatibles.map { t =>
-            s"""@inline def :=(v: ${eventTypeForTagType(t.scalaJSType)} => Unit)(implicit _imp: ${Utils.identifierFor(t.tagName)}.tag.type) =
-               |  new AttrPair[${Utils.identifierFor(t.tagName)}.tag.type]("${a.attributeName}", v)""".stripMargin
-          }.mkString("", "\n", "\n") + noEvent
+          s"""@inline def :=[T <: TagElement](v: ${eventTypeForTagType("T#RefType")} => Unit)(implicit supported: AttrPair[attrType] => AttrPair[T]) =
+              |  new AttrPair[T]("${a.attributeName}", v)
+              |$noEvent""".stripMargin
         } else if (a.attributeType == "RefType") {
-          compatibles.map { t =>
-            s"""@inline def :=(v: ${t.scalaJSType} => Unit)(implicit _imp: ${Utils.identifierFor(t.tagName)}.tag.type) =
-               |  new AttrPair[${Utils.identifierFor(t.tagName)}.tag.type]("${a.attributeName}", v)
-               |@inline def :=[E >: ${t.scalaJSType}](v: slinky.core.facade.ReactRef[E])(implicit _imp: ${Utils.identifierFor(t.tagName)}.tag.type) =
-               |  new AttrPair[${Utils.identifierFor(t.tagName)}.tag.type]("${a.attributeName}", v)""".stripMargin
-          }.mkString("", "\n", "\n")
+          s"""@inline def :=[T <: TagElement](v: T#RefType => Unit)(implicit supported: AttrPair[attrType] => AttrPair[T]) =
+             |  new AttrPair[T]("${a.attributeName}", v)
+             |@inline def :=[T <: TagElement, E <: T#RefType](v: slinky.core.RefAttr[E])(implicit supported: AttrPair[attrType] => AttrPair[T]) =
+             |  new AttrPair[T]("${a.attributeName}", v)""".stripMargin
         } else {
           s"""@inline def :=(v: ${a.attributeType}) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)"""
         }) + s"\ntype attrType = _${symbolWithoutEscape}_attr.type"
@@ -126,7 +123,9 @@ object Generator extends App {
            | * ${(tags.map(_.docLines) ++ attrs.map(_.docLines)).flatten.map(_.replace("*", "&#47;")).mkString("\n * ")}
            | */
            |object $symbol $symbolExtends {
-           |implicit object tag extends TagElement
+           |implicit object tag extends TagElement {
+           |  type RefType = ${tags.headOption.map(_.scalaJSType).getOrElse("Nothing")}
+           |}
            |${tagsGen.mkString("\n")}
            |${attrsGen.mkString("\n")}
            |${booleanImplicits.mkString("\n")}

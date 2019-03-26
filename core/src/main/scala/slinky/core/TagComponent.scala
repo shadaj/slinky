@@ -26,7 +26,9 @@ trait Attr {
   type supports[T <: Tag] = AttrPair[attrType] => AttrPair[T#tagType]
 }
 
-abstract class TagElement
+abstract class TagElement {
+  type RefType
+}
 
 final class CustomAttribute[T](@inline private val name: String) {
   @inline def :=(v: T) = new AttrPair[Any](name, v.asInstanceOf[js.Any])
@@ -40,6 +42,11 @@ object TagMod {
 }
 
 @js.native trait ReactElementMod extends TagMod[Any]
+
+@js.native trait RefAttr[-T] extends js.Object
+object RefAttr {
+  @inline implicit def fromReact[T](in: slinky.core.facade.ReactRef[T]): RefAttr[T] = in.asInstanceOf[RefAttr[T]]
+}
 
 final class AttrPair[-A](@inline final val name: String,
                          @inline final val value: js.Any) extends TagMod[A]
