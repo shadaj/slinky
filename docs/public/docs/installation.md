@@ -16,16 +16,16 @@ Since Slinky is distributed just like any other Scala.js library, it's very easy
 
 Add the dependencies that match your application as well as required Scala.js compiler options:
 ```scala
-libraryDependencies += "me.shadaj" %%% "slinky-core" % "0.5.2" // core React functionality, no React DOM
-libraryDependencies += "me.shadaj" %%% "slinky-web" % "0.5.2" // React DOM, HTML and SVG tags
-libraryDependencies += "me.shadaj" %%% "slinky-native" % "0.5.2" // React Native components
-libraryDependencies += "me.shadaj" %%% "slinky-hot" % "0.5.2" // Hot loading, requires react-proxy package
-libraryDependencies += "me.shadaj" %%% "slinky-scalajsreact-interop" % "0.5.2" // Interop with japgolly/scalajs-react
+libraryDependencies += "me.shadaj" %%% "slinky-core" % "0.6.0" // core React functionality, no React DOM
+libraryDependencies += "me.shadaj" %%% "slinky-web" % "0.6.0" // React DOM, HTML and SVG tags
+libraryDependencies += "me.shadaj" %%% "slinky-native" % "0.6.0" // React Native components
+libraryDependencies += "me.shadaj" %%% "slinky-hot" % "0.6.0" // Hot loading, requires react-proxy package
+libraryDependencies += "me.shadaj" %%% "slinky-scalajsreact-interop" % "0.6.0" // Interop with japgolly/scalajs-react
 
 scalacOptions += "-P:scalajs:sjsDefinedByDefault"
 
 // optional, but recommended; enables the @react macro annotation API
-addCompilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.full)
+addCompilerPlugin("org.scalamacros" % "paradise" % "2.1.1" cross CrossVersion.full)
 // if using Scala 2.13.0-M5, instead use
 scalacOptions += "-Ymacro-annotations"
 ```

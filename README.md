@@ -13,7 +13,7 @@
   </a>
 </p>
 
-# Get started at [slinky.shadaj.me](https://slinky.shadaj.me)
+# Get started at [slinky.dev](https://slinky.dev)
 
 ## What is Slinky?
 Slinky is a framework for writing React apps in Scala with an experience just like using ES6.

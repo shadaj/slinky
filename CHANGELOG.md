@@ -1,10 +1,13 @@
 # Changelog
 
 ## vNEXT
+
+## [v0.6.0](https://slinky.dev)
 ### Highlights :tada:
 + Casting the `target` property of event objects is **no longer needed**! Now all event handlers are statically typed based on the tag they are being placed on [PR #243](https://github.com/shadaj/slinky/pull/243)
-+ Support **React Hooks for functional components**, see [the docs](https://slinky.shadaj.me/docs/functional-components-and-hooks/) for more details [PR #227](https://github.com/shadaj/slinky/pull/227)
-+ Add support for **writing functional components**, see [the docs](https://slinky.shadaj.me/docs/functional-components-and-hooks/) for more details [PR #217](https://github.com/shadaj/slinky/pull/217)
++ Support **React Hooks for functional components**, see [the docs](https://slinky.dev/docs/functional-components-and-hooks/) for more details [PR #227](https://github.com/shadaj/slinky/pull/227)
++ Add support for **writing functional components**, see [the docs](https://slinky.dev/docs/functional-components-and-hooks/) for more details [PR #217](https://github.com/shadaj/slinky/pull/217)
++ Slinky docs have moved to a new domain, [slinky.dev](https://slinky.dev)!
 
 ### Breaking Changes :warning:
 + The tags API has seen some major changes, please take a look at the separate section below for more details [PR #243](https://github.com/shadaj/slinky/pull/243)
@@ -48,7 +51,7 @@ div(allAttrs: _*)
 
 Similarly, in components that previously took in `AttrPair` and `ReactElement` separately, this can now be simplified to just take `TagMod`s.
 
-## v0.5.2
+## [v0.5.2](https://5c4f690f534c280008c14654--slinky.netlify.com/)
 ### Highlights :tada:
 + Slinky support for Scala 2.13 is now built with **2.13.0-M5** [PR #202](https://github.com/shadaj/slinky/pull/202)
 + Add support for `getDerivedStateFromError` from React 16.6 [PR #206](https://github.com/shadaj/slinky/pull/206)
@@ -61,7 +64,7 @@ Similarly, in components that previously took in `AttrPair` and `ReactElement` s
 + Fix runtime crash when `initialState()` is defined with the extra parentheses [PR #218](https://github.com/shadaj/slinky/pull/218)
 + Fix compilation errors in generating `Reader`/`Writer` when private objects are involved [PR #205](https://github.com/shadaj/slinky/pull/205)
 
-## v0.5.1
+## [v0.5.1](https://5bddfe8373f2cf373856d7f7--slinky.netlify.com/)
 ### Highlights :tada:
 + Support reading and writing `scala.Array` [PR #187](https://github.com/shadaj/slinky/pull/187)
 + Support the `defaultValue` attribute for specifying a default form value without overriding user inputs [PR #186](https://github.com/shadaj/slinky/pull/186)
