@@ -72,23 +72,30 @@ class ExternalComponentTest extends FunSuite {
   }
 
   test("Implicit macro to shortcut ExternalComponent can be invoked") {
-    assertCompiles("""div(ExternalSimple())""")
+    div(ExternalSimple())
   }
 
   test("Implicit macro to shortcut ExternalComponentWithAttributes can be invoked") {
-    assertCompiles("""div(ExternalSimpleWithAttributes())""")
+    div(ExternalSimpleWithAttributes())
   }
 
   test("Can construct an external component taking Unit props with no arguments") {
-    assertCompiles("""ExternalSimple()""")
+    ExternalSimple()
   }
 
   test("Can construct an external component taking Unit props and attributes with no arguments") {
-    assertCompiles("""ExternalSimpleWithAttributes(className := "hi")""")
+    ExternalSimpleWithAttributes(className := "hi")
+  }
+
+  test("Can construct an external component taking onClick/ref attribute with no arguments") {
+    ExternalSimpleWithAttributes(
+      onClick := (e => { e.target: dom.html.Div }),
+      ref := (e => { e: dom.html.Div})
+    )
   }
 
   test("Can construct an external component taking Unit props and attributes with some children") {
-    assertCompiles("""ExternalSimpleWithAttributes(className := "hi")(div())""")
+    ExternalSimpleWithAttributes(className := "hi")(div())
   }
 
   test("Cannot construct an external component taking div attributes with attributes for another tag") {
@@ -96,14 +103,14 @@ class ExternalComponentTest extends FunSuite {
   }
 
   test("Can construct an external component taking * attributes") {
-    assertCompiles("""ExternalSimpleWithWildcardAttributes(className := "hi", href := "foo")""")
+    ExternalSimpleWithWildcardAttributes(className := "hi", href := "foo")
   }
 
   test("Can construct an external component with generated apply") {
-    assertCompiles("""div(ExternalSimpleWithProps(a = 1))""")
+    div(ExternalSimpleWithProps(a = 1))
   }
 
   test("Can construct an external component with default parameters") {
-    assertCompiles("""div(ExternalDivWithAllDefaulted())""")
+    div(ExternalDivWithAllDefaulted())
   }
 }

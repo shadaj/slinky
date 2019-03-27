@@ -102,13 +102,9 @@ abstract class ExternalComponentNoPropsWithAttributesWithRefType[E <: TagElement
   def withKey(key: String): BuildingComponent[E, R] =
     new BuildingComponent(js.Array(component.asInstanceOf[js.Any], js.Dictionary.empty)).withKey(key)
   def withRef(ref: R => Unit): BuildingComponent[E, R] =
-  new BuildingComponent(js.Array(component.asInstanceOf[js.Any], js.Dictionary.empty)).withRef(ref)
+    new BuildingComponent(js.Array(component.asInstanceOf[js.Any], js.Dictionary.empty)).withRef(ref)
   def withRef(ref: ReactRef[R]): BuildingComponent[E, R] =
-  new BuildingComponent(js.Array(component.asInstanceOf[js.Any], js.Dictionary.empty)).withRef(ref)
-
-  def apply(children: ReactElement*): ReactElement = {
-    React.createElement(component, js.Dynamic.literal().asInstanceOf[js.Dictionary[js.Any]], children: _*)
-  }
+    new BuildingComponent(js.Array(component.asInstanceOf[js.Any], js.Dictionary.empty)).withRef(ref)
 }
 
 abstract class ExternalComponentNoPropsWithAttributes[T <: TagElement]
