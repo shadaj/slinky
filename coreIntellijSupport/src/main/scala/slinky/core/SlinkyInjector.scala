@@ -1,4 +1,4 @@
-package me.shadaj.slinky.core
+package slinky.core
 
 import org.jetbrains.plugins.scala.lang.psi.types.ScParameterizedType
 import org.jetbrains.plugins.scala.lang.psi.impl.toplevel.typedef.{SyntheticMembersInjector, TypeDefinitionMembers}

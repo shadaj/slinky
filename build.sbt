@@ -140,7 +140,7 @@ updateIdea in ThisBuild := {}
 lazy val coreIntellijSupport = project.enablePlugins(SbtIdeaPlugin).settings(
   org.jetbrains.sbtidea.Keys.buildSettings
 ).settings(
-  ideaBuild := "183.4886.37",
+  ideaBuild := "191.6183.87",
   ideaExternalPlugins += IdeaPlugin.Id("Scala", "org.intellij.scala", None)
 )
 

@@ -1,5 +1,5 @@
 <idea-plugin>
-    <id>me.shadaj.slinky.core.SlinkyInjector</id>
+    <id>slinky.core.SlinkyInjector</id>
     <name>Slinky Library Extenstion</name>
     <version>1.0</version>
     <vendor url="http://www.jetbrains.com">JetBrains</vendor>
@@ -19,7 +19,7 @@
     </project-components>
 
     <extensions defaultExtensionNs="org.intellij.scala">
-        <syntheticMemberInjector implementation="me.shadaj.slinky.core.SlinkyInjector"/>
+        <syntheticMemberInjector implementation="slinky.core.SlinkyInjector"/>
     </extensions>
 
     <extensions defaultExtensionNs="com.intellij">
