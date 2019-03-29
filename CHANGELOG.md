@@ -1,7 +1,11 @@
 # Changelog
 
 ## vNEXT
+### Highlights :tada:
 + Allow `React.memo` to specify a custom compare function [PR #260](https://github.com/shadaj/slinky/pull/260)
+
+### Bug Fixes
++ Fix incorrect typing of `SyntheticMouseEvent.clientX` [PR #261](https://github.com/shadaj/slinky/pull/261)
 
 ## [v0.6.0](https://slinky.dev)
 ### Highlights :tada:
