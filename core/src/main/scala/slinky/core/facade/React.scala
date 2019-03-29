@@ -72,7 +72,7 @@ private[slinky] object ReactRaw extends js.Object {
 
   def forwardRef[P](fn: js.Object): js.Object = js.native
 
-  def memo(fn: js.Object): js.Object = js.native
+  def memo(fn: js.Object, compare: js.UndefOr[js.Object]): js.Object = js.native
 
   @js.native
   object Children extends js.Object {
@@ -108,7 +108,13 @@ object React {
   }
 
   def memo[P](component: FunctionalComponent[P]): FunctionalComponent[P] = {
-    new FunctionalComponent(ReactRaw.memo(component.component))
+    new FunctionalComponent(ReactRaw.memo(component.component, js.undefined))
+  }
+
+  def memo[P](component: FunctionalComponent[P], compare: (P, P) => Boolean): FunctionalComponent[P] = {
+    new FunctionalComponent(ReactRaw.memo(component.component, ((oldProps: js.Dynamic, newProps: js.Dynamic) => {
+      compare(oldProps.__.asInstanceOf[P], newProps.__.asInstanceOf[P])
+    }): js.Function2[js.Dynamic, js.Dynamic, Boolean]))
   }
 
   @JSImport("react", "Component", "React.Component")
