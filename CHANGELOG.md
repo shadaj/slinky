@@ -1,6 +1,7 @@
 # Changelog
 
 ## vNEXT
++ Allow `React.memo` to specify a custom compare function [PR #260](https://github.com/shadaj/slinky/pull/260)
 
 ## [v0.6.0](https://slinky.dev)
 ### Highlights :tada:
