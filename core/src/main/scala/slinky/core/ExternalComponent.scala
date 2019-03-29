@@ -20,7 +20,7 @@ final class BuildingComponent[E, R <: js.Object](private val args: js.Array[js.A
         case a: AttrPair[_] =>
           args(1).asInstanceOf[js.Dictionary[js.Any]](a.name) = a.value
         case r =>
-          args.push(r.asInstanceOf[ReactElementMod])
+          args.push(r.asInstanceOf[ReactElement])
       }
     }
 
@@ -56,7 +56,7 @@ final class BuildingComponent[E, R <: js.Object](private val args: js.Array[js.A
 }
 
 object BuildingComponent {
-  @inline implicit def make[E, R <: js.Object](comp: BuildingComponent[E, R]): ReactElement = {
+  implicit def make[E, R <: js.Object](comp: BuildingComponent[E, R]): ReactElement = {
     if (comp.args(0) == null) {
       throw new IllegalStateException("This component has already been built into a ReactElement, and cannot be reused")
     }

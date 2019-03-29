@@ -137,4 +137,18 @@ class TagTest extends FunSuite {
       val fullyBuilt2: ReactElement = halfBuilt("hi2")
     }
   }
+
+  test("Edge-cases for macros") {
+    def bar(
+      a: Int = 123,
+      b: String
+    )(children: ReactElement*): ReactElement = null
+    def foo(component: => ReactElement): ReactElement = null
+
+    bar(b = "abc")(
+      foo(
+        div()
+      )
+    )
+  }
 }

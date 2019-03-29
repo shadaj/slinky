@@ -12,7 +12,7 @@ import scala.language.implicitConversions
 import scala.reflect.macros.whitebox
 
 final class KeyAndRefAddingStage[D](private val args: js.Array[js.Any]) extends AnyVal {
-  @inline def withKey(key: String): KeyAndRefAddingStage[D] = {
+  def withKey(key: String): KeyAndRefAddingStage[D] = {
     if (args(0) == null) {
       throw new IllegalStateException("This component has already been built into a ReactElement, and cannot be reused")
     }
@@ -21,7 +21,7 @@ final class KeyAndRefAddingStage[D](private val args: js.Array[js.Any]) extends 
     this
   }
 
-  @inline def withRef(ref: D => Unit): KeyAndRefAddingStage[D] = {
+  def withRef(ref: D => Unit): KeyAndRefAddingStage[D] = {
     if (args(0) == null) {
       throw new IllegalStateException("This component has already been built into a ReactElement, and cannot be reused")
     }
@@ -30,7 +30,7 @@ final class KeyAndRefAddingStage[D](private val args: js.Array[js.Any]) extends 
     this
   }
 
-  @inline def withRef(ref: ReactRef[D]): KeyAndRefAddingStage[D] = {
+  def withRef(ref: ReactRef[D]): KeyAndRefAddingStage[D] = {
     if (args(0) == null) {
       throw new IllegalStateException("This component has already been built into a ReactElement, and cannot be reused")
     }
@@ -41,7 +41,7 @@ final class KeyAndRefAddingStage[D](private val args: js.Array[js.Any]) extends 
 }
 
 object KeyAndRefAddingStage {
-  @inline implicit def build[D](stage: KeyAndRefAddingStage[D]): ReactElement = {
+  implicit def build[D](stage: KeyAndRefAddingStage[D]): ReactElement = {
     if (stage.args(0) == null) {
       throw new IllegalStateException("This component has already been built into a ReactElement, and cannot be reused")
     }

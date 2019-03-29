@@ -10,7 +10,7 @@ import scala.language.experimental.macros
 import scala.language.implicitConversions
 
 final class KeyAddingStage(private val args: js.Array[js.Any]) extends AnyVal {
-  @inline def withKey(key: String): ReactElement = {
+  def withKey(key: String): ReactElement = {
     if (args(0) == null) {
       throw new IllegalStateException("This component has already been built into a ReactElement, and cannot be reused")
     }
@@ -21,7 +21,7 @@ final class KeyAddingStage(private val args: js.Array[js.Any]) extends AnyVal {
 }
 
 object KeyAddingStage {
-  @inline implicit def build(stage: KeyAddingStage): ReactElement = {
+  implicit def build(stage: KeyAddingStage): ReactElement = {
     if (stage.args(0) == null) {
       throw new IllegalStateException("This component has already been built into a ReactElement, and cannot be reused")
     }

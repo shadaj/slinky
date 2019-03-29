@@ -11,38 +11,41 @@ import scala.scalajs.js.JSConverters._
 import scala.language.implicitConversions
 
 @js.native
-trait ReactElement extends js.Object with ReactElementMod
+trait ReactElement extends TagMod[Any]
 
-object ReactElement {
-  @inline implicit def stringToElement(s: String): ReactElement = {
+// mixed into TagMod, because then it's available for both mods and regular conversions
+trait ReactElementConversions {
+  @inline final implicit def stringToElement(s: String): ReactElement = {
     s.asInstanceOf[ReactElement]
   }
 
-  @inline implicit def intToElement(i: Int): ReactElement = {
+  @inline final implicit def intToElement(i: Int): ReactElement = {
     i.asInstanceOf[ReactElement]
   }
 
-  @inline implicit def doubleToElement(d: Double): ReactElement = {
+  @inline final implicit def doubleToElement(d: Double): ReactElement = {
     d.asInstanceOf[ReactElement]
   }
 
-  @inline implicit def floatToElement(f: Float): ReactElement = {
+  @inline final implicit def floatToElement(f: Float): ReactElement = {
     f.asInstanceOf[ReactElement]
   }
 
-  @inline implicit def booleanToElement(b: Boolean): ReactElement = {
+  @inline final implicit def booleanToElement(b: Boolean): ReactElement = {
     b.asInstanceOf[ReactElement]
   }
 
-  @inline implicit def optionToElement[T](s: Option[T])(implicit cv: T => ReactElement): ReactElement = {
+  final implicit def optionToElement[T](s: Option[T])(implicit cv: T => ReactElement): ReactElement = {
     s match {
       case Some(e) => cv(e)
       case None => null.asInstanceOf[ReactElement]
     }
   }
 
-  @inline implicit def seqElementToElement[T](s: Iterable[T])(implicit cv: T => ReactElement): ReactElement = {
-    s.map(cv).toJSArray.asInstanceOf[ReactElement]
+  final implicit def seqElementToElement[T](s: Iterable[T])(implicit cv: T => ReactElement): ReactElement = {
+    val elem = js.Array[ReactElement]()
+    s.foreach(v => elem.push(cv(v)))
+    s.asInstanceOf[ReactElement]
   }
 }
 
@@ -59,7 +62,7 @@ trait ReactRef[T] extends js.Object {
 
 @js.native
 @JSImport("react", JSImport.Namespace, "React")
-private[slinky] object ReactRaw extends js.Object {
+object ReactRaw extends js.Object {
   def createElement(elementName: String | js.Object,
                     properties: js.Dictionary[js.Any],
                     contents: ReactElement*): ReactElement = js.native

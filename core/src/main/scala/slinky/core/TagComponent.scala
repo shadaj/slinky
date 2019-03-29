@@ -7,18 +7,28 @@ import scala.scalajs.js
 import scala.scalajs.js.Dictionary
 
 import scala.language.higherKinds
+import scala.language.experimental.macros
 
-trait Tag extends Any {
+class Tag(@inline private final val name: String) {
   type tagType <: TagElement
-  def apply(mods: TagMod[tagType]*): WithAttrs[tagType]
+  def apply(mods: TagMod[tagType]*): WithAttrs = {
+    val inst = new WithAttrs(js.Array(name, js.Dynamic.literal()))
+    
+    mods.foreach { m =>
+      m match {
+        case a: AttrPair[_] =>
+          inst.args(1).asInstanceOf[js.Dictionary[js.Any]](a.name) = a.value
+        case r =>
+          inst.args.push(r.asInstanceOf[ReactElement])
+      }
+    }
+    
+    inst
+  }
 }
 
-final class CustomTag(@inline private val name: String) extends Tag {
+final class CustomTag(name: String) extends Tag(name) {
   override type tagType = Nothing
-
-  @inline def apply(mods: TagMod[tagType]*): WithAttrs[tagType] = {
-    WithAttrs[tagType](name, mods)
-  }
 }
 
 trait Attr {
@@ -36,12 +46,8 @@ final class CustomAttribute[T](@inline private val name: String) {
 
 trait TagMod[-A] extends js.Object
 
-object TagMod {
-  @inline implicit def elemToTagMod[E](elem: E)(implicit ev: E => ReactElement): TagMod[Any] =
-    ev(elem)
-}
-
-@js.native trait ReactElementMod extends TagMod[Any]
+import slinky.core.facade.ReactElementConversions
+object TagMod extends ReactElementConversions
 
 @js.native trait RefAttr[-T] extends js.Object
 object RefAttr {
@@ -51,32 +57,12 @@ object RefAttr {
 final class AttrPair[-A](@inline final val name: String,
                          @inline final val value: js.Any) extends TagMod[A]
 
-final class WithAttrs[A](@inline private val args: js.Array[js.Any]) extends AnyVal {
-  @inline def apply(children: ReactElement*): ReactElement = {
-    if (args(0) == null) {
-      throw new IllegalStateException("This tag has already been built into a ReactElement, and cannot be reused")
-    }
-
-    children.foreach(c => args.push(c))
-    WithAttrs.build(this)
-  }
+final class WithAttrs(@inline private[core] val args: js.Array[js.Any]) extends AnyVal {
+  def apply(children: ReactElement*): ReactElement = macro TagMacros.applyChildren
 }
 
-object WithAttrs {
-  @inline def apply[A](component: js.Any, mods: Seq[TagMod[A]]) = {
-    val inst = new WithAttrs[A](js.Array(component, js.Dynamic.literal()))
-    mods.foreach { m =>
-      m match {
-        case a: AttrPair[_] =>
-          inst.args(1).asInstanceOf[js.Dictionary[js.Any]](a.name) = a.value
-        case r =>
-          inst.args.push(r.asInstanceOf[ReactElementMod])
-      }
-    }
-    inst
-  }
-
-  @inline implicit def build(withAttrs: WithAttrs[_]): ReactElement = {
+trait LowPrioWithAttrs {
+  implicit def runtimeBuild(withAttrs: WithAttrs): ReactElement = {
     if (withAttrs.args(0) == null) {
       throw new IllegalStateException("This tag has already been built into a ReactElement, and cannot be reused")
     }
@@ -87,5 +73,172 @@ object WithAttrs {
     withAttrs.args(0) = null
 
     ret
+  }
+}
+
+object WithAttrs extends LowPrioWithAttrs {
+  def runtimeApplyChildren(withAttrs: WithAttrs, children: ReactElement*): ReactElement = {
+    if (withAttrs.args(0) == null) {
+      throw new IllegalStateException("This tag has already been built into a ReactElement, and cannot be reused")
+    }
+
+    children.foreach(c => withAttrs.args.push(c))
+    WithAttrs.runtimeBuild(withAttrs)
+  }
+
+  implicit def build(withAttrs: WithAttrs): ReactElement = macro TagMacros.build
+}
+
+import scala.annotation.StaticAnnotation
+class tagObject(name: String) extends StaticAnnotation
+class attrAppliedConversion extends StaticAnnotation
+class createAttrMethod(name: String) extends StaticAnnotation
+
+object TagMacros {
+  import scala.reflect.macros.blackbox
+
+  def tagApply(c: blackbox.Context)(mods: c.Tree*): c.Tree = {
+    import c.universe._
+
+    val isUnderscoreStar = if (mods.size == 1) {
+      mods.head match {
+        case Typed(_, Ident(typeNames.WILDCARD_STAR)) =>
+          true
+        case _ => false
+      }
+    } else false
+
+    val argsName = TermName(c.freshName())
+    val propsName = TermName(c.freshName())
+
+    val tagName = c.prefix.tree.symbol.annotations.find(_.tpe =:= typeOf[tagObject]).get.scalaArgs.head
+    
+    if (isUnderscoreStar) {
+      val Typed(starred, Ident(typeNames.WILDCARD_STAR)) = mods.head
+      q"""(() => {
+        val $propsName = _root_.scala.scalajs.js.Dictionary.empty[_root_.scala.scalajs.js.Any]
+        val $argsName = _root_.scala.scalajs.js.Array[_root_.scala.scalajs.js.Any]($tagName, $propsName)
+
+        ${c.untypecheck(starred)}.foreach { e =>
+          (e: Any) match {
+            case a: _root_.slinky.core.AttrPair[_] =>
+              $propsName(a.name) = a.value
+            case r =>
+              $argsName.push(r.asInstanceOf[_root_.slinky.core.facade.ReactElement])
+          }
+        }
+
+        new _root_.slinky.core.WithAttrs($argsName)
+      })()"""
+    } else {
+      val modsApplied = mods.map { m =>
+        def getActualType(tpe: Type, isRetyped: Boolean = false): Type = {
+          if (tpe =:= typeOf[ReactElement]) {
+          typeOf[ReactElement]
+          } else if (tpe.typeSymbol == typeOf[AttrPair[_]].typeSymbol) {
+            typeOf[AttrPair[_]]
+          } else {
+            if (isRetyped) {
+              tpe
+            } else {
+              getActualType(c.typecheck(c.untypecheck(m)).tpe, true)
+            }
+          }
+        }
+
+        val actualType = getActualType(m.tpe)
+
+        if (actualType =:= typeOf[ReactElement]) {
+          q"$argsName.push(${c.untypecheck(m)})"
+        } else if (actualType =:= typeOf[AttrPair[_]]) {
+          def extractNameValue(tree: Tree): Option[(Tree, Tree)] = {
+            tree match {
+              case q"${met}($in)" if met.symbol.annotations.exists(_.tree.tpe =:= typeOf[attrAppliedConversion]) =>
+                extractNameValue(in)
+              case q"${met}($value)" if met.symbol.annotations.exists(_.tree.tpe =:= typeOf[createAttrMethod]) =>
+                val annot =  met.symbol.annotations.find(_.tree.tpe =:= typeOf[createAttrMethod]).get
+                val attrName = annot.scalaArgs.head
+                Some((attrName, value))
+              case q"${met}($value)(..$_)" if met.symbol.annotations.exists(_.tree.tpe =:= typeOf[createAttrMethod]) =>
+                val annot =  met.symbol.annotations.find(_.tree.tpe =:= typeOf[createAttrMethod]).get
+                val attrName = annot.scalaArgs.head
+                Some((attrName, value))
+              case o =>
+                None
+            }
+          }
+
+          extractNameValue(m).map { case (name, value) =>
+            q"$propsName($name) = $value"
+          }.getOrElse {
+            val mName = TermName(c.freshName())
+            q"""
+            val $mName = ${c.untypecheck(m)}
+            $propsName(${mName}.name) = ${mName}.value
+            """
+          }
+        } else {
+          q"""
+          ($m) match {
+            case a: _root_.slinky.core.AttrPair[_] =>
+              $propsName(a.name) = a.value
+            case r =>
+              $argsName.push(r.asInstanceOf[_root_.slinky.core.facade.ReactElement])
+          }
+          """
+        }
+      }
+
+      q"""(() => {
+        val $propsName = _root_.scala.scalajs.js.Dictionary.empty[_root_.scala.scalajs.js.Any];
+        val $argsName = _root_.scala.scalajs.js.Array[_root_.scala.scalajs.js.Any]($tagName, $propsName);
+        ..$modsApplied
+        new _root_.slinky.core.WithAttrs($argsName)
+      })()"""
+    }
+  }
+
+  def applyChildren(c: blackbox.Context)(children: c.Tree*): c.Tree = {
+    import c.universe._
+
+    val isUnderscoreStar = if (children.size == 1) {
+      children.head match {
+        case Typed(_, Ident(tpnme.WILDCARD_STAR)) =>
+          true
+        case _ => false
+      }
+    } else false
+
+    c.untypecheck(c.prefix.tree) match {
+      case q"((() => { ..$pre; new slinky.core.WithAttrs($i) }).apply(): $_)" if !isUnderscoreStar =>
+        val retName = TermName(c.freshName())
+
+        q"""(() => {
+          ..$pre
+          ..${children.map(child => q"$i.push(${c.untypecheck(child)})")}
+          _root_.slinky.core.facade.ReactRaw.createElement.applyDynamic("apply")(
+            _root_.slinky.core.facade.ReactRaw, $i
+          ).asInstanceOf[_root_.slinky.core.facade.ReactElement]
+        })()"""
+      case o =>
+        q"_root_.slinky.core.WithAttrs.runtimeApplyChildren($o, ..$children)"
+    }
+  }
+
+  def build(c: blackbox.Context)(withAttrs: c.Tree): c.Tree = {
+    import c.universe._
+    c.untypecheck(withAttrs) match {
+      case q"((() => { ..$pre; new slinky.core.WithAttrs($i) }).apply(): $_)" =>
+        val retName = TermName(c.freshName())
+
+        q"""(() => {
+          ..$pre
+          _root_.slinky.core.facade.ReactRaw.createElement.applyDynamic("apply")(
+            _root_.slinky.core.facade.ReactRaw, $i
+          ).asInstanceOf[_root_.slinky.core.facade.ReactElement]
+        })()"""
+      case o =>
+        q"_root_.slinky.core.WithAttrs.runtimeBuild($o)"
+    }
   }
 }
