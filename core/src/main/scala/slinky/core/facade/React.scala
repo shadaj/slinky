@@ -45,7 +45,7 @@ trait ReactElementConversions {
   final implicit def seqElementToElement[T](s: Iterable[T])(implicit cv: T => ReactElement): ReactElement = {
     val elem = js.Array[ReactElement]()
     s.foreach(v => elem.push(cv(v)))
-    s.asInstanceOf[ReactElement]
+    elem.asInstanceOf[ReactElement]
   }
 }
 

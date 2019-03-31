@@ -97,6 +97,30 @@ class createAttrMethod(name: String) extends StaticAnnotation
 object TagMacros {
   import scala.reflect.macros.blackbox
 
+  // From https://github.com/wix/accord/blob/master/core/src/main/scala/com/wix/accord/transform/MacroHelper.scala
+  // Workaround for https://issues.scala-lang.org/browse/SI-8500.
+  def resetWithExistentialFix(c: blackbox.Context)(tree: c.Tree): c.Tree = {
+    import c.universe._
+    val transformed = new Transformer {
+      override def transform(subtree: Tree): Tree = {
+        subtree match {
+          case typeTree: TypeTree
+            if typeTree.tpe.dealias.typeArgs.nonEmpty && typeTree.tpe.dealias.typeArgs.forall {
+              case arg if internal.isSkolem(arg.typeSymbol) && arg.typeSymbol.asInstanceOf[TypeSymbolApi].isExistential => true
+              case _ => false
+            } =>
+    
+            val tpe = typeTree.tpe.asInstanceOf[TypeRefApi]
+            def existentialTypePara =
+              internal.boundedWildcardType(internal.typeBounds(typeOf[Nothing], typeOf[Any]))
+            TypeTree(internal.typeRef(tpe.pre, tpe.sym, List.fill(tpe.args.length)(existentialTypePara)))
+          case o => super.transform(o)
+        }
+      }
+    }.transform(tree.duplicate)
+    c.resetLocalAttrs(transformed)
+  }
+
   def tagApply(c: blackbox.Context)(mods: c.Tree*): c.Tree = {
     import c.universe._
 
@@ -119,7 +143,7 @@ object TagMacros {
         val $propsName = _root_.scala.scalajs.js.Dictionary.empty[_root_.scala.scalajs.js.Any]
         val $argsName = _root_.scala.scalajs.js.Array[_root_.scala.scalajs.js.Any]($tagName, $propsName)
 
-        ${c.untypecheck(starred)}.foreach { e =>
+        ${resetWithExistentialFix(c)(starred)}.foreach { e =>
           (e: Any) match {
             case a: _root_.slinky.core.AttrPair[_] =>
               $propsName(a.name) = a.value
@@ -149,7 +173,7 @@ object TagMacros {
         val actualType = getActualType(m.tpe)
 
         if (actualType =:= typeOf[ReactElement]) {
-          q"$argsName.push(${c.untypecheck(m)})"
+          q"$argsName.push(${resetWithExistentialFix(c)(m)})"
         } else if (actualType =:= typeOf[AttrPair[_]]) {
           def extractNameValue(tree: Tree): Option[(Tree, Tree)] = {
             tree match {
@@ -169,11 +193,11 @@ object TagMacros {
           }
 
           extractNameValue(m).map { case (name, value) =>
-            q"$propsName($name) = $value"
+            q"$propsName($name) = ${resetWithExistentialFix(c)(value)}"
           }.getOrElse {
             val mName = TermName(c.freshName())
             q"""
-            val $mName = ${c.untypecheck(m)}
+            val $mName = ${resetWithExistentialFix(c)(m)}
             $propsName(${mName}.name) = ${mName}.value
             """
           }
@@ -209,13 +233,13 @@ object TagMacros {
       }
     } else false
 
-    c.untypecheck(c.prefix.tree) match {
+    resetWithExistentialFix(c)(c.prefix.tree) match {
       case q"((() => { ..$pre; new slinky.core.WithAttrs($i) }).apply(): $_)" if !isUnderscoreStar =>
         val retName = TermName(c.freshName())
 
         q"""(() => {
           ..$pre
-          ..${children.map(child => q"$i.push(${c.untypecheck(child)})")}
+          ..${children.map(child => q"$i.push(${resetWithExistentialFix(c)(child)})")}
           _root_.slinky.core.facade.ReactRaw.createElement.applyDynamic("apply")(
             _root_.slinky.core.facade.ReactRaw, $i
           ).asInstanceOf[_root_.slinky.core.facade.ReactElement]
@@ -227,7 +251,7 @@ object TagMacros {
 
   def build(c: blackbox.Context)(withAttrs: c.Tree): c.Tree = {
     import c.universe._
-    c.untypecheck(withAttrs) match {
+    resetWithExistentialFix(c)(withAttrs) match {
       case q"((() => { ..$pre; new slinky.core.WithAttrs($i) }).apply(): $_)" =>
         val retName = TermName(c.freshName())
 
