@@ -211,18 +211,12 @@ trait CoreReaders extends MacroReaders with FallbackReaders {
     }
   }
 
-  implicit def collectionReader[T, C[T] <: Iterable[T]](implicit reader: Reader[T],
+  implicit def collectionReader[T, C[A] <: Iterable[A]](implicit reader: Reader[T],
                                                         bf: Factory[T, C[T]]): Reader[C[T]] =
     c => bf.fromSpecific(c.asInstanceOf[js.Array[js.Object]].map(o => reader.read(o)))
 
   implicit def arrayReader[T](implicit reader: Reader[T], classTag: ClassTag[T]): Reader[Array[T]] = {
-    case c: js.Array[js.Object] => {
-      val ret = new Array[T](c.length)
-      (0 until c.length).foreach { i =>
-        ret(i) = reader.read(c(i))
-      }
-      ret
-    }
+    c => c.asInstanceOf[js.Array[js.Object]].map(o => reader.read(o)).toArray
   }
 
   implicit def mapReader[A, B](implicit abReader: Reader[(A, B)]): Reader[Map[A, B]] = o => {

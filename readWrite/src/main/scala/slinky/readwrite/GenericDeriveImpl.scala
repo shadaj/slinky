@@ -69,6 +69,7 @@ abstract class GenericDeriveImpl(val c: whitebox.Context) { self =>
       } else {
         currentMemo.remove((getClass.getSimpleName, tpe.toString))
       }
+      ()
     }
   }
 
