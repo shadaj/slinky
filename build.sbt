@@ -37,6 +37,39 @@ lazy val crossScalaSettings = Seq(
   }
 )
 
+def commonScalacOptions(scalaVersion: String) = {
+  Seq(
+    "-encoding",
+    "UTF-8",
+    "-feature",
+    "-language:existentials",
+    "-language:higherKinds",
+    "-language:implicitConversions",
+    "-language:experimental.macros",
+    "-unchecked",
+    "-Ywarn-numeric-widen",
+    "-Ywarn-value-discard",
+    "-Xfatal-warnings",
+    "-Xfuture"
+  ) ++ (if (priorTo2_13(scalaVersion)) {
+    Seq(
+      "-Yno-adapted-args",
+      "-deprecation"
+    )
+  } else {
+    Seq(
+      "-Ymacro-annotations"
+    )
+  })
+}
+
+def priorTo2_13(scalaVersion: String): Boolean =
+  CrossVersion.partialVersion(scalaVersion) match {
+    case Some((2, minor)) if minor < 13 => true
+    case _                              => false
+  }
+
+
 lazy val librarySettings = Seq(
   scalacOptions += {
     val origVersion = version.value
@@ -49,7 +82,8 @@ lazy val librarySettings = Seq(
     val a = baseDirectory.value.toURI
     val g = "https://raw.githubusercontent.com/shadaj/slinky"
     s"-P:scalajs:mapSourceURI:$a->$g/$githubVersion/${baseDirectory.value.getName}/"
-  }
+  },
+  scalacOptions ++= commonScalacOptions(scalaVersion.value)
 )
 
 addCommandAlias(

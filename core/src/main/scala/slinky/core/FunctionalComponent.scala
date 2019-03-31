@@ -136,6 +136,7 @@ object FunctionalComponentNameMacros {
       name == "<init>" || (name.startsWith("<local ") && name.endsWith(">")) || name == "component"
     }
 
+    @scala.annotation.tailrec
     def findNonSyntheticOwner(current: Symbol): Symbol = {
       if (isSyntheticName(current.name.decodedName.toString.trim)) {
         findNonSyntheticOwner(current.owner)
