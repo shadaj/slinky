@@ -10,7 +10,7 @@ import org.scalajs.dom.{MouseEvent, EventTarget}
   val altKey: Boolean = js.native
   val button: Int = js.native
   val buttons: Int = js.native
-  val clientX: Int = js.native
+  val clientX: Double = js.native
   val clientY: Double = js.native
   val ctrlKey: Boolean = js.native
   def getModifierState(key: String): Boolean = js.native
