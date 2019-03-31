@@ -26,6 +26,18 @@ import scala.scalajs.js
   }
 }
 
+@react object FunctionalComponentWithPrivateValComponent {
+  private val component = FunctionalComponent[Int] { in =>
+    in.toString
+  }
+}
+
+@react object FunctionalComponentWithProtectedValComponent {
+  protected val component = FunctionalComponent[Int] { in =>
+    in.toString
+  }
+}
+
 class ReactAnnotatedFunctionalComponentTest extends AsyncFunSuite {
   test("Simple component has generated apply") {
     val container = dom.document.createElement("div")
@@ -41,6 +53,26 @@ class ReactAnnotatedFunctionalComponentTest extends AsyncFunSuite {
     val container = dom.document.createElement("div")
     ReactDOM.render(
       FunctionalComponentJustReExpose(1),
+      container
+    )
+
+    assert(container.innerHTML == "1")
+  }
+
+  test("Component with private component definition works") {
+    val container = dom.document.createElement("div")
+    ReactDOM.render(
+      FunctionalComponentWithPrivateValComponent(1),
+      container
+    )
+
+    assert(container.innerHTML == "1")
+  }
+
+  test("Component with protected component definition works") {
+    val container = dom.document.createElement("div")
+    ReactDOM.render(
+      FunctionalComponentWithProtectedValComponent(1),
       container
     )
 

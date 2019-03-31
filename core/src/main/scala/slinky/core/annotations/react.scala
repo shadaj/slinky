@@ -200,7 +200,7 @@ object ReactMacrosImpl {
         List(q"object $objName extends _root_.slinky.core.ExternalComponentWithAttributesWithRefType[$elementType, $refType] { ..${objStats ++ companionStats} }")
 
       case Seq(obj @ q"$pre object $objName extends ..$parents { $self => ..$objStats }") if (objStats.exists {
-        case q"val component: $_ = $_" => true
+        case q"$_ val component: $_ = $_" => true
         case _ => false
       }) =>
         val applyMethods = objStats.flatMap {
