@@ -6,3 +6,7 @@ node_modules/
 package-lock.json
 docs/build
 idea/
+.bloop/
+.metals/
+.vscode/
+project/.bloop/
