@@ -203,6 +203,12 @@ final class SetStateHookCallback[T](private val origFunction: js.Function1[js.An
   }
 }
 
+object SetStateHookCallback {
+  @inline implicit def toFunction[T](callback: SetStateHookCallback[T]): T => Unit = callback(_)
+
+  @inline implicit def toTransformFunction[T](callback: SetStateHookCallback[T]): (T => T) => Unit = callback(_)
+}
+
 object Hooks {
   @inline def useState[T](default: T): (T, SetStateHookCallback[T]) = {
     val call = HooksRaw.useState[T](default)
