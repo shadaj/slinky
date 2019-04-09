@@ -1,6 +1,6 @@
 enablePlugins(ScalaJSPlugin)
 
-libraryDependencies += "org.scalatest" %%% "scalatest" % "3.0.6-SNAP4" % Test
+libraryDependencies += "org.scalatest" %%% "scalatest" % "3.0.8-RC2" % Test
 
 jsDependencies += RuntimeDOM % Test
 

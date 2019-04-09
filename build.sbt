@@ -20,7 +20,7 @@ lazy val slinky = project.in(file(".")).aggregate(
 )
 
 lazy val crossScalaSettings = Seq(
-  crossScalaVersions := Seq("2.12.8", "2.13.0-M5"),
+  crossScalaVersions := Seq("2.12.8", "2.13.0-RC1"),
   unmanagedSourceDirectories in Compile += {
     val sourceDir = (sourceDirectory in Compile).value
     CrossVersion.partialVersion(scalaVersion.value) match {
@@ -49,10 +49,10 @@ def commonScalacOptions(scalaVersion: String) = {
     "-unchecked",
     "-Ywarn-numeric-widen",
     "-Ywarn-value-discard",
-    "-Xfatal-warnings",
-    "-Xfuture"
+    "-Xfatal-warnings"
   ) ++ (if (priorTo2_13(scalaVersion)) {
     Seq(
+      "-Xfuture",
       "-Yno-adapted-args",
       "-deprecation"
     )
@@ -97,11 +97,11 @@ addCommandAlias(
 lazy val macroAnnotationSettings = Seq(
   resolvers += Resolver.sonatypeRepo("releases"),
   scalacOptions ++= {
-    if (scalaVersion.value == "2.13.0-M5") Seq("-Ymacro-annotations")
+    if (scalaVersion.value == "2.13.0-RC1") Seq("-Ymacro-annotations")
     else Seq.empty
   },
   libraryDependencies ++= {
-    if (scalaVersion.value == "2.13.0-M5") Seq.empty
+    if (scalaVersion.value == "2.13.0-RC1") Seq.empty
     else Seq(compilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.full))
   }
 )
