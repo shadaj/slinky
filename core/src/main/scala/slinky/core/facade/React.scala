@@ -72,7 +72,7 @@ private[slinky] object ReactRaw extends js.Object {
 
   def forwardRef[P](fn: js.Object): js.Object = js.native
 
-  def memo(fn: js.Object, compare: js.UndefOr[js.Object]): js.Object = js.native
+  def memo(fn: js.Function, compare: js.UndefOr[js.Object]): js.Function = js.native
 
   @js.native
   object Children extends js.Object {
