@@ -3,6 +3,7 @@
 ## vNEXT
 ### Highlights :tada:
 + Allow `React.memo` to specify a custom compare function [PR #260](https://github.com/shadaj/slinky/pull/260)
++ Support for Scala 2.13 is now built against 2.13.0-RC1 [PR #269](https://github.com/shadaj/slinky/pull/269)
 
 ### Bug Fixes
 + Allow `component` defined in a functional component to have any access control [PR #262](https://github.com/shadaj/slinky/pull/262)
