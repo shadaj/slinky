@@ -48,13 +48,13 @@ def commonScalacOptions(scalaVersion: String) = {
     "-language:experimental.macros",
     "-unchecked",
     "-Ywarn-numeric-widen",
-    "-Ywarn-value-discard",
-    "-Xfatal-warnings"
+    "-Ywarn-value-discard"
   ) ++ (if (priorTo2_13(scalaVersion)) {
     Seq(
       "-Xfuture",
       "-Yno-adapted-args",
-      "-deprecation"
+      "-deprecation",
+      "-Xfatal-warnings" // fails Scaladoc compilation on 2.13
     )
   } else {
     Seq(
