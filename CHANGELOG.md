@@ -2,7 +2,7 @@
 
 ## vNEXT
 
-## v0.6.1(https://slinky.dev)
+## [v0.6.1](https://slinky.dev)
 ### Highlights :tada:
 + Allow `SetStateHookCallback` to be used as plain functions through an implicit conversion [PR #268](https://github.com/shadaj/slinky/pull/268)
 + Allow `React.memo` to specify a custom compare function [PR #260](https://github.com/shadaj/slinky/pull/260)
