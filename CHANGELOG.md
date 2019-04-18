@@ -4,6 +4,7 @@
 ### Highlights :tada:
 + Allow `SetStateHookCallback` to be used as plain functions through an implicit conversion [PR #268](https://github.com/shadaj/slinky/pull/268)
 + Allow `React.memo` to specify a custom compare function [PR #260](https://github.com/shadaj/slinky/pull/260)
++ New facades for React Native: `SafeAreaView`, `TouchableHighlight`, `TouchableOpacity`, and `Platform` [PR #214](https://github.com/shadaj/slinky/pull/214)
 
 ### Bug Fixes
 + Allow `component` defined in a functional component to have any access control [PR #262](https://github.com/shadaj/slinky/pull/262)
