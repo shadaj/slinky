@@ -16,7 +16,7 @@ object ReactRouterDOM extends js.Object {
 }
 
 @react object Route extends ExternalComponent {
-  case class Props(path: String, component: ReactComponentClass, exact: Boolean = false)
+  case class Props(path: String, component: ReactComponentClass[_], exact: Boolean = false)
   override val component = ReactRouterDOM.Route
 }
 
