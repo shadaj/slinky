@@ -15,13 +15,13 @@ final class BuildingComponent[E, R <: js.Object](private val args: js.Array[js.A
       throw new IllegalStateException("This component has already been built into a ReactElement, and cannot be reused")
     }
 
-    mods.foreach { m =>
-      m match {
-        case a: AttrPair[_] =>
-          args(1).asInstanceOf[js.Dictionary[js.Any]](a.name) = a.value
-        case r =>
-          args.push(r.asInstanceOf[ReactElementMod])
-      }
+    mods.foreach {
+      case a: AttrPair[_] =>
+        args(1).asInstanceOf[js.Dictionary[js.Any]](a.name) = a.value
+      case o: OptionalAttrPair[_] =>
+        if (o.value.isDefined) args(1).asInstanceOf[js.Dictionary[js.Any]](o.name) = o.value.get
+      case r =>
+        args.push(r.asInstanceOf[ReactElementMod])
     }
 
     this

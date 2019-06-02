@@ -1,11 +1,10 @@
 package slinky.core
 
-import slinky.core.facade.{React, ReactRaw, ReactElement}
+import slinky.core.facade.{React, ReactElement, ReactRaw}
 
 import scala.language.implicitConversions
 import scala.scalajs.js
-import scala.scalajs.js.Dictionary
-
+import scala.scalajs.js.{Dictionary, JSON}
 import scala.language.higherKinds
 
 trait Tag extends Any {
@@ -32,6 +31,7 @@ abstract class TagElement {
 
 final class CustomAttribute[T](@inline private val name: String) {
   @inline def :=(v: T) = new AttrPair[Any](name, v.asInstanceOf[js.Any])
+  @inline def :=(v: Option[T]) = new OptionalAttrPair[Any](name, v.asInstanceOf[Option[js.Any]])
 }
 
 trait TagMod[-A] extends js.Object
@@ -51,6 +51,14 @@ object RefAttr {
 final class AttrPair[-A](@inline final val name: String,
                          @inline final val value: js.Any) extends TagMod[A]
 
+final class OptionalAttrPair[-A](@inline final val name: String,
+                                 @inline final val value: Option[js.Any]) extends TagMod[A]
+
+object OptionalAttrPair {
+  @inline implicit def optionToJsOption[T](o: Option[T])(implicit a: T => js.Any): Option[js.Any] =
+    o.map(a(_))
+}
+
 final class WithAttrs[A](@inline private val args: js.Array[js.Any]) extends AnyVal {
   @inline def apply(children: ReactElement*): ReactElement = {
     if (args(0) == null) {
@@ -65,13 +73,13 @@ final class WithAttrs[A](@inline private val args: js.Array[js.Any]) extends Any
 object WithAttrs {
   @inline def apply[A](component: js.Any, mods: Seq[TagMod[A]]) = {
     val inst = new WithAttrs[A](js.Array(component, js.Dynamic.literal()))
-    mods.foreach { m =>
-      m match {
-        case a: AttrPair[_] =>
-          inst.args(1).asInstanceOf[js.Dictionary[js.Any]](a.name) = a.value
-        case r =>
-          inst.args.push(r.asInstanceOf[ReactElementMod])
-      }
+    mods.foreach {
+      case a: AttrPair[_] =>
+        inst.args(1).asInstanceOf[js.Dictionary[js.Any]](a.name) = a.value
+      case o: OptionalAttrPair[_] =>
+        if (o.value.isDefined) inst.args(1).asInstanceOf[js.Dictionary[js.Any]](o.name) = o.value.get
+      case r =>
+        inst.args.push(r.asInstanceOf[ReactElementMod])
     }
     inst
   }

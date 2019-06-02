@@ -54,6 +54,20 @@ input(onChange := (event) => {
 
 Scala.js even handles the process of binding functions to the appropriate scope, so there's no need to worry about where the event handler is implemented!
 
+### Optional Attributes
+
+Slinky supports the use of the Option type to indicate where an attribute is optional. For example:
+
+```scala
+h1(className := Some("header"))
+h2(className := None)
+```
+Would be rendered as:
+```html
+<h1 class="header"></h1>
+<h2></h2>
+```
+
 ### Styles
 When attaching CSS styles to an element, Slinky follows the React API of having the `style` be a JavaScript object and provides an attribute that can be assigned to a `js.Dynamic` value. This different from other Scala tags libraries, which usually provide individual attributes for assigning style values.
 ```scala
