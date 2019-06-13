@@ -72,6 +72,50 @@ class HooksComponentTest extends AsyncFunSuite {
     promise.future
   }
 
+  test("Can use callback returned by setState as a plain function") {
+    val container = document.createElement("div")
+    var stateSetter: Option[String => Unit] = None
+
+    val promise: Promise[Assertion] = Promise()
+    val component = FunctionalComponent[Int] { props =>
+      val (state, setState) = useState("hello")
+      stateSetter = Some(setState)
+
+      if (state == "olleh") {
+        promise.success(assert(true))
+      }
+
+      state + props
+    }
+
+    ReactDOM.render(component(1), container)
+    stateSetter.foreach(_("olleh"))
+
+    promise.future
+  }
+
+  test("Can use callback returned by setState as a plain transform function") {
+    val container = document.createElement("div")
+    var stateSetter: Option[(String => String) => Unit] = None
+
+    val promise: Promise[Assertion] = Promise()
+    val component = FunctionalComponent[Int] { props =>
+      val (state, setState) = useState("hello")
+      stateSetter = Some(setState)
+
+      if (state == "olleh") {
+        promise.success(assert(true))
+      }
+
+      state + props
+    }
+
+    ReactDOM.render(component(1), container)
+    stateSetter.foreach(transform => transform(s => s.reverse))
+
+    promise.future
+  }
+
   test("useEffect hook fires after render") {
     val container = document.createElement("div")
 

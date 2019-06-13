@@ -87,6 +87,11 @@ class ExternalComponentTest extends FunSuite {
     ExternalSimpleWithAttributes(className := "hi")
   }
 
+  test("Can construct an external component taking Unit props and optional arguments") {
+    ExternalSimpleWithAttributes(className := Some("hi"))
+    ExternalSimpleWithAttributes(className := None)
+  }
+
   test("Can construct an external component taking onClick/ref attribute with no arguments") {
     ExternalSimpleWithAttributes(
       onClick := (e => { e.target: dom.html.Div }),

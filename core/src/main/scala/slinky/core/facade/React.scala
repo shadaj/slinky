@@ -72,7 +72,7 @@ private[slinky] object ReactRaw extends js.Object {
 
   def forwardRef[P](fn: js.Object): js.Object = js.native
 
-  def memo(fn: js.Object, compare: js.UndefOr[js.Object]): js.Object = js.native
+  def memo(fn: js.Function, compare: js.UndefOr[js.Object]): js.Function = js.native
 
   @js.native
   object Children extends js.Object {
@@ -201,6 +201,12 @@ final class SetStateHookCallback[T](private val origFunction: js.Function1[js.An
   @inline def apply(transformState: T => T): Unit = {
     origFunction.apply(transformState: js.Function1[T, T])
   }
+}
+
+object SetStateHookCallback {
+  @inline implicit def toFunction[T](callback: SetStateHookCallback[T]): T => Unit = callback(_)
+
+  @inline implicit def toTransformFunction[T](callback: SetStateHookCallback[T]): (T => T) => Unit = callback(_)
 }
 
 object Hooks {

@@ -2,14 +2,20 @@
 
 ## vNEXT
 ### Highlights :tada:
-+ Allow `React.memo` to specify a custom compare function [PR #260](https://github.com/shadaj/slinky/pull/260)
++ Support **optional attributes**, see [the docs](https://slinky.dev/docs/the-tag-api/) for more details [PR #275](https://github.com/shadaj/slinky/pull/275)
 + Support for Scala 2.13 is now built against 2.13.0-RC1 [PR #269](https://github.com/shadaj/slinky/pull/269)
+
+## [v0.6.1](https://slinky.dev)
+### Highlights :tada:
++ Allow `SetStateHookCallback` to be used as plain functions through an implicit conversion [PR #268](https://github.com/shadaj/slinky/pull/268)
++ Allow `React.memo` to specify a custom compare function [PR #260](https://github.com/shadaj/slinky/pull/260)
++ New facades for React Native: `SafeAreaView`, `TouchableHighlight`, `TouchableOpacity`, and `Platform` [PR #214](https://github.com/shadaj/slinky/pull/214)
 
 ### Bug Fixes
 + Allow `component` defined in a functional component to have any access control [PR #262](https://github.com/shadaj/slinky/pull/262)
 + Fix incorrect typing of `SyntheticMouseEvent.clientX` [PR #261](https://github.com/shadaj/slinky/pull/261)
 
-## [v0.6.0](https://slinky.dev)
+## [v0.6.0](https://5c9e606a26ea4000070d0c7d--slinky.netlify.com/)
 ### Highlights :tada:
 + Casting the `target` property of event objects is **no longer needed**! Now all event handlers are statically typed based on the tag they are being placed on [PR #243](https://github.com/shadaj/slinky/pull/243)
 + Support **React Hooks for functional components**, see [the docs](https://slinky.dev/docs/functional-components-and-hooks/) for more details [PR #227](https://github.com/shadaj/slinky/pull/227)
