@@ -3,6 +3,7 @@
 ## vNEXT
 ### Highlights :tada:
 + Support **optional attributes**, see [the docs](https://slinky.dev/docs/the-tag-api/) for more details [PR #275](https://github.com/shadaj/slinky/pull/275)
++ Slinky now has **full support for Scala 2.13** [PR #269](https://github.com/shadaj/slinky/pull/269)
 
 ## [v0.6.1](https://slinky.dev)
 ### Highlights :tada:
