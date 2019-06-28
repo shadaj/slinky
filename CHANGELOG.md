@@ -7,6 +7,7 @@
 
 ## Bug Fixes
 + Improve error messages when an `@react class` extends the wrong supertype [PR #277](https://github.com/shadaj/slinky/pull/277)
++ Add shortcut `apply` for `@react` functional components to mirror class components [PR #278](https://github.com/shadaj/slinky/pull/278)
 
 ## [v0.6.1](https://slinky.dev)
 ### Highlights :tada:

@@ -38,6 +38,16 @@ import scala.scalajs.js
   }
 }
 
+@react object FunctionalComponentEmptyProps {
+  case class Props()
+  val component = FunctionalComponent[Props](_ => "test")
+}
+
+@react object FunctionalComponentUnitProps {
+  type Props = Unit
+  val component = FunctionalComponent[Props](_ => "test")
+}
+
 class ReactAnnotatedFunctionalComponentTest extends AsyncFunSuite {
   test("Simple component has generated apply") {
     val container = dom.document.createElement("div")
@@ -77,5 +87,25 @@ class ReactAnnotatedFunctionalComponentTest extends AsyncFunSuite {
     )
 
     assert(container.innerHTML == "1")
+  }
+
+  test("Component with empty props has shortcut apply") {
+    val container = dom.document.createElement("div")
+    ReactDOM.render(
+      FunctionalComponentEmptyProps(),
+      container
+    )
+
+    assert(container.innerHTML == "test")
+  }
+
+  test("Component with unit props has shortcut apply") {
+    val container = dom.document.createElement("div")
+    ReactDOM.render(
+      FunctionalComponentUnitProps(),
+      container
+    )
+
+    assert(container.innerHTML == "test")
   }
 }

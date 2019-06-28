@@ -241,19 +241,23 @@ object ReactMacrosImpl {
               q"""def apply[..$tparams](...$paramssWithoutChildren)(${childrenParam.get}) =
                     $body"""
             } else {
-              q"""def apply[..$tparams](...$paramssWithoutChildren) =
-                    component.apply(Props.apply(...$applyValues))"""
+              if (paramssWithoutChildren.flatten.isEmpty) {
+                q"def apply() = component.apply(Props.apply())"
+              } else {
+                q"""def apply[..$tparams](...$paramssWithoutChildren) =
+                      component.apply(Props.apply(...$applyValues))"""
+              }
             }
 
-            Some(Seq(caseClassApply))
+            Some(Seq(caseClassApply, q"def apply(props: component.Props) = component.apply(props)"))
+
+          case q"type Props = Unit" =>
+            Some(Seq(q"def apply() = component.apply(())"))
 
           case _ => None
         }.headOption.getOrElse[Seq[Tree]] {
-          c.warning(c.enclosingPosition, "Props case class was not found. The component's simple apply method will still be added to the object.")
-          Seq.empty
-        } ++ Seq(
-          q"def apply(props: component.Props) = component.apply(props)"
-        )
+          Seq(q"def apply(props: component.Props) = component.apply(props)")
+        }
 
         List(q"$pre object $objName extends ..$parents { $self => ..${objStats ++ applyMethods} }")
 
