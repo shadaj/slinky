@@ -1,15 +1,17 @@
 # Changelog
 
 ## vNEXT
+
+## [v0.6.2](https://slinky.dev)
 ### Highlights :tada:
 + Support **optional attributes**, see [the docs](https://slinky.dev/docs/the-tag-api/) for more details [PR #275](https://github.com/shadaj/slinky/pull/275)
 + Slinky now has **full support for Scala 2.13** [PR #269](https://github.com/shadaj/slinky/pull/269)
 
-## Bug Fixes
+### Bug Fixes
 + Improve error messages when an `@react class` extends the wrong supertype [PR #277](https://github.com/shadaj/slinky/pull/277)
 + Add shortcut `apply` for `@react` functional components to mirror class components [PR #278](https://github.com/shadaj/slinky/pull/278)
 
-## [v0.6.1](https://slinky.dev)
+## [v0.6.1](https://5cb8c7064aba1f00090053e4--slinky.netlify.com/)
 ### Highlights :tada:
 + Allow `SetStateHookCallback` to be used as plain functions through an implicit conversion [PR #268](https://github.com/shadaj/slinky/pull/268)
 + Allow `React.memo` to specify a custom compare function [PR #260](https://github.com/shadaj/slinky/pull/260)
