@@ -1,11 +1,10 @@
 package slinky.core
 
-import slinky.core.facade.{React, ReactRaw, ReactElement}
+import slinky.core.facade.{React, ReactElement, ReactRaw}
 
 import scala.language.implicitConversions
 import scala.scalajs.js
-import scala.scalajs.js.Dictionary
-
+import scala.scalajs.js.{Dictionary, JSON}
 import scala.language.higherKinds
 import scala.language.experimental.macros
 
@@ -14,13 +13,15 @@ class Tag(@inline private final val name: String) {
   def apply(mods: TagMod[tagType]*): WithAttrs = {
     val inst = new WithAttrs(js.Array(name, js.Dynamic.literal()))
     
-    mods.foreach { m =>
-      m match {
-        case a: AttrPair[_] =>
-          inst.args(1).asInstanceOf[js.Dictionary[js.Any]](a.name) = a.value
-        case r =>
-          inst.args.push(r.asInstanceOf[ReactElement])
-      }
+    mods.foreach {
+      case a: AttrPair[_] =>
+        inst.args(1).asInstanceOf[js.Dictionary[js.Any]](a.name) = a.value
+      case o: OptionalAttrPair[_] =>
+        if (o.value.isDefined) {
+          inst.args(1).asInstanceOf[js.Dictionary[js.Any]](o.name) = o.value.get
+        }
+      case r =>
+        inst.args.push(r.asInstanceOf[ReactElement])
     }
     
     inst
@@ -42,6 +43,7 @@ abstract class TagElement {
 
 final class CustomAttribute[T](@inline private val name: String) {
   @inline def :=(v: T) = new AttrPair[Any](name, v.asInstanceOf[js.Any])
+  @inline def :=(v: Option[T]) = new OptionalAttrPair[Any](name, v.asInstanceOf[Option[js.Any]])
 }
 
 trait TagMod[-A] extends js.Object
@@ -57,8 +59,12 @@ object RefAttr {
 final class AttrPair[-A](@inline final val name: String,
                          @inline final val value: js.Any) extends TagMod[A]
 
-final class WithAttrs(@inline private[core] val args: js.Array[js.Any]) extends AnyVal {
-  def apply(children: ReactElement*): ReactElement = macro TagMacros.applyChildren
+final class OptionalAttrPair[-A](@inline final val name: String,
+                                 @inline final val value: Option[js.Any]) extends TagMod[A]
+
+object OptionalAttrPair {
+  @inline implicit def optionToJsOption[T](o: Option[T])(implicit a: T => js.Any): Option[js.Any] =
+    o.map(a(_))
 }
 
 trait LowPrioWithAttrs {
@@ -76,6 +82,10 @@ trait LowPrioWithAttrs {
   }
 }
 
+final class WithAttrs(@inline private[core] val args: js.Array[js.Any]) extends AnyVal {
+  def apply(children: ReactElement*): ReactElement = macro TagMacros.applyChildren
+}
+
 object WithAttrs extends LowPrioWithAttrs {
   def runtimeApplyChildren(withAttrs: WithAttrs, children: ReactElement*): ReactElement = {
     if (withAttrs.args(0) == null) {
@@ -91,8 +101,8 @@ object WithAttrs extends LowPrioWithAttrs {
 
 import scala.annotation.StaticAnnotation
 class tagObject(name: String) extends StaticAnnotation
-class attrAppliedConversion extends StaticAnnotation
-class createAttrMethod(name: String) extends StaticAnnotation
+class attrAppliedConversion(optional: Boolean) extends StaticAnnotation
+class createAttrMethod(name: String, optional: Boolean) extends StaticAnnotation
 
 object TagMacros {
   import scala.reflect.macros.blackbox
@@ -175,24 +185,25 @@ object TagMacros {
         if (actualType =:= typeOf[ReactElement]) {
           q"$argsName.push(${resetWithExistentialFix(c)(m)})"
         } else if (actualType =:= typeOf[AttrPair[_]]) {
-          def extractNameValue(tree: Tree): Option[(Tree, Tree)] = {
+          def extractNameValue(tree: Tree): Option[(Tree, Tree, Boolean)] = {
             tree match {
               case q"${met}($in)" if met.symbol.annotations.exists(_.tree.tpe =:= typeOf[attrAppliedConversion]) =>
+                val annot =  met.symbol.annotations.find(_.tree.tpe =:= typeOf[attrAppliedConversion]).get
                 extractNameValue(in)
               case q"${met}($value)" if met.symbol.annotations.exists(_.tree.tpe =:= typeOf[createAttrMethod]) =>
                 val annot =  met.symbol.annotations.find(_.tree.tpe =:= typeOf[createAttrMethod]).get
-                val attrName = annot.scalaArgs.head
-                Some((attrName, value))
+                val Seq(attrName, optional) = annot.scalaArgs
+                Some((attrName, value, optional == q"true"))
               case q"${met}($value)(..$_)" if met.symbol.annotations.exists(_.tree.tpe =:= typeOf[createAttrMethod]) =>
                 val annot =  met.symbol.annotations.find(_.tree.tpe =:= typeOf[createAttrMethod]).get
-                val attrName = annot.scalaArgs.head
-                Some((attrName, value))
+                val Seq(attrName, optional) = annot.scalaArgs
+                Some((attrName, value, optional == q"true"))
               case o =>
                 None
             }
           }
 
-          extractNameValue(m).map { case (name, value) =>
+          extractNameValue(m).map { case (name, value, optional) =>
             q"$propsName($name) = ${resetWithExistentialFix(c)(value)}"
           }.getOrElse {
             val mName = TermName(c.freshName())

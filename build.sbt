@@ -20,7 +20,7 @@ lazy val slinky = project.in(file(".")).aggregate(
 )
 
 lazy val crossScalaSettings = Seq(
-  crossScalaVersions := Seq("2.12.8", "2.13.0-M5"),
+  crossScalaVersions := Seq("2.12.8", "2.13.0"),
   unmanagedSourceDirectories in Compile += {
     val sourceDir = (sourceDirectory in Compile).value
     CrossVersion.partialVersion(scalaVersion.value) match {
@@ -37,6 +37,39 @@ lazy val crossScalaSettings = Seq(
   }
 )
 
+def commonScalacOptions(scalaVersion: String) = {
+  Seq(
+    "-encoding",
+    "UTF-8",
+    "-feature",
+    "-language:existentials",
+    "-language:higherKinds",
+    "-language:implicitConversions",
+    "-language:experimental.macros",
+    "-unchecked",
+    "-Ywarn-numeric-widen",
+    "-Ywarn-value-discard"
+  ) ++ (if (priorTo2_13(scalaVersion)) {
+    Seq(
+      "-Xfuture",
+      "-Yno-adapted-args",
+      "-deprecation",
+      "-Xfatal-warnings" // fails Scaladoc compilation on 2.13
+    )
+  } else {
+    Seq(
+      "-Ymacro-annotations"
+    )
+  })
+}
+
+def priorTo2_13(scalaVersion: String): Boolean =
+  CrossVersion.partialVersion(scalaVersion) match {
+    case Some((2, minor)) if minor < 13 => true
+    case _                              => false
+  }
+
+
 lazy val librarySettings = Seq(
   scalacOptions += {
     val origVersion = version.value
@@ -49,7 +82,8 @@ lazy val librarySettings = Seq(
     val a = baseDirectory.value.toURI
     val g = "https://raw.githubusercontent.com/shadaj/slinky"
     s"-P:scalajs:mapSourceURI:$a->$g/$githubVersion/${baseDirectory.value.getName}/"
-  }
+  },
+  scalacOptions ++= commonScalacOptions(scalaVersion.value)
 )
 
 addCommandAlias(
@@ -63,11 +97,11 @@ addCommandAlias(
 lazy val macroAnnotationSettings = Seq(
   resolvers += Resolver.sonatypeRepo("releases"),
   scalacOptions ++= {
-    if (scalaVersion.value == "2.13.0-M5") Seq("-Ymacro-annotations")
+    if (scalaVersion.value == "2.13.0") Seq("-Ymacro-annotations")
     else Seq.empty
   },
   libraryDependencies ++= {
-    if (scalaVersion.value == "2.13.0-M5") Seq.empty
+    if (scalaVersion.value == "2.13.0") Seq.empty
     else Seq(compilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.full))
   }
 )

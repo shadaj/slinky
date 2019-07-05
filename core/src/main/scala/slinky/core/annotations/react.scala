@@ -18,8 +18,15 @@ object react {
 
 object ReactMacrosImpl {
   private def parentsContainsType(c: whitebox.Context)(parents: Seq[c.Tree], tpe: c.Type) = {
+    import scala.reflect.macros.TypecheckException
     parents.exists { p =>
-      c.typecheck(p, mode = c.TYPEmode).tpe.typeSymbol == tpe.typeSymbol
+      try {
+        c.typecheck(p, mode = c.TYPEmode).tpe.typeSymbol == tpe.typeSymbol
+      } catch {
+        case _: TypecheckException =>
+          // with local imports, typechecking fails so we just fall back and skip the check
+          true
+      }
     }
   }
 
@@ -181,12 +188,16 @@ object ReactMacrosImpl {
     import c.universe._
 
     val outs: List[Tree] = annottees.map(_.tree).toList match {
-      case Seq(cls @ q"..$_ class $className extends ..$parents { $_ => ..$_}") =>
+      case Seq(cls @ q"..$_ class $className extends ..$parents { $_ => ..$_}")
+        if parentsContainsType(c)(parents, typeOf[Component]) ||
+           parentsContainsType(c)(parents, typeOf[StatelessComponent]) =>
         val (newCls, companionStats) = createComponentBody(c)(cls)
         val parent = tq"${TermName(parents.head.toString)}.Wrapper"
         List(newCls, q"object ${TermName(className.decodedName.toString)} extends $parent { ..$companionStats }")
 
-      case Seq(cls @ q"..$_ class $className extends ..$parents { $_ => ..$_}", obj @ q"..$_ object $_ extends ..$_ { $_ => ..$objStats }") =>
+      case Seq(cls @ q"..$_ class $className extends ..$parents { $_ => ..$_}", obj @ q"..$_ object $_ extends ..$_ { $_ => ..$objStats }")
+        if parentsContainsType(c)(parents, typeOf[Component]) ||
+           parentsContainsType(c)(parents, typeOf[StatelessComponent])=>
         val (newCls, companionStats) = createComponentBody(c)(cls)
         val parent = tq"${TermName(parents.head.toString)}.Wrapper"
         List(newCls, q"object ${TermName(className.decodedName.toString)} extends $parent { ..${objStats ++ companionStats} }")
@@ -200,7 +211,7 @@ object ReactMacrosImpl {
         List(q"object $objName extends _root_.slinky.core.ExternalComponentWithAttributesWithRefType[$elementType, $refType] { ..${objStats ++ companionStats} }")
 
       case Seq(obj @ q"$pre object $objName extends ..$parents { $self => ..$objStats }") if (objStats.exists {
-        case q"val component: $_ = $_" => true
+        case q"$_ val component: $_ = $_" => true
         case _ => false
       }) =>
         val applyMethods = objStats.flatMap {
@@ -230,24 +241,34 @@ object ReactMacrosImpl {
               q"""def apply[..$tparams](...$paramssWithoutChildren)(${childrenParam.get}) =
                     $body"""
             } else {
-              q"""def apply[..$tparams](...$paramssWithoutChildren) =
-                    component.apply(Props.apply(...$applyValues))"""
+              if (paramssWithoutChildren.flatten.isEmpty) {
+                q"def apply() = component.apply(Props.apply())"
+              } else {
+                q"""def apply[..$tparams](...$paramssWithoutChildren) =
+                      component.apply(Props.apply(...$applyValues))"""
+              }
             }
 
-            Some(Seq(caseClassApply))
+            Some(Seq(caseClassApply, q"def apply(props: component.Props) = component.apply(props)"))
+
+          case q"type Props = Unit" =>
+            Some(Seq(q"def apply() = component.apply(())"))
 
           case _ => None
         }.headOption.getOrElse[Seq[Tree]] {
-          c.warning(c.enclosingPosition, "Props case class was not found. The component's simple apply method will still be added to the object.")
-          Seq.empty
-        } ++ Seq(
-          q"def apply(props: component.Props) = component.apply(props)"
-        )
+          Seq(q"def apply(props: component.Props) = component.apply(props)")
+        }
 
         List(q"$pre object $objName extends ..$parents { $self => ..${objStats ++ applyMethods} }")
 
       case defn =>
-        c.abort(c.enclosingPosition, s"@react must annotate a class that extends (Stateless)Component or an object that extends ExternalComponent(WithAttributes)(WithRefType), got $defn")
+        c.abort(
+          c.enclosingPosition,
+          """@react must annotate:
+            |  - a class that extends (Stateless)Component,
+            |  - an object that extends ExternalComponent(WithAttributes)(WithRefType)
+            |  - an object defining a `val component = FunctionalComponent(...)`""".stripMargin
+        )
     }
 
     c.Expr[Any](Block(outs, Literal(Constant(()))))

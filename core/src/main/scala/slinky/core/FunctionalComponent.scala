@@ -35,7 +35,7 @@ object KeyAddingStage {
   }
 }
 
-final class FunctionalComponent[P] private[core](private[core] val component: js.Object) extends AnyVal {
+final class FunctionalComponent[P] private[core](private[core] val component: js.Function) extends AnyVal {
   type Props = P
   type Result = KeyAddingStage
 
@@ -51,7 +51,7 @@ final class FunctionalComponent[P] private[core](private[core] val component: js
   }
 }
 
-final class FunctionalComponentTakingRef[P, R] private[core](private[core] val component: js.Object) extends AnyVal {
+final class FunctionalComponentTakingRef[P, R] private[core](private[core] val component: js.Function) extends AnyVal {
   type Props = P
   type Result = KeyAddingStage
 
@@ -67,7 +67,7 @@ final class FunctionalComponentTakingRef[P, R] private[core](private[core] val c
   }
 }
 
-final class FunctionalComponentForwardedRef[P, R] private[core](private[core] val component: js.Object) extends AnyVal {
+final class FunctionalComponentForwardedRef[P, R] private[core](private[core] val component: js.Any) extends AnyVal {
   type Props = P
   type Result = KeyAndRefAddingStage[R]
 
@@ -102,7 +102,7 @@ object FunctionalComponent {
     }
 
     ret
-  }.asInstanceOf[js.Object])
+  })
 
   def apply[P, R](fn: (P, ReactRef[R]) => ReactElement)(implicit name: FunctionalComponentName) = new FunctionalComponentTakingRef[P, R]({
     var ret: js.Function2[js.Object, ReactRef[R], ReactElement] = null
@@ -119,7 +119,7 @@ object FunctionalComponent {
     }
 
     ret
-  }.asInstanceOf[js.Object])
+  })
 }
 
 final class FunctionalComponentName(val name: String) extends AnyVal
@@ -136,6 +136,7 @@ object FunctionalComponentNameMacros {
       name == "<init>" || (name.startsWith("<local ") && name.endsWith(">")) || name == "component"
     }
 
+    @scala.annotation.tailrec
     def findNonSyntheticOwner(current: Symbol): Symbol = {
       if (isSyntheticName(current.name.decodedName.toString.trim)) {
         findNonSyntheticOwner(current.owner)

@@ -60,6 +60,18 @@ class TagTest extends FunSuite {
     assertCompiles("div(onMouseOver := (v => { (v: SyntheticMouseEvent[Element]) }))")
   }
 
+  test("Can construct a tag with present optional attributes") {
+    val divContainer = dom.document.createElement("div")
+    ReactDOM.render(input(`type` := "textarea", defaultValue := Some("foo")), divContainer)
+    assert(divContainer.innerHTML == """<input type="textarea" value="foo">""")
+  }
+
+  test("Can construct a tag with missing optional attributes") {
+    val divContainer = dom.document.createElement("div")
+    ReactDOM.render(input(`type` := "textarea", defaultValue := None), divContainer)
+    assert(divContainer.innerHTML == """<input type="textarea">""")
+  }
+
   test("Can construct tag with abstraction over element type") {
     def constructTag[T <: Tag: className.supports: onClick.supports: ref.supports](tag: T): ReactElement = {
       tag.apply(
@@ -90,6 +102,17 @@ class TagTest extends FunSuite {
     val divContainer = dom.document.createElement("div")
     ReactDOM.render(customTag(customClass := "foo", customColorAttr := "bar")("hello!"), divContainer)
     assert(divContainer.innerHTML == """<custom-element class="foo" color="bar">hello!</custom-element>""")
+  }
+
+  test("Can construct a custom tag with optional attributes") {
+    val customTag = new CustomTag("custom-element")
+    val customClass = new CustomAttribute[String]("class")
+    val customNoneAttr = new CustomAttribute[String]("none")
+    val customSomeAttr = new CustomAttribute[String]("some")
+
+    val divContainer = dom.document.createElement("div")
+    ReactDOM.render(customTag(customClass := "foo", customNoneAttr := None, customSomeAttr := Some("bar"))("hello!"), divContainer)
+    assert(divContainer.innerHTML == """<custom-element class="foo" some="bar">hello!</custom-element>""")
   }
 
   test("Can construct a custom tag with custom attributes inside another class") {

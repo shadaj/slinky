@@ -60,7 +60,8 @@ object Generator extends App {
 
       val attrsGen = attrs.toList.flatMap { a =>
         val compatibles = a.compatibleTags.map(ts => ts.map(n => extracted.tags.find(_.tagName == n).get)).getOrElse(extracted.tags)
-        val noEvent = s"""@inline @slinky.core.createAttrMethod("${a.attributeName}") def :=(v: () => Unit) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)""".stripMargin
+        val noEvent = s"""@inline @slinky.core.createAttrMethod("${a.attributeName}") def :=(v: () => Unit) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)
+                         |@inline @slinky.core.createAttrMethod("${a.attributeName}") def :=(v: Option[() => Unit]) = new OptionalAttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)""".stripMargin
         val base = (if (eventToSynthetic.contains(a.attributeType)) {
           val eventTypeForTagType = eventToSynthetic(a.attributeType)
           s"""@inline @slinky.core.createAttrMethod("${a.attributeName}") def :=[T <: TagElement](v: ${eventTypeForTagType("T#RefType")} => Unit)(implicit supported: AttrPair[attrType] => AttrPair[T]) =
@@ -72,13 +73,16 @@ object Generator extends App {
              |@inline @slinky.core.createAttrMethod("${a.attributeName}") def :=[T <: TagElement, E <: T#RefType](v: slinky.core.RefAttr[E])(implicit supported: AttrPair[attrType] => AttrPair[T]) =
              |  new AttrPair[T]("${a.attributeName}", v)""".stripMargin
         } else {
-          s"""@inline @slinky.core.createAttrMethod("${a.attributeName}") def :=(v: ${a.attributeType}) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)"""
+          s"""@inline @slinky.core.createAttrMethod("${a.attributeName}") def :=(v: ${a.attributeType}) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)
+             |@inline @slinky.core.createAttrMethod("${a.attributeName}") def :=(v: Option[${a.attributeType}]) = new OptionalAttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)""".stripMargin
         }) + s"\ntype attrType = _${symbolWithoutEscape}_attr.type"
 
         if (a.withDash) {
           Seq(
             base,
-            s"""final class WithDash(@inline private val sub: String) extends AnyVal { @inline def :=(v: ${a.attributeType}) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}-" + sub, v) }
+            s"""final class WithDash(@inline private val sub: String) extends AnyVal {
+               |@inline def :=(v: ${a.attributeType}) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}-" + sub, v)
+               |@inline def :=(v: Option[${a.attributeType}]) = new OptionalAttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}-" + sub, v) }
                |@inline def -(sub: String) = new WithDash(sub)""".stripMargin
           )
         } else Seq(base)
@@ -88,7 +92,9 @@ object Generator extends App {
         a.compatibleTags.getOrElse(extracted.tags.map(_.tagName)).flatMap { t =>
           val fixedT = if (t == "*") "star" else t
           Seq(
-            s"""@inline @slinky.core.attrAppliedConversion implicit def to${fixedT}Applied(pair: AttrPair[_${symbolWithoutEscape}_attr.type]) = pair.asInstanceOf[AttrPair[${Utils.identifierFor(t)}.tag.type]]"""
+            s"""@inline @slinky.core.attrAppliedConversion implicit def to${fixedT}Applied(pair: AttrPair[_${symbolWithoutEscape}_attr.type]) = pair.asInstanceOf[AttrPair[${Utils.identifierFor(t)}.tag.type]]
+               |@inline @slinky.core.attrAppliedConversion implicit def to${fixedT}OptionalApplied(pair: OptionalAttrPair[_${symbolWithoutEscape}_attr.type]) = pair.asInstanceOf[OptionalAttrPair[${Utils.identifierFor(t)}.tag.type]]
+             """.stripMargin
           )
         }
       }
@@ -112,7 +118,8 @@ object Generator extends App {
       out.println(
         s"""package $pkg
            |
-           |import slinky.core.{AttrPair, TagElement, Tag, Attr, WithAttrs, TagMod}
+           |import slinky.core.{AttrPair, OptionalAttrPair, TagElement, Tag, Attr, WithAttrs, TagMod}
+           |import slinky.core.OptionalAttrPair._
            |import slinky.core.facade.{React, ReactElement}
            |import scala.scalajs.js
            |import scala.language.implicitConversions
