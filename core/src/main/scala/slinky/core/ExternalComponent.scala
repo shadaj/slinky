@@ -18,8 +18,6 @@ final class BuildingComponent[E, R <: js.Object](private val args: js.Array[js.A
     mods.foreach {
       case a: AttrPair[_] =>
         args(1).asInstanceOf[js.Dictionary[js.Any]](a.name) = a.value
-      case o: OptionalAttrPair[_] =>
-        if (o.value.isDefined) args(1).asInstanceOf[js.Dictionary[js.Any]](o.name) = o.value.get
       case r =>
         args.push(r.asInstanceOf[ReactElement])
     }

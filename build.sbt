@@ -2,8 +2,6 @@ organization in ThisBuild := "me.shadaj"
 
 scalaVersion in ThisBuild := "2.12.8"
 
-scalacOptions in ThisBuild ++= Seq("-feature", "-deprecation")
-
 lazy val slinky = project.in(file(".")).aggregate(
   readWrite,
   core,
@@ -42,10 +40,6 @@ def commonScalacOptions(scalaVersion: String) = {
     "-encoding",
     "UTF-8",
     "-feature",
-    "-language:existentials",
-    "-language:higherKinds",
-    "-language:implicitConversions",
-    "-language:experimental.macros",
     "-unchecked",
     "-Ywarn-numeric-widen",
     "-Ywarn-value-discard"
@@ -53,8 +47,8 @@ def commonScalacOptions(scalaVersion: String) = {
     Seq(
       "-Xfuture",
       "-Yno-adapted-args",
-      "-deprecation",
-      "-Xfatal-warnings" // fails Scaladoc compilation on 2.13
+      // "-deprecation",
+      // "-Xfatal-warnings" // fails Scaladoc compilation on 2.13
     )
   } else {
     Seq(

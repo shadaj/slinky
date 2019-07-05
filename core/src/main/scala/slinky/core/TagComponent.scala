@@ -15,10 +15,8 @@ class Tag(@inline private final val name: String) {
     
     mods.foreach {
       case a: AttrPair[_] =>
-        inst.args(1).asInstanceOf[js.Dictionary[js.Any]](a.name) = a.value
-      case o: OptionalAttrPair[_] =>
-        if (o.value.isDefined) {
-          inst.args(1).asInstanceOf[js.Dictionary[js.Any]](o.name) = o.value.get
+        if (a.value != js.undefined) {
+          inst.args(1).asInstanceOf[js.Dictionary[js.Any]](a.name) = a.value
         }
       case r =>
         inst.args.push(r.asInstanceOf[ReactElement])
@@ -43,7 +41,7 @@ abstract class TagElement {
 
 final class CustomAttribute[T](@inline private val name: String) {
   @inline def :=(v: T) = new AttrPair[Any](name, v.asInstanceOf[js.Any])
-  @inline def :=(v: Option[T]) = new OptionalAttrPair[Any](name, v.asInstanceOf[Option[js.Any]])
+  @inline def :=(v: Option[T]) = new AttrPair[Any](name, v.getOrElse(js.undefined).asInstanceOf[js.Any])
 }
 
 trait TagMod[-A] extends js.Object
@@ -58,14 +56,6 @@ object RefAttr {
 
 final class AttrPair[-A](@inline final val name: String,
                          @inline final val value: js.Any) extends TagMod[A]
-
-final class OptionalAttrPair[-A](@inline final val name: String,
-                                 @inline final val value: Option[js.Any]) extends TagMod[A]
-
-object OptionalAttrPair {
-  @inline implicit def optionToJsOption[T](o: Option[T])(implicit a: T => js.Any): Option[js.Any] =
-    o.map(a(_))
-}
 
 trait LowPrioWithAttrs {
   implicit def runtimeBuild(withAttrs: WithAttrs): ReactElement = {
@@ -101,7 +91,7 @@ object WithAttrs extends LowPrioWithAttrs {
 
 import scala.annotation.StaticAnnotation
 class tagObject(name: String) extends StaticAnnotation
-class attrAppliedConversion(optional: Boolean) extends StaticAnnotation
+class attrAppliedConversion extends StaticAnnotation
 class createAttrMethod(name: String, optional: Boolean) extends StaticAnnotation
 
 object TagMacros {
@@ -193,30 +183,46 @@ object TagMacros {
               case q"${met}($value)" if met.symbol.annotations.exists(_.tree.tpe =:= typeOf[createAttrMethod]) =>
                 val annot =  met.symbol.annotations.find(_.tree.tpe =:= typeOf[createAttrMethod]).get
                 val Seq(attrName, optional) = annot.scalaArgs
-                Some((attrName, value, optional == q"true"))
+                val isOptional = optional match {
+                  case q"true" => true
+                  case q"false" => false
+                }
+                Some((attrName, value, isOptional))
               case q"${met}($value)(..$_)" if met.symbol.annotations.exists(_.tree.tpe =:= typeOf[createAttrMethod]) =>
                 val annot =  met.symbol.annotations.find(_.tree.tpe =:= typeOf[createAttrMethod]).get
                 val Seq(attrName, optional) = annot.scalaArgs
-                Some((attrName, value, optional == q"true"))
+                val isOptional = optional match {
+                  case q"true" => true
+                  case q"false" => false
+                }
+                Some((attrName, value, isOptional))
               case o =>
                 None
             }
           }
 
           extractNameValue(m).map { case (name, value, optional) =>
-            q"$propsName($name) = ${resetWithExistentialFix(c)(value)}"
+            if (optional) {
+              q"${resetWithExistentialFix(c)(value)}.foreach(v => $propsName($name) = v)"
+            } else {
+              q"$propsName($name) = ${resetWithExistentialFix(c)(value)}"
+            }
           }.getOrElse {
             val mName = TermName(c.freshName())
             q"""
             val $mName = ${resetWithExistentialFix(c)(m)}
-            $propsName(${mName}.name) = ${mName}.value
+            if (${mName}.value.asInstanceOf[_root_.scala.scalajs.js.UndefOr[js.Any]] != _root_.scala.scalajs.js.undefined) {
+              $propsName(${mName}.name) = ${mName}.value
+            }
             """
           }
         } else {
           q"""
           ($m) match {
             case a: _root_.slinky.core.AttrPair[_] =>
-              $propsName(a.name) = a.value
+              if (a.value.asInstanceOf[_root_.scala.scalajs.js.UndefOr[js.Any]] != _root_.scala.scalajs.js.undefined) {
+                $propsName(a.name) = a.value
+              }
             case r =>
               $argsName.push(r.asInstanceOf[_root_.slinky.core.facade.ReactElement])
           }

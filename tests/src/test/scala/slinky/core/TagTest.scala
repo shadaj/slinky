@@ -72,6 +72,20 @@ class TagTest extends FunSuite {
     assert(divContainer.innerHTML == """<input type="textarea">""")
   }
 
+  test("Can construct a tag with missing present optional attributes") {
+    val divContainer = dom.document.createElement("div")
+    val customValue = new CustomAttribute[String]("value")
+    ReactDOM.render(input(`type` := "textarea", customValue := None), divContainer)
+    assert(divContainer.innerHTML == """<input type="textarea">""")
+  }
+
+  test("Can construct a tag with missing custom optional attributes") {
+    val divContainer = dom.document.createElement("div")
+    val customValue = new CustomAttribute[String]("value")
+    ReactDOM.render(input(`type` := "textarea", customValue := None), divContainer)
+    assert(divContainer.innerHTML == """<input type="textarea">""")
+  }
+
   test("Can construct tag with abstraction over element type") {
     def constructTag[T <: Tag: className.supports: onClick.supports: ref.supports](tag: T): ReactElement = {
       tag.apply(
