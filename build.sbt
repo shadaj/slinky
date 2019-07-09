@@ -42,13 +42,13 @@ def commonScalacOptions(scalaVersion: String) = {
     "-feature",
     "-unchecked",
     "-Ywarn-numeric-widen",
-    "-Ywarn-value-discard"
+    "-Ywarn-value-discard",
+    "-deprecation"
   ) ++ (if (priorTo2_13(scalaVersion)) {
     Seq(
       "-Xfuture",
       "-Yno-adapted-args",
-      // "-deprecation",
-      // "-Xfatal-warnings" // fails Scaladoc compilation on 2.13
+      "-Xfatal-warnings" // fails Scaladoc compilation on 2.13
     )
   } else {
     Seq(

@@ -15,7 +15,7 @@ class Tag(@inline private final val name: String) {
     
     mods.foreach {
       case a: AttrPair[_] =>
-        if (a.value != js.undefined) {
+        if (a.value.asInstanceOf[js.UndefOr[js.Any]] != js.undefined) {
           inst.args(1).asInstanceOf[js.Dictionary[js.Any]](a.name) = a.value
         }
       case r =>
@@ -118,7 +118,7 @@ object TagMacros {
         }
       }
     }.transform(tree.duplicate)
-    c.resetLocalAttrs(transformed)
+    c.untypecheck(transformed)
   }
 
   def tagApply(c: blackbox.Context)(mods: c.Tree*): c.Tree = {
@@ -135,7 +135,7 @@ object TagMacros {
     val argsName = TermName(c.freshName())
     val propsName = TermName(c.freshName())
 
-    val tagName = c.prefix.tree.symbol.annotations.find(_.tpe =:= typeOf[tagObject]).get.scalaArgs.head
+    val tagName = c.prefix.tree.symbol.annotations.find(_.tree.tpe =:= typeOf[tagObject]).get.tree.children.tail.head
     
     if (isUnderscoreStar) {
       val Typed(starred, Ident(typeNames.WILDCARD_STAR)) = mods.head
@@ -182,7 +182,7 @@ object TagMacros {
                 extractNameValue(in)
               case q"${met}($value)" if met.symbol.annotations.exists(_.tree.tpe =:= typeOf[createAttrMethod]) =>
                 val annot =  met.symbol.annotations.find(_.tree.tpe =:= typeOf[createAttrMethod]).get
-                val Seq(attrName, optional) = annot.scalaArgs
+                val Seq(attrName, optional) = annot.tree.children.tail
                 val isOptional = optional match {
                   case q"true" => true
                   case q"false" => false
@@ -190,7 +190,7 @@ object TagMacros {
                 Some((attrName, value, isOptional))
               case q"${met}($value)(..$_)" if met.symbol.annotations.exists(_.tree.tpe =:= typeOf[createAttrMethod]) =>
                 val annot =  met.symbol.annotations.find(_.tree.tpe =:= typeOf[createAttrMethod]).get
-                val Seq(attrName, optional) = annot.scalaArgs
+                val Seq(attrName, optional) = annot.tree.children.tail
                 val isOptional = optional match {
                   case q"true" => true
                   case q"false" => false
@@ -244,7 +244,7 @@ object TagMacros {
 
     val isUnderscoreStar = if (children.size == 1) {
       children.head match {
-        case Typed(_, Ident(tpnme.WILDCARD_STAR)) =>
+        case Typed(_, Ident(typeNames.WILDCARD_STAR)) =>
           true
         case _ => false
       }
