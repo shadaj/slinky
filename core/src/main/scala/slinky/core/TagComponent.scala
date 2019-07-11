@@ -211,7 +211,7 @@ object TagMacros {
             val mName = TermName(c.freshName())
             q"""
             val $mName = ${resetWithExistentialFix(c)(m)}
-            if (${mName}.value.asInstanceOf[_root_.scala.scalajs.js.UndefOr[js.Any]] != _root_.scala.scalajs.js.undefined) {
+            if (${mName}.value.asInstanceOf[_root_.scala.scalajs.js.UndefOr[_root_.scala.scalajs.js.Any]] != _root_.scala.scalajs.js.undefined) {
               $propsName(${mName}.name) = ${mName}.value
             }
             """
@@ -220,7 +220,7 @@ object TagMacros {
           q"""
           ($m) match {
             case a: _root_.slinky.core.AttrPair[_] =>
-              if (a.value.asInstanceOf[_root_.scala.scalajs.js.UndefOr[js.Any]] != _root_.scala.scalajs.js.undefined) {
+              if (a.value.asInstanceOf[_root_.scala.scalajs.js.UndefOr[_root_.scala.scalajs.js.Any]] != _root_.scala.scalajs.js.undefined) {
                 $propsName(a.name) = a.value
               }
             case r =>
@@ -251,7 +251,7 @@ object TagMacros {
     } else false
 
     resetWithExistentialFix(c)(c.prefix.tree) match {
-      case q"((() => { ..$pre; new slinky.core.WithAttrs($i) }).apply(): $_)" if !isUnderscoreStar =>
+      case q"((() => { ..$pre; new _root_.slinky.core.WithAttrs($i) }).apply(): $_)" if !isUnderscoreStar =>
         val retName = TermName(c.freshName())
 
         q"""(() => {
@@ -269,7 +269,7 @@ object TagMacros {
   def build(c: blackbox.Context)(withAttrs: c.Tree): c.Tree = {
     import c.universe._
     resetWithExistentialFix(c)(withAttrs) match {
-      case q"((() => { ..$pre; new slinky.core.WithAttrs($i) }).apply(): $_)" =>
+      case q"((() => { ..$pre; new _root_.slinky.core.WithAttrs($i) }).apply(): $_)" =>
         val retName = TermName(c.freshName())
 
         q"""(() => {
