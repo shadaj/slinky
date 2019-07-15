@@ -2,14 +2,14 @@ package slinky.readwrite
 
 import scala.annotation.compileTimeOnly
 import CompatUtil._
+
+import scala.collection.mutable
 import scala.concurrent.Future
 import scala.scalajs.js
 import scala.scalajs.js.|
 import scala.concurrent.ExecutionContext.Implicits.global
-
 import scala.reflect.ClassTag
 import scala.reflect.macros.whitebox
-
 import scala.language.experimental.macros
 import scala.language.higherKinds
 
@@ -222,6 +222,9 @@ trait CoreReaders extends MacroReaders with FallbackReaders {
   implicit def mapReader[A, B](implicit abReader: Reader[(A, B)]): Reader[Map[A, B]] = o => {
     collectionReader[(A, B), Iterable].read(o).toMap
   }
+
+  implicit def mutableMapReader[T](implicit reader: Reader[T]): Reader[mutable.Map[String, T]] =
+    _.asInstanceOf[mutable.Map[String, T]]
 
   implicit val rangeReader: Reader[Range] = o => {
     val dyn = o.asInstanceOf[js.Dynamic]

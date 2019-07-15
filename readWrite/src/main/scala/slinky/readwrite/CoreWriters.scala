@@ -2,13 +2,13 @@ package slinky.readwrite
 
 import scala.annotation.compileTimeOnly
 import scala.collection.generic.CanBuildFrom
+import scala.collection.mutable
 import scala.concurrent.Future
 import scala.reflect.ClassTag
 import scala.scalajs.js
 import scala.scalajs.js.|
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.reflect.macros.whitebox
-
 import scala.language.experimental.macros
 import scala.language.higherKinds
 
@@ -170,6 +170,11 @@ trait CoreWriters extends MacroWriters with FallbackWriters {
 
   implicit def mapWriter[A, B](implicit abWriter: Writer[(A, B)]): Writer[Map[A, B]] = s => {
     collectionWriter[(A, B), Iterable].write(s)
+  }
+
+  implicit def mutableMapWriter[T](implicit writer: Writer[T]): Writer[mutable.Map[String, T]] = {
+    import scala.scalajs.js.JSConverters._
+    _.toJSDictionary.asInstanceOf[js.Object]
   }
 
   implicit val rangeWriter: Writer[Range] = r => {
