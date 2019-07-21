@@ -1,8 +1,9 @@
 # Changelog
 
 ## vNEXT
-## Bug Fixes
+### Bug Fixes
 + Support `useCallback` with a function that takes arguments [PR #290](https://github.com/shadaj/slinky/pull/290)
++ Fix issues around using ReactElements within first-order types e.g. Map, List [PR #285](https://github.com/shadaj/slinky/pull/285)
 
 ## [v0.6.2](https://slinky.dev)
 ### Highlights :tada:

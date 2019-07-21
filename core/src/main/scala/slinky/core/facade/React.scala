@@ -34,15 +34,25 @@ object ReactElement {
     b.asInstanceOf[ReactElement]
   }
 
-  @inline implicit def optionToElement[T](s: Option[T])(implicit cv: T => ReactElement): ReactElement = {
-    s match {
+  @inline implicit def iterableToElement[A, B <: Iterable[A]](e: Iterable[A])(implicit cv: A => ReactElement): ReactElement = {
+    e.map(cv).toJSArray.asInstanceOf[ReactElement]
+  }
+
+  @inline implicit def optionToElement[E](o: Option[E])(implicit cv: E => ReactElement): ReactElement = {
+    o match {
       case Some(e) => cv(e)
       case None => null.asInstanceOf[ReactElement]
     }
   }
 
-  @inline implicit def seqElementToElement[T](s: Iterable[T])(implicit cv: T => ReactElement): ReactElement = {
-    s.map(cv).toJSArray.asInstanceOf[ReactElement]
+  @inline implicit def jsUndefOrToElement[E](j: js.UndefOr[E])(implicit cv: E => ReactElement): ReactElement = {
+    val x = if (j.isDefined) cv(j.get) else null.asInstanceOf[ReactElement]
+    println(x)
+    x
+  }
+
+  @inline implicit def anyToElementContainer[E, F[_]](e: F[E])(implicit f: ReactElementContainer[F], cv: E => ReactElement): F[ReactElement] = {
+    f.map(e)(cv)
   }
 }
 

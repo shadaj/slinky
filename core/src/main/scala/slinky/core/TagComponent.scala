@@ -96,4 +96,8 @@ object WithAttrs {
 
     ret
   }
+
+  @inline implicit def buildContainer[F[_]](withAttrs: F[WithAttrs[_]])(implicit f: ReactElementContainer[F]): F[ReactElement] = {
+    f.map(withAttrs)(build)
+  }
 }

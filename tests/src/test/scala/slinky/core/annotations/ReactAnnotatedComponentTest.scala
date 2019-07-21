@@ -1,13 +1,15 @@
 package slinky.core.annotations
 
 import slinky.core.{Component, StatelessComponent}
-import slinky.core.facade.{ErrorBoundaryInfo, ReactElement}
+import slinky.core.facade.{ErrorBoundaryInfo, Fragment, ReactElement}
 import slinky.web.ReactDOM
+import slinky.web.html._
 import org.scalajs.dom
 import org.scalatest.{Assertion, AsyncFunSuite}
 
-import scala.concurrent.Promise
+import scala.concurrent.{Future, Promise}
 import scala.scalajs.js
+import scala.util.Try
 
 @react class TestComponent extends Component {
   type Props = Int => Unit
@@ -213,6 +215,62 @@ object DerivedStateComponent {
   }
 }
 
+@react class SubComponentWithReactElementContainers extends StatelessComponent {
+  case class Props(seq: Seq[ReactElement],
+                   list: List[ReactElement],
+                   option: Option[ReactElement],
+                   jsUndefOr: js.UndefOr[String],
+                   attempt: Try[ReactElement],
+                   function: () => ReactElement,
+                   fragment: ReactElement,
+                   future: Future[ReactElement],
+                   varargs: ReactElement*)
+
+  override def render(): ReactElement = {
+    div(props.seq, props.list, props.option, props.jsUndefOr, props.fragment, props.varargs)
+  }
+}
+
+@react class ComponentWithVariableReactElementContainers extends StatelessComponent {
+  import scala.concurrent.ExecutionContext.Implicits.global
+
+  type Props = Unit
+
+  override def render(): ReactElement = {
+    val s = Seq("a", "b")
+    val l = List("c", "d")
+    val o = Some("e")
+    val j = "f"
+    val t = Try(h2("g"))
+    val fn = () => "h"
+    val fr = Fragment(List(h1("i"), i("j")))
+    val f = Future { "k" }
+    val v = "l"
+
+    SubComponentWithReactElementContainers(s, l, o, j, t, fn, fr, f, v)
+  }
+}
+
+@react class ComponentWithInlineReactElementContainers extends StatelessComponent {
+  import scala.concurrent.ExecutionContext.Implicits.global
+
+  type Props = Unit
+
+  override def render(): ReactElement = {
+    SubComponentWithReactElementContainers(
+      Seq("a", "b"),
+      List("c", "d"),
+      Some("e"),
+      "f",
+      Try(h2("g")),
+      () => "h",
+      Fragment(List(h1("i"), i("j"))),
+      Future { "k" },
+      "l"
+    )
+  }
+}
+
 class ReactAnnotatedComponentTest extends AsyncFunSuite {
   test("setState given function is applied") {
     val promise: Promise[Assertion] = Promise()
@@ -348,5 +406,23 @@ class ReactAnnotatedComponentTest extends AsyncFunSuite {
     )
 
     assert(targetNode.innerHTML == "abc")
+  }
+
+  test("Can use variable ReactElementContainer types within components") {
+    val targetNode = dom.document.createElement("div")
+    ReactDOM.render(
+      ComponentWithVariableReactElementContainers(),
+      targetNode
+    )
+    assert(targetNode.innerHTML == "<div>abcdef<h1>i</h1><i>j</i>l</div>")
+  }
+
+  test("Can use inline ReactElementContainer types within components") {
+    val targetNode = dom.document.createElement("div")
+    ReactDOM.render(
+      ComponentWithInlineReactElementContainers(),
+      targetNode
+    )
+    assert(targetNode.innerHTML == "<div>abcdef<h1>i</h1><i>j</i>l</div>")
   }
 }
