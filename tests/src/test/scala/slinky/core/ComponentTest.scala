@@ -269,6 +269,22 @@ object DefaultStateParamsComponent extends ComponentWrapper {
   }
 }
 
+object TypeParamsComponent extends ComponentWrapper {
+  case class TypedProps[T](abc: T)
+  case class TypedState[T](abc: T)
+
+  type Props = TypedProps[_]
+  type State = TypedState[_]
+
+  class Def(jsProps: js.Object) extends Definition(jsProps) {
+    override def initialState = TypedState(props.abc)
+
+    override def render(): ReactElement = {
+      state.abc.toString
+    }
+  }
+}
+
 class ComponentTest extends AsyncFunSuite {
   test("setState given function is applied") {
     val promise: Promise[Assertion] = Promise()
@@ -443,5 +459,15 @@ class ComponentTest extends AsyncFunSuite {
     )
 
     promise.future
+  }
+
+  test("Can render a component with type parameters") {
+    val container = dom.document.createElement("div")
+    ReactDOM.render(
+      TypeParamsComponent(TypeParamsComponent.TypedProps(123)),
+      container
+    )
+
+    assert(container.innerHTML == "123")
   }
 }

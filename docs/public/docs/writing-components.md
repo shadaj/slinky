@@ -75,6 +75,31 @@ When defining the `Props` and `State` types, Slinky accepts **any type definitio
 
 where `props` is the `String` value passed in from a parent.
 
+### Typed Props
+If you need props with typed parameters, Slinky requires the typed props to be declared as a separate case class with the props specified as a type alias. Currently, this approach does not work with the `@react` style, so you will need to declare a `ComponentWrapper` instead. For example, a simple component with type parameters for both `Props` and `State` would look like:
+
+```scala
+object MyComponent extends ComponentWrapper {
+  case class TypedProps[T](value: T)
+  case class TypedState[T](value: T)
+
+  type Props = TypedProps[_]
+  type State = TypedState[_]
+
+  class Def(jsProps: js.Object) extends Definition(jsProps) {
+    override def initialState = TypedState(props.value)
+
+    override def render(): ReactElement = {
+      state.value.toString
+    }
+  }
+}
+
+// ...
+
+MyComponent(MyComponent.TypedProps(123))
+```
+
 ## Component Styles
 With Slinky 0.2.0, the `@react` macro annotation was introduced to reduce the boilerplate involved with creating components. Most examples in the documentation will use the macro annotation, but it is always possible to use the no-annotation API with just a few changes.
 
