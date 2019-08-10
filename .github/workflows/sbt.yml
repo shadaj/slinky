@@ -12,5 +12,7 @@ jobs:
       uses: actions/setup-java@v1
       with:
         version: 1.8
+    - name: Install NPM Dependencies
+      run: npm install
     - name: Test with SBT
       run: sbt tests/test
