@@ -20,8 +20,10 @@ jobs:
         version: 1.8
     - name: Install NPM Dependencies
       run: npm install; cd native; npm install; cd ..
-    - name: Test with SBT
+    - name: Test with SBT (fastopt)
       run: sbt ";scalajsReactInterop/test; + tests/test; + native/test"
+    - name: Test with SBT (fullopt)
+      run: sbt ";set scalaJSStage in Global := FullOptStage; scalajsReactInterop/test; + tests/test; + native/test"
   build-docs:
     runs-on: ubuntu-latest
 
