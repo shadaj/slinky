@@ -1,6 +1,12 @@
 name: Slinky CI
 
-on: [push]
+on:
+  push:
+    branches:
+      - master
+    tags:
+      - "*"
+  pull_request:
 
 jobs:
   test:
@@ -31,6 +37,8 @@ jobs:
       run: sbt docs/fullOptJS::webpack
     - name: Report Bundle Size
       run: npx bundlesize
+      env:
+        BUNDLESIZE_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   build-intellij-plugin:
     runs-on: ubuntu-latest
 
