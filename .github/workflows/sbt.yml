@@ -13,6 +13,30 @@ jobs:
       with:
         version: 1.8
     - name: Install NPM Dependencies
-      run: npm install
+      run: npm install; cd native; npm install; cd ..
     - name: Test with SBT
-      run: sbt tests/test
+      run: sbt ";scalajsReactInterop/test; + tests/test; + native/test"
+  build-docs:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@master
+    - name: Set up JDK 1.8
+      uses: actions/setup-java@v1
+      with:
+        version: 1.8
+    - name: Install NPM Dependencies
+      run: npm install
+    - name: Build Docs Site
+      run: sbt docs/fullOptJS::webpack
+  build-intellij-plugin:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@master
+    - name: Set up JDK 1.8
+      uses: actions/setup-java@v1
+      with:
+        version: 1.8
+    - name: Build IntelliJ Plugin
+      run: sbt coreIntellijSupport/updateIdea coreIntellijSupport/compile
