@@ -30,7 +30,7 @@ jobs:
     - name: Build Docs Site
       run: sbt docs/fullOptJS::webpack
     - name: Report Bundle Size
-      run: npm install -g bundlesize; bundlesize
+      run: npx bundlesize
   build-intellij-plugin:
     runs-on: ubuntu-latest
 
