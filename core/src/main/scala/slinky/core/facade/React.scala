@@ -169,6 +169,7 @@ private[slinky] object HooksRaw extends js.Object {
   def useReducer[T, I, A](reducer: js.Function2[T, A, T], initialState: I, init: js.Function1[I, T]): js.Tuple2[T, js.Function1[A, Unit]] = js.native
 
   def useCallback(callback: js.Function0[Unit], watchedObjects: js.Array[js.Any]): js.Function0[Unit] = js.native
+  def useCallback[T](callback: js.Function1[T, Unit], watchedObjects: js.Array[js.Any]): js.Function1[T, Unit] = js.native
 
   def useMemo[T](callback: js.Function0[T], watchedObjects: js.Array[js.Any]): T = js.native
 
@@ -244,6 +245,10 @@ object Hooks {
   }
 
   @inline def useCallback(callback: () => Unit, watchedObjects: Iterable[Any]): () => Unit = {
+    HooksRaw.useCallback(callback, watchedObjects.toJSArray.asInstanceOf[js.Array[js.Any]])
+  }
+
+  @inline def useCallback[T](callback: T => Unit, watchedObjects: Iterable[Any]): T => Unit = {
     HooksRaw.useCallback(callback, watchedObjects.toJSArray.asInstanceOf[js.Array[js.Any]])
   }
 
