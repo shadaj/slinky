@@ -4,9 +4,8 @@ on:
   push:
     branches:
       - master
-    tags:
-      - "*"
   pull_request:
+  release:
 
 jobs:
   test:
@@ -52,3 +51,18 @@ jobs:
         version: 1.8
     - name: Build IntelliJ Plugin
       run: sbt coreIntellijSupport/updateIdea coreIntellijSupport/compile
+  publish:
+    needs: [test, build-docs, build-intellij-plugin]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Set up JDK 1.8
+      uses: actions/setup-java@v1
+      with:
+        version: 1.8
+    - name: Publish with SBT
+      run: bash ./publish.sh
+      if: github.ref == 'master' || github.eventName == 'release'
+      env:
+        encrypted_key: ${{ secrets.key }}
+        encrypted_iv: ${{ secrets.iv }}
