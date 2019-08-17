@@ -37,9 +37,9 @@ jobs:
     - name: Build Docs Site
       run: sbt docs/fullOptJS::webpack
     - name: Report Bundle Size
-      run: npx bundlesize
+      run: export BUNDLESIZE_GITHUB_TOKEN=`echo $BUNDLESIZE_TOKEN | base64 --decode`; npx bundlesize
       env:
-        BUNDLESIZE_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        BUNDLESIZE_TOKEN: N2JjZDIxYjA1OGU1YzkwOWVkZWYzOWQ5MWYyZjRhYTgyMzE3MzY3Mgo=
   build-intellij-plugin:
     runs-on: ubuntu-latest
 
