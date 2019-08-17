@@ -1,6 +1,8 @@
 # Changelog
 
 ## vNEXT
+## Bug Fixes
++ Support `useCallback` with a function that takes arguments [PR #290](https://github.com/shadaj/slinky/pull/290)
 
 ## [v0.6.2](https://slinky.dev)
 ### Highlights :tada:
