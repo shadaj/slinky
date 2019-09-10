@@ -4,6 +4,7 @@
 ### Bug Fixes
 + Support `useCallback` with a function that takes arguments [PR #290](https://github.com/shadaj/slinky/pull/290)
 + Fix issues around using ReactElements within first-order types e.g. Map, List [PR #285](https://github.com/shadaj/slinky/pull/285)
++ Support [React Native's Keyboard API](https://facebook.github.io/react-native/docs/keyboard) via a scalajs facade [PR #293](https://github.com/shadaj/slinky/pull/293)
 
 ## [v0.6.2](https://slinky.dev)
 ### Highlights :tada:
