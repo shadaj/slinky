@@ -10,3 +10,4 @@ idea/
 .metals/
 .vscode/
 project/.bloop/
+publishing-setup/
