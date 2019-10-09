@@ -1,10 +1,13 @@
 # Changelog
 
 ## vNEXT
+### Highlights :tada:
++ Improve experience using `ReactElement`s within first-order types such as Map and List [PR #285](https://github.com/shadaj/slinky/pull/285)
++ Support [React Native's Keyboard API](https://facebook.github.io/react-native/docs/keyboard) [PR #293](https://github.com/shadaj/slinky/pull/293)
+
 ### Bug Fixes
++ Fix crashes when calling `setState` on a component with `Props` set to some subtype of `Function1` [PR #295](https://github.com/shadaj/slinky/pull/295)
 + Support `useCallback` with a function that takes arguments [PR #290](https://github.com/shadaj/slinky/pull/290)
-+ Fix issues around using ReactElements within first-order types e.g. Map, List [PR #285](https://github.com/shadaj/slinky/pull/285)
-+ Support [React Native's Keyboard API](https://facebook.github.io/react-native/docs/keyboard) via a scalajs facade [PR #293](https://github.com/shadaj/slinky/pull/293)
 
 ## [v0.6.2](https://slinky.dev)
 ### Highlights :tada:
