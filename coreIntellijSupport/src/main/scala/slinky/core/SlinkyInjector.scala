@@ -19,8 +19,8 @@ class SlinkyInjector extends SyntheticMembersInjector {
 
   def createComponentBody(cls: ScTypeDefinition): Seq[(String, InjectType)] = {
     val types = TypeDefinitionMembers.getTypes(cls)
-    val (propsDefinition, applyMethods) = types.forName("Props")._1.iterator.toSeq.headOption.flatMap { elm =>
-      elm._1 match {
+    val (propsDefinition, applyMethods) = types.forName("Props").iterator.toSeq.headOption.flatMap { elm =>
+      elm.namedElement match {
         case alias: ScTypeAliasDefinition =>
           Some(((alias.getText, Member), Seq.empty[(String, InjectType)]))
         case propsCls: ScClass if propsCls.isCase =>
@@ -51,8 +51,8 @@ class SlinkyInjector extends SyntheticMembersInjector {
       }
     }.getOrElse(("", Type), Seq.empty)
 
-    val stateDefinition: Option[(String, InjectType)] = types.forName("State")._1.iterator.toSeq.headOption.flatMap { elm =>
-      elm._1 match {
+    val stateDefinition: Option[(String, InjectType)] = types.forName("State").iterator.toSeq.headOption.flatMap { elm =>
+      elm.namedElement match {
         case alias: ScTypeAliasDefinition =>
           Some((alias.getText, Member))
         case propsCls: ScClass if propsCls.isCase =>
@@ -61,8 +61,8 @@ class SlinkyInjector extends SyntheticMembersInjector {
       }
     }
 
-    val snapshotDefinition: Option[(String, InjectType)] = types.forName("Snapshot")._1.iterator.toSeq.headOption.flatMap { elm =>
-      elm._1 match {
+    val snapshotDefinition: Option[(String, InjectType)] = types.forName("Snapshot").iterator.toSeq.headOption.flatMap { elm =>
+      elm.namedElement match {
         case alias: ScTypeAliasDefinition =>
           Some((alias.getText, Member))
         case propsCls: ScClass if propsCls.isCase =>
@@ -190,7 +190,7 @@ class SlinkyInjector extends SyntheticMembersInjector {
 
   def isFunctionalComponent(tpe: ScTypeDefinition): Boolean = {
     isSlinky(tpe) && tpe.extendsBlock.members.exists {
-      case td: ScValueDeclaration if td.getName == "component" => true
+      case td: ScValueDeclaration if td.declaredNames == Seq("component") => true
       case pd: ScPatternDefinition =>
         pd.bindings.exists(_.getName == "component")
       case _ => false
