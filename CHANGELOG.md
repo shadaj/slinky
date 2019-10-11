@@ -8,6 +8,7 @@
 ### Bug Fixes
 + Fix crashes when calling `setState` on a component with `Props` set to some subtype of `Function1` [PR #295](https://github.com/shadaj/slinky/pull/295)
 + Support `useCallback` with a function that takes arguments [PR #290](https://github.com/shadaj/slinky/pull/290)
++ Fix false warnings on `@react` classes if `-Ywarn-value-discard` scalac option was used [PR #296](https://github.com/shadaj/slinky/pull/296)
 
 ## [v0.6.2](https://slinky.dev)
 ### Highlights :tada:

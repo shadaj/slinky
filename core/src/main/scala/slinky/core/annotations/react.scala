@@ -100,6 +100,7 @@ object ReactMacrosImpl {
                 null.asInstanceOf[Props]
                 null.asInstanceOf[State]
                 null.asInstanceOf[Snapshot]
+                ()
               })
               ..${stats.filterNot(s => s == propsDefinition || s == stateDefinition.orNull || s == snapshotDefinition.orNull)}
             }"""
