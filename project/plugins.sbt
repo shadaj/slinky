@@ -8,4 +8,4 @@ addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % "2.3")
 
 addSbtPlugin("com.dwijnand" % "sbt-dynver" % "3.1.0")
 
-addSbtPlugin("org.jetbrains" % "sbt-idea-plugin" % "2.2.5-noauto")
+addSbtPlugin("org.jetbrains" % "sbt-idea-plugin" % "3.3.0")

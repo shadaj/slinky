@@ -6,7 +6,7 @@
 
     <description>Type inferencing for the Slinky @react annotation</description>
 
-    <idea-version since-build="143.0"/>
+    <idea-version since-build="192.0"/>
 
     <depends>org.intellij.scala</depends>
 

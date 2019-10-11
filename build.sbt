@@ -167,17 +167,14 @@ lazy val docsMacros = project.settings(macroAnnotationSettings).dependsOn(web, h
 
 lazy val docs = project.settings(macroAnnotationSettings).dependsOn(web, hot, docsMacros)
 
-dumpDependencyStructure in ThisBuild := null
-ideaExternalPlugins in ThisBuild := Seq.empty
-updateIdea in ThisBuild := {}
+updateIntellij in ThisBuild := {}
 
 lazy val coreIntellijSupport = project.enablePlugins(SbtIdeaPlugin).settings(
   org.jetbrains.sbtidea.Keys.buildSettings
 ).settings(
-  ideaBuild := "191.6183.87",
-  ideaExternalPlugins += IdeaPlugin.Id("Scala", "org.intellij.scala", None)
-)
-
-lazy val coreIntellijSupportRunner = createRunnerProject(coreIntellijSupport, "coreIntellijSupportRunner").settings(
-  org.jetbrains.sbtidea.Keys.projectSettings
+  intellijBuild := "192.6817.14",
+  intellijInternalPlugins += "java",
+  intellijExternalPlugins += "org.intellij.scala".toPlugin,
+  packageMethod := PackagingMethod.Standalone(),
+  intellijMainJars ++= maybeToolsJar
 )
