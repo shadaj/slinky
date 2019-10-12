@@ -12,8 +12,7 @@ lazy val slinky = project.in(file(".")).aggregate(
   native,
   vr,
   hot,
-  scalajsReactInterop,
-  coreIntellijSupport
+  scalajsReactInterop
 ).settings(
   publish := {},
   publishLocal := {}

@@ -6,4 +6,4 @@ openssl aes-256-cbc -K $encrypted_key -iv $encrypted_iv -in secrets.tar.enc -out
 
 tar xvf secrets.tar
 
-sbt publishSignedAll sonatypeRelease
+sbt publishSignedAll coreIntellijSupport/updateIntellij coreIntellijSupport/publishSigned sonatypeBundleRelease
