@@ -4,11 +4,12 @@ Beginning with version 0.4.0, Slinky has official support for [React Native](htt
 ## React Native
 The `slinky-native` module contains component interfaces for React Native as well as Scala.js bindings to React Native APIs.
 
-The easiest way to create a new native project is to use [Create React Native Scala App](https://github.com/shadaj/create-react-native-scala-app.g8). This template creates a starter project with a default React Native build configuration that enables hot reloading and bundling into a production app.
+The easiest way to create a new native project is to use [Expo Scala Template](https://github.com/shadaj/expo-template-scala). This template creates a starter project with a minimal React Native build configuration that enables hot reloading and bundling into a production app.
 
-You can use this template from the command line with SBT:
-```scala
-sbt new shadaj/create-react-native-scala-app.g8
+You can use this template from the command line with NPM:
+```bash
+$ npm install -g expo-cli
+$ expo init --template expo-template-scala
 ```
 
 ## React 360
