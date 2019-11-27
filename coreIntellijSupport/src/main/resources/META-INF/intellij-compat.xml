@@ -2,7 +2,7 @@
     <name>Slinky IntelliJ support</name>
     <description>This provides type inference for Slinky macros</description>
     <vendor>Slinky</vendor>
-    <ideaVersion since-build="2018.2.0" until-build="2020.0.0">
+    <ideaVersion since-build="2019.2.0" until-build="2020.0.0">
         <extension interface="org.jetbrains.plugins.scala.lang.psi.impl.toplevel.typedef.SyntheticMembersInjector"
                    implementation="slinky.core.SlinkyInjector">
             <name>Slinky IntelliJ Support</name>

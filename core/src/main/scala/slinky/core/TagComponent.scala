@@ -282,4 +282,8 @@ object TagMacros {
         q"_root_.slinky.core.WithAttrs.runtimeBuild($o)"
     }
   }
+
+  @inline implicit def buildContainer[F[_]](withAttrs: F[WithAttrs[_]])(implicit f: ReactElementContainer[F]): F[ReactElement] = {
+    f.map(withAttrs)(build)
+  }
 }

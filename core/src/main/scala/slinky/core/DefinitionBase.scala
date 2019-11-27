@@ -57,7 +57,7 @@ abstract class DefinitionBase[Props, State, Snapshot](jsProps: js.Object) extend
     readStateValue(this.asInstanceOf[PrivateComponentClass].stateR)
   }
 
-  @JSName("setState_scala")
+  @JSName("setState_scala_1")
   @inline final def setState(s: State): Unit = {
     val stateObject = if (BaseComponentWrapper.scalaComponentWritingEnabled) {
       writeWithWrappingAdjustment(stateWriter)(s)
@@ -66,7 +66,7 @@ abstract class DefinitionBase[Props, State, Snapshot](jsProps: js.Object) extend
     this.asInstanceOf[PrivateComponentClass].setStateR(stateObject)
   }
 
-  @JSName("setState_scala")
+  @JSName("setState_scala_2")
   @inline final def setState(fn: State => State): Unit = {
     this.asInstanceOf[PrivateComponentClass].setStateR((ps: js.Object) => {
       val s = fn(readStateValue(ps))
@@ -76,7 +76,7 @@ abstract class DefinitionBase[Props, State, Snapshot](jsProps: js.Object) extend
     })
   }
 
-  @JSName("setState_scala")
+  @JSName("setState_scala_3")
   @inline final def setState(fn: (State, Props) => State): Unit = {
     this.asInstanceOf[PrivateComponentClass].setStateR((ps: js.Object, p: js.Object) => {
       val s = fn(readStateValue(ps), readPropsValue(p))
@@ -86,7 +86,7 @@ abstract class DefinitionBase[Props, State, Snapshot](jsProps: js.Object) extend
     })
   }
 
-  @JSName("setState_scala")
+  @JSName("setState_scala_4")
   @inline final def setState(s: State, callback: () => Unit): Unit = {
     val stateObject = if (BaseComponentWrapper.scalaComponentWritingEnabled) {
       writeWithWrappingAdjustment(stateWriter)(s)
@@ -94,7 +94,7 @@ abstract class DefinitionBase[Props, State, Snapshot](jsProps: js.Object) extend
     this.asInstanceOf[PrivateComponentClass].setStateR(stateObject, callback)
   }
 
-  @JSName("setState_scala")
+  @JSName("setState_scala_5")
   @inline final def setState(fn: State => State, callback: () => Unit): Unit = {
     this.asInstanceOf[PrivateComponentClass].setStateR((ps: js.Object) => {
       val s = fn(readStateValue(ps))
@@ -104,7 +104,7 @@ abstract class DefinitionBase[Props, State, Snapshot](jsProps: js.Object) extend
     }, callback)
   }
 
-  @JSName("setState_scala")
+  @JSName("setState_scala_6")
   @inline final def setState(fn: (State, Props) => State, callback: () => Unit): Unit = {
     this.asInstanceOf[PrivateComponentClass].setStateR((ps: js.Object, p: js.Object) => {
       val s = fn(readStateValue(ps), readPropsValue(p))
@@ -137,7 +137,6 @@ abstract class DefinitionBase[Props, State, Snapshot](jsProps: js.Object) extend
 
   def componentDidCatch(error: js.Error, info: ErrorBoundaryInfo): Unit = {}
 
-  @JSName("render")
   def render(): ReactElement
 
   if (defaultBase != null) {

@@ -4,7 +4,7 @@ pomIncludeRepository in ThisBuild := { _ => false }
 
 publishArtifact in Test in ThisBuild := false
 
-publishTo in ThisBuild := Some(Opts.resolver.sonatypeStaging)
+publishTo in ThisBuild := sonatypePublishToBundle.value
 
 pomExtra in ThisBuild :=
   <url>https://github.com/shadaj/slinky</url>

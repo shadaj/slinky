@@ -35,17 +35,23 @@ trait ReactElementConversions {
     b.asInstanceOf[ReactElement]
   }
 
-  final implicit def optionToElement[T](s: Option[T])(implicit cv: T => ReactElement): ReactElement = {
-    s match {
+  final implicit def iterableToElement[A, B <: Iterable[A]](e: Iterable[A])(implicit cv: A => ReactElement): ReactElement = {
+    e.map(cv).toJSArray.asInstanceOf[ReactElement]
+  }
+
+  final implicit def optionToElement[E](o: Option[E])(implicit cv: E => ReactElement): ReactElement = {
+    o match {
       case Some(e) => cv(e)
       case None => null.asInstanceOf[ReactElement]
     }
   }
 
-  final implicit def seqElementToElement[T](s: Iterable[T])(implicit cv: T => ReactElement): ReactElement = {
-    val elem = js.Array[ReactElement]()
-    s.foreach(v => elem.push(cv(v)))
-    elem.asInstanceOf[ReactElement]
+  final implicit def jsUndefOrToElement[E](j: js.UndefOr[E])(implicit cv: E => ReactElement): ReactElement = {
+    if (j.isDefined) cv(j.get) else null.asInstanceOf[ReactElement]
+  }
+
+  final implicit def anyToElementContainer[E, F[_]](e: F[E])(implicit f: ReactElementContainer[F], cv: E => ReactElement): F[ReactElement] = {
+    f.map(e)(cv)
   }
 }
 
@@ -172,6 +178,7 @@ private[slinky] object HooksRaw extends js.Object {
   def useReducer[T, I, A](reducer: js.Function2[T, A, T], initialState: I, init: js.Function1[I, T]): js.Tuple2[T, js.Function1[A, Unit]] = js.native
 
   def useCallback(callback: js.Function0[Unit], watchedObjects: js.Array[js.Any]): js.Function0[Unit] = js.native
+  def useCallback[T](callback: js.Function1[T, Unit], watchedObjects: js.Array[js.Any]): js.Function1[T, Unit] = js.native
 
   def useMemo[T](callback: js.Function0[T], watchedObjects: js.Array[js.Any]): T = js.native
 
@@ -247,6 +254,10 @@ object Hooks {
   }
 
   @inline def useCallback(callback: () => Unit, watchedObjects: Iterable[Any]): () => Unit = {
+    HooksRaw.useCallback(callback, watchedObjects.toJSArray.asInstanceOf[js.Array[js.Any]])
+  }
+
+  @inline def useCallback[T](callback: T => Unit, watchedObjects: Iterable[Any]): T => Unit = {
     HooksRaw.useCallback(callback, watchedObjects.toJSArray.asInstanceOf[js.Array[js.Any]])
   }
 

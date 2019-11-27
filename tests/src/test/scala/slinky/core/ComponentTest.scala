@@ -55,22 +55,22 @@ object TestComponentExtraApply extends ComponentWrapper {
   }
 }
 
-object TestComponentForSetStateCallback extends ComponentWrapper {
-  type Props = Int => Unit
-  type State = Int
+object TestComponentForSeqState extends ComponentWrapper {
+  type Props = () => Unit
+  type State = Seq[String]
 
   class Def(jsProps: js.Object) extends Definition(jsProps) {
-    override def initialState: Int = 0
+    override def initialState = Seq.empty
 
     override def componentDidMount(): Unit = {
-      setState((s, p) => {
-        s + 1
-      }, () => {
-        props.apply(state)
-      })
+      setState(state :+ "hello")
     }
 
-    override def render(): ReactElement = {
+    override def render() = {
+      if (state.nonEmpty) {
+        props.apply()
+      }
+      
       null
     }
   }
@@ -269,6 +269,22 @@ object DefaultStateParamsComponent extends ComponentWrapper {
   }
 }
 
+object TypeParamsComponent extends ComponentWrapper {
+  case class TypedProps[T](abc: T)
+  case class TypedState[T](abc: T)
+
+  type Props = TypedProps[_]
+  type State = TypedState[_]
+
+  class Def(jsProps: js.Object) extends Definition(jsProps) {
+    override def initialState = TypedState(props.abc)
+
+    override def render(): ReactElement = {
+      state.abc.toString
+    }
+  }
+}
+
 class ComponentTest extends AsyncFunSuite {
   test("setState given function is applied") {
     val promise: Promise[Assertion] = Promise()
@@ -297,6 +313,17 @@ class ComponentTest extends AsyncFunSuite {
 
     ReactDOM.render(
       TestComponentExtraApply(i => promise.success(assert(i == 1))),
+      dom.document.createElement("div")
+    )
+
+    promise.future
+  }
+
+  test("setState with Seq state runs correct overloaded definition") {
+    val promise: Promise[Assertion] = Promise()
+
+    ReactDOM.render(
+      TestComponentForSeqState(() => promise.success(assert(true))),
       dom.document.createElement("div")
     )
 
@@ -443,5 +470,15 @@ class ComponentTest extends AsyncFunSuite {
     )
 
     promise.future
+  }
+
+  test("Can render a component with type parameters") {
+    val container = dom.document.createElement("div")
+    ReactDOM.render(
+      TypeParamsComponent(TypeParamsComponent.TypedProps(123)),
+      container
+    )
+
+    assert(container.innerHTML == "123")
   }
 }

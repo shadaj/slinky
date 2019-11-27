@@ -53,6 +53,10 @@ object KeyAndRefAddingStage {
 
     ret
   }
+
+  @inline implicit def buildContainer[D, F[_]](stage: F[KeyAndRefAddingStage[D]])(implicit f: ReactElementContainer[F]): F[ReactElement] = {
+    f.map(stage)(build)
+  }
 }
 
 abstract class BaseComponentWrapper(sr: StateReaderProvider, sw: StateWriterProvider) {

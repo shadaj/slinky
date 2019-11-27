@@ -264,6 +264,29 @@ class HooksComponentTest extends AsyncFunSuite {
     assert(called)
   }
 
+  test("useCallback with arguments produces callable function") {
+    val container = document.createElement("div")
+
+    var called = false
+    
+    val component = FunctionalComponent[Unit] { props =>
+      val callback = useCallback((value: Boolean) => {
+        called = value
+      }, Seq.empty)
+
+      callback(true)
+
+      ""
+    }
+
+    ReactDOM.render(
+      component(),
+      container
+    )
+
+    assert(called)
+  }
+
   test("useMemo only recalculates when watched objects change") {
     val container = document.createElement("div")
 

@@ -107,7 +107,7 @@ abstract class GenericDeriveImpl(val c: whitebox.Context) { self =>
           c.abort(c.enclosingPosition, "Cannot derive a typeclass for a type parameter")
         } else if (symbol.isModuleClass && c.typecheck(c.parse(symbol.asClass.module.fullName), silent = true).nonEmpty) {
           createModuleTypeclass(tTag.tpe, c.parse(symbol.asClass.module.fullName))
-        } else if (symbol.isClass && symbol.asClass.isCaseClass) {
+        } else if (symbol.isClass && symbol.asClass.isCaseClass && symbol.asType.typeParams.size == tTag.tpe.typeArgs.size) {
           val constructor = symbol.asClass.primaryConstructor
           val companion = symbol.asClass.companion
           if (companion != NoSymbol) {

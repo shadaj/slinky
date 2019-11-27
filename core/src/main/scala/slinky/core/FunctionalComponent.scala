@@ -33,6 +33,10 @@ object KeyAddingStage {
 
     ret
   }
+
+  @inline implicit def buildContainer[F[_]](stage: F[KeyAddingStage])(implicit f: ReactElementContainer[F]): F[ReactElement] = {
+    f.map(stage)(build)
+  }
 }
 
 final class FunctionalComponent[P] private[core](private[core] val component: js.Function) extends AnyVal {
