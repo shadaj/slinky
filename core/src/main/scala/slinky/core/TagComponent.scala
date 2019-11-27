@@ -283,7 +283,7 @@ object TagMacros {
     }
   }
 
-  @inline implicit def buildContainer[F[_]](withAttrs: F[WithAttrs[_]])(implicit f: ReactElementContainer[F]): F[ReactElement] = {
-    f.map(withAttrs)(build)
+  @inline implicit def buildContainer[F[_]](withAttrs: F[WithAttrs])(implicit f: ReactElementContainer[F]): F[ReactElement] = {
+    f.map(withAttrs)(WithAttrs.runtimeBuild)
   }
 }
