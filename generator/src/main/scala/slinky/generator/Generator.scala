@@ -66,7 +66,6 @@ object Generator extends App {
       }
 
       val attrsGen = attrs.toList.flatMap { a =>
-        val compatibles = a.compatibleTags.map(ts => ts.map(n => extracted.tags.find(_.tagName == n).get)).getOrElse(extracted.tags)
         val noEvent = s"""@inline def :=(v: () => Unit) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)
                          |@inline def :=(v: Option[() => Unit]) = new OptionalAttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)""".stripMargin
         val base = (if (eventToSynthetic.contains(a.attributeType)) {
