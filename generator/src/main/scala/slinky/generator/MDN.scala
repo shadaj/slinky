@@ -144,7 +144,7 @@ object MDN extends TagsProvider {
         val children = dl.children.toList
         val attrsAndDocs = children.foldLeft(Seq.empty[(String, String)]) { (acc, cur) =>
           if (cur.tagName == "dt") {
-            acc :+ (cur >> text("code"), "")
+            acc :+ ((cur >> text("code"), ""))
           } else {
             acc.init :+ acc.last.copy(_2 = if (acc.last._2.isEmpty) cur.innerHtml else acc.last._2 + " " + cur.innerHtml)
           }

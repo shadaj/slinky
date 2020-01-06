@@ -40,7 +40,11 @@ object Generator extends App {
         a.copy(compatibleTags = a.compatibleTags.map(_ :+ "*")))
     )
 
-    val allSymbols = extracted.attributes.foldLeft(extracted.tags.map(t => Utils.identifierFor(t.tagName) -> (Some(t): Option[Tag], None: Option[Attribute])).toSet) { case (symbols, attr) =>
+    val allSymbols = extracted.attributes.foldLeft(
+      extracted.tags.map { t =>
+        Utils.identifierFor(t.tagName) -> ((Some(t): Option[Tag], None: Option[Attribute]))
+      }.toSet
+    ){ case (symbols, attr) =>
       symbols.find(_._1 == Utils.identifierFor(attr.attributeName)) match {
         case Some(o@(_, (tags, None))) =>
           symbols - o + ((Utils.identifierFor(attr.attributeName), (tags, Some(attr))))
