@@ -9,3 +9,5 @@ addSbtPlugin("org.xerial.sbt" % "sbt-sonatype" % "3.8")
 addSbtPlugin("com.dwijnand" % "sbt-dynver" % "3.1.0")
 
 addSbtPlugin("org.jetbrains" % "sbt-idea-plugin" % "3.3.0")
+
+addSbtPlugin("io.github.davidgregory084" % "sbt-tpolecat" % "0.1.10")

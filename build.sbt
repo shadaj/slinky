@@ -2,8 +2,6 @@ organization in ThisBuild := "me.shadaj"
 
 scalaVersion in ThisBuild := "2.12.8"
 
-scalacOptions in ThisBuild ++= Seq("-feature", "-deprecation")
-
 lazy val slinky = project.in(file(".")).aggregate(
   readWrite,
   core,
@@ -36,32 +34,6 @@ lazy val crossScalaSettings = Seq(
   }
 )
 
-def commonScalacOptions(scalaVersion: String) = {
-  Seq(
-    "-encoding",
-    "UTF-8",
-    "-feature",
-    "-language:existentials",
-    "-language:higherKinds",
-    "-language:implicitConversions",
-    "-language:experimental.macros",
-    "-unchecked",
-    "-Ywarn-numeric-widen",
-    "-Ywarn-value-discard"
-  ) ++ (if (priorTo2_13(scalaVersion)) {
-    Seq(
-      "-Xfuture",
-      "-Yno-adapted-args",
-      "-deprecation",
-      "-Xfatal-warnings" // fails Scaladoc compilation on 2.13
-    )
-  } else {
-    Seq(
-      "-Ymacro-annotations"
-    )
-  })
-}
-
 def priorTo2_13(scalaVersion: String): Boolean =
   CrossVersion.partialVersion(scalaVersion) match {
     case Some((2, minor)) if minor < 13 => true
@@ -82,7 +54,6 @@ lazy val librarySettings = Seq(
     val g = "https://raw.githubusercontent.com/shadaj/slinky"
     s"-P:scalajs:mapSourceURI:$a->$g/$githubVersion/${baseDirectory.value.getName}/"
   },
-  scalacOptions ++= commonScalacOptions(scalaVersion.value)
 )
 
 addCommandAlias(
