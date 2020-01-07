@@ -65,25 +65,40 @@ object Generator extends App {
            |}"""
       }
 
-      val attrsGen = attrs.toList.flatMap { a =>
+      val tagImports: List[String] = tagsGen.map(_ =>
+        List(
+          "import slinky.core.TagMod",
+          "import slinky.core.WithAttrs",
+        )
+      ).getOrElse(Nil)
+
+      val (attrsExtraImports: Set[String], attrsGen: List[String]) = attrs.toList.map { a =>
         val noEvent = s"""@inline def :=(v: () => Unit) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)
                          |@inline def :=(v: Option[() => Unit]) = new OptionalAttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)""".stripMargin
-        val base = (if (eventToSynthetic.contains(a.attributeType)) {
+        val base  = (if (eventToSynthetic.contains(a.attributeType)) {
           val eventTypeForTagType = eventToSynthetic(a.attributeType)
-          s"""@inline def :=[T <: TagElement](v: ${eventTypeForTagType("T#RefType")} => Unit)(implicit supported: AttrPair[attrType] => AttrPair[T]) =
+            s"""@inline def :=[T <: TagElement](v: ${eventTypeForTagType("T#RefType")} => Unit) =
               |  new AttrPair[T]("${a.attributeName}", v)
               |$noEvent""".stripMargin
         } else if (a.attributeType == "RefType") {
-          s"""@inline def :=[T <: TagElement](v: T#RefType => Unit)(implicit supported: AttrPair[attrType] => AttrPair[T]) =
+          s"""@inline def :=[T <: TagElement](v: T#RefType => Unit) =
              |  new AttrPair[T]("${a.attributeName}", v)
-             |@inline def :=[T <: TagElement, E <: T#RefType](v: slinky.core.RefAttr[E])(implicit supported: AttrPair[attrType] => AttrPair[T]) =
+             |@inline def :=[T <: TagElement, E <: T#RefType](v: slinky.core.RefAttr[E]) =
              |  new AttrPair[T]("${a.attributeName}", v)""".stripMargin
         } else {
           s"""@inline def :=(v: ${a.attributeType}) = new AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)
              |@inline def :=(v: Option[${a.attributeType}]) = new OptionalAttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)""".stripMargin
         }) + s"\ntype attrType = _${symbolWithoutEscape}_attr.type"
 
-        if (a.withDash) {
+        val imports = if (a.attributeType.startsWith("js.")) {
+          Set("import scala.scalajs.js")
+        } else if (a.attributeName != "ref") {
+          Set("import slinky.core.OptionalAttrPair._")
+        } else {
+          Set()
+        }
+
+        val segment = if (a.withDash) {
           Seq(
             base,
             s"""final class WithDash(@inline private val sub: String) extends AnyVal {
@@ -92,7 +107,12 @@ object Generator extends App {
                |@inline def -(sub: String) = new WithDash(sub)""".stripMargin
           )
         } else Seq(base)
+
+        (imports, segment)
+      }.foldLeft((Set[String](), List[String]())){
+        case ((accis, accas), (is, as)) => (accis ++ is, accas ++ as) // inefficient list append...
       }
+
 
       val attrToTagImplicits = attrs.toList.flatMap { a =>
         a.compatibleTags.getOrElse(extracted.tags.map(_.tagName)).flatMap { t =>
@@ -105,6 +125,15 @@ object Generator extends App {
         }
       }
 
+      val attrImports: List[String] = (attrsGen.headOption, attrToTagImplicits.headOption) match {
+        case (None, None) => Nil
+        case _ => List(
+          "import slinky.core.AttrPair",
+          "import slinky.core.OptionalAttrPair",
+        )
+      }
+
+
       val booleanImplicits = attrs.toList.flatMap { a =>
         a.compatibleTags.getOrElse(extracted.tags.map(_.tagName)).flatMap { t =>
           val fixedT = if (t == "*") "star" else t
@@ -114,20 +143,33 @@ object Generator extends App {
         }
       }
 
+      val booleanImports = booleanImplicits.headOption.map(_ =>
+        List(
+          "import slinky.core.AttrPair",
+        )
+      ).getOrElse(Nil)
+
       val symbolExtendsList = (if (tags.nonEmpty) Seq("Tag") else Seq.empty) ++ (if (attrs.isDefined) Seq("Attr") else Seq.empty)
 
       val symbolExtends = if (symbolExtendsList.isEmpty) "" else symbolExtendsList.mkString("extends ", " with ", "")
 
       val out = new PrintWriter(new File(outFolder.getAbsolutePath + "/" + symbol + ".scala"))
 
+      val symbolImports = symbolExtendsList.toList.map(t => s"import slinky.core.$t")
+
+      val imports = List(
+        Set("import slinky.core.TagElement"),
+        booleanImports.toSet,
+        attrImports.toSet,
+        tagImports.toSet,
+        symbolImports.toSet,
+        attrsExtraImports.toSet
+      ).reduce(_ ++ _)
+
       out.println(
         s"""package $pkg
            |
-           |import slinky.core.{AttrPair, OptionalAttrPair, TagElement, Tag, Attr, WithAttrs, TagMod}
-           |import slinky.core.OptionalAttrPair._
-           |import slinky.core.facade.{React, ReactElement}
-           |import scala.scalajs.js
-           |import scala.language.implicitConversions
+           |${imports.mkString("\n")}
            |
            |/**
            | * ${(tags.map(_.docLines) ++ attrs.map(_.docLines)).flatten.map(_.replace("*", "&#47;")).mkString("\n * ")}
