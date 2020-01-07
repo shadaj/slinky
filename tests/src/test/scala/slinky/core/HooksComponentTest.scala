@@ -19,7 +19,7 @@ class HooksComponentTest extends AsyncFunSuite {
   test("Can render a functional component with useState hook") {
     val container = document.createElement("div")
     val component = FunctionalComponent[Int] { props =>
-      val (state, setState) = useState("hello")
+      val (state, _) = useState("hello")
       state + props
     }
     
@@ -180,7 +180,7 @@ class HooksComponentTest extends AsyncFunSuite {
   test("useContext hook gets context value") {
     val container = document.createElement("div")
     val context = React.createContext("")
-    val component = FunctionalComponent[Unit] { props =>
+    val component = FunctionalComponent[Unit] { _ =>
       val ctx = useContext(context)
       ctx
     }
@@ -198,7 +198,7 @@ class HooksComponentTest extends AsyncFunSuite {
     var doDispatch: Int => Unit = null
     val promise: Promise[Assertion] = Promise()
 
-    val component = FunctionalComponent[Unit] { props =>
+    val component = FunctionalComponent[Unit] { _ =>
       val (state, dispatch) = useReducer((s: String, a: Int) => {
         a.toString
       }, "")

@@ -21,7 +21,7 @@ object TestComponent extends ComponentWrapper {
     }
 
     override def componentDidMount(): Unit = {
-      setState((s, p) => {
+      setState((s, _) => {
         s + 1
       })
     }
