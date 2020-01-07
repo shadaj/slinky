@@ -68,7 +68,7 @@ abstract class BaseComponentWrapper(sr: StateReaderProvider, sw: StateWriterProv
   type Definition <: js.Object
 
   val getDerivedStateFromProps: (Props, State) => State = null
-  
+
   val getDerivedStateFromError: js.Error => State = null
 
   private[core] val hot_stateReader = sr.asInstanceOf[Reader[State]]
@@ -160,7 +160,7 @@ abstract class BaseComponentWrapper(sr: StateReaderProvider, sw: StateWriterProv
 }
 
 object BaseComponentWrapper {
-  implicit def proplessKeyAndRef[C <: BaseComponentWrapper { type Props = Unit }](c: C)(implicit stateWriter: Writer[c.State], stateReader: Reader[c.State], constructorTag: ConstructorTag[c.Def]): KeyAndRefAddingStage[c.Def] = {
+  implicit def proplessKeyAndRef[C <: BaseComponentWrapper { type Props = Unit }](c: C)(implicit constructorTag: ConstructorTag[c.Def]): KeyAndRefAddingStage[c.Def] = {
     c.apply(())
   }
 
