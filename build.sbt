@@ -137,7 +137,7 @@ lazy val hot = project.settings(macroAnnotationSettings, librarySettings, crossS
 
 lazy val scalajsReactInterop = project.settings(macroAnnotationSettings, librarySettings).dependsOn(core, web % Test)
 
-lazy val tests = project.settings(macroAnnotationSettings, crossScalaSettings).dependsOn(core, web, hot)
+lazy val tests = project.settings(macroAnnotationSettings, crossScalaSettings).disablePlugins(TpolecatPlugin).dependsOn(core, web, hot)
 
 lazy val docsMacros = project.settings(macroAnnotationSettings).dependsOn(web, hot)
 
