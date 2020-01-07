@@ -48,7 +48,7 @@ object Generator extends App {
       symbols.find(_._1 == Utils.identifierFor(attr.attributeName)) match {
         case Some(o@(_, (tags, None))) =>
           symbols - o + ((Utils.identifierFor(attr.attributeName), (tags, Some(attr))))
-        case None =>
+        case _ =>
           symbols + ((Utils.identifierFor(attr.attributeName), (None, Some(attr))))
       }
     }
