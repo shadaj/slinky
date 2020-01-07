@@ -37,7 +37,7 @@ object TestComponentExtraApply extends ComponentWrapper {
   type State = Int
 
   class Def(jsProps: js.Object) extends Definition(jsProps) {
-    override def initialState(): Int = 0
+    override def initialState: Int = 0
 
     override def componentWillUpdate(nextProps: Props, nextState: Int): Unit = {
       props.apply(nextState)
