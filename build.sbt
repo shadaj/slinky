@@ -40,6 +40,11 @@ def priorTo2_13(scalaVersion: String): Boolean =
     case _                              => false
   }
 
+val misbehavingScalacOptions = Set(
+  "-Ywarn-dead-code", "-Wdead-code",
+  "-Ywarn-unused:params", "-Wunused:params",
+  "-Ywarn-unused:patvars", "-Wunused:patvars"
+)
 
 lazy val librarySettings = Seq(
   scalacOptions += {
@@ -54,6 +59,7 @@ lazy val librarySettings = Seq(
     val g = "https://raw.githubusercontent.com/shadaj/slinky"
     s"-P:scalajs:mapSourceURI:$a->$g/$githubVersion/${baseDirectory.value.getName}/"
   },
+  scalacOptions ~= (_.filterNot(misbehavingScalacOptions))
 )
 
 addCommandAlias(
