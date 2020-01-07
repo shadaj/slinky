@@ -147,7 +147,8 @@ lazy val web = project.settings(
     files.map { f => (f, f.relativeTo(base).get.getPath) }
   },
   librarySettings,
-  crossScalaSettings
+  crossScalaSettings,
+  macroAnnotationSettings
 ).dependsOn(core)
 
 lazy val testRenderer = project.settings(macroAnnotationSettings, librarySettings, crossScalaSettings).dependsOn(core)
