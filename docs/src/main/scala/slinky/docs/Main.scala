@@ -80,6 +80,7 @@ object Main {
       ),
       container
     )
+    ()
   }
 
   var isSSR = false
@@ -125,5 +126,6 @@ object Main {
       ),
       container
     )
+    ()
   }
 }

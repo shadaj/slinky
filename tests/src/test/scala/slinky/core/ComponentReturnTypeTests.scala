@@ -10,6 +10,7 @@ class ComponentReturnTypeTests extends FunSuite {
   def testElement(elem: ReactElement): Unit = {
     assert((div(elem): ReactElement) != null) // test use in another element
     ReactDOM.render(div(elem), dom.document.createElement("div")) // test rendering to DOM
+    ()
   }
 
   test("Components can return - arrays") {
