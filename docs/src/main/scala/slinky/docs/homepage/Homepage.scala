@@ -1,8 +1,8 @@
 package slinky.docs.homepage
 
-import slinky.core.{Component, StatelessComponent, StatelessComponentWrapper}
+import slinky.core.StatelessComponent
 import slinky.core.annotations.react
-import slinky.docs.{MainPageContent, Navbar}
+import slinky.docs.MainPageContent
 import slinky.web.html._
 
 import scala.scalajs.js

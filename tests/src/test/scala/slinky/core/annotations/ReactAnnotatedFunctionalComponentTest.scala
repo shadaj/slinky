@@ -1,16 +1,11 @@
 package slinky.core.annotations
 
 import slinky.core.FunctionalComponent
-import slinky.core.facade.ReactElement
 
 import slinky.web.ReactDOM
-import slinky.web.html.div
 
 import org.scalajs.dom
-import org.scalatest.{Assertion, AsyncFunSuite}
-
-import scala.concurrent.Promise
-import scala.scalajs.js
+import org.scalatest.AsyncFunSuite
 
 @react object SimpleFunctionalComponent {
   case class Props[T](in: Seq[T])

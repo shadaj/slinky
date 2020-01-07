@@ -1,11 +1,8 @@
 package slinky.core
 
-import slinky.core.facade.{React, ReactElement, ReactRaw}
+import slinky.core.facade.{ReactElement, ReactRaw}
 
-import scala.language.implicitConversions
 import scala.scalajs.js
-import scala.scalajs.js.{Dictionary, JSON}
-import scala.language.higherKinds
 
 trait Tag extends Any {
   type tagType <: TagElement

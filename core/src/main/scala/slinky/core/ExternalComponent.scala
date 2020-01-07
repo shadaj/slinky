@@ -1,12 +1,10 @@
 package slinky.core
 
-import slinky.core.facade.{React, ReactRaw, ReactElement, ReactRef}
+import slinky.core.facade.{ReactRaw, ReactElement, ReactRef}
 import slinky.readwrite.Writer
 
-import scala.language.implicitConversions
 import scala.scalajs.js
 import scala.scalajs.js.|
-import scala.language.experimental.macros
 import scala.reflect.macros.whitebox
 
 final class BuildingComponent[E, R <: js.Object](private val args: js.Array[js.Any]) extends AnyVal {

@@ -1,10 +1,9 @@
 package slinky.core.facade
 
 import slinky.core.{BuildingComponent, ExternalComponent, ExternalPropsWriterProvider}
-import slinky.readwrite.{Reader, Writer}
+import slinky.readwrite.Writer
 
 import scala.scalajs.js
-import scala.scalajs.js.annotation.JSName
 import scala.scalajs.js.|
 
 @js.native

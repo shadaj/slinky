@@ -2,7 +2,6 @@ package slinky.docs.homepage
 
 import slinky.core.FunctionalComponent
 import slinky.core.annotations.react
-import slinky.core.facade.ReactElement
 import slinky.reactrouter.Link
 import slinky.web.html._
 

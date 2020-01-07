@@ -3,7 +3,6 @@ package slinky.core.annotations
 import slinky.core._
 
 import scala.annotation.compileTimeOnly
-import scala.language.experimental.macros
 import scala.reflect.macros.whitebox
 import scala.scalajs.js
 

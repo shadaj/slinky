@@ -1,14 +1,11 @@
 package slinky.core
 
-import slinky.core.facade.{React, ReactRaw, ReactElement, ReactRef}
+import slinky.core.facade.{ReactRaw, ReactElement, ReactRef}
 import slinky.readwrite.{Reader, Writer}
 
 import scala.scalajs.js
 import scala.scalajs.js.ConstructorTag
-import scala.scalajs.js.annotation.JSExport
 
-import scala.language.experimental.macros
-import scala.language.implicitConversions
 import scala.reflect.macros.whitebox
 
 final class KeyAndRefAddingStage[D](private val args: js.Array[js.Any]) extends AnyVal {

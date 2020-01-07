@@ -7,7 +7,6 @@ import slinky.web.html._
 
 import scala.scalajs.js
 import scala.scalajs.js.Dynamic.literal
-import scala.language.experimental.macros
 
 @react object CodeExampleInternal {
   case class Props(codeText: String, demoElement: ReactElement)
