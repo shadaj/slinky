@@ -37,7 +37,7 @@ object KeyAddingStage {
 }
 
 final class FunctionalComponent[P] private[core](private[core] val component: js.Function) extends AnyVal {
-  type Props = P
+  type Props = js.UndefOr[P]
   type Result = KeyAddingStage
 
   private[core] def componentWithReader(propsReader: Reader[P]) = {
@@ -45,7 +45,7 @@ final class FunctionalComponent[P] private[core](private[core] val component: js
     component
   }
 
-  @inline def apply(props: P): KeyAddingStage = {
+  @inline def apply(props: js.UndefOr[P] = js.undefined): KeyAddingStage = {
     new KeyAddingStage(js.Array(component, js.Dynamic.literal(
       __ = props.asInstanceOf[js.Any]
     )))
@@ -53,7 +53,7 @@ final class FunctionalComponent[P] private[core](private[core] val component: js
 }
 
 final class FunctionalComponentTakingRef[P, R] private[core](private[core] val component: js.Function) extends AnyVal {
-  type Props = P
+  type Props = js.UndefOr[P]
   type Result = KeyAddingStage
 
   private[core] def componentWithReader(propsReader: Reader[P]) = {
@@ -61,7 +61,7 @@ final class FunctionalComponentTakingRef[P, R] private[core](private[core] val c
     component
   }
 
-  @inline def apply(props: P): KeyAddingStage = {
+  @inline def apply(props: js.UndefOr[P] = js.undefined): KeyAddingStage = {
     new KeyAddingStage(js.Array(component, js.Dynamic.literal(
       __ = props.asInstanceOf[js.Any]
     )))
@@ -69,7 +69,7 @@ final class FunctionalComponentTakingRef[P, R] private[core](private[core] val c
 }
 
 final class FunctionalComponentForwardedRef[P, R] private[core](private[core] val component: js.Any) extends AnyVal {
-  type Props = P
+  type Props = js.UndefOr[P]
   type Result = KeyAndRefAddingStage[R]
 
   private[core] def componentWithReader(propsReader: Reader[P]) = {
@@ -77,7 +77,7 @@ final class FunctionalComponentForwardedRef[P, R] private[core](private[core] va
     component
   }
 
-  @inline def apply(props: P): KeyAndRefAddingStage[R] = {
+  @inline def apply(props: js.UndefOr[P] = js.undefined): KeyAndRefAddingStage[R] = {
     new KeyAndRefAddingStage[R](js.Array(
       component,
       js.Dynamic.literal(
