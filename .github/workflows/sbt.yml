@@ -62,7 +62,7 @@ jobs:
       with:
         java-version: 1.8
     - name: Publish with SBT
-      run: bash ./publish.sh
+      run: export JAVA_OPTS="-Xmx4g" && bash ./publish.sh
       if: github.ref == 'refs/heads/master' || github.event_name == 'release'
       env:
         encrypted_key: ${{ secrets.key }}
