@@ -11,6 +11,8 @@ lazy val slinky = project.in(file(".")).aggregate(
   readWrite,
   core,
   web,
+  history,
+  reactrouter,
   testRenderer,
   native,
   vr,
@@ -151,8 +153,11 @@ lazy val web = project.settings(
   },
   librarySettings,
   crossScalaSettings,
-  macroAnnotationSettings
 ).dependsOn(core)
+
+lazy val history = project.settings(crossScalaSettings)
+
+lazy val reactrouter = project.settings(macroAnnotationSettings, librarySettings, crossScalaSettings).dependsOn(core, web, history)
 
 lazy val testRenderer = project.settings(macroAnnotationSettings, librarySettings, crossScalaSettings).dependsOn(core)
 
@@ -168,7 +173,7 @@ lazy val tests = project.settings(macroAnnotationSettings, crossScalaSettings).d
 
 lazy val docsMacros = project.settings(macroAnnotationSettings).dependsOn(web, hot)
 
-lazy val docs = project.settings(macroAnnotationSettings).dependsOn(web, hot, docsMacros)
+lazy val docs = project.settings(macroAnnotationSettings).dependsOn(web, hot, docsMacros, reactrouter, history)
 
 updateIntellij in ThisBuild := {}
 
