@@ -39,5 +39,5 @@ Slinky is split up into several submodules:
 + `coreIntellijSupport` contains IntelliJ-specific support for the `@react` macro annotation
 + `tests` contains the unit tests for the above modules (except native and vr which have local tests)
 + `docs` and `docsMacros` contains the documentation site, which is a Slinky app itself
-+ 
+
 To run the main unit tests, run `sbt tests/test`.
