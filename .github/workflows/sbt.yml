@@ -24,6 +24,30 @@ jobs:
       run: sbt ";scalajsReactInterop/test; + tests/test; + native/test"
     - name: Test with SBT (fullopt)
       run: sbt ";set scalaJSStage in Global := FullOptStage; scalajsReactInterop/test; + tests/test; + native/test"
+  test-windows:
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+
+    steps:
+      - name: Configure git to disable Windows line feeds
+        run: "git config --global core.autocrlf false"
+        shell: bash
+      - uses: actions/checkout@master
+      # Pre-installed SBT on Windows-runner is unstable so use more polished 3rd-party action olafurpg/setup-scala.
+      - name: Set up JDK 1.8 and SBT
+        uses: olafurpg/setup-scala@v7
+        with:
+          java-version: 1.8
+      - name: Install NPM Dependencies
+        run: npm install; cd native; npm install; cd ..
+        shell: bash
+      - name: Test with SBT (fastopt)
+        run: sbt ";scalajsReactInterop/test; + tests/test; + native/test"
+        shell: bash
+      - name: Test with SBT (fullopt)
+        run: sbt ";set scalaJSStage in Global := FullOptStage; scalajsReactInterop/test; + tests/test; + native/test"
+        shell: bash
   build-docs:
     runs-on: ubuntu-latest
 
@@ -53,6 +77,8 @@ jobs:
     - name: Build IntelliJ Plugin
       run: sbt coreIntellijSupport/updateIntellij coreIntellijSupport/compile
   publish:
+    # Currently publication doesn't depend on testing results for Windows platform, since primary developers use Linux,
+    # but it may be changed in the future.
     needs: [test, build-docs, build-intellij-plugin]
     runs-on: ubuntu-latest
     steps:
