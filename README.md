@@ -28,6 +28,8 @@ Slinky lets you:
 Slinky is split up into several submodules:
 + `core` contains the React.js facades and APIs for creating components and interfaces to external components
 + `web` contains bindings to React DOM and definitions for the HTML/SVG tag API
++ `reactrouter` contains bindings to React Router
++ `history` contains a facade for the HTML5 history API
 + `native` contains bindings to React Native and external component definitions for native UI elements
 + `vr` contains bindings to React 360 and external component definitions for VR UI elements
 + `readWrite` contains the `Reader` and `Writer` typeclasses used to persist state for hot reloading
