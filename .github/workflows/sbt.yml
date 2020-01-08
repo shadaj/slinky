@@ -61,6 +61,7 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
+    - run: git fetch --unshallow
     - name: Publish with SBT
       run: export JAVA_OPTS="-Xmx4g" && bash ./publish.sh
       if: github.ref == 'refs/heads/master' || github.event_name == 'release'
