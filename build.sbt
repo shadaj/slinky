@@ -1,6 +1,9 @@
 organization in ThisBuild := "me.shadaj"
 
-scalaVersion in ThisBuild := "2.12.8"
+val scala212 = "2.12.10"
+val scala213 = "2.13.1"
+
+scalaVersion in ThisBuild := scala212
 
 scalacOptions in ThisBuild ++= Seq("-feature", "-deprecation")
 
@@ -19,7 +22,7 @@ lazy val slinky = project.in(file(".")).aggregate(
 )
 
 lazy val crossScalaSettings = Seq(
-  crossScalaVersions := Seq("2.12.8", "2.13.0"),
+  crossScalaVersions := Seq(scala212, scala213),
   unmanagedSourceDirectories in Compile += {
     val sourceDir = (sourceDirectory in Compile).value
     CrossVersion.partialVersion(scalaVersion.value) match {
@@ -96,11 +99,11 @@ addCommandAlias(
 lazy val macroAnnotationSettings = Seq(
   resolvers += Resolver.sonatypeRepo("releases"),
   scalacOptions ++= {
-    if (scalaVersion.value == "2.13.0") Seq("-Ymacro-annotations")
+    if (scalaVersion.value == scala213) Seq("-Ymacro-annotations")
     else Seq.empty
   },
   libraryDependencies ++= {
-    if (scalaVersion.value == "2.13.0") Seq.empty
+    if (scalaVersion.value == scala213) Seq.empty
     else Seq(compilerPlugin("org.scalamacros" % "paradise" % "2.1.0" cross CrossVersion.full))
   }
 )
