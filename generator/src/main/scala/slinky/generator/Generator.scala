@@ -115,7 +115,9 @@ object Generator extends App {
 
       val symbolExtends = if (symbolExtendsList.isEmpty) "" else symbolExtendsList.mkString("extends ", " with ", "")
 
-      val out = new PrintWriter(new File(outFolder.getAbsolutePath + "/" + symbol + ".scala"))
+      // Character "*" is not allowed in file names in Windows filesystem
+      val symbolFixed = if (symbol == "*") "star" else symbol
+      val out = new PrintWriter(new File(outFolder.getAbsolutePath + "/" + symbolFixed + ".scala"))
 
       out.println(
         s"""package $pkg
