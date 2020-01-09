@@ -2,6 +2,7 @@
 
 ## vNEXT
 * Add slinky-react-router and slinky-history as separate subprojects, to provide interfaces to react-router and the html5 history api [PR #305](https://github.com/shadaj/slinky/pull/305)
++ Fix project build in Windows OS and add automated testing in Windows to CI workflow. You can now build Slinky and run tests in Windows [PR #308](https://github.com/shadaj/slinky/pull/308)
 
 ## [v0.6.3](https://slinky.dev)
 ### Highlights :tada:

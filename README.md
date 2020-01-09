@@ -1,8 +1,8 @@
 <p align="center"><img width="400" src="https://github.com/shadaj/slinky/raw/master/logo.png"/></p>
 <p align="center"><i>Write Scala.js React apps just like you would in ES6</i></p>
 <p align="center">
-  <a href="https://travis-ci.org/shadaj/slinky">
-    <img src="https://travis-ci.org/shadaj/slinky.svg?branch=master"/>
+  <a href="https://github.com/shadaj/slinky/actions?query=branch%3Amaster">
+    <img src="https://github.com/shadaj/slinky/workflows/Slinky%20CI/badge.svg?branch=master"/>
   </a>
   <a href="https://www.scala-js.org">
     <img src="https://www.scala-js.org/assets/badges/scalajs-0.6.17.svg"/>
@@ -41,3 +41,13 @@ Slinky is split up into several submodules:
 + `docs` and `docsMacros` contains the documentation site, which is a Slinky app itself
 
 To run the main unit tests, run `sbt tests/test`.
+
+Note to IntelliJ IDEA users. When you try to import Slinky SBT definition in IDEA and encounter an exception like
+ `java.nio.file.NoSuchFileException: /Users/someuser/.slinkyPluginIC/sdk/192.6817.14/plugins`, you should
+try to download required IntelliJ files for plugin subproject manually before importing:
+
+```shell
+sbt coreIntellijSupport/updateIntellij
+```
+
+And then import the project again.
