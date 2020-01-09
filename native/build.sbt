@@ -19,8 +19,9 @@ jsEnv in Test := new NodeJSEnv() {
   )
 }
 
-def escapeBackslashes(path: String): String =
+def escapeBackslashes(path: String): String = {
   if (Properties.isWin)
     path.replace("\\", "\\\\")
   else
     path
+}
