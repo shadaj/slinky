@@ -12,6 +12,7 @@ import scala.scalajs.js.annotation.JSImport
 @js.native
 object ReactRouter extends js.Object {
   val StaticRouter: js.Object = js.native
+  val MemoryRouter: js.Object = js.native
 }
 
 @JSImport("react-router-dom", JSImport.Default)
@@ -19,10 +20,13 @@ object ReactRouter extends js.Object {
 object ReactRouterDOM extends js.Object {
   val Router: js.Object = js.native
   val BrowserRouter: js.Object = js.native
+  val HashRouter: js.Object = js.native
   val Route: js.Object = js.native
   val Switch : js.Object = js.native
   val Link: js.Object = js.native
   val NavLink: js.Object = js.native
+  val Redirect: js.Object = js.native
+  val Prompt: js.Object = js.native
 }
 
 @react object StaticRouter extends ExternalComponent {
@@ -52,6 +56,11 @@ object Switch extends ExternalComponentNoProps {
 @react object Link extends ExternalComponentWithAttributes[a.tag.type] {
   case class Props(to: String)
   override val component = ReactRouterDOM.Link
+}
+
+@react object Redirect extends ExternalComponent {
+  case class Props(to: String, push: Boolean = false)
+  override val component = ReactRouterDOM.Redirect
 }
 
 @react object NavLink extends ExternalComponentWithAttributes[a.tag.type] {
