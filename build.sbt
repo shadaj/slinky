@@ -48,7 +48,7 @@ lazy val crossScalaSettings = Seq(
   }
 )
 
-def commonScalacOptions(scalaVersion: String) = {
+def commonScalacOptions(scalaVersion: String, fatalWarnings: Boolean = true) = {
   Seq(
     "-encoding",
     "UTF-8",
@@ -64,9 +64,10 @@ def commonScalacOptions(scalaVersion: String) = {
     Seq(
       "-Xfuture",
       "-Yno-adapted-args",
-      "-deprecation",
+      "-deprecation"
+    ) ++ (if (fatalWarnings) Seq(
       "-Xfatal-warnings" // fails Scaladoc compilation on 2.13
-    )
+    ) else Nil)
   } else {
     Seq(
       "-Ymacro-annotations"
@@ -81,7 +82,7 @@ def priorTo2_13(scalaVersion: String): Boolean =
   }
 
 
-lazy val librarySettings = Seq(
+def librarySettings(fatalWarnings: Boolean = true) = Seq(
   scalacOptions += {
     val origVersion = version.value
     val githubVersion = if (origVersion.contains("-")) {
@@ -94,7 +95,7 @@ lazy val librarySettings = Seq(
     val g = "https://raw.githubusercontent.com/shadaj/slinky"
     s"-P:scalajs:mapSourceURI:$a->$g/$githubVersion/${baseDirectory.value.getName}/"
   },
-  scalacOptions ++= commonScalacOptions(scalaVersion.value)
+  scalacOptions ++= commonScalacOptions(scalaVersion.value, fatalWarnings)
 )
 
 lazy val macroAnnotationSettings = Seq(
@@ -111,7 +112,7 @@ lazy val macroAnnotationSettings = Seq(
 
 lazy val generator = project
 
-lazy val readWrite = project.settings(librarySettings, crossScalaSettings)
+lazy val readWrite = project.settings(librarySettings(), crossScalaSettings)
 
 lazy val core = project.settings(
   Compile / resourceGenerators += Def.task {
@@ -127,7 +128,7 @@ lazy val core = project.settings(
 
     Seq(rootFolder / "intellij-compat.json")
   },
-  macroAnnotationSettings, librarySettings, crossScalaSettings
+  macroAnnotationSettings, librarySettings(), crossScalaSettings
 ).dependsOn(readWrite)
 
 lazy val web = project.settings(
@@ -150,23 +151,23 @@ lazy val web = project.settings(
     val files = (Compile / managedSources).value
     files.map { f => (f, f.relativeTo(base).get.getPath) }
   },
-  librarySettings,
+  librarySettings(fatalWarnings = false),
   crossScalaSettings,
 ).dependsOn(core)
 
-lazy val history = project.settings(crossScalaSettings)
+lazy val history = project.settings(librarySettings(), crossScalaSettings)
 
-lazy val reactrouter = project.settings(macroAnnotationSettings, librarySettings, crossScalaSettings).dependsOn(core, web, history)
+lazy val reactrouter = project.settings(macroAnnotationSettings, librarySettings(), crossScalaSettings).dependsOn(core, web, history)
 
-lazy val testRenderer = project.settings(macroAnnotationSettings, librarySettings, crossScalaSettings).dependsOn(core)
+lazy val testRenderer = project.settings(macroAnnotationSettings, librarySettings(), crossScalaSettings).dependsOn(core)
 
-lazy val native = project.settings(macroAnnotationSettings, librarySettings, crossScalaSettings).dependsOn(core, testRenderer % Test)
+lazy val native = project.settings(macroAnnotationSettings, librarySettings(), crossScalaSettings).dependsOn(core, testRenderer % Test)
 
-lazy val vr = project.settings(macroAnnotationSettings, librarySettings, crossScalaSettings).dependsOn(core, testRenderer % Test)
+lazy val vr = project.settings(macroAnnotationSettings, librarySettings(), crossScalaSettings).dependsOn(core, testRenderer % Test)
 
-lazy val hot = project.settings(macroAnnotationSettings, librarySettings, crossScalaSettings).dependsOn(core)
+lazy val hot = project.settings(macroAnnotationSettings, librarySettings(), crossScalaSettings).dependsOn(core)
 
-lazy val scalajsReactInterop = project.settings(macroAnnotationSettings, librarySettings).dependsOn(core, web % Test)
+lazy val scalajsReactInterop = project.settings(macroAnnotationSettings, librarySettings()).dependsOn(core, web % Test)
 
 lazy val tests = project.settings(macroAnnotationSettings, crossScalaSettings).dependsOn(core, web, hot)
 

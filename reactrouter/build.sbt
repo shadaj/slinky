@@ -2,4 +2,8 @@ enablePlugins(ScalaJSPlugin)
 
 name := "slinky-react-router"
 
-scalacOptions += "-P:scalajs:sjsDefinedByDefault"
+scalacOptions ++= {
+  if (scalaJSVersion.startsWith("0.6.")) Seq("-P:scalajs:sjsDefinedByDefault")
+  else Nil
+}
+

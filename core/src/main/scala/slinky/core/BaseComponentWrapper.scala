@@ -77,64 +77,180 @@ abstract class BaseComponentWrapper(sr: StateReaderProvider, sw: StateWriterProv
   private[core] val hot_stateReader = sr.asInstanceOf[Reader[State]]
   private[core] val hot_stateWriter = sw.asInstanceOf[Writer[State]]
 
+  private var patchedConstructor: js.Dynamic = null
+
+  private def getPatchedConstructor(implicit constructorTag: ConstructorTag[Def]) = {
+    if (patchedConstructor == null) {
+      val constructor = constructorTag.constructor
+      val componentPrototype = constructor.prototype
+
+      if (componentPrototype.componentWillMount == DefinitionBase.defaultBase.componentWillMount) {
+        componentPrototype.componentWillMount = js.undefined
+      }
+
+      if (componentPrototype.componentDidMount == DefinitionBase.defaultBase.componentDidMount) {
+        componentPrototype.componentDidMount = js.undefined
+      }
+
+      if (componentPrototype.componentWillReceiveProps != DefinitionBase.defaultBase.componentWillReceiveProps) {
+        val orig = componentPrototype.componentWillReceiveProps.asInstanceOf[js.ThisFunction1[Def, Props, Unit]]
+        componentPrototype.componentWillReceiveProps = ((self: Def, props: js.Object) => {
+          orig(
+            self,
+            self.asInstanceOf[DefinitionBase[Props, _, _]].readPropsValue(props)
+          )
+        }): js.ThisFunction1[Def, js.Object, Unit]
+      } else {
+        componentPrototype.componentWillReceiveProps = js.undefined
+      }
+
+      if (componentPrototype.shouldComponentUpdate != DefinitionBase.defaultBase.shouldComponentUpdate) {
+        val orig = componentPrototype.shouldComponentUpdate.asInstanceOf[js.ThisFunction2[Def, Props, State, Boolean]]
+        componentPrototype.shouldComponentUpdate = ((self: Def, nextProps: js.Object, nextState: js.Object) => {
+          orig(
+            self,
+            self.asInstanceOf[DefinitionBase[Props, _, _]].readPropsValue(nextProps),
+            self.asInstanceOf[DefinitionBase[_, State, _]].readStateValue(nextState)
+          )
+        }): js.ThisFunction2[Def, js.Object, js.Object, Boolean]
+      } else {
+        componentPrototype.shouldComponentUpdate = js.undefined
+      }
+
+      if (componentPrototype.componentWillUpdate != DefinitionBase.defaultBase.componentWillUpdate) {
+        val orig = componentPrototype.componentWillUpdate.asInstanceOf[js.ThisFunction2[Def, Props, State, Unit]]
+        componentPrototype.componentWillUpdate = ((self: Def, nextProps: js.Object, nextState: js.Object) => {
+          orig(
+            self,
+            self.asInstanceOf[DefinitionBase[Props, _, _]].readPropsValue(nextProps),
+            self.asInstanceOf[DefinitionBase[_, State, _]].readStateValue(nextState)
+          )
+        }): js.ThisFunction2[Def, js.Object, js.Object, Unit]
+      } else {
+        componentPrototype.componentWillUpdate = js.undefined
+      }
+
+      if (componentPrototype.getSnapshotBeforeUpdate != DefinitionBase.defaultBase.getSnapshotBeforeUpdate) {
+        val orig = componentPrototype.getSnapshotBeforeUpdate.asInstanceOf[js.ThisFunction2[Def, Props, State, Any]]
+        componentPrototype.getSnapshotBeforeUpdate = ((self: Def, prevProps: js.Object, prevState: js.Object) => {
+          orig(
+            self,
+            self.asInstanceOf[DefinitionBase[Props, _, _]].readPropsValue(prevProps),
+            self.asInstanceOf[DefinitionBase[_, State, _]].readStateValue(prevState)
+          )
+        }): js.ThisFunction2[Def, js.Object, js.Object, Any]
+      } else {
+        componentPrototype.getSnapshotBeforeUpdate = js.undefined
+      }
+
+      if (componentPrototype.componentDidUpdate != DefinitionBase.defaultBase.componentDidUpdate) {
+        val orig = componentPrototype.componentDidUpdate
+        componentPrototype.componentDidUpdateScala = orig
+        componentPrototype.componentDidUpdate = ((self: Def, prevProps: js.Object, prevState: js.Object, snapshot: js.Any) => {
+          orig.asInstanceOf[js.ThisFunction].call(
+            self,
+            self.asInstanceOf[DefinitionBase[Props, _, _]].readPropsValue(prevProps).asInstanceOf[js.Any],
+            self.asInstanceOf[DefinitionBase[_, State, _]].readStateValue(prevState).asInstanceOf[js.Any],
+            snapshot.asInstanceOf[js.Any]
+          ).asInstanceOf[Unit]
+        }): js.ThisFunction3[Def, js.Object, js.Object, js.Any, Unit]
+      } else {
+        componentPrototype.componentDidUpdate = js.undefined
+      }
+
+      if (componentPrototype.componentWillUnmount == DefinitionBase.defaultBase.componentWillUnmount) {
+        componentPrototype.componentWillUnmount = js.undefined
+      }
+
+      if (componentPrototype.componentDidCatch == DefinitionBase.defaultBase.componentDidCatch) {
+        componentPrototype.componentDidCatch = js.undefined
+      }
+
+      componentPrototype._base = this.asInstanceOf[js.Any]
+
+      patchedConstructor = constructor
+    }
+
+    patchedConstructor
+  }
+
+  private var wrappedConstructor: js.Dynamic = null
+  private def getWrappedConstructor(implicit constructorTag: ConstructorTag[Def]) = {
+    if (wrappedConstructor == null) {
+      val constructor = getPatchedConstructor
+      val descriptor = js.Object.getOwnPropertyDescriptor(constructor.prototype.asInstanceOf[js.Object], "initialState")
+      val needsExtraApply = !js.isUndefined(descriptor) && !js.isUndefined(descriptor.asInstanceOf[js.Dynamic].writable)
+
+      wrappedConstructor = (((self: Def, props: js.Object) => {
+        // run the original constructor
+        constructor.asInstanceOf[js.ThisFunction1[Def, js.Object, Unit]](self, props)
+        
+        // set initial state of the component after the original constructor
+        self.asInstanceOf[js.Dynamic].state = {
+          val initialStateValue = self.asInstanceOf[DefinitionBase[_, _, _]].initialState
+          val stateWithExtraApplyFix = (if (needsExtraApply) {
+            initialStateValue.asInstanceOf[js.Function0[State]].apply()
+          } else initialStateValue).asInstanceOf[State]
+
+          if (BaseComponentWrapper.scalaComponentWritingEnabled) {
+            DefinitionBase.writeWithWrappingAdjustment(self.asInstanceOf[DefinitionBase[_, State, _]].stateWriter)(stateWithExtraApplyFix)
+          } else js.Dynamic.literal(__ = stateWithExtraApplyFix.asInstanceOf[js.Any])
+        }
+      }): js.ThisFunction1[Def, js.Object, Unit]).asInstanceOf[js.Dynamic]
+
+      wrappedConstructor.prototype = constructor.prototype
+
+      if (!scala.scalajs.LinkingInfo.productionMode) {
+        wrappedConstructor.displayName = getClass.getSimpleName
+      }
+
+      if (this.getDerivedStateFromProps != null) {
+        wrappedConstructor.getDerivedStateFromProps = ((props: js.Object, state: js.Object) => {
+          val propsScala = DefinitionBase.readValue(props, constructor.prototype._base._propsReader.asInstanceOf[Reader[Props]])
+          val stateScala = DefinitionBase.readValue(state, constructor.prototype._base._stateReader.asInstanceOf[Reader[State]])
+
+          val newState = getDerivedStateFromProps(propsScala, stateScala)
+
+          if (newState == null) null else {
+            if (BaseComponentWrapper.scalaComponentWritingEnabled) {
+              DefinitionBase.writeWithWrappingAdjustment(constructor.prototype._base._stateWriter.asInstanceOf[Writer[State]])(newState)
+            } else {
+              js.Dynamic.literal(__ = newState.asInstanceOf[js.Any])
+            }
+          }
+        }): js.Function2[js.Object, js.Object, js.Object]
+      }
+
+      if (this.getDerivedStateFromError != null) {
+        wrappedConstructor.getDerivedStateFromError = ((error: js.Error) => {
+          val newState = getDerivedStateFromError(error)
+
+          if (newState == null) null else {
+            if (BaseComponentWrapper.scalaComponentWritingEnabled) {
+              DefinitionBase.writeWithWrappingAdjustment(constructor.prototype._base._stateWriter.asInstanceOf[Writer[State]])(newState)
+            } else {
+              js.Dynamic.literal(__ = newState.asInstanceOf[js.Any])
+            }
+          }
+        }): js.Function1[js.Error, js.Object]
+      }
+    }
+
+    wrappedConstructor
+  }
+
   def componentConstructor(implicit propsReader: Reader[Props],
                            stateWriter: Writer[State], stateReader: Reader[State],
                            constructorTag: ConstructorTag[Def]): js.Object = {
-    val constructor = constructorTag.constructor
-    if (!scala.scalajs.LinkingInfo.productionMode) {
-      constructor.displayName = getClass.getSimpleName
-    }
-
-    constructor._base = this.asInstanceOf[js.Any]
-
-    if (this.getDerivedStateFromProps != null) {
-      constructor.getDerivedStateFromProps = ((props: js.Object, state: js.Object) => {
-        val propsScala = if (js.typeOf(props) == "object" && props.hasOwnProperty("__")) {
-          props.asInstanceOf[js.Dynamic].__.asInstanceOf[Props]
-        } else {
-          DefinitionBase.readWithWrappingAdjustment(propsReader)(props)
-        }
-
-        val stateScala = if (js.typeOf(state) == "object" && state.hasOwnProperty("__")) {
-          state.asInstanceOf[js.Dynamic].__.asInstanceOf[State]
-        } else {
-          DefinitionBase.readWithWrappingAdjustment(stateReader)(state)
-        }
-
-        val newState = getDerivedStateFromProps(propsScala, stateScala)
-
-        if (newState == null) null else {
-          if (BaseComponentWrapper.scalaComponentWritingEnabled) {
-            DefinitionBase.writeWithWrappingAdjustment(stateWriter)(newState)
-          } else {
-            js.Dynamic.literal(__ = newState.asInstanceOf[js.Any])
-          }
-        }
-      }): js.Function2[js.Object, js.Object, js.Object]
-    }
-
-    if (this.getDerivedStateFromError != null) {
-      constructor.getDerivedStateFromError = ((error: js.Error) => {
-        val newState = getDerivedStateFromError(error)
-
-        if (newState == null) null else {
-          if (BaseComponentWrapper.scalaComponentWritingEnabled) {
-            DefinitionBase.writeWithWrappingAdjustment(stateWriter)(newState)
-          } else {
-            js.Dynamic.literal(__ = newState.asInstanceOf[js.Any])
-          }
-        }
-      }): js.Function1[js.Error, js.Object]
-    }
-
     // we only receive non-null reader/writers here when we generate a full typeclass; otherwise we don't set
     // the reader/writer values since we can just use the fallback ones
+    // also, we don't overwrite the reader if we already have one since we may have already exported
     if (propsReader != null) this.asInstanceOf[js.Dynamic]._propsReader = propsReader.asInstanceOf[js.Any]
     if (stateReader != null) this.asInstanceOf[js.Dynamic]._stateReader = stateReader.asInstanceOf[js.Any]
     if (stateWriter != null) this.asInstanceOf[js.Dynamic]._stateWriter = stateWriter.asInstanceOf[js.Any]
 
     BaseComponentWrapper.componentConstructorMiddleware(
-      constructor.asInstanceOf[js.Object], this.asInstanceOf[js.Object])
+      getWrappedConstructor(constructorTag).asInstanceOf[js.Object], this.asInstanceOf[js.Object])
   }
 
   private var componentConstructorInstance: js.Object = null
