@@ -585,6 +585,15 @@
       "withDash" : false
     },
     {
+      "attributeName" : "className",
+      "attributeType" : "String",
+      "docLines" : [
+        "Is a space-separated list of the classes of the element. Classes allows CSS and JavaScript to select and access specific elements via the \n<a href=\"/en-US/docs/Web/CSS/Class_selectors\">class selectors</a> or functions like the method \n<a title=\"Returns an array-like object of all child elements which have all of the given class names. When called on the document object, the complete document is searched, including the root node. You may also call getElementsByClassName() on any element; it will return only elements which are descendants of the specified root element with the given class names.\" href=\"/en-US/docs/Web/API/Document/getElementsByClassName\"><code>Document.getElementsByClassName()</code></a>."
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
       "attributeName" : "clipPathUnits",
       "attributeType" : "String",
       "docLines" : [
@@ -1388,6 +1397,15 @@
       "attributeName" : "result",
       "attributeType" : "js.Any",
       "docLines" : [
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "role",
+      "attributeType" : "String",
+      "docLines" : [
+        ""
       ],
       "compatibleTags" : null,
       "withDash" : false
