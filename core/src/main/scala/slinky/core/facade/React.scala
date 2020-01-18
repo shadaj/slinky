@@ -11,47 +11,46 @@ import scala.scalajs.js.JSConverters._
 import scala.language.implicitConversions
 
 @js.native
-trait ReactElement extends js.Object with ReactElementMod
+trait ReactElement extends TagMod[Any]
 
-object ReactElement {
-  @inline implicit def stringToElement(s: String): ReactElement = {
+// mixed into TagMod, because then it's available for both mods and regular conversions
+trait ReactElementConversions {
+  @inline final implicit def stringToElement(s: String): ReactElement = {
     s.asInstanceOf[ReactElement]
   }
 
-  @inline implicit def intToElement(i: Int): ReactElement = {
+  @inline final implicit def intToElement(i: Int): ReactElement = {
     i.asInstanceOf[ReactElement]
   }
 
-  @inline implicit def doubleToElement(d: Double): ReactElement = {
+  @inline final implicit def doubleToElement(d: Double): ReactElement = {
     d.asInstanceOf[ReactElement]
   }
 
-  @inline implicit def floatToElement(f: Float): ReactElement = {
+  @inline final implicit def floatToElement(f: Float): ReactElement = {
     f.asInstanceOf[ReactElement]
   }
 
-  @inline implicit def booleanToElement(b: Boolean): ReactElement = {
+  @inline final implicit def booleanToElement(b: Boolean): ReactElement = {
     b.asInstanceOf[ReactElement]
   }
 
-  @inline implicit def iterableToElement[A, B <: Iterable[A]](e: Iterable[A])(implicit cv: A => ReactElement): ReactElement = {
+  final implicit def iterableToElement[A, B <: Iterable[A]](e: Iterable[A])(implicit cv: A => ReactElement): ReactElement = {
     e.map(cv).toJSArray.asInstanceOf[ReactElement]
   }
 
-  @inline implicit def optionToElement[E](o: Option[E])(implicit cv: E => ReactElement): ReactElement = {
+  final implicit def optionToElement[E](o: Option[E])(implicit cv: E => ReactElement): ReactElement = {
     o match {
       case Some(e) => cv(e)
       case None => null.asInstanceOf[ReactElement]
     }
   }
 
-  @inline implicit def jsUndefOrToElement[E](j: js.UndefOr[E])(implicit cv: E => ReactElement): ReactElement = {
-    val x = if (j.isDefined) cv(j.get) else null.asInstanceOf[ReactElement]
-    println(x)
-    x
+  final implicit def jsUndefOrToElement[E](j: js.UndefOr[E])(implicit cv: E => ReactElement): ReactElement = {
+    if (j.isDefined) cv(j.get) else null.asInstanceOf[ReactElement]
   }
 
-  @inline implicit def anyToElementContainer[E, F[_]](e: F[E])(implicit f: ReactElementContainer[F], cv: E => ReactElement): F[ReactElement] = {
+  final implicit def anyToElementContainer[E, F[_]](e: F[E])(implicit f: ReactElementContainer[F], cv: E => ReactElement): F[ReactElement] = {
     f.map(e)(cv)
   }
 }
@@ -69,7 +68,7 @@ trait ReactRef[T] extends js.Object {
 
 @js.native
 @JSImport("react", JSImport.Namespace, "React")
-private[slinky] object ReactRaw extends js.Object {
+object ReactRaw extends js.Object {
   def createElement(elementName: String | js.Object,
                     properties: js.Dictionary[js.Any],
                     contents: ReactElement*): ReactElement = js.native

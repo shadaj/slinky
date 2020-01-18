@@ -5,8 +5,6 @@ val scala213 = "2.13.1"
 
 scalaVersion in ThisBuild := scala212
 
-scalacOptions in ThisBuild ++= Seq("-feature", "-deprecation")
-
 lazy val slinky = project.in(file(".")).aggregate(
   readWrite,
   core,
@@ -52,12 +50,12 @@ def commonScalacOptions(scalaVersion: String) = {
     "-language:experimental.macros",
     "-unchecked",
     "-Ywarn-numeric-widen",
-    "-Ywarn-value-discard"
+    "-Ywarn-value-discard",
+    "-deprecation"
   ) ++ (if (priorTo2_13(scalaVersion)) {
     Seq(
       "-Xfuture",
       "-Yno-adapted-args",
-      "-deprecation",
       "-Xfatal-warnings" // fails Scaladoc compilation on 2.13
     )
   } else {
