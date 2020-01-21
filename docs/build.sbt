@@ -2,8 +2,8 @@ enablePlugins(ScalaJSBundlerPlugin)
 
 name := "slinky-docs"
 
-npmDependencies in Compile += "react" -> "16.8.1"
-npmDependencies in Compile += "react-dom" -> "16.8.1"
+npmDependencies in Compile += "react" -> "16.12.0"
+npmDependencies in Compile += "react-dom" -> "16.12.0"
 npmDependencies in Compile += "react-proxy" -> "1.1.8"
 
 npmDependencies in Compile += "react-router-dom" -> "5.0.0"
