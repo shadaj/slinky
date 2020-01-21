@@ -35,38 +35,28 @@ as `window.React` and React DOM as `window.ReactDOM`.
 
 While Slinky can be in a simple Scala.js app with no bundler, we highly recommend that you use [webpack](https://webpack.js.org/) for bundling your application with its dependencies. The SBT plugin [scalajs-bundler](https://scalacenter.github.io/scalajs-bundler/) automates much of the process around configuring webpack, and is very useful for adding webpack to an SBT build setup.
 
-For example, If you're using scalajs-bundler, add the following to your build.sbt:
+For example, If you're using [scalajs-bundler](https://scalacenter.github.io/scalajs-bundler/), add the following to your `build.sbt`:
 ```
-  enablePlugins(ScalaJSPlugin)
+enablePlugins(ScalaJSPlugin)
+enablePlugins(ScalaJSBundlerPlugin)
 
-  enablePlugins(ScalaJSBundlerPlugin)
-
-  libraryDependencies += "com.github.japgolly.scalajs-react" %%% "core" % "1.4.0"
-
-  npmDependencies in Compile ++= Seq(
-    "react" -> "16.7.0",
-    "react-dom" -> "16.7.0")
+npmDependencies in Compile += "react" -> "16.12.0"
+npmDependencies in Compile += "react-dom" -> "16.12.0"
 ```
+
 If you are using `jsDependencies` you should add, instead:
 ```
-// React JS itself (Note the filenames, adjust as needed, eg. to remove addons.)
+// React itself (note the filenames, adjust as needed to remove addons)
 jsDependencies ++= Seq(
-  "org.webjars.npm" % "react" % "16.7.0"
-    /        "umd/react.development.js"
-    minified "umd/react.production.min.js"
-    commonJSName "React",
-
-  "org.webjars.npm" % "react-dom" % "16.7.0"
-    /         "umd/react-dom.development.js"
-    minified  "umd/react-dom.production.min.js"
-    dependsOn "umd/react.development.js"
-    commonJSName "ReactDOM",
-
-  "org.webjars.npm" % "react-dom" % "16.7.0"
-    /         "umd/react-dom-server.browser.development.js"
-    minified  "umd/react-dom-server.browser.production.min.js"
-    dependsOn "umd/react-dom.development.js"
-    commonJSName "ReactDOMServer"),
+  "org.webjars.npm" % "react" % "16.12.0" % Test / "umd/react.development.js"
+    minified "umd/react.production.min.js" commonJSName "React",
+  "org.webjars.npm" % "react-dom" % "16.12.0" % Test / "umd/react-dom.development.js"
+    minified "umd/react-dom.production.min.js" dependsOn "umd/react.development.js" commonJSName "ReactDOM",
+  "org.webjars.npm" % "react-dom" % "16.12.0" % Test / "umd/react-dom-test-utils.development.js"
+    minified "umd/react-dom-test-utils.production.min.js" dependsOn "umd/react-dom.development.js" commonJSName "ReactTestUtils",
+  "org.webjars.npm" % "react-dom" % "16.12.0" % Test / "umd/react-dom-server.browser.development.js"
+    minified  "umd/react-dom-server.browser.production.min.js" dependsOn "umd/react-dom.development.js" commonJSName "ReactDOMServer"
+)
 ```
 
 ## IntelliJ Support
