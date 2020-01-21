@@ -5,6 +5,7 @@
 + Fix project build in Windows OS and add automated testing in Windows to CI workflow. You can now build Slinky and run tests in Windows [PR #308](https://github.com/shadaj/slinky/pull/308)
 + Add ARIA role attribute [PR #309](https://github.com/shadaj/slinky/pull/309)
 + Support className and role attributes for SVG [PR #314](https://github.com/shadaj/slinky/pull/314)
++ Add novalidate attribute to form [PR #315](https://github.com/shadaj/slinky/pull/315)
 
 ## [v0.6.3](https://slinky.dev)
 ### Highlights :tada:

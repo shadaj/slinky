@@ -851,6 +851,17 @@
       "withDash" : false
     },
     {
+      "attributeName" : "noValidate",
+      "attributeType" : "Boolean",
+      "docLines" : [
+        "This Boolean attribute indicates that the form shouldn't be validated when submitted. If this attribute is not set (and therefore the form is validated), it can be overridden by a <code><a href=\"/en-US/docs/Web/HTML/Element/button#attr-formnovalidate\">formnovalidate</a></code> attribute on a <a title=\"The HTML <button> element represents a clickable button, which can be used in forms or anywhere in a document that needs simple, standard button functionality.\" href=\"/en-US/docs/Web/HTML/Element/button\"><code>&lt;button&gt;</a></code>, <code><a href=\"/en-US/docs/Web/HTML/Element/button#attr-formnovalidate\">formnovalidate</a></code> attribute on a <a href=\"/en-US/docs/Web/HTML/Element/input/submit\"><code>&lt;input type=\"submit\"&gt;</code></a>, or <a href=\"/en-US/docs/Web/HTML/Element/input/submit\"><code>&lt;input type=\"image\"&gt;</code></a> element belonging to the form."
+      ],
+      "compatibleTags" : [
+        "form"
+      ],
+      "withDash" : false
+    },
+    {
       "attributeName" : "poster",
       "attributeType" : "String",
       "docLines" : [
