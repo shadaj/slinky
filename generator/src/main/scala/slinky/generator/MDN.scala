@@ -118,7 +118,7 @@ object MDN extends TagsProvider {
       val attr = i.head
       val docs = i.last
 
-      val attrString = attr.head >> text("code")
+      val attrString = attr >> text("code")
       if (extraAttributes.exists(_._1.name.toLowerCase == attrString) || !supportedAttributes.contains(attrString)) {
         None
       } else {

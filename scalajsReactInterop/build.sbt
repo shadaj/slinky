@@ -2,12 +2,11 @@ enablePlugins(ScalaJSBundlerPlugin)
 
 name := "slinky-scalajsreact-interop"
 
-libraryDependencies += "com.github.japgolly.scalajs-react" %%% "core" % "1.2.0"
-
+libraryDependencies += "com.github.japgolly.scalajs-react" %%% "core" % "1.6.0"
 libraryDependencies += "org.scalatest" %%% "scalatest" % "3.0.8" % Test
+Test / npmDependencies += "react" -> "16.12.0"
+Test / npmDependencies += "react-dom" -> "16.12.0"
 
-npmDependencies in Test += "react" -> "16.8.1"
-npmDependencies in Test += "react-dom" -> "16.8.1"
-jsDependencies += RuntimeDOM % Test
-
+Test / requireJsDomEnv := true
+jsEnv := new org.scalajs.jsenv.jsdomnodejs.JSDOMNodeJSEnv
 scalacOptions += "-P:scalajs:sjsDefinedByDefault"

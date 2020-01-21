@@ -1,12 +1,8 @@
-publishMavenStyle in ThisBuild := true
-
-pomIncludeRepository in ThisBuild := { _ => false }
-
-publishArtifact in Test in ThisBuild := false
-
-publishTo in ThisBuild := sonatypePublishToBundle.value
-
-pomExtra in ThisBuild :=
+ThisBuild / publishMavenStyle := true
+ThisBuild / pomIncludeRepository := { _ => false }
+ThisBuild / Test / publishArtifact := false
+ThisBuild / publishTo := sonatypePublishToBundle.value
+ThisBuild / pomExtra :=
   <url>https://github.com/shadaj/slinky</url>
     <licenses>
       <license>

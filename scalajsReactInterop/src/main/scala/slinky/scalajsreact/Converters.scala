@@ -16,7 +16,7 @@ object Converters {
 
   implicit class TagToInstance(tag: TagOf[_]) {
     def toSlinky: ReactElement = {
-      tag.render.rawNode.asInstanceOf[ReactElement]
+      tag.rawNode.asInstanceOf[ReactElement]
     }
   }
 

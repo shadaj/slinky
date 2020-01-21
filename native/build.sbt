@@ -11,9 +11,9 @@ libraryDependencies += "org.scalatest" %%% "scalatest" % "3.0.8" % Test
 
 scalacOptions += "-P:scalajs:sjsDefinedByDefault"
 
-scalaJSModuleKind in Test := ModuleKind.CommonJSModule
+Test / scalaJSModuleKind := ModuleKind.CommonJSModule
 
-jsEnv in Test := new NodeJSEnv() {
+Test / jsEnv := new NodeJSEnv() {
   override def customInitFiles(): Seq[VirtualJSFile] = super.customInitFiles() :+ new MemVirtualJSFile("addReactNativeMock.js").withContent(
     s"""require("${escapeBackslashes((baseDirectory.value / "node_modules/react-native-mock-render/mock.js").getAbsolutePath)}");"""
   )
