@@ -1,11 +1,10 @@
-organization in ThisBuild := "me.shadaj"
+ThisBuild / organization := "me.shadaj"
 
 val scala212 = "2.12.10"
 val scala213 = "2.13.1"
 
-scalaVersion in ThisBuild := scala212
-
-scalacOptions in ThisBuild ++= Seq("-feature", "-deprecation")
+ThisBuild / scalaVersion := scala212
+ThisBuild / scalacOptions ++= Seq("-feature", "-deprecation")
 
 lazy val slinky = project.in(file(".")).aggregate(
   readWrite,
@@ -25,15 +24,15 @@ lazy val slinky = project.in(file(".")).aggregate(
 
 lazy val crossScalaSettings = Seq(
   crossScalaVersions := Seq(scala212, scala213),
-  unmanagedSourceDirectories in Compile += {
-    val sourceDir = (sourceDirectory in Compile).value
+  Compile / unmanagedSourceDirectories += {
+    val sourceDir = (Compile / sourceDirectory).value
     CrossVersion.partialVersion(scalaVersion.value) match {
       case Some((2, n)) if n >= 13 => sourceDir / "scala-2.13+"
       case _                       => sourceDir / "scala-2.13-"
     }
   },
-  unmanagedSourceDirectories in Test += {
-    val sourceDir = (sourceDirectory in Test).value
+  Test / unmanagedSourceDirectories += {
+    val sourceDir = (Test / sourceDirectory).value
     CrossVersion.partialVersion(scalaVersion.value) match {
       case Some((2, n)) if n >= 13 => sourceDir / "scala-2.13+"
       case _                       => sourceDir / "scala-2.13-"
@@ -115,8 +114,8 @@ lazy val generator = project
 lazy val readWrite = project.settings(librarySettings, crossScalaSettings)
 
 lazy val core = project.settings(
-  resourceGenerators in Compile += Def.task {
-    val rootFolder = (resourceManaged in Compile).value / "META-INF"
+  Compile / resourceGenerators += Def.task {
+    val rootFolder = (Compile / resourceManaged).value / "META-INF"
     rootFolder.mkdirs()
 
     IO.write(
@@ -132,23 +131,23 @@ lazy val core = project.settings(
 ).dependsOn(readWrite)
 
 lazy val web = project.settings(
-  sourceGenerators in Compile += Def.taskDyn[Seq[File]] {
-    val rootFolder = (sourceManaged in Compile).value / "slinky/web"
+  Compile / sourceGenerators += Def.taskDyn[Seq[File]] {
+    val rootFolder = (Compile / sourceManaged).value / "slinky/web"
     rootFolder.mkdirs()
 
-    val html = (runMain in Compile in generator).toTask(Seq("slinky.generator.Generator", "web/html.json", (rootFolder / "html").getAbsolutePath, "slinky.web.html").mkString(" ", " ", "")).map { _ =>
+    val html = (generator / Compile / runMain).toTask(Seq("slinky.generator.Generator", "web/html.json", (rootFolder / "html").getAbsolutePath, "slinky.web.html").mkString(" ", " ", "")).map { _ =>
       (rootFolder / "html" ** "*.scala").get
     }
 
-    val svg = (runMain in Compile in generator).toTask(Seq("slinky.generator.Generator", "web/svg.json", (rootFolder / "svg").getAbsolutePath, "slinky.web.svg").mkString(" ", " ", "")).map { _ =>
+    val svg = (generator / Compile / runMain).toTask(Seq("slinky.generator.Generator", "web/svg.json", (rootFolder / "svg").getAbsolutePath, "slinky.web.svg").mkString(" ", " ", "")).map { _ =>
       (rootFolder / "svg" ** "*.scala").get
     }
 
     html.zip(svg).flatMap(t => t._1.flatMap(h => t._2.map(s => h ++ s)))
   }.taskValue,
-  mappings in (Compile, packageSrc) ++= {
-    val base  = (sourceManaged  in Compile).value
-    val files = (managedSources in Compile).value
+  Compile / packageSrc / mappings ++= {
+    val base  = (Compile / sourceManaged).value
+    val files = (Compile / managedSources).value
     files.map { f => (f, f.relativeTo(base).get.getPath) }
   },
   librarySettings,
@@ -175,7 +174,7 @@ lazy val docsMacros = project.settings(macroAnnotationSettings).dependsOn(web, h
 
 lazy val docs = project.settings(macroAnnotationSettings).dependsOn(web, hot, docsMacros, reactrouter, history)
 
-updateIntellij in ThisBuild := {}
+ThisBuild / updateIntellij := {}
 
 lazy val coreIntellijSupport = project.enablePlugins(SbtIdeaPlugin).settings(
   org.jetbrains.sbtidea.Keys.buildSettings

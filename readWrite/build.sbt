@@ -7,9 +7,9 @@ name := "slinky-readwrite"
 libraryDependencies += "org.scala-lang" % "scala-reflect" % scalaVersion.value
 libraryDependencies += "org.scala-lang" % "scala-compiler" % scalaVersion.value
 
-sourceGenerators in Compile += Def.task {
-  val genFile = (sourceManaged in Compile).value / "GenWriters.scala"
-  (sourceManaged in Compile).value.mkdirs()
+Compile / sourceGenerators += Def.task {
+  val genFile = (Compile / sourceManaged).value / "GenWriters.scala"
+  (Compile / sourceManaged).value.mkdirs()
   genFile.createNewFile()
   val out = new PrintWriter(genFile)
   val gens = (0 to 22).map { n =>
@@ -40,9 +40,9 @@ sourceGenerators in Compile += Def.task {
   Seq(genFile)
 }
 
-sourceGenerators in Compile += Def.task {
-  val genFile = (sourceManaged in Compile).value / "GenReaders.scala"
-  (sourceManaged in Compile).value.mkdirs()
+Compile / sourceGenerators += Def.task {
+  val genFile = (Compile / sourceManaged).value / "GenReaders.scala"
+  (Compile / sourceManaged).value.mkdirs()
   genFile.createNewFile()
   val out = new PrintWriter(genFile)
   val gens = (0 to 22).map { n =>

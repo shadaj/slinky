@@ -2,7 +2,7 @@ enablePlugins(ScalaJSPlugin)
 
 libraryDependencies += "org.scalatest" %%% "scalatest" % "3.0.8" % Test
 
-jsDependencies += RuntimeDOM % Test
+jsEnv := new org.scalajs.jsenv.jsdomnodejs.JSDOMNodeJSEnv
 
 dependencyOverrides += "org.webjars.npm" % "js-tokens" % "3.0.2" % Test
 
