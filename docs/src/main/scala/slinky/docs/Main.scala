@@ -44,7 +44,7 @@ object Main {
   }
 
   def insideRouter: ReactElement = {
-    val charSet = new CustomAttribute[String]("charSet")
+    val charSet = CustomAttribute[String]("charSet")
     div(
       Helmet(
         meta(charSet := "utf-8"),

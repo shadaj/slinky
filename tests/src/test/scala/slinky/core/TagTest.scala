@@ -11,9 +11,9 @@ import org.scalajs.dom
 import org.scalajs.dom.{Element, html, Event, MouseEvent}
 
 class InnerClassCustom extends js.Object {
-  val customTag = new CustomTag("custom-element")
-  val customClass = new CustomAttribute[String]("class")
-  val customColorAttr = new CustomAttribute[String]("color")
+  val customTag = CustomTag("custom-element")
+  val customClass = CustomAttribute[String]("class")
+  val customColorAttr = CustomAttribute[String]("color")
 
   def run(): Unit = {
     val divContainer = dom.document.createElement("div")
@@ -36,7 +36,7 @@ class TagTest extends FunSuite {
   }
 
   test("Can provide a custom tag, which is supported by all components") {
-    val customHref = new CustomAttribute[String]("href")
+    val customHref = CustomAttribute[String]("href")
 
     val instance: ReactElement = a(customHref := "foo")
     assert(instance.asInstanceOf[js.Dynamic].props.href.asInstanceOf[String] == "foo")
@@ -87,7 +87,7 @@ class TagTest extends FunSuite {
   }
 
   test("Can construct a custom tag with existing attributes") {
-    val customTag = new CustomTag("custom-element")
+    val customTag = CustomTag("custom-element")
 
     val divContainer = dom.document.createElement("div")
     ReactDOM.render(customTag(href := "foo")("hello!"), divContainer)
@@ -95,9 +95,9 @@ class TagTest extends FunSuite {
   }
 
   test("Can construct a custom tag with custom attributes") {
-    val customTag = new CustomTag("custom-element")
-    val customClass = new CustomAttribute[String]("class")
-    val customColorAttr = new CustomAttribute[String]("color")
+    val customTag = CustomTag("custom-element")
+    val customClass = CustomAttribute[String]("class")
+    val customColorAttr = CustomAttribute[String]("color")
 
     val divContainer = dom.document.createElement("div")
     ReactDOM.render(customTag(customClass := "foo", customColorAttr := "bar")("hello!"), divContainer)
@@ -105,10 +105,10 @@ class TagTest extends FunSuite {
   }
 
   test("Can construct a custom tag with optional attributes") {
-    val customTag = new CustomTag("custom-element")
-    val customClass = new CustomAttribute[String]("class")
-    val customNoneAttr = new CustomAttribute[String]("none")
-    val customSomeAttr = new CustomAttribute[String]("some")
+    val customTag = CustomTag("custom-element")
+    val customClass = CustomAttribute[String]("class")
+    val customNoneAttr = CustomAttribute[String]("none")
+    val customSomeAttr = CustomAttribute[String]("some")
 
     val divContainer = dom.document.createElement("div")
     ReactDOM.render(customTag(customClass := "foo", customNoneAttr := None, customSomeAttr := Some("bar"))("hello!"), divContainer)

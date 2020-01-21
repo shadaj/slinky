@@ -7,7 +7,7 @@ import scala.scalajs.js
 import scala.scalajs.js.{Dictionary, JSON}
 import scala.language.higherKinds
 
-trait Tag extends Any {
+trait Tag {
   type tagType <: TagElement
   def apply(mods: TagMod[tagType]*): WithAttrs[tagType]
 }
@@ -18,6 +18,9 @@ final class CustomTag(@inline private val name: String) extends Tag {
   @inline def apply(mods: TagMod[tagType]*): WithAttrs[tagType] = {
     WithAttrs[tagType](name, mods)
   }
+}
+object CustomTag {
+  def apply(name: String): CustomTag = new CustomTag(name)
 }
 
 trait Attr {
@@ -32,6 +35,9 @@ abstract class TagElement {
 final class CustomAttribute[T](@inline private val name: String) {
   @inline def :=(v: T) = new AttrPair[Any](name, v.asInstanceOf[js.Any])
   @inline def :=(v: Option[T]) = new OptionalAttrPair[Any](name, v.asInstanceOf[Option[js.Any]])
+}
+object CustomAttribute {
+  def apply[T](name: String): CustomAttribute[T] = new CustomAttribute[T](name)
 }
 
 trait TagMod[-A] extends js.Object
