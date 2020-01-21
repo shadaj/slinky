@@ -37,8 +37,7 @@ While Slinky can be in a simple Scala.js app with no bundler, we highly recommen
 
 For example, If you're using [scalajs-bundler](https://scalacenter.github.io/scalajs-bundler/), add the following to your `build.sbt`:
 ```
-enablePlugins(ScalaJSPlugin)
-enablePlugins(ScalaJSBundlerPlugin)
+enablePlugins(ScalaJSBundlerPlugin) // at the top of the file
 
 npmDependencies in Compile += "react" -> "16.12.0"
 npmDependencies in Compile += "react-dom" -> "16.12.0"
@@ -46,6 +45,8 @@ npmDependencies in Compile += "react-dom" -> "16.12.0"
 
 If you are using `jsDependencies` you should add, instead:
 ```
+enablePlugins(ScalaJSPlugin) // at the top of the file
+
 // React itself (note the filenames, adjust as needed to remove addons)
 jsDependencies ++= Seq(
   "org.webjars.npm" % "react" % "16.12.0" % Test / "umd/react.development.js"
