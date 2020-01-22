@@ -3,18 +3,25 @@ package slinky.docs
 import scala.scalajs.js
 import scala.scalajs.js.annotation.{JSExportTopLevel, JSImport}
 import scala.scalajs.LinkingInfo
-import slinky.docs.homepage.Homepage
-import slinky.history.History
-import slinky.web.{ReactDOM, ReactDOMServer}
-import slinky.hot
-import slinky.reactrouter._
-import slinky.analytics.ReactGA
-import slinky.web.html._
+
 import org.scalajs.dom
 import org.scalajs.dom.History
+
 import slinky.core.CustomAttribute
 import slinky.core.facade.ReactElement
+
+import slinky.web.{ReactDOM, ReactDOMServer}
+import slinky.web.html._
+
+import slinky.hot
+
+import slinky.reactrouter._
+import slinky.history.History
+
+import slinky.analytics.ReactGA
 import slinky.reacthelmet.{Helmet, ReactHelmet}
+
+import slinky.docs.homepage.Homepage
 
 @JSImport("resources/index.css", JSImport.Default)
 @js.native

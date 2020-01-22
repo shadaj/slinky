@@ -21,7 +21,7 @@ Compile / npmDevDependencies += "copy-webpack-plugin" -> "4.5.1"
 Compile / npmDevDependencies += "static-site-generator-webpack-plugin" -> "3.4.1"
 
 webpack / version := "4.5.0"
-startWebpackDevServer / version := "3.1.3"
+startWebpackDevServer / version := "3.3.0"
 
 fastOptJS / webpackConfigFile := Some(baseDirectory.value / "webpack-fastopt.config.js")
 fullOptJS / webpackConfigFile := Some(baseDirectory.value / "webpack-opt.config.js")
