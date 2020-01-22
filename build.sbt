@@ -22,6 +22,14 @@ lazy val slinky = project.in(file(".")).aggregate(
   publishLocal := {}
 )
 
+addCommandAlias(
+  "publishSignedAll",
+  (slinky: ProjectDefinition[ProjectReference])
+    .aggregate
+    .map(p => s"+ ${p.asInstanceOf[LocalProject].project}/publishSigned")
+    .mkString(";", ";", "")
+)
+
 lazy val crossScalaSettings = Seq(
   crossScalaVersions := Seq(scala212, scala213),
   Compile / unmanagedSourceDirectories += {
@@ -87,14 +95,6 @@ lazy val librarySettings = Seq(
     s"-P:scalajs:mapSourceURI:$a->$g/$githubVersion/${baseDirectory.value.getName}/"
   },
   scalacOptions ++= commonScalacOptions(scalaVersion.value)
-)
-
-addCommandAlias(
-  "publishSignedAll",
-  (slinky: ProjectDefinition[ProjectReference])
-    .aggregate
-    .map(p => s"+ ${p.asInstanceOf[LocalProject].project}/publishSigned")
-    .mkString(";", ";", "")
 )
 
 lazy val macroAnnotationSettings = Seq(

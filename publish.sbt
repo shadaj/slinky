@@ -1,7 +1,11 @@
 ThisBuild / publishMavenStyle := true
+
 ThisBuild / pomIncludeRepository := { _ => false }
+
 ThisBuild / Test / publishArtifact := false
+
 ThisBuild / publishTo := sonatypePublishToBundle.value
+
 ThisBuild / pomExtra :=
   <url>https://github.com/shadaj/slinky</url>
     <licenses>
@@ -22,3 +26,5 @@ ThisBuild / pomExtra :=
         <url>http://shadaj.me</url>
       </developer>
     </developers>
+
+Global / useGpgPinentry := true
