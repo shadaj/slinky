@@ -3,9 +3,7 @@ package slinky.core
 import org.jetbrains.plugins.scala.lang.psi.types.ScParameterizedType
 import org.jetbrains.plugins.scala.lang.psi.impl.toplevel.typedef.{SyntheticMembersInjector, TypeDefinitionMembers}
 import org.jetbrains.plugins.scala.lang.psi.api.toplevel.typedef._
-import org.jetbrains.plugins.scala.lang.psi.api.statements.{ScTypeAliasDeclaration, ScTypeAliasDefinition, ScValueDeclaration, ScPatternDefinition}
-import org.jetbrains.plugins.scala.lang.psi.types.api.designator.ScDesignatorType
-import org.jetbrains.plugins.scala.lang.psi.types.api.{ParameterizedType, StdType}
+import org.jetbrains.plugins.scala.lang.psi.api.statements.{ScTypeAliasDefinition, ScValueDeclaration, ScPatternDefinition}
 
 class SlinkyInjector extends SyntheticMembersInjector {
   sealed trait InjectType
@@ -49,7 +47,7 @@ class SlinkyInjector extends SyntheticMembersInjector {
           }))
         case _ => None
       }
-    }.getOrElse(("", Type), Seq.empty)
+    }.getOrElse((("", Type), Seq.empty))
 
     val stateDefinition: Option[(String, InjectType)] = types.forName("State").iterator.toSeq.headOption.flatMap { elm =>
       elm.namedElement match {
@@ -134,7 +132,7 @@ class SlinkyInjector extends SyntheticMembersInjector {
       case td: ScTypeAliasDefinition => td
     }.find(_.name == "Props").flatMap { elm =>
       elm match {
-        case alias: ScTypeAliasDefinition =>
+        case _: ScTypeAliasDefinition =>
           Some(Seq(
             s"def apply(props: ${cls.name}.Props): ${cls.name}.component.Result = ???" -> Function
           ))

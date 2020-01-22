@@ -1,8 +1,8 @@
 package slinky.docs.homepage
 
-import slinky.core.{Component, StatelessComponent, StatelessComponentWrapper}
+import slinky.core.StatelessComponent
 import slinky.core.annotations.react
-import slinky.docs.{MainPageContent, Navbar}
+import slinky.docs.MainPageContent
 import slinky.web.html._
 
 import scala.scalajs.js
@@ -28,7 +28,7 @@ object SlinkyLogo extends js.Object
 
   def render() = {
     div(
-      Jumbotron(),
+      Jumbotron(()),
       MainPageContent(Seq(
         div(style := literal(
           width = "100%",
@@ -66,7 +66,7 @@ object SlinkyLogo extends js.Object
           borderBottom = "1px solid #ececec",
           marginTop = "40px"
         )),
-        Examples()
+        Examples(())
       )),
       div(style := literal(
         width = "100%",

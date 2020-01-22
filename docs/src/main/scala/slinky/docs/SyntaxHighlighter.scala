@@ -4,8 +4,7 @@ import slinky.core.ExternalComponent
 import slinky.core.annotations.react
 
 import scala.scalajs.js
-import scala.scalajs.js.annotation.{JSImport, JSName}
-import scala.scalajs.js.|
+import scala.scalajs.js.annotation.JSImport
 
 @js.native
 @JSImport("react-syntax-highlighter/light", JSImport.Default)

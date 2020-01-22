@@ -1,13 +1,10 @@
 package slinky.core
 
 import slinky.readwrite.Reader
-import slinky.core.facade.{React, ReactRaw, ReactElement, ReactRef}
+import slinky.core.facade.{ReactRaw, ReactElement, ReactRef}
 import scala.scalajs.js
 
 import scala.reflect.macros.whitebox
-import scala.language.experimental.macros
-
-import scala.language.implicitConversions
 
 final class KeyAddingStage(private val args: js.Array[js.Any]) extends AnyVal {
   @inline def withKey(key: String): ReactElement = {

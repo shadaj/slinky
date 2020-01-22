@@ -3,7 +3,7 @@ package slinky.web
 import slinky.core.SyntheticEvent
 
 import scala.scalajs.js
-import org.scalajs.dom.{PointerEvent, EventTarget}
+import org.scalajs.dom.PointerEvent
 
 // https://reactjs.org/docs/events.html#pointer-events
 @js.native trait SyntheticPointerEvent[+TargetType] extends SyntheticEvent[TargetType, PointerEvent] {

@@ -73,7 +73,7 @@ abstract class GenericDeriveImpl(val c: whitebox.Context) { self =>
     }
   }
 
-  private def memoTree[T](tpe: Type, symbol: Symbol)(tree: => Tree): Tree = {
+  private def memoTree[T](tpe: Type)(tree: => Tree): Tree = {
     val fresh = c.freshName()
     currentMemo((getClass.getSimpleName, tpe.toString)) = Some(fresh)
     currentOrder.enqueue((this, fresh, tpe, tree))
@@ -115,7 +115,7 @@ abstract class GenericDeriveImpl(val c: whitebox.Context) { self =>
           }
 
           val paramsLists = constructor.asMethod.paramLists
-          memoTree(tTag.tpe, symbol) {
+          memoTree(tTag.tpe) {
             val params: Seq[Seq[Param]] = paramsLists.map(_.zipWithIndex.map { case (p, i) =>
               val transformedValueType = p.typeSignatureIn(tTag.tpe).resultType
               Param(
@@ -134,7 +134,7 @@ abstract class GenericDeriveImpl(val c: whitebox.Context) { self =>
           val actualValue = symbol.asClass.primaryConstructor.asMethod.paramLists.head.head
           val param = Param(actualValue.name, actualValue.typeSignatureIn(tTag.tpe).resultType, None)
 
-          memoTree(tTag.tpe, symbol)(createValueClassTypeclass(tTag.tpe, param))
+          memoTree(tTag.tpe)(createValueClassTypeclass(tTag.tpe, param))
         } else if (symbol.isClass && symbol.asClass.isSealed && symbol.asType.toType.typeArgs.isEmpty) {
           def getSubclasses(clazz: ClassSymbol): Set[Symbol] = {
             // from magnolia
@@ -144,11 +144,11 @@ abstract class GenericDeriveImpl(val c: whitebox.Context) { self =>
             abstractTypes.map(_.asClass).flatMap(getSubclasses) ++ concreteTypes
           }
 
-          memoTree(tTag.tpe, symbol) {
+          memoTree(tTag.tpe) {
             createSealedTraitTypeclass(tTag.tpe, getSubclasses(symbol.asClass).toSeq)
           }
         } else {
-          memoTree(tTag.tpe, symbol) {
+          memoTree(tTag.tpe) {
             c.echo(c.enclosingPosition, s"Using fallback derivation for type ${tTag.tpe} (derivation: ${getClass.getSimpleName})")
             createFallback(tTag.tpe)
           }
@@ -157,7 +157,7 @@ abstract class GenericDeriveImpl(val c: whitebox.Context) { self =>
         if (isRoot) {
           regularImplicit
         } else {
-          memoTree(tTag.tpe, symbol) {
+          memoTree(tTag.tpe) {
             regularImplicit
           }
         }

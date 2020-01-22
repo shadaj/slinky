@@ -1,12 +1,11 @@
 package slinky.docs
 
-import slinky.core.{Component, StatelessComponent, FunctionalComponent, ReactComponentClass}
+import slinky.core.{FunctionalComponent, ReactComponentClass}
 import slinky.core.annotations.react
 import slinky.core.facade.{Fragment, ReactElement}
 import slinky.core.facade.Hooks._
 import slinky.remarkreact.{ReactRenderer, Remark}
 import slinky.web.html._
-import org.scalajs.dom
 import org.scalajs.dom.raw.XMLHttpRequest
 import slinky.reacthelmet.Helmet
 

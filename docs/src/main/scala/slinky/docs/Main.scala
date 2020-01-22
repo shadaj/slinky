@@ -55,7 +55,7 @@ object Main {
         title(s"Slinky - Write React apps in Scala just like ES6"),
         style(`type` := "text/css")(IndexCSS.toString)
       ),
-      Navbar(),
+      Navbar(()),
       div(style := js.Dynamic.literal(
         marginTop = "60px"
       ))(
@@ -82,11 +82,10 @@ object Main {
     }
 
     ReactDOM.render(
-      Router(history = setupAnalytics())(
-        insideRouter
-      ),
+      Router(history = setupAnalytics())(insideRouter),
       container
     )
+    ()
   }
 
   var isSSR = false
@@ -127,10 +126,9 @@ object Main {
     val container = dom.document.getElementById("root")
 
     ReactDOM.hydrate(
-      Router(history = setupAnalytics())(
-        insideRouter
-      ),
+      Router(history = setupAnalytics())(insideRouter),
       container
     )
+    ()
   }
 }
