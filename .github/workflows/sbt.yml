@@ -12,6 +12,7 @@ jobs:
   test:
     runs-on: ${{ matrix.os }}
     strategy:
+      fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest]
         scalajs: ["0.6.31", "1.0.0-RC2"]
@@ -27,13 +28,14 @@ jobs:
       - name: Install NPM Dependencies
         run: npm install; cd native; npm install; cd ..
         shell: bash
-      - name: Test with SBT (fastopt)
-        run: sbt ";scalajsReactInterop/test; + tests/test; + native/test"
+      - name: Test core and native (fastopt + fullopt)
+        run: sbt "; + tests/test; + native/test; set scalaJSStage in Global := FullOptStage; + tests/test; + native/test"
         env:
           SCALAJS_VERSION: ${{ matrix.scalajs }}
         shell: bash
-      - name: Test with SBT (fullopt)
-        run: sbt ";set scalaJSStage in Global := FullOptStage; scalajsReactInterop/test; + tests/test; + native/test"
+      - name: Test Scala.js React Interop (fastopt + fullopt)
+        if: matrix.scalajs == '0.6.31'
+        run: sbt ";scalajsReactInterop/test; set scalaJSStage in Global := FullOptStage; scalajsReactInterop/test"
         env:
           SCALAJS_VERSION: ${{ matrix.scalajs }}
         shell: bash
