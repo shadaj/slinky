@@ -13,7 +13,7 @@ scalacOptions ++= {
   else Nil
 }
 
-Test / scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) }
+scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) }
 
 Test / jsEnv := new JSDOMNodeJSEnv(JSDOMNodeJSEnv.Config().withArgs(List("-r", "react-native-mock-render")))
 

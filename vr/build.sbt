@@ -9,4 +9,4 @@ scalacOptions ++= {
   else Nil
 }
 
-Test / scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) }
+scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) }
