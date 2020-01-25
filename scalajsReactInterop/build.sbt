@@ -8,6 +8,8 @@ libraryDependencies += "org.scalatest" %%% "scalatest" % "3.1.0" % Test
 
 Test / npmDependencies += "react" -> "16.12.0"
 Test / npmDependencies += "react-dom" -> "16.12.0"
+
+Test / requireJsDomEnv := true
 Test / jsEnv := new org.scalajs.jsenv.jsdomnodejs.JSDOMNodeJSEnv()
 
 scalacOptions ++= {
