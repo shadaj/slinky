@@ -6,6 +6,6 @@
     }
   ],
   "dependencies": {
-    "jsdom": "^9.9.0"
+    "jsdom": "^9.12.0"
   }
 }

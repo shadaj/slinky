@@ -10,7 +10,7 @@ addSbtPlugin("org.scala-js" % "sbt-scalajs" % scalaJSVersion)
 
 libraryDependencies ++= {
   if (scalaJSVersion.startsWith("0.6.")) Nil
-  else Seq("org.scala-js" %% "scalajs-env-jsdom-nodejs" % "1.0.0-RC2")
+  else Seq("org.scala-js" %% "scalajs-env-jsdom-nodejs" % "1.0.0-RC3")
 }
 
 {
