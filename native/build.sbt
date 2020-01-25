@@ -15,7 +15,10 @@ scalacOptions ++= {
 
 scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) }
 
-Test / jsEnv := new NodeJSEnv(NodeJSEnv.Config().withArgs(List("-r", "react-native-mock-render")))
+Test / jsEnv := new NodeJSEnv(
+  NodeJSEnv.Config()
+    .withArgs(List("-r", baseDirectory.value.getAbsolutePath + "/node_modules/react-native-mock-render/mock.js"))
+)
 
 def escapeBackslashes(path: String): String = {
   if (Properties.isWin)
