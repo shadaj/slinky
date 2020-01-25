@@ -1,6 +1,6 @@
 enablePlugins(ScalaJSPlugin)
 
-import org.scalajs.jsenv.jsdomnodejs.JSDOMNodeJSEnv
+import org.scalajs.jsenv.nodejs.NodeJSEnv
 
 import scala.util.Properties
 
@@ -15,7 +15,7 @@ scalacOptions ++= {
 
 scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) }
 
-Test / jsEnv := new JSDOMNodeJSEnv(JSDOMNodeJSEnv.Config().withArgs(List("-r", "react-native-mock-render")))
+Test / jsEnv := new NodeJSEnv(NodeJSEnv.Config().withArgs(List("-r", "react-native-mock-render")))
 
 def escapeBackslashes(path: String): String = {
   if (Properties.isWin)
