@@ -4,8 +4,11 @@ Global / onChangedBuildSource := ReloadOnSourceChanges
 turbo := true
 
 ThisBuild / libraryDependencies += compilerPlugin(scalafixSemanticdb)
-addCommandAlias("style", "Compile/scalafix; Test/scalafix")
-addCommandAlias("styleCheck", "Compile/scalafix --check; Test/scalafix --check")
+addCommandAlias("style", "compile:scalafix; test:scalafix; compile:scalafmt; test:scalafmt; scalafmtSbt")
+addCommandAlias(
+  "styleCheck",
+  "compile:scalafix --check; test:scalafix --check; compile:scalafmtCheck; test:scalafmtCheck; scalafmtSbtCheck"
+)
 
 val scala212 = "2.12.10"
 val scala213 = "2.13.1"
