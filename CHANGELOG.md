@@ -6,6 +6,7 @@
 + Add ARIA role attribute [PR #309](https://github.com/shadaj/slinky/pull/309)
 + Support className and role attributes for SVG [PR #314](https://github.com/shadaj/slinky/pull/314)
 + Add novalidate attribute to form [PR #315](https://github.com/shadaj/slinky/pull/315)
++ Add apply method for constructing CustomTag and CustomAttributes [PR #318](https://github.com/shadaj/slinky/pull/318)
 
 ## [v0.6.3](https://slinky.dev)
 ### Highlights :tada:
