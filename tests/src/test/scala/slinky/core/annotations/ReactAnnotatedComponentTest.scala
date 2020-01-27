@@ -22,7 +22,7 @@ import scala.util.Try
   }
 
   override def componentDidMount(): Unit = {
-    setState((s, p) => {
+    setState((s, _) => {
       s + 1
     })
   }
@@ -39,7 +39,7 @@ import scala.util.Try
   override def initialState: Int = 0
 
   override def componentDidMount(): Unit = {
-    setState((s, p) => {
+    setState((s, _) => {
       s + 1
     }, () => {
       props.apply(state)

@@ -1,8 +1,7 @@
 package slinky.docs.homepage
 
 import slinky.core.annotations.react
-import slinky.core.{FunctionalComponent}
-import slinky.core.facade.ReactElement
+import slinky.core.FunctionalComponent
 import slinky.docs.CodeExample
 import slinky.web.html._
 

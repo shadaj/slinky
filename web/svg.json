@@ -466,7 +466,7 @@
     },
     {
       "attributeName" : "alphabetic",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -474,7 +474,7 @@
     },
     {
       "attributeName" : "amplitude",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -482,7 +482,7 @@
     },
     {
       "attributeName" : "arabicForm",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -530,7 +530,7 @@
     },
     {
       "attributeName" : "baseProfile",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -538,7 +538,7 @@
     },
     {
       "attributeName" : "bbox",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -562,7 +562,7 @@
     },
     {
       "attributeName" : "by",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -578,7 +578,7 @@
     },
     {
       "attributeName" : "capHeight",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -635,7 +635,7 @@
     },
     {
       "attributeName" : "d",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -643,7 +643,7 @@
     },
     {
       "attributeName" : "descent",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -651,7 +651,7 @@
     },
     {
       "attributeName" : "diffuseConstant",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -659,7 +659,7 @@
     },
     {
       "attributeName" : "divisor",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -667,7 +667,7 @@
     },
     {
       "attributeName" : "dur",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -675,7 +675,7 @@
     },
     {
       "attributeName" : "dx",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -683,7 +683,7 @@
     },
     {
       "attributeName" : "dy",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -691,7 +691,7 @@
     },
     {
       "attributeName" : "edgeMode",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -699,7 +699,7 @@
     },
     {
       "attributeName" : "elevation",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -707,7 +707,7 @@
     },
     {
       "attributeName" : "end",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -715,7 +715,7 @@
     },
     {
       "attributeName" : "exponent",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -723,7 +723,7 @@
     },
     {
       "attributeName" : "externalResourcesRequired",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -731,7 +731,7 @@
     },
     {
       "attributeName" : "fill",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -739,7 +739,7 @@
     },
     {
       "attributeName" : "filterRes",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -747,7 +747,7 @@
     },
     {
       "attributeName" : "filterUnits",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -755,7 +755,7 @@
     },
     {
       "attributeName" : "fontFamily",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -763,7 +763,7 @@
     },
     {
       "attributeName" : "fontSize",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -771,7 +771,7 @@
     },
     {
       "attributeName" : "fontStretch",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -779,7 +779,7 @@
     },
     {
       "attributeName" : "fontStyle",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -787,7 +787,7 @@
     },
     {
       "attributeName" : "format",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -795,7 +795,7 @@
     },
     {
       "attributeName" : "from",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -819,7 +819,7 @@
     },
     {
       "attributeName" : "g1",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -827,7 +827,7 @@
     },
     {
       "attributeName" : "g2",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -835,7 +835,7 @@
     },
     {
       "attributeName" : "glyphName",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -843,7 +843,7 @@
     },
     {
       "attributeName" : "glyphRef",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -851,7 +851,7 @@
     },
     {
       "attributeName" : "gradientTransform",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -859,7 +859,7 @@
     },
     {
       "attributeName" : "gradientUnits",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -867,7 +867,7 @@
     },
     {
       "attributeName" : "hanging",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -883,7 +883,7 @@
     },
     {
       "attributeName" : "horizAdvX",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -891,7 +891,7 @@
     },
     {
       "attributeName" : "horizOriginX",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -907,7 +907,7 @@
     },
     {
       "attributeName" : "ideographic",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -915,7 +915,7 @@
     },
     {
       "attributeName" : "in",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -923,7 +923,7 @@
     },
     {
       "attributeName" : "in2",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -931,7 +931,7 @@
     },
     {
       "attributeName" : "intercept",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -939,7 +939,7 @@
     },
     {
       "attributeName" : "k",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -947,7 +947,7 @@
     },
     {
       "attributeName" : "k1",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -955,7 +955,7 @@
     },
     {
       "attributeName" : "k2",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -963,7 +963,7 @@
     },
     {
       "attributeName" : "k3",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -971,7 +971,7 @@
     },
     {
       "attributeName" : "k4",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -979,7 +979,7 @@
     },
     {
       "attributeName" : "kernelMatrix",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -987,7 +987,7 @@
     },
     {
       "attributeName" : "kernelUnitLength",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -995,7 +995,7 @@
     },
     {
       "attributeName" : "keyPoints",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1003,7 +1003,7 @@
     },
     {
       "attributeName" : "keySplines",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1011,7 +1011,7 @@
     },
     {
       "attributeName" : "keyTimes",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1027,7 +1027,7 @@
     },
     {
       "attributeName" : "lengthAdjust",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1035,7 +1035,7 @@
     },
     {
       "attributeName" : "limitingConeAngle",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1043,7 +1043,7 @@
     },
     {
       "attributeName" : "local",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1051,7 +1051,7 @@
     },
     {
       "attributeName" : "markerHeight",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1059,7 +1059,7 @@
     },
     {
       "attributeName" : "markerUnits",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1067,7 +1067,7 @@
     },
     {
       "attributeName" : "markerWidth",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1075,7 +1075,7 @@
     },
     {
       "attributeName" : "maskContentUnits",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1083,7 +1083,7 @@
     },
     {
       "attributeName" : "maskUnits",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1091,7 +1091,7 @@
     },
     {
       "attributeName" : "mathematical",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1131,7 +1131,7 @@
     },
     {
       "attributeName" : "mode",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1147,7 +1147,7 @@
     },
     {
       "attributeName" : "numOctaves",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1155,7 +1155,7 @@
     },
     {
       "attributeName" : "offset",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1163,7 +1163,7 @@
     },
     {
       "attributeName" : "operator",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1171,7 +1171,7 @@
     },
     {
       "attributeName" : "order",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1179,7 +1179,7 @@
     },
     {
       "attributeName" : "orient",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1187,7 +1187,7 @@
     },
     {
       "attributeName" : "orientation",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1195,7 +1195,7 @@
     },
     {
       "attributeName" : "origin",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1203,7 +1203,7 @@
     },
     {
       "attributeName" : "overlinePosition",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1211,7 +1211,7 @@
     },
     {
       "attributeName" : "overlineThickness",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1219,7 +1219,7 @@
     },
     {
       "attributeName" : "panose1",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1227,7 +1227,7 @@
     },
     {
       "attributeName" : "pathLength",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1235,7 +1235,7 @@
     },
     {
       "attributeName" : "patternContentUnits",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1243,7 +1243,7 @@
     },
     {
       "attributeName" : "patternTransform",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1251,7 +1251,7 @@
     },
     {
       "attributeName" : "patternUnits",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1259,7 +1259,7 @@
     },
     {
       "attributeName" : "points",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1267,7 +1267,7 @@
     },
     {
       "attributeName" : "pointsAtX",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1275,7 +1275,7 @@
     },
     {
       "attributeName" : "pointsAtY",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1283,7 +1283,7 @@
     },
     {
       "attributeName" : "pointsAtZ",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1291,7 +1291,7 @@
     },
     {
       "attributeName" : "preserveAlpha",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1299,7 +1299,7 @@
     },
     {
       "attributeName" : "preserveAspectRatio",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1307,7 +1307,7 @@
     },
     {
       "attributeName" : "primitiveUnits",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1315,7 +1315,7 @@
     },
     {
       "attributeName" : "r",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1323,7 +1323,7 @@
     },
     {
       "attributeName" : "radius",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1331,7 +1331,7 @@
     },
     {
       "attributeName" : "refX",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1339,7 +1339,7 @@
     },
     {
       "attributeName" : "refY",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1347,7 +1347,7 @@
     },
     {
       "attributeName" : "renderingIntent",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1355,7 +1355,7 @@
     },
     {
       "attributeName" : "repeatCount",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1363,7 +1363,7 @@
     },
     {
       "attributeName" : "repeatDur",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1371,7 +1371,7 @@
     },
     {
       "attributeName" : "requiredExtensions",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1379,7 +1379,7 @@
     },
     {
       "attributeName" : "requiredFeatures",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1387,7 +1387,7 @@
     },
     {
       "attributeName" : "restart",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1395,7 +1395,7 @@
     },
     {
       "attributeName" : "result",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1412,7 +1412,7 @@
     },
     {
       "attributeName" : "rotate",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1420,7 +1420,7 @@
     },
     {
       "attributeName" : "rx",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1428,7 +1428,7 @@
     },
     {
       "attributeName" : "ry",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1436,7 +1436,7 @@
     },
     {
       "attributeName" : "scale",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1444,7 +1444,7 @@
     },
     {
       "attributeName" : "seed",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1452,7 +1452,7 @@
     },
     {
       "attributeName" : "slope",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1460,7 +1460,7 @@
     },
     {
       "attributeName" : "spacing",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1468,7 +1468,7 @@
     },
     {
       "attributeName" : "specularConstant",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1476,7 +1476,7 @@
     },
     {
       "attributeName" : "specularExponent",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1484,7 +1484,7 @@
     },
     {
       "attributeName" : "spreadMethod",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1492,7 +1492,7 @@
     },
     {
       "attributeName" : "startOffset",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1500,7 +1500,7 @@
     },
     {
       "attributeName" : "stdDeviation",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1508,7 +1508,7 @@
     },
     {
       "attributeName" : "stemh",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1516,7 +1516,7 @@
     },
     {
       "attributeName" : "stemv",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1524,7 +1524,7 @@
     },
     {
       "attributeName" : "stitchTiles",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1532,7 +1532,7 @@
     },
     {
       "attributeName" : "strikethroughPosition",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1540,7 +1540,7 @@
     },
     {
       "attributeName" : "strikethroughThickness",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1548,7 +1548,7 @@
     },
     {
       "attributeName" : "string",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1556,7 +1556,7 @@
     },
     {
       "attributeName" : "style",
-      "attributeType" : "js.Dynamic",
+      "attributeType" : "scala.scalajs.js.Dynamic",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1564,7 +1564,7 @@
     },
     {
       "attributeName" : "surfaceScale",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1572,7 +1572,7 @@
     },
     {
       "attributeName" : "systemLanguage",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1580,7 +1580,7 @@
     },
     {
       "attributeName" : "tableValues",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1596,7 +1596,7 @@
     },
     {
       "attributeName" : "targetX",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1604,7 +1604,7 @@
     },
     {
       "attributeName" : "targetY",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1612,7 +1612,7 @@
     },
     {
       "attributeName" : "textLength",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1628,7 +1628,7 @@
     },
     {
       "attributeName" : "to",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1636,7 +1636,7 @@
     },
     {
       "attributeName" : "transform",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1652,7 +1652,7 @@
     },
     {
       "attributeName" : "u1",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1660,7 +1660,7 @@
     },
     {
       "attributeName" : "u2",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1668,7 +1668,7 @@
     },
     {
       "attributeName" : "underlinePosition",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1676,7 +1676,7 @@
     },
     {
       "attributeName" : "underlineThickness",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1684,7 +1684,7 @@
     },
     {
       "attributeName" : "unicode",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1692,7 +1692,7 @@
     },
     {
       "attributeName" : "unicodeRange",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1700,7 +1700,7 @@
     },
     {
       "attributeName" : "unitsPerEm",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1708,7 +1708,7 @@
     },
     {
       "attributeName" : "vAlphabetic",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1716,7 +1716,7 @@
     },
     {
       "attributeName" : "vHanging",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1724,7 +1724,7 @@
     },
     {
       "attributeName" : "vIdeographic",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1732,7 +1732,7 @@
     },
     {
       "attributeName" : "vMathematical",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1740,7 +1740,7 @@
     },
     {
       "attributeName" : "values",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1748,7 +1748,7 @@
     },
     {
       "attributeName" : "version",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1756,7 +1756,7 @@
     },
     {
       "attributeName" : "vertAdvY",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1764,7 +1764,7 @@
     },
     {
       "attributeName" : "vertOriginX",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1772,7 +1772,7 @@
     },
     {
       "attributeName" : "vertOriginY",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1780,7 +1780,7 @@
     },
     {
       "attributeName" : "viewBox",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1788,7 +1788,7 @@
     },
     {
       "attributeName" : "viewTarget",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1804,7 +1804,7 @@
     },
     {
       "attributeName" : "widths",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1812,7 +1812,7 @@
     },
     {
       "attributeName" : "x",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1820,7 +1820,7 @@
     },
     {
       "attributeName" : "xHeight",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1828,7 +1828,7 @@
     },
     {
       "attributeName" : "x1",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1836,7 +1836,7 @@
     },
     {
       "attributeName" : "x2",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1844,7 +1844,7 @@
     },
     {
       "attributeName" : "xChannelSelector",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1852,7 +1852,7 @@
     },
     {
       "attributeName" : "y",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1860,7 +1860,7 @@
     },
     {
       "attributeName" : "y1",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1868,7 +1868,7 @@
     },
     {
       "attributeName" : "y2",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1876,7 +1876,7 @@
     },
     {
       "attributeName" : "yChannelSelector",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1884,7 +1884,7 @@
     },
     {
       "attributeName" : "z",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1892,7 +1892,7 @@
     },
     {
       "attributeName" : "zoomAndPan",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1980,7 +1980,7 @@
     },
     {
       "attributeName" : "direction",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1988,7 +1988,7 @@
     },
     {
       "attributeName" : "display",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -1996,7 +1996,7 @@
     },
     {
       "attributeName" : "dominantBaseline",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -2004,7 +2004,7 @@
     },
     {
       "attributeName" : "enableBackground",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -2012,7 +2012,7 @@
     },
     {
       "attributeName" : "fillOpacity",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -2020,7 +2020,7 @@
     },
     {
       "attributeName" : "fillRule",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -2028,7 +2028,7 @@
     },
     {
       "attributeName" : "filter",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -2036,7 +2036,7 @@
     },
     {
       "attributeName" : "floodColor",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -2044,7 +2044,7 @@
     },
     {
       "attributeName" : "floodOpacity",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -2052,7 +2052,7 @@
     },
     {
       "attributeName" : "fontSizeAdjust",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -2060,7 +2060,7 @@
     },
     {
       "attributeName" : "fontVariant",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -2068,7 +2068,7 @@
     },
     {
       "attributeName" : "fontWeight",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -2076,7 +2076,7 @@
     },
     {
       "attributeName" : "glyphOrientationHorizontal",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -2084,7 +2084,7 @@
     },
     {
       "attributeName" : "glyphOrientationVertical",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -2092,7 +2092,7 @@
     },
     {
       "attributeName" : "imageRendering",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -2100,7 +2100,7 @@
     },
     {
       "attributeName" : "kerning",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -2108,7 +2108,7 @@
     },
     {
       "attributeName" : "letterSpacing",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -2116,7 +2116,7 @@
     },
     {
       "attributeName" : "lightingColor",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -2124,7 +2124,7 @@
     },
     {
       "attributeName" : "markerEnd",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -2132,7 +2132,7 @@
     },
     {
       "attributeName" : "markerMid",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -2140,7 +2140,7 @@
     },
     {
       "attributeName" : "markerStart",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -2148,7 +2148,7 @@
     },
     {
       "attributeName" : "mask",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -2156,7 +2156,7 @@
     },
     {
       "attributeName" : "opacity",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -2164,7 +2164,7 @@
     },
     {
       "attributeName" : "overflow",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -2172,7 +2172,7 @@
     },
     {
       "attributeName" : "pointerEvents",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -2180,7 +2180,7 @@
     },
     {
       "attributeName" : "shapeRendering",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -2188,7 +2188,7 @@
     },
     {
       "attributeName" : "stopColor",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -2196,7 +2196,7 @@
     },
     {
       "attributeName" : "stopOpacity",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -2204,7 +2204,7 @@
     },
     {
       "attributeName" : "strokeDasharray",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -2212,7 +2212,7 @@
     },
     {
       "attributeName" : "strokeDashoffset",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -2220,7 +2220,7 @@
     },
     {
       "attributeName" : "strokeLinecap",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -2228,7 +2228,7 @@
     },
     {
       "attributeName" : "strokeLinejoin",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -2236,7 +2236,7 @@
     },
     {
       "attributeName" : "strokeMiterlimit",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -2244,7 +2244,7 @@
     },
     {
       "attributeName" : "strokeOpacity",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -2252,7 +2252,7 @@
     },
     {
       "attributeName" : "strokeWidth",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -2260,7 +2260,7 @@
     },
     {
       "attributeName" : "stroke",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -2268,7 +2268,7 @@
     },
     {
       "attributeName" : "textAnchor",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -2276,7 +2276,7 @@
     },
     {
       "attributeName" : "textDecoration",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -2284,7 +2284,7 @@
     },
     {
       "attributeName" : "textRendering",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -2292,7 +2292,7 @@
     },
     {
       "attributeName" : "unicodeBidi",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -2300,7 +2300,7 @@
     },
     {
       "attributeName" : "visibility",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -2308,7 +2308,7 @@
     },
     {
       "attributeName" : "wordSpacing",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -2316,7 +2316,7 @@
     },
     {
       "attributeName" : "writingMode",
-      "attributeType" : "js.Any",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -2340,7 +2340,7 @@
     },
     {
       "attributeName" : "dangerouslySetInnerHTML",
-      "attributeType" : "js.Object",
+      "attributeType" : "scala.scalajs.js.Object",
       "docLines" : [
       ],
       "compatibleTags" : null,

@@ -1,14 +1,12 @@
 package slinky.core.facade
 
 import slinky.core._
-import slinky.readwrite.{ObjectOrWritten, Reader, Writer}
 
 import scala.scalajs.js
 import js.|
 import scala.annotation.unchecked.uncheckedVariance
 import scala.scalajs.js.annotation.{JSImport, JSName}
 import scala.scalajs.js.JSConverters._
-import scala.language.implicitConversions
 
 @js.native
 trait ReactElement extends js.Object with ReactElementMod

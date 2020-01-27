@@ -1,16 +1,12 @@
 package slinky.readwrite
 
 import scala.annotation.compileTimeOnly
-import scala.collection.generic.CanBuildFrom
 import scala.concurrent.Future
 import scala.reflect.ClassTag
 import scala.scalajs.js
 import scala.scalajs.js.|
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.reflect.macros.whitebox
-
-import scala.language.experimental.macros
-import scala.language.higherKinds
 
 @compileTimeOnly("Deferred writers are used to handle recursive structures")
 final class DeferredWriter[T, Term] extends Writer[T] {

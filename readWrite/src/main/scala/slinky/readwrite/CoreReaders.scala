@@ -10,9 +10,6 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.reflect.ClassTag
 import scala.reflect.macros.whitebox
 
-import scala.language.experimental.macros
-import scala.language.higherKinds
-
 @compileTimeOnly("Deferred readers are used to handle recursive structures")
 final class DeferredReader[T, Term] extends Reader[T] {
   override protected def forceRead(o: js.Object): T = throw new Exception

@@ -202,13 +202,11 @@ class ReaderWriterTest extends FunSuite {
   }
 
   // compilation test: can use derivation macro with type parameter when typeclass is available
-  {
-    def deriveReaderTypeclass[T: Reader]: Reader[T] = {
-      Reader.deriveReader[T]
-    }
+  def deriveReaderTypeclass[T: Reader]: Reader[T] = {
+    Reader.deriveReader[T]
+  }
 
-    def deriveWriterTypeclass[T: Writer]: Writer[T] = {
-      Writer.deriveWriter[T]
-    }
+  def deriveWriterTypeclass[T: Writer]: Writer[T] = {
+    Writer.deriveWriter[T]
   }
 }

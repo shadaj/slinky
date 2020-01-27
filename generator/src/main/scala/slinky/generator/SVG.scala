@@ -88,6 +88,6 @@ object SVG extends TagsProvider {
       } else None
     } ++ extraAttributes.map(e => Attribute(e._1.name, e._1.valueType, Seq.empty, None, false))
 
-    (allTags, attributes)
+    (allTags.toSeq, attributes.toSeq)
   }
 }

@@ -1,12 +1,10 @@
 package slinky.core
 
-import slinky.core.facade.{React, ReactRaw, ReactElement, ReactRef}
+import slinky.core.facade.{ReactRaw, ReactElement, ReactRef}
 import slinky.readwrite.Writer
 
-import scala.language.implicitConversions
 import scala.scalajs.js
 import scala.scalajs.js.|
-import scala.language.experimental.macros
 import scala.reflect.macros.whitebox
 
 final class BuildingComponent[E, R <: js.Object](private val args: js.Array[js.Any]) extends AnyVal {
@@ -75,7 +73,7 @@ abstract class ExternalComponentWithAttributesWithRefType[E <: TagElement, R <: 
   type Element = E
   type RefType = R
 
-  private[this] final val writer = pw.asInstanceOf[Writer[Props]]
+  private[this] val writer = pw.asInstanceOf[Writer[Props]]
 
   val component: String | js.Object
 
@@ -121,7 +119,7 @@ object ExternalPropsWriterProvider {
   def impl(c: whitebox.Context): c.Expr[ExternalPropsWriterProvider] = {
     import c.universe._
     val compName = c.internal.enclosingOwner.owner.asClass
-    val q"$_; val x: $typedReaderType = null" = c.typecheck(q"@_root_.scala.annotation.unchecked.uncheckedStable val comp: $compName = null; val x: _root_.slinky.readwrite.Writer[comp.Props] = null")
+    val q"$_; val x: $typedReaderType = null" = c.typecheck(q"@_root_.scala.annotation.unchecked.uncheckedStable val comp: $compName = null; val x: _root_.slinky.readwrite.Writer[comp.Props] = null") // scalafix:ok
     val tpcls = c.inferImplicitValue(typedReaderType.tpe.asInstanceOf[c.Type])
     c.Expr(q"$tpcls.asInstanceOf[_root_.slinky.core.ExternalPropsWriterProvider]")
   }

@@ -1,14 +1,13 @@
 package slinky.core
 
 import org.scalatest.FunSuite
-
 import slinky.core.facade.{React, ReactElement}
 import slinky.web.{ReactDOM, SyntheticMouseEvent}
 import slinky.web.html._
 
 import scala.scalajs.js
 import org.scalajs.dom
-import org.scalajs.dom.{Element, html, Event, MouseEvent}
+import org.scalajs.dom.{Element, html}
 
 class InnerClassCustom extends js.Object {
   val customTag = new CustomTag("custom-element")
@@ -28,7 +27,7 @@ class TagTest extends FunSuite {
   }
 
   test("Sequence of different tag types can be typed to TagComponent[Any]") {
-    val foo: Seq[ReactElement] = Seq(div(), a())
+    Seq(div(), a()): Seq[ReactElement]
   }
 
   test("Sequence of different tag types can used as child of tag") {
@@ -57,7 +56,10 @@ class TagTest extends FunSuite {
   }
 
   test("Mouse events can be given a function taking a SyntheticMouseEvent") {
-    assertCompiles("div(onMouseOver := (v => { (v: SyntheticMouseEvent[Element]) }))")
+    div(onMouseOver := (v => {
+      assert((v: SyntheticMouseEvent[Element]) != null)
+      ()
+    }))
   }
 
   test("Can construct a tag with present optional attributes") {
@@ -76,8 +78,11 @@ class TagTest extends FunSuite {
     def constructTag[T <: Tag: className.supports: onClick.supports: ref.supports](tag: T): ReactElement = {
       tag.apply(
         className := "foo",
-        onClick := (e => e.target),
-        ref := (r => {})
+        onClick := { e =>
+          assert(e.target != null)
+          ()
+        },
+        ref := (_ => {})
       )("hello!")
     }
 
@@ -142,7 +147,10 @@ class TagTest extends FunSuite {
   }
 
   test("Can grab the target for an input event listener and use input properties") {
-    input(onInput := (v => v.target.value))(
+    input(onInput := { e =>
+      assert(e.target.value != null)
+      ()
+    })(
       "body"
     )
   }
@@ -154,10 +162,10 @@ class TagTest extends FunSuite {
 
   test("Cannot reuse half-built tag") {
     val halfBuilt = div(id := "1")
-    val fullyBuilt: ReactElement = halfBuilt("hi")
+    halfBuilt("hi"): ReactElement
 
     assertThrows[IllegalStateException] {
-      val fullyBuilt2: ReactElement = halfBuilt("hi2")
+      halfBuilt("hi2"): ReactElement
     }
   }
 }

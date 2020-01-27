@@ -18,12 +18,14 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 1.8
+    - name: Style checks
+      run: sbt styleCheck
     - name: Install NPM Dependencies
       run: npm install; cd native; npm install; cd ..
     - name: Test with SBT (fastopt)
-      run: sbt ";scalajsReactInterop/test; + tests/test; + native/test"
+      run: sbt scalajsReactInterop/test +tests/test +native/test
     - name: Test with SBT (fullopt)
-      run: sbt ";set scalaJSStage in Global := FullOptStage; scalajsReactInterop/test; + tests/test; + native/test"
+      run: sbt "set Global/scalaJSStage := FullOptStage" scalajsReactInterop/test +tests/test +native/test
   test-windows:
     runs-on: windows-latest
     strategy:
@@ -39,14 +41,16 @@ jobs:
         uses: olafurpg/setup-scala@v7
         with:
           java-version: 1.8
+      - name: Style checks
+        run: sbt styleCheck
       - name: Install NPM Dependencies
         run: npm install; cd native; npm install; cd ..
         shell: bash
       - name: Test with SBT (fastopt)
-        run: sbt ";scalajsReactInterop/test; + tests/test; + native/test"
+        run: sbt scalajsReactInterop/test +tests/test +native/test
         shell: bash
       - name: Test with SBT (fullopt)
-        run: sbt ";set scalaJSStage in Global := FullOptStage; scalajsReactInterop/test; + tests/test; + native/test"
+        run: sbt "set Global/scalaJSStage := FullOptStage" scalajsReactInterop/test +tests/test +native/test
         shell: bash
   build-docs:
     runs-on: ubuntu-latest

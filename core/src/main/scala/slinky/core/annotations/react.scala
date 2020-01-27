@@ -3,7 +3,6 @@ package slinky.core.annotations
 import slinky.core._
 
 import scala.annotation.compileTimeOnly
-import scala.language.experimental.macros
 import scala.reflect.macros.whitebox
 import scala.scalajs.js
 
@@ -32,7 +31,7 @@ object ReactMacrosImpl {
 
   def createComponentBody(c: whitebox.Context)(cls: c.Tree): (c.Tree, List[c.Tree]) = {
     import c.universe._
-    val q"..$_ class ${className: Name} extends ..$parents { $self => ..$stats}" = cls
+    val q"..$_ class ${className: Name} extends ..$parents { $self => ..$stats}" = cls // scalafix:ok
     val (propsDefinition, applyMethods) = stats.flatMap {
       case defn@q"..$_ type Props = ${_}" =>
         Some((defn, Seq()))
@@ -117,7 +116,7 @@ object ReactMacrosImpl {
   def createExternalBody(c: whitebox.Context)(obj: c.Tree): (List[c.Tree], c.Type, c.Type) = {
     import c.universe._
 
-    val q"..$_ object ${objectName: Name} extends ..$parents { $self => ..$stats}" = obj
+    val q"..$_ object ${objectName: Name} extends ..$parents { $self => ..$stats}" = obj // scalafix:ok
 
     val typecheckedParent = c.typecheck(parents.head.asInstanceOf[c.universe.Tree], mode = c.TYPEmode)
     val refType = if (parentsContainsType(c)(parents.asInstanceOf[Seq[c.Tree]], typeOf[ExternalComponent])) {

@@ -144,7 +144,7 @@ object MDN extends TagsProvider {
         val children = dl.children.toList
         val attrsAndDocs = children.foldLeft(Seq.empty[(String, String)]) { (acc, cur) =>
           if (cur.tagName == "dt") {
-            acc :+ (cur >> text("code"), "")
+            acc :+ ((cur >> text("code"), ""))
           } else {
             acc.init :+ acc.last.copy(_2 = if (acc.last._2.isEmpty) cur.innerHtml else acc.last._2 + " " + cur.innerHtml)
           }
@@ -177,7 +177,7 @@ object MDN extends TagsProvider {
   def extract: (Seq[Tag], Seq[Attribute]) = {
     val tagsWithAttributes = tags.map { n =>
       val extracted = htmlElement(n)
-      (Tag(n, "Any", extracted._1.split('\n')), extracted._2)
+      (Tag(n, "Any", extracted._1.split('\n').toSeq), extracted._2)
     }
 
     val attrs = tagsWithAttributes.flatMap(v => v._2.map(t => (v._1, t._1, t._2)))
