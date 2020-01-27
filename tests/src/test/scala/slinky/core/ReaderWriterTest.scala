@@ -3,6 +3,7 @@ package slinky.core
 import slinky.readwrite.{Reader, WithRaw, Writer}
 import org.scalatest.FunSuite
 
+import scala.collection.mutable
 import scala.scalajs.js
 import scala.scalajs.js.|
 
@@ -171,6 +172,10 @@ class ReaderWriterTest extends FunSuite {
 
   test("Read/write - maps") {
     readWrittenSame(Map(1 -> 2, 3 -> 4))
+  }
+
+  test("Read/write - mutable maps") {
+    readWrittenSame(mutable.Map("1" -> 2, "3" -> 4))
   }
 
   test("Read/write - ranges (inclusive)") {
