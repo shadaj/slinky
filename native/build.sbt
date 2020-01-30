@@ -14,6 +14,7 @@ scalacOptions ++= {
 }
 
 scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) }
+Test / scalaJSLinkerConfig ~= { _.withESFeatures(_.withUseECMAScript2015(false)) }
 
 Test / jsEnv := new NodeJSEnv(
   NodeJSEnv.Config()
