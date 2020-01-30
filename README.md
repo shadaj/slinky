@@ -40,7 +40,7 @@ Slinky is split up into several submodules:
 + `tests` contains the unit tests for the above modules (except native and vr which have local tests)
 + `docs` and `docsMacros` contains the documentation site, which is a Slinky app itself
 
-To run the main unit tests, run `sbt tests/test`.
+To run the main unit tests, first install the dependencies by running `npm install` inside the `tests` folder, then from the base folder run `sbt tests/test`. Similarly for React Native tests, run `npm install` inside the `native` folder, then from the base folder run `sbt native/test`.
 
 Note to IntelliJ IDEA users. When you try to import Slinky SBT definition in IDEA and encounter an exception like
  `java.nio.file.NoSuchFileException: /Users/someuser/.slinkyPluginIC/sdk/192.6817.14/plugins`, you should
