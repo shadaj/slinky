@@ -34,6 +34,7 @@ trait ScrollViewInstance extends js.Object {
                    pagingEnabled: js.UndefOr[Boolean] = js.undefined,
                    refreshControl: js.UndefOr[ReactElement] = js.undefined,
                    removeClippedSubviews: js.UndefOr[Boolean] = js.undefined,
+                   style: js.UndefOr[js.Object] = js.undefined,
                    scrollEnabled: js.UndefOr[Boolean] = js.undefined,
                    showsHorizontalScrollIndicator: js.UndefOr[Boolean] = js.undefined,
                    showsVerticalScrollIndicator: js.UndefOr[Boolean] = js.undefined,

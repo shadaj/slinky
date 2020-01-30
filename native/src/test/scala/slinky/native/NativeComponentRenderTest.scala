@@ -4,6 +4,7 @@ import org.scalatest.FunSuite
 import slinky.testrenderer.TestRenderer
 
 import scala.scalajs.js
+import scala.scalajs.js.Dynamic.literal
 
 class NativeComponentRenderTest extends FunSuite {
   test("Can render a button component") {
@@ -28,6 +29,17 @@ class NativeComponentRenderTest extends FunSuite {
       View(
         View()
       )
+    ).toJSON()))
+  }
+
+  val testStyle = literal(
+    fontSize = 20,
+    color = "black"
+  )
+
+  test("Can render a view component with style") {
+    assert(!js.isUndefined(TestRenderer.create(
+      View(style = testStyle)()
     ).toJSON()))
   }
 
@@ -74,6 +86,12 @@ class NativeComponentRenderTest extends FunSuite {
       ScrollView(
         TextInput(value = "hello")
       )
+    )))
+  }
+
+  test("Can render a ScrollView with style") {
+    assert(!js.isUndefined(TestRenderer.create(
+      ScrollView(style = testStyle)()
     )))
   }
 
