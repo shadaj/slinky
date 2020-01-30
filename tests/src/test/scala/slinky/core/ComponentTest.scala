@@ -3,11 +3,13 @@ package slinky.core
 import slinky.core.facade.{ErrorBoundaryInfo, ReactElement}
 import slinky.web.ReactDOM
 import org.scalajs.dom
-import org.scalatest.{Assertion, AsyncFunSuite}
 import slinky.readwrite.{Reader, Writer}
 
 import scala.concurrent.Promise
 import scala.scalajs.js
+
+import org.scalatest.Assertion
+import org.scalatest.funsuite.AsyncFunSuite
 
 object TestComponent extends ComponentWrapper {
   type Props = Int => Unit
@@ -21,7 +23,7 @@ object TestComponent extends ComponentWrapper {
     }
 
     override def componentDidMount(): Unit = {
-      setState((s, p) => {
+      setState((s, _) => {
         s + 1
       })
     }
@@ -37,14 +39,14 @@ object TestComponentExtraApply extends ComponentWrapper {
   type State = Int
 
   class Def(jsProps: js.Object) extends Definition(jsProps) {
-    override def initialState(): Int = 0
+    override def initialState: Int = 0
 
     override def componentWillUpdate(nextProps: Props, nextState: Int): Unit = {
       props.apply(nextState)
     }
 
     override def componentDidMount(): Unit = {
-      setState((s, p) => {
+      setState((s, _) => {
         s + 1
       })
     }
@@ -183,7 +185,7 @@ object DerivedStateComponent extends ComponentWrapper {
   case class Props(num: Int, onValue: Int => Unit)
   type State = Int
 
-  override val getDerivedStateFromProps = (nextProps: Props, prevState: State) => {
+  override val getDerivedStateFromProps = (nextProps: Props, _: State) => {
     nextProps.num
   }
 
@@ -204,7 +206,7 @@ object DerivedStateReturnNullComponent extends ComponentWrapper {
   case class Props(returnNull: Boolean, value: Int)
   case class State(value: Int)
 
-  override val getDerivedStateFromProps = (nextProps: Props, prevState: State) => {
+  override val getDerivedStateFromProps = (nextProps: Props, _: State) => {
     if (nextProps.returnNull) null else State(nextProps.value)
   }
 
@@ -221,9 +223,7 @@ object DerivedStateFromErrorComponent extends ComponentWrapper {
   case class Props(onValue: Int => Unit)
   type State = Int
 
-  override val getDerivedStateFromError = (e: js.Error) => {
-    123
-  }
+  override val getDerivedStateFromError = (_: js.Error) => 123
 
   class Def(jsProps: js.Object) extends Definition(jsProps) {
     override def initialState: Int = 0
@@ -348,10 +348,10 @@ class ComponentTest extends AsyncFunSuite {
 
   test("Cannot reuse half-built component") {
     val halfBuilt = NoPropsComponent()
-    val fullyBuilt: ReactElement = halfBuilt.withKey("abc")
+    halfBuilt.withKey("abc"): ReactElement
 
     assertThrows[IllegalStateException] {
-      val fullyBuilt2: ReactElement = halfBuilt.withKey("abc2")
+      halfBuilt.withKey("abc2"): ReactElement
     }
   }
 
@@ -391,7 +391,7 @@ class ComponentTest extends AsyncFunSuite {
     val promise: Promise[Assertion] = Promise()
 
     ReactDOM.render(
-      ErrorBoundaryComponent(ErrorBoundaryComponent.Props(true, (error, info) => {
+      ErrorBoundaryComponent(ErrorBoundaryComponent.Props(true, { (_, _) =>
         promise.success(assert(true))
       })),
       dom.document.createElement("div")
@@ -404,7 +404,7 @@ class ComponentTest extends AsyncFunSuite {
     var sawError = false
 
     ReactDOM.render(
-      ErrorBoundaryComponent(ErrorBoundaryComponent.Props(false, (error, info) => {
+      ErrorBoundaryComponent(ErrorBoundaryComponent.Props(false, { (_, _) =>
         sawError = true
       })),
       dom.document.createElement("div")
@@ -441,18 +441,14 @@ class ComponentTest extends AsyncFunSuite {
     val container = dom.document.createElement("div")
 
     ReactDOM.render(
-      DerivedStateReturnNullComponent(DerivedStateReturnNullComponent.Props(
-        false, 123
-      )),
+      DerivedStateReturnNullComponent(DerivedStateReturnNullComponent.Props(returnNull = false, 123)),
       container
     )
 
     assert(container.innerHTML == "123")
 
     ReactDOM.render(
-      DerivedStateReturnNullComponent(DerivedStateReturnNullComponent.Props(
-        true, 456
-      )),
+      DerivedStateReturnNullComponent(DerivedStateReturnNullComponent.Props(returnNull = true, 456)),
       container
     )
 
@@ -463,9 +459,7 @@ class ComponentTest extends AsyncFunSuite {
     val promise: Promise[Assertion] = Promise()
 
     ReactDOM.render(
-      DerivedStateFromErrorComponent(DerivedStateFromErrorComponent.Props(
-        i => promise.success(assert(i == 123))
-      )),
+      DerivedStateFromErrorComponent(DerivedStateFromErrorComponent.Props(i => promise.success(assert(i == 123)))),
       dom.document.createElement("div")
     )
 

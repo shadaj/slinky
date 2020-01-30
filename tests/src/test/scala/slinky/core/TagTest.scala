@@ -1,19 +1,19 @@
 package slinky.core
 
-import org.scalatest.FunSuite
-
 import slinky.core.facade.{React, ReactElement}
 import slinky.web.{ReactDOM, SyntheticMouseEvent}
 import slinky.web.html._
 
 import scala.scalajs.js
 import org.scalajs.dom
-import org.scalajs.dom.{Element, html, Event, MouseEvent}
+import org.scalajs.dom.{Element, html}
+
+import org.scalatest.funsuite.AnyFunSuite
 
 class InnerClassCustom extends js.Object {
-  val customTag = new CustomTag("custom-element")
-  val customClass = new CustomAttribute[String]("class")
-  val customColorAttr = new CustomAttribute[String]("color")
+  val customTag = CustomTag("custom-element")
+  val customClass = CustomAttribute[String]("class")
+  val customColorAttr = CustomAttribute[String]("color")
 
   def run(): Unit = {
     val divContainer = dom.document.createElement("div")
@@ -22,13 +22,13 @@ class InnerClassCustom extends js.Object {
   }
 }
 
-class TagTest extends FunSuite {
+class TagTest extends AnyFunSuite {
   test("Fails compilation when an incompatible attr is provided") {
     assertDoesNotCompile("div(width := 1)")
   }
 
   test("Sequence of different tag types can be typed to TagComponent[Any]") {
-    val foo: Seq[ReactElement] = Seq(div(), a())
+    Seq(div(), a()): Seq[ReactElement]
   }
 
   test("Sequence of different tag types can used as child of tag") {
@@ -36,7 +36,7 @@ class TagTest extends FunSuite {
   }
 
   test("Can provide a custom tag, which is supported by all components") {
-    val customHref = new CustomAttribute[String]("href")
+    val customHref = CustomAttribute[String]("href")
 
     val instance: ReactElement = a(customHref := "foo")
     assert(instance.asInstanceOf[js.Dynamic].props.href.asInstanceOf[String] == "foo")
@@ -57,7 +57,10 @@ class TagTest extends FunSuite {
   }
 
   test("Mouse events can be given a function taking a SyntheticMouseEvent") {
-    assertCompiles("div(onMouseOver := (v => { (v: SyntheticMouseEvent[Element]) }))")
+    div(onMouseOver := (v => {
+      assert((v: SyntheticMouseEvent[Element]) != null)
+      ()
+    }))
   }
 
   test("Can construct a tag with present optional attributes") {
@@ -76,8 +79,11 @@ class TagTest extends FunSuite {
     def constructTag[T <: Tag: className.supports: onClick.supports: ref.supports](tag: T): ReactElement = {
       tag.apply(
         className := "foo",
-        onClick := (e => e.target),
-        ref := (r => {})
+        onClick := { e =>
+          assert(e.target != null)
+          ()
+        },
+        ref := (_ => {})
       )("hello!")
     }
 
@@ -87,7 +93,7 @@ class TagTest extends FunSuite {
   }
 
   test("Can construct a custom tag with existing attributes") {
-    val customTag = new CustomTag("custom-element")
+    val customTag = CustomTag("custom-element")
 
     val divContainer = dom.document.createElement("div")
     ReactDOM.render(customTag(href := "foo")("hello!"), divContainer)
@@ -95,9 +101,9 @@ class TagTest extends FunSuite {
   }
 
   test("Can construct a custom tag with custom attributes") {
-    val customTag = new CustomTag("custom-element")
-    val customClass = new CustomAttribute[String]("class")
-    val customColorAttr = new CustomAttribute[String]("color")
+    val customTag = CustomTag("custom-element")
+    val customClass = CustomAttribute[String]("class")
+    val customColorAttr = CustomAttribute[String]("color")
 
     val divContainer = dom.document.createElement("div")
     ReactDOM.render(customTag(customClass := "foo", customColorAttr := "bar")("hello!"), divContainer)
@@ -105,10 +111,10 @@ class TagTest extends FunSuite {
   }
 
   test("Can construct a custom tag with optional attributes") {
-    val customTag = new CustomTag("custom-element")
-    val customClass = new CustomAttribute[String]("class")
-    val customNoneAttr = new CustomAttribute[String]("none")
-    val customSomeAttr = new CustomAttribute[String]("some")
+    val customTag = CustomTag("custom-element")
+    val customClass = CustomAttribute[String]("class")
+    val customNoneAttr = CustomAttribute[String]("none")
+    val customSomeAttr = CustomAttribute[String]("some")
 
     val divContainer = dom.document.createElement("div")
     ReactDOM.render(customTag(customClass := "foo", customNoneAttr := None, customSomeAttr := Some("bar"))("hello!"), divContainer)
@@ -142,7 +148,10 @@ class TagTest extends FunSuite {
   }
 
   test("Can grab the target for an input event listener and use input properties") {
-    input(onInput := (v => v.target.value))(
+    input(onInput := { e =>
+      assert(e.target.value != null)
+      ()
+    })(
       "body"
     )
   }
@@ -154,10 +163,10 @@ class TagTest extends FunSuite {
 
   test("Cannot reuse half-built tag") {
     val halfBuilt = div(id := "1")
-    val fullyBuilt: ReactElement = halfBuilt("hi")
+    halfBuilt("hi"): ReactElement
 
     assertThrows[IllegalStateException] {
-      val fullyBuilt2: ReactElement = halfBuilt("hi2")
+      halfBuilt("hi2"): ReactElement
     }
   }
 }

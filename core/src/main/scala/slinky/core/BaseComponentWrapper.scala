@@ -1,14 +1,11 @@
 package slinky.core
 
-import slinky.core.facade.{React, ReactRaw, ReactElement, ReactRef}
+import slinky.core.facade.{ReactRaw, ReactElement, ReactRef}
 import slinky.readwrite.{Reader, Writer}
 
 import scala.scalajs.js
 import scala.scalajs.js.ConstructorTag
-import scala.scalajs.js.annotation.JSExport
 
-import scala.language.experimental.macros
-import scala.language.implicitConversions
 import scala.reflect.macros.whitebox
 
 final class KeyAndRefAddingStage[D](private val args: js.Array[js.Any]) extends AnyVal {
@@ -279,7 +276,7 @@ abstract class BaseComponentWrapper(sr: StateReaderProvider, sw: StateWriterProv
 }
 
 object BaseComponentWrapper {
-  implicit def proplessKeyAndRef[C <: BaseComponentWrapper { type Props = Unit }](c: C)(implicit stateWriter: Writer[c.State], stateReader: Reader[c.State], constructorTag: ConstructorTag[c.Def]): KeyAndRefAddingStage[c.Def] = {
+  implicit def proplessKeyAndRef[C <: BaseComponentWrapper { type Props = Unit }](c: C)(implicit constructorTag: ConstructorTag[c.Def]): KeyAndRefAddingStage[c.Def] = {
     c.apply(())
   }
 
@@ -323,7 +320,7 @@ object StateReaderProvider {
   def impl(c: whitebox.Context): c.Expr[StateReaderProvider] = {
     import c.universe._
     val compName = c.internal.enclosingOwner.owner.asClass
-    val q"$_; val x: $typedReaderType = null" = c.typecheck(q"@_root_.scala.annotation.unchecked.uncheckedStable val comp: $compName = null; val x: _root_.slinky.readwrite.Reader[comp.State] = null")
+    val q"$_; val x: $typedReaderType = null" = c.typecheck(q"@_root_.scala.annotation.unchecked.uncheckedStable val comp: $compName = null; val x: _root_.slinky.readwrite.Reader[comp.State] = null") // scalafix:ok
     val tpcls = c.inferImplicitValue(typedReaderType.tpe.asInstanceOf[c.Type], silent = false)
     c.Expr(q"if (_root_.scala.scalajs.LinkingInfo.productionMode) null else $tpcls.asInstanceOf[_root_.slinky.core.StateReaderProvider]")
   }
@@ -336,7 +333,7 @@ object StateWriterProvider {
   def impl(c: whitebox.Context): c.Expr[StateWriterProvider] = {
     import c.universe._
     val compName = c.internal.enclosingOwner.owner.asClass
-    val q"$_; val x: $typedReaderType = null" = c.typecheck(q"@_root_.scala.annotation.unchecked.uncheckedStable val comp: $compName = null; val x: _root_.slinky.readwrite.Writer[comp.State] = null")
+    val q"$_; val x: $typedReaderType = null" = c.typecheck(q"@_root_.scala.annotation.unchecked.uncheckedStable val comp: $compName = null; val x: _root_.slinky.readwrite.Writer[comp.State] = null") // scalafix:ok
     val tpcls = c.inferImplicitValue(typedReaderType.tpe.asInstanceOf[c.Type], silent = false)
     c.Expr(q"if (_root_.scala.scalajs.LinkingInfo.productionMode) null else $tpcls.asInstanceOf[_root_.slinky.core.StateWriterProvider]")
   }

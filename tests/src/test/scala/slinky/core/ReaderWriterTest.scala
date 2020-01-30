@@ -1,10 +1,11 @@
 package slinky.core
 
 import slinky.readwrite.{Reader, WithRaw, Writer}
-import org.scalatest.FunSuite
 
 import scala.scalajs.js
 import scala.scalajs.js.|
+
+import org.scalatest.funsuite.AnyFunSuite
 
 // cannot be a local class
 class ValueClass(val int: Int) extends AnyVal
@@ -25,7 +26,7 @@ object ContainingPrivateType {
   val TestInstance = Test
 }
 
-class ReaderWriterTest extends FunSuite {
+class ReaderWriterTest extends AnyFunSuite {
   private def readWrittenSame[T](v: T,
                                  isOpaque: Boolean = false,
                                  beSame: Boolean = true,
@@ -202,13 +203,11 @@ class ReaderWriterTest extends FunSuite {
   }
 
   // compilation test: can use derivation macro with type parameter when typeclass is available
-  {
-    def deriveReaderTypeclass[T: Reader]: Reader[T] = {
-      Reader.deriveReader[T]
-    }
+  def deriveReaderTypeclass[T: Reader]: Reader[T] = {
+    Reader.deriveReader[T]
+  }
 
-    def deriveWriterTypeclass[T: Writer]: Writer[T] = {
-      Writer.deriveWriter[T]
-    }
+  def deriveWriterTypeclass[T: Writer]: Writer[T] = {
+    Writer.deriveWriter[T]
   }
 }

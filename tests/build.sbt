@@ -7,8 +7,6 @@ Test / jsEnv := new org.scalajs.jsenv.jsdomnodejs.JSDOMNodeJSEnv()
 
 Test / scalaJSLinkerConfig ~= { _.withESFeatures(_.withUseECMAScript2015(false)) }
 
-dependencyOverrides += "org.webjars.npm" % "js-tokens" % "3.0.2" % Test
-
 jsDependencies ++= Seq(
   "org.webjars.npm" % "react" % "16.12.0" % Test / "umd/react.development.js"
     minified "umd/react.production.min.js" commonJSName "React",
@@ -17,7 +15,8 @@ jsDependencies ++= Seq(
   "org.webjars.npm" % "react-dom" % "16.12.0" % Test / "umd/react-dom-test-utils.development.js"
     minified "umd/react-dom-test-utils.production.min.js" dependsOn "umd/react-dom.development.js" commonJSName "ReactTestUtils",
   "org.webjars.npm" % "react-dom" % "16.12.0" % Test / "umd/react-dom-server.browser.development.js"
-    minified  "umd/react-dom-server.browser.production.min.js" dependsOn "umd/react-dom.development.js" commonJSName "ReactDOMServer"
+    minified  "umd/react-dom-server.browser.production.min.js" dependsOn "umd/react-dom.development.js" commonJSName "ReactDOMServer",
+  "org.webjars.npm" % "prop-types" % "15.6.2" % Test
 )
 
 scalacOptions ++= {

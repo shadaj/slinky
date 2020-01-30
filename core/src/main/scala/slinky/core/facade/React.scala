@@ -1,14 +1,12 @@
 package slinky.core.facade
 
 import slinky.core._
-import slinky.readwrite.{ObjectOrWritten, Reader, Writer}
 
 import scala.scalajs.js
 import js.|
 import scala.annotation.unchecked.uncheckedVariance
 import scala.scalajs.js.annotation.{JSImport, JSName}
 import scala.scalajs.js.JSConverters._
-import scala.language.implicitConversions
 
 @js.native
 trait ReactElement extends js.Object with ReactElementMod
@@ -178,9 +176,6 @@ private[slinky] object HooksRaw extends js.Object {
   def useReducer[T, A](reducer: js.Function2[T, A, T], initialState: T): js.Tuple2[T, js.Function1[A, Unit]] = js.native
   def useReducer[T, I, A](reducer: js.Function2[T, A, T], initialState: I, init: js.Function1[I, T]): js.Tuple2[T, js.Function1[A, Unit]] = js.native
 
-  def useCallback(callback: js.Function0[Unit], watchedObjects: js.Array[js.Any]): js.Function0[Unit] = js.native
-  def useCallback[T](callback: js.Function1[T, Unit], watchedObjects: js.Array[js.Any]): js.Function1[T, Unit] = js.native
-
   def useMemo[T](callback: js.Function0[T], watchedObjects: js.Array[js.Any]): T = js.native
 
   def useRef[T](initialValue: T): ReactRef[T] = js.native
@@ -191,6 +186,8 @@ private[slinky] object HooksRaw extends js.Object {
   def useLayoutEffect(thunk: js.Function0[EffectCallbackReturn], watchedObjects: js.Array[js.Any]): Unit = js.native
 
   def useDebugValue(value: String): Unit = js.native
+
+  // No useCallback, since its usage from Hooks won't be able to implement the reference equality guarantee while converting js.Function to scala.FunctionN, anyway
 }
 
 @js.native trait EffectCallbackReturn extends js.Object
@@ -254,12 +251,10 @@ object Hooks {
     (ret._1, ret._2)
   }
 
-  @inline def useCallback(callback: () => Unit, watchedObjects: Iterable[Any]): () => Unit = {
-    HooksRaw.useCallback(callback, watchedObjects.toJSArray.asInstanceOf[js.Array[js.Any]])
-  }
-
-  @inline def useCallback[T](callback: T => Unit, watchedObjects: Iterable[Any]): T => Unit = {
-    HooksRaw.useCallback(callback, watchedObjects.toJSArray.asInstanceOf[js.Array[js.Any]])
+  @inline def useCallback[F](callback: F, watchedObjects: Iterable[Any])(implicit ev: F => js.Function): F = {
+    // Do not implement using React's useCallback. Otherwise, converting the js.Function returned by to scala.FunctionN will
+    // produce a new object and thus violating the reference equality guarantee of useCallback
+    useMemo(() => callback, watchedObjects)
   }
 
   @inline def useMemo[T](memoValue: () => T, watchedObjects: Iterable[Any]): T = {

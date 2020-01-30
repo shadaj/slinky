@@ -1,4 +1,5 @@
 {
+  "private": true,
   "bundlesize": [
     {
       "path": "docs/build/slinky-docs-opt-bundle.js",

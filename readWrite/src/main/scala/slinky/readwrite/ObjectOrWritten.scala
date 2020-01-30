@@ -1,6 +1,5 @@
 package slinky.readwrite
 
-import scala.language.{higherKinds, implicitConversions}
 import scala.scalajs.js
 
 @js.native

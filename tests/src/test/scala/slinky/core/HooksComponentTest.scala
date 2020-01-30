@@ -1,6 +1,6 @@
 package slinky.core
 
-import org.scalatest.AsyncFunSuite
+import org.scalatest.funsuite.AsyncFunSuite
 import org.scalajs.dom.document
 import org.scalajs.dom.Element
 
@@ -180,13 +180,13 @@ class HooksComponentTest extends AsyncFunSuite {
   test("useContext hook gets context value") {
     val container = document.createElement("div")
     val context = React.createContext("")
-    val component = FunctionalComponent[Unit] { props =>
+    val component = FunctionalComponent[Unit] { _ =>
       val ctx = useContext(context)
       ctx
     }
 
     ReactDOM.render(
-      context.Provider("hello from context!")(component()),
+      context.Provider("hello from context!")(component(())),
       container
     )
 
@@ -199,7 +199,7 @@ class HooksComponentTest extends AsyncFunSuite {
     val promise: Promise[Assertion] = Promise()
 
     val component = FunctionalComponent[Unit] { props =>
-      val (state, dispatch) = useReducer((s: String, a: Int) => {
+      val (state, dispatch) = useReducer((_: String, a: Int) => {
         a.toString
       }, "")
 
@@ -213,7 +213,7 @@ class HooksComponentTest extends AsyncFunSuite {
     }
 
     ReactDOM.render(
-      component(),
+      component(()),
       container
     )
     
@@ -234,57 +234,69 @@ class HooksComponentTest extends AsyncFunSuite {
     }
 
     ReactDOM.render(
-      component(),
+      component(()),
       container
     )
 
     assert(container.innerHTML == "123")
   }
 
-  test("useCallback produces callable function") {
+  test("useCallback maintains reference equality unless dependency changes") {
     val container = document.createElement("div")
 
-    var called = false
-    
-    val component = FunctionalComponent[Unit] { props =>
+    var callbackRef: () => String = null
+
+    val component = FunctionalComponent[(Int, String)] { props =>
       val callback = useCallback(() => {
-        called = true
-      }, Seq.empty)
+        props._2 // purposefully wrong (so that we can assert that untracked dependency retains old value)
+      }, Seq(props._1))
 
+      callbackRef = callback
       callback()
-
-      ""
     }
 
-    ReactDOM.render(
-      component(),
-      container
-    )
+    ReactDOM.render(component((1, "one")), container)
+    assert(container.innerHTML == "one")
+    assert(callbackRef != null)
 
-    assert(called)
+    var prevCallbackRef = callbackRef
+    ReactDOM.render(component((1, "one_")), container)
+    assert(container.innerHTML == "one")
+    assert(callbackRef eq prevCallbackRef) // note that we use eq to check for reference equality
+
+    prevCallbackRef = callbackRef
+    ReactDOM.render(component((2, "two")), container)
+    assert(callbackRef ne prevCallbackRef) // note that we use ne to check for reference inequality
+    assert(container.innerHTML == "two")
   }
 
-  test("useCallback with arguments produces callable function") {
+  test("useCallback with arguments maintains reference equality unless dependency changes") {
     val container = document.createElement("div")
 
-    var called = false
+    var callbackRef: Boolean => String = null
     
-    val component = FunctionalComponent[Unit] { props =>
+    val component = FunctionalComponent[(Int, String)] { props =>
       val callback = useCallback((value: Boolean) => {
-        called = value
-      }, Seq.empty)
+        props._2 // purposefully wrong (so that we can assert that untracked dependency retains old value)
+      }, Seq(props._1))
 
+      callbackRef = callback
       callback(true)
-
-      ""
     }
 
-    ReactDOM.render(
-      component(),
-      container
-    )
+    ReactDOM.render(component((1, "one")), container)
+    assert(container.innerHTML == "one")
+    assert(callbackRef != null)
 
-    assert(called)
+    var prevCallbackRef = callbackRef
+    ReactDOM.render(component((1, "one_")), container)
+    assert(container.innerHTML == "one")
+    assert(callbackRef eq prevCallbackRef) // note that we use eq to check for reference equality
+
+    prevCallbackRef = callbackRef
+    ReactDOM.render(component((2, "two")), container)
+    assert(callbackRef ne prevCallbackRef) // note that we use ne to check for reference inequality
+    assert(container.innerHTML == "two")
   }
 
   test("useMemo only recalculates when watched objects change") {

@@ -1,13 +1,10 @@
 package slinky.core
 
-import slinky.core.facade.{React, ReactElement, ReactRaw}
+import slinky.core.facade.{ReactElement, ReactRaw}
 
-import scala.language.implicitConversions
 import scala.scalajs.js
-import scala.scalajs.js.{Dictionary, JSON}
-import scala.language.higherKinds
 
-trait Tag extends Any {
+trait Tag {
   type tagType <: TagElement
   def apply(mods: TagMod[tagType]*): WithAttrs[tagType]
 }
@@ -18,6 +15,9 @@ final class CustomTag(@inline private val name: String) extends Tag {
   @inline def apply(mods: TagMod[tagType]*): WithAttrs[tagType] = {
     WithAttrs[tagType](name, mods)
   }
+}
+object CustomTag {
+  def apply(name: String): CustomTag = new CustomTag(name)
 }
 
 trait Attr {
@@ -32,6 +32,9 @@ abstract class TagElement {
 final class CustomAttribute[T](@inline private val name: String) {
   @inline def :=(v: T) = new AttrPair[Any](name, v.asInstanceOf[js.Any])
   @inline def :=(v: Option[T]) = new OptionalAttrPair[Any](name, v.asInstanceOf[Option[js.Any]])
+}
+object CustomAttribute {
+  def apply[T](name: String): CustomAttribute[T] = new CustomAttribute[T](name)
 }
 
 trait TagMod[-A] extends js.Object
@@ -55,8 +58,10 @@ final class OptionalAttrPair[-A](@inline final val name: String,
                                  @inline final val value: Option[js.Any]) extends TagMod[A]
 
 object OptionalAttrPair {
-  @inline implicit def optionToJsOption[T](o: Option[T])(implicit a: T => js.Any): Option[js.Any] =
+  @inline def optionToJsOption[T](o: Option[T])(implicit a: T => js.Any): Option[js.Any] =
     o.map(a(_))
+
+  implicit val identity: js.Any => js.Any = Predef.identity
 }
 
 final class WithAttrs[A](@inline private val args: js.Array[js.Any]) extends AnyVal {

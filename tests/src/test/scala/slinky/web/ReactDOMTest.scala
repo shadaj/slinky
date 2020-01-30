@@ -6,7 +6,8 @@ import org.scalajs.dom.{Element, document}
 
 import scala.scalajs.js
 import html._
-import org.scalatest.FunSuite
+
+import org.scalatest.funsuite.AnyFunSuite
 
 object TestComponent extends ComponentWrapper {
   type Props = Unit
@@ -21,7 +22,7 @@ object TestComponent extends ComponentWrapper {
   }
 }
 
-class ReactDOMTest extends FunSuite {
+class ReactDOMTest extends AnyFunSuite {
   test("Renders a single element into the DOM") {
     val target = document.createElement("div")
     ReactDOM.render(

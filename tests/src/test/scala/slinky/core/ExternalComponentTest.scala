@@ -8,7 +8,7 @@ import slinky.core.facade.{React, ReactElement}
 import slinky.web.ReactDOM
 import slinky.web.html._
 
-import org.scalatest.FunSuite
+import org.scalatest.funsuite.AnyFunSuite
 
 object ExternalSimple extends ExternalComponentNoProps {
   override val component = "div"
@@ -42,7 +42,7 @@ object ExternalSimpleWithWildcardAttributes extends ExternalComponentNoPropsWith
   override val component = "div"
 }
 
-class ExternalComponentTest extends FunSuite {
+class ExternalComponentTest extends AnyFunSuite {
   test("Rendering an external component results in appropriate props") {
     val rendered = ReactDOM.render(
       ExternalDivWithProps(id = "test"),
@@ -64,10 +64,10 @@ class ExternalComponentTest extends FunSuite {
 
   test("Cannot reuse half-built external component") {
     val halfBuilt = ExternalDivWithProps(id = "test")
-    val fullyBuilt: ReactElement = halfBuilt.withKey("abc")
+    halfBuilt.withKey("abc"): ReactElement
 
     assertThrows[IllegalStateException] {
-      val fullyBuilt2: ReactElement = halfBuilt.withKey("abc2")
+      halfBuilt.withKey("abc2"): ReactElement
     }
   }
 
@@ -94,8 +94,8 @@ class ExternalComponentTest extends FunSuite {
 
   test("Can construct an external component taking onClick/ref attribute with no arguments") {
     ExternalSimpleWithAttributes(
-      onClick := (e => { e.target: dom.html.Div }),
-      ref := (e => { e: dom.html.Div})
+      onClick := (_ => ()),
+      ref := (_ => ())
     )
   }
 
