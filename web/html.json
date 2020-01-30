@@ -1194,7 +1194,7 @@
     },
     {
       "attributeName" : "style",
-      "attributeType" : "scala.scalajs.js.Dynamic",
+      "attributeType" : "scala.scalajs.js.Object",
       "docLines" : [
         "Contains \n<a href=\"/en-US/docs/Web/CSS\">CSS</a> styling declarations to be applied to the element. Note that it is recommended for styles to be defined in a separate file or files. This attribute and the \n<a title=\"The HTML <style> element contains style information for a document, or part of a document. By default, the style instructions written inside that element are expected to be CSS.\" href=\"/en-US/docs/Web/HTML/Element/style\"><code>&lt;style&gt;</code></a> element have mainly the purpose of allowing for quick styling, for example for testing purposes."
       ],
