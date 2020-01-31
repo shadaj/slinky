@@ -12,4 +12,12 @@ export GPG_TTY=$(tty)
 
 cp publishing-setup/credentials.sbt credentials.sbt
 
-sbt publishSignedAll coreIntellijSupport/updateIntellij coreIntellijSupport/publishSigned sonatypeBundleRelease
+sbt coreIntellijSupport/updateIntellij coreIntellijSupport/publishSigned
+
+export SCALAJS_VERSION="0.6.31"
+sbt publishSignedAll
+
+export SCALAJS_VERSION="1.0.0-RC2"
+sbt publishSignedAll
+
+sbt sonatypeBundleRelease
