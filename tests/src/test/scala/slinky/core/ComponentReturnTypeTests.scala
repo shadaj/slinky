@@ -4,9 +4,10 @@ import slinky.core.facade.{Fragment, ReactElement}
 import slinky.web.ReactDOM
 import slinky.web.html._
 import org.scalajs.dom
-import org.scalatest.FunSuite
 
-class ComponentReturnTypeTests extends FunSuite {
+import org.scalatest.funsuite.AnyFunSuite
+
+class ComponentReturnTypeTests extends AnyFunSuite {
   def testElement(elem: ReactElement): Unit = {
     assert((div(elem): ReactElement) != null) // test use in another element
     ReactDOM.render(div(elem), dom.document.createElement("div")) // test rendering to DOM

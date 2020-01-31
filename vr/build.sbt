@@ -2,8 +2,11 @@ enablePlugins(ScalaJSPlugin)
 
 name := "slinky-vr"
 
-libraryDependencies += "org.scalatest" %%% "scalatest" % "3.0.8" % Test
+libraryDependencies += "org.scalatest" %%% "scalatest" % "3.1.0" % Test
 
-scalacOptions += "-P:scalajs:sjsDefinedByDefault"
+scalacOptions ++= {
+  if (scalaJSVersion.startsWith("0.6.")) Seq("-P:scalajs:sjsDefinedByDefault")
+  else Nil
+}
 
-Test / scalaJSModuleKind := ModuleKind.CommonJSModule
+scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) }

@@ -1,23 +1,25 @@
 enablePlugins(ScalaJSPlugin)
 
-import org.scalajs.core.tools.io.{MemVirtualJSFile, VirtualJSFile}
 import org.scalajs.jsenv.nodejs.NodeJSEnv
 
 import scala.util.Properties
 
 name := "slinky-native"
 
-libraryDependencies += "org.scalatest" %%% "scalatest" % "3.0.8" % Test
+libraryDependencies += "org.scalatest" %%% "scalatest" % "3.1.0" % Test
 
-scalacOptions += "-P:scalajs:sjsDefinedByDefault"
-
-Test / scalaJSModuleKind := ModuleKind.CommonJSModule
-
-Test / jsEnv := new NodeJSEnv() {
-  override def customInitFiles(): Seq[VirtualJSFile] = super.customInitFiles() :+ new MemVirtualJSFile("addReactNativeMock.js").withContent(
-    s"""require("${escapeBackslashes((baseDirectory.value / "node_modules/react-native-mock-render/mock.js").getAbsolutePath)}");"""
-  )
+scalacOptions ++= {
+  if (scalaJSVersion.startsWith("0.6.")) Seq("-P:scalajs:sjsDefinedByDefault")
+  else Nil
 }
+
+scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) }
+Test / scalaJSLinkerConfig ~= { _.withESFeatures(_.withUseECMAScript2015(false)) }
+
+Test / jsEnv := new NodeJSEnv(
+  NodeJSEnv.Config()
+    .withArgs(List("-r", baseDirectory.value.getAbsolutePath + "/node_modules/react-native-mock-render/mock.js"))
+)
 
 def escapeBackslashes(path: String): String = {
   if (Properties.isWin)

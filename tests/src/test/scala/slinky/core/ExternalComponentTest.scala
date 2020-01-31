@@ -8,7 +8,7 @@ import slinky.core.facade.{React, ReactElement}
 import slinky.web.ReactDOM
 import slinky.web.html._
 
-import org.scalatest.FunSuite
+import org.scalatest.funsuite.AnyFunSuite
 
 object ExternalSimple extends ExternalComponentNoProps {
   override val component = "div"
@@ -42,7 +42,7 @@ object ExternalSimpleWithWildcardAttributes extends ExternalComponentNoPropsWith
   override val component = "div"
 }
 
-class ExternalComponentTest extends FunSuite {
+class ExternalComponentTest extends AnyFunSuite {
   test("Rendering an external component results in appropriate props") {
     val rendered = ReactDOM.render(
       ExternalDivWithProps(id = "test"),

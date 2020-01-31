@@ -1,12 +1,13 @@
 package slinky.core
 
-import org.scalatest.FunSuite
 import slinky.core.facade.React
 import slinky.web.ReactDOM
 import org.scalajs.dom.document
 import slinky.web.html.div
 
-class ContextTest extends FunSuite {
+import org.scalatest.funsuite.AnyFunSuite
+
+class ContextTest extends AnyFunSuite {
   test("Can provide and read a simple context value") {
     val context = React.createContext(-1)
     var gotValue = 0

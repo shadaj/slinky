@@ -3,11 +3,13 @@ package slinky.core
 import slinky.core.facade.{ErrorBoundaryInfo, ReactElement}
 import slinky.web.ReactDOM
 import org.scalajs.dom
-import org.scalatest.{Assertion, AsyncFunSuite}
 import slinky.readwrite.{Reader, Writer}
 
 import scala.concurrent.Promise
 import scala.scalajs.js
+
+import org.scalatest.Assertion
+import org.scalatest.funsuite.AsyncFunSuite
 
 object TestComponent extends ComponentWrapper {
   type Props = Int => Unit

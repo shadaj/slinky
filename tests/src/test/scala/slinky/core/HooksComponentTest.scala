@@ -1,6 +1,6 @@
 package slinky.core
 
-import org.scalatest.AsyncFunSuite
+import org.scalatest.funsuite.AsyncFunSuite
 import org.scalajs.dom.document
 import org.scalajs.dom.Element
 

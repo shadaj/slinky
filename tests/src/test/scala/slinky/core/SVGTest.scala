@@ -1,12 +1,13 @@
 package slinky.core
 
-import org.scalatest.FunSuite
 import slinky.core.facade.ReactElement
 import slinky.web.svg._
 
 import scala.scalajs.js
 
-class SVGTest extends FunSuite {
+import org.scalatest.funsuite.AnyFunSuite
+
+class SVGTest extends AnyFunSuite {
   test("Can specify key attribute for SVG element") {
     val instance: ReactElement = circle(key := "1")
 

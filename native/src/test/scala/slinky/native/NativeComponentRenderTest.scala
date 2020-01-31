@@ -1,12 +1,12 @@
 package slinky.native
 
-import org.scalatest.FunSuite
+import org.scalatest.funsuite.AnyFunSuite
 import slinky.testrenderer.TestRenderer
 
 import scala.scalajs.js
 import scala.scalajs.js.Dynamic.literal
 
-class NativeComponentRenderTest extends FunSuite {
+class NativeComponentRenderTest extends AnyFunSuite {
   test("Can render a button component") {
     assert(!js.isUndefined(TestRenderer.create(
       Button(

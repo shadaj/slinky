@@ -2,11 +2,12 @@ package slinky.core
 
 import slinky.core.facade.{React, ReactChildren, ReactElement}
 import slinky.web.html.div
-import org.scalatest.FunSuite
 
 import scala.scalajs.js
 
-class ReactChildrenTest extends FunSuite {
+import org.scalatest.funsuite.AnyFunSuite
+
+class ReactChildrenTest extends AnyFunSuite {
   import React.Children._
 
   test("Can map over a single element") {
