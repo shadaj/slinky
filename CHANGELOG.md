@@ -8,6 +8,7 @@
 + Add novalidate attribute to form [PR #315](https://github.com/shadaj/slinky/pull/315)
 + Add apply method for constructing CustomTag and CustomAttributes [PR #318](https://github.com/shadaj/slinky/pull/318)
 + Fix types for the useCallback hook and fix its reference equality behavior [PR #302](https://github.com/shadaj/slinky/pull/302)
++ Use js.Object instead of js.Dynamics on attribute style [PR #322](https://github.com/shadaj/slinky/pull/322)
 + Add support for Scala.js 1.0.0-RC2 [PR #321](https://github.com/shadaj/slinky/pull/321)
 + Rewrite the class component logic to patch the component definition once to handle JS data instead of on every initialization [PR #321](https://github.com/shadaj/slinky/pull/321)
 
