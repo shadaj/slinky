@@ -1,10 +1,10 @@
 package slinky.native
 
-import org.scalatest.FunSuite
+import org.scalatest.funsuite.AnyFunSuite
 
 import scala.scalajs.js
 
-class NativeStaticAPITest extends FunSuite {
+class NativeStaticAPITest extends AnyFunSuite {
   test("Can fire an alert") {
     Alert.alert("alert!")
   }

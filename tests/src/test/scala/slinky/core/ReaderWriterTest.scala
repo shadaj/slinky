@@ -1,10 +1,11 @@
 package slinky.core
 
 import slinky.readwrite.{Reader, WithRaw, Writer}
-import org.scalatest.FunSuite
 
 import scala.scalajs.js
 import scala.scalajs.js.|
+
+import org.scalatest.funsuite.AnyFunSuite
 
 // cannot be a local class
 class ValueClass(val int: Int) extends AnyVal
@@ -25,7 +26,7 @@ object ContainingPrivateType {
   val TestInstance = Test
 }
 
-class ReaderWriterTest extends FunSuite {
+class ReaderWriterTest extends AnyFunSuite {
   private def readWrittenSame[T](v: T,
                                  isOpaque: Boolean = false,
                                  beSame: Boolean = true,

@@ -1,11 +1,12 @@
 package slinky.core
 
-import org.scalatest.FunSuite
 import org.scalajs.dom.document
 import slinky.core.facade.{React, ReactElement}
 import slinky.web.ReactDOM
 
-class FunctionalComponentTest extends FunSuite {
+import org.scalatest.funsuite.AnyFunSuite
+
+class FunctionalComponentTest extends AnyFunSuite {
   test("Can render a functional component") {
     val container = document.createElement("div")
     val component = FunctionalComponent[Int](_.toString)

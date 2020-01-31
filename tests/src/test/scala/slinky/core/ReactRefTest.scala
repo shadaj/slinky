@@ -2,12 +2,15 @@ package slinky.core
 
 import org.scalajs.dom
 import org.scalajs.dom.html
-import org.scalatest.{Assertion, AsyncFunSuite}
+
 import slinky.core.facade.React
 import slinky.web.ReactDOM
 import slinky.web.html.{div, ref}
 
 import scala.concurrent.Promise
+
+import org.scalatest.Assertion
+import org.scalatest.funsuite.AsyncFunSuite
 
 class ReactRefTest extends AsyncFunSuite {
   test("Can pass in a ref object to an HTML tag and use it") {

@@ -4,7 +4,7 @@ import slinky.core.FunctionalComponent
 import slinky.web.ReactDOM
 
 import org.scalajs.dom
-import org.scalatest.AsyncFunSuite
+import org.scalatest.funsuite.AsyncFunSuite
 
 @react object SimpleFunctionalComponent {
   case class Props[T](in: Seq[T])

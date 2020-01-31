@@ -1,6 +1,5 @@
 package slinky.core
 
-import org.scalatest.FunSuite
 import slinky.core.facade.{React, ReactElement}
 import slinky.web.{ReactDOM, SyntheticMouseEvent}
 import slinky.web.html._
@@ -8,6 +7,8 @@ import slinky.web.html._
 import scala.scalajs.js
 import org.scalajs.dom
 import org.scalajs.dom.{Element, html}
+
+import org.scalatest.funsuite.AnyFunSuite
 
 class InnerClassCustom extends js.Object {
   val customTag = CustomTag("custom-element")
@@ -21,7 +22,7 @@ class InnerClassCustom extends js.Object {
   }
 }
 
-class TagTest extends FunSuite {
+class TagTest extends AnyFunSuite {
   test("Fails compilation when an incompatible attr is provided") {
     assertDoesNotCompile("div(width := 1)")
   }

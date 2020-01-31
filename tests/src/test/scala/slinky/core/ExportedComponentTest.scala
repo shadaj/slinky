@@ -2,10 +2,11 @@ package slinky.core
 
 import slinky.core.facade.{React, ReactElement}
 import slinky.web.ReactDOM
-import org.scalatest.FunSuite
 
 import scala.scalajs.js
 import org.scalajs.dom.document
+
+import org.scalatest.funsuite.AnyFunSuite
 
 object TestExportedComponentWithState extends ComponentWrapper {
   case class Props(name: String)
@@ -30,7 +31,7 @@ object TestExportedComponentStateless extends StatelessComponentWrapper {
   }
 }
 
-class ExportedComponentTest extends FunSuite {
+class ExportedComponentTest extends AnyFunSuite {
   test("Can construct an instance of an exported component with JS-provided props") {
     val container = document.createElement("div")
     ReactDOM.render(React.createElement(

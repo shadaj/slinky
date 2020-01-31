@@ -5,11 +5,13 @@ import slinky.core.facade.{ErrorBoundaryInfo, Fragment, ReactElement}
 import slinky.web.ReactDOM
 import slinky.web.html._
 import org.scalajs.dom
-import org.scalatest.{Assertion, AsyncFunSuite}
 
 import scala.concurrent.{Future, Promise}
 import scala.scalajs.js
 import scala.util.Try
+
+import org.scalatest.Assertion
+import org.scalatest.funsuite.AsyncFunSuite
 
 @react class TestComponent extends Component {
   type Props = Int => Unit

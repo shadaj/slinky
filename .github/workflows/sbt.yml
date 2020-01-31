@@ -10,33 +10,17 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
-
-    steps:
-    - uses: actions/checkout@master
-    - name: Set up JDK 1.8
-      uses: actions/setup-java@v1
-      with:
-        java-version: 1.8
-    - name: Style checks
-      run: sbt styleCheck
-    - name: Install NPM Dependencies
-      run: npm install; cd native; npm install; cd ..
-    - name: Test with SBT (fastopt)
-      run: sbt scalajsReactInterop/test +tests/test +native/test
-    - name: Test with SBT (fullopt)
-      run: sbt "set Global/scalaJSStage := FullOptStage" scalajsReactInterop/test +tests/test +native/test
-  test-windows:
-    runs-on: windows-latest
+    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
-
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        scalajs: ["0.6.31", "1.0.0-RC2"]
     steps:
       - name: Configure git to disable Windows line feeds
         run: "git config --global core.autocrlf false"
         shell: bash
       - uses: actions/checkout@master
-      # Pre-installed SBT on Windows-runner is unstable so use more polished 3rd-party action olafurpg/setup-scala.
       - name: Set up JDK 1.8 and SBT
         uses: olafurpg/setup-scala@v7
         with:
@@ -44,21 +28,25 @@ jobs:
       - name: Style checks
         run: sbt styleCheck
       - name: Install NPM Dependencies
-        run: npm install; cd native; npm install; cd ..
+        run: npm install; cd tests; npm install; cd ..; cd native; npm install; cd ..
         shell: bash
-      - name: Test with SBT (fastopt)
-        run: sbt scalajsReactInterop/test +tests/test +native/test
+      - name: Test core and native (fastopt + fullopt)
+        run: sbt +tests/test +native/test "set scalaJSStage in Global := FullOptStage" +tests/test +native/test
+        env:
+          SCALAJS_VERSION: ${{ matrix.scalajs }}
         shell: bash
-      - name: Test with SBT (fullopt)
-        run: sbt "set Global/scalaJSStage := FullOptStage" scalajsReactInterop/test +tests/test +native/test
+      - name: Test Scala.js React Interop (fastopt + fullopt)
+        if: matrix.scalajs == '0.6.31'
+        run: sbt scalajsReactInterop/test "set scalaJSStage in Global := FullOptStage" scalajsReactInterop/test
+        env:
+          SCALAJS_VERSION: ${{ matrix.scalajs }}
         shell: bash
   build-docs:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@master
-    - name: Set up JDK 1.8
-      uses: actions/setup-java@v1
+    - name: Set up JDK 1.8 and SBT
+      uses: olafurpg/setup-scala@v7
       with:
         java-version: 1.8
     - name: Install NPM Dependencies
@@ -71,24 +59,21 @@ jobs:
         BUNDLESIZE_TOKEN: N2JjZDIxYjA1OGU1YzkwOWVkZWYzOWQ5MWYyZjRhYTgyMzE3MzY3Mgo=
   build-intellij-plugin:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@master
-    - name: Set up JDK 1.8
-      uses: actions/setup-java@v1
+    - name: Set up JDK 1.8 and SBT
+      uses: olafurpg/setup-scala@v7
       with:
         java-version: 1.8
     - name: Build IntelliJ Plugin
       run: sbt coreIntellijSupport/updateIntellij coreIntellijSupport/compile
   publish:
-    # Currently publication doesn't depend on testing results for Windows platform, since primary developers use Linux,
-    # but it may be changed in the future.
     needs: [test, build-docs, build-intellij-plugin]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
-    - name: Set up JDK 1.8
-      uses: actions/setup-java@v1
+    - name: Set up JDK 1.8 and SBT
+      uses: olafurpg/setup-scala@v7
       with:
         java-version: 1.8
     - run: git fetch --unshallow
