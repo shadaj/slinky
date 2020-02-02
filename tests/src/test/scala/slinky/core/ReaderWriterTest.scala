@@ -1,6 +1,6 @@
 package slinky.core
 
-import slinky.readwrite.{Reader, WithRaw, Writer}
+import slinky.readwrite.{Reader, WithRaw, Writer, ObjectOrWritten}
 
 import scala.scalajs.js
 import scala.scalajs.js.|
@@ -200,6 +200,26 @@ class ReaderWriterTest extends AnyFunSuite {
 
   test("Reading empty object uses default parameter values when available") {
     assert(implicitly[Reader[ClassWithDefault]].read(js.Dynamic.literal()).a == 5)
+  }
+
+  test("Can convert Scala instance into ObjectOrWritten") {
+    assert((SubTypeA(int = 123): ObjectOrWritten[SubTypeA])
+      .asInstanceOf[js.Dynamic].int.asInstanceOf[Int] == 123)
+  }
+
+  test("Can convert Scala instance into js.UndefOr[ObjectOrWritten]") {
+    assert((SubTypeA(int = 123): js.UndefOr[ObjectOrWritten[SubTypeA]])
+      .asInstanceOf[js.Dynamic].int.asInstanceOf[Int] == 123)
+  }
+
+  test("Can convert js.Object into ObjectOrWritten") {
+    assert((js.Dynamic.literal(int = 123): ObjectOrWritten[SubTypeA])
+      .asInstanceOf[js.Dynamic].int.asInstanceOf[Int] == 123)
+  }
+
+  test("Can convert js.Object into js.UndefOr[ObjectOrWritten]") {
+    assert((js.Dynamic.literal(int = 123): js.UndefOr[ObjectOrWritten[SubTypeA]])
+      .asInstanceOf[js.Dynamic].int.asInstanceOf[Int] == 123)
   }
 
   // compilation test: can use derivation macro with type parameter when typeclass is available
