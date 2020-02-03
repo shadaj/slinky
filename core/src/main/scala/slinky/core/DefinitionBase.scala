@@ -11,28 +11,26 @@ abstract class DefinitionBase[Props, State, Snapshot](jsProps: js.Object) extend
 
   // we extract out props/state reader/writer from the _base value defined in on the constructor
   // see componentConstructor in BaseComponentWrapper
-  @inline private[this] final def stateReader: Reader[State] =
+  @inline final private[this] def stateReader: Reader[State] =
     this.asInstanceOf[js.Dynamic]._base._stateReader.asInstanceOf[Reader[State]]
-  @inline private[slinky] final def stateWriter: Writer[State] =
+  @inline final private[slinky] def stateWriter: Writer[State] =
     this.asInstanceOf[js.Dynamic]._base._stateWriter.asInstanceOf[Writer[State]]
-  @inline private[this] final def propsReader: Reader[Props] =
+  @inline final private[this] def propsReader: Reader[Props] =
     this.asInstanceOf[js.Dynamic]._base._propsReader.asInstanceOf[Reader[Props]]
 
   def initialState: State
 
-  @inline private[slinky] final def readPropsValue(value: js.Object): Props = readValue(value, propsReader)
+  @inline final private[slinky] def readPropsValue(value: js.Object): Props = readValue(value, propsReader)
 
-  @inline private[slinky] final def readStateValue(value: js.Object): State = readValue(value, stateReader)
+  @inline final private[slinky] def readStateValue(value: js.Object): State = readValue(value, stateReader)
 
   @JSName("props_scala")
-  @inline final def props: Props = {
+  @inline final def props: Props =
     readPropsValue(this.asInstanceOf[PrivateComponentClass].propsR)
-  }
 
   @JSName("state_scala")
-  @inline final def state: State = {
+  @inline final def state: State =
     readStateValue(this.asInstanceOf[PrivateComponentClass].stateR)
-  }
 
   @JSName("setState_scala_1")
   @inline final def setState(s: State): Unit = {
@@ -44,24 +42,22 @@ abstract class DefinitionBase[Props, State, Snapshot](jsProps: js.Object) extend
   }
 
   @JSName("setState_scala_2")
-  @inline final def setState(fn: State => State): Unit = {
-    this.asInstanceOf[PrivateComponentClass].setStateR((ps: js.Object) => {
+  @inline final def setState(fn: State => State): Unit =
+    this.asInstanceOf[PrivateComponentClass].setStateR { (ps: js.Object) =>
       val s = fn(readStateValue(ps))
       if (BaseComponentWrapper.scalaComponentWritingEnabled) {
         writeWithWrappingAdjustment(stateWriter)(s)
       } else js.Dynamic.literal(__ = s.asInstanceOf[js.Any])
-    })
-  }
+    }
 
   @JSName("setState_scala_3")
-  @inline final def setState(fn: (State, Props) => State): Unit = {
-    this.asInstanceOf[PrivateComponentClass].setStateR((ps: js.Object, p: js.Object) => {
+  @inline final def setState(fn: (State, Props) => State): Unit =
+    this.asInstanceOf[PrivateComponentClass].setStateR { (ps: js.Object, p: js.Object) =>
       val s = fn(readStateValue(ps), readPropsValue(p))
       if (BaseComponentWrapper.scalaComponentWritingEnabled) {
         writeWithWrappingAdjustment(stateWriter)(s)
       } else js.Dynamic.literal(__ = s.asInstanceOf[js.Any])
-    })
-  }
+    }
 
   @JSName("setState_scala_4")
   @inline final def setState(s: State, callback: () => Unit): Unit = {
@@ -72,24 +68,32 @@ abstract class DefinitionBase[Props, State, Snapshot](jsProps: js.Object) extend
   }
 
   @JSName("setState_scala_5")
-  @inline final def setState(fn: State => State, callback: () => Unit): Unit = {
-    this.asInstanceOf[PrivateComponentClass].setStateR((ps: js.Object) => {
-      val s = fn(readStateValue(ps))
-      if (BaseComponentWrapper.scalaComponentWritingEnabled) {
-        writeWithWrappingAdjustment(stateWriter)(s)
-      } else js.Dynamic.literal(__ = s.asInstanceOf[js.Any])
-    }, callback)
-  }
+  @inline final def setState(fn: State => State, callback: () => Unit): Unit =
+    this
+      .asInstanceOf[PrivateComponentClass]
+      .setStateR(
+        (ps: js.Object) => {
+          val s = fn(readStateValue(ps))
+          if (BaseComponentWrapper.scalaComponentWritingEnabled) {
+            writeWithWrappingAdjustment(stateWriter)(s)
+          } else js.Dynamic.literal(__ = s.asInstanceOf[js.Any])
+        },
+        callback
+      )
 
   @JSName("setState_scala_6")
-  @inline final def setState(fn: (State, Props) => State, callback: () => Unit): Unit = {
-    this.asInstanceOf[PrivateComponentClass].setStateR((ps: js.Object, p: js.Object) => {
-      val s = fn(readStateValue(ps), readPropsValue(p))
-      if (BaseComponentWrapper.scalaComponentWritingEnabled) {
-        writeWithWrappingAdjustment(stateWriter)(s)
-      } else js.Dynamic.literal(__ = s.asInstanceOf[js.Any])
-    }, callback)
-  }
+  @inline final def setState(fn: (State, Props) => State, callback: () => Unit): Unit =
+    this
+      .asInstanceOf[PrivateComponentClass]
+      .setStateR(
+        (ps: js.Object, p: js.Object) => {
+          val s = fn(readStateValue(ps), readPropsValue(p))
+          if (BaseComponentWrapper.scalaComponentWritingEnabled) {
+            writeWithWrappingAdjustment(stateWriter)(s)
+          } else js.Dynamic.literal(__ = s.asInstanceOf[js.Any])
+        },
+        callback
+      )
 
   def componentWillMount(): Unit = {}
 
@@ -104,9 +108,11 @@ abstract class DefinitionBase[Props, State, Snapshot](jsProps: js.Object) extend
   def getSnapshotBeforeUpdate(prevProps: Props, prevState: State): Snapshot = null.asInstanceOf[Snapshot]
 
   def componentDidUpdate(prevProps: Props, prevState: State): Unit = {}
-  def componentDidUpdate(prevProps: Props, prevState: State, snapshot: Snapshot): Unit = {
-    this.asInstanceOf[js.Dynamic].componentDidUpdateScala(prevProps.asInstanceOf[js.Any], prevState.asInstanceOf[js.Any]).asInstanceOf[Unit]
-  }
+  def componentDidUpdate(prevProps: Props, prevState: State, snapshot: Snapshot): Unit =
+    this
+      .asInstanceOf[js.Dynamic]
+      .componentDidUpdateScala(prevProps.asInstanceOf[js.Any], prevState.asInstanceOf[js.Any])
+      .asInstanceOf[Unit]
 
   def componentWillUnmount(): Unit = {}
 
@@ -117,19 +123,18 @@ abstract class DefinitionBase[Props, State, Snapshot](jsProps: js.Object) extend
 
 object DefinitionBase {
   private[slinky] val defaultBase = new DefinitionBase[Unit, Unit, Unit](null) {
-    override def initialState: Unit = ()
+    override def initialState: Unit     = ()
     override def render(): ReactElement = null
   }.asInstanceOf[js.Dynamic]
 
-  @inline private[slinky] final def readValue[P](value: js.Object, propsReader: => Reader[P]): P = {
+  @inline final private[slinky] def readValue[P](value: js.Object, propsReader: => Reader[P]): P =
     if (js.typeOf(value) == "object" && value.hasOwnProperty("__")) {
       value.asInstanceOf[js.Dynamic].__.asInstanceOf[P]
     } else {
       readWithWrappingAdjustment(propsReader)(value)
     }
-  }
 
-  private[slinky] final def readWithWrappingAdjustment[T](reader: Reader[T])(value: js.Object): T = {
+  final private[slinky] def readWithWrappingAdjustment[T](reader: Reader[T])(value: js.Object): T = {
     val __value = value.asInstanceOf[js.Dynamic].__value
 
     if (value.hasOwnProperty("__value")) {
@@ -139,7 +144,7 @@ object DefinitionBase {
     }
   }
 
-  private[slinky] final def writeWithWrappingAdjustment[T](writer: Writer[T])(value: T): js.Object = {
+  final private[slinky] def writeWithWrappingAdjustment[T](writer: Writer[T])(value: T): js.Object = {
     val __value = writer.write(value)
 
     if (js.typeOf(__value) == "object") {

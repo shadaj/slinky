@@ -1,6 +1,6 @@
 package slinky.core
 
-import slinky.core.facade.{ReactRaw, ReactElement, ReactRef}
+import slinky.core.facade.{ReactElement, ReactRaw, ReactRef}
 import slinky.readwrite.Writer
 
 import scala.scalajs.js
@@ -60,7 +60,8 @@ object BuildingComponent {
     }
 
     val ret = ReactRaw.createElement
-      .applyDynamic("apply")(ReactRaw, comp.args).asInstanceOf[ReactElement]
+      .applyDynamic("apply")(ReactRaw, comp.args)
+      .asInstanceOf[ReactElement]
 
     comp.args(0) = null
 
@@ -68,7 +69,9 @@ object BuildingComponent {
   }
 }
 
-abstract class ExternalComponentWithAttributesWithRefType[E <: TagElement, R <: js.Object](implicit pw: ExternalPropsWriterProvider) {
+abstract class ExternalComponentWithAttributesWithRefType[E <: TagElement, R <: js.Object](
+  implicit pw: ExternalPropsWriterProvider
+) {
   type Props
   type Element = E
   type RefType = R
@@ -77,25 +80,25 @@ abstract class ExternalComponentWithAttributesWithRefType[E <: TagElement, R <: 
 
   val component: String | js.Object
 
-  def apply(p: Props): BuildingComponent[E, R] = {
+  def apply(p: Props): BuildingComponent[E, R] =
     // no need to take key or ref here because those can be passed in through attributes
     new BuildingComponent(js.Array(component.asInstanceOf[js.Any], writer.write(p)))
-  }
 }
 
 abstract class ExternalComponentWithAttributes[E <: TagElement](implicit pw: ExternalPropsWriterProvider)
-  extends ExternalComponentWithAttributesWithRefType[E, js.Object]()(pw)
+    extends ExternalComponentWithAttributesWithRefType[E, js.Object]()(pw)
 
-abstract class ExternalComponentWithRefType[R <: js.Object](implicit pw: ExternalPropsWriterProvider) extends ExternalComponentWithAttributesWithRefType[Nothing, R]()(pw)
+abstract class ExternalComponentWithRefType[R <: js.Object](implicit pw: ExternalPropsWriterProvider)
+    extends ExternalComponentWithAttributesWithRefType[Nothing, R]()(pw)
 
-abstract class ExternalComponent(implicit pw: ExternalPropsWriterProvider) extends ExternalComponentWithAttributes[Nothing]()(pw)
+abstract class ExternalComponent(implicit pw: ExternalPropsWriterProvider)
+    extends ExternalComponentWithAttributes[Nothing]()(pw)
 
 abstract class ExternalComponentNoPropsWithAttributesWithRefType[E <: TagElement, R <: js.Object] {
   val component: String | js.Object
 
-  def apply(mods: TagMod[E]*): BuildingComponent[E, R] = {
+  def apply(mods: TagMod[E]*): BuildingComponent[E, R] =
     new BuildingComponent(js.Array(component.asInstanceOf[js.Any], js.Dictionary.empty)).apply(mods: _*)
-  }
 
   def withKey(key: String): BuildingComponent[E, R] =
     new BuildingComponent(js.Array(component.asInstanceOf[js.Any], js.Dictionary.empty)).withKey(key)
@@ -106,10 +109,10 @@ abstract class ExternalComponentNoPropsWithAttributesWithRefType[E <: TagElement
 }
 
 abstract class ExternalComponentNoPropsWithAttributes[T <: TagElement]
-  extends ExternalComponentNoPropsWithAttributesWithRefType[T, js.Object]
+    extends ExternalComponentNoPropsWithAttributesWithRefType[T, js.Object]
 
 abstract class ExternalComponentNoPropsWithRefType[R <: js.Object]
-  extends ExternalComponentNoPropsWithAttributesWithRefType[Nothing, R]
+    extends ExternalComponentNoPropsWithAttributesWithRefType[Nothing, R]
 
 abstract class ExternalComponentNoProps extends ExternalComponentNoPropsWithAttributes[Nothing]
 
@@ -119,7 +122,9 @@ object ExternalPropsWriterProvider {
   def impl(c: whitebox.Context): c.Expr[ExternalPropsWriterProvider] = {
     import c.universe._
     val compName = c.internal.enclosingOwner.owner.asClass
-    val q"$_; val x: $typedReaderType = null" = c.typecheck(q"@_root_.scala.annotation.unchecked.uncheckedStable val comp: $compName = null; val x: _root_.slinky.readwrite.Writer[comp.Props] = null") // scalafix:ok
+    val q"$_; val x: $typedReaderType = null" = c.typecheck(
+      q"@_root_.scala.annotation.unchecked.uncheckedStable val comp: $compName = null; val x: _root_.slinky.readwrite.Writer[comp.Props] = null"
+    ) // scalafix:ok
     val tpcls = c.inferImplicitValue(typedReaderType.tpe.asInstanceOf[c.Type])
     c.Expr(q"$tpcls.asInstanceOf[_root_.slinky.core.ExternalPropsWriterProvider]")
   }

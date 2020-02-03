@@ -12,36 +12,31 @@ import scala.scalajs.js.JSConverters._
 trait ReactElement extends js.Object with ReactElementMod
 
 object ReactElement {
-  @inline implicit def stringToElement(s: String): ReactElement = {
+  @inline implicit def stringToElement(s: String): ReactElement =
     s.asInstanceOf[ReactElement]
-  }
 
-  @inline implicit def intToElement(i: Int): ReactElement = {
+  @inline implicit def intToElement(i: Int): ReactElement =
     i.asInstanceOf[ReactElement]
-  }
 
-  @inline implicit def doubleToElement(d: Double): ReactElement = {
+  @inline implicit def doubleToElement(d: Double): ReactElement =
     d.asInstanceOf[ReactElement]
-  }
 
-  @inline implicit def floatToElement(f: Float): ReactElement = {
+  @inline implicit def floatToElement(f: Float): ReactElement =
     f.asInstanceOf[ReactElement]
-  }
 
-  @inline implicit def booleanToElement(b: Boolean): ReactElement = {
+  @inline implicit def booleanToElement(b: Boolean): ReactElement =
     b.asInstanceOf[ReactElement]
-  }
 
-  @inline implicit def iterableToElement[A, B <: Iterable[A]](e: Iterable[A])(implicit cv: A => ReactElement): ReactElement = {
+  @inline implicit def iterableToElement[A, B <: Iterable[A]](
+    e: Iterable[A]
+  )(implicit cv: A => ReactElement): ReactElement =
     e.map(cv).toJSArray.asInstanceOf[ReactElement]
-  }
 
-  @inline implicit def optionToElement[E](o: Option[E])(implicit cv: E => ReactElement): ReactElement = {
+  @inline implicit def optionToElement[E](o: Option[E])(implicit cv: E => ReactElement): ReactElement =
     o match {
       case Some(e) => cv(e)
-      case None => null.asInstanceOf[ReactElement]
+      case None    => null.asInstanceOf[ReactElement]
     }
-  }
 
   @inline implicit def jsUndefOrToElement[E](j: js.UndefOr[E])(implicit cv: E => ReactElement): ReactElement = {
     val x = if (j.isDefined) cv(j.get) else null.asInstanceOf[ReactElement]
@@ -49,9 +44,10 @@ object ReactElement {
     x
   }
 
-  @inline implicit def anyToElementContainer[E, F[_]](e: F[E])(implicit f: ReactElementContainer[F], cv: E => ReactElement): F[ReactElement] = {
+  @inline implicit def anyToElementContainer[E, F[_]](
+    e: F[E]
+  )(implicit f: ReactElementContainer[F], cv: E => ReactElement): F[ReactElement] =
     f.map(e)(cv)
-  }
 }
 
 @js.native
@@ -62,15 +58,17 @@ trait ReactChildren extends ReactElement
 
 @js.native
 trait ReactRef[T] extends js.Object {
-  var current: T @uncheckedVariance  = js.native
+  var current: T @uncheckedVariance = js.native
 }
 
 @js.native
 @JSImport("react", JSImport.Namespace, "React")
 private[slinky] object ReactRaw extends js.Object {
-  def createElement(elementName: String | js.Object,
-                    properties: js.Dictionary[js.Any],
-                    contents: ReactElement*): ReactElement = js.native
+  def createElement(
+    elementName: String | js.Object,
+    properties: js.Dictionary[js.Any],
+    contents: ReactElement*
+  ): ReactElement = js.native
 
   val createElement: js.Dynamic = js.native // used for WithAttrs
 
@@ -85,9 +83,10 @@ private[slinky] object ReactRaw extends js.Object {
   @js.native
   object Children extends js.Object {
     def map(children: ReactChildren, transformer: js.Function1[ReactElement, ReactElement]): ReactChildren = js.native
-    def map(children: ReactChildren, transformer: js.Function2[ReactElement, Int, ReactElement]): ReactChildren = js.native
+    def map(children: ReactChildren, transformer: js.Function2[ReactElement, Int, ReactElement]): ReactChildren =
+      js.native
 
-    def forEach(children: ReactChildren, transformer: js.Function1[ReactElement, Unit]): Unit = js.native
+    def forEach(children: ReactChildren, transformer: js.Function1[ReactElement, Unit]): Unit      = js.native
     def forEach(children: ReactChildren, transformer: js.Function2[ReactElement, Int, Unit]): Unit = js.native
 
     def only(children: ReactChildren): ReactElement = js.native
@@ -97,69 +96,66 @@ private[slinky] object ReactRaw extends js.Object {
     def toArray(children: ReactChildren): js.Array[ReactElement] = js.native
   }
 
-  val Fragment: js.Object = js.native
+  val Fragment: js.Object   = js.native
   val StrictMode: js.Object = js.native
-  val Suspense: js.Object = js.native
+  val Suspense: js.Object   = js.native
 }
 
 object React {
-  def createElement(elementName: String | js.Object,
-                    properties: js.Dictionary[js.Any],
-                    contents: ReactElement*): ReactElement = ReactRaw.createElement(elementName, properties, contents: _*)
+  def createElement(
+    elementName: String | js.Object,
+    properties: js.Dictionary[js.Any],
+    contents: ReactElement*
+  ): ReactElement = ReactRaw.createElement(elementName, properties, contents: _*)
 
   def createContext[T](defaultValue: T): ReactContext[T] = ReactRaw.createContext[T](defaultValue)
 
   def createRef[T]: ReactRef[T] = ReactRaw.createRef[T]()
 
-  def forwardRef[P, R](component: FunctionalComponentTakingRef[P, R]): FunctionalComponentForwardedRef[P, R] = {
+  def forwardRef[P, R](component: FunctionalComponentTakingRef[P, R]): FunctionalComponentForwardedRef[P, R] =
     new FunctionalComponentForwardedRef(ReactRaw.forwardRef(component.component))
-  }
 
-  def memo[P](component: FunctionalComponent[P]): FunctionalComponent[P] = {
+  def memo[P](component: FunctionalComponent[P]): FunctionalComponent[P] =
     new FunctionalComponent(ReactRaw.memo(component.component, js.undefined))
-  }
 
-  def memo[P](component: FunctionalComponent[P], compare: (P, P) => Boolean): FunctionalComponent[P] = {
-    new FunctionalComponent(ReactRaw.memo(component.component, ((oldProps: js.Dynamic, newProps: js.Dynamic) => {
-      compare(oldProps.__.asInstanceOf[P], newProps.__.asInstanceOf[P])
-    }): js.Function2[js.Dynamic, js.Dynamic, Boolean]))
-  }
+  def memo[P](component: FunctionalComponent[P], compare: (P, P) => Boolean): FunctionalComponent[P] =
+    new FunctionalComponent(
+      ReactRaw.memo(
+        component.component,
+        ((oldProps: js.Dynamic, newProps: js.Dynamic) => {
+          compare(oldProps.__.asInstanceOf[P], newProps.__.asInstanceOf[P])
+        }): js.Function2[js.Dynamic, js.Dynamic, Boolean]
+      )
+    )
 
   @JSImport("react", "Component", "React.Component")
   @js.native
   class Component(jsProps: js.Object) extends js.Object {
-    def forceUpdate(): Unit = js.native
+    def forceUpdate(): Unit                             = js.native
     def forceUpdate(callback: js.Function0[Unit]): Unit = js.native
   }
 
   object Children extends js.Object {
-    def map(children: ReactChildren, transformer: ReactElement => ReactElement): ReactChildren = {
+    def map(children: ReactChildren, transformer: ReactElement => ReactElement): ReactChildren =
       ReactRaw.Children.map(children, transformer)
-    }
 
-    def map(children: ReactChildren, transformer: (ReactElement, Int) => ReactElement): ReactChildren = {
+    def map(children: ReactChildren, transformer: (ReactElement, Int) => ReactElement): ReactChildren =
       ReactRaw.Children.map(children, transformer)
-    }
 
-    def forEach(children: ReactChildren, transformer: ReactElement => Unit): Unit = {
+    def forEach(children: ReactChildren, transformer: ReactElement => Unit): Unit =
       ReactRaw.Children.forEach(children, transformer)
-    }
 
-    def forEach(children: ReactChildren, transformer: (ReactElement, Int) => Unit): Unit = {
+    def forEach(children: ReactChildren, transformer: (ReactElement, Int) => Unit): Unit =
       ReactRaw.Children.forEach(children, transformer)
-    }
 
-    def only(children: ReactChildren): ReactElement = {
+    def only(children: ReactChildren): ReactElement =
       ReactRaw.Children.only(children)
-    }
 
-    def count(children: ReactChildren): Int = {
+    def count(children: ReactChildren): Int =
       ReactRaw.Children.count(children)
-    }
 
-    def toArray(children: ReactChildren): js.Array[ReactElement] = {
+    def toArray(children: ReactChildren): js.Array[ReactElement] =
       ReactRaw.Children.toArray(children)
-    }
   }
 }
 
@@ -167,14 +163,18 @@ object React {
 @JSImport("react", JSImport.Namespace, "React")
 private[slinky] object HooksRaw extends js.Object {
   def useState[T](default: T | js.Function0[T]): js.Tuple2[T, js.Function1[js.Any, Unit]] = js.native
-  
-  def useEffect(thunk: js.Function0[EffectCallbackReturn]): Unit = js.native
+
+  def useEffect(thunk: js.Function0[EffectCallbackReturn]): Unit                                   = js.native
   def useEffect(thunk: js.Function0[EffectCallbackReturn], watchedObjects: js.Array[js.Any]): Unit = js.native
-  
+
   def useContext[T](context: ReactContext[T]): T = js.native
 
   def useReducer[T, A](reducer: js.Function2[T, A, T], initialState: T): js.Tuple2[T, js.Function1[A, Unit]] = js.native
-  def useReducer[T, I, A](reducer: js.Function2[T, A, T], initialState: I, init: js.Function1[I, T]): js.Tuple2[T, js.Function1[A, Unit]] = js.native
+  def useReducer[T, I, A](
+    reducer: js.Function2[T, A, T],
+    initialState: I,
+    init: js.Function1[I, T]
+  ): js.Tuple2[T, js.Function1[A, Unit]] = js.native
 
   def useMemo[T](callback: js.Function0[T], watchedObjects: js.Array[js.Any]): T = js.native
 
@@ -182,7 +182,7 @@ private[slinky] object HooksRaw extends js.Object {
 
   def useImperativeHandle[R](ref: ReactRef[R], value: js.Function0[R]): Unit = js.native
 
-  def useLayoutEffect(thunk: js.Function0[EffectCallbackReturn]): Unit = js.native
+  def useLayoutEffect(thunk: js.Function0[EffectCallbackReturn]): Unit                                   = js.native
   def useLayoutEffect(thunk: js.Function0[EffectCallbackReturn], watchedObjects: js.Array[js.Any]): Unit = js.native
 
   def useDebugValue(value: String): Unit = js.native
@@ -190,25 +190,22 @@ private[slinky] object HooksRaw extends js.Object {
   // No useCallback, since its usage from Hooks won't be able to implement the reference equality guarantee while converting js.Function to scala.FunctionN, anyway
 }
 
-@js.native trait EffectCallbackReturn extends js.Object
+@js.native
+trait EffectCallbackReturn extends js.Object
 object EffectCallbackReturn {
-  @inline implicit def fromFunction[T](fn: () => T): EffectCallbackReturn = {
+  @inline implicit def fromFunction[T](fn: () => T): EffectCallbackReturn =
     (fn: js.Function0[T]).asInstanceOf[EffectCallbackReturn]
-  }
 
-  @inline implicit def fromAny[T](value: T): EffectCallbackReturn = {
+  @inline implicit def fromAny[T](value: T): EffectCallbackReturn =
     js.undefined.asInstanceOf[EffectCallbackReturn]
-  }
 }
 
 final class SetStateHookCallback[T](private val origFunction: js.Function1[js.Any, Unit]) extends AnyVal {
-  @inline def apply(newState: T): Unit = {
+  @inline def apply(newState: T): Unit =
     origFunction.apply(newState.asInstanceOf[js.Any])
-  }
 
-  @inline def apply(transformState: T => T): Unit = {
+  @inline def apply(transformState: T => T): Unit =
     origFunction.apply(transformState: js.Function1[T, T])
-  }
 }
 
 object SetStateHookCallback {
@@ -228,16 +225,16 @@ object Hooks {
     (call._1, new SetStateHookCallback[T](call._2))
   }
 
-  @inline def useEffect[T](thunk: () => T)(implicit conv: T => EffectCallbackReturn): Unit = {
+  @inline def useEffect[T](thunk: () => T)(implicit conv: T => EffectCallbackReturn): Unit =
     HooksRaw.useEffect(() => { conv(thunk()) })
-  }
 
-  @inline def useEffect[T](thunk: () => T, watchedObjects: Iterable[Any])(implicit conv: T => EffectCallbackReturn): Unit = {
+  @inline def useEffect[T](thunk: () => T, watchedObjects: Iterable[Any])(
+    implicit conv: T => EffectCallbackReturn
+  ): Unit =
     HooksRaw.useEffect(
-      () => { conv(thunk()) },
+      () => conv(thunk()),
       watchedObjects.toJSArray.asInstanceOf[js.Array[js.Any]]
     )
-  }
 
   @inline def useContext[T](context: ReactContext[T]): T = HooksRaw.useContext[T](context)
 
@@ -251,34 +248,30 @@ object Hooks {
     (ret._1, ret._2)
   }
 
-  @inline def useCallback[F](callback: F, watchedObjects: Iterable[Any])(implicit ev: F => js.Function): F = {
+  @inline def useCallback[F](callback: F, watchedObjects: Iterable[Any])(implicit ev: F => js.Function): F =
     // Do not implement using React's useCallback. Otherwise, converting the js.Function returned by to scala.FunctionN will
     // produce a new object and thus violating the reference equality guarantee of useCallback
     useMemo(() => callback, watchedObjects)
-  }
 
-  @inline def useMemo[T](memoValue: () => T, watchedObjects: Iterable[Any]): T = {
+  @inline def useMemo[T](memoValue: () => T, watchedObjects: Iterable[Any]): T =
     HooksRaw.useMemo[T](memoValue, watchedObjects.toJSArray.asInstanceOf[js.Array[js.Any]])
-  }
 
-  @inline def useRef[T](initialValue: T): ReactRef[T] = {
+  @inline def useRef[T](initialValue: T): ReactRef[T] =
     HooksRaw.useRef[T](initialValue)
-  }
 
-  @inline def useImperativeHandle[R](ref: ReactRef[R], value: () => R): Unit = {
+  @inline def useImperativeHandle[R](ref: ReactRef[R], value: () => R): Unit =
     HooksRaw.useImperativeHandle[R](ref, value)
-  }
 
-  @inline def useLayoutEffect[T](thunk: () => T)(implicit conv: T => EffectCallbackReturn): Unit = {
+  @inline def useLayoutEffect[T](thunk: () => T)(implicit conv: T => EffectCallbackReturn): Unit =
     HooksRaw.useLayoutEffect(() => { conv(thunk()) })
-  }
 
-  @inline def useLayoutEffect[T](thunk: () => T, watchedObjects: Iterable[Any])(implicit conv: T => EffectCallbackReturn): Unit = {
+  @inline def useLayoutEffect[T](thunk: () => T, watchedObjects: Iterable[Any])(
+    implicit conv: T => EffectCallbackReturn
+  ): Unit =
     HooksRaw.useLayoutEffect(
-      () => { conv(thunk()) },
+      () => conv(thunk()),
       watchedObjects.toJSArray.asInstanceOf[js.Array[js.Any]]
     )
-  }
 
   @inline def useDebugValue(value: String): Unit = HooksRaw.useDebugValue(value)
 }

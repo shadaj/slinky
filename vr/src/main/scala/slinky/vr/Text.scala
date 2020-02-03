@@ -7,12 +7,14 @@ import scala.scalajs.js
 import scala.scalajs.js.annotation.JSImport
 
 @react object Text extends ExternalComponent {
-  case class Props(numberOfLines: js.UndefOr[Int] = js.undefined,
-                   onLayout: js.UndefOr[NativeSyntheticEvent[LayoutEvent] => Unit] = js.undefined,
-                   onLongPress: js.UndefOr[() => Unit] = js.undefined,
-                   onPress: js.UndefOr[() => Unit] = js.undefined,
-                   style: js.UndefOr[js.Object] = js.undefined,
-                   testID: js.UndefOr[String] = js.undefined)
+  case class Props(
+    numberOfLines: js.UndefOr[Int] = js.undefined,
+    onLayout: js.UndefOr[NativeSyntheticEvent[LayoutEvent] => Unit] = js.undefined,
+    onLongPress: js.UndefOr[() => Unit] = js.undefined,
+    onPress: js.UndefOr[() => Unit] = js.undefined,
+    style: js.UndefOr[js.Object] = js.undefined,
+    testID: js.UndefOr[String] = js.undefined
+  )
 
   @js.native
   @JSImport("react-360", "Text")
