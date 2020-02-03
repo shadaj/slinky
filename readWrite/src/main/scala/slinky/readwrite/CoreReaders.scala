@@ -37,7 +37,7 @@ class MacroReadersImpl(_c: whitebox.Context) extends GenericDeriveImpl(_c) {
   def deferredInstance(forType: c.universe.Type, constantType: c.universe.Type) =
     q"new _root_.slinky.readwrite.DeferredReader[$forType, $constantType]"
 
-  def maybeExtractDeferred(tree: c.Tree): Option[c.Tree] = {
+  def maybeExtractDeferred(tree: c.Tree): Option[c.Tree] =
     tree match {
       case q"new _root_.slinky.readwrite.DeferredReader[$_, $t]()" =>
         Some(t)
@@ -45,15 +45,13 @@ class MacroReadersImpl(_c: whitebox.Context) extends GenericDeriveImpl(_c) {
         Some(t)
       case _ => None
     }
-  }
 
-  def createModuleTypeclass(tpe: c.universe.Type, moduleReference: c.Tree): c.Tree = {
+  def createModuleTypeclass(tpe: c.universe.Type, moduleReference: c.Tree): c.Tree =
     q"""new _root_.slinky.readwrite.Reader[$tpe] {
           def forceRead(o: _root_.scala.scalajs.js.Object): $tpe = {
             $moduleReference
           }
         }"""
-  }
 
   def createCaseClassTypeclass(clazz: c.Type, params: Seq[Seq[Param]]): c.Tree = {
     val paramsTrees = params.map(_.map { p =>
@@ -73,13 +71,12 @@ class MacroReadersImpl(_c: whitebox.Context) extends GenericDeriveImpl(_c) {
         }"""
   }
 
-  def createValueClassTypeclass(clazz: c.Type, param: Param): c.Tree = {
+  def createValueClassTypeclass(clazz: c.Type, param: Param): c.Tree =
     q"""new _root_.slinky.readwrite.Reader[$clazz] {
           def forceRead(o: _root_.scala.scalajs.js.Object): $clazz = {
             new $clazz(${getTypeclass(param.tpe)}.read(o))
           }
         }"""
-  }
 
   def createSealedTraitTypeclass(traitType: c.Type, subclasses: Seq[c.Symbol]): c.Tree = {
     val cases = subclasses.map { sub =>
@@ -192,13 +189,14 @@ trait CoreReaders extends MacroReaders with FallbackReaders {
     }
   }
 
-  implicit def optionReader[T](implicit reader: Reader[T]): Reader[Option[T]] = (s => {
-    if (js.isUndefined(s) || s == null) {
-      None
-    } else {
-      Some(reader.read(s))
-    }
-  }): AlwaysReadReader[Option[T]]
+  implicit def optionReader[T](implicit reader: Reader[T]): Reader[Option[T]] =
+    (s => {
+      if (js.isUndefined(s) || s == null) {
+        None
+      } else {
+        Some(reader.read(s))
+      }
+    }): AlwaysReadReader[Option[T]]
 
   implicit def eitherReader[A, B](implicit aReader: Reader[A], bReader: Reader[B]): Reader[Either[A, B]] = o => {
     if (o.asInstanceOf[js.Dynamic].isLeft.asInstanceOf[Boolean]) {
@@ -208,12 +206,14 @@ trait CoreReaders extends MacroReaders with FallbackReaders {
     }
   }
 
-  implicit def collectionReader[T, C[A] <: Iterable[A]](implicit reader: Reader[T],
-                                                        bf: Factory[T, C[T]]): Reader[C[T]] =
+  implicit def collectionReader[T, C[A] <: Iterable[A]](
+    implicit reader: Reader[T],
+    bf: Factory[T, C[T]]
+  ): Reader[C[T]] =
     c => bf.fromSpecific(c.asInstanceOf[js.Array[js.Object]].map(o => reader.read(o)))
 
-  implicit def arrayReader[T](implicit reader: Reader[T], classTag: ClassTag[T]): Reader[Array[T]] = {
-    c => c.asInstanceOf[js.Array[js.Object]].map(o => reader.read(o)).toArray
+  implicit def arrayReader[T](implicit reader: Reader[T], classTag: ClassTag[T]): Reader[Array[T]] = { c =>
+    c.asInstanceOf[js.Array[js.Object]].map(o => reader.read(o)).toArray
   }
 
   implicit def mapReader[A, B](implicit abReader: Reader[(A, B)]): Reader[Map[A, B]] = o => {

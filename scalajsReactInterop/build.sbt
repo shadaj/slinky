@@ -6,7 +6,7 @@ libraryDependencies += "com.github.japgolly.scalajs-react" %%% "core" % "1.6.0"
 
 libraryDependencies += "org.scalatest" %%% "scalatest" % "3.1.0" % Test
 
-Test / npmDependencies += "react" -> "16.12.0"
+Test / npmDependencies += "react"     -> "16.12.0"
 Test / npmDependencies += "react-dom" -> "16.12.0"
 
 Test / requireJsDomEnv := true

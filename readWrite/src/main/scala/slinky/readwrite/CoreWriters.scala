@@ -29,7 +29,7 @@ class MacroWritersImpl(_c: whitebox.Context) extends GenericDeriveImpl(_c) {
   def deferredInstance(forType: Type, constantType: Type) =
     q"new _root_.slinky.readwrite.DeferredWriter[$forType, $constantType]"
 
-  def maybeExtractDeferred(tree: Tree): Option[Tree] = {
+  def maybeExtractDeferred(tree: Tree): Option[Tree] =
     tree match {
       case q"new _root_.slinky.readwrite.DeferredWriter[$_, $t]()" =>
         Some(t)
@@ -37,15 +37,13 @@ class MacroWritersImpl(_c: whitebox.Context) extends GenericDeriveImpl(_c) {
         Some(t)
       case _ => None
     }
-  }
 
-  def createModuleTypeclass(tpe: Type, moduleReference: Tree): Tree = {
+  def createModuleTypeclass(tpe: Type, moduleReference: Tree): Tree =
     q"""new _root_.slinky.readwrite.Writer[$tpe] {
           def write(v: $tpe): _root_.scala.scalajs.js.Object = {
             _root_.scala.scalajs.js.Dynamic.literal()
           }
         }"""
-  }
 
   def createCaseClassTypeclass(clazz: Type, params: Seq[Seq[Param]]): Tree = {
     val paramsTrees = params.flatMap(_.map { p =>
@@ -66,13 +64,12 @@ class MacroWritersImpl(_c: whitebox.Context) extends GenericDeriveImpl(_c) {
         }"""
   }
 
-  def createValueClassTypeclass(clazz: Type, param: Param): Tree = {
+  def createValueClassTypeclass(clazz: Type, param: Param): Tree =
     q"""new _root_.slinky.readwrite.Writer[$clazz] {
           def write(v: $clazz): _root_.scala.scalajs.js.Object = {
             ${getTypeclass(param.tpe)}.write(v.${param.name.toTermName})
           }
         }"""
-  }
 
   def createSealedTraitTypeclass(traitType: Type, subclasses: Seq[Symbol]): Tree = {
     val cases = subclasses.map { sub =>
@@ -121,19 +118,20 @@ trait CoreWriters extends MacroWriters with FallbackWriters {
   implicit def undefOrWriter[T](implicit writer: Writer[T]): Writer[js.UndefOr[T]] =
     _.map(v => writer.write(v)).getOrElse(js.undefined.asInstanceOf[js.Object])
 
-  implicit def unionWriter[A: ClassTag, B: ClassTag](implicit aWriter: Writer[A], bWriter: Writer[B]): Writer[A | B] = { v =>
-    if (implicitly[ClassTag[A]].runtimeClass == v.getClass) {
-      aWriter.write(v.asInstanceOf[A])
-    } else if (implicitly[ClassTag[B]].runtimeClass == v.getClass) {
-      bWriter.write(v.asInstanceOf[B])
-    } else {
-      try {
+  implicit def unionWriter[A: ClassTag, B: ClassTag](implicit aWriter: Writer[A], bWriter: Writer[B]): Writer[A | B] = {
+    v =>
+      if (implicitly[ClassTag[A]].runtimeClass == v.getClass) {
         aWriter.write(v.asInstanceOf[A])
-      } catch {
-        case _: Throwable =>
-          bWriter.write(v.asInstanceOf[B])
+      } else if (implicitly[ClassTag[B]].runtimeClass == v.getClass) {
+        bWriter.write(v.asInstanceOf[B])
+      } else {
+        try {
+          aWriter.write(v.asInstanceOf[A])
+        } catch {
+          case _: Throwable =>
+            bWriter.write(v.asInstanceOf[B])
+        }
       }
-    }
   }
 
   implicit def optionWriter[T](implicit writer: Writer[T]): Writer[Option[T]] =
@@ -147,8 +145,7 @@ trait CoreWriters extends MacroWriters with FallbackWriters {
     )
   }
 
-  implicit def collectionWriter[T, C[_]](implicit writer: Writer[T],
-                                         ev: C[T] <:< Iterable[T]): Writer[C[T]] = s => {
+  implicit def collectionWriter[T, C[_]](implicit writer: Writer[T], ev: C[T] <:< Iterable[T]): Writer[C[T]] = s => {
     val ret = js.Array[js.Object]()
     s.foreach { v =>
       ret.push(writer.write(v))

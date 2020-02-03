@@ -7,8 +7,7 @@ import scala.scalajs.js
 import scala.scalajs.js.annotation.JSImport
 
 @react object TouchableHighlight extends ExternalComponent {
-  case class Props(onPress: js.UndefOr[() => Unit],
-                   style: js.UndefOr[js.Object] = js.undefined)
+  case class Props(onPress: js.UndefOr[() => Unit], style: js.UndefOr[js.Object] = js.undefined)
 
   @js.native
   @JSImport("react-native", "TouchableHighlight")

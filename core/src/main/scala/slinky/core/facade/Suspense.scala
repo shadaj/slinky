@@ -6,11 +6,11 @@ import slinky.core.{BuildingComponent, ExternalComponent, ExternalPropsWriterPro
 import scala.scalajs.js
 import scala.scalajs.js.|
 
-object Suspense extends ExternalComponent()(new Writer[Suspense.Props] {
-  override def write(value: Suspense.Props): js.Object = {
-    js.Dynamic.literal(fallback = value.fallback)
-  }
-}.asInstanceOf[ExternalPropsWriterProvider]) {
+object Suspense
+    extends ExternalComponent()(new Writer[Suspense.Props] {
+      override def write(value: Suspense.Props): js.Object =
+        js.Dynamic.literal(fallback = value.fallback)
+    }.asInstanceOf[ExternalPropsWriterProvider]) {
   case class Props(fallback: ReactElement)
   override val component: |[String, js.Object] = ReactRaw.Suspense
 

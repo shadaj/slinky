@@ -9,26 +9,22 @@ import slinky.core.facade.ReactElement
 
 object Converters {
   implicit class UnmountedToInstance(unmounted: UnmountedRaw) {
-    def toSlinky: ReactElement = {
+    def toSlinky: ReactElement =
       unmounted.raw.asInstanceOf[ReactElement]
-    }
   }
 
   implicit class TagToInstance(tag: TagOf[_]) {
-    def toSlinky: ReactElement = {
+    def toSlinky: ReactElement =
       tag.rawNode.asInstanceOf[ReactElement]
-    }
   }
 
   implicit class VdomToInstance(vdom: VdomElement) {
-    def toSlinky: ReactElement = {
+    def toSlinky: ReactElement =
       vdom.rawNode.asInstanceOf[ReactElement]
-    }
   }
 
   implicit class ComponentInstanceToVdom[T](component: T)(implicit ev: T => ReactElement) {
-    def toScalaJSReact: VdomNode = {
+    def toScalaJSReact: VdomNode =
       VdomNode(ev(component).asInstanceOf[Element])
-    }
   }
 }

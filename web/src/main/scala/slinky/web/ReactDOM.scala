@@ -9,9 +9,9 @@ import scala.scalajs.js.annotation.JSImport
 @js.native
 @JSImport("react-dom", JSImport.Namespace, "ReactDOM")
 object ReactDOM extends js.Object {
-  def render(component: ReactElement, target: Element): ReactInstance = js.native
+  def render(component: ReactElement, target: Element): ReactInstance  = js.native
   def hydrate(component: ReactElement, target: Element): ReactInstance = js.native
-  def findDOMNode(instance: React.Component): Element = js.native
+  def findDOMNode(instance: React.Component): Element                  = js.native
 
   def unmountComponentAtNode(container: Element): Unit = js.native
 
@@ -29,9 +29,9 @@ object ReactDOM extends js.Object {
 @js.native
 @JSImport("react-dom/server", JSImport.Namespace, "ReactDOMServer")
 object ReactDOMServer extends js.Object {
-  def renderToString(element: ReactElement): String = js.native
+  def renderToString(element: ReactElement): String       = js.native
   def renderToStaticMarkup(element: ReactElement): String = js.native
 
-  def renderToNodeStream(element: ReactElement): js.Object = js.native
+  def renderToNodeStream(element: ReactElement): js.Object       = js.native
   def renderToStaticNodeStream(element: ReactElement): js.Object = js.native
 }
