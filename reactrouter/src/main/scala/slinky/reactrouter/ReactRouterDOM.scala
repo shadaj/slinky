@@ -18,15 +18,15 @@ object ReactRouter extends js.Object {
 @JSImport("react-router-dom", JSImport.Default)
 @js.native
 object ReactRouterDOM extends js.Object {
-  val Router: js.Object = js.native
+  val Router: js.Object        = js.native
   val BrowserRouter: js.Object = js.native
-  val HashRouter: js.Object = js.native
-  val Route: js.Object = js.native
-  val Switch : js.Object = js.native
-  val Link: js.Object = js.native
-  val NavLink: js.Object = js.native
-  val Redirect: js.Object = js.native
-  val Prompt: js.Object = js.native
+  val HashRouter: js.Object    = js.native
+  val Route: js.Object         = js.native
+  val Switch: js.Object        = js.native
+  val Link: js.Object          = js.native
+  val NavLink: js.Object       = js.native
+  val Redirect: js.Object      = js.native
+  val Prompt: js.Object        = js.native
 }
 
 @react object StaticRouter extends ExternalComponent {

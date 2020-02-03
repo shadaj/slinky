@@ -17,13 +17,13 @@ scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) }
 Test / scalaJSLinkerConfig ~= { _.withESFeatures(_.withUseECMAScript2015(false)) }
 
 Test / jsEnv := new NodeJSEnv(
-  NodeJSEnv.Config()
+  NodeJSEnv
+    .Config()
     .withArgs(List("-r", baseDirectory.value.getAbsolutePath + "/node_modules/react-native-mock-render/mock.js"))
 )
 
-def escapeBackslashes(path: String): String = {
+def escapeBackslashes(path: String): String =
   if (Properties.isWin)
     path.replace("\\", "\\\\")
   else
     path
-}

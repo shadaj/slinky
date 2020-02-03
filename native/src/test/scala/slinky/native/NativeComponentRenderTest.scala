@@ -7,38 +7,60 @@ import scala.scalajs.js
 
 class NativeComponentRenderTest extends AnyFunSuite {
   test("Can render a button component") {
-    assert(!js.isUndefined(TestRenderer.create(
-      Button(
-        title = "foo",
-        onPress = () => {}
-      )("Hello!")
-    ).toJSON()))
+    assert(
+      !js.isUndefined(
+        TestRenderer
+          .create(
+            Button(
+              title = "foo",
+              onPress = () => {}
+            )("Hello!")
+          )
+          .toJSON()
+      )
+    )
   }
 
   test("Can render a text component") {
-    assert(!js.isUndefined(TestRenderer.create(
-      Text(
-        "Hello!"
+    assert(
+      !js.isUndefined(
+        TestRenderer
+          .create(
+            Text(
+              "Hello!"
+            )
+          )
+          .toJSON()
       )
-    ).toJSON()))
+    )
   }
 
   test("Can render a view component with children") {
-    assert(!js.isUndefined(TestRenderer.create(
-      View(
-        View()
+    assert(
+      !js.isUndefined(
+        TestRenderer
+          .create(
+            View(
+              View()
+            )
+          )
+          .toJSON()
       )
-    ).toJSON()))
+    )
   }
 
   test("Can render an image component") {
-    assert(!js.isUndefined(TestRenderer.create(
-      Image(
-        source = ImageURISource(
-          uri = ""
+    assert(
+      !js.isUndefined(
+        TestRenderer.create(
+          Image(
+            source = ImageURISource(
+              uri = ""
+            )
+          )
         )
       )
-    )))
+    )
   }
 
   test("Can request prefetch of an image") {
@@ -48,56 +70,76 @@ class NativeComponentRenderTest extends AnyFunSuite {
   }
 
   test("Can render a text input") {
-    assert(!js.isUndefined(TestRenderer.create(
-      TextInput(
-        value = "hello"
+    assert(
+      !js.isUndefined(
+        TestRenderer.create(
+          TextInput(
+            value = "hello"
+          )
+        )
       )
-    )))
+    )
   }
 
   test("Can call clear() on a text input instance") {
     var clearedValue = false
-    assert(!js.isUndefined(TestRenderer.create(
-      TextInput(
-        value = "hello"
-      ).withRef { i =>
-        i.clear()
-        clearedValue = true
-      }
-    )))
+    assert(
+      !js.isUndefined(
+        TestRenderer.create(
+          TextInput(
+            value = "hello"
+          ).withRef { i =>
+            i.clear()
+            clearedValue = true
+          }
+        )
+      )
+    )
 
     assert(clearedValue)
   }
 
   test("Can render a ScrollView with children") {
-    assert(!js.isUndefined(TestRenderer.create(
-      ScrollView(
-        TextInput(value = "hello")
+    assert(
+      !js.isUndefined(
+        TestRenderer.create(
+          ScrollView(
+            TextInput(value = "hello")
+          )
+        )
       )
-    )))
+    )
   }
 
   test("Can call scrollTo() on a scroll view instance") {
     var scrolled = false
-    assert(!js.isUndefined(TestRenderer.create(
-      ScrollView.withRef { i =>
-        i.scrollTo(ScrollTarget(x = 0, y = 50, animated = true))
-        scrolled = true
-      }(
-        TextInput(value = "hello")
+    assert(
+      !js.isUndefined(
+        TestRenderer.create(
+          ScrollView.withRef { i =>
+            i.scrollTo(ScrollTarget(x = 0, y = 50, animated = true))
+            scrolled = true
+          }(
+            TextInput(value = "hello")
+          )
+        )
       )
-    )))
+    )
 
     assert(scrolled)
   }
 
   test("Can render a picker with items") {
-    assert(!js.isUndefined(TestRenderer.create(
-      Picker(
-        Picker.Item(label = "abc", value = "abc"),
-        Picker.Item(label = "abc2", value = "abc2")
+    assert(
+      !js.isUndefined(
+        TestRenderer.create(
+          Picker(
+            Picker.Item(label = "abc", value = "abc"),
+            Picker.Item(label = "abc2", value = "abc2")
+          )
+        )
       )
-    )))
+    )
   }
 
   /* react-native-mock-render does not support Slider yet
@@ -108,25 +150,34 @@ class NativeComponentRenderTest extends AnyFunSuite {
       )
     )))
   }
-  */
+   */
 
   test("Can render a switch") {
-    assert(!js.isUndefined(TestRenderer.create(
-      Switch(
-        value = true
+    assert(
+      !js.isUndefined(
+        TestRenderer.create(
+          Switch(
+            value = true
+          )
+        )
       )
-    )))
+    )
   }
 
   test("Can render a flatlist") {
-    assert(!js.isUndefined(TestRenderer.create(
-      FlatList[Int](
-        data = Seq(1, 2),
-        renderItem = { case RenderItemInfo(d, index, _) =>
-          Text(d.toString)
-        }
+    assert(
+      !js.isUndefined(
+        TestRenderer.create(
+          FlatList[Int](
+            data = Seq(1, 2),
+            renderItem = {
+              case RenderItemInfo(d, index, _) =>
+                Text(d.toString)
+            }
+          )
+        )
       )
-    )))
+    )
   }
 
   /* react-native-mock-render does not support SectionList yet
@@ -144,11 +195,15 @@ class NativeComponentRenderTest extends AnyFunSuite {
       )
     )))
   }
-  */
+   */
 
   test("Can render an activity indicator") {
-    assert(!js.isUndefined(TestRenderer.create(
-      ActivityIndicator()
-    )))
+    assert(
+      !js.isUndefined(
+        TestRenderer.create(
+          ActivityIndicator()
+        )
+      )
+    )
   }
 }

@@ -12,7 +12,7 @@ trait ReactElementContainer[F[_]] extends Any { self =>
 }
 
 object ReactElementContainer {
-  def apply[F[_] : ReactElementContainer]: ReactElementContainer[F] = implicitly[ReactElementContainer[F]]
+  def apply[F[_]: ReactElementContainer]: ReactElementContainer[F] = implicitly[ReactElementContainer[F]]
 
   @inline implicit def function0Container: ReactElementContainer[Function0] = new ReactElementContainer[Function0] {
     override def map[A](fa: () => A)(f: A => ReactElement): () => ReactElement = () => f(fa())

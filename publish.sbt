@@ -1,6 +1,8 @@
 ThisBuild / publishMavenStyle := true
 
-ThisBuild / pomIncludeRepository := { _ => false }
+ThisBuild / pomIncludeRepository := { _ =>
+  false
+}
 
 ThisBuild / Test / publishArtifact := false
 

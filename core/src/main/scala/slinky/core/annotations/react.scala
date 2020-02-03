@@ -33,14 +33,15 @@ object ReactMacrosImpl {
     import c.universe._
     val q"..$_ class ${className: Name} extends ..$parents { $self => ..$stats}" = cls // scalafix:ok
     val (propsDefinition, applyMethods) = stats.flatMap {
-      case defn@q"..$_ type Props = ${_}" =>
+      case defn @ q"..$_ type Props = ${_}" =>
         Some((defn, Seq()))
 
-      case defn@q"case class Props[..$tparams](...${caseClassparamssRaw}) extends ..$_ { $_ => ..$_ }" =>
+      case defn @ q"case class Props[..$tparams](...${caseClassparamssRaw}) extends ..$_ { $_ => ..$_ }" =>
         val caseClassparamss = caseClassparamssRaw.asInstanceOf[Seq[Seq[ValDef]]]
-        val childrenParam = caseClassparamss.flatten.find(_.name.toString == "children")
+        val childrenParam    = caseClassparamss.flatten.find(_.name.toString == "children")
 
-        val paramssWithoutChildren = caseClassparamss.map(_.filterNot(childrenParam.contains))
+        val paramssWithoutChildren = caseClassparamss
+          .map(_.filterNot(childrenParam.contains))
           .filterNot(_.isEmpty)
         val applyValues = caseClassparamss.map(ps => ps.map(_.name))
 
@@ -48,11 +49,13 @@ object ReactMacrosImpl {
           // from https://groups.google.com/forum/#!topic/scala-user/dUOonrP_5K4
           val body = c.typecheck(childrenParam.get.tpt, c.TYPEmode).tpe match {
             case TypeRef(_, sym, _) if sym == definitions.RepeatedParamClass =>
-              val applyValuesChildrenVararg = caseClassparamss.map(ps => ps.map { ps =>
-                if (ps == childrenParam.get) {
-                  q"${ps.name}: _*"
-                } else q"${ps.name}"
-              })
+              val applyValuesChildrenVararg = caseClassparamss.map { ps =>
+                ps.map { ps =>
+                  if (ps == childrenParam.get) {
+                    q"${ps.name}: _*"
+                  } else q"${ps.name}"
+                }
+              }
 
               q"this.apply(Props.apply[..$tparams](...$applyValuesChildrenVararg))"
             case _ =>
@@ -69,25 +72,26 @@ object ReactMacrosImpl {
         Some((defn, Seq(caseClassApply)))
 
       case _ => None
-    }.headOption.getOrElse(c.abort(c.enclosingPosition, "Components must define a Props type or case class, but none was found."))
+    }.headOption
+      .getOrElse(c.abort(c.enclosingPosition, "Components must define a Props type or case class, but none was found."))
 
     val stateDefinition = stats.flatMap {
-      case defn@q"..$_ type State = ${_}" =>
+      case defn @ q"..$_ type State = ${_}" =>
         Some(defn)
-      case defn@q"case class State[..$_](...$_) extends ..$_ { $_ => ..$_ }" =>
+      case defn @ q"case class State[..$_](...$_) extends ..$_ { $_ => ..$_ }" =>
         Some(defn)
       case _ => None
     }.headOption
 
     val snapshotDefinition = stats.flatMap {
-      case defn@q"type Snapshot = ${_}" =>
+      case defn @ q"type Snapshot = ${_}" =>
         Some(defn)
-      case defn@q"case class Snapshot[..$_](...$_) extends ..$_ { $_ => ..$_ }" =>
+      case defn @ q"case class Snapshot[..$_](...$_) extends ..$_ { $_ => ..$_ }" =>
         Some(defn)
       case _ => None
     }.headOption
 
-    val clazz = TypeName(className.asInstanceOf[Name].toString)
+    val clazz     = TypeName(className.asInstanceOf[Name].toString)
     val companion = TermName(className.asInstanceOf[Name].toString)
 
     val definitionClass = q"type Def = $clazz"
@@ -101,10 +105,13 @@ object ReactMacrosImpl {
                 null.asInstanceOf[Snapshot]
                 ()
               })
-              ..${stats.filterNot(s => s == propsDefinition || s == stateDefinition.orNull || s == snapshotDefinition.orNull)}
+              ..${stats.filterNot(s =>
+        s == propsDefinition || s == stateDefinition.orNull || s == snapshotDefinition.orNull
+      )}
             }"""
 
-    (newClazz,
+    (
+      newClazz,
       ((q"null.asInstanceOf[${parents.head}]" +:
         propsDefinition +:
         stateDefinition.toList) ++
@@ -125,7 +132,10 @@ object ReactMacrosImpl {
       typeOf[js.Object]
     } else if (parentsContainsType(c)(parents.asInstanceOf[Seq[c.Tree]], typeOf[ExternalComponentWithRefType[_]])) {
       typecheckedParent.tpe.typeArgs.head
-    } else if (parentsContainsType(c)(parents.asInstanceOf[Seq[c.Tree]], typeOf[ExternalComponentWithAttributesWithRefType[_, _]])) {
+    } else if (parentsContainsType(c)(
+                 parents.asInstanceOf[Seq[c.Tree]],
+                 typeOf[ExternalComponentWithAttributesWithRefType[_, _]]
+               )) {
       typecheckedParent.tpe.typeArgs(1)
     } else {
       null
@@ -137,7 +147,10 @@ object ReactMacrosImpl {
       typecheckedParent.tpe.typeArgs.head
     } else if (parentsContainsType(c)(parents.asInstanceOf[Seq[c.Tree]], typeOf[ExternalComponentWithRefType[_]])) {
       typeOf[Nothing]
-    } else if (parentsContainsType(c)(parents.asInstanceOf[Seq[c.Tree]], typeOf[ExternalComponentWithAttributesWithRefType[_, _]])) {
+    } else if (parentsContainsType(c)(
+                 parents.asInstanceOf[Seq[c.Tree]],
+                 typeOf[ExternalComponentWithAttributesWithRefType[_, _]]
+               )) {
       typecheckedParent.tpe.typeArgs.head
     } else {
       null
@@ -183,55 +196,65 @@ object ReactMacrosImpl {
     (body, refType, elementType)
   }
 
-
   def reactImpl(c: whitebox.Context)(annottees: c.Expr[Any]*): c.Expr[Any] = {
     import c.universe._
 
     val outs: List[Tree] = annottees.map(_.tree).toList match {
       case Seq(cls @ q"..$_ class $className extends ..$parents { $_ => ..$_}")
-        if parentsContainsType(c)(parents, typeOf[Component]) ||
-           parentsContainsType(c)(parents, typeOf[StatelessComponent]) =>
+          if parentsContainsType(c)(parents, typeOf[Component]) ||
+            parentsContainsType(c)(parents, typeOf[StatelessComponent]) =>
         val (newCls, companionStats) = createComponentBody(c)(cls)
-        val parent = tq"${TermName(parents.head.toString)}.Wrapper"
+        val parent                   = tq"${TermName(parents.head.toString)}.Wrapper"
         List(newCls, q"object ${TermName(className.decodedName.toString)} extends $parent { ..$companionStats }")
 
-      case Seq(cls @ q"..$_ class $className extends ..$parents { $_ => ..$_}", obj @ q"..$_ object $_ extends ..$_ { $_ => ..$objStats }")
-        if parentsContainsType(c)(parents, typeOf[Component]) ||
-           parentsContainsType(c)(parents, typeOf[StatelessComponent])=>
+      case Seq(
+          cls @ q"..$_ class $className extends ..$parents { $_ => ..$_}",
+          obj @ q"..$_ object $_ extends ..$_ { $_ => ..$objStats }"
+          )
+          if parentsContainsType(c)(parents, typeOf[Component]) ||
+            parentsContainsType(c)(parents, typeOf[StatelessComponent]) =>
         val (newCls, companionStats) = createComponentBody(c)(cls)
-        val parent = tq"${TermName(parents.head.toString)}.Wrapper"
-        List(newCls, q"object ${TermName(className.decodedName.toString)} extends $parent { ..${objStats ++ companionStats} }")
+        val parent                   = tq"${TermName(parents.head.toString)}.Wrapper"
+        List(
+          newCls,
+          q"object ${TermName(className.decodedName.toString)} extends $parent { ..${objStats ++ companionStats} }"
+        )
 
       case Seq(obj @ q"..$_ object $objName extends ..$parents { $_ => ..$objStats}")
-        if parentsContainsType(c)(parents, typeOf[ExternalComponent]) ||
-           parentsContainsType(c)(parents, typeOf[ExternalComponentWithAttributes[_]]) ||
-           parentsContainsType(c)(parents, typeOf[ExternalComponentWithRefType[_]]) ||
-          parentsContainsType(c)(parents, typeOf[ExternalComponentWithAttributesWithRefType[_, _]]) =>
+          if parentsContainsType(c)(parents, typeOf[ExternalComponent]) ||
+            parentsContainsType(c)(parents, typeOf[ExternalComponentWithAttributes[_]]) ||
+            parentsContainsType(c)(parents, typeOf[ExternalComponentWithRefType[_]]) ||
+            parentsContainsType(c)(parents, typeOf[ExternalComponentWithAttributesWithRefType[_, _]]) =>
         val (companionStats, refType, elementType) = createExternalBody(c)(obj)
-        List(q"object $objName extends _root_.slinky.core.ExternalComponentWithAttributesWithRefType[$elementType, $refType] { ..${objStats ++ companionStats} }")
+        List(
+          q"object $objName extends _root_.slinky.core.ExternalComponentWithAttributesWithRefType[$elementType, $refType] { ..${objStats ++ companionStats} }"
+        )
 
       case Seq(obj @ q"$pre object $objName extends ..$parents { $self => ..$objStats }") if (objStats.exists {
-        case q"$_ val component: $_ = $_" => true
-        case _ => false
-      }) =>
+            case q"$_ val component: $_ = $_" => true
+            case _                            => false
+          }) =>
         val applyMethods = objStats.flatMap {
-          case defn@q"case class Props[..$tparams](...${caseClassparamssRaw}) extends ..$_ { $_ => ..$_ }" =>
+          case defn @ q"case class Props[..$tparams](...${caseClassparamssRaw}) extends ..$_ { $_ => ..$_ }" =>
             val caseClassparamss = caseClassparamssRaw.asInstanceOf[Seq[Seq[ValDef]]]
-            val childrenParam = caseClassparamss.flatten.find(_.name.toString == "children")
+            val childrenParam    = caseClassparamss.flatten.find(_.name.toString == "children")
 
-            val paramssWithoutChildren = caseClassparamss.map(_.filterNot(childrenParam.contains))
+            val paramssWithoutChildren = caseClassparamss
+              .map(_.filterNot(childrenParam.contains))
               .filterNot(_.isEmpty)
             val applyValues = caseClassparamss.map(ps => ps.map(_.name))
-    
+
             val caseClassApply = if (childrenParam.isDefined) {
               // from https://groups.google.com/forum/#!topic/scala-user/dUOonrP_5K4
               val body = c.typecheck(childrenParam.get.tpt, c.TYPEmode).tpe match {
                 case TypeRef(_, sym, _) if sym == definitions.RepeatedParamClass =>
-                  val applyValuesChildrenVararg = caseClassparamss.map(ps => ps.map { ps =>
-                    if (ps == childrenParam.get) {
-                      q"${ps.name}: _*"
-                    } else q"${ps.name}"
-                  })
+                  val applyValuesChildrenVararg = caseClassparamss.map { ps =>
+                    ps.map { ps =>
+                      if (ps == childrenParam.get) {
+                        q"${ps.name}: _*"
+                      } else q"${ps.name}"
+                    }
+                  }
 
                   q"component.apply(Props.apply(...$applyValuesChildrenVararg))"
                 case _ =>

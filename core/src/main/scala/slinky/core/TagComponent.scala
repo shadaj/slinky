@@ -12,9 +12,8 @@ trait Tag {
 final class CustomTag(@inline private val name: String) extends Tag {
   override type tagType = Nothing
 
-  @inline def apply(mods: TagMod[tagType]*): WithAttrs[tagType] = {
+  @inline def apply(mods: TagMod[tagType]*): WithAttrs[tagType] =
     WithAttrs[tagType](name, mods)
-  }
 }
 object CustomTag {
   def apply(name: String): CustomTag = new CustomTag(name)
@@ -30,7 +29,7 @@ abstract class TagElement {
 }
 
 final class CustomAttribute[T](@inline private val name: String) {
-  @inline def :=(v: T) = new AttrPair[Any](name, v.asInstanceOf[js.Any])
+  @inline def :=(v: T)         = new AttrPair[Any](name, v.asInstanceOf[js.Any])
   @inline def :=(v: Option[T]) = new OptionalAttrPair[Any](name, v.asInstanceOf[Option[js.Any]])
 }
 object CustomAttribute {
@@ -44,18 +43,19 @@ object TagMod {
     ev(elem)
 }
 
-@js.native trait ReactElementMod extends TagMod[Any]
+@js.native
+trait ReactElementMod extends TagMod[Any]
 
-@js.native trait RefAttr[-T] extends js.Object
+@js.native
+trait RefAttr[-T] extends js.Object
 object RefAttr {
   @inline implicit def fromReact[T](in: slinky.core.facade.ReactRef[T]): RefAttr[T] = in.asInstanceOf[RefAttr[T]]
 }
 
-final class AttrPair[-A](@inline final val name: String,
-                         @inline final val value: js.Any) extends TagMod[A]
+final class AttrPair[-A](@inline final val name: String, @inline final val value: js.Any) extends TagMod[A]
 
-final class OptionalAttrPair[-A](@inline final val name: String,
-                                 @inline final val value: Option[js.Any]) extends TagMod[A]
+final class OptionalAttrPair[-A](@inline final val name: String, @inline final val value: Option[js.Any])
+    extends TagMod[A]
 
 object OptionalAttrPair {
   @inline def optionToJsOption[T](o: Option[T])(implicit a: T => js.Any): Option[js.Any] =
@@ -95,14 +95,16 @@ object WithAttrs {
     }
 
     val ret = ReactRaw.createElement
-      .applyDynamic("apply")(ReactRaw, withAttrs.args).asInstanceOf[ReactElement]
+      .applyDynamic("apply")(ReactRaw, withAttrs.args)
+      .asInstanceOf[ReactElement]
 
     withAttrs.args(0) = null
 
     ret
   }
 
-  @inline implicit def buildContainer[F[_]](withAttrs: F[WithAttrs[_]])(implicit f: ReactElementContainer[F]): F[ReactElement] = {
+  @inline implicit def buildContainer[F[_]](
+    withAttrs: F[WithAttrs[_]]
+  )(implicit f: ReactElementContainer[F]): F[ReactElement] =
     f.map(withAttrs)(build)
-  }
 }

@@ -13,13 +13,12 @@ abstract class GenericDeriveImpl(val c: whitebox.Context) { self =>
       case _ => origTpe
     }
 
-    def transformIfVarArg(tree: Tree): Tree = {
+    def transformIfVarArg(tree: Tree): Tree =
       origTpe match {
         case TypeRef(_, sym, _) if sym == definitions.RepeatedParamClass =>
           q"$tree: _*"
         case _ => tree
       }
-    }
   }
 
   val typeclassType: Type
@@ -33,7 +32,7 @@ abstract class GenericDeriveImpl(val c: whitebox.Context) { self =>
 
   private lazy val typeclassSymbol = typeclassType.typeSymbol
 
-  private def replaceDeferred(saveReferencesTo: mutable.Set[String]): Transformer = {
+  private def replaceDeferred(saveReferencesTo: mutable.Set[String]): Transformer =
     new Transformer {
       override def transform(tree: Tree): Tree = maybeExtractDeferred(tree) match {
         case Some(t) =>
@@ -44,11 +43,9 @@ abstract class GenericDeriveImpl(val c: whitebox.Context) { self =>
           super.transform(tree)
       }
     }
-  }
 
-  def getTypeclass(forType: Type): Tree = {
+  def getTypeclass(forType: Type): Tree =
     c.inferImplicitValue(appliedType(typeclassSymbol, forType))
-  }
 
   private val currentMemo = {
     GenericDeriveImpl.derivationMemo.get()
@@ -105,40 +102,43 @@ abstract class GenericDeriveImpl(val c: whitebox.Context) { self =>
       val deriveTree = if (regularImplicit.isEmpty) {
         if (symbol.isParameter) {
           c.abort(c.enclosingPosition, "Cannot derive a typeclass for a type parameter")
-        } else if (symbol.isModuleClass && c.typecheck(c.parse(symbol.asClass.module.fullName), silent = true).nonEmpty) {
+        } else if (symbol.isModuleClass && c
+                     .typecheck(c.parse(symbol.asClass.module.fullName), silent = true)
+                     .nonEmpty) {
           createModuleTypeclass(tTag.tpe, c.parse(symbol.asClass.module.fullName))
         } else if (symbol.isClass && symbol.asClass.isCaseClass && symbol.asType.typeParams.size == tTag.tpe.typeArgs.size) {
           val constructor = symbol.asClass.primaryConstructor
-          val companion = symbol.asClass.companion
+          val companion   = symbol.asClass.companion
           if (companion != NoSymbol) {
             companion.info.decl(TermName("apply")).alternatives.foreach(_.asMethod.typeSignature)
           }
 
           val paramsLists = constructor.asMethod.paramLists
           memoTree(tTag.tpe) {
-            val params: Seq[Seq[Param]] = paramsLists.map(_.zipWithIndex.map { case (p, i) =>
-              val transformedValueType = p.typeSignatureIn(tTag.tpe).resultType
-              Param(
-                p.name,
-                transformedValueType.substituteTypes(symbol.asType.typeParams, tTag.tpe.typeArgs),
-                if (p.asTerm.isParamWithDefault && companion != NoSymbol) {
-                  val defaultTermName = "apply$default$" + (i + 1)
-                  Some(q"$companion.${TermName(defaultTermName)}")
-                } else None
-              )
+            val params: Seq[Seq[Param]] = paramsLists.map(_.zipWithIndex.map {
+              case (p, i) =>
+                val transformedValueType = p.typeSignatureIn(tTag.tpe).resultType
+                Param(
+                  p.name,
+                  transformedValueType.substituteTypes(symbol.asType.typeParams, tTag.tpe.typeArgs),
+                  if (p.asTerm.isParamWithDefault && companion != NoSymbol) {
+                    val defaultTermName = "apply$default$" + (i + 1)
+                    Some(q"$companion.${TermName(defaultTermName)}")
+                  } else None
+                )
             })
 
             createCaseClassTypeclass(tTag.tpe, params)
           }
         } else if (symbol.isClass && tTag.tpe <:< typeOf[AnyVal]) {
           val actualValue = symbol.asClass.primaryConstructor.asMethod.paramLists.head.head
-          val param = Param(actualValue.name, actualValue.typeSignatureIn(tTag.tpe).resultType, None)
+          val param       = Param(actualValue.name, actualValue.typeSignatureIn(tTag.tpe).resultType, None)
 
           memoTree(tTag.tpe)(createValueClassTypeclass(tTag.tpe, param))
         } else if (symbol.isClass && symbol.asClass.isSealed && symbol.asType.toType.typeArgs.isEmpty) {
           def getSubclasses(clazz: ClassSymbol): Set[Symbol] = {
             // from magnolia
-            val children = clazz.knownDirectSubclasses
+            val children                       = clazz.knownDirectSubclasses
             val (abstractTypes, concreteTypes) = children.partition(_.isAbstract)
 
             abstractTypes.map(_.asClass).flatMap(getSubclasses) ++ concreteTypes
@@ -149,7 +149,10 @@ abstract class GenericDeriveImpl(val c: whitebox.Context) { self =>
           }
         } else {
           memoTree(tTag.tpe) {
-            c.echo(c.enclosingPosition, s"Using fallback derivation for type ${tTag.tpe} (derivation: ${getClass.getSimpleName})")
+            c.echo(
+              c.enclosingPosition,
+              s"Using fallback derivation for type ${tTag.tpe} (derivation: ${getClass.getSimpleName})"
+            )
             createFallback(tTag.tpe)
           }
         }
@@ -165,30 +168,34 @@ abstract class GenericDeriveImpl(val c: whitebox.Context) { self =>
 
       if (isRoot) {
         val saveReferences = mutable.Set.empty[String]
-        val seenImpls = mutable.Set.empty[GenericDeriveImpl]
+        val seenImpls      = mutable.Set.empty[GenericDeriveImpl]
 
-        def replaceDeferredAllTypeclasses(tree: Tree): Tree = {
+        def replaceDeferredAllTypeclasses(tree: Tree): Tree =
           seenImpls.foldLeft(tree) { (tree, impl) =>
-            impl.replaceDeferred(saveReferences).transform(tree.asInstanceOf[impl.c.universe.Tree])
+            impl
+              .replaceDeferred(saveReferences)
+              .transform(tree.asInstanceOf[impl.c.universe.Tree])
               .asInstanceOf[Tree]
           }
-        }
 
-        val unwrappedOrder = currentOrder.dequeueAll(_ => true).map { case (impl, name, tpe, t) =>
-          seenImpls.add(impl)
-          val typeclassTree = c.untypecheck(replaceDeferredAllTypeclasses(t.asInstanceOf[Tree]))
+        val unwrappedOrder = currentOrder.dequeueAll(_ => true).map {
+          case (impl, name, tpe, t) =>
+            seenImpls.add(impl)
+            val typeclassTree = c.untypecheck(replaceDeferredAllTypeclasses(t.asInstanceOf[Tree]))
 
-          if (saveReferences.contains(name)) {
-            (
-              Some(q"var ${TermName(name)}: ${appliedType(impl.typeclassSymbol.asInstanceOf[Symbol], tpe.asInstanceOf[Type])} = null"),
-              q"${TermName(name)} = $typeclassTree"
-            )
-          } else {
-            (
-              None,
-              q"val ${TermName(name)}: ${appliedType(impl.typeclassSymbol.asInstanceOf[Symbol], tpe.asInstanceOf[Type])} = $typeclassTree"
-            )
-          }
+            if (saveReferences.contains(name)) {
+              (
+                Some(
+                  q"var ${TermName(name)}: ${appliedType(impl.typeclassSymbol.asInstanceOf[Symbol], tpe.asInstanceOf[Type])} = null"
+                ),
+                q"${TermName(name)} = $typeclassTree"
+              )
+            } else {
+              (
+                None,
+                q"val ${TermName(name)}: ${appliedType(impl.typeclassSymbol.asInstanceOf[Symbol], tpe.asInstanceOf[Type])} = $typeclassTree"
+              )
+            }
         }
 
         currentMemo.clear()
