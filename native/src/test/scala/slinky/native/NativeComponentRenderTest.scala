@@ -56,9 +56,15 @@ class NativeComponentRenderTest extends AnyFunSuite {
   )
 
   test("Can render a view component with style") {
-    assert(!js.isUndefined(TestRenderer.create(
-      View(style = testStyle)()
-    ).toJSON()))
+    assert(
+      !js.isUndefined(
+        TestRenderer
+          .create(
+            View(style = testStyle)()
+          )
+          .toJSON()
+      )
+    )
   }
 
   test("Can render an image component") {
@@ -124,9 +130,13 @@ class NativeComponentRenderTest extends AnyFunSuite {
   }
 
   test("Can render a ScrollView with style") {
-    assert(!js.isUndefined(TestRenderer.create(
-      ScrollView(style = testStyle)()
-    )))
+    assert(
+      !js.isUndefined(
+        TestRenderer.create(
+          ScrollView(style = testStyle)()
+        )
+      )
+    )
   }
 
   test("Can call scrollTo() on a scroll view instance") {
