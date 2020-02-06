@@ -15,7 +15,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest]
-        scalajs: ["0.6.31", "1.0.0-RC2"]
+        scalajs: ["0.6.32", "1.0.0"]
     steps:
       - name: Configure git to disable Windows line feeds
         run: "git config --global core.autocrlf false"
@@ -36,7 +36,7 @@ jobs:
           SCALAJS_VERSION: ${{ matrix.scalajs }}
         shell: bash
       - name: Test Scala.js React Interop (fastopt + fullopt)
-        if: matrix.scalajs == '0.6.31'
+        if: matrix.scalajs == '0.6.32'
         run: sbt scalajsReactInterop/test "set scalaJSStage in Global := FullOptStage" scalajsReactInterop/test
         env:
           SCALAJS_VERSION: ${{ matrix.scalajs }}

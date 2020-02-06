@@ -132,18 +132,14 @@ lazy val web = project
             Seq("slinky.generator.Generator", "web/html.json", (rootFolder / "html").getAbsolutePath, "slinky.web.html")
               .mkString(" ", " ", "")
           )
-          .map { _ =>
-            (rootFolder / "html" ** "*.scala").get
-          }
+          .map(_ => (rootFolder / "html" ** "*.scala").get)
 
         val svg = (generator / Compile / runMain)
           .toTask(
             Seq("slinky.generator.Generator", "web/svg.json", (rootFolder / "svg").getAbsolutePath, "slinky.web.svg")
               .mkString(" ", " ", "")
           )
-          .map { _ =>
-            (rootFolder / "svg" ** "*.scala").get
-          }
+          .map(_ => (rootFolder / "svg" ** "*.scala").get)
 
         html.zip(svg).flatMap(t => t._1.flatMap(h => t._2.map(s => h ++ s)))
       }
@@ -151,9 +147,7 @@ lazy val web = project
     Compile / packageSrc / mappings ++= {
       val base  = (Compile / sourceManaged).value
       val files = (Compile / managedSources).value
-      files.map { f =>
-        (f, f.relativeTo(base).get.getPath)
-      }
+      files.map(f => (f, f.relativeTo(base).get.getPath))
     },
     librarySettings,
     crossScalaSettings
@@ -176,13 +170,13 @@ lazy val vr =
 lazy val hot = project.settings(macroAnnotationSettings, librarySettings, crossScalaSettings).dependsOn(core)
 
 val scalaJSVersion =
-  Option(System.getenv("SCALAJS_VERSION")).getOrElse("0.6.31")
+  Option(System.getenv("SCALAJS_VERSION")).getOrElse("0.6.32")
 
 lazy val scalajsReactInterop = project
   .settings(
     macroAnnotationSettings,
     librarySettings,
-    publish / skip := scalaJSVersion != "0.6.31"
+    publish / skip := scalaJSVersion != "0.6.32"
   )
   .dependsOn(core, web % Test)
 
