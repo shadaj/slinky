@@ -226,7 +226,7 @@ object Hooks {
   }
 
   @inline def useEffect[T](thunk: () => T)(implicit conv: T => EffectCallbackReturn): Unit =
-    HooksRaw.useEffect(() => { conv(thunk()) })
+    HooksRaw.useEffect(() => conv(thunk()))
 
   @inline def useEffect[T](thunk: () => T, watchedObjects: Iterable[Any])(
     implicit conv: T => EffectCallbackReturn
@@ -263,7 +263,7 @@ object Hooks {
     HooksRaw.useImperativeHandle[R](ref, value)
 
   @inline def useLayoutEffect[T](thunk: () => T)(implicit conv: T => EffectCallbackReturn): Unit =
-    HooksRaw.useLayoutEffect(() => { conv(thunk()) })
+    HooksRaw.useLayoutEffect(() => conv(thunk()))
 
   @inline def useLayoutEffect[T](thunk: () => T, watchedObjects: Iterable[Any])(
     implicit conv: T => EffectCallbackReturn

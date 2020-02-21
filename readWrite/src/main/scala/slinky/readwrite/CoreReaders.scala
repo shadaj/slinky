@@ -79,9 +79,7 @@ class MacroReadersImpl(_c: whitebox.Context) extends GenericDeriveImpl(_c) {
         }"""
 
   def createSealedTraitTypeclass(traitType: c.Type, subclasses: Seq[c.Symbol]): c.Tree = {
-    val cases = subclasses.map { sub =>
-      cq"""${sub.name.toString} => ${getTypeclass(sub.asType.toType)}.read(o)"""
-    }
+    val cases = subclasses.map(sub => cq"""${sub.name.toString} => ${getTypeclass(sub.asType.toType)}.read(o)""")
 
     q"""new _root_.slinky.readwrite.Reader[$traitType] {
           def forceRead(o: _root_.scala.scalajs.js.Object): $traitType = {
@@ -232,7 +230,5 @@ trait CoreReaders extends MacroReaders with FallbackReaders {
   implicit val inclusiveRangeReader: Reader[Range.Inclusive] = rangeReader.asInstanceOf[Reader[Range.Inclusive]]
 
   implicit def futureReader[O](implicit oReader: Reader[O]): Reader[Future[O]] =
-    _.asInstanceOf[js.Promise[js.Object]].toFuture.map { v =>
-      oReader.read(v)
-    }
+    _.asInstanceOf[js.Promise[js.Object]].toFuture.map(v => oReader.read(v))
 }

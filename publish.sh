@@ -14,10 +14,10 @@ cp publishing-setup/credentials.sbt credentials.sbt
 
 sbt coreIntellijSupport/updateIntellij coreIntellijSupport/publishSigned
 
-export SCALAJS_VERSION="0.6.31"
+export SCALAJS_VERSION="0.6.32"
 sbt publishSignedAll
 
-export SCALAJS_VERSION="1.0.0-RC2"
+export SCALAJS_VERSION="1.0.0"
 sbt publishSignedAll
 
 sbt sonatypeBundleRelease

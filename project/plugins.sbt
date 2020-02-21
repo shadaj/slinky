@@ -1,16 +1,16 @@
 val scalaJSVersion =
-  Option(System.getenv("SCALAJS_VERSION")).getOrElse("0.6.31")
+  Option(System.getenv("SCALAJS_VERSION")).getOrElse("0.6.32")
 
 addSbtPlugin("org.scala-js" % "sbt-scalajs" % scalaJSVersion)
 
 {
   if (scalaJSVersion.startsWith("0.6.")) Nil
-  else Seq(addSbtPlugin("org.scala-js" % "sbt-jsdependencies" % "1.0.0-RC2"))
+  else Seq(addSbtPlugin("org.scala-js" % "sbt-jsdependencies" % "1.0.0"))
 }
 
 libraryDependencies ++= {
   if (scalaJSVersion.startsWith("0.6.")) Nil
-  else Seq("org.scala-js" %% "scalajs-env-jsdom-nodejs" % "1.0.0-RC3")
+  else Seq("org.scala-js" %% "scalajs-env-jsdom-nodejs" % "1.0.0")
 }
 
 {
@@ -20,7 +20,7 @@ libraryDependencies ++= {
 
 libraryDependencies ++= {
   if (scalaJSVersion.startsWith("0.6.")) Nil
-  else Seq("org.scala-js" %% "scalajs-linker" % "1.0.0-RC2")
+  else Seq("org.scala-js" %% "scalajs-linker" % "1.0.0")
 }
 
 addSbtPlugin("com.jsuereth" % "sbt-pgp" % "2.0.0")

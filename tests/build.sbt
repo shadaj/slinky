@@ -1,7 +1,7 @@
 enablePlugins(ScalaJSPlugin)
 enablePlugins(JSDependenciesPlugin)
 
-libraryDependencies += "org.scalatest" %%% "scalatest" % "3.1.0" % Test
+libraryDependencies += "org.scalatest" %%% "scalatest" % "3.1.1" % Test
 
 Test / jsEnv := new org.scalajs.jsenv.jsdomnodejs.JSDOMNodeJSEnv()
 
