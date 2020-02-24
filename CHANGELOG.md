@@ -1,19 +1,26 @@
 # Changelog
 
 ## vNEXT
-* Add slinky-react-router and slinky-history as separate subprojects, to provide interfaces to react-router and the html5 history api [PR #305](https://github.com/shadaj/slinky/pull/305)
-+ Fix project build in Windows OS and add automated testing in Windows to CI workflow. You can now build Slinky and run tests in Windows [PR #308](https://github.com/shadaj/slinky/pull/308)
+
+## [v0.6.4](https://slinky.dev)
+### Highlights :tada:
++ Add support for **Scala.js 1.0.0** [PR #327](https://github.com/shadaj/slinky/pull/327) and [PR #321](https://github.com/shadaj/slinky/pull/321)
+* Add **slinky-react-router** and **slinky-history** as separate subprojects, to provide interfaces to react-router and the html5 history api [PR #305](https://github.com/shadaj/slinky/pull/305)
++ Add apply method for constructing CustomTag and CustomAttributes [PR #318](https://github.com/shadaj/slinky/pull/318)
++ Rewrite the class component logic to patch the component definition once to handle JS data instead of on every initialization [PR #321](https://github.com/shadaj/slinky/pull/321)
+
+### Bug Fixes :bug:
 + Add ARIA role attribute [PR #309](https://github.com/shadaj/slinky/pull/309)
 + Support className and role attributes for SVG [PR #314](https://github.com/shadaj/slinky/pull/314)
 + Add novalidate attribute to form [PR #315](https://github.com/shadaj/slinky/pull/315)
-+ Add apply method for constructing CustomTag and CustomAttributes [PR #318](https://github.com/shadaj/slinky/pull/318)
 + Fix types for the useCallback hook and fix its reference equality behavior [PR #302](https://github.com/shadaj/slinky/pull/302)
 + Use js.Object instead of js.Dynamics on attribute style [PR #322](https://github.com/shadaj/slinky/pull/322)
-+ Add support for Scala.js 1.0.0 [PR #327](https://github.com/shadaj/slinky/pull/327) and [PR #321](https://github.com/shadaj/slinky/pull/321)
-+ Rewrite the class component logic to patch the component definition once to handle JS data instead of on every initialization [PR #321](https://github.com/shadaj/slinky/pull/321)
 + Add missing inherited props to native ScrollView component [PR #326](https://github.com/shadaj/slinky/pull/326)
 
-## [v0.6.3](https://slinky.dev)
+### Internal Infrastructure
++ Fix project build in Windows OS and add automated testing in Windows to CI workflow. You can now build Slinky and run tests in Windows [PR #308](https://github.com/shadaj/slinky/pull/308)
+
+## [v0.6.3](https://5e28ce624dd0550179b50f20--slinky.netlify.com/)
 ### Highlights :tada:
 + Improve experience using `ReactElement`s within first-order types such as Map and List [PR #285](https://github.com/shadaj/slinky/pull/285)
 + Support [React Native's Keyboard API](https://facebook.github.io/react-native/docs/keyboard) [PR #293](https://github.com/shadaj/slinky/pull/293)
