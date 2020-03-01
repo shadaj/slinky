@@ -1,6 +1,8 @@
 # Changelog
 
 ## vNEXT
++ Fix crashes with class components when emitting ES2015 code [PR #335](https://github.com/shadaj/slinky/pull/335)
++ Support hot reloading when using Scala.js 1.0 [PR #336](https://github.com/shadaj/slinky/pull/336)
 
 ## [v0.6.4](https://slinky.dev)
 ### Highlights :tada:
