@@ -20,6 +20,21 @@ abstract class DefinitionBase[Props, State, Snapshot](jsProps: js.Object) extend
 
   def initialState: State
 
+  if (!js.isUndefined(this.asInstanceOf[js.Dynamic]._base)) {
+    this.asInstanceOf[js.Dynamic].state = {
+      val initialStateValue = this.asInstanceOf[DefinitionBase[_, _, _]].initialState
+      val stateWithExtraApplyFix = (if (this.asInstanceOf[js.Dynamic]._base.needsExtraApply.asInstanceOf[Boolean]) {
+                                      initialStateValue.asInstanceOf[js.Function0[State]].apply()
+                                    } else initialStateValue).asInstanceOf[State]
+
+      if (BaseComponentWrapper.scalaComponentWritingEnabled) {
+        DefinitionBase.writeWithWrappingAdjustment(this.asInstanceOf[DefinitionBase[_, State, _]].stateWriter)(
+          stateWithExtraApplyFix
+        )
+      } else js.Dynamic.literal(__ = stateWithExtraApplyFix.asInstanceOf[js.Any])
+    }
+  }
+
   @inline final private[slinky] def readPropsValue(value: js.Object): Props = readValue(value, propsReader)
 
   @inline final private[slinky] def readStateValue(value: js.Object): State = readValue(value, stateReader)

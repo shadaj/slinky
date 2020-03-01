@@ -5,7 +5,9 @@ libraryDependencies += "org.scalatest" %%% "scalatest" % "3.1.1" % Test
 
 Test / jsEnv := new org.scalajs.jsenv.jsdomnodejs.JSDOMNodeJSEnv()
 
-Test / scalaJSLinkerConfig ~= { _.withESFeatures(_.withUseECMAScript2015(false)) }
+Test / scalaJSLinkerConfig ~= { _.withESFeatures(_.withUseECMAScript2015(
+  Option(System.getenv("ES2015_ENABLED")).map(_ == "true").getOrElse(false)
+)) }
 
 Test / unmanagedResourceDirectories += baseDirectory.value / "node_modules"
 

@@ -171,50 +171,20 @@ abstract class BaseComponentWrapper(sr: StateReaderProvider, sw: StateWriterProv
 
       componentPrototype._base = this.asInstanceOf[js.Any]
 
-      patchedConstructor = constructor
-    }
-
-    patchedConstructor
-  }
-
-  private var wrappedConstructor: js.Dynamic = null
-  private def getWrappedConstructor(implicit constructorTag: ConstructorTag[Def]) = {
-    if (wrappedConstructor == null) {
-      val constructor     = getPatchedConstructor
-      val descriptor      = js.Object.getOwnPropertyDescriptor(constructor.prototype.asInstanceOf[js.Object], "initialState")
+      val descriptor      = js.Object.getOwnPropertyDescriptor(componentPrototype.asInstanceOf[js.Object], "initialState")
       val needsExtraApply = !js.isUndefined(descriptor) && !js.isUndefined(descriptor.asInstanceOf[js.Dynamic].writable)
-
-      wrappedConstructor = (((self: Def, props: js.Object) => {
-        // run the original constructor
-        constructor.asInstanceOf[js.ThisFunction1[Def, js.Object, Unit]](self, props)
-
-        // set initial state of the component after the original constructor
-        self.asInstanceOf[js.Dynamic].state = {
-          val initialStateValue = self.asInstanceOf[DefinitionBase[_, _, _]].initialState
-          val stateWithExtraApplyFix = (if (needsExtraApply) {
-                                          initialStateValue.asInstanceOf[js.Function0[State]].apply()
-                                        } else initialStateValue).asInstanceOf[State]
-
-          if (BaseComponentWrapper.scalaComponentWritingEnabled) {
-            DefinitionBase.writeWithWrappingAdjustment(self.asInstanceOf[DefinitionBase[_, State, _]].stateWriter)(
-              stateWithExtraApplyFix
-            )
-          } else js.Dynamic.literal(__ = stateWithExtraApplyFix.asInstanceOf[js.Any])
-        }
-      }): js.ThisFunction1[Def, js.Object, Unit]).asInstanceOf[js.Dynamic]
-
-      wrappedConstructor.prototype = constructor.prototype
+      this.asInstanceOf[js.Dynamic].needsExtraApply = needsExtraApply
 
       if (!scala.scalajs.LinkingInfo.productionMode) {
-        wrappedConstructor.displayName = getClass.getSimpleName
+        constructor.displayName = getClass.getSimpleName
       }
 
       if (this.getDerivedStateFromProps != null) {
-        wrappedConstructor.getDerivedStateFromProps = ((props: js.Object, state: js.Object) => {
+        constructor.getDerivedStateFromProps = ((props: js.Object, state: js.Object) => {
           val propsScala =
-            DefinitionBase.readValue(props, constructor.prototype._base._propsReader.asInstanceOf[Reader[Props]])
+            DefinitionBase.readValue(props, this.asInstanceOf[js.Dynamic]._propsReader.asInstanceOf[Reader[Props]])
           val stateScala =
-            DefinitionBase.readValue(state, constructor.prototype._base._stateReader.asInstanceOf[Reader[State]])
+            DefinitionBase.readValue(state, this.asInstanceOf[js.Dynamic]._stateReader.asInstanceOf[Reader[State]])
 
           val newState = getDerivedStateFromProps(propsScala, stateScala)
 
@@ -222,7 +192,7 @@ abstract class BaseComponentWrapper(sr: StateReaderProvider, sw: StateWriterProv
           else {
             if (BaseComponentWrapper.scalaComponentWritingEnabled) {
               DefinitionBase.writeWithWrappingAdjustment(
-                constructor.prototype._base._stateWriter.asInstanceOf[Writer[State]]
+                this.asInstanceOf[js.Dynamic]._stateWriter.asInstanceOf[Writer[State]]
               )(newState)
             } else {
               js.Dynamic.literal(__ = newState.asInstanceOf[js.Any])
@@ -232,14 +202,14 @@ abstract class BaseComponentWrapper(sr: StateReaderProvider, sw: StateWriterProv
       }
 
       if (this.getDerivedStateFromError != null) {
-        wrappedConstructor.getDerivedStateFromError = ((error: js.Error) => {
+        constructor.getDerivedStateFromError = ((error: js.Error) => {
           val newState = getDerivedStateFromError(error)
 
           if (newState == null) null
           else {
             if (BaseComponentWrapper.scalaComponentWritingEnabled) {
               DefinitionBase.writeWithWrappingAdjustment(
-                constructor.prototype._base._stateWriter.asInstanceOf[Writer[State]]
+                this.asInstanceOf[js.Dynamic]._stateWriter.asInstanceOf[Writer[State]]
               )(newState)
             } else {
               js.Dynamic.literal(__ = newState.asInstanceOf[js.Any])
@@ -247,9 +217,11 @@ abstract class BaseComponentWrapper(sr: StateReaderProvider, sw: StateWriterProv
           }
         }): js.Function1[js.Error, js.Object]
       }
+
+      patchedConstructor = constructor
     }
 
-    wrappedConstructor
+    patchedConstructor
   }
 
   def componentConstructor(
@@ -266,7 +238,7 @@ abstract class BaseComponentWrapper(sr: StateReaderProvider, sw: StateWriterProv
     if (stateWriter != null) this.asInstanceOf[js.Dynamic]._stateWriter = stateWriter.asInstanceOf[js.Any]
 
     BaseComponentWrapper.componentConstructorMiddleware(
-      getWrappedConstructor(constructorTag).asInstanceOf[js.Object],
+      getPatchedConstructor(constructorTag).asInstanceOf[js.Object],
       this.asInstanceOf[js.Object]
     )
   }
