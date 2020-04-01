@@ -14,7 +14,7 @@ import js.Dynamic.literal
 
 @react object RemarkCode {
   case class Props(children: Seq[String])
-  
+
   val component = FunctionalComponent[Props] { props =>
     if (props.children.head.contains('\n')) {
       div(className := "code-block", style := literal(
@@ -100,7 +100,8 @@ object DocsTree {
       "Writing Components" -> "/docs/writing-components/",
       "External Components" -> "/docs/external-components/",
       "Functional Components and Hooks" -> "/docs/functional-components-and-hooks/",
-      "React Native and VR" -> "/docs/native-and-vr/"
+      "React Native and VR" -> "/docs/native-and-vr/",
+      "Electron" -> "/docs/electron/",
     ),
     "Advanced Guides" -> List(
       "Technical Overview" -> "/docs/technical-overview/",

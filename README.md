@@ -23,7 +23,7 @@ Slinky is a framework for writing React apps in Scala with an experience just li
 Slinky lets you:
 + Write React components in Scala with an API that mirrors vanilla React
 + Implement interfaces to other React libraries with automatic conversions between Scala and JS types
-+ Write apps for React Native and React 360, including the ability to share code with web apps
++ Write apps for React Native,  React 360 and Electron, including the ability to share code with web apps
 + Develop apps iteratively with included hot-reloading support
 
 ## Contributing
