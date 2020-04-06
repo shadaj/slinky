@@ -91,7 +91,7 @@ lazy val macroAnnotationSettings = Seq(
   },
   libraryDependencies ++= {
     if (scalaVersion.value == scala213) Seq.empty
-    else Seq(compilerPlugin(("org.scalamacros" % "paradise" % "2.1.0").cross(CrossVersion.full)))
+    else Seq(compilerPlugin(("org.scalamacros" % "paradise" % "2.1.1").cross(CrossVersion.full)))
   }
 )
 
