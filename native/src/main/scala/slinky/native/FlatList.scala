@@ -11,8 +11,7 @@ import scala.scalajs.js.|
 case class Separators(highlight: () => Unit, unhighlight: () => Unit, updateProps: (String, js.Object) => ReactElement)
 case class ItemLayout(length: Int, offset: Int, index: Int)
 
-case class OnEndReachedInfo(distanceFromEnd: Int)
-case class OnEndReachedEvent(info: OnEndReachedInfo)
+case class OnEndReachedEvent(distanceFromEnd: Double)
 
 case class ViewToken[T](
   item: T,
