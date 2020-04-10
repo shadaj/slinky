@@ -1,10 +1,17 @@
 # Changelog
 
 ## vNEXT
+
+## [v0.6.5](https://slinky.dev)
+### Highlights :tada:
++ Add docs for the new Electron app template [PR #339](https://github.com/shadaj/slinky/pull/339)
+
+### Bug Fixes :bug:
 + Fix crashes with class components when emitting ES2015 code [PR #335](https://github.com/shadaj/slinky/pull/335)
 + Support hot reloading when using Scala.js 1.0 [PR #336](https://github.com/shadaj/slinky/pull/336)
++ Correct props type definition for the React Native `FlatList` component [PR #352](https://github.com/shadaj/slinky/pull/352)
 
-## [v0.6.4](https://slinky.dev)
+## [v0.6.4](https://5e5428ea765522000a4acd61--slinky.netlify.com/)
 ### Highlights :tada:
 + Add support for **Scala.js 1.0.0** [PR #327](https://github.com/shadaj/slinky/pull/327) and [PR #321](https://github.com/shadaj/slinky/pull/321)
 * Add **slinky-react-router** and **slinky-history** as separate subprojects, to provide interfaces to react-router and the html5 history api [PR #305](https://github.com/shadaj/slinky/pull/305)
