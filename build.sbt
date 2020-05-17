@@ -170,13 +170,13 @@ lazy val vr =
 lazy val hot = project.settings(macroAnnotationSettings, librarySettings, crossScalaSettings).dependsOn(core)
 
 val scalaJSVersion =
-  Option(System.getenv("SCALAJS_VERSION")).getOrElse("0.6.33")
+  Option(System.getenv("SCALAJS_VERSION")).getOrElse("1.1.0")
 
 lazy val scalajsReactInterop = project
   .settings(
     macroAnnotationSettings,
     librarySettings,
-    publish / skip := scalaJSVersion != "0.6.33"
+    publish / skip := scalaJSVersion != "1.1.0"
   )
   .dependsOn(core, web % Test)
 
