@@ -169,13 +169,6 @@
       ]
     },
     {
-      "tagName" : "dd",
-      "scalaJSType": "org.scalajs.dom.html.DD",
-      "docLines" : [
-        "The&nbsp;<strong>HTML <code>&lt;dd&gt;</code> element</strong> indicates the description of a term in a description list (<a title=\"The HTML <dl>&nbsp;element represents a description list.&nbsp;The element encloses a list of groups of terms and descriptions. Common uses for this element are to implement a glossary or to display metadata (a list of key-value pairs).\" href=\"/en-US/docs/Web/HTML/Element/dl\"><code>&lt;dl&gt;</code></a>)."
-      ]
-    },
-    {
       "tagName" : "del",
       "scalaJSType": "org.scalajs.dom.html.Element",
       "docLines" : [
@@ -215,13 +208,6 @@
       "scalaJSType": "org.scalajs.dom.html.DList",
       "docLines" : [
         "The <strong>HTML <code>&lt;dl&gt;</code>&nbsp;</strong>element represents a description list.<strong>&nbsp;</strong>The element encloses a list of groups of terms and descriptions. Common uses for this element are to implement a glossary or to display metadata (a list of key-value pairs)."
-      ]
-    },
-    {
-      "tagName" : "dt",
-      "scalaJSType": "org.scalajs.dom.html.DT",
-      "docLines" : [
-        "The <strong>HTML <code>&lt;dt&gt;</code> element</strong> identifies a term in a description list. This element can occur only as a child element of a <a title=\"The HTML <dl>&nbsp;element represents a description list.&nbsp;The element encloses a list of groups of terms and descriptions. Common uses for this element are to implement a glossary or to display metadata (a list of key-value pairs).\" href=\"/en-US/docs/Web/HTML/Element/dl\"><code>&lt;dl&gt;</code></a>. It is usually followed by a <a title=\"The&nbsp;HTML <dd> element indicates the description of a term in a description list (<dl>).\" href=\"/en-US/docs/Web/HTML/Element/dd\"><code>&lt;dd&gt;</code></a> element; however, multiple <code>&lt;dt&gt;</code> elements in a row indicate several terms that are all defined by the immediate next <a title=\"The&nbsp;HTML <dd> element indicates the description of a term in a description list (<dl>).\" href=\"/en-US/docs/Web/HTML/Element/dd\"><code>&lt;dd&gt;</code></a> element."
       ]
     },
     {
@@ -688,7 +674,7 @@
     },
     {
       "tagName" : "td",
-      "scalaJSType": "org.scalajs.dom.html.TableDataCell",
+      "scalaJSType": "org.scalajs.dom.html.TableCell",
       "docLines" : [
         "The <strong>HTML <code>&lt;td&gt;</code> element</strong> defines a cell of a table that contains data. It participates in the <em>table model</em>."
       ]
@@ -709,7 +695,7 @@
     },
     {
       "tagName" : "th",
-      "scalaJSType": "org.scalajs.dom.html.TableHeaderCell",
+      "scalaJSType": "org.scalajs.dom.html.TableCell",
       "docLines" : [
         "<span class=\"seoSummary\">The <strong>HTML <code>&lt;th&gt;</code> element</strong> defines a cell as header of a group of table cells. The exact nature of this group is defined by the <code><a href=\"/en-US/docs/Web/HTML/Element/th#attr-scope\">scope</a></code> and <code><a href=\"/en-US/docs/Web/HTML/Element/th#attr-headers\">headers</a></code> attributes.</span>"
       ]
