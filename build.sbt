@@ -175,8 +175,7 @@ val scalaJSVersion =
 lazy val scalajsReactInterop = project
   .settings(
     macroAnnotationSettings,
-    librarySettings,
-    publish / skip := scalaJSVersion != "0.6.32"
+    librarySettings
   )
   .dependsOn(core, web % Test)
 
