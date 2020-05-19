@@ -38,7 +38,6 @@ jobs:
           ES2015_ENABLED: ${{ matrix.es2015_enabled }}
         shell: bash
       - name: Test Scala.js React Interop (fastopt + fullopt)
-        if: matrix.scalajs == '0.6.32'
         run: sbt scalajsReactInterop/test "set scalaJSStage in Global := FullOptStage" scalajsReactInterop/test
         env:
           SCALAJS_VERSION: ${{ matrix.scalajs }}
