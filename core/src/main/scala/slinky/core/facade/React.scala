@@ -99,7 +99,7 @@ private[slinky] object ReactRaw extends js.Object {
   val Fragment: js.Object   = js.native
   val StrictMode: js.Object = js.native
   val Suspense: js.Object   = js.native
-  val Profiler: js.Object = js.native
+  val Profiler: js.Object   = js.native
 }
 
 object React {
