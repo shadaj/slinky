@@ -3,6 +3,7 @@
 ## vNEXT
 ### Highlights :tada:
 + Updated scalajs-dom to 1.0.0  [PR #362](https://github.com/shadaj/slinky/pull/362)
++ Add facades for the `React.Profiler` component [PR #372](https://github.com/shadaj/slinky/pull/372)
 
 ### Breaking Changes :warning:
 + Due to the update of scalajs-dom to 1.0.0 a support for `dd` and `dt` tags has been dropped.
