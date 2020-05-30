@@ -17,6 +17,17 @@ object ReactComponentClass {
       .componentConstructor(propsReader, wrapper.hot_stateWriter, wrapper.hot_stateReader, ctag)
       .asInstanceOf[ReactComponentClass[wrapper.Props]]
 
+  implicit def externalToClass(
+    external: ExternalComponentWithAttributesWithRefType[_, _]
+  ): ReactComponentClass[external.Props] =
+    external.component
+      .asInstanceOf[ReactComponentClass[external.Props]]
+
+  implicit def externalNoPropsToClass(
+    external: ExternalComponentNoPropsWithAttributesWithRefType[_, _]
+  ): ReactComponentClass[Unit] =
+    external.component.asInstanceOf[ReactComponentClass[Unit]]
+
   implicit def functionalComponentToClass[P](
     component: FunctionalComponent[P]
   )(implicit propsReader: Reader[P]): ReactComponentClass[P] =
