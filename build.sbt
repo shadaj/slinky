@@ -11,9 +11,9 @@ addCommandAlias(
 )
 
 val scala212 = "2.12.10"
-val scala213 = "2.13.1"
+val scala213 = "2.13.2"
 
-ThisBuild / scalaVersion := scala212
+ThisBuild / scalaVersion := scala213
 
 lazy val slinky = project
   .in(file("."))
