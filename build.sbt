@@ -72,14 +72,8 @@ lazy val librarySettings = Seq(
     val g = "https://raw.githubusercontent.com/shadaj/slinky"
     s"-P:scalajs:mapSourceURI:$a->$g/$githubVersion/${baseDirectory.value.getName}/"
   },
-  scalacOptions --= Seq(
-    "-Ywarn-unused:params",
-    "-Ywarn-unused:patvars",
-    "-Ywarn-dead-code",
-    "-Xcheckinit",
-    "-Wunused:params",
-    "-Wunused:patvars",
-    "-Wdead-code"
+  scalacOptions ++= Seq(
+    "-Ywarn-unused:imports"
   )
 )
 
