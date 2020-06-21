@@ -7,6 +7,7 @@
 + Add facades for the `act` funcion in `react-test-renderer` [PR #376](https://github.com/shadaj/slinky/pull/376)
 
 ### Bug Fixes :bug:
++ Fix compilation errors on Scala 2.13 when `Any` is involved in `Props`/`State` types [PR #388](https://github.com/shadaj/slinky/pull/388)
 + Allow exporting external component definitions as instances of `ReactComponentClass` [PR #377](https://github.com/shadaj/slinky/pull/377)
 
 ### Breaking Changes :warning:

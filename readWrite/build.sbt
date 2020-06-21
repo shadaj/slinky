@@ -35,9 +35,11 @@ Compile / sourceGenerators += Def.task {
                  |  def write(p: P): js.Object
                  |}
                  |
-                 |object Writer extends CoreWriters {
+                 |trait FunctionWriters {
                  |  ${gens.mkString("\n")}
-                 |}""".stripMargin)
+                 |}
+                 |
+                 |object Writer extends CoreWriters""".stripMargin)
 
   out.close()
   Seq(genFile)
@@ -87,9 +89,11 @@ Compile / sourceGenerators += Def.task {
                  |  protected def forceRead(o: js.Object): P
                  |}
                  |
-                 |object Reader extends CoreReaders {
+                 |trait FunctionReaders {
                  |  ${gens.mkString("\n")}
-                 |}""".stripMargin)
+                 }
+                 |
+                 |object Reader extends CoreReaders""".stripMargin)
 
   out.close()
   Seq(genFile)

@@ -9,6 +9,7 @@ import scala.concurrent.ExecutionContext.Implicits.global
 
 import scala.reflect.ClassTag
 import scala.reflect.macros.whitebox
+import scala.language.experimental.macros
 
 @compileTimeOnly("Deferred readers are used to handle recursive structures")
 final class DeferredReader[T, Term] extends Reader[T] {
@@ -94,7 +95,7 @@ class MacroReadersImpl(_c: whitebox.Context) extends GenericDeriveImpl(_c) {
   def createFallback(forType: c.Type) = q"_root_.slinky.readwrite.Reader.fallback[$forType]"
 }
 
-trait CoreReaders extends MacroReaders with FallbackReaders {
+trait CoreReaders extends MacroReaders with FallbackReaders with FunctionReaders {
   implicit def jsAnyReader[T <: js.Any]: Reader[T] = _.asInstanceOf[T]
 
   implicit val unitReader: Reader[Unit] = _ => ()
