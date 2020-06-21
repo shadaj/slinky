@@ -198,6 +198,10 @@ class ReaderWriterTest extends AnyFunSuite {
     readWrittenSame[ContainingPrivateType.ToRead](ContainingPrivateType.TestInstance, true)
   }
 
+  test("Read/write - any") {
+    readWrittenSame[Any](123, true)
+  }
+
   test("Reading empty object uses default parameter values when available") {
     assert(implicitly[Reader[ClassWithDefault]].read(js.Dynamic.literal()).a == 5)
   }
