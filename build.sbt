@@ -11,9 +11,9 @@ addCommandAlias(
 )
 
 val scala212 = "2.12.10"
-val scala213 = "2.13.1"
+val scala213 = "2.13.2"
 
-ThisBuild / scalaVersion := scala212
+ThisBuild / scalaVersion := scala213
 
 lazy val slinky = project
   .in(file("."))
@@ -72,14 +72,8 @@ lazy val librarySettings = Seq(
     val g = "https://raw.githubusercontent.com/shadaj/slinky"
     s"-P:scalajs:mapSourceURI:$a->$g/$githubVersion/${baseDirectory.value.getName}/"
   },
-  scalacOptions --= Seq(
-    "-Ywarn-unused:params",
-    "-Ywarn-unused:patvars",
-    "-Ywarn-dead-code",
-    "-Xcheckinit",
-    "-Wunused:params",
-    "-Wunused:patvars",
-    "-Wdead-code"
+  scalacOptions ++= Seq(
+    "-Ywarn-unused:imports"
   )
 )
 

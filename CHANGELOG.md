@@ -2,7 +2,13 @@
 
 ## vNEXT
 ### Highlights :tada:
-+ Updated scalajs-dom to 1.0.0  [PR #362](https://github.com/shadaj/slinky/pull/362)
++ Updated `scalajs-dom` to 1.0.0  [PR #362](https://github.com/shadaj/slinky/pull/362)
++ Add facades for the `React.Profiler` component [PR #372](https://github.com/shadaj/slinky/pull/372)
++ Add facades for the `act` funcion in `react-test-renderer` [PR #376](https://github.com/shadaj/slinky/pull/376)
+
+### Bug Fixes :bug:
++ Fix compilation errors on Scala 2.13 when `Any` is involved in `Props`/`State` types [PR #388](https://github.com/shadaj/slinky/pull/388)
++ Allow exporting external component definitions as instances of `ReactComponentClass` [PR #377](https://github.com/shadaj/slinky/pull/377)
 
 ### Breaking Changes :warning:
 + Due to the update of scalajs-dom to 1.0.0 a support for `dd` and `dt` tags has been dropped.

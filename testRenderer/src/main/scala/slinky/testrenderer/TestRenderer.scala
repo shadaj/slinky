@@ -20,6 +20,7 @@ trait TestRenderer extends js.Object {
 @JSImport("react-test-renderer", JSImport.Default)
 object TestRenderer extends js.Object {
   def create(element: ReactElement): TestRenderer = js.native
+  def act(callback: js.Function0[js.Any]): Unit   = js.native
 }
 
 @js.native
