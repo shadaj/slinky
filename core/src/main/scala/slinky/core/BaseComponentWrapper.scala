@@ -6,6 +6,7 @@ import slinky.readwrite.{Reader, Writer}
 import scala.scalajs.js
 import scala.scalajs.js.ConstructorTag
 
+import scala.language.experimental.macros
 import scala.reflect.macros.whitebox
 
 final class KeyAndRefAddingStage[D](private val args: js.Array[js.Any]) extends AnyVal {

@@ -4,6 +4,7 @@ import slinky.readwrite.Reader
 import slinky.core.facade.{ReactElement, ReactRaw, ReactRef}
 import scala.scalajs.js
 
+import scala.language.experimental.macros
 import scala.reflect.macros.whitebox
 
 final class KeyAddingStage(private val args: js.Array[js.Any]) extends AnyVal {

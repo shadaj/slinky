@@ -7,6 +7,7 @@ import scala.scalajs.js
 import scala.scalajs.js.|
 import scala.concurrent.ExecutionContext.Implicits.global
 import scala.reflect.macros.whitebox
+import scala.language.experimental.macros
 
 @compileTimeOnly("Deferred writers are used to handle recursive structures")
 final class DeferredWriter[T, Term] extends Writer[T] {
@@ -92,7 +93,7 @@ class MacroWritersImpl(_c: whitebox.Context) extends GenericDeriveImpl(_c) {
   def createFallback(forType: Type) = q"_root_.slinky.readwrite.Writer.fallback[$forType]"
 }
 
-trait CoreWriters extends MacroWriters with FallbackWriters {
+trait CoreWriters extends MacroWriters with FallbackWriters with FunctionWriters {
   implicit def jsAnyWriter[T <: js.Any]: Writer[T] = _.asInstanceOf[js.Object]
 
   implicit val unitWriter: Writer[Unit] = _ => js.Dynamic.literal()
