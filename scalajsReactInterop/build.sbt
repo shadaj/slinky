@@ -2,7 +2,7 @@ enablePlugins(ScalaJSBundlerPlugin)
 
 name := "slinky-scalajsreact-interop"
 
-libraryDependencies += "com.github.japgolly.scalajs-react" %%% "core" % "1.7.1"
+libraryDependencies += "com.github.japgolly.scalajs-react" %%% "core" % "1.7.2"
 
 libraryDependencies += "org.scalatest" %%% "scalatest" % "3.1.2" % Test
 
