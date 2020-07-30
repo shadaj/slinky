@@ -56,7 +56,7 @@ Some React libraries, like `react-router` (which handles multi-page React websit
 
 The Reader/Writer API builds upon typeclasses, a concept popularized by the Haskell programming language that makes it easy to define and implement behavior tied to specific types. Typeclasses can be defined for a variety of extensions like serialization, where individual typeclass instances handle the serialization of specific types. The powerful idea of typeclasses is that they can be composed, with complex typeclasses based on simpler ones for primitive types.
 
-Slinky includes the `Reader` and `Writer` typeclasses, which respectively handler reading JavaScript values into Scala types and writing Scala values into what a JavaScript library would expect. In addition to providing conversions for primitive types, Slinky also handles conversions between the idiomatic representations of shared concepts between the two languages, such as JavaScript `Promise`s and Scala `Future`s.
+Slinky includes the `Reader` and `Writer` typeclasses, which respectively handle reading JavaScript values into Scala types and writing Scala values into what a JavaScript library would expect. In addition to providing conversions for primitive types, Slinky also handles conversions between the idiomatic representations of shared concepts between the two languages, such as JavaScript `Promise`s and Scala `Future`s.
 
 Coming back to the concept of generating code at compile time with macros, Slinky also includes macros (powered by [Magnolia](http://magnolia.work/)) that automatically generate typeclasses for case classes. So a case class like this:
 
