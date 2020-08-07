@@ -4,7 +4,7 @@ name := "slinky-scalajsreact-interop"
 
 libraryDependencies += "com.github.japgolly.scalajs-react" %%% "core" % "1.7.3"
 
-libraryDependencies += "org.scalatest" %%% "scalatest" % "3.1.2" % Test
+libraryDependencies += "org.scalatest" %%% "scalatest" % "3.2.1" % Test
 
 Test / npmDependencies += "react"     -> "16.12.0"
 Test / npmDependencies += "react-dom" -> "16.12.0"
