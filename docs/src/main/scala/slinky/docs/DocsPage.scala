@@ -175,7 +175,7 @@ object TrackSSRDocs {
                   h2 = RemarkH2.component: ReactComponentClass[_],
                   code = RemarkCode.component: ReactComponentClass[_]
                 )
-              )).processSync(t).contents
+              )).processSync(t).result
             }
           )
         ),
