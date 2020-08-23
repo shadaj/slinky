@@ -38,12 +38,16 @@ module.exports = {
     }
   },
   plugins: [
-    new CopyWebpackPlugin([
-      {
-        from: path.resolve(__dirname, "../../../../public"),
-        ignore: ["404.html", "404-fastopt.html"]
-      }
-    ]),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: path.resolve(__dirname, "../../../../public"),
+          globOptions: {
+            ignore: ["**/404.html", "**/404-fastopt.html"]
+          }
+        }
+      ]
+    }),
     new HtmlWebpackPlugin({
       template: path.resolve(__dirname, "../../../../public/404-fastopt.html"),
       inject: false,
