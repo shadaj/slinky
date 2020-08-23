@@ -27,7 +27,7 @@ trait RemarkInstanceWithRenderer[T] extends js.Object {
 
 @js.native
 trait RemarkResult[T] extends js.Object {
-  val contents: T = js.native
+  val result: T = js.native
 }
 
 @js.native
