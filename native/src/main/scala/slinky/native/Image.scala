@@ -3,6 +3,7 @@ package slinky.native
 import slinky.core.ExternalComponent
 import slinky.core.annotations.react
 import slinky.core.facade.ReactElement
+import slinky.readwrite.ObjectOrWritten
 
 import scala.concurrent.Future
 import scala.scalajs.js
@@ -38,7 +39,7 @@ case class ImageProgressEvent(loaded: Int, total: Int)
     onLoadEnd: js.UndefOr[() => Unit] = js.undefined,
     onLoadStart: js.UndefOr[() => Unit] = js.undefined,
     resizeMode: js.UndefOr[String] = js.undefined,
-    source: js.UndefOr[ImageURISource | Int | Seq[ImageURISource]] = js.undefined,
+    source: js.UndefOr[ImageURISource | js.Object | Seq[ImageURISource | js.Object]] = js.undefined,
     loadingIndicatorSource: js.UndefOr[Seq[ImageURISource | Int]] = js.undefined,
     onError: js.UndefOr[NativeSyntheticEvent[ImageErrorEvent] => Unit] = js.undefined,
     testID: js.UndefOr[String] = js.undefined,
