@@ -81,7 +81,13 @@ object FlatList extends ExternalComponentWithRefType[FlatListInstance[Any]] {
     progressViewOffset: js.UndefOr[Double] = js.undefined,
     legacyImplementation: js.UndefOr[Boolean] = js.undefined,
     refreshing: js.UndefOr[Boolean] = js.undefined,
-    removeClippedSubviews: js.UndefOr[Boolean] = js.undefined
+    removeClippedSubviews: js.UndefOr[Boolean] = js.undefined,
+    // start of props inherited from ScrollView
+    pagingEnabled: js.UndefOr[Boolean] = js.undefined,
+    showsHorizontalScrollIndicator: js.UndefOr[Boolean] = js.undefined,
+    showsVerticalScrollIndicator: js.UndefOr[Boolean] = js.undefined,
+    snapToAlignment: js.UndefOr[String] = js.undefined,
+    snapToInterval: js.UndefOr[Double] = js.undefined,
   )
 
   @js.native
@@ -115,7 +121,13 @@ object FlatList extends ExternalComponentWithRefType[FlatListInstance[Any]] {
     progressViewOffset: js.UndefOr[Double] = js.undefined,
     legacyImplementation: js.UndefOr[Boolean] = js.undefined,
     refreshing: js.UndefOr[Boolean] = js.undefined,
-    removeClippedSubviews: js.UndefOr[Boolean] = js.undefined
+    removeClippedSubviews: js.UndefOr[Boolean] = js.undefined,
+    // start of props inherited from ScrollView
+    pagingEnabled: js.UndefOr[Boolean] = js.undefined,
+    showsHorizontalScrollIndicator: js.UndefOr[Boolean] = js.undefined,
+    showsVerticalScrollIndicator: js.UndefOr[Boolean] = js.undefined,
+    snapToAlignment: js.UndefOr[String] = js.undefined,
+    snapToInterval: js.UndefOr[Double] = js.undefined
   ): BuildingComponent[FlatListInstance[T], js.Object] =
     new BuildingComponent(
       js.Array(
@@ -145,7 +157,11 @@ object FlatList extends ExternalComponentWithRefType[FlatListInstance[Any]] {
             progressViewOffset = progressViewOffset,
             legacyImplementation = legacyImplementation,
             refreshing = refreshing,
-            removeClippedSubviews = removeClippedSubviews
+            pagingEnabled = pagingEnabled,
+            showsHorizontalScrollIndicator = showsHorizontalScrollIndicator,
+            showsVerticalScrollIndicator = showsVerticalScrollIndicator,
+            snapToAlignment = snapToAlignment,
+            snapToInterval = snapToInterval
           )
         )
       )
