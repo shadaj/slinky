@@ -84,10 +84,11 @@ object FlatList extends ExternalComponentWithRefType[FlatListInstance[Any]] {
     removeClippedSubviews: js.UndefOr[Boolean] = js.undefined,
     // start of props inherited from ScrollView
     pagingEnabled: js.UndefOr[Boolean] = js.undefined,
+    scrollEnabled: js.UndefOr[Boolean] = js.undefined,
     showsHorizontalScrollIndicator: js.UndefOr[Boolean] = js.undefined,
     showsVerticalScrollIndicator: js.UndefOr[Boolean] = js.undefined,
     snapToAlignment: js.UndefOr[String] = js.undefined,
-    snapToInterval: js.UndefOr[Double] = js.undefined,
+    snapToInterval: js.UndefOr[Double] = js.undefined
   )
 
   @js.native
@@ -124,6 +125,7 @@ object FlatList extends ExternalComponentWithRefType[FlatListInstance[Any]] {
     removeClippedSubviews: js.UndefOr[Boolean] = js.undefined,
     // start of props inherited from ScrollView
     pagingEnabled: js.UndefOr[Boolean] = js.undefined,
+    scrollEnabled: js.UndefOr[Boolean] = js.undefined,
     showsHorizontalScrollIndicator: js.UndefOr[Boolean] = js.undefined,
     showsVerticalScrollIndicator: js.UndefOr[Boolean] = js.undefined,
     snapToAlignment: js.UndefOr[String] = js.undefined,
@@ -157,7 +159,9 @@ object FlatList extends ExternalComponentWithRefType[FlatListInstance[Any]] {
             progressViewOffset = progressViewOffset,
             legacyImplementation = legacyImplementation,
             refreshing = refreshing,
+            // start of props inherited from ScrollView
             pagingEnabled = pagingEnabled,
+            scrollEnabled = scrollEnabled,
             showsHorizontalScrollIndicator = showsHorizontalScrollIndicator,
             showsVerticalScrollIndicator = showsVerticalScrollIndicator,
             snapToAlignment = snapToAlignment,
