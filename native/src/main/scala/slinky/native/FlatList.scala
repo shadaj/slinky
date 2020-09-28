@@ -83,6 +83,7 @@ object FlatList extends ExternalComponentWithRefType[FlatListInstance[Any]] {
     refreshing: js.UndefOr[Boolean] = js.undefined,
     removeClippedSubviews: js.UndefOr[Boolean] = js.undefined,
     // start of props inherited from ScrollView
+    decelerationRate: js.UndefOr[String | Double] = js.undefined,
     pagingEnabled: js.UndefOr[Boolean] = js.undefined,
     scrollEnabled: js.UndefOr[Boolean] = js.undefined,
     showsHorizontalScrollIndicator: js.UndefOr[Boolean] = js.undefined,
@@ -124,6 +125,7 @@ object FlatList extends ExternalComponentWithRefType[FlatListInstance[Any]] {
     refreshing: js.UndefOr[Boolean] = js.undefined,
     removeClippedSubviews: js.UndefOr[Boolean] = js.undefined,
     // start of props inherited from ScrollView
+    decelerationRate: js.UndefOr[String | Double] = js.undefined,
     pagingEnabled: js.UndefOr[Boolean] = js.undefined,
     scrollEnabled: js.UndefOr[Boolean] = js.undefined,
     showsHorizontalScrollIndicator: js.UndefOr[Boolean] = js.undefined,
@@ -160,6 +162,7 @@ object FlatList extends ExternalComponentWithRefType[FlatListInstance[Any]] {
             legacyImplementation = legacyImplementation,
             refreshing = refreshing,
             // start of props inherited from ScrollView
+            decelerationRate = decelerationRate,
             pagingEnabled = pagingEnabled,
             scrollEnabled = scrollEnabled,
             showsHorizontalScrollIndicator = showsHorizontalScrollIndicator,
