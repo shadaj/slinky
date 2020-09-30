@@ -2,6 +2,12 @@
 
 ## vNEXT
 
+### Highlights :tada:
++ Add support for native [`useWindowDimensions`]((https://reactnative.dev/docs/0.62/usewindowdimensions)) hook [PR #422](https://github.com/shadaj/slinky/pull/422)
+
+### Bug Fixes :bug:
++ Add missing inherited props to native `FlatList` component [PR #422](https://github.com/shadaj/slinky/pull/422)
+
 ## [v0.6.6](https://slinky.dev)
 ### Highlights :tada:
 + Updated `scalajs-dom` to 1.0.0  [PR #362](https://github.com/shadaj/slinky/pull/362)
