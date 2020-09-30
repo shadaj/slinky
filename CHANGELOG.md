@@ -3,7 +3,7 @@
 ## vNEXT
 
 ### Highlights :tada:
-+ Add support for native [`useWindowDimensions`]((https://reactnative.dev/docs/0.62/usewindowdimensions)) hook [PR #422](https://github.com/shadaj/slinky/pull/422)
++ Add support for native [`useWindowDimensions`](https://reactnative.dev/docs/0.62/usewindowdimensions) hook [PR #422](https://github.com/shadaj/slinky/pull/422)
 
 ### Bug Fixes :bug:
 + Add missing inherited props to native `FlatList` component [PR #422](https://github.com/shadaj/slinky/pull/422)
