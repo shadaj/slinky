@@ -34,3 +34,5 @@ scalacOptions ++= {
   if (scalaJSVersion.startsWith("0.6.")) Seq("-P:scalajs:sjsDefinedByDefault")
   else Nil
 }
+
+addCommandAlias("dev", ";fastOptJS::startWebpackDevServer;~fastOptJS")

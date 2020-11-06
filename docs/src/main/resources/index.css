@@ -48,6 +48,17 @@ a {
   text-decoration: none;
 }
 
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border-top: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
 .article code {
   background-color: rgba(255, 229, 100, 0.3);
 }
