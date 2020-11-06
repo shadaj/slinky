@@ -47,9 +47,9 @@ div(data-"columns" := "3")
 To add event listeners to elements, you can pass in an attribute pair assigning an event to a handler function. In Slinky, the event value is based on a type from the [Scala.js DOM](https://github.com/scala-js/scala-js-dom) library (this may change in the near future, see [PR #53](https://github.com/shadaj/slinky/pull/53)).
 
 ```scala
-input(onChange := (event) => {
-  println("the value of this input element was changed!")
-})
+input(onChange := (event => {
+        println(s"the value of this input element was changed!")
+      }))
 ```
 
 Scala.js even handles the process of binding functions to the appropriate scope, so there's no need to worry about where the event handler is implemented!
