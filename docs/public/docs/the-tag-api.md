@@ -48,7 +48,7 @@ To add event listeners to elements, you can pass in an attribute pair assigning 
 
 ```scala
 input(onChange := (event => {
-        println(s"the value of this input element was changed!")
+        println("the value of this input element was changed!")
       }))
 ```
 
