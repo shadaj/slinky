@@ -113,6 +113,8 @@ object DocsTree {
       "Exporting Components" -> "/docs/exporting-components/",
       "Scala.js React Interop" -> "/docs/scalajs-react-interop/",
       "Abstracting Over Tags" -> "/docs/abstracting-over-tags/",
+    ),"" -> List(
+      "Resources" -> "/docs/resources/",
     )
   )
 }

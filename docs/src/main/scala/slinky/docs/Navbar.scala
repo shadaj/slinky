@@ -92,6 +92,13 @@ import scala.scalajs.js
           )(
             "Community"
           ),
+          Link(
+            to = "/docs/resources/"
+          )(
+            style := smallLinkStyle
+          )(
+            "Resources"
+          ),
           a(
             href := "https://github.com/shadaj/slinky/blob/master/CHANGELOG.md",
             style := smallLinkStyle
