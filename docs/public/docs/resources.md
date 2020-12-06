@@ -32,6 +32,8 @@ Title | Author | Released | Slinky Version
 --- | --- | --- | --- 
 [Demos for ScalablyTyped with Slinky flavour](https://github.com/ScalablyTyped/SlinkyDemos) | Øyvind Raddum Berg | Active | 0.6.5
 [Code for: Slinky doing React the Scala way](https://github.com/pme123/slinky-react-tutorial) | Pascal Mengelt | Nov 2020 |  0.6.5
+[A Simple Example using Slinky with Scalably Typed.](https://github.com/pme123/scalably-slinky-example) | Pascal Mengelt | Dec 2020 |  0.6.5
+[The famous TODO List as a client-server App](https://github.com/pme123/slinky-todos) | Pascal Mengelt | Dec 2020 |  0.6.6
 
 
 ## Projects using Slinky
