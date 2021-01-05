@@ -86,3 +86,4 @@ jobs:
         encrypted_key: ${{ secrets.key }}
         encrypted_iv: ${{ secrets.iv }}
         PGP_PASSPHRASE: ${{ secrets.pgp_passphrase }}
+        IJ_PLUGIN_REPO_TOKEN: ${{ secrets.ij_plugin_repo_token }}
