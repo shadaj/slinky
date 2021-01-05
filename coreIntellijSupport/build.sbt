@@ -2,13 +2,15 @@ enablePlugins(SbtIdeaPlugin)
 
 name := "slinky-core-ijext"
 
-intellijPluginName := "Slinky IntelliJ Support"
-
-intellijBuild := "203.6682.168" // 2020.3
-
 intellijPlugins += "org.intellij.scala".toPlugin
 
 packageMethod := PackagingMethod.Standalone()
+
+patchPluginXml := pluginXmlOptions { xml =>
+  xml.version = version.value
+  xml.sinceBuild = (intellijBuild in ThisBuild).value
+  xml.untilBuild = "999.9999.999"
+}
 
 val publishAutoChannel = taskKey[Unit]("publishAutoChannel")
 publishAutoChannel := Def.taskDyn {

@@ -12,7 +12,7 @@ export GPG_TTY=$(tty)
 
 cp publishing-setup/credentials.sbt credentials.sbt
 
-sbt coreIntellijSupport/updateIntellij coreIntellijSupport/publishAutoChannel
+sbt coreIntellijSupport/updateIntellij coreIntellijSupport/packageArtifact coreIntellijSupport/publishAutoChannel
 
 export SCALAJS_VERSION="0.6.32"
 sbt publishSignedAll

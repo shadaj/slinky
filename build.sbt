@@ -181,6 +181,11 @@ lazy val docsMacros = project.settings(macroAnnotationSettings).dependsOn(web, h
 lazy val docs =
   project.settings(librarySettings, macroAnnotationSettings).dependsOn(web, hot, docsMacros, reactrouter, history)
 
-lazy val coreIntellijSupport = project
+updateIntellij in ThisBuild := {}
 
+lazy val coreIntellijSupport = project.settings(
+  org.jetbrains.sbtidea.Keys.buildSettings: _*
+)
+
+intellijBuild in ThisBuild := "203.6682.168" // 2020.3
 packageMethod in ThisBuild := PackagingMethod.Skip()
