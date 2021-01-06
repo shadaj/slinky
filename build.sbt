@@ -182,10 +182,13 @@ lazy val docs =
   project.settings(librarySettings, macroAnnotationSettings).dependsOn(web, hot, docsMacros, reactrouter, history)
 
 updateIntellij in ThisBuild := {}
+val intelliJVersion = "203.6682.168" // 2020.3
 
 lazy val coreIntellijSupport = project.settings(
-  org.jetbrains.sbtidea.Keys.buildSettings: _*
+  org.jetbrains.sbtidea.Keys.buildSettings :+ (
+    intellijBuild := intelliJVersion
+  ): _*
 )
 
-intellijBuild in ThisBuild := "203.6682.168" // 2020.3
+intellijBuild in ThisBuild := intelliJVersion
 packageMethod in ThisBuild := PackagingMethod.Skip()
