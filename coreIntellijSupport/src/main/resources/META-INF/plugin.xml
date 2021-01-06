@@ -1,6 +1,6 @@
 <idea-plugin>
     <id>slinky.core.intellij</id>
-    <name>Slinky IntelliJ Support</name>
+    <name>Slinky Library Support</name>
     <version>PATCH</version>
     <vendor url="http://www.jetbrains.com">JetBrains</vendor>
 
