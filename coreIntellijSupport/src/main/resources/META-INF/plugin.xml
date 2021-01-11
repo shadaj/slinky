@@ -4,7 +4,7 @@
     <version>PATCH</version>
     <vendor url="https://slinky.dev">Shadaj Laddad and Slinky Contributors</vendor>
 
-    <description>Type inference for the Slinky @react annotation</description>
+    <description>Typechecking support for the @react macro annotation in the Slinky framework for writing React apps with Scala.</description>
 
     <idea-version since-build="PATCH" until-build="PATCH"/>
 
