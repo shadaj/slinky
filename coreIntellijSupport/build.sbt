@@ -4,6 +4,8 @@ name := "slinky-core-ijext"
 
 intellijPlugins += "org.intellij.scala".toPlugin
 
+intellijPlugins += "com.intellij.java".toPlugin
+
 packageMethod := PackagingMethod.Standalone()
 
 patchPluginXml := pluginXmlOptions { xml =>
