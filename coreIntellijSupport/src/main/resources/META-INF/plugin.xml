@@ -9,6 +9,7 @@
     <idea-version since-build="PATCH" until-build="PATCH"/>
 
     <depends>org.intellij.scala</depends>
+    <depends>com.intellij.modules.java</depends>
 
     <application-components></application-components>
 
