@@ -181,17 +181,14 @@ lazy val docsMacros = project.settings(macroAnnotationSettings).dependsOn(web, h
 lazy val docs =
   project.settings(librarySettings, macroAnnotationSettings).dependsOn(web, hot, docsMacros, reactrouter, history)
 
-ThisBuild / updateIntellij := {}
+updateIntellij in ThisBuild := {}
+val intelliJVersion = "203.6682.168" // 2020.3
 
-lazy val coreIntellijSupport = project
-  .enablePlugins(SbtIdeaPlugin)
-  .settings(
-    org.jetbrains.sbtidea.Keys.buildSettings
-  )
-  .settings(
-    intellijBuild := "192.6817.14",
-    intellijInternalPlugins += "java",
-    intellijExternalPlugins += "org.intellij.scala".toPlugin,
-    packageMethod := PackagingMethod.Standalone(),
-    intellijMainJars ++= maybeToolsJar
-  )
+lazy val coreIntellijSupport = project.settings(
+  org.jetbrains.sbtidea.Keys.buildSettings :+ (
+    intellijBuild := intelliJVersion
+  ): _*
+)
+
+intellijBuild in ThisBuild := intelliJVersion
+packageMethod in ThisBuild := PackagingMethod.Skip()

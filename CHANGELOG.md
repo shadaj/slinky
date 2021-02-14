@@ -2,13 +2,15 @@
 
 ## vNEXT
 
+## [v0.6.7](https://slinky.dev)
 ### Highlights :tada:
++ The IntelliJ support plugin has now been extracted into an [independent plugin](https://plugins.jetbrains.com/plugin/15748-slinky-library-support) on the JetBrains Marketplace, making installation much more consistent
 + Add support for native [`useWindowDimensions`](https://reactnative.dev/docs/0.62/usewindowdimensions) hook [PR #422](https://github.com/shadaj/slinky/pull/422)
 
 ### Bug Fixes :bug:
 + Add missing inherited props to native `FlatList` component [PR #422](https://github.com/shadaj/slinky/pull/422)
 
-## [v0.6.6](https://slinky.dev)
+## [v0.6.6](https://5fa89fd323eb8c0008823359--slinky.netlify.app/)
 ### Highlights :tada:
 + Updated `scalajs-dom` to 1.0.0  [PR #362](https://github.com/shadaj/slinky/pull/362)
 + Add facades for the `React.Profiler` component [PR #372](https://github.com/shadaj/slinky/pull/372)

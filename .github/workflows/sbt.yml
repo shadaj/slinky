@@ -23,7 +23,7 @@ jobs:
         shell: bash
       - uses: actions/checkout@master
       - name: Set up JDK 1.8 and SBT
-        uses: olafurpg/setup-scala@v7
+        uses: olafurpg/setup-scala@v10
         with:
           java-version: 1.8
       - name: Style checks
@@ -48,7 +48,7 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - name: Set up JDK 1.8 and SBT
-      uses: olafurpg/setup-scala@v7
+      uses: olafurpg/setup-scala@v10
       with:
         java-version: 1.8
     - name: Install NPM Dependencies
@@ -64,7 +64,7 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - name: Set up JDK 1.8 and SBT
-      uses: olafurpg/setup-scala@v7
+      uses: olafurpg/setup-scala@v10
       with:
         java-version: 1.8
     - name: Build IntelliJ Plugin
@@ -75,7 +75,7 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - name: Set up JDK 1.8 and SBT
-      uses: olafurpg/setup-scala@v7
+      uses: olafurpg/setup-scala@v10
       with:
         java-version: 1.8
     - run: git fetch --unshallow
@@ -86,3 +86,18 @@ jobs:
         encrypted_key: ${{ secrets.key }}
         encrypted_iv: ${{ secrets.iv }}
         PGP_PASSPHRASE: ${{ secrets.pgp_passphrase }}
+  publish-intellij-plugin:
+    needs: [test, build-docs, build-intellij-plugin]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Set up JDK 1.8 and SBT
+      uses: olafurpg/setup-scala@v10
+      with:
+        java-version: 1.8
+    - run: git fetch --unshallow
+    - name: Publish to Marketplace
+      run: sbt coreIntellijSupport/updateIntellij coreIntellijSupport/packageArtifact coreIntellijSupport/packageArtifact coreIntellijSupport/publishAutoChannel
+      if: github.ref == 'refs/heads/master' || github.event_name == 'release'
+      env:
+        IJ_PLUGIN_REPO_TOKEN: ${{ secrets.ij_plugin_repo_token }}
