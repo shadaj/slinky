@@ -10,7 +10,7 @@ addCommandAlias(
   "compile:scalafix --check; test:scalafix --check; compile:scalafmtCheck; test:scalafmtCheck; scalafmtSbtCheck"
 )
 
-val scala212 = "2.12.10"
+val scala212 = "2.12.13"
 val scala213 = "2.13.2"
 
 ThisBuild / scalaVersion := scala213
