@@ -8,7 +8,7 @@ import scala.reflect.macros.whitebox
 import scala.scalajs.js
 
 @compileTimeOnly("Enable macro paradise to expand the @react macro annotation")
-class react extends scala.annotation.StaticAnnotation {
+class react(expandChildren: Boolean = false) extends scala.annotation.StaticAnnotation {
   def macroTransform(annottees: Any*): Any = macro ReactMacrosImpl.reactImpl
 }
 
@@ -30,7 +30,7 @@ object ReactMacrosImpl {
     }
   }
 
-  def createComponentBody(c: whitebox.Context)(cls: c.Tree): (c.Tree, List[c.Tree]) = {
+  def createComponentBody(c: whitebox.Context)(cls: c.Tree, expandChildren: Boolean): (c.Tree, List[c.Tree]) = {
     import c.universe._
     val q"..$_ class ${className: Name} extends ..$parents { $self => ..$stats}" = cls // scalafix:ok
     val (propsDefinition, applyMethods) = stats.flatMap {
@@ -47,24 +47,30 @@ object ReactMacrosImpl {
         val applyValues = caseClassparamss.map(ps => ps.map(_.name))
 
         val caseClassApply = if (childrenParam.isDefined) {
-          // from https://groups.google.com/forum/#!topic/scala-user/dUOonrP_5K4
-          val body = c.typecheck(childrenParam.get.tpt, c.TYPEmode).tpe match {
-            case TypeRef(_, sym, _) if sym == definitions.RepeatedParamClass =>
-              val applyValuesChildrenVararg = caseClassparamss.map { ps =>
-                ps.map { ps =>
-                  if (ps == childrenParam.get) {
-                    q"${ps.name}: _*"
-                  } else q"${ps.name}"
-                }
+          childrenParam.get.tpt match {
+            case defn @ tq"Seq[$child]" if expandChildren =>
+              q"""def apply[..$tparams](...$paramssWithoutChildren)(children: $child*): _root_.slinky.core.KeyAndRefAddingStage[Def] =
+                this.apply(Props.apply(...$applyValues))"""
+            case _ =>
+              // from https://groups.google.com/forum/#!topic/scala-user/dUOonrP_5K4
+              val body = c.typecheck(childrenParam.get.tpt, c.TYPEmode).tpe match {
+                case TypeRef(_, sym, _) if sym == definitions.RepeatedParamClass =>
+                  val applyValuesChildrenVararg = caseClassparamss.map { ps =>
+                    ps.map { ps =>
+                      if (ps == childrenParam.get) {
+                        q"${ps.name}: _*"
+                      } else q"${ps.name}"
+                    }
+                  }
+
+                  q"this.apply(Props.apply[..$tparams](...$applyValuesChildrenVararg))"
+                case _ =>
+                  q"this.apply(Props.apply[..$tparams](...$applyValues))"
               }
 
-              q"this.apply(Props.apply[..$tparams](...$applyValuesChildrenVararg))"
-            case _ =>
-              q"this.apply(Props.apply[..$tparams](...$applyValues))"
+              q"""def apply[..$tparams](...$paramssWithoutChildren)(${childrenParam.get}): _root_.slinky.core.KeyAndRefAddingStage[Def] =
+                    $body"""
           }
-
-          q"""def apply[..$tparams](...$paramssWithoutChildren)(${childrenParam.get}): _root_.slinky.core.KeyAndRefAddingStage[Def] =
-                $body"""
         } else {
           q"""def apply[..$tparams](...$paramssWithoutChildren): _root_.slinky.core.KeyAndRefAddingStage[Def] =
                 this.apply(Props.apply[..$tparams](...$applyValues))"""
@@ -200,11 +206,17 @@ object ReactMacrosImpl {
   def reactImpl(c: whitebox.Context)(annottees: c.Expr[Any]*): c.Expr[Any] = {
     import c.universe._
 
+    val expandChildren = c.prefix.tree match {
+      case q"new react(true)"                  => true
+      case q"new react(expandChildren = true)" => true
+      case _                                   => false
+    }
+
     val outs: List[Tree] = annottees.map(_.tree).toList match {
       case Seq(cls @ q"..$_ class $className extends ..$parents { $_ => ..$_}")
           if parentsContainsType(c)(parents, typeOf[Component]) ||
             parentsContainsType(c)(parents, typeOf[StatelessComponent]) =>
-        val (newCls, companionStats) = createComponentBody(c)(cls)
+        val (newCls, companionStats) = createComponentBody(c)(cls, expandChildren)
         val parent                   = tq"${TermName(parents.head.toString)}.Wrapper"
         List(newCls, q"object ${TermName(className.decodedName.toString)} extends $parent { ..$companionStats }")
 
@@ -214,7 +226,7 @@ object ReactMacrosImpl {
           )
           if parentsContainsType(c)(parents, typeOf[Component]) ||
             parentsContainsType(c)(parents, typeOf[StatelessComponent]) =>
-        val (newCls, companionStats) = createComponentBody(c)(cls)
+        val (newCls, companionStats) = createComponentBody(c)(cls, expandChildren)
         val parent                   = tq"${TermName(parents.head.toString)}.Wrapper"
         List(
           newCls,
@@ -246,24 +258,30 @@ object ReactMacrosImpl {
             val applyValues = caseClassparamss.map(ps => ps.map(_.name))
 
             val caseClassApply = if (childrenParam.isDefined) {
-              // from https://groups.google.com/forum/#!topic/scala-user/dUOonrP_5K4
-              val body = c.typecheck(childrenParam.get.tpt, c.TYPEmode).tpe match {
-                case TypeRef(_, sym, _) if sym == definitions.RepeatedParamClass =>
-                  val applyValuesChildrenVararg = caseClassparamss.map { ps =>
-                    ps.map { ps =>
-                      if (ps == childrenParam.get) {
-                        q"${ps.name}: _*"
-                      } else q"${ps.name}"
-                    }
+              childrenParam.get.tpt match {
+                case defn @ tq"Seq[$child]" if expandChildren =>
+                  q"""def apply[..$tparams](...$paramssWithoutChildren)(children: $child*) =
+                    component.apply(Props.apply(...$applyValues))"""
+                case _ =>
+                  // from https://groups.google.com/forum/#!topic/scala-user/dUOonrP_5K4
+                  val body = c.typecheck(childrenParam.get.tpt, c.TYPEmode).tpe match {
+                    case TypeRef(_, sym, _) if sym == definitions.RepeatedParamClass =>
+                      val applyValuesChildrenVararg = caseClassparamss.map { ps =>
+                        ps.map { ps =>
+                          if (ps == childrenParam.get) {
+                            q"${ps.name}: _*"
+                          } else q"${ps.name}"
+                        }
+                      }
+
+                      q"component.apply(Props.apply(...$applyValuesChildrenVararg))"
+                    case _ =>
+                      q"component.apply(Props.apply(...$applyValues))"
                   }
 
-                  q"component.apply(Props.apply(...$applyValuesChildrenVararg))"
-                case _ =>
-                  q"component.apply(Props.apply(...$applyValues))"
+                  q"""def apply[..$tparams](...$paramssWithoutChildren)(${childrenParam.get}) =
+                        $body"""
               }
-
-              q"""def apply[..$tparams](...$paramssWithoutChildren)(${childrenParam.get}) =
-                    $body"""
             } else {
               if (paramssWithoutChildren.flatten.isEmpty) {
                 q"def apply() = component.apply(Props.apply())"
