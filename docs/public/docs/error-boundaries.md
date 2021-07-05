@@ -26,7 +26,7 @@ To create an error boundary using the `@react` macro annotation, simply define t
 
 If using the `ComponentWrapper` API, you similarly implement the `componentDidCatch` method.
 ```scala
-object ErrorBoundaryComponent extends StatelessComponentWrapper {
+object ErrorBoundaryComponent extends ComponentWrapper {
   type Props = ReactElement
   case class State(hasError: Boolean)
 
