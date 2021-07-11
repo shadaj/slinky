@@ -40,6 +40,7 @@ Title | Author | Released | Slinky Version
 Title | Author | Released | Slinky Version
 --- | --- | --- | --- 
 [Cazadescuentos App (pwa)](https://github.com/wiringbits/cazadescuentos/pwa) | https://wiringbits.net | Active | 0.6.6
+[wiringbits scala-webapp-template](https://github.com/wiringbits/scala-webapp-template) | https://wiringbits.net | Active | 0.6.7
 
 ## Other
 Please add here stuff that does not fit any section of above. For example Cheat Sheets, Books etc.
