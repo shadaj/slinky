@@ -236,7 +236,8 @@ object ReactMacrosImpl {
             case _                            => false
           }) =>
         val applyMethods = objStats.flatMap {
-          case defn @ q"case class Props[..$tparams](...${caseClassparamssRaw}) extends ..$_ { $_ => ..$_ }" =>
+          case defn @ q"$pre class Props[..$tparams](...${caseClassparamssRaw}) extends ..$_ { $_ => ..$_ }"
+              if pre.hasFlag(Flag.CASE) =>
             val caseClassparamss = caseClassparamssRaw.asInstanceOf[Seq[Seq[ValDef]]]
             val childrenParam    = caseClassparamss.flatten.find(_.name.toString == "children")
 

@@ -16,11 +16,11 @@ Since Slinky is distributed just like any other Scala.js library, it's very easy
 
 Add the dependencies that match your application as well as required Scala.js compiler options:
 ```scala
-libraryDependencies += "me.shadaj" %%% "slinky-core" % "0.6.6" // core React functionality, no React DOM
-libraryDependencies += "me.shadaj" %%% "slinky-web" % "0.6.6" // React DOM, HTML and SVG tags
-libraryDependencies += "me.shadaj" %%% "slinky-native" % "0.6.6" // React Native components
-libraryDependencies += "me.shadaj" %%% "slinky-hot" % "0.6.6" // Hot loading, requires react-proxy package
-libraryDependencies += "me.shadaj" %%% "slinky-scalajsreact-interop" % "0.6.6" // Interop with japgolly/scalajs-react
+libraryDependencies += "me.shadaj" %%% "slinky-core" % "0.6.7" // core React functionality, no React DOM
+libraryDependencies += "me.shadaj" %%% "slinky-web" % "0.6.7" // React DOM, HTML and SVG tags
+libraryDependencies += "me.shadaj" %%% "slinky-native" % "0.6.7" // React Native components
+libraryDependencies += "me.shadaj" %%% "slinky-hot" % "0.6.7" // Hot loading, requires react-proxy package
+libraryDependencies += "me.shadaj" %%% "slinky-scalajsreact-interop" % "0.6.7" // Interop with japgolly/scalajs-react
 
 scalacOptions += "-P:scalajs:sjsDefinedByDefault"
 
@@ -61,7 +61,7 @@ jsDependencies ++= Seq(
 ```
 
 ## IntelliJ Support
-Starting with Slinky 0.5.0, the `@react` macro annotation is implemented with Macro Paradise to ensure compatibility with future versions of Scala, so a small extra step is required to enable IDE support in IntelliJ (version 2018.3 or higher is required). After loading, your project, uncheck `Enable loading external extensions` in `Settings > Languages & Frameworks > Scala > Extensions`, hit apply, re-check it, and hit apply again. After applying these settings and refreshing your SBT project again, IntelliJ will pop up with a request to enable Slinky support.
+Starting with Slinky 0.5.0, the `@react` macro annotation is implemented with Macro Paradise to ensure compatibility with future versions of Scala, so a small plugin is required to enable IDE support in IntelliJ (version 2018.3 or higher is required). To install the plugin, head over to the [JetBrains Marketplace page](https://plugins.jetbrains.com/plugin/15748-slinky-library-support) or search for "Slinky Library Support" from inside IntelliJ.
 
 ## Credits
 Much credit goes to existing Scala.js libraries for React, such as [scalajs-react](https://github.com/japgolly/scalajs-react), which provided a lot of inspiration for Slinky's design. Credit also goes to [scala-js-preact](https://github.com/LMnet/scala-js-preact), which provided the inspiration for the `@react` macro annotation. 
