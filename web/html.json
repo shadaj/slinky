@@ -2029,7 +2029,8 @@
       "scalaJSType": "org.scalajs.dom.Element",
       "docLines": [],
       "compatibleTags": [
-        "input"
+        "input",
+        "textarea"
       ],
       "withDash": false
     },
