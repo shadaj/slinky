@@ -19,19 +19,14 @@ import org.scalatest.funsuite.AsyncFunSuite
 
   override def initialState: Int = 0
 
-  override def componentWillUpdate(nextProps: Props, nextState: Int): Unit = {
+  override def componentWillUpdate(nextProps: Props, nextState: Int): Unit =
     props.apply(nextState)
-  }
 
-  override def componentDidMount(): Unit = {
-    setState((s, _) => {
-      s + 1
-    })
-  }
+  override def componentDidMount(): Unit =
+    setState((s, _) => s + 1)
 
-  override def render(): ReactElement = {
+  override def render(): ReactElement =
     null
-  }
 }
 
 @react class TestComponentForSetStateCallback extends Component {
@@ -40,17 +35,11 @@ import org.scalatest.funsuite.AsyncFunSuite
 
   override def initialState: Int = 0
 
-  override def componentDidMount(): Unit = {
-    setState((s, _) => {
-      s + 1
-    }, () => {
-      props.apply(state)
-    })
-  }
+  override def componentDidMount(): Unit =
+    setState((s, _) => s + 1, () => props.apply(state))
 
-  override def render(): ReactElement = {
+  override def render(): ReactElement =
     null
-  }
 }
 
 @react class TestComponentStateCaseClass extends Component {
@@ -59,9 +48,8 @@ import org.scalatest.funsuite.AsyncFunSuite
 
   override def initialState: State = State()
 
-  override def render(): ReactElement = {
+  override def render(): ReactElement =
     null
-  }
 }
 
 @react class TestComponentCaseClass extends Component {
@@ -70,17 +58,15 @@ import org.scalatest.funsuite.AsyncFunSuite
 
   override def initialState: Int = 0
 
-  override def render(): ReactElement = {
+  override def render(): ReactElement =
     null
-  }
 }
 
 @react class TestComponentOverrideType extends StatelessComponent {
   override type Props = Int
 
-  override def render(): ReactElement = {
+  override def render(): ReactElement =
     null
-  }
 }
 
 @react class NoPropsComponent extends Component {
@@ -89,24 +75,21 @@ import org.scalatest.funsuite.AsyncFunSuite
 
   override def initialState: Int = 0
 
-  override def render(): ReactElement = {
+  override def render(): ReactElement =
     null
-  }
 }
 
 @react class TestForceUpdateComponent extends Component {
   type Props = Function0[Unit]
   type State = Int
 
-  override def componentDidUpdate(prevProps: Props, prevState: State): Unit = {
+  override def componentDidUpdate(prevProps: Props, prevState: State): Unit =
     props.apply()
-  }
 
   override def initialState: Int = 0
 
-  override def render(): ReactElement = {
+  override def render(): ReactElement =
     null
-  }
 }
 
 @react class TakeValuesFromCompanionObject extends Component {
@@ -117,9 +100,8 @@ import org.scalatest.funsuite.AsyncFunSuite
 
   override def initialState: Int = 0
 
-  override def render(): ReactElement = {
+  override def render(): ReactElement =
     foo
-  }
 }
 
 object TakeValuesFromCompanionObject {
@@ -129,47 +111,41 @@ object TakeValuesFromCompanionObject {
 @react class BadComponent extends StatelessComponent {
   type Props = Unit
 
-  override def render(): ReactElement = {
+  override def render(): ReactElement =
     throw new Exception("BOO")
-  }
 }
 
 @react class ErrorBoundaryComponent extends StatelessComponent {
   case class Props(bad: Boolean, handler: (js.Error, ErrorBoundaryInfo) => Unit)
 
-  override def componentDidCatch(error: js.Error, info: ErrorBoundaryInfo): Unit = {
+  override def componentDidCatch(error: js.Error, info: ErrorBoundaryInfo): Unit =
     props.handler.apply(error, info)
-  }
 
-  override def render(): ReactElement = {
+  override def render(): ReactElement =
     if (props.bad) {
       BadComponent()
     } else {
       null
     }
-  }
 }
 
 @react class TestComponentForSnapshot extends Component {
-  type Props = Int => Unit
-  type State = Int
+  type Props    = Int => Unit
+  type State    = Int
   type Snapshot = Int
 
   override def initialState: Int = 0
 
   override def componentDidMount(): Unit = forceUpdate()
 
-  override def getSnapshotBeforeUpdate(prevProps: Int => Unit, prevState: Int): Snapshot = {
+  override def getSnapshotBeforeUpdate(prevProps: Int => Unit, prevState: Int): Snapshot =
     123
-  }
 
-  override def componentDidUpdate(prevProps: Int => Unit, prevState: Int, snapshot: Snapshot): Unit = {
+  override def componentDidUpdate(prevProps: Int => Unit, prevState: Int, snapshot: Snapshot): Unit =
     props(snapshot)
-  }
 
-  override def render(): ReactElement = {
+  override def render(): ReactElement =
     null
-  }
 }
 
 @react class DerivedStateComponent extends Component {
@@ -196,41 +172,39 @@ object DerivedStateComponent {
 @react class ComponentWithChildren extends StatelessComponent {
   case class Props(int: Int, children: ReactElement*)
 
-  override def render(): ReactElement = {
+  override def render(): ReactElement =
     props.children
-  }
 }
 
 @react class ComponentWithOnlyChildren extends StatelessComponent {
   case class Props(children: Int*)
 
-  override def render(): ReactElement = {
+  override def render(): ReactElement =
     props.children.map(_.toString)
-  }
 }
 
 @react class ComponentWithNonVarargChildren extends StatelessComponent {
   case class Props(int: Int, children: List[String])
 
-  override def render(): ReactElement = {
+  override def render(): ReactElement =
     props.children
-  }
 }
 
 @react class SubComponentWithReactElementContainers extends StatelessComponent {
-  case class Props(seq: Seq[ReactElement],
-                   list: List[ReactElement],
-                   option: Option[ReactElement],
-                   jsUndefOr: js.UndefOr[String],
-                   attempt: Try[ReactElement],
-                   function: () => ReactElement,
-                   fragment: ReactElement,
-                   future: Future[ReactElement],
-                   varargs: ReactElement*)
+  case class Props(
+    seq: Seq[ReactElement],
+    list: List[ReactElement],
+    option: Option[ReactElement],
+    jsUndefOr: js.UndefOr[String],
+    attempt: Try[ReactElement],
+    function: () => ReactElement,
+    fragment: ReactElement,
+    future: Future[ReactElement],
+    varargs: ReactElement*
+  )
 
-  override def render(): ReactElement = {
+  override def render(): ReactElement =
     div(props.seq, props.list, props.option, props.jsUndefOr, props.fragment, props.varargs)
-  }
 }
 
 @react class ComponentWithVariableReactElementContainers extends StatelessComponent {
@@ -239,15 +213,15 @@ object DerivedStateComponent {
   type Props = Unit
 
   override def render(): ReactElement = {
-    val s = Seq("a", "b")
-    val l = List("c", "d")
-    val o = Some("e")
-    val j = "f"
-    val t = Try(h2("g"))
+    val s  = Seq("a", "b")
+    val l  = List("c", "d")
+    val o  = Some("e")
+    val j  = "f"
+    val t  = Try(h2("g"))
     val fn = () => "h"
     val fr = Fragment(List(h1("i"), i("j")))
-    val f = Future { "k" }
-    val v = "l"
+    val f  = Future("k")
+    val v  = "l"
 
     SubComponentWithReactElementContainers(s, l, o, j, t, fn, fr, f, v)
   }
@@ -258,7 +232,7 @@ object DerivedStateComponent {
 
   type Props = Unit
 
-  override def render(): ReactElement = {
+  override def render(): ReactElement =
     SubComponentWithReactElementContainers(
       Seq("a", "b"),
       List("c", "d"),
@@ -267,10 +241,17 @@ object DerivedStateComponent {
       Try(h2("g")),
       () => "h",
       Fragment(List(h1("i"), i("j"))),
-      Future { "k" },
+      Future("k"),
       "l"
     )
-  }
+}
+
+@react(expandChildren = true) class ComponentExpandChildren extends StatelessComponent {
+  case class Props(
+    alpha: String,
+    children: Seq[ReactElement]
+  )
+  override def render(): ReactElement = s"${props.alpha}: ${props.children.mkString(" ")}"
 }
 
 class ReactAnnotatedComponentTest extends AsyncFunSuite {
@@ -312,7 +293,7 @@ class ReactAnnotatedComponentTest extends AsyncFunSuite {
   }
 
   test("Can construct a component taking Unit props with refs and key") {
-    val element: ReactElement = NoPropsComponent.withKey("hi").withRef((r: js.Object) => {})
+    val element: ReactElement = NoPropsComponent.withKey("hi").withRef { (r: js.Object) => }
     assert(element.asInstanceOf[js.Dynamic].key.toString == "hi")
     assert(!js.isUndefined(element.asInstanceOf[js.Dynamic].ref))
   }
@@ -321,9 +302,7 @@ class ReactAnnotatedComponentTest extends AsyncFunSuite {
     val promise: Promise[Assertion] = Promise()
 
     ReactDOM.render(
-      TestForceUpdateComponent(() => promise.success(assert(true))).withRef(ref => {
-        ref.forceUpdate()
-      }),
+      TestForceUpdateComponent(() => promise.success(assert(true))).withRef(ref => ref.forceUpdate()),
       dom.document.createElement("div")
     )
 
@@ -334,9 +313,7 @@ class ReactAnnotatedComponentTest extends AsyncFunSuite {
     val promise: Promise[Assertion] = Promise()
 
     ReactDOM.render(
-      ErrorBoundaryComponent(true, (error, info) => {
-        promise.success(assert(true))
-      }),
+      ErrorBoundaryComponent(true, (error, info) => promise.success(assert(true))),
       dom.document.createElement("div")
     )
 
@@ -347,9 +324,7 @@ class ReactAnnotatedComponentTest extends AsyncFunSuite {
     var sawError = false
 
     ReactDOM.render(
-      ErrorBoundaryComponent(false, (error, info) => {
-        sawError = true
-      }),
+      ErrorBoundaryComponent(false, (error, info) => sawError = true),
       dom.document.createElement("div")
     )
 
@@ -372,7 +347,8 @@ class ReactAnnotatedComponentTest extends AsyncFunSuite {
 
     ReactDOM.render(
       DerivedStateComponent(
-        123, i => promise.success(assert(i == 123))
+        123,
+        i => promise.success(assert(i == 123))
       ),
       dom.document.createElement("div")
     )
@@ -426,5 +402,15 @@ class ReactAnnotatedComponentTest extends AsyncFunSuite {
       targetNode
     )
     assert(targetNode.innerHTML == "<div>abcdef<h1>i</h1><i>j</i>l</div>")
+  }
+
+  test("Component with expandChildren option has apply with children varargs") {
+    val container = dom.document.createElement("div")
+    ReactDOM.render(
+      ComponentExpandChildren("alpha")(1, 2, 3),
+      container
+    )
+
+    assert(container.innerHTML == "alpha: 1 2 3")
   }
 }
