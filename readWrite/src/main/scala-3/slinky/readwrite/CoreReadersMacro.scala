@@ -20,6 +20,17 @@ trait MacroReaders {
        }
     }
   }
+
+  inline implicit def deriveSum[T](using m: Mirror.SumOf[T]): Reader[T] = {
+    val labels = constValueTuple[m.MirroredElemLabels]
+    val readers = summonAll[Tuple.Map[m.MirroredElemTypes, Reader]]
+    new Reader[T] {
+      protected def forceRead(o: scala.scalajs.js.Object): T = {
+        val ord = o.asInstanceOf[js.Dynamic]._ord.asInstanceOf[Int]
+        readers.productElement(ord).asInstanceOf[Reader[T]].read(o)
+      }
+    }
+  }
 }
 
 //class MacroReadersImpl(_c: whitebox.Context) extends GenericDeriveImpl(_c) {

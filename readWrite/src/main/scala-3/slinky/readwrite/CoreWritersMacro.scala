@@ -23,6 +23,21 @@ trait MacroWriters {
       }
     }
   }
+
+  inline implicit def deriveSum[T](using m: Mirror.SumOf[T]): Writer[T] = {
+    val labels = constValueTuple[m.MirroredElemLabels]
+    val writers = summonAll[Tuple.Map[m.MirroredElemTypes, Writer]]
+    new Writer[T] {
+      def write(p: T): js.Object = {
+        val ord = m.ordinal(p)
+        val typ = labels.productElement(ord)
+        val base = writers.productElement(ord).asInstanceOf[Writer[T]].write(p)
+        base.asInstanceOf[js.Dynamic]._type = typ.asInstanceOf[js.Any]
+        base.asInstanceOf[js.Dynamic]._ord = ord
+        base
+      }
+    }
+  }
 }
 
 //class MacroWritersImpl(_c: whitebox.Context) extends GenericDeriveImpl(_c) {

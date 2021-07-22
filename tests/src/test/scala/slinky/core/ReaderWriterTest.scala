@@ -96,9 +96,9 @@ class ReaderWriterTest extends AnyFunSuite {
     readWrittenSame[Either[Int, String]](Right("hello"))
   }
 
-  // test("Read/write - tuple") {
-  //   readWrittenSame((1, "hello", "bye"))
-  // }
+  test("Read/write - tuple") {
+    readWrittenSame((1, "hello", "bye"))
+  }
 
   // test("Read/write - js.|") {
   //   readWrittenSame[Int | String](1)
@@ -131,25 +131,25 @@ class ReaderWriterTest extends AnyFunSuite {
   //   assert(!written.asInstanceOf[js.Object].hasOwnProperty("boolean"))
   // }
 
-  // test("Read/write - case class with raw") {
-  //   case class CaseClassWithRaw(int: Int, boolean: Boolean) extends WithRaw
-  //   val inObj = js.Dynamic.literal(int = 1, boolean = true)
-  //   val read = implicitly[Reader[CaseClassWithRaw]].read(inObj)
-  //   assert(read == CaseClassWithRaw(1, true) && read.raw == inObj)
-  // }
+  test("Read/write - case class with raw") {
+    case class CaseClassWithRaw(int: Int, boolean: Boolean) extends WithRaw
+    val inObj = js.Dynamic.literal(int = 1, boolean = true)
+    val read = implicitly[Reader[CaseClassWithRaw]].read(inObj)
+    assert(read == CaseClassWithRaw(1, true) && read.raw == inObj)
+  }
 
-  // test("Read/write - sealed trait with case objects") {
-  //   readWrittenSame[MySealedTrait](SubTypeA(-1))
-  //   readWrittenSame[MySealedTrait](SubTypeB(true))
-  //   readWrittenSame[MySealedTrait](SubTypeC)
-  // }
+  test("Read/write - sealed trait with case objects") {
+    readWrittenSame[MySealedTrait](SubTypeA(-1))
+    readWrittenSame[MySealedTrait](SubTypeB(true))
+    readWrittenSame[MySealedTrait](SubTypeC)
+  }
 
-  // test("Read/write - case class with shared type in reader and writer position") {
-  //   case class TypeA()
-  //   case class ComplexClass(a: TypeA, b: TypeA => Int)
+  test("Read/write - case class with shared type in reader and writer position") {
+    case class TypeA()
+    case class ComplexClass(a: TypeA, b: TypeA => Int)
 
-  //   readWrittenSame(ComplexClass(TypeA(), _ => 1), beSame = false)
-  // }
+    readWrittenSame(ComplexClass(TypeA(), _ => 1), beSame = false)
+  }
 
   test("Read/write - case class with varargs") {
     readWrittenSame(ClassWithVararg(1, "hi", "hi", "bye"))
