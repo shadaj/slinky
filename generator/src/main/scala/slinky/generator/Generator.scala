@@ -101,8 +101,8 @@ object Generator {
           a.compatibleTags.getOrElse(extracted.tags.map(_.tagName)).flatMap { t =>
             val fixedT = if (t == "*") "star" else t
             Seq(
-              s"""@inline implicit def to${fixedT}Applied(pair: slinky.core.AttrPair[_${symbolWithoutEscape}_attr.type]) = pair.asInstanceOf[slinky.core.AttrPair[${Utils.identifierFor(t)}.tag.type]]
-                 |@inline implicit def to${fixedT}OptionalApplied(pair: slinky.core.OptionalAttrPair[_${symbolWithoutEscape}_attr.type]) = pair.asInstanceOf[slinky.core.OptionalAttrPair[${Utils.identifierFor(t)}.tag.type]]
+              s"""@inline implicit def to${fixedT}Applied(pair: slinky.core.AttrPair[_${symbolWithoutEscape}_attr.type]): slinky.core.AttrPair[${Utils.identifierFor(t)}.tag.type] = pair.asInstanceOf[slinky.core.AttrPair[${Utils.identifierFor(t)}.tag.type]]
+                 |@inline implicit def to${fixedT}OptionalApplied(pair: slinky.core.OptionalAttrPair[_${symbolWithoutEscape}_attr.type]): slinky.core.OptionalAttrPair[${Utils.identifierFor(t)}.tag.type] = pair.asInstanceOf[slinky.core.OptionalAttrPair[${Utils.identifierFor(t)}.tag.type]]
                """.stripMargin
             )
           }
@@ -112,7 +112,7 @@ object Generator {
           a.compatibleTags.getOrElse(extracted.tags.map(_.tagName)).flatMap { t =>
             val fixedT = if (t == "*") "star" else t
             if (attrs.isDefined && attrs.get.attributeType == "Boolean") {
-              Seq(s"""@inline implicit def boolToPair${fixedT}Applied(attrObj: this.type) = new slinky.core.AttrPair[${Utils.identifierFor(t)}.tag.type]("${attrs.get.attributeName}", true)""")
+              Seq(s"""@inline implicit def boolToPair${fixedT}Applied(attrObj: this.type): slinky.core.AttrPair[${Utils.identifierFor(t)}.tag.type] = new slinky.core.AttrPair[${Utils.identifierFor(t)}.tag.type]("${attrs.get.attributeName}", true)""")
             } else Seq.empty
           }
         }

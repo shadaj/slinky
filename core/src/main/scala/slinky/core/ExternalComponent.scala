@@ -33,7 +33,8 @@ final class BuildingComponent[E, R <: js.Object](private val args: js.Array[js.A
     this
   }
 
-  def withRef(newRef: R => Unit): BuildingComponent[E, R] = {
+  // TODO: Temporary workaround, using overloading crashes Scala 3 compiler; Union type would work there, needs more source fiddling
+  def withRefF(newRef: R => Unit): BuildingComponent[E, R] = {
     if (args(0) == null) {
       throw new IllegalStateException("This component has already been built into a ReactElement, and cannot be reused")
     }
@@ -102,7 +103,7 @@ abstract class ExternalComponentNoPropsWithAttributesWithRefType[E <: TagElement
   def withKey(key: String): BuildingComponent[E, R] =
     new BuildingComponent(js.Array(component.asInstanceOf[js.Any], js.Dictionary.empty)).withKey(key)
   def withRef(ref: R => Unit): BuildingComponent[E, R] =
-    new BuildingComponent(js.Array(component.asInstanceOf[js.Any], js.Dictionary.empty)).withRef(ref)
+    new BuildingComponent(js.Array(component.asInstanceOf[js.Any], js.Dictionary.empty)).withRefF(ref)
   def withRef(ref: ReactRef[R]): BuildingComponent[E, R] =
     new BuildingComponent(js.Array(component.asInstanceOf[js.Any], js.Dictionary.empty)).withRef(ref)
 }
