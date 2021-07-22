@@ -1,8 +1,28 @@
 package slinky.readwrite
 
+import scala.deriving._
+import scala.compiletime._
+import scalajs.js
 
 trait MacroWriters {
 //  implicit def deriveWriter[T]: Writer[T] = macro MacroWritersImpl.derive[T]
+
+  inline implicit def deriveProduct[T] (using m: Mirror.ProductOf[T]): Writer[T] = {
+    val labels = constValueTuple[m.MirroredElemLabels]
+    val writers = summonAll[Tuple.Map[m.MirroredElemTypes, Writer]]
+    new Writer[T] {
+      def write(p: T): js.Object = {
+        val d = js.Dictionary[js.Object]()
+        labels.productIterator
+          .zip(writers.productIterator)
+          .zip(p.asInstanceOf[Product].productIterator)
+          .foreach { case ((label, writer), value) =>
+            d(label.asInstanceOf[String]) = writer.asInstanceOf[Writer[_]].write(value.asInstanceOf)
+          }
+        d.asInstanceOf[js.Object]
+      }
+    }
+  }
 }
 
 //class MacroWritersImpl(_c: whitebox.Context) extends GenericDeriveImpl(_c) {

@@ -1,7 +1,25 @@
 package slinky.readwrite
 
+import scala.deriving._
+import scala.compiletime._
+import scalajs.js
+
 trait MacroReaders {
-//  implicit def deriveReader[T]: Reader[T] = macro MacroReadersImpl.derive[T]
+  inline implicit def deriveProduct[T] (using m: Mirror.ProductOf[T]): Reader[T] = {
+    val labels = constValueTuple[m.MirroredElemLabels]
+    val readers = summonAll[Tuple.Map[m.MirroredElemTypes, Reader]]
+    new Reader[T] {
+       protected def forceRead(o: scala.scalajs.js.Object): T = {
+         val dyn = o.asInstanceOf[js.Dictionary[js.Object]]
+         m.fromProduct(new Product{
+           def canEqual(that: Any) = this == that
+           def productArity = readers.productArity
+           def productElement(idx: Int): Any =
+            readers.productElement(idx).asInstanceOf[Reader[_]].read(dyn(labels.productElement(idx).asInstanceOf[String]))
+         })
+       }
+    }
+  }
 }
 
 //class MacroReadersImpl(_c: whitebox.Context) extends GenericDeriveImpl(_c) {
