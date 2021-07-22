@@ -100,10 +100,10 @@ class ReaderWriterTest extends AnyFunSuite {
     readWrittenSame((1, "hello", "bye"))
   }
 
-  // test("Read/write - js.|") {
-  //   readWrittenSame[Int | String](1)
-  //   readWrittenSame[Int | String]("str")
-  // }
+  test("Read/write - js.|") {
+    readWrittenSame[Int | String](1)
+    readWrittenSame[Int | String]("str")
+  }
 
   test("Read/write - js.Array") {
     readWrittenSame[js.Array[String]](js.Array("hello"))
@@ -170,9 +170,9 @@ class ReaderWriterTest extends AnyFunSuite {
     readWrittenSame(Array(1, 2), equality = ((a: Array[Int], b: Array[Int]) => a.toList == b.toList))
   }
 
-  // test("Read/write - maps") {
-  //   readWrittenSame(Map(1 -> 2, 3 -> 4))
-  // }
+  test("Read/write - maps") {
+    readWrittenSame(Map(1 -> 2, 3 -> 4))
+  }
 
   test("Read/write - ranges (inclusive)") {
     readWrittenSame(1 to 10)

@@ -3,14 +3,48 @@ package slinky.readwrite
 import scala.deriving._
 import scala.compiletime._
 import scalajs.js
+import scala.reflect.ClassTag
+import scala.util.control.NonFatal
 
 trait MacroWriters {
-//  implicit def deriveWriter[T]: Writer[T] = macro MacroWritersImpl.derive[T]
+  inline implicit def deriveWriter[T]: Writer[T] = summonFrom {
+    case m: Mirror.ProductOf[T] => deriveProduct(m)
+    case m: Mirror.SumOf[T] => deriveSum(m)
+    case nu: NominalUnion[T] => 
+      MacroWriters.UnionWriter(
+        summonAll[Tuple.Map[nu.Constituents, Writer]],
+        summonAll[Tuple.Map[nu.Constituents, ClassTag]]
+      )
+  }
 
-  inline implicit def deriveProduct[T] (using m: Mirror.ProductOf[T]): Writer[T] = {
+  inline def deriveProduct[T](m: Mirror.ProductOf[T]): Writer[T] = {
     val labels = constValueTuple[m.MirroredElemLabels]
     val writers = summonAll[Tuple.Map[m.MirroredElemTypes, Writer]]
-    new Writer[T] {
+    MacroWriters.ProductWriter(labels, writers)
+  }
+
+  inline def deriveSum[T](m: Mirror.SumOf[T]): Writer[T] = {
+    val labels = constValueTuple[m.MirroredElemLabels]
+    val writers = summonAll[Tuple.Map[m.MirroredElemTypes, Writer]]
+    MacroWriters.SumWriter(labels, writers, m)
+  }
+}
+
+object MacroWriters {
+  class UnionWriter[T](writers: Tuple, classTags: Tuple) extends Writer[T] {
+    def write(p: T): js.Object = 
+      classTags.productIterator.indexWhere(_.asInstanceOf[ClassTag[_]].runtimeClass == p.getClass) match {
+        case -1 =>
+          var lastEx: Throwable = null
+          writers.productIterator.asInstanceOf[Iterator[Writer[T]]]
+            .map { w => try { Some(w.write(p)) } catch { case NonFatal(e) => lastEx = e; None } }
+            .collectFirst { case Some(obj) => obj }
+            .getOrElse { throw lastEx }
+        case other => writers.productElement(other).asInstanceOf[Writer[T]].write(p)
+      }
+  }
+
+  class ProductWriter[T](labels: Tuple, writers: Tuple) extends Writer[T] {
       def write(p: T): js.Object = {
         val d = js.Dictionary[js.Object]()
         labels.productIterator
@@ -21,13 +55,9 @@ trait MacroWriters {
           }
         d.asInstanceOf[js.Object]
       }
-    }
   }
 
-  inline implicit def deriveSum[T](using m: Mirror.SumOf[T]): Writer[T] = {
-    val labels = constValueTuple[m.MirroredElemLabels]
-    val writers = summonAll[Tuple.Map[m.MirroredElemTypes, Writer]]
-    new Writer[T] {
+  class SumWriter[T](labels: Tuple, writers: Tuple, m: Mirror.SumOf[T]) extends Writer[T] {
       def write(p: T): js.Object = {
         val ord = m.ordinal(p)
         val typ = labels.productElement(ord)
@@ -36,7 +66,6 @@ trait MacroWriters {
         base.asInstanceOf[js.Dynamic]._ord = ord
         base
       }
-    }
   }
 }
 

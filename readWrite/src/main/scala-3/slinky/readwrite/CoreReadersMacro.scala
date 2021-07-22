@@ -3,36 +3,57 @@ package slinky.readwrite
 import scala.deriving._
 import scala.compiletime._
 import scalajs.js
+import scala.util.control.NonFatal
 
 trait MacroReaders {
-  inline implicit def deriveProduct[T] (using m: Mirror.ProductOf[T]): Reader[T] = {
-    val labels = constValueTuple[m.MirroredElemLabels]
-    val readers = summonAll[Tuple.Map[m.MirroredElemTypes, Reader]]
-    new Reader[T] {
-       protected def forceRead(o: scala.scalajs.js.Object): T = {
-         val dyn = o.asInstanceOf[js.Dictionary[js.Object]]
-         m.fromProduct(new Product{
-           def canEqual(that: Any) = this == that
-           def productArity = readers.productArity
-           def productElement(idx: Int): Any =
-            readers.productElement(idx).asInstanceOf[Reader[_]].read(dyn(labels.productElement(idx).asInstanceOf[String]))
-         })
-       }
-    }
+  inline implicit def deriveReader[T]: Reader[T] = summonFrom {
+    case m: Mirror.ProductOf[T] => deriveProduct(m)
+    case m: Mirror.SumOf[T] => deriveSum(m)
+    case nu: NominalUnion[T] => MacroReaders.UnionReader(summonAll[Tuple.Map[nu.Constituents, Reader]])
   }
 
-  inline implicit def deriveSum[T](using m: Mirror.SumOf[T]): Reader[T] = {
+  inline def deriveProduct[T](m: Mirror.ProductOf[T]): Reader[T] = {
     val labels = constValueTuple[m.MirroredElemLabels]
     val readers = summonAll[Tuple.Map[m.MirroredElemTypes, Reader]]
-    new Reader[T] {
-      protected def forceRead(o: scala.scalajs.js.Object): T = {
-        val ord = o.asInstanceOf[js.Dynamic]._ord.asInstanceOf[Int]
-        readers.productElement(ord).asInstanceOf[Reader[T]].read(o)
-      }
-    }
+    MacroReaders.ProductReader(m, labels, readers)
+  }
+
+  inline def deriveSum[T](m: Mirror.SumOf[T]): Reader[T] = {
+    val readers = summonAll[Tuple.Map[m.MirroredElemTypes, Reader]]
+    MacroReaders.SumReader(readers)
   }
 }
 
+object MacroReaders {
+  class UnionReader[T](readers: Tuple) extends Reader[T] {
+    protected def forceRead(o: scala.scalajs.js.Object): T = {
+      var lastEx: Throwable = null
+      readers.productIterator.asInstanceOf[Iterator[Reader[T]]]
+        .map { r => try { Some(r.read(o)) } catch { case NonFatal(ex) => lastEx = ex; None }}
+        .collectFirst { case Some(a) => a }
+        .getOrElse(throw lastEx)
+    }
+  }
+
+  class ProductReader[T](m: Mirror.ProductOf[T], labels: Tuple, readers: Tuple) extends Reader[T] {
+    protected def forceRead(o: scala.scalajs.js.Object): T = {
+      val dyn = o.asInstanceOf[js.Dictionary[js.Object]]
+      m.fromProduct(new Product{
+        def canEqual(that: Any) = this == that
+        def productArity = readers.productArity
+        def productElement(idx: Int): Any =
+        readers.productElement(idx).asInstanceOf[Reader[_]].read(dyn(labels.productElement(idx).asInstanceOf[String]))
+      })
+    }
+  }
+
+  class SumReader[T](readers: Tuple) extends Reader[T] {
+    protected def forceRead(o: scala.scalajs.js.Object): T = {
+      val ord = o.asInstanceOf[js.Dynamic]._ord.asInstanceOf[Int]
+      readers.productElement(ord).asInstanceOf[Reader[T]].read(o)
+    }
+  }
+}
 //class MacroReadersImpl(_c: whitebox.Context) extends GenericDeriveImpl(_c) {
 //  import c.universe._
 //
