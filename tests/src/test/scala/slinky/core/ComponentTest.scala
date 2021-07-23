@@ -1,206 +1,206 @@
-// package slinky.core
+package slinky.core
 
-// import slinky.core.facade.{ErrorBoundaryInfo, ReactElement}
-// import slinky.web.ReactDOM
-// import org.scalajs.dom
-// import slinky.readwrite.{Reader, Writer}
+import slinky.core.facade.{ErrorBoundaryInfo, ReactElement}
+import slinky.web.ReactDOM
+import org.scalajs.dom
+import slinky.readwrite.{Reader, Writer}
 
-// import scala.concurrent.Promise
-// import scala.scalajs.js
+import scala.concurrent.Promise
+import scala.scalajs.js
 
-// import org.scalatest.Assertion
-// import org.scalatest.funsuite.AsyncFunSuite
+import org.scalatest.Assertion
+import org.scalatest.funsuite.AsyncFunSuite
 
-// object TestComponent extends ComponentWrapper {
-//   type Props = Int => Unit
-//   type State = Int
+object TestComponent extends ComponentWrapper {
+  type Props = Int => Unit
+  type State = Int
 
-//   class Def(jsProps: js.Object) extends Definition(jsProps) {
-//     override def initialState: Int = 0
+  class Def(jsProps: js.Object) extends Definition(jsProps) {
+    override def initialState: Int = 0
 
-//     override def componentWillUpdate(nextProps: Props, nextState: Int): Unit = {
-//       props.apply(nextState)
-//     }
+    override def componentWillUpdate(nextProps: Props, nextState: Int): Unit = {
+      props.apply(nextState)
+    }
 
-//     override def componentDidMount(): Unit = {
-//       setState((s, _) => {
-//         s + 1
-//       })
-//     }
+    override def componentDidMount(): Unit = {
+      setState((s, _) => {
+        s + 1
+      })
+    }
 
-//     override def render(): ReactElement = {
-//       null
-//     }
-//   }
-// }
+    override def render(): ReactElement = {
+      null
+    }
+  }
+}
 
-// object TestComponentExtraApply extends ComponentWrapper {
-//   type Props = Int => Unit
-//   type State = Int
+object TestComponentExtraApply extends ComponentWrapper {
+  type Props = Int => Unit
+  type State = Int
 
-//   class Def(jsProps: js.Object) extends Definition(jsProps) {
-//     override def initialState: Int = 0
+  class Def(jsProps: js.Object) extends Definition(jsProps) {
+    override def initialState: Int = 0
 
-//     override def componentWillUpdate(nextProps: Props, nextState: Int): Unit = {
-//       props.apply(nextState)
-//     }
+    override def componentWillUpdate(nextProps: Props, nextState: Int): Unit = {
+      props.apply(nextState)
+    }
 
-//     override def componentDidMount(): Unit = {
-//       setState((s, _) => {
-//         s + 1
-//       })
-//     }
+    override def componentDidMount(): Unit = {
+      setState((s, _) => {
+        s + 1
+      })
+    }
 
-//     override def render(): ReactElement = {
-//       null
-//     }
-//   }
-// }
+    override def render(): ReactElement = {
+      null
+    }
+  }
+}
 
-// object TestComponentForSeqState extends ComponentWrapper {
-//   type Props = () => Unit
-//   type State = Seq[String]
+object TestComponentForSeqState extends ComponentWrapper {
+  type Props = () => Unit
+  type State = Seq[String]
 
-//   class Def(jsProps: js.Object) extends Definition(jsProps) {
-//     override def initialState = Seq.empty
+  class Def(jsProps: js.Object) extends Definition(jsProps) {
+    override def initialState = Seq.empty
 
-//     override def componentDidMount(): Unit = {
-//       setState(state :+ "hello")
-//     }
+    override def componentDidMount(): Unit = {
+      setState(state :+ "hello")
+    }
 
-//     override def render() = {
-//       if (state.nonEmpty) {
-//         props.apply()
-//       }
+    override def render() = {
+      if (state.nonEmpty) {
+        props.apply()
+      }
       
-//       null
-//     }
-//   }
-// }
+      null
+    }
+  }
+}
 
-// object TestComponentForShouldComponentUpdate extends ComponentWrapper {
-//   type Props = () => Unit
-//   type State = Int
+object TestComponentForShouldComponentUpdate extends ComponentWrapper {
+  type Props = () => Unit
+  type State = Int
 
-//   class Def(jsProps: js.Object) extends Definition(jsProps) {
-//     override def initialState: Int = 0
+  class Def(jsProps: js.Object) extends Definition(jsProps) {
+    override def initialState: Int = 0
 
-//     override def shouldComponentUpdate(nextProps: Props, nextState: State) = {
-//       nextState == 123
-//     }
+    override def shouldComponentUpdate(nextProps: Props, nextState: State) = {
+      nextState == 123
+    }
 
-//     override def componentDidUpdate(prevProps: Props, prevState: State) = {
-//       prevProps.apply()
-//     }
+    override def componentDidUpdate(prevProps: Props, prevState: State) = {
+      prevProps.apply()
+    }
 
-//     override def render(): ReactElement = {
-//       null
-//     }
-//   }
-// }
+    override def render(): ReactElement = {
+      null
+    }
+  }
+}
 
-// object TestComponentForSnapshot extends ComponentWrapper {
-//   type Props = Int => Unit
-//   type State = Int
-//   type Snapshot = Int
+object TestComponentForSnapshot extends ComponentWrapper {
+  type Props = Int => Unit
+  type State = Int
+  type Snapshot = Int
 
-//   class Def(jsProps: js.Object) extends Definition(jsProps) {
-//     override def initialState: Int = 0
+  class Def(jsProps: js.Object) extends Definition(jsProps) {
+    override def initialState: Int = 0
 
-//     override def componentDidMount(): Unit = forceUpdate()
+    override def componentDidMount(): Unit = forceUpdate()
 
-//     override def getSnapshotBeforeUpdate(prevProps: Int => Unit, prevState: Int): Snapshot = {
-//       123
-//     }
+    override def getSnapshotBeforeUpdate(prevProps: Int => Unit, prevState: Int): Snapshot = {
+      123
+    }
 
-//     override def componentDidUpdate(prevProps: Int => Unit, prevState: Int, snapshot: Snapshot): Unit = {
-//       props(snapshot)
-//     }
+    override def componentDidUpdate(prevProps: Int => Unit, prevState: Int, snapshot: Snapshot): Unit = {
+      props(snapshot)
+    }
 
-//     override def render(): ReactElement = {
-//       null
-//     }
-//   }
-// }
+    override def render(): ReactElement = {
+      null
+    }
+  }
+}
 
-// object NoPropsComponent extends ComponentWrapper {
-//   type Props = Unit
-//   type State = Int
+object NoPropsComponent extends ComponentWrapper {
+  type Props = Unit
+  type State = Int
 
-//   class Def(jsProps: js.Object) extends Definition(jsProps) {
-//     override def initialState: Int = 0
+  class Def(jsProps: js.Object) extends Definition(jsProps) {
+    override def initialState: Int = 0
 
-//     override def render(): ReactElement = {
-//       null
-//     }
-//   }
-// }
+    override def render(): ReactElement = {
+      null
+    }
+  }
+}
 
-// object TestForceUpdateComponent extends ComponentWrapper {
-//   type Props = () => Unit
-//   type State = Int
+object TestForceUpdateComponent extends ComponentWrapper {
+  type Props = () => Unit
+  type State = Int
 
-//   class Def(jsProps: js.Object) extends Definition(jsProps) {
-//     override def componentDidUpdate(prevProps: Props, prevState: State): Unit = {
-//       props.apply()
-//     }
+  class Def(jsProps: js.Object) extends Definition(jsProps) {
+    override def componentDidUpdate(prevProps: Props, prevState: State): Unit = {
+      props.apply()
+    }
 
-//     override def initialState: Int = 0
+    override def initialState: Int = 0
 
-//     override def render(): ReactElement = {
-//       null
-//     }
-//   }
-// }
+    override def render(): ReactElement = {
+      null
+    }
+  }
+}
 
-// object BadComponent extends StatelessComponentWrapper {
-//   type Props = Unit
+object BadComponent extends StatelessComponentWrapper {
+  type Props = Unit
 
-//   class Def(jsProps: js.Object) extends Definition(jsProps) {
-//     override def render(): ReactElement = {
-//       throw new Exception("BOO")
-//     }
-//   }
-// }
+  class Def(jsProps: js.Object) extends Definition(jsProps) {
+    override def render(): ReactElement = {
+      throw new Exception("BOO")
+    }
+  }
+}
 
-// object ErrorBoundaryComponent extends StatelessComponentWrapper {
-//   case class Props(bad: Boolean, handler: (js.Error, ErrorBoundaryInfo) => Unit)
+object ErrorBoundaryComponent extends StatelessComponentWrapper {
+  case class Props(bad: Boolean, handler: (js.Error, ErrorBoundaryInfo) => Unit)
 
-//   class Def(jsProps: js.Object) extends Definition(jsProps) {
-//     override def componentDidCatch(error: js.Error, info: ErrorBoundaryInfo): Unit = {
-//       props.handler.apply(error, info)
-//     }
+  class Def(jsProps: js.Object) extends Definition(jsProps) {
+    override def componentDidCatch(error: js.Error, info: ErrorBoundaryInfo): Unit = {
+      props.handler.apply(error, info)
+    }
 
-//     override def render(): ReactElement = {
-//       if (props.bad) {
-//         BadComponent()
-//       } else {
-//         null
-//       }
-//     }
-//   }
-// }
+    override def render(): ReactElement = {
+      if (props.bad) {
+        BadComponent()
+      } else {
+        null
+      }
+    }
+  }
+}
 
-// object DerivedStateComponent extends ComponentWrapper {
-//   case class Props(num: Int, onValue: Int => Unit)
-//   type State = Int
+object DerivedStateComponent extends ComponentWrapper {
+  case class Props(num: Int, onValue: Int => Unit)
+  type State = Int
 
-//   override val getDerivedStateFromProps = (nextProps: Props, _: State) => {
-//     nextProps.num
-//   }
+  override val getDerivedStateFromProps = (nextProps: Props, _: State) => {
+    nextProps.num
+  }
 
-//   class Def(jsProps: js.Object) extends Definition(jsProps) {
-//     override def initialState: Int = 0
+  class Def(jsProps: js.Object) extends Definition(jsProps) {
+    override def initialState: Int = 0
 
-//     override def render(): ReactElement = {
-//       if (state != 0) {
-//         props.onValue(state)
-//       }
+    override def render(): ReactElement = {
+      if (state != 0) {
+        props.onValue(state)
+      }
 
-//       null
-//     }
-//   }
-// }
+      null
+    }
+  }
+}
 
 // object DerivedStateReturnNullComponent extends ComponentWrapper {
 //   case class Props(returnNull: Boolean, value: Int)
@@ -219,42 +219,42 @@
 //   }
 // }
 
-// object DerivedStateFromErrorComponent extends ComponentWrapper {
-//   case class Props(onValue: Int => Unit)
-//   type State = Int
+object DerivedStateFromErrorComponent extends ComponentWrapper {
+  case class Props(onValue: Int => Unit)
+  type State = Int
 
-//   override val getDerivedStateFromError = (_: js.Error) => 123
+  override val getDerivedStateFromError = (_: js.Error) => 123
 
-//   class Def(jsProps: js.Object) extends Definition(jsProps) {
-//     override def initialState: Int = 0
+  class Def(jsProps: js.Object) extends Definition(jsProps) {
+    override def initialState: Int = 0
 
-//     override def render(): ReactElement = {
-//       if (state != 0) {
-//         props.onValue(state)
-//         null
-//       } else {
-//         BadComponent()
-//       }
-//     }
-//   }
-// }
+    override def render(): ReactElement = {
+      if (state != 0) {
+        props.onValue(state)
+        null
+      } else {
+        BadComponent()
+      }
+    }
+  }
+}
 
-// // compilation test: state providers for underivable type
-// object TestUnderivable {
-//   case class UnDerivable private(private val a: Int)
+// compilation test: state providers for underivable type
+object TestUnderivable {
+  case class UnDerivable private(private val a: Int)
 
-//   object UnDerivableReaderWriter {
-//     implicit val unDerivableReader: Reader[UnDerivable] = null
-//     implicit val unDerivableWriter: Writer[UnDerivable] = null
-//   }
+  object UnDerivableReaderWriter {
+    implicit val unDerivableReader: Reader[UnDerivable] = null
+    implicit val unDerivableWriter: Writer[UnDerivable] = null
+  }
 
-//   import UnDerivableReaderWriter._
+  import UnDerivableReaderWriter._
 
-//   object App extends ComponentWrapper {
-//     type Props = Unit
-//     type State = UnDerivable
-//   }
-// }
+  object App extends ComponentWrapper {
+    type Props = Unit
+    type State = UnDerivable
+  }
+}
 
 // object DefaultStateParamsComponent extends ComponentWrapper {
 //   type Props = Unit
@@ -285,194 +285,194 @@
 //   }
 // }
 
-// class ComponentTest extends AsyncFunSuite {
-//   test("setState given function is applied") {
-//     val promise: Promise[Assertion] = Promise()
+class ComponentTest extends AsyncFunSuite {
+  test("setState given function is applied") {
+    val promise: Promise[Assertion] = Promise()
 
-//     ReactDOM.render(
-//       TestComponent(i => promise.success(assert(i == 1))),
-//       dom.document.createElement("div")
-//     )
+    ReactDOM.render(
+      TestComponent(i => promise.success(assert(i == 1))),
+      dom.document.createElement("div")
+    )
 
-//     promise.future
-//   }
+    promise.future
+  }
 
-//   test("setState callback function is run") {
-//     val promise: Promise[Assertion] = Promise()
+  test("setState callback function is run") {
+    val promise: Promise[Assertion] = Promise()
 
-//     ReactDOM.render(
-//       TestComponent(i => promise.success(assert(i == 1))),
-//       dom.document.createElement("div")
-//     )
+    ReactDOM.render(
+      TestComponent(i => promise.success(assert(i == 1))),
+      dom.document.createElement("div")
+    )
 
-//     promise.future
-//   }
+    promise.future
+  }
 
-//   test("initialState works with empty parentheses") {
-//     val promise: Promise[Assertion] = Promise()
+  test("initialState works with empty parentheses") {
+    val promise: Promise[Assertion] = Promise()
 
-//     ReactDOM.render(
-//       TestComponentExtraApply(i => promise.success(assert(i == 1))),
-//       dom.document.createElement("div")
-//     )
+    ReactDOM.render(
+      TestComponentExtraApply(i => promise.success(assert(i == 1))),
+      dom.document.createElement("div")
+    )
 
-//     promise.future
-//   }
+    promise.future
+  }
 
-//   test("setState with Seq state runs correct overloaded definition") {
-//     val promise: Promise[Assertion] = Promise()
+  test("setState with Seq state runs correct overloaded definition") {
+    val promise: Promise[Assertion] = Promise()
 
-//     ReactDOM.render(
-//       TestComponentForSeqState(() => promise.success(assert(true))),
-//       dom.document.createElement("div")
-//     )
+    ReactDOM.render(
+      TestComponentForSeqState(() => promise.success(assert(true))),
+      dom.document.createElement("div")
+    )
 
-//     promise.future
-//   }
+    promise.future
+  }
 
-//   test("Can construct a component and provide key") {
-//     val element: ReactElement = TestComponent(_ => ()).withKey("test")
-//     assert(element.asInstanceOf[js.Dynamic].key.toString == "test")
-//   }
+  test("Can construct a component and provide key") {
+    val element: ReactElement = TestComponent(_ => ()).withKey("test")
+    assert(element.asInstanceOf[js.Dynamic].key.toString == "test")
+  }
 
-//   test("Can construct a component taking Unit props with no arguments") {
-//     val element: ReactElement = NoPropsComponent()
-//     assert(!js.isUndefined(element.asInstanceOf[js.Dynamic]))
-//   }
+  test("Can construct a component taking Unit props with no arguments") {
+    val element: ReactElement = NoPropsComponent()
+    assert(!js.isUndefined(element.asInstanceOf[js.Dynamic]))
+  }
 
-//   test("Can construct a component taking Unit props with refs and key") {
-//     val element: ReactElement = NoPropsComponent.withKey("hi").withRef((r: js.Object) => {})
-//     assert(element.asInstanceOf[js.Dynamic].key.toString == "hi")
-//     assert(!js.isUndefined(element.asInstanceOf[js.Dynamic].ref))
-//   }
+  test("Can construct a component taking Unit props with refs and key") {
+    val element: ReactElement = NoPropsComponent.withKey("hi").withRef((r: js.Object) => {})
+    assert(element.asInstanceOf[js.Dynamic].key.toString == "hi")
+    assert(!js.isUndefined(element.asInstanceOf[js.Dynamic].ref))
+  }
 
-//   test("Cannot reuse half-built component") {
-//     val halfBuilt = NoPropsComponent()
-//     halfBuilt.withKey("abc"): ReactElement
+  test("Cannot reuse half-built component") {
+    val halfBuilt = NoPropsComponent()
+    halfBuilt.withKey("abc"): ReactElement
 
-//     assertThrows[IllegalStateException] {
-//       halfBuilt.withKey("abc2"): ReactElement
-//     }
-//   }
+    assertThrows[IllegalStateException] {
+      halfBuilt.withKey("abc2"): ReactElement
+    }
+  }
 
-//   test("shouldComponentUpdate controls when component is updated") {
-//     var called = false
-//     var ref: TestComponentForShouldComponentUpdate.Def = null
+  test("shouldComponentUpdate controls when component is updated") {
+    var called = false
+    var ref: TestComponentForShouldComponentUpdate.Def = null
 
-//     ReactDOM.render(
-//       TestComponentForShouldComponentUpdate(() => {
-//         called = true
-//       }).withRef(r => ref = r),
-//       dom.document.createElement("div")
-//     )
+    ReactDOM.render(
+      TestComponentForShouldComponentUpdate(() => {
+        called = true
+      }).withRef(r => ref = r),
+      dom.document.createElement("div")
+    )
 
-//     ref.setState(123)
-//     assert(called)
+    ref.setState(123)
+    assert(called)
 
-//     called = false
-//     ref.setState(1)
-//     assert(!called)
-//   }
+    called = false
+    ref.setState(1)
+    assert(!called)
+  }
 
-//   test("Force updating a component by its ref works") {
-//     val promise: Promise[Assertion] = Promise()
+  test("Force updating a component by its ref works") {
+    val promise: Promise[Assertion] = Promise()
 
-//     ReactDOM.render(
-//       TestForceUpdateComponent(() => promise.success(assert(true))).withRef(ref => {
-//         ref.forceUpdate()
-//       }),
-//       dom.document.createElement("div")
-//     )
+    ReactDOM.render(
+      TestForceUpdateComponent(() => promise.success(assert(true))).withRef(ref => {
+        ref.forceUpdate()
+      }),
+      dom.document.createElement("div")
+    )
 
-//     promise.future
-//   }
+    promise.future
+  }
 
-//   test("Error boundary component catches an exception in its children") {
-//     val promise: Promise[Assertion] = Promise()
+  test("Error boundary component catches an exception in its children") {
+    val promise: Promise[Assertion] = Promise()
 
-//     ReactDOM.render(
-//       ErrorBoundaryComponent(ErrorBoundaryComponent.Props(true, { (_, _) =>
-//         promise.success(assert(true))
-//       })),
-//       dom.document.createElement("div")
-//     )
+    ReactDOM.render(
+      ErrorBoundaryComponent(ErrorBoundaryComponent.Props(true, { (_, _) =>
+        promise.success(assert(true))
+      })),
+      dom.document.createElement("div")
+    )
 
-//     promise.future
-//   }
+    promise.future
+  }
 
-//   test("Error boundary component works fine with no errors") {
-//     var sawError = false
+  test("Error boundary component works fine with no errors") {
+    var sawError = false
 
-//     ReactDOM.render(
-//       ErrorBoundaryComponent(ErrorBoundaryComponent.Props(false, { (_, _) =>
-//         sawError = true
-//       })),
-//       dom.document.createElement("div")
-//     )
+    ReactDOM.render(
+      ErrorBoundaryComponent(ErrorBoundaryComponent.Props(false, { (_, _) =>
+        sawError = true
+      })),
+      dom.document.createElement("div")
+    )
 
-//     assert(!sawError)
-//   }
+    assert(!sawError)
+  }
 
-//   test("getSnapshotBeforeUpdate is run and returned value is passed to componentDidUpdate") {
-//     val promise: Promise[Assertion] = Promise()
+  test("getSnapshotBeforeUpdate is run and returned value is passed to componentDidUpdate") {
+    val promise: Promise[Assertion] = Promise()
 
-//     ReactDOM.render(
-//       TestComponentForSnapshot(i => promise.success(assert(i == 123))),
-//       dom.document.createElement("div")
-//     )
+    ReactDOM.render(
+      TestComponentForSnapshot(i => promise.success(assert(i == 123))),
+      dom.document.createElement("div")
+    )
 
-//     promise.future
-//   }
+    promise.future
+  }
 
-//   test("getDerivedStateFromProps results in state being calculated based on props") {
-//     val promise: Promise[Assertion] = Promise()
+  test("getDerivedStateFromProps results in state being calculated based on props") {
+    val promise: Promise[Assertion] = Promise()
 
-//     ReactDOM.render(
-//       DerivedStateComponent(DerivedStateComponent.Props(
-//         123, i => promise.success(assert(i == 123))
-//       )),
-//       dom.document.createElement("div")
-//     )
+    ReactDOM.render(
+      DerivedStateComponent(DerivedStateComponent.Props(
+        123, i => promise.success(assert(i == 123))
+      )),
+      dom.document.createElement("div")
+    )
 
-//     promise.future
-//   }
+    promise.future
+  }
 
-//   test("getDerivedStateFromProps doesn't update state when null is returned") {
-//     val container = dom.document.createElement("div")
+  // test("getDerivedStateFromProps doesn't update state when null is returned") {
+  //   val container = dom.document.createElement("div")
 
-//     ReactDOM.render(
-//       DerivedStateReturnNullComponent(DerivedStateReturnNullComponent.Props(returnNull = false, 123)),
-//       container
-//     )
+  //   ReactDOM.render(
+  //     DerivedStateReturnNullComponent(DerivedStateReturnNullComponent.Props(returnNull = false, 123)),
+  //     container
+  //   )
 
-//     assert(container.innerHTML == "123")
+  //   assert(container.innerHTML == "123")
 
-//     ReactDOM.render(
-//       DerivedStateReturnNullComponent(DerivedStateReturnNullComponent.Props(returnNull = true, 456)),
-//       container
-//     )
+  //   ReactDOM.render(
+  //     DerivedStateReturnNullComponent(DerivedStateReturnNullComponent.Props(returnNull = true, 456)),
+  //     container
+  //   )
 
-//     assert(container.innerHTML == "123")
-//   }
+  //   assert(container.innerHTML == "123")
+  // }
 
-//   test("getDerivedStateFromError results in state being calculated based on error") {
-//     val promise: Promise[Assertion] = Promise()
+  test("getDerivedStateFromError results in state being calculated based on error") {
+    val promise: Promise[Assertion] = Promise()
 
-//     ReactDOM.render(
-//       DerivedStateFromErrorComponent(DerivedStateFromErrorComponent.Props(i => promise.success(assert(i == 123)))),
-//       dom.document.createElement("div")
-//     )
+    ReactDOM.render(
+      DerivedStateFromErrorComponent(DerivedStateFromErrorComponent.Props(i => promise.success(assert(i == 123)))),
+      dom.document.createElement("div")
+    )
 
-//     promise.future
-//   }
+    promise.future
+  }
 
-//   test("Can render a component with type parameters") {
-//     val container = dom.document.createElement("div")
-//     ReactDOM.render(
-//       TypeParamsComponent(TypeParamsComponent.TypedProps(123)),
-//       container
-//     )
+  // test("Can render a component with type parameters") {
+  //   val container = dom.document.createElement("div")
+  //   ReactDOM.render(
+  //     TypeParamsComponent(TypeParamsComponent.TypedProps(123)),
+  //     container
+  //   )
 
-//     assert(container.innerHTML == "123")
-//   }
-// }
+  //   assert(container.innerHTML == "123")
+  // }
+}

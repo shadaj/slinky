@@ -1,31 +1,31 @@
 package slinky.core
 
-//import scala.language.experimental.macros
-//import scala.reflect.macros.whitebox
+import scala.quoted._
 
 final class FunctionalComponentName(val name: String) extends AnyVal
-//object FunctionalComponentName {
-//  implicit def get: FunctionalComponentName = macro FunctionalComponentNameMacros.impl
-//}
-//
-//object FunctionalComponentNameMacros {
-//  def impl(c: whitebox.Context): c.Expr[FunctionalComponentName] = {
-//    import c.universe._
-//
-//    // from lihaoyi/sourcecode
-//    def isSyntheticName(name: String) =
-//      name == "<init>" || (name.startsWith("<local ") && name.endsWith(">")) || name == "component"
-//
-//    @scala.annotation.tailrec
-//    def findNonSyntheticOwner(current: Symbol): Symbol =
-//      if (isSyntheticName(current.name.decodedName.toString.trim)) {
-//        findNonSyntheticOwner(current.owner)
-//      } else {
-//        current
-//      }
-//
-//    c.Expr(
-//      q"new _root_.slinky.core.FunctionalComponentName(${findNonSyntheticOwner(c.internal.enclosingOwner).name.decodedName.toString})"
-//    )
-//  }
-//}
+object FunctionalComponentName {
+  inline implicit def get: FunctionalComponentName = ${FunctionalComponentNameMacros.impl}
+}
+
+object FunctionalComponentNameMacros {
+ def impl(using q: Quotes): Expr[FunctionalComponentName] = {
+  import q.reflect._
+
+  // from lihaoyi/sourcecode
+  def isSyntheticName(name: String) =
+    name == "<init>" || (name.startsWith("<local ") && name.endsWith(">")) || name == "component" || name == "macro" || name == "$anonfun"
+
+  @scala.annotation.tailrec
+  def findNonSyntheticOwnerName(current: Symbol): String =
+    if (isSyntheticName(current.name.trim)) {
+      findNonSyntheticOwnerName(current.owner)
+    } else {
+      current.name.trim.stripSuffix("$")
+    }
+
+  val name = Expr[String](findNonSyntheticOwnerName(Symbol.spliceOwner))
+  '{
+    new FunctionalComponentName(${name})
+  }
+ }
+}
