@@ -69,8 +69,10 @@ object BuildingComponent {
   }
 }
 
+// TODO: providers need to be by-name because implicit will reference the type inside the object being initialized
+//       maybe it could be fixed with a better instance macro for those
 abstract class ExternalComponentWithAttributesWithRefType[E <: TagElement, R <: js.Object](
-  implicit pw: ExternalPropsWriterProvider
+  implicit pw: => ExternalPropsWriterProvider
 ) {
   type Props
   type Element = E
@@ -85,13 +87,13 @@ abstract class ExternalComponentWithAttributesWithRefType[E <: TagElement, R <: 
     new BuildingComponent(js.Array(component.asInstanceOf[js.Any], writer.write(p)))
 }
 
-abstract class ExternalComponentWithAttributes[E <: TagElement](implicit pw: ExternalPropsWriterProvider)
+abstract class ExternalComponentWithAttributes[E <: TagElement](implicit pw: => ExternalPropsWriterProvider)
     extends ExternalComponentWithAttributesWithRefType[E, js.Object]()(pw)
 
-abstract class ExternalComponentWithRefType[R <: js.Object](implicit pw: ExternalPropsWriterProvider)
+abstract class ExternalComponentWithRefType[R <: js.Object](implicit pw: => ExternalPropsWriterProvider)
     extends ExternalComponentWithAttributesWithRefType[Nothing, R]()(pw)
 
-abstract class ExternalComponent(implicit pw: ExternalPropsWriterProvider)
+abstract class ExternalComponent(implicit pw: => ExternalPropsWriterProvider)
     extends ExternalComponentWithAttributes[Nothing]()(pw)
 
 abstract class ExternalComponentNoPropsWithAttributesWithRefType[E <: TagElement, R <: js.Object] {

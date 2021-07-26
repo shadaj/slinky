@@ -202,22 +202,22 @@ object DerivedStateComponent extends ComponentWrapper {
   }
 }
 
-// object DerivedStateReturnNullComponent extends ComponentWrapper {
-//   case class Props(returnNull: Boolean, value: Int)
-//   case class State(value: Int)
+object DerivedStateReturnNullComponent extends ComponentWrapper {
+  case class Props(returnNull: Boolean, value: Int)
+  case class State(value: Int)
 
-//   override val getDerivedStateFromProps = (nextProps: Props, _: State) => {
-//     if (nextProps.returnNull) null else State(nextProps.value)
-//   }
+  override val getDerivedStateFromProps = (nextProps: Props, _: State) => {
+    if (nextProps.returnNull) null else State(nextProps.value)
+  }
 
-//   class Def(jsProps: js.Object) extends Definition(jsProps) {
-//     override def initialState = State(0)
+  class Def(jsProps: js.Object) extends Definition(jsProps) {
+    override def initialState = State(0)
 
-//     override def render(): ReactElement = {
-//       state.value.toString
-//     }
-//   }
-// }
+    override def render(): ReactElement = {
+      state.value.toString
+    }
+  }
+}
 
 object DerivedStateFromErrorComponent extends ComponentWrapper {
   case class Props(onValue: Int => Unit)
@@ -437,23 +437,23 @@ class ComponentTest extends AsyncFunSuite {
     promise.future
   }
 
-  // test("getDerivedStateFromProps doesn't update state when null is returned") {
-  //   val container = dom.document.createElement("div")
+  test("getDerivedStateFromProps doesn't update state when null is returned") {
+    val container = dom.document.createElement("div")
 
-  //   ReactDOM.render(
-  //     DerivedStateReturnNullComponent(DerivedStateReturnNullComponent.Props(returnNull = false, 123)),
-  //     container
-  //   )
+    ReactDOM.render(
+      DerivedStateReturnNullComponent(DerivedStateReturnNullComponent.Props(returnNull = false, 123)),
+      container
+    )
 
-  //   assert(container.innerHTML == "123")
+    assert(container.innerHTML == "123")
 
-  //   ReactDOM.render(
-  //     DerivedStateReturnNullComponent(DerivedStateReturnNullComponent.Props(returnNull = true, 456)),
-  //     container
-  //   )
+    ReactDOM.render(
+      DerivedStateReturnNullComponent(DerivedStateReturnNullComponent.Props(returnNull = true, 456)),
+      container
+    )
 
-  //   assert(container.innerHTML == "123")
-  // }
+    assert(container.innerHTML == "123")
+  }
 
   test("getDerivedStateFromError results in state being calculated based on error") {
     val promise: Promise[Assertion] = Promise()

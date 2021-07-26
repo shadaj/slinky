@@ -7,7 +7,7 @@ import slinky.readwrite.Writer
 // same as PropsWriterProvider except it always returns the typeclass instead of nulling it out in fullOpt mode
 trait ExternalPropsWriterProvider extends js.Object
 object ExternalPropsWriterProvider {
- def impl(using q: Quotes): Expr[StateWriterProvider] = {
+ def impl(using q: Quotes): Expr[ExternalPropsWriterProvider] = {
   import q.reflect._
   val module = Symbol.spliceOwner.owner.owner
   val stateType = TypeIdent(module.memberType("Props")).tpe
@@ -16,10 +16,10 @@ object ExternalPropsWriterProvider {
     case fail: ImplicitSearchFailure => report.throwError(fail.explanation)
     case s: ImplicitSearchSuccess => 
       '{
-        ${s.tree.asExpr}.asInstanceOf[StateWriterProvider]
+        ${s.tree.asExpr}.asInstanceOf[ExternalPropsWriterProvider]
       }
   }
  }
 
- implicit inline def get: StateWriterProvider = ${impl}
+ implicit inline def get: ExternalPropsWriterProvider = ${impl}
 }
