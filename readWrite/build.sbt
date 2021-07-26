@@ -4,6 +4,11 @@ enablePlugins(ScalaJSPlugin)
 
 name := "slinky-readwrite"
 
+
+scalacOptions ~= {
+  _.filterNot(_ == "-source:3.0-migration") // Having this option breaks nested quotes/splices entirely
+}
+
 libraryDependencies ++= {
   CrossVersion.partialVersion(scalaVersion.value) match {
     case Some((2, _)) => Seq(

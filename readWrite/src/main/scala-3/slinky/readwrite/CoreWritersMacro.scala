@@ -8,6 +8,8 @@ import scala.util.control.NonFatal
 
 trait MacroWriters {
   inline implicit def deriveWriter[T]: Writer[T] = summonFrom {
+    case vc: ValueClass[T] => 
+      MacroWriters.ValueClassWriter(vc, summonInline[Writer[vc.Repr]])
     case m: Mirror.ProductOf[T] => deriveProduct(m)
     case m: Mirror.SumOf[T] => deriveSum(m)
     case nu: NominalUnion[T] => 
@@ -31,6 +33,10 @@ trait MacroWriters {
 }
 
 object MacroWriters {
+  class ValueClassWriter[T, R](vc: ValueClass[T] { type Repr = R }, w: Writer[R]) extends Writer[T] {
+    def write(p: T): js.Object = w.write(vc.from(p))
+  }
+
   class UnionWriter[T](writers: Tuple, classTags: Tuple) extends Writer[T] {
     def write(p: T): js.Object = 
       classTags.productIterator.indexWhere(_.asInstanceOf[ClassTag[_]].runtimeClass == p.getClass) match {

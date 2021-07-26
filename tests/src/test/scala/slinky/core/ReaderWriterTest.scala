@@ -155,12 +155,13 @@ class ReaderWriterTest extends AnyFunSuite {
     readWrittenSame(ClassWithVararg(1, "hi", "hi", "bye"))
   }
 
-  // test("Read/write - value class") {
-  //   readWrittenSame(new ValueClass(1))
 
-  //   // directly writes the inner value without wrapping it in an object
-  //   assert(implicitly[Writer[ValueClass]].write(new ValueClass(1)).asInstanceOf[Int] == 1)
-  // }
+  test("Read/write - value class") {
+    readWrittenSame(new ValueClass(1))
+
+    // directly writes the inner value without wrapping it in an object
+    assert(implicitly[Writer[ValueClass]].write(new ValueClass(1)).asInstanceOf[Int] == 1)
+  }
 
   test("Read/write - sequences") {
     readWrittenSame(List(1, 2))
@@ -206,25 +207,25 @@ class ReaderWriterTest extends AnyFunSuite {
   //   assert(implicitly[Reader[ClassWithDefault]].read(js.Dynamic.literal()).a == 5)
   // }
 
-  // test("Can convert Scala instance into ObjectOrWritten") {
-  //   assert((SubTypeA(int = 123): ObjectOrWritten[SubTypeA])
-  //     .asInstanceOf[js.Dynamic].int.asInstanceOf[Int] == 123)
-  // }
+  test("Can convert Scala instance into ObjectOrWritten") {
+    assert((SubTypeA(int = 123): ObjectOrWritten[SubTypeA])
+      .asInstanceOf[js.Dynamic].int.asInstanceOf[Int] == 123)
+  }
 
-  // test("Can convert Scala instance into js.UndefOr[ObjectOrWritten]") {
-  //   assert((SubTypeA(int = 123): js.UndefOr[ObjectOrWritten[SubTypeA]])
-  //     .asInstanceOf[js.Dynamic].int.asInstanceOf[Int] == 123)
-  // }
+  test("Can convert Scala instance into js.UndefOr[ObjectOrWritten]") {
+    assert((SubTypeA(int = 123): js.UndefOr[ObjectOrWritten[SubTypeA]])
+      .asInstanceOf[js.Dynamic].int.asInstanceOf[Int] == 123)
+  }
 
-  // test("Can convert js.Object into ObjectOrWritten") {
-  //   assert((js.Dynamic.literal(int = 123): ObjectOrWritten[SubTypeA])
-  //     .asInstanceOf[js.Dynamic].int.asInstanceOf[Int] == 123)
-  // }
+  test("Can convert js.Object into ObjectOrWritten") {
+    assert((js.Dynamic.literal(int = 123): ObjectOrWritten[SubTypeA])
+      .asInstanceOf[js.Dynamic].int.asInstanceOf[Int] == 123)
+  }
 
-  // test("Can convert js.Object into js.UndefOr[ObjectOrWritten]") {
-  //   assert((js.Dynamic.literal(int = 123): js.UndefOr[ObjectOrWritten[SubTypeA]])
-  //     .asInstanceOf[js.Dynamic].int.asInstanceOf[Int] == 123)
-  // }
+  test("Can convert js.Object into js.UndefOr[ObjectOrWritten]") {
+    assert((js.Dynamic.literal(int = 123): js.UndefOr[ObjectOrWritten[SubTypeA]])
+      .asInstanceOf[js.Dynamic].int.asInstanceOf[Int] == 123)
+  }
 
   // compilation test: can use derivation macro with type parameter when typeclass is available
   // def deriveReaderTypeclass[T: Reader]: Reader[T] = {

@@ -7,6 +7,8 @@ import scala.util.control.NonFatal
 
 trait MacroReaders {
   inline implicit def deriveReader[T]: Reader[T] = summonFrom {
+    case vc: ValueClass[T] =>
+      MacroReaders.ValueClassReader(vc, summonInline[Reader[vc.Repr]])
     case m: Mirror.ProductOf[T] => deriveProduct(m)
     case m: Mirror.SumOf[T] => deriveSum(m)
     case nu: NominalUnion[T] => MacroReaders.UnionReader(summonAll[Tuple.Map[nu.Constituents, Reader]])
@@ -25,6 +27,10 @@ trait MacroReaders {
 }
 
 object MacroReaders {
+  class ValueClassReader[T, R](vc: ValueClass[T] { type Repr = R }, reader: Reader[R]) extends Reader[T] {
+    protected def forceRead(o: scala.scalajs.js.Object): T = vc.to(reader.read(o))
+  }
+
   class UnionReader[T](readers: Tuple) extends Reader[T] {
     protected def forceRead(o: scala.scalajs.js.Object): T = {
       var lastEx: Throwable = null
