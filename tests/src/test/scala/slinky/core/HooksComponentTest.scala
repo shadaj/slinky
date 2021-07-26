@@ -1,380 +1,380 @@
-// package slinky.core
+package slinky.core
 
-// import org.scalatest.funsuite.AsyncFunSuite
-// import org.scalajs.dom.document
-// import org.scalajs.dom.Element
+import org.scalatest.funsuite.AsyncFunSuite
+import org.scalajs.dom.document
+import org.scalajs.dom.Element
 
-// import slinky.core.facade.{React, SetStateHookCallback, ReactRef}
-// import slinky.core.facade.Hooks._
-// import slinky.web.ReactDOM
-// import slinky.web.html._
+import slinky.core.facade.{React, SetStateHookCallback, ReactRef}
+import slinky.core.facade.Hooks._
+import slinky.web.ReactDOM
+import slinky.web.html._
 
-// import org.scalatest.Assertion
-// import scala.concurrent.Promise
-// import scala.util.Try
+import org.scalatest.Assertion
+import scala.concurrent.Promise
+import scala.util.Try
 
-// class HooksComponentTest extends AsyncFunSuite {
-//   implicit override def executionContext = scala.concurrent.ExecutionContext.Implicits.global
+class HooksComponentTest extends AsyncFunSuite {
+  implicit override def executionContext = scala.concurrent.ExecutionContext.Implicits.global
 
-//   test("Can render a functional component with useState hook") {
-//     val container = document.createElement("div")
-//     val component = FunctionalComponent[Int] { props =>
-//       val (state, setState) = useState("hello")
-//       state + props
-//     }
+  test("Can render a functional component with useState hook") {
+    val container = document.createElement("div")
+    val component = FunctionalComponent[Int] { props =>
+      val (state, setState) = useState("hello")
+      state + props
+    }
     
-//     ReactDOM.render(component(1), container)
+    ReactDOM.render(component(1), container)
 
-//     assert(container.innerHTML == "hello1")
-//   }
+    assert(container.innerHTML == "hello1")
+  }
 
-//   test("Can call setState with direct value on a functional component with useState hook") {
-//     val container = document.createElement("div")
-//     var stateSetter: Option[SetStateHookCallback[String]] = None
+  test("Can call setState with direct value on a functional component with useState hook") {
+    val container = document.createElement("div")
+    var stateSetter: Option[SetStateHookCallback[String]] = None
 
-//     val promise: Promise[Assertion] = Promise()
-//     val component = FunctionalComponent[Int] { props =>
-//       val (state, setState) = useState("hello")
-//       stateSetter = Some(setState)
+    val promise: Promise[Assertion] = Promise()
+    val component = FunctionalComponent[Int] { props =>
+      val (state, setState) = useState("hello")
+      stateSetter = Some(setState)
 
-//       if (state == "bye") {
-//         promise.success(assert(true))
-//       }
+      if (state == "bye") {
+        promise.success(assert(true))
+      }
 
-//       state + props
-//     }
+      state + props
+    }
     
-//     ReactDOM.render(component(1), container)
-//     stateSetter.get.apply("bye")
+    ReactDOM.render(component(1), container)
+    stateSetter.get.apply("bye")
 
-//     promise.future
-//   }
+    promise.future
+  }
 
-//   test("Can call setState with transformed value on a functional component with useState hook") {
-//     val container = document.createElement("div")
-//     var stateSetter: Option[SetStateHookCallback[String]] = None
+  test("Can call setState with transformed value on a functional component with useState hook") {
+    val container = document.createElement("div")
+    var stateSetter: Option[SetStateHookCallback[String]] = None
 
-//     val promise: Promise[Assertion] = Promise()
-//     val component = FunctionalComponent[Int] { props =>
-//       val (state, setState) = useState("hello")
-//       stateSetter = Some(setState)
+    val promise: Promise[Assertion] = Promise()
+    val component = FunctionalComponent[Int] { props =>
+      val (state, setState) = useState("hello")
+      stateSetter = Some(setState)
 
-//       if (state == "olleh") {
-//         promise.success(assert(true))
-//       }
+      if (state == "olleh") {
+        promise.success(assert(true))
+      }
 
-//       state + props
-//     }
+      state + props
+    }
     
-//     ReactDOM.render(component(1), container)
-//     stateSetter.get.apply(_.reverse)
+    ReactDOM.render(component(1), container)
+    stateSetter.get.apply(_.reverse)
 
-//     promise.future
-//   }
+    promise.future
+  }
 
-//   test("Can use callback returned by setState as a plain function") {
-//     val container = document.createElement("div")
-//     var stateSetter: Option[String => Unit] = None
+  test("Can use callback returned by setState as a plain function") {
+    val container = document.createElement("div")
+    var stateSetter: Option[String => Unit] = None
 
-//     val promise: Promise[Assertion] = Promise()
-//     val component = FunctionalComponent[Int] { props =>
-//       val (state, setState) = useState("hello")
-//       stateSetter = Some(setState)
+    val promise: Promise[Assertion] = Promise()
+    val component = FunctionalComponent[Int] { props =>
+      val (state, setState) = useState("hello")
+      stateSetter = Some(setState)
 
-//       if (state == "olleh") {
-//         promise.success(assert(true))
-//       }
+      if (state == "olleh") {
+        promise.success(assert(true))
+      }
 
-//       state + props
-//     }
+      state + props
+    }
 
-//     ReactDOM.render(component(1), container)
-//     stateSetter.foreach(_("olleh"))
+    ReactDOM.render(component(1), container)
+    stateSetter.foreach(_("olleh"))
 
-//     promise.future
-//   }
+    promise.future
+  }
 
-//   test("Can use callback returned by setState as a plain transform function") {
-//     val container = document.createElement("div")
-//     var stateSetter: Option[(String => String) => Unit] = None
+  test("Can use callback returned by setState as a plain transform function") {
+    val container = document.createElement("div")
+    var stateSetter: Option[(String => String) => Unit] = None
 
-//     val promise: Promise[Assertion] = Promise()
-//     val component = FunctionalComponent[Int] { props =>
-//       val (state, setState) = useState("hello")
-//       stateSetter = Some(setState)
+    val promise: Promise[Assertion] = Promise()
+    val component = FunctionalComponent[Int] { props =>
+      val (state, setState) = useState("hello")
+      stateSetter = Some(setState)
 
-//       if (state == "olleh") {
-//         promise.success(assert(true))
-//       }
+      if (state == "olleh") {
+        promise.success(assert(true))
+      }
 
-//       state + props
-//     }
+      state + props
+    }
 
-//     ReactDOM.render(component(1), container)
-//     stateSetter.foreach(transform => transform(s => s.reverse))
+    ReactDOM.render(component(1), container)
+    stateSetter.foreach(transform => transform(s => s.reverse))
 
-//     promise.future
-//   }
+    promise.future
+  }
 
-//   test("useEffect hook fires after render") {
-//     val container = document.createElement("div")
+  test("useEffect hook fires after render") {
+    val container = document.createElement("div")
 
-//     val promise: Promise[Assertion] = Promise()
-//     val component = FunctionalComponent[Int] { props =>
-//       useEffect(() => {
-//         promise.success(assert(true))
-//       })
+    val promise: Promise[Assertion] = Promise()
+    val component = FunctionalComponent[Int] { props =>
+      useEffect(() => {
+        promise.success(assert(true))
+      })
 
-//       props
-//     }
+      props
+    }
     
-//     ReactDOM.render(component(1), container)
+    ReactDOM.render(component(1), container)
 
-//     promise.future
-//   }
+    promise.future
+  }
 
-//   test("useEffect hook fires only when watched objects change") {
-//     val container = document.createElement("div")
+  test("useEffect hook fires only when watched objects change") {
+    val container = document.createElement("div")
 
-//     val promise: Promise[Assertion] = Promise()
-//     var firstEffectOccured = false
-//     val component = FunctionalComponent[Int] { props =>
-//       useEffect(() => {
-//         if (firstEffectOccured) {
-//           promise.complete(Try(assert(props == 2)))
-//         }
+    val promise: Promise[Assertion] = Promise()
+    var firstEffectOccured = false
+    val component = FunctionalComponent[Int] { props =>
+      useEffect(() => {
+        if (firstEffectOccured) {
+          promise.complete(Try(assert(props == 2)))
+        }
 
-//         firstEffectOccured = true
-//       }, Seq(props))
+        firstEffectOccured = true
+      }, Seq(props))
 
-//       props
-//     }
+      props
+    }
     
-//     ReactDOM.render(component(1), container)
-//     ReactDOM.render(component(1), container)
-//     ReactDOM.render(component(2), container)
+    ReactDOM.render(component(1), container)
+    ReactDOM.render(component(1), container)
+    ReactDOM.render(component(2), container)
 
-//     promise.future
-//   }
+    promise.future
+  }
 
-//   test("useEffect hook unsubscribe function is called on unmount") {
-//     val container = document.createElement("div")
+  test("useEffect hook unsubscribe function is called on unmount") {
+    val container = document.createElement("div")
 
-//     val promise: Promise[Assertion] = Promise()
-//     val component = FunctionalComponent[Int] { props =>
-//       useEffect(() => {
-//         () => {
-//           promise.success(assert(true))
-//         }
-//       }, Seq(props))
+    val promise: Promise[Assertion] = Promise()
+    val component = FunctionalComponent[Int] { props =>
+      useEffect(() => {
+        () => {
+          promise.success(assert(true))
+        }
+      }, Seq(props))
 
-//       props
-//     }
+      props
+    }
     
-//     ReactDOM.render(component(1), container)
-//     ReactDOM.unmountComponentAtNode(container)
+    ReactDOM.render(component(1), container)
+    ReactDOM.unmountComponentAtNode(container)
 
-//     promise.future
-//   }
+    promise.future
+  }
 
-//   test("useContext hook gets context value") {
-//     val container = document.createElement("div")
-//     val context = React.createContext("")
-//     val component = FunctionalComponent[Unit] { _ =>
-//       val ctx = useContext(context)
-//       ctx
-//     }
+  test("useContext hook gets context value") {
+    val container = document.createElement("div")
+    val context = React.createContext("")
+    val component = FunctionalComponent[Unit] { _ =>
+      val ctx = useContext(context)
+      ctx
+    }
 
-//     ReactDOM.render(
-//       context.Provider("hello from context!")(component(())),
-//       container
-//     )
+    ReactDOM.render(
+      context.Provider("hello from context!")(component(())),
+      container
+    )
 
-//     assert(container.innerHTML == "hello from context!")
-//   }
+    assert(container.innerHTML == "hello from context!")
+  }
 
-//   test("useReducer gets reducer value and dispatch works") {
-//     val container = document.createElement("div")
-//     var doDispatch: Int => Unit = null
-//     val promise: Promise[Assertion] = Promise()
+  test("useReducer gets reducer value and dispatch works") {
+    val container = document.createElement("div")
+    var doDispatch: Int => Unit = null
+    val promise: Promise[Assertion] = Promise()
 
-//     val component = FunctionalComponent[Unit] { props =>
-//       val (state, dispatch) = useReducer((_: String, a: Int) => {
-//         a.toString
-//       }, "")
+    val component = FunctionalComponent[Unit] { props =>
+      val (state, dispatch) = useReducer((_: String, a: Int) => {
+        a.toString
+      }, "")
 
-//       doDispatch = dispatch
+      doDispatch = dispatch
 
-//       if (state == "123") {
-//         promise.success(assert(true))
-//       }
+      if (state == "123") {
+        promise.success(assert(true))
+      }
 
-//       state
-//     }
+      state
+    }
 
-//     ReactDOM.render(
-//       component(()),
-//       container
-//     )
+    ReactDOM.render(
+      component(()),
+      container
+    )
     
-//     doDispatch(123)
+    doDispatch(123)
 
-//     promise.future
-//   }
+    promise.future
+  }
 
-//   test("useReducer can have lazy init") {
-//     val container = document.createElement("div")
+  test("useReducer can have lazy init") {
+    val container = document.createElement("div")
 
-//     val component = FunctionalComponent[Unit] { props =>
-//       val (state, dispatch) = useReducer((s: String, a: Int) => {
-//         a.toString
-//       }, 123, (init: Int) => init.toString)
+    val component = FunctionalComponent[Unit] { props =>
+      val (state, dispatch) = useReducer((s: String, a: Int) => {
+        a.toString
+      }, 123, (init: Int) => init.toString)
 
-//       state
-//     }
+      state
+    }
 
-//     ReactDOM.render(
-//       component(()),
-//       container
-//     )
+    ReactDOM.render(
+      component(()),
+      container
+    )
 
-//     assert(container.innerHTML == "123")
-//   }
+    assert(container.innerHTML == "123")
+  }
 
-//   test("useCallback maintains reference equality unless dependency changes") {
-//     val container = document.createElement("div")
+  test("useCallback maintains reference equality unless dependency changes") {
+    val container = document.createElement("div")
 
-//     var callbackRef: () => String = null
+    var callbackRef: () => String = null
 
-//     val component = FunctionalComponent[(Int, String)] { props =>
-//       val callback = useCallback(() => {
-//         props._2 // purposefully wrong (so that we can assert that untracked dependency retains old value)
-//       }, Seq(props._1))
+    val component = FunctionalComponent[(Int, String)] { props =>
+      val callback = useCallback(() => {
+        props._2 // purposefully wrong (so that we can assert that untracked dependency retains old value)
+      }, Seq(props._1))
 
-//       callbackRef = callback
-//       callback()
-//     }
+      callbackRef = callback
+      callback()
+    }
 
-//     ReactDOM.render(component((1, "one")), container)
-//     assert(container.innerHTML == "one")
-//     assert(callbackRef != null)
+    ReactDOM.render(component((1, "one")), container)
+    assert(container.innerHTML == "one")
+    assert(callbackRef != null)
 
-//     var prevCallbackRef = callbackRef
-//     ReactDOM.render(component((1, "one_")), container)
-//     assert(container.innerHTML == "one")
-//     assert(callbackRef eq prevCallbackRef) // note that we use eq to check for reference equality
+    var prevCallbackRef = callbackRef
+    ReactDOM.render(component((1, "one_")), container)
+    assert(container.innerHTML == "one")
+    assert(callbackRef eq prevCallbackRef) // note that we use eq to check for reference equality
 
-//     prevCallbackRef = callbackRef
-//     ReactDOM.render(component((2, "two")), container)
-//     assert(callbackRef ne prevCallbackRef) // note that we use ne to check for reference inequality
-//     assert(container.innerHTML == "two")
-//   }
+    prevCallbackRef = callbackRef
+    ReactDOM.render(component((2, "two")), container)
+    assert(callbackRef ne prevCallbackRef) // note that we use ne to check for reference inequality
+    assert(container.innerHTML == "two")
+  }
 
-//   test("useCallback with arguments maintains reference equality unless dependency changes") {
-//     val container = document.createElement("div")
+  test("useCallback with arguments maintains reference equality unless dependency changes") {
+    val container = document.createElement("div")
 
-//     var callbackRef: Boolean => String = null
+    var callbackRef: Boolean => String = null
     
-//     val component = FunctionalComponent[(Int, String)] { props =>
-//       val callback = useCallback((value: Boolean) => {
-//         props._2 // purposefully wrong (so that we can assert that untracked dependency retains old value)
-//       }, Seq(props._1))
+    val component = FunctionalComponent[(Int, String)] { props =>
+      val callback = useCallback((value: Boolean) => {
+        props._2 // purposefully wrong (so that we can assert that untracked dependency retains old value)
+      }, Seq(props._1))
 
-//       callbackRef = callback
-//       callback(true)
-//     }
+      callbackRef = callback
+      callback(true)
+    }
 
-//     ReactDOM.render(component((1, "one")), container)
-//     assert(container.innerHTML == "one")
-//     assert(callbackRef != null)
+    ReactDOM.render(component((1, "one")), container)
+    assert(container.innerHTML == "one")
+    assert(callbackRef != null)
 
-//     var prevCallbackRef = callbackRef
-//     ReactDOM.render(component((1, "one_")), container)
-//     assert(container.innerHTML == "one")
-//     assert(callbackRef eq prevCallbackRef) // note that we use eq to check for reference equality
+    var prevCallbackRef = callbackRef
+    ReactDOM.render(component((1, "one_")), container)
+    assert(container.innerHTML == "one")
+    assert(callbackRef eq prevCallbackRef) // note that we use eq to check for reference equality
 
-//     prevCallbackRef = callbackRef
-//     ReactDOM.render(component((2, "two")), container)
-//     assert(callbackRef ne prevCallbackRef) // note that we use ne to check for reference inequality
-//     assert(container.innerHTML == "two")
-//   }
+    prevCallbackRef = callbackRef
+    ReactDOM.render(component((2, "two")), container)
+    assert(callbackRef ne prevCallbackRef) // note that we use ne to check for reference inequality
+    assert(container.innerHTML == "two")
+  }
 
-//   test("useMemo only recalculates when watched objects change") {
-//     val container = document.createElement("div")
+  test("useMemo only recalculates when watched objects change") {
+    val container = document.createElement("div")
 
-//     var memoedValue = "first"
-//     val component = FunctionalComponent[Int] { props =>
-//       useMemo(() => {
-//         memoedValue
-//       }, Seq(props))
-//     }
+    var memoedValue = "first"
+    val component = FunctionalComponent[Int] { props =>
+      useMemo(() => {
+        memoedValue
+      }, Seq(props))
+    }
     
-//     ReactDOM.render(component(1), container)
-//     assert(container.innerHTML == "first")
+    ReactDOM.render(component(1), container)
+    assert(container.innerHTML == "first")
 
-//     memoedValue = "second"
-//     ReactDOM.render(component(1), container)
-//     assert(container.innerHTML == "first")
+    memoedValue = "second"
+    ReactDOM.render(component(1), container)
+    assert(container.innerHTML == "first")
 
-//     memoedValue = "third"
-//     ReactDOM.render(component(2), container)
-//     assert(container.innerHTML == "third")
-//   }
+    memoedValue = "third"
+    ReactDOM.render(component(2), container)
+    assert(container.innerHTML == "third")
+  }
 
-//   test("useRef allows a ref to be tracked across renders") {
-//     val container = document.createElement("div")
+  test("useRef allows a ref to be tracked across renders") {
+    val container = document.createElement("div")
 
-//     val component = FunctionalComponent[String] { props =>
-//       val ref = useRef[String]("")
+    val component = FunctionalComponent[String] { props =>
+      val ref = useRef[String]("")
 
-//       if (ref.current == "") ref.current = props
+      if (ref.current == "") ref.current = props
 
-//       ref.current
-//     }
+      ref.current
+    }
     
-//     ReactDOM.render(component("first"), container)
-//     assert(container.innerHTML == "first")
+    ReactDOM.render(component("first"), container)
+    assert(container.innerHTML == "first")
 
-//     ReactDOM.render(component("second"), container)
-//     assert(container.innerHTML == "first")
-//   }
+    ReactDOM.render(component("second"), container)
+    assert(container.innerHTML == "first")
+  }
 
-//   test("useImperativeHandle allows for customizing ref") {
-//     val container = document.createElement("div")
+  // test("useImperativeHandle allows for customizing ref") {
+  //   val container = document.createElement("div")
 
-//     trait RefHandle {
-//       def foo: Int
-//     }
+  //   trait RefHandle {
+  //     def foo: Int
+  //   }
 
-//     val component = React.forwardRef(FunctionalComponent { (props: String, ref: ReactRef[RefHandle]) =>
-//       useImperativeHandle(ref, () => {
-//         new RefHandle {
-//           def foo = 123
-//         }
-//       })
-//       ""
-//     })
+  //   val component = React.forwardRef(FunctionalComponent { (props: String, ref: ReactRef[RefHandle]) =>
+  //     useImperativeHandle(ref, () => {
+  //       new RefHandle {
+  //         def foo = 123
+  //       }
+  //     })
+  //     ""
+  //   })
 
-//     val refReceiver = React.createRef[RefHandle]
-//     ReactDOM.render(component("first").withRef(refReceiver), container)
-//     assert(refReceiver.current.foo == 123)
-//   }
+  //   val refReceiver = React.createRef[RefHandle]
+  //   ReactDOM.render(component("first").withRef(refReceiver), container)
+  //   assert(refReceiver.current.foo == 123)
+  // }
 
-//   test("useLayoutEffect hook fires after mount") {
-//     val container = document.createElement("div")
+  test("useLayoutEffect hook fires after mount") {
+    val container = document.createElement("div")
 
-//     val promise: Promise[Assertion] = Promise()
-//     val component = FunctionalComponent[Int] { props =>
-//       val divRef = useRef[Element](null)
-//       useLayoutEffect(() => {
-//         promise.success(assert(divRef.current.innerHTML == "hello"))
-//       })
+    val promise: Promise[Assertion] = Promise()
+    val component = FunctionalComponent[Int] { props =>
+      val divRef = useRef[Element](null)
+      useLayoutEffect(() => {
+        promise.success(assert(divRef.current.innerHTML == "hello"))
+      })
 
-//       div(ref := divRef)("hello")
-//     }
+      div(ref := divRef)("hello")
+    }
     
-//     ReactDOM.render(component(1), container)
+    ReactDOM.render(component(1), container)
 
-//     promise.future
-//   }
-// }
+    promise.future
+  }
+}
