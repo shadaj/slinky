@@ -63,3 +63,42 @@ object ValueClass {
     }
   }
 }
+
+trait DefaultConstructorParameters[T] {
+  val values: Array[Option[Any]]
+}
+
+object DefaultConstructorParameters {
+  /*transparent*/ inline implicit def provide[T]: DefaultConstructorParameters[T] =
+    ${make[T]}
+
+  def make[T: Type](using q: Quotes): Expr[DefaultConstructorParameters[T]] = {
+    import q.reflect._
+    // Scala encodes default values for a method as parameterless public methods named "%methodname%$default$%pos%"
+    // For constructor, method name is <init> which needs to be mangled
+    // The idea here is to call those methods by hand, constructing all the defaults. Pos is 1-based btw
+    // May gods have mercy on my soul.
+    val ctorDefaultParamPrefix = "$lessinit$greater$default$"
+    val T = TypeRepr.of[T].classSymbol
+      .getOrElse(report.throwError(s"Could not find primary constructor tree for type ${TypeRepr.of[T]}"))
+
+    val ctorDefaults = T.companionModule.memberMethods.filter(_.name startsWith ctorDefaultParamPrefix)
+      
+    val lookup = ctorDefaults.map { s =>
+      (s.name.drop(ctorDefaultParamPrefix.length).toInt - 1) -> s
+    }.toMap
+  
+    val ctorLen = T.primaryConstructor.paramSymss.find(!_.headOption.exists(_.isTypeParam)).fold(0)(_.size)
+
+    val args = List.tabulate(ctorLen)(i => lookup.get(i) match {
+      case None => '{None}
+      case Some(sym) => '{Some(${Select(Ref(T.companionModule), sym).asExprOf[Any]})}
+    })
+
+    '{
+      new DefaultConstructorParameters[T] {
+        val values: Array[Option[Any]] = Array(${Varargs(args)}: _*)
+      }
+    }
+  }
+}

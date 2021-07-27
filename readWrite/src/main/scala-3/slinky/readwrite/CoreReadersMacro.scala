@@ -15,13 +15,16 @@ trait MacroReaders {
       case m: Mirror.SumOf[T] => deriveSum(m)
       case nu: NominalUnion[T] => MacroReaders.UnionReader(summonAll[Tuple.Map[nu.Constituents, Reader]])
     }
-    
   }
 
   inline def deriveProduct[T](m: Mirror.ProductOf[T]): Reader[T] = {
     val labels = constValueTuple[m.MirroredElemLabels]
     val readers = summonAll[Tuple.Map[m.MirroredElemTypes, Reader]]
-    MacroReaders.ProductReader(m, labels, readers)
+    val defaults = summonFrom {
+      case d: slinky.readwrite.DefaultConstructorParameters[T] => d.values
+      case _ => null
+    }
+    MacroReaders.ProductReader(m, labels, readers, defaults)
   }
 
   inline def deriveSum[T](m: Mirror.SumOf[T]): Reader[T] = {
@@ -45,14 +48,21 @@ object MacroReaders {
     }
   }
 
-  class ProductReader[T](m: Mirror.ProductOf[T], labels: Tuple, readers: Tuple) extends Reader[T] {
+  class ProductReader[T](m: Mirror.ProductOf[T], labels: Tuple, readers: Tuple, defaults: Array[Option[Any]]) extends Reader[T] {
     protected def forceRead(o: scala.scalajs.js.Object): T = {
       val dyn = o.asInstanceOf[js.Dictionary[js.Object]]
       m.fromProduct(new Product{
         def canEqual(that: Any) = this == that
         def productArity = readers.productArity
-        def productElement(idx: Int): Any =
-        readers.productElement(idx).asInstanceOf[Reader[_]].read(dyn(labels.productElement(idx).asInstanceOf[String]))
+        def productElement(idx: Int): Any = {
+          val key = labels.productElement(idx).asInstanceOf[String]
+          def doRead = readers.productElement(idx).asInstanceOf[Reader[_]].read(dyn(key))
+          if (!o.hasOwnProperty(key) && (defaults ne null)) {
+            defaults(idx).getOrElse(doRead)
+          } else {
+            doRead
+          }
+        }
       })
     }
   }

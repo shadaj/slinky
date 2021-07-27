@@ -31,7 +31,7 @@ trait MacroWriters {
   inline def deriveSum[T](m: Mirror.SumOf[T]): Writer[T] = {
     val labels = constValueTuple[m.MirroredElemLabels]
     val writers = summonAll[Tuple.Map[m.MirroredElemTypes, Writer]]
-    MacroWriters.SumWriter(labels, writers, m)
+    MacroWriters.SumWriter(labels, writers, m.ordinal)
   }
 }
 
@@ -60,15 +60,21 @@ object MacroWriters {
           .zip(writers.productIterator)
           .zip(p.asInstanceOf[Product].productIterator)
           .foreach { case ((label, writer), value) =>
-            d(label.asInstanceOf[String]) = writer.asInstanceOf[Writer[_]].write(value.asInstanceOf)
+            val written = writer.asInstanceOf[Writer[_]].write(value.asInstanceOf)
+            if (!js.isUndefined(written)) {
+              d(label.asInstanceOf[String]) = written
+            }
           }
         d.asInstanceOf[js.Object]
       }
   }
 
-  class SumWriter[T](labels: Tuple, writers: Tuple, m: Mirror.SumOf[T]) extends Writer[T] {
+  class SumWriter[T](labels: Tuple, writers: Tuple, ordinal: T => Int) extends Writer[T] {
       def write(p: T): js.Object = {
-        val ord = m.ordinal(p)
+        // n.b. using function instead of full-fledged mirror b/c scala3-sjs somehow manages
+        // to replace the path-dependent m.MirroredMonoType with garbage like org.scalatest.Exceptional
+        // for no good reason
+        val ord = ordinal(p)
         val typ = labels.productElement(ord)
         val base = writers.productElement(ord).asInstanceOf[Writer[T]].write(p)
         base.asInstanceOf[js.Dynamic]._type = typ.asInstanceOf[js.Any]

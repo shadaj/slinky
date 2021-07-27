@@ -119,17 +119,17 @@ class ReaderWriterTest extends AnyFunSuite {
     readWrittenSame(RecursiveCaseClass(1, Some(RecursiveCaseClass(2, None))))
   }
 
-  // test("Read/write - case class with default js.undefined") {
-  //   case class CaseClass(int: Int, boolean: js.UndefOr[Boolean] = js.undefined)
-  //   readWrittenSame(CaseClass(1))
-  //   readWrittenSame(CaseClass(1, true))
+  test("Read/write - case class with default js.undefined") {
+    case class CaseClass(int: Int, boolean: js.UndefOr[Boolean] = js.undefined)
+    readWrittenSame(CaseClass(1))
+    readWrittenSame(CaseClass(1, true))
 
-  //   // Assert that any undefined property in the input does not map to the written object's property;
-  //   // not even as js.undefined
-  //   val written = implicitly[Writer[CaseClass]].write(CaseClass(1))
-  //   assert(written.asInstanceOf[js.Object].hasOwnProperty("int"))
-  //   assert(!written.asInstanceOf[js.Object].hasOwnProperty("boolean"))
-  // }
+    // Assert that any undefined property in the input does not map to the written object's property;
+    // not even as js.undefined
+    val written = implicitly[Writer[CaseClass]].write(CaseClass(1))
+    assert(written.asInstanceOf[js.Object].hasOwnProperty("int"))
+    assert(!written.asInstanceOf[js.Object].hasOwnProperty("boolean"))
+  }
 
   test("Read/write - case class with raw") {
     case class CaseClassWithRaw(int: Int, boolean: Boolean) extends WithRaw
@@ -203,9 +203,9 @@ class ReaderWriterTest extends AnyFunSuite {
   //   readWrittenSame[Any](123, true)
   // }
 
-  // test("Reading empty object uses default parameter values when available") {
-  //   assert(implicitly[Reader[ClassWithDefault]].read(js.Dynamic.literal()).a == 5)
-  // }
+  test("Reading empty object uses default parameter values when available") {
+    assert(implicitly[Reader[ClassWithDefault]].read(js.Dynamic.literal()).a == 5)
+  }
 
   test("Can convert Scala instance into ObjectOrWritten") {
     assert((SubTypeA(int = 123): ObjectOrWritten[SubTypeA])
