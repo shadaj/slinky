@@ -114,10 +114,10 @@ class ReaderWriterTest extends AnyFunSuite {
     readWrittenSame(CaseClass(1, true))
   }
 
-  // test("Read/write - recursive case class") {
-  //   case class RecursiveCaseClass(int: Int, recurse: Option[RecursiveCaseClass])
-  //   readWrittenSame(RecursiveCaseClass(1, Some(RecursiveCaseClass(2, None))))
-  // }
+  test("Read/write - recursive case class") {
+    case class RecursiveCaseClass(int: Int, recurse: Option[RecursiveCaseClass])
+    readWrittenSame(RecursiveCaseClass(1, Some(RecursiveCaseClass(2, None))))
+  }
 
   // test("Read/write - case class with default js.undefined") {
   //   case class CaseClass(int: Int, boolean: js.UndefOr[Boolean] = js.undefined)
@@ -228,11 +228,11 @@ class ReaderWriterTest extends AnyFunSuite {
   }
 
   // compilation test: can use derivation macro with type parameter when typeclass is available
-  // def deriveReaderTypeclass[T: Reader]: Reader[T] = {
-  //   Reader.deriveReader[T]
-  // }
+  def deriveReaderTypeclass[T: Reader]: Reader[T] = {
+    Reader.deriveReader[T]
+  }
 
-  // def deriveWriterTypeclass[T: Writer]: Writer[T] = {
-  //   Writer.deriveWriter[T]
-  // }
+  def deriveWriterTypeclass[T: Writer]: Writer[T] = {
+    Writer.deriveWriter[T]
+  }
 }

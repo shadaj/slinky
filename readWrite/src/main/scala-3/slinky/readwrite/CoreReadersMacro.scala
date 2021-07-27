@@ -6,12 +6,16 @@ import scalajs.js
 import scala.util.control.NonFatal
 
 trait MacroReaders {
-  inline implicit def deriveReader[T]: Reader[T] = summonFrom {
-    case vc: ValueClass[T] =>
-      MacroReaders.ValueClassReader(vc, summonInline[Reader[vc.Repr]])
-    case m: Mirror.ProductOf[T] => deriveProduct(m)
-    case m: Mirror.SumOf[T] => deriveSum(m)
-    case nu: NominalUnion[T] => MacroReaders.UnionReader(summonAll[Tuple.Map[nu.Constituents, Reader]])
+  inline implicit def deriveReader[T]: Reader[T] = {
+    summonFrom {
+      case r: Reader[T] => r
+      case vc: ValueClass[T] =>
+        MacroReaders.ValueClassReader(vc, summonInline[Reader[vc.Repr]])
+      case m: Mirror.ProductOf[T] => deriveProduct(m)
+      case m: Mirror.SumOf[T] => deriveSum(m)
+      case nu: NominalUnion[T] => MacroReaders.UnionReader(summonAll[Tuple.Map[nu.Constituents, Reader]])
+    }
+    
   }
 
   inline def deriveProduct[T](m: Mirror.ProductOf[T]): Reader[T] = {

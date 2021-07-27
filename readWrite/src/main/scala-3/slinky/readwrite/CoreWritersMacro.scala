@@ -7,16 +7,19 @@ import scala.reflect.ClassTag
 import scala.util.control.NonFatal
 
 trait MacroWriters {
-  inline implicit def deriveWriter[T]: Writer[T] = summonFrom {
-    case vc: ValueClass[T] => 
-      MacroWriters.ValueClassWriter(vc, summonInline[Writer[vc.Repr]])
-    case m: Mirror.ProductOf[T] => deriveProduct(m)
-    case m: Mirror.SumOf[T] => deriveSum(m)
-    case nu: NominalUnion[T] => 
-      MacroWriters.UnionWriter(
-        summonAll[Tuple.Map[nu.Constituents, Writer]],
-        summonAll[Tuple.Map[nu.Constituents, ClassTag]]
-      )
+  inline implicit def deriveWriter[T]: Writer[T] = {
+    summonFrom {
+      case w: Writer[T] => w
+      case vc: ValueClass[T] => 
+        MacroWriters.ValueClassWriter(vc, summonInline[Writer[vc.Repr]])
+      case m: Mirror.ProductOf[T] => deriveProduct(m)
+      case m: Mirror.SumOf[T] => deriveSum(m)
+      case nu: NominalUnion[T] => 
+        MacroWriters.UnionWriter(
+          summonAll[Tuple.Map[nu.Constituents, Writer]],
+          summonAll[Tuple.Map[nu.Constituents, ClassTag]]
+        )
+    }
   }
 
   inline def deriveProduct[T](m: Mirror.ProductOf[T]): Writer[T] = {
