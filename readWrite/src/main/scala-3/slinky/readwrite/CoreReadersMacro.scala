@@ -14,6 +14,7 @@ trait MacroReaders {
       case m: Mirror.ProductOf[T] => deriveProduct(m)
       case m: Mirror.SumOf[T] => deriveSum(m)
       case nu: ExoticTypes.NominalUnion[T] => MacroReaders.UnionReader(summonAll[Tuple.Map[nu.Constituents, Reader]])
+      case _ => Reader.fallback[T]
     }
   }
 

@@ -183,25 +183,25 @@ class ReaderWriterTest extends AnyFunSuite {
     readWrittenSame(1 until 10)
   }
 
-  // test("Read/write - opaque class") {
-  //   class OpaqueClass(int: Int)
-  //   readWrittenSame(new OpaqueClass(1), true)
-  // }
+  test("Read/write - opaque class") {
+    class OpaqueClass(int: Int)
+    readWrittenSame(new OpaqueClass(1), true)
+  }
 
-  // test("Read/write - option of opaque class") {
-  //   class OpaqueClass(int: Int)
-  //   assert(implicitly[Reader[Option[OpaqueClass]]].read(
-  //     implicitly[Writer[Option[OpaqueClass]]].write(Some(new OpaqueClass(1)))
-  //   ).get != null)
-  // }
+  test("Read/write - option of opaque class") {
+    class OpaqueClass(int: Int)
+    assert(implicitly[Reader[Option[OpaqueClass]]].read(
+      implicitly[Writer[Option[OpaqueClass]]].write(Some(new OpaqueClass(1)))
+    ).get != null)
+  }
 
-  // test("Read/write - private type defaults to opaque") {
-  //   readWrittenSame[ContainingPrivateType.ToRead](ContainingPrivateType.TestInstance, true)
-  // }
+  test("Read/write - private type defaults to opaque") {
+    readWrittenSame[ContainingPrivateType.ToRead](ContainingPrivateType.TestInstance, true)
+  }
 
-  // test("Read/write - any") {
-  //   readWrittenSame[Any](123, true)
-  // }
+  test("Read/write - any") {
+    readWrittenSame[Any](123, true)
+  }
 
   test("Reading empty object uses default parameter values when available") {
     assert(implicitly[Reader[ClassWithDefault]].read(js.Dynamic.literal()).a == 5)

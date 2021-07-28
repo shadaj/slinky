@@ -37,7 +37,11 @@ trait CoreWriters extends MacroWriters with UnionWriters with FallbackWriters wi
 
   implicit val floatWriter: Writer[Float] = _.asInstanceOf[js.Object]
 
-  implicit def undefOrWriter[T](implicit writer: => Writer[T]): Writer[js.UndefOr[T]] =
+  // This one deliberately doesn't have a by-name parameter since with Scala 3 unions, it manages to cause
+  // infinite recursion, and there's no point in that (js.undefined | js.undefined | A is same as js.undefined | A,
+  // while Option[Option[A]] is very different from Option[A]). Interestingly, if writer was a by-name parameter here,
+  // scalac would resolve this as valid implicit for T = Any, making Any not writable
+  implicit def undefOrWriter[T](implicit writer: Writer[T]): Writer[js.UndefOr[T]] =
     _.map(v => writer.write(v)).getOrElse(js.undefined.asInstanceOf[js.Object])
 
   implicit def optionWriter[T](implicit writer: => Writer[T]): Writer[Option[T]] =

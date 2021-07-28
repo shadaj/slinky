@@ -19,6 +19,7 @@ trait MacroWriters {
           summonAll[Tuple.Map[nu.Constituents, Writer]],
           summonAll[Tuple.Map[nu.Constituents, ClassTag]]
         )
+      case _ => Writer.fallback[T]
     }
   }
 

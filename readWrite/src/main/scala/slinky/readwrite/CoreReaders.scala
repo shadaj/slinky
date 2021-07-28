@@ -100,7 +100,8 @@ trait CoreReaders extends MacroReaders with UnionReaders with FallbackReaders wi
     }
   }
 
-  implicit def undefOrReader[T](implicit reader: => Reader[T]): Reader[js.UndefOr[T]] = s => {
+  // reader is not by-name implicit for consistency with undefOrWriter
+  implicit def undefOrReader[T](implicit reader: Reader[T]): Reader[js.UndefOr[T]] = s => {
     if (js.isUndefined(s)) {
       js.undefined
     } else {
