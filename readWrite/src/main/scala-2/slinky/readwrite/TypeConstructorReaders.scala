@@ -6,7 +6,6 @@ import scala.scalajs.js
 import scala.reflect.ClassTag
 import CompatUtil._
 
-
 trait TypeConstructorReaders {
   implicit def optionReader[T](implicit reader: Reader[T]): Reader[Option[T]] =
     (s => {

@@ -2,8 +2,6 @@ package slinky.readwrite
 
 import scala.annotation.compileTimeOnly
 import scala.scalajs.js
-
-
 @compileTimeOnly("Deferred readers are used to handle recursive structures")
 final class DeferredReader[T, Term] extends Reader[T] {
   override protected def forceRead(o: js.Object): T = throw new Exception
@@ -19,7 +17,12 @@ trait FallbackReaders {
   }
 }
 
-trait CoreReaders extends MacroReaders with UnionReaders with FallbackReaders with FunctionReaders with TypeConstructorReaders {
+trait CoreReaders
+    extends MacroReaders
+    with UnionReaders
+    with FallbackReaders
+    with FunctionReaders
+    with TypeConstructorReaders {
   implicit def jsAnyReader[T <: js.Any]: Reader[T] = _.asInstanceOf[T]
 
   implicit val unitReader: Reader[Unit] = _ => ()

@@ -12,7 +12,12 @@ trait FallbackWriters {
   def fallback[T]: Writer[T] = s => js.Dynamic.literal(__ = s.asInstanceOf[js.Any])
 }
 
-trait CoreWriters extends MacroWriters with UnionWriters with FallbackWriters with FunctionWriters with TypeConstructorWriters {
+trait CoreWriters
+    extends MacroWriters
+    with UnionWriters
+    with FallbackWriters
+    with FunctionWriters
+    with TypeConstructorWriters {
   implicit def jsAnyWriter[T <: js.Any]: Writer[T] = _.asInstanceOf[js.Object]
 
   implicit val unitWriter: Writer[Unit] = _ => js.Dynamic.literal()

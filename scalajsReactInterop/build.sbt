@@ -4,10 +4,12 @@ name := "slinky-scalajsreact-interop"
 
 libraryDependencies ++= {
   CrossVersion.partialVersion(scalaVersion.value) match {
-    case Some((2, _)) => Seq(
+    case Some((2, _)) =>
+      Seq(
       "com.github.japgolly.scalajs-react" %%% "core" % "1.7.7"
     )
-    case _ => Seq(
+    case _ =>
+      Seq(
       "com.github.japgolly.scalajs-react" %%% "core" % "2.0.0-RC1"
     )
   }

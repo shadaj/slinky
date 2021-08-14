@@ -4,7 +4,6 @@ import scala.concurrent.ExecutionContext.Implicits.global
 import scala.concurrent.Future
 import scala.scalajs.js
 
-
 trait TypeConstructorWriters {
   implicit def optionWriter[T](implicit writer: Writer[T]): Writer[Option[T]] =
     _.map(v => writer.write(v)).orNull
