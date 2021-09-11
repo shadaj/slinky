@@ -2,7 +2,14 @@
 
 ## vNEXT
 
-## [v0.6.7](https://slinky.dev)
+## [v0.6.8](https://slinky.dev)
+### Bug Fixes :bug:
++ Bring back the missing `dd` and `dt` tags [PR #477](https://github.com/shadaj/slinky/pull/477)
++ Allow the `Props` type in an `@react` component to have its own annotations [PR #476](https://github.com/shadaj/slinky/pull/476)
++ Support the `readOnly` attribute on `textarea` elements [PR #492](https://github.com/shadaj/slinky/pull/492)
++ Remove an extra `println` in an element conversion [PR #507](https://github.com/shadaj/slinky/pull/507)
+
+## [v0.6.7](https://601b53d4193ae700074381ec--slinky.netlify.app/)
 ### Highlights :tada:
 + The IntelliJ support plugin has now been extracted into an [independent plugin](https://plugins.jetbrains.com/plugin/15748-slinky-library-support) on the JetBrains Marketplace, making installation much more consistent
 + Add support for native [`useWindowDimensions`](https://reactnative.dev/docs/0.62/usewindowdimensions) hook [PR #422](https://github.com/shadaj/slinky/pull/422)
