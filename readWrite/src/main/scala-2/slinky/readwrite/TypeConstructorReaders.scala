@@ -37,7 +37,7 @@ trait TypeConstructorReaders {
   implicit def mapReader[A, B](implicit abReader: Reader[(A, B)]): Reader[Map[A, B]] = o => {
     collectionReader[(A, B), Iterable].read(o).toMap
   }
-  
+
   implicit def futureReader[O](implicit oReader: Reader[O]): Reader[Future[O]] =
     _.asInstanceOf[js.Promise[js.Object]].toFuture.map(v => oReader.read(v))
 }
