@@ -62,6 +62,9 @@ lazy val crossScalaSettings = Seq(
   }
 )
 
+lazy val crossScala2OnlySettings =
+  (crossScalaVersions := Seq(scala212, scala213)) +: crossScalaSettings.tail
+
 lazy val librarySettings = Seq(
   scalacOptions += {
     val origVersion = version.value
@@ -176,10 +179,10 @@ lazy val reactrouter =
 lazy val testRenderer = project.settings(macroAnnotationSettings, librarySettings, crossScalaSettings).dependsOn(core)
 
 lazy val native =
-  project.settings(macroAnnotationSettings, librarySettings, crossScalaSettings).dependsOn(core, testRenderer % Test)
+  project.settings(macroAnnotationSettings, librarySettings, crossScala2OnlySettings).dependsOn(core, testRenderer % Test)
 
 lazy val vr =
-  project.settings(macroAnnotationSettings, librarySettings, crossScalaSettings).dependsOn(core, testRenderer % Test)
+  project.settings(macroAnnotationSettings, librarySettings, crossScala2OnlySettings).dependsOn(core, testRenderer % Test)
 
 lazy val hot = project.settings(macroAnnotationSettings, librarySettings, crossScalaSettings).dependsOn(core)
 
