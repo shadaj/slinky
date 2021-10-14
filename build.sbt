@@ -179,10 +179,14 @@ lazy val reactrouter =
 lazy val testRenderer = project.settings(macroAnnotationSettings, librarySettings, crossScalaSettings).dependsOn(core)
 
 lazy val native =
-  project.settings(macroAnnotationSettings, librarySettings, crossScala2OnlySettings).dependsOn(core, testRenderer % Test)
+  project
+    .settings(macroAnnotationSettings, librarySettings, crossScala2OnlySettings)
+    .dependsOn(core, testRenderer % Test)
 
 lazy val vr =
-  project.settings(macroAnnotationSettings, librarySettings, crossScala2OnlySettings).dependsOn(core, testRenderer % Test)
+  project
+    .settings(macroAnnotationSettings, librarySettings, crossScala2OnlySettings)
+    .dependsOn(core, testRenderer % Test)
 
 lazy val hot = project.settings(macroAnnotationSettings, librarySettings, crossScalaSettings).dependsOn(core)
 
