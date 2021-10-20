@@ -9,5 +9,4 @@ libraryDependencies += {
     "org.scala-js" %%% "scalajs-dom" % "2.0.0-RC1"
 }
 
-
 scalacOptions -= "-Xfatal-warnings"
