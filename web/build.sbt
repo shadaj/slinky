@@ -2,6 +2,6 @@ enablePlugins(ScalaJSPlugin)
 
 name := "slinky-web"
 
-libraryDependencies += ("org.scala-js" %%% "scalajs-dom" % "1.1.0").cross(CrossVersion.for3Use2_13)
+libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "2.0.0"
 
 scalacOptions -= "-Xfatal-warnings"
