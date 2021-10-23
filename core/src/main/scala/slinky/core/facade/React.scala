@@ -40,7 +40,6 @@ object ReactElement {
 
   @inline implicit def jsUndefOrToElement[E](j: js.UndefOr[E])(implicit cv: E => ReactElement): ReactElement = {
     val x = if (j.isDefined) cv(j.get) else null.asInstanceOf[ReactElement]
-    println(x)
     x
   }
 
