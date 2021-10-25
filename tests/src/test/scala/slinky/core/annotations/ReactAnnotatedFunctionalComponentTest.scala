@@ -1,6 +1,7 @@
 package slinky.core.annotations
 
 import slinky.core.FunctionalComponent
+import slinky.core.facade.ReactElement
 import slinky.web.ReactDOM
 
 import org.scalajs.dom
@@ -9,27 +10,22 @@ import org.scalatest.funsuite.AsyncFunSuite
 @react object SimpleFunctionalComponent {
   case class Props[T](in: Seq[T])
 
-  val component = FunctionalComponent[Props[_]] { case Props(in) =>
-    in.mkString(" ")
+  val component = FunctionalComponent[Props[_]] {
+    case Props(in) =>
+      in.mkString(" ")
   }
 }
 
 @react object FunctionalComponentJustReExpose {
-  val component = FunctionalComponent[Int] { in =>
-    in.toString
-  }
+  val component = FunctionalComponent[Int](in => in.toString)
 }
 
 @react object FunctionalComponentWithPrivateValComponent {
-  private val component = FunctionalComponent[Int] { in =>
-    in.toString
-  }
+  private val component = FunctionalComponent[Int](in => in.toString)
 }
 
 @react object FunctionalComponentWithProtectedValComponent {
-  protected val component = FunctionalComponent[Int] { in =>
-    in.toString
-  }
+  protected val component = FunctionalComponent[Int](in => in.toString)
 }
 
 @react object FunctionalComponentEmptyProps {
@@ -40,6 +36,14 @@ import org.scalatest.funsuite.AsyncFunSuite
 @react object FunctionalComponentUnitProps {
   type Props = Unit
   val component = FunctionalComponent[Props](_ => "test")
+}
+
+@react(expandChildren = true) object FunctionalComponentExpandChildren {
+  case class Props(
+    alpha: String,
+    children: Seq[ReactElement]
+  )
+  val component = FunctionalComponent[Props](p => s"${p.alpha}: ${p.children.mkString(" ")}")
 }
 
 class ReactAnnotatedFunctionalComponentTest extends AsyncFunSuite {
@@ -101,5 +105,15 @@ class ReactAnnotatedFunctionalComponentTest extends AsyncFunSuite {
     )
 
     assert(container.innerHTML == "test")
+  }
+
+  test("Component with expandChildren option has apply with children varargs") {
+    val container = dom.document.createElement("div")
+    ReactDOM.render(
+      FunctionalComponentExpandChildren("alpha")(1, 2, 3),
+      container
+    )
+
+    assert(container.innerHTML == "alpha: 1 2 3")
   }
 }
