@@ -256,34 +256,34 @@ object TestUnderivable {
   }
 }
 
-// object DefaultStateParamsComponent extends ComponentWrapper {
-//   type Props = Unit
-//   case class State(a: Int = 1)
+object DefaultStateParamsComponent extends ComponentWrapper {
+  type Props = Unit
+  case class State(a: Int = 1)
 
-//   class Def(jsProps: js.Object) extends Definition(jsProps) {
-//     override def initialState = null
+  class Def(jsProps: js.Object) extends Definition(jsProps) {
+    override def initialState = null
 
-//     override def render(): ReactElement = {
-//       null
-//     }
-//   }
-// }
+    override def render(): ReactElement = {
+      null
+    }
+  }
+}
 
-// object TypeParamsComponent extends ComponentWrapper {
-//   case class TypedProps[T](abc: T)
-//   case class TypedState[T](abc: T)
+object TypeParamsComponent extends ComponentWrapper {
+  case class TypedProps[T](abc: T)
+  case class TypedState[T](abc: T)
 
-//   type Props = TypedProps[_]
-//   type State = TypedState[_]
+  type Props = TypedProps[_]
+  type State = TypedState[_]
 
-//   class Def(jsProps: js.Object) extends Definition(jsProps) {
-//     override def initialState = TypedState(props.abc)
+  class Def(jsProps: js.Object) extends Definition(jsProps) {
+    override def initialState = TypedState(props.abc)
 
-//     override def render(): ReactElement = {
-//       state.abc.toString
-//     }
-//   }
-// }
+    override def render(): ReactElement = {
+      state.abc.toString
+    }
+  }
+}
 
 class ComponentTest extends AsyncFunSuite {
   test("setState given function is applied") {
@@ -466,13 +466,13 @@ class ComponentTest extends AsyncFunSuite {
     promise.future
   }
 
-  // test("Can render a component with type parameters") {
-  //   val container = dom.document.createElement("div")
-  //   ReactDOM.render(
-  //     TypeParamsComponent(TypeParamsComponent.TypedProps(123)),
-  //     container
-  //   )
+  test("Can render a component with type parameters") {
+    val container = dom.document.createElement("div")
+    ReactDOM.render(
+      TypeParamsComponent(TypeParamsComponent.TypedProps(123)),
+      container
+    )
 
-  //   assert(container.innerHTML == "123")
-  // }
+    assert(container.innerHTML == "123")
+  }
 }

@@ -1,9 +1,6 @@
 package slinky.core
 
 import scala.scalajs.js
-//
-//import scala.language.experimental.macros
-//import scala.reflect.macros.whitebox
 import scala.quoted._
 import slinky.readwrite.Writer
 import scala.scalajs.LinkingInfo

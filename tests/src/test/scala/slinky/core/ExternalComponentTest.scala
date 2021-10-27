@@ -109,12 +109,4 @@ class ExternalComponentTest extends AnyFunSuite {
   test("Can construct an external component taking * attributes") {
     ExternalSimpleWithWildcardAttributes(className := "hi", href := "foo")
   }
-
-  // test("Can construct an external component with generated apply") {
-  //   div(ExternalSimpleWithProps(a = 1))
-  // }
-
-  // test("Can construct an external component with default parameters") {
-  //   div(ExternalDivWithAllDefaulted())
-  // }
 }

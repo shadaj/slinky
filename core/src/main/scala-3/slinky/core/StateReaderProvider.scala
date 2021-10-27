@@ -5,7 +5,6 @@ import scala.quoted._
 import slinky.readwrite.Reader
 import scala.scalajs.LinkingInfo
 
-
 trait StateReaderProvider extends js.Object
 object StateReaderProvider {
  def impl(using q: Quotes): Expr[StateReaderProvider] = {
