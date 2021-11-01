@@ -11,3 +11,5 @@ idea/
 .vscode/
 project/.bloop/
 publishing-setup/
+
+.bsp/
