@@ -1,9 +1,10 @@
 package slinky.scalajsreact
 
 import japgolly.scalajs.react.component.Generic.UnmountedRaw
-import japgolly.scalajs.react.raw.React.Element
 import japgolly.scalajs.react.vdom.{TagOf, VdomNode}
 import japgolly.scalajs.react.vdom.html_<^._
+
+import ScalaJSReactCompat._
 
 import slinky.core.facade.ReactElement
 

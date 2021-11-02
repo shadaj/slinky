@@ -155,6 +155,7 @@ class ReaderWriterTest extends AnyFunSuite {
     readWrittenSame(ClassWithVararg(1, "hi", "hi", "bye"))
   }
 
+
   test("Read/write - value class") {
     readWrittenSame(new ValueClass(1))
 

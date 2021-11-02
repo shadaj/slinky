@@ -12,10 +12,6 @@ export GPG_TTY=$(tty)
 
 cp publishing-setup/credentials.sbt credentials.sbt
 
-export SCALAJS_VERSION="0.6.32"
-sbt publishSignedAll
-
-export SCALAJS_VERSION="1.0.0"
 sbt publishSignedAll
 
 sbt sonatypeBundleRelease
