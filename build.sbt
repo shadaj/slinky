@@ -171,10 +171,12 @@ lazy val web = project
   )
   .dependsOn(core)
 
-lazy val history = project.settings(librarySettings, crossScalaSettings)
+lazy val history = project.settings(librarySettings, crossScala2OnlySettings)
 
 lazy val reactrouter =
-  project.settings(macroAnnotationSettings, librarySettings, crossScalaSettings).dependsOn(core, web, history)
+  project
+    .settings(macroAnnotationSettings, librarySettings, crossScala2OnlySettings)
+    .dependsOn(core, web, history)
 
 lazy val testRenderer = project.settings(macroAnnotationSettings, librarySettings, crossScalaSettings).dependsOn(core)
 
