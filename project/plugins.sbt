@@ -5,7 +5,7 @@ addSbtPlugin("org.scala-js" % "sbt-scalajs" % scalaJSVersion)
 
 {
   if (scalaJSVersion.startsWith("0.6.")) Nil
-  else Seq(addSbtPlugin("org.scala-js" % "sbt-jsdependencies" % "1.0.0"))
+  else Seq(addSbtPlugin("org.scala-js" % "sbt-jsdependencies" % "1.0.2"))
 }
 
 libraryDependencies ++= {
