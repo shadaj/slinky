@@ -4,9 +4,6 @@ import slinky.readwrite.Reader
 import slinky.core.facade.{ReactElement, ReactRaw, ReactRef}
 import scala.scalajs.js
 
-import scala.language.experimental.macros
-import scala.reflect.macros.whitebox
-
 final class KeyAddingStage(private val args: js.Array[js.Any]) extends AnyVal {
   @inline def withKey(key: String): ReactElement = {
     if (args(0) == null) {
@@ -135,31 +132,4 @@ object FunctionalComponent {
 
       ret
     })
-}
-
-final class FunctionalComponentName(val name: String) extends AnyVal
-object FunctionalComponentName {
-  implicit def get: FunctionalComponentName = macro FunctionalComponentNameMacros.impl
-}
-
-object FunctionalComponentNameMacros {
-  def impl(c: whitebox.Context): c.Expr[FunctionalComponentName] = {
-    import c.universe._
-
-    // from lihaoyi/sourcecode
-    def isSyntheticName(name: String) =
-      name == "<init>" || (name.startsWith("<local ") && name.endsWith(">")) || name == "component"
-
-    @scala.annotation.tailrec
-    def findNonSyntheticOwner(current: Symbol): Symbol =
-      if (isSyntheticName(current.name.decodedName.toString.trim)) {
-        findNonSyntheticOwner(current.owner)
-      } else {
-        current
-      }
-
-    c.Expr(
-      q"new _root_.slinky.core.FunctionalComponentName(${findNonSyntheticOwner(c.internal.enclosingOwner).name.decodedName.toString})"
-    )
-  }
 }

@@ -1,5 +1,5 @@
 val scalaJSVersion =
-  Option(System.getenv("SCALAJS_VERSION")).getOrElse("0.6.33")
+  Option(System.getenv("SCALAJS_VERSION")).getOrElse("1.6.0")
 
 addSbtPlugin("org.scala-js" % "sbt-scalajs" % scalaJSVersion)
 
@@ -15,7 +15,7 @@ libraryDependencies ++= {
 
 {
   if (scalaJSVersion.startsWith("0.6.")) addSbtPlugin("ch.epfl.scala" % "sbt-scalajs-bundler-sjs06" % "0.19.0")
-  else Seq(addSbtPlugin("ch.epfl.scala" % "sbt-scalajs-bundler" % "0.17.0"))
+  else Seq(addSbtPlugin("ch.epfl.scala" % "sbt-scalajs-bundler" % "0.20.0"))
 }
 
 libraryDependencies ++= {

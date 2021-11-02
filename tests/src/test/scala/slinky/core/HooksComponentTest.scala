@@ -4,7 +4,8 @@ import org.scalatest.funsuite.AsyncFunSuite
 import org.scalajs.dom.document
 import org.scalajs.dom.Element
 
-import slinky.core.facade.{React, SetStateHookCallback, ReactRef}
+import slinky.core.facade.{React, SetStateHookCallback, ReactRef, ReactElement}
+
 import slinky.core.facade.Hooks._
 import slinky.web.ReactDOM
 import slinky.web.html._
@@ -323,12 +324,9 @@ class HooksComponentTest extends AsyncFunSuite {
 
   test("useRef allows a ref to be tracked across renders") {
     val container = document.createElement("div")
-
     val component = FunctionalComponent[String] { props =>
       val ref = useRef[String]("")
-
       if (ref.current == "") ref.current = props
-
       ref.current
     }
     
@@ -352,13 +350,14 @@ class HooksComponentTest extends AsyncFunSuite {
           def foo = 123
         }
       })
-      ""
+      "": ReactElement // FIXME - implicit conversion from string seems to not trigger in Scala 3
     })
 
     val refReceiver = React.createRef[RefHandle]
     ReactDOM.render(component("first").withRef(refReceiver), container)
     assert(refReceiver.current.foo == 123)
   }
+
 
   test("useLayoutEffect hook fires after mount") {
     val container = document.createElement("div")

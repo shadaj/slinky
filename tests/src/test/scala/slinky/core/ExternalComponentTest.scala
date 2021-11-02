@@ -3,7 +3,6 @@ package slinky.core
 import scala.scalajs.js
 import org.scalajs.dom
 
-import slinky.core.annotations.react
 import slinky.core.facade.{React, ReactElement}
 import slinky.web.ReactDOM
 import slinky.web.html._
@@ -22,22 +21,22 @@ object ExternalSimpleWithWildcardAttributes extends ExternalComponentNoPropsWith
   override val component = "div"
 }
 
-@react object ExternalSimpleWithProps extends ExternalComponent {
+object ExternalSimpleWithProps extends ExternalComponent {
   case class Props(a: Int)
   override val component = "div"
 }
 
-@react object ExternalDivWithPropsAndAttributes extends ExternalComponentWithAttributes[div.tag.type] {
+object ExternalDivWithPropsAndAttributes extends ExternalComponentWithAttributes[div.tag.type] {
   case class Props(id: String)
   override val component = "div"
 }
 
-@react object ExternalDivWithProps extends ExternalComponent {
+object ExternalDivWithProps extends ExternalComponent {
   case class Props(id: String)
   override val component = "div"
 }
 
-@react object ExternalDivWithAllDefaulted extends ExternalComponent {
+object ExternalDivWithAllDefaulted extends ExternalComponent {
   case class Props(id: String = "foo")
   override val component = "div"
 }
@@ -45,7 +44,7 @@ object ExternalSimpleWithWildcardAttributes extends ExternalComponentNoPropsWith
 class ExternalComponentTest extends AnyFunSuite {
   test("Rendering an external component results in appropriate props") {
     val rendered = ReactDOM.render(
-      ExternalDivWithProps(id = "test"),
+      ExternalDivWithProps(ExternalDivWithProps.Props(id = "test")),
       dom.document.createElement("div")
     )
 
@@ -55,7 +54,7 @@ class ExternalComponentTest extends AnyFunSuite {
   test("Can use a ref with an macro-based external component") {
     val ref = React.createRef[js.Object]
     ReactDOM.render(
-      ExternalDivWithProps(id = "test").withRef(ref),
+      ExternalDivWithProps(ExternalDivWithProps.Props(id = "test")).withRef(ref),
       dom.document.createElement("div")
     )
 
@@ -63,7 +62,7 @@ class ExternalComponentTest extends AnyFunSuite {
   }
 
   test("Cannot reuse half-built external component") {
-    val halfBuilt = ExternalDivWithProps(id = "test")
+    val halfBuilt = ExternalDivWithProps(ExternalDivWithProps.Props(id = "test"))
     halfBuilt.withKey("abc"): ReactElement
 
     assertThrows[IllegalStateException] {
@@ -109,13 +108,5 @@ class ExternalComponentTest extends AnyFunSuite {
 
   test("Can construct an external component taking * attributes") {
     ExternalSimpleWithWildcardAttributes(className := "hi", href := "foo")
-  }
-
-  test("Can construct an external component with generated apply") {
-    div(ExternalSimpleWithProps(a = 1))
-  }
-
-  test("Can construct an external component with default parameters") {
-    div(ExternalDivWithAllDefaulted())
   }
 }
