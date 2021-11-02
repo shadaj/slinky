@@ -15,7 +15,7 @@ libraryDependencies ++= {
   }
 }
 
-libraryDependencies += "org.scalatest" %%% "scalatest" % "3.2.9" % Test
+libraryDependencies += "org.scalatest" %%% "scalatest" % "3.2.10" % Test
 
 Test / npmDependencies += "react"     -> "16.12.0"
 Test / npmDependencies += "react-dom" -> "16.12.0"
