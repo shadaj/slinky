@@ -29,7 +29,7 @@ jobs:
       - name: Style checks
         run: sbt styleCheck
       - name: Install NPM Dependencies
-        run: npm install; cd tests; npm install; cd ..; cd native; npm install; cd ..
+        run: npm install; cd tests; npm install; cd ..; cd native; npm install; cd ..; cd scalajsReactInterop; npm install; cd ..
         shell: bash
       - name: Test core and native (fastopt + fullopt)
         run: sbt +tests/test +native/test "set scalaJSStage in Global := FullOptStage" +tests/test +native/test

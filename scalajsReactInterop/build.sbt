@@ -20,7 +20,9 @@ libraryDependencies += "org.scalatest" %%% "scalatest" % "3.2.9" % Test
 
 Test / jsEnv := new org.scalajs.jsenv.jsdomnodejs.JSDOMNodeJSEnv()
 
-Test / jsDependencies ++= Seq(
+Test / unmanagedResourceDirectories += baseDirectory.value / "node_modules"
+
+jsDependencies ++= Seq(
   ((ProvidedJS / "react/umd/react.development.js")
     .minified("react/umd/react.production.min.js")
     .commonJSName("React")) % Test,
