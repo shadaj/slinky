@@ -22,8 +22,6 @@ libraryDependencies += "me.shadaj" %%% "slinky-native" % "0.6.8" // React Native
 libraryDependencies += "me.shadaj" %%% "slinky-hot" % "0.6.8" // Hot loading, requires react-proxy package
 libraryDependencies += "me.shadaj" %%% "slinky-scalajsreact-interop" % "0.6.8" // Interop with japgolly/scalajs-react
 
-scalacOptions += "-P:scalajs:sjsDefinedByDefault"
-
 // optional, but recommended; enables the @react macro annotation API
 addCompilerPlugin("org.scalamacros" % "paradise" % "2.1.1" cross CrossVersion.full)
 // if using Scala 2.13.0, instead use
