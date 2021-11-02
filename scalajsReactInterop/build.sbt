@@ -10,7 +10,7 @@ libraryDependencies ++= {
       )
     case _ =>
       Seq(
-        "com.github.japgolly.scalajs-react" %%% "core" % "2.0.0-RC1"
+        "com.github.japgolly.scalajs-react" %%% "core" % "2.0.0-RC5"
       )
   }
 }
