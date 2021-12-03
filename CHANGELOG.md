@@ -11,6 +11,9 @@
 + Dropped Scala.js 0.6 and upgraded 1.x line to 1.6.0 to simplify building with Scala 3.
 + Updated scalajs-dom to v2.0.0 which is cross-published for Scala 3
 
+### Bug Fixes :bug:
++ Support returning `js.Function` as the cleanup handler for effect hooks [PR #525](https://github.com/shadaj/slinky/pull/525)
+
 ## [v0.6.8](https://slinky.dev)
 ### Bug Fixes :bug:
 + Bring back the missing `dd` and `dt` tags [PR #477](https://github.com/shadaj/slinky/pull/477)

@@ -6,6 +6,7 @@ Compile / npmDependencies += "react" -> "16.13.1"
 Compile / npmDependencies += "react-dom" -> "16.13.1"
 Compile / npmDependencies += "react-proxy" -> "1.1.8"
 
+Compile / npmDependencies += "react-router" -> "5.2.0"
 Compile / npmDependencies += "react-router-dom" -> "5.2.0"
 Compile / npmDependencies += "react-syntax-highlighter" -> "9.0.1"
 Compile / npmDependencies += "remark" -> "12.0.1"

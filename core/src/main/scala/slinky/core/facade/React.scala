@@ -196,6 +196,9 @@ object EffectCallbackReturn {
   @inline implicit def fromFunction[T](fn: () => T): EffectCallbackReturn =
     (fn: js.Function0[T]).asInstanceOf[EffectCallbackReturn]
 
+  @inline implicit def fromJSFunction[T](fn: js.Function0[T]): EffectCallbackReturn =
+    fn.asInstanceOf[EffectCallbackReturn]
+
   @inline implicit def fromAny[T](value: T): EffectCallbackReturn =
     js.undefined.asInstanceOf[EffectCallbackReturn]
 }
