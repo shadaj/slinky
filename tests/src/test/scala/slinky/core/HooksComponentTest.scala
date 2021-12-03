@@ -1,5 +1,6 @@
 package slinky.core
 
+import scala.scalajs.js
 import org.scalatest.funsuite.AsyncFunSuite
 import org.scalajs.dom.document
 import org.scalajs.dom.Element
@@ -167,6 +168,28 @@ class HooksComponentTest extends AsyncFunSuite {
         () => {
           promise.success(assert(true))
         }
+      }, Seq(props))
+
+      props
+    }
+    
+    ReactDOM.render(component(1), container)
+    ReactDOM.unmountComponentAtNode(container)
+
+    promise.future
+  }
+
+  test("useEffect hook unsubscribe function is called on unmount when it is a js.Function") {
+    val container = document.createElement("div")
+
+    val promise: Promise[Assertion] = Promise()
+    val cleanup: js.Function0[Unit] = () => {
+      promise.success(assert(true))
+    }
+
+    val component = FunctionalComponent[Int] { props =>
+      useEffect(() => {
+        cleanup
       }, Seq(props))
 
       props
