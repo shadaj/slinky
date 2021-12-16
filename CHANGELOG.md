@@ -13,6 +13,7 @@
 
 ### Bug Fixes :bug:
 + Support returning `js.Function` as the cleanup handler for effect hooks [PR #525](https://github.com/shadaj/slinky/pull/525)
++ Support the dependencies parameter of `useImperativeHandle` [PR #531](https://github.com/shadaj/slinky/pull/531)
 
 ## [v0.6.8](https://slinky.dev)
 ### Bug Fixes :bug:
