@@ -75,7 +75,7 @@ private[slinky] object ReactRaw extends js.Object {
 
   def createRef[T](): ReactRef[T] = js.native
 
-  def forwardRef[P](fn: js.Object): js.Object = js.native
+  def forwardRef[P](fn: js.Object): js.Function = js.native
 
   def memo(fn: js.Function, compare: js.UndefOr[js.Object]): js.Function = js.native
 
@@ -115,11 +115,11 @@ object React {
   def forwardRef[P, R](component: FunctionalComponentTakingRef[P, R]): FunctionalComponentForwardedRef[P, R] =
     new FunctionalComponentForwardedRef(ReactRaw.forwardRef(component.component))
 
-  def memo[P](component: FunctionalComponent[P]): FunctionalComponent[P] =
-    new FunctionalComponent(ReactRaw.memo(component.component, js.undefined))
+  def memo[P, R, C](component: FunctionalComponentCore[P, R, C]): C =
+    component.makeAnother(ReactRaw.memo(component.component, js.undefined))
 
-  def memo[P](component: FunctionalComponent[P], compare: (P, P) => Boolean): FunctionalComponent[P] =
-    new FunctionalComponent(
+  def memo[P, R, C](component: FunctionalComponentCore[P, R, C], compare: (P, P) => Boolean): C =
+    component.makeAnother(
       ReactRaw.memo(
         component.component,
         ((oldProps: js.Dynamic, newProps: js.Dynamic) => {
