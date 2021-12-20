@@ -7,8 +7,8 @@
   <a href="https://www.scala-js.org">
     <img src="https://www.scala-js.org/assets/badges/scalajs-0.6.17.svg"/>
   </a>
-  <a href="https://maven-central-latest.netlify.com/.netlify/functions/latest-link?org=me.shadaj&name=slinky-core_sjs0.6_2.12&format=libraryDependencies%20%2B%3D%20%22me.shadaj%22%20%25%25%25%20%22slinky-core%22%20%25%20%22VERSION%22">
-    <img src="https://maven-central-latest.netlify.com/.netlify/functions/latest-link?org=me.shadaj&name=slinky-core_sjs0.6_2.12&formatRedirect=https%3A%2F%2Fimg.shields.io%2Fbadge%2Fmaven--central-VERSIONDOUBLEDASHED-orange.svg "/>
+  <a href="https://maven-central-latest.netlify.com/.netlify/functions/latest-link?org=me.shadaj&name=slinky-core_sjs1_2.13&format=libraryDependencies%20%2B%3D%20%22me.shadaj%22%20%25%25%25%20%22slinky-core%22%20%25%20%22VERSION%22">
+    <img src="https://maven-central-latest.netlify.com/.netlify/functions/latest-link?org=me.shadaj&name=slinky-core_sjs1_2.13&formatRedirect=https%3A%2F%2Fimg.shields.io%2Fbadge%2Fmaven--central-VERSIONDOUBLEDASHED-orange.svg "/>
   </a>
   <a href="https://gitter.im/shadaj/slinky?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge">
     <img src="https://badges.gitter.im/shadaj/slinky.svg"/>
