@@ -2,14 +2,14 @@
 
 ## vNEXT
 ### Highlights :tada:
-+ Added preliminary Scala 3 support
++ Added preliminary Scala 3 support [PR #494](https://github.com/shadaj/slinky/pull/494)
   + no `@react`/`Props`-`apply` sugar
   + expected to require `-source:3.0-migration` and produce warnings
   + may not encode the same props in the same way as Scala 2 version due to different encoder generation mechanism.
 
 ### Breaking Changes :warning:
-+ Dropped Scala.js 0.6 and upgraded 1.x line to 1.6.0 to simplify building with Scala 3.
-+ Updated scalajs-dom to v2.0.0 which is cross-published for Scala 3
++ Dropped Scala.js 0.6 and upgraded 1.x line to 1.6.0 to simplify building with Scala 3 [PR #494](https://github.com/shadaj/slinky/pull/494)
++ Updated scalajs-dom to v2.0.0 which is cross-published for Scala 3 [PR #511](https://github.com/shadaj/slinky/pull/511)
 
 ### Bug Fixes :bug:
 + Support returning `js.Function` as the cleanup handler for effect hooks [PR #525](https://github.com/shadaj/slinky/pull/525)
