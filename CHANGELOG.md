@@ -1,6 +1,8 @@
 # Changelog
 
 ## vNEXT
+
+## [v0.7.0](https://slinky.dev)
 ### Highlights :tada:
 + Added preliminary Scala 3 support [PR #494](https://github.com/shadaj/slinky/pull/494)
   + no `@react`/`Props`-`apply` sugar
@@ -16,7 +18,7 @@
 + Support using `React.memo` on a component created with `React.forwardRef` [PR #530](https://github.com/shadaj/slinky/pull/530)
 + Support the dependencies parameter of `useImperativeHandle` [PR #531](https://github.com/shadaj/slinky/pull/531)
 
-## [v0.6.8](https://slinky.dev)
+## [v0.6.8](https://613d18497c84770008b2dbab--slinky.netlify.app/)
 ### Bug Fixes :bug:
 + Bring back the missing `dd` and `dt` tags [PR #477](https://github.com/shadaj/slinky/pull/477)
 + Allow the `Props` type in an `@react` component to have its own annotations [PR #476](https://github.com/shadaj/slinky/pull/476)
