@@ -3,17 +3,18 @@ ThisBuild / organization := "me.shadaj"
 Global / onChangedBuildSource := ReloadOnSourceChanges
 turbo := true
 
-ThisBuild / libraryDependencies += compilerPlugin(scalafixSemanticdb)
 addCommandAlias("style", "compile:scalafix; test:scalafix; compile:scalafmt; test:scalafmt; scalafmtSbt")
 addCommandAlias(
   "styleCheck",
   "compile:scalafix --check; test:scalafix --check; compile:scalafmtCheck; test:scalafmtCheck; scalafmtSbtCheck"
 )
 
-val scala212 = "2.12.10"
-val scala213 = "2.13.2"
+val scala212 = "2.12.14"
+val scala213 = "2.13.6"
+val scala3   = "3.0.1"
 
 ThisBuild / scalaVersion := scala213
+ThisBuild / semanticdbEnabled := true
 
 lazy val slinky = project
   .in(file("."))
@@ -42,22 +43,27 @@ addCommandAlias(
 )
 
 lazy val crossScalaSettings = Seq(
-  crossScalaVersions := Seq(scala212, scala213),
-  Compile / unmanagedSourceDirectories += {
+  crossScalaVersions := Seq(scala212, scala213, scala3),
+  Compile / unmanagedSourceDirectories ++= {
     val sourceDir = (Compile / sourceDirectory).value
     CrossVersion.partialVersion(scalaVersion.value) match {
-      case Some((2, n)) if n >= 13 => sourceDir / "scala-2.13+"
-      case _                       => sourceDir / "scala-2.13-"
+      case Some((3, _))            => Seq(sourceDir / "scala-2.13+")
+      case Some((2, n)) if n >= 13 => Seq(sourceDir / "scala-2.13+")
+      case _                       => Seq(sourceDir / "scala-2.13-")
     }
   },
-  Test / unmanagedSourceDirectories += {
+  Test / unmanagedSourceDirectories ++= {
     val sourceDir = (Test / sourceDirectory).value
     CrossVersion.partialVersion(scalaVersion.value) match {
-      case Some((2, n)) if n >= 13 => sourceDir / "scala-2.13+"
-      case _                       => sourceDir / "scala-2.13-"
+      case Some((3, _))            => Seq(sourceDir / "scala-2.13+")
+      case Some((2, n)) if n >= 13 => Seq(sourceDir / "scala-2.13+")
+      case _                       => Seq(sourceDir / "scala-2.13-")
     }
   }
 )
+
+lazy val crossScala2OnlySettings =
+  (crossScalaVersions := Seq(scala212, scala213)) +: crossScalaSettings.tail
 
 lazy val librarySettings = Seq(
   scalacOptions += {
@@ -68,13 +74,29 @@ lazy val librarySettings = Seq(
       s"v$origVersion"
     }
 
-    val a = baseDirectory.value.toURI
-    val g = "https://raw.githubusercontent.com/shadaj/slinky"
-    s"-P:scalajs:mapSourceURI:$a->$g/$githubVersion/${baseDirectory.value.getName}/"
+    val a   = baseDirectory.value.toURI
+    val g   = "https://raw.githubusercontent.com/shadaj/slinky"
+    val opt = if (scalaVersion.value == scala3) "-scalajs-mapSourceURI" else "-P:scalajs:mapSourceURI"
+    s"$opt:$a->$g/$githubVersion/${baseDirectory.value.getName}/"
   },
   scalacOptions ++= Seq(
-    "-Ywarn-unused:imports"
-  )
+    "-encoding",
+    "UTF-8",
+    "-feature",
+    "-language:implicitConversions"
+  ) ++ (CrossVersion.partialVersion(scalaVersion.value) match {
+    case Some((3, _)) =>
+      Seq(
+        "-unchecked",
+        "-source:3.0-migration"
+      )
+    case _ =>
+      Seq(
+        "-deprecation",
+        "-language:higherKinds",
+        "-Ywarn-unused:imports,privates,locals"
+      )
+  })
 )
 
 lazy val macroAnnotationSettings = Seq(
@@ -84,8 +106,9 @@ lazy val macroAnnotationSettings = Seq(
     else Seq.empty
   },
   libraryDependencies ++= {
-    if (scalaVersion.value == scala213) Seq.empty
-    else Seq(compilerPlugin(("org.scalamacros" % "paradise" % "2.1.1").cross(CrossVersion.full)))
+    if (scalaVersion.value == scala212)
+      Seq(compilerPlugin(("org.scalamacros" % "paradise" % "2.1.1").cross(CrossVersion.full)))
+    else Seq.empty
   }
 )
 
@@ -148,28 +171,35 @@ lazy val web = project
   )
   .dependsOn(core)
 
-lazy val history = project.settings(librarySettings, crossScalaSettings)
+lazy val history = project.settings(librarySettings, crossScala2OnlySettings)
 
 lazy val reactrouter =
-  project.settings(macroAnnotationSettings, librarySettings, crossScalaSettings).dependsOn(core, web, history)
+  project
+    .settings(macroAnnotationSettings, librarySettings, crossScala2OnlySettings)
+    .dependsOn(core, web, history)
 
 lazy val testRenderer = project.settings(macroAnnotationSettings, librarySettings, crossScalaSettings).dependsOn(core)
 
 lazy val native =
-  project.settings(macroAnnotationSettings, librarySettings, crossScalaSettings).dependsOn(core, testRenderer % Test)
+  project
+    .settings(macroAnnotationSettings, librarySettings, crossScala2OnlySettings)
+    .dependsOn(core, testRenderer % Test)
 
 lazy val vr =
-  project.settings(macroAnnotationSettings, librarySettings, crossScalaSettings).dependsOn(core, testRenderer % Test)
+  project
+    .settings(macroAnnotationSettings, librarySettings, crossScala2OnlySettings)
+    .dependsOn(core, testRenderer % Test)
 
 lazy val hot = project.settings(macroAnnotationSettings, librarySettings, crossScalaSettings).dependsOn(core)
 
 val scalaJSVersion =
-  Option(System.getenv("SCALAJS_VERSION")).getOrElse("0.6.33")
+  Option(System.getenv("SCALAJS_VERSION")).getOrElse("1.6.0")
 
 lazy val scalajsReactInterop = project
   .settings(
     macroAnnotationSettings,
-    librarySettings
+    librarySettings,
+    crossScalaSettings
   )
   .dependsOn(core, web % Test)
 
@@ -181,7 +211,7 @@ lazy val docsMacros = project.settings(macroAnnotationSettings).dependsOn(web, h
 lazy val docs =
   project.settings(librarySettings, macroAnnotationSettings).dependsOn(web, hot, docsMacros, reactrouter, history)
 
-updateIntellij in ThisBuild := {}
+ThisBuild / updateIntellij := {}
 val intelliJVersion = "203.6682.168" // 2020.3
 
 lazy val coreIntellijSupport = project.settings(
@@ -190,5 +220,5 @@ lazy val coreIntellijSupport = project.settings(
   ): _*
 )
 
-intellijBuild in ThisBuild := intelliJVersion
-packageMethod in ThisBuild := PackagingMethod.Skip()
+ThisBuild / intellijBuild := intelliJVersion
+ThisBuild / packageMethod := PackagingMethod.Skip()

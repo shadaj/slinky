@@ -1,7 +1,7 @@
 enablePlugins(ScalaJSPlugin)
 enablePlugins(JSDependenciesPlugin)
 
-libraryDependencies += "org.scalatest" %%% "scalatest" % "3.1.2" % Test
+libraryDependencies += "org.scalatest" %%% "scalatest" % "3.2.9" % Test
 
 Test / jsEnv := new org.scalajs.jsenv.jsdomnodejs.JSDOMNodeJSEnv()
 
@@ -21,8 +21,3 @@ jsDependencies ++= Seq(
   (ProvidedJS / "react-dom/umd/react-dom-server.browser.development.js"
     minified "react-dom/umd/react-dom-server.browser.production.min.js" dependsOn "react-dom/umd/react-dom.development.js" commonJSName "ReactDOMServer") % Test
 )
-
-scalacOptions ++= {
-  if (scalaJSVersion.startsWith("0.6.")) Seq("-P:scalajs:sjsDefinedByDefault")
-  else Nil
-}

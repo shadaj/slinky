@@ -6,9 +6,9 @@ import slinky.web.ReactDOM
 import org.scalajs.dom
 import org.scalatest.funsuite.AsyncFunSuite
 
+
 @react object SimpleFunctionalComponent {
   case class Props[T](in: Seq[T])
-
   val component = FunctionalComponent[Props[_]] { case Props(in) =>
     in.mkString(" ")
   }

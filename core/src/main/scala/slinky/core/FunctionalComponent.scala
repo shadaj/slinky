@@ -4,9 +4,6 @@ import slinky.readwrite.Reader
 import slinky.core.facade.{ReactElement, ReactRaw, ReactRef}
 import scala.scalajs.js
 
-import scala.language.experimental.macros
-import scala.reflect.macros.whitebox
-
 final class KeyAddingStage(private val args: js.Array[js.Any]) extends AnyVal {
   @inline def withKey(key: String): ReactElement = {
     if (args(0) == null) {
@@ -39,15 +36,25 @@ object KeyAddingStage {
     f.map(stage)(build)
 }
 
-final class FunctionalComponent[P] private[core] (private[core] val component: js.Function) extends AnyVal {
+trait FunctionalComponentCore[P, R, S] extends Any { self: S =>
   type Props  = P
-  type Result = KeyAddingStage
+  type Result = R
+
+  private[core] def component: js.Function
 
   private[core] def componentWithReader(propsReader: Reader[P]) = {
     component.asInstanceOf[js.Dynamic].__propsReader = propsReader.asInstanceOf[js.Object]
     component
   }
 
+  private[core] def makeAnother(underlying: js.Function): S
+
+  @inline def apply(props: P): R
+}
+
+final class FunctionalComponent[P] private[core] (private[core] val component: js.Function)
+    extends AnyVal
+    with FunctionalComponentCore[P, KeyAddingStage, FunctionalComponent[P]] {
   @inline def apply(props: P): KeyAddingStage =
     new KeyAddingStage(
       js.Array(
@@ -57,17 +64,14 @@ final class FunctionalComponent[P] private[core] (private[core] val component: j
         )
       )
     )
+
+  private[core] def makeAnother(underlying: js.Function): FunctionalComponent[P] =
+    new FunctionalComponent[P](underlying)
 }
 
-final class FunctionalComponentTakingRef[P, R] private[core] (private[core] val component: js.Function) extends AnyVal {
-  type Props  = P
-  type Result = KeyAddingStage
-
-  private[core] def componentWithReader(propsReader: Reader[P]) = {
-    component.asInstanceOf[js.Dynamic].__propsReader = propsReader.asInstanceOf[js.Object]
-    component
-  }
-
+final class FunctionalComponentTakingRef[P, R] private[core] (private[core] val component: js.Function)
+    extends AnyVal
+    with FunctionalComponentCore[P, KeyAddingStage, FunctionalComponentTakingRef[P, R]] {
   @inline def apply(props: P): KeyAddingStage =
     new KeyAddingStage(
       js.Array(
@@ -77,17 +81,14 @@ final class FunctionalComponentTakingRef[P, R] private[core] (private[core] val 
         )
       )
     )
+
+  private[core] def makeAnother(underlying: js.Function): FunctionalComponentTakingRef[P, R] =
+    new FunctionalComponentTakingRef[P, R](underlying)
 }
 
-final class FunctionalComponentForwardedRef[P, R] private[core] (private[core] val component: js.Any) extends AnyVal {
-  type Props  = P
-  type Result = KeyAndRefAddingStage[R]
-
-  private[core] def componentWithReader(propsReader: Reader[P]) = {
-    component.asInstanceOf[js.Dynamic].__propsReader = propsReader.asInstanceOf[js.Object]
-    component
-  }
-
+final class FunctionalComponentForwardedRef[P, R] private[core] (private[core] val component: js.Function)
+    extends AnyVal
+    with FunctionalComponentCore[P, KeyAndRefAddingStage[R], FunctionalComponentForwardedRef[P, R]] {
   @inline def apply(props: P): KeyAndRefAddingStage[R] =
     new KeyAndRefAddingStage[R](
       js.Array(
@@ -97,6 +98,9 @@ final class FunctionalComponentForwardedRef[P, R] private[core] (private[core] v
         )
       )
     )
+
+  private[core] def makeAnother(underlying: js.Function): FunctionalComponentForwardedRef[P, R] =
+    new FunctionalComponentForwardedRef[P, R](underlying)
 }
 
 object FunctionalComponent {
@@ -135,31 +139,4 @@ object FunctionalComponent {
 
       ret
     })
-}
-
-final class FunctionalComponentName(val name: String) extends AnyVal
-object FunctionalComponentName {
-  implicit def get: FunctionalComponentName = macro FunctionalComponentNameMacros.impl
-}
-
-object FunctionalComponentNameMacros {
-  def impl(c: whitebox.Context): c.Expr[FunctionalComponentName] = {
-    import c.universe._
-
-    // from lihaoyi/sourcecode
-    def isSyntheticName(name: String) =
-      name == "<init>" || (name.startsWith("<local ") && name.endsWith(">")) || name == "component"
-
-    @scala.annotation.tailrec
-    def findNonSyntheticOwner(current: Symbol): Symbol =
-      if (isSyntheticName(current.name.decodedName.toString.trim)) {
-        findNonSyntheticOwner(current.owner)
-      } else {
-        current
-      }
-
-    c.Expr(
-      q"new _root_.slinky.core.FunctionalComponentName(${findNonSyntheticOwner(c.internal.enclosingOwner).name.decodedName.toString})"
-    )
-  }
 }

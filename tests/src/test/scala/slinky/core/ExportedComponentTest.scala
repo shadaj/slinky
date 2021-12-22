@@ -64,7 +64,7 @@ class ExportedComponentTest extends AnyFunSuite {
   test("Can construct an instance of an exported functional component with JS-provided props") {
     case class FunctionalProps(name: String)
     val TestExportedFunctionalComponent = FunctionalComponent((p: FunctionalProps) => {
-      p.name
+      p.name: ReactElement // FIXME - implicit conversion from string seems to not trigger in Scala 3
     })
 
     val container = document.createElement("div")
