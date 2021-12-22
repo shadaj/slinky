@@ -2,7 +2,7 @@
 If you're using Slinky in an application that's already using [scalajs-react](https://github.com/japgolly/scalajs-react), Slinky comes with the `slinky-scalajsreact-interop` module for crossing over between the two styles of writing React code.
 
 ```scala
-libraryDependencies += "me.shadaj" %%% "slinky-scalajsreact-interop" % "0.6.7"
+libraryDependencies += "me.shadaj" %%% "slinky-scalajsreact-interop" % "0.7.0"
 ```
 
 To use this module, simply import the implicit conversions between Slinky and scalajs-react types.

@@ -15,7 +15,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest]
-        scalajs: ["0.6.33", "1.0.0"]
+        scalajs: ["1.6.0"]
         es2015_enabled: ["false", "true"]
     steps:
       - name: Configure git to disable Windows line feeds
@@ -29,7 +29,7 @@ jobs:
       - name: Style checks
         run: sbt styleCheck
       - name: Install NPM Dependencies
-        run: npm install; cd tests; npm install; cd ..; cd native; npm install; cd ..
+        run: npm install; cd tests; npm install; cd ..; cd native; npm install; cd ..; cd scalajsReactInterop; npm install; cd ..
         shell: bash
       - name: Test core and native (fastopt + fullopt)
         run: sbt +tests/test +native/test "set scalaJSStage in Global := FullOptStage" +tests/test +native/test

@@ -4,9 +4,6 @@ import slinky.core.facade.{ReactElement, ReactRaw, ReactRef}
 import slinky.readwrite.Writer
 
 import scala.scalajs.js
-import scala.scalajs.js.|
-import scala.language.experimental.macros
-import scala.reflect.macros.whitebox
 
 final class BuildingComponent[E, R <: js.Object](private val args: js.Array[js.Any]) extends AnyVal {
   def apply(mods: TagMod[E]*): BuildingComponent[E, R] = {
@@ -35,21 +32,18 @@ final class BuildingComponent[E, R <: js.Object](private val args: js.Array[js.A
     this
   }
 
-  def withRef(newRef: R => Unit): BuildingComponent[E, R] = {
+  // Using union type instead of overloading, as the latter manages to crash scala 3 compiler
+  def withRef(newRef: (R => Unit) | ReactRef[R]): BuildingComponent[E, R] = {
     if (args(0) == null) {
       throw new IllegalStateException("This component has already been built into a ReactElement, and cannot be reused")
     }
 
-    args(1).asInstanceOf[js.Dictionary[js.Any]]("ref") = (newRef: js.Function1[R, Unit])
-    this
-  }
-
-  def withRef(ref: ReactRef[R]): BuildingComponent[E, R] = {
-    if (args(0) == null) {
-      throw new IllegalStateException("This component has already been built into a ReactElement, and cannot be reused")
+    newRef match {
+      case f: (R => Unit) =>
+        args(1).asInstanceOf[js.Dictionary[js.Any]]("ref") = (f: js.Function1[R, Unit])
+      case _ =>  
+        args(1).asInstanceOf[js.Dictionary[js.Any]]("ref") = newRef.asInstanceOf[ReactRef[R]]
     }
-
-    args(1).asInstanceOf[js.Dictionary[js.Any]]("ref") = ref
     this
   }
 }
@@ -70,8 +64,10 @@ object BuildingComponent {
   }
 }
 
+// TODO: providers need to be by-name because implicit will reference the type inside the object being initialized
+//       maybe it could be fixed with a better instance macro for those
 abstract class ExternalComponentWithAttributesWithRefType[E <: TagElement, R <: js.Object](
-  implicit pw: ExternalPropsWriterProvider
+  implicit pw: => ExternalPropsWriterProvider
 ) {
   type Props
   type Element = E
@@ -86,13 +82,13 @@ abstract class ExternalComponentWithAttributesWithRefType[E <: TagElement, R <: 
     new BuildingComponent(js.Array(component.asInstanceOf[js.Any], writer.write(p)))
 }
 
-abstract class ExternalComponentWithAttributes[E <: TagElement](implicit pw: ExternalPropsWriterProvider)
+abstract class ExternalComponentWithAttributes[E <: TagElement](implicit pw: => ExternalPropsWriterProvider)
     extends ExternalComponentWithAttributesWithRefType[E, js.Object]()(pw)
 
-abstract class ExternalComponentWithRefType[R <: js.Object](implicit pw: ExternalPropsWriterProvider)
+abstract class ExternalComponentWithRefType[R <: js.Object](implicit pw: => ExternalPropsWriterProvider)
     extends ExternalComponentWithAttributesWithRefType[Nothing, R]()(pw)
 
-abstract class ExternalComponent(implicit pw: ExternalPropsWriterProvider)
+abstract class ExternalComponent(implicit pw: => ExternalPropsWriterProvider)
     extends ExternalComponentWithAttributes[Nothing]()(pw)
 
 abstract class ExternalComponentNoPropsWithAttributesWithRefType[E <: TagElement, R <: js.Object] {
@@ -103,9 +99,7 @@ abstract class ExternalComponentNoPropsWithAttributesWithRefType[E <: TagElement
 
   def withKey(key: String): BuildingComponent[E, R] =
     new BuildingComponent(js.Array(component.asInstanceOf[js.Any], js.Dictionary.empty)).withKey(key)
-  def withRef(ref: R => Unit): BuildingComponent[E, R] =
-    new BuildingComponent(js.Array(component.asInstanceOf[js.Any], js.Dictionary.empty)).withRef(ref)
-  def withRef(ref: ReactRef[R]): BuildingComponent[E, R] =
+  def withRef(ref: (R => Unit) | ReactRef[R]): BuildingComponent[E, R] =
     new BuildingComponent(js.Array(component.asInstanceOf[js.Any], js.Dictionary.empty)).withRef(ref)
 }
 
@@ -116,19 +110,3 @@ abstract class ExternalComponentNoPropsWithRefType[R <: js.Object]
     extends ExternalComponentNoPropsWithAttributesWithRefType[Nothing, R]
 
 abstract class ExternalComponentNoProps extends ExternalComponentNoPropsWithAttributes[Nothing]
-
-// same as PropsWriterProvider except it always returns the typeclass instead of nulling it out in fullOpt mode
-trait ExternalPropsWriterProvider extends js.Object
-object ExternalPropsWriterProvider {
-  def impl(c: whitebox.Context): c.Expr[ExternalPropsWriterProvider] = {
-    import c.universe._
-    val compName = c.internal.enclosingOwner.owner.asClass
-    val q"$_; val x: $typedReaderType = null" = c.typecheck(
-      q"@_root_.scala.annotation.unchecked.uncheckedStable val comp: $compName = null; val x: _root_.slinky.readwrite.Writer[comp.Props] = null"
-    ) // scalafix:ok
-    val tpcls = c.inferImplicitValue(typedReaderType.tpe.asInstanceOf[c.Type])
-    c.Expr(q"$tpcls.asInstanceOf[_root_.slinky.core.ExternalPropsWriterProvider]")
-  }
-
-  implicit def get: ExternalPropsWriterProvider = macro impl
-}

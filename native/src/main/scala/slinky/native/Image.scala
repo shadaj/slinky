@@ -3,7 +3,6 @@ package slinky.native
 import slinky.core.ExternalComponent
 import slinky.core.annotations.react
 import slinky.core.facade.ReactElement
-import slinky.readwrite.ObjectOrWritten
 
 import scala.concurrent.Future
 import scala.scalajs.js
