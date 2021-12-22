@@ -1,17 +1,24 @@
 # Changelog
 
 ## vNEXT
+
+## [v0.7.0](https://slinky.dev)
 ### Highlights :tada:
-+ Added preliminary Scala 3 support
++ Added preliminary Scala 3 support [PR #494](https://github.com/shadaj/slinky/pull/494)
   + no `@react`/`Props`-`apply` sugar
   + expected to require `-source:3.0-migration` and produce warnings
   + may not encode the same props in the same way as Scala 2 version due to different encoder generation mechanism.
 
 ### Breaking Changes :warning:
-+ Dropped Scala.js 0.6 and upgraded 1.x line to 1.6.0 to simplify building with Scala 3.
-+ Updated scalajs-dom to v2.0.0 which is cross-published for Scala 3
++ Dropped Scala.js 0.6 and upgraded 1.x line to 1.6.0 to simplify building with Scala 3 [PR #494](https://github.com/shadaj/slinky/pull/494)
++ Updated scalajs-dom to v2.0.0 which is cross-published for Scala 3 [PR #511](https://github.com/shadaj/slinky/pull/511)
 
-## [v0.6.8](https://slinky.dev)
+### Bug Fixes :bug:
++ Support returning `js.Function` as the cleanup handler for effect hooks [PR #525](https://github.com/shadaj/slinky/pull/525)
++ Support using `React.memo` on a component created with `React.forwardRef` [PR #530](https://github.com/shadaj/slinky/pull/530)
++ Support the dependencies parameter of `useImperativeHandle` [PR #531](https://github.com/shadaj/slinky/pull/531)
+
+## [v0.6.8](https://613d18497c84770008b2dbab--slinky.netlify.app/)
 ### Bug Fixes :bug:
 + Bring back the missing `dd` and `dt` tags [PR #477](https://github.com/shadaj/slinky/pull/477)
 + Allow the `Props` type in an `@react` component to have its own annotations [PR #476](https://github.com/shadaj/slinky/pull/476)
