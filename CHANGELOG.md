@@ -3,6 +3,7 @@
 ## vNEXT
 ### Bug Fixes :bug:
 + Inline functional component creation to improve stack traces [PR #551](https://github.com/shadaj/slinky/pull/551)
++ Fix issue with readers not being available in dev mode on Scala 3 [PR #552](https://github.com/shadaj/slinky/pull/552)
 
 ## [v0.7.0](https://slinky.dev)
 ### Highlights :tada:
