@@ -1,6 +1,8 @@
 # Changelog
 
 ## vNEXT
+### Bug Fixes :bug:
++ Inline functional component creation to improve stack traces [PR #551](https://github.com/shadaj/slinky/pull/551)
 
 ## [v0.7.0](https://slinky.dev)
 ### Highlights :tada:

@@ -104,7 +104,7 @@ final class FunctionalComponentForwardedRef[P, R] private[core] (private[core] v
 }
 
 object FunctionalComponent {
-  def apply[P](fn: P => ReactElement)(implicit name: FunctionalComponentName) =
+  @inline def apply[P](fn: P => ReactElement)(implicit name: FunctionalComponentName) =
     new FunctionalComponent[P]({
       var ret: js.Function1[js.Object, ReactElement] = null
       ret = ((obj: js.Object) => {
@@ -122,7 +122,7 @@ object FunctionalComponent {
       ret
     })
 
-  def apply[P, R](fn: (P, ReactRef[R]) => ReactElement)(implicit name: FunctionalComponentName) =
+  @inline def apply[P, R](fn: (P, ReactRef[R]) => ReactElement)(implicit name: FunctionalComponentName) =
     new FunctionalComponentTakingRef[P, R]({
       var ret: js.Function2[js.Object, ReactRef[R], ReactElement] = null
       ret = ((obj: js.Object, ref: ReactRef[R]) => {
