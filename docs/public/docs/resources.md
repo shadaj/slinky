@@ -8,6 +8,7 @@ Title | Author | Released | Slinky Version
 [Slinky for React Part 1 (Play using Scala)](https://www.youtube.com/watch?v=oe14Hq_Uyv8) | Mark Lewis | Apr 2020 | 0.6.5
 [Slinky for React Part 2 (Play using Scala)](https://www.youtube.com/watch?v=Bv42oKOWJoI) | Mark Lewis | Apr 2020 | 0.6.5
 [React Task List with Slinky Part 1 (Play using Scala)](https://www.youtube.com/watch?v=VHyN-QPCNJo) | Mark Lewis | Apr 2020 | 0.6.5
+[React Task List with Slinky Part 2 (Play using Scala)](https://www.youtube.com/watch?v=f0DZ33k2kUQ) | Mark Lewis | Apr 2020 | 0.6.5
 [React Task List with Slinky Part 3 (Play using Scala](https://www.youtube.com/watch?v=PsWIqTGtZ0w) | Mark Lewis | Apr 2020 | 0.6.5
 [React Task List with Slinky Part 4 (Play using Scala)](https://www.youtube.com/watch?v=f1d2_gkLRCg) | Mark Lewis | Apr 2020 | 0.6.5
 [Livecoding: React Hooks Support in Slinky](https://www.youtube.com/watch?v=_VAxrJImF7E) | Shadaj Laddad | Feb 2019 | -
