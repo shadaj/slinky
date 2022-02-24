@@ -16,7 +16,7 @@ object StateReaderProvider {
     case fail: ImplicitSearchFailure => report.throwError(fail.explanation)
     case s: ImplicitSearchSuccess => 
       '{
-        if (!LinkingInfo.productionMode) null
+        if (LinkingInfo.productionMode) null
         else ${s.tree.asExpr}.asInstanceOf[StateReaderProvider]
       }
   }
