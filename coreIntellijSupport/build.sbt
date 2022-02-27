@@ -11,7 +11,6 @@ packageMethod := PackagingMethod.Standalone()
 patchPluginXml := pluginXmlOptions { xml =>
   xml.version = version.value
   xml.sinceBuild = (intellijBuild in ThisBuild).value
-  xml.untilBuild = "999.9999.999"
 }
 
 val publishAutoChannel = taskKey[Unit]("publishAutoChannel")
