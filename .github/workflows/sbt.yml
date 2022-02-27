@@ -97,7 +97,7 @@ jobs:
         java-version: 1.8
     - run: git fetch --unshallow
     - name: Publish to Marketplace
-      run: sbt coreIntellijSupport/updateIntellij coreIntellijSupport/packageArtifact coreIntellijSupport/publishAutoChannel
+      run: sbt coreIntellijSupport/updateIntellij coreIntellijSupport/packageArtifact coreIntellijSupport/packageArtifact coreIntellijSupport/publishAutoChannel
       if: github.ref == 'refs/heads/main' || github.event_name == 'release'
       env:
         IJ_PLUGIN_REPO_TOKEN: ${{ secrets.ij_plugin_repo_token }}
