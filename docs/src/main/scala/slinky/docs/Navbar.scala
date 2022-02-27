@@ -103,7 +103,7 @@ import scala.scalajs.js
             href := "https://github.com/shadaj/slinky/blob/main/CHANGELOG.md",
             style := smallLinkStyle
           )(
-            "v0.7.1"
+            "v0.7.2"
           ),
           a(
             href := "https://github.com/shadaj/slinky",
