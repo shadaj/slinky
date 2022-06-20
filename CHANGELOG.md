@@ -2,10 +2,11 @@
 
 ## vNEXT
 
-## [v0.7.1](https://slinky.dev)
+## [v0.7.2](https://slinky.dev) (replaced v0.7.1)
 ### Bug Fixes :bug:
 + Inline functional component creation to improve stack traces ([PR #551](https://github.com/shadaj/slinky/pull/551))
 + Fix issue with readers not being available in dev mode on Scala 3 ([PR #552](https://github.com/shadaj/slinky/pull/552))
++ Fix CI issues with publishing to Maven Central and JetBrains Marketplace
 
 ## [v0.7.0](https://61c10985b5d0ea0008b6d7f6--slinky.netlify.app/)
 ### Highlights :tada:
