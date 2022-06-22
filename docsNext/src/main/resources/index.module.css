@@ -1,0 +1,56 @@
+.docs-content li {
+  font-size: 17px;
+  line-height: 25px;
+}
+
+.article code {
+  background-color: rgba(255, 229, 100, 0.3);
+}
+
+.article a {
+  background-color: rgba(187, 239, 253, 0.5);
+  border-bottom: 1px solid rgba(0,0,0,0.2);
+  color: #1a1a1a;
+}
+
+.article a:hover {
+  background-color: #bbeffd;
+  border-bottom-color: #1a1a1a;
+}
+
+@media screen and (min-width: 1400px) {
+  .article.fill-right {
+    margin-left: calc(50vw - 700px);
+  }
+}
+
+@media (max-width: 779px) {
+  .sidebar-right {
+    display: none !important;
+  }
+
+  .docs-page {
+    display: block !important;
+  }
+
+  .docs-content {
+    width: calc(100% - 15px) !important;
+    margin-top: 90px;
+  }
+
+  .docs-sidebar {
+    width: calc(100% - 15px) !important;
+    margin-left: 0 !important;
+  }
+
+  .docs-sidebar-content {
+    position: static !important;
+    height: auto !important;
+    padding-top: 0 !important;
+    border: 1px solid #ececec !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    margin-bottom: 10px !important;
+    padding-right: 0 !important;
+  }
+}

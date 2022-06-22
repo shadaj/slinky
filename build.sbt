@@ -1,8 +1,5 @@
 ThisBuild / organization := "me.shadaj"
 
-Global / onChangedBuildSource := ReloadOnSourceChanges
-turbo := true
-
 addCommandAlias("style", "compile:scalafix; test:scalafix; compile:scalafmt; test:scalafmt; scalafmtSbt")
 addCommandAlias(
   "styleCheck",
@@ -209,6 +206,9 @@ lazy val tests =
 lazy val docsMacros = project.settings(macroAnnotationSettings).dependsOn(web, hot)
 
 lazy val docs =
+  project.settings(librarySettings, macroAnnotationSettings).dependsOn(web, hot, docsMacros, reactrouter, history)
+
+lazy val docsNext =
   project.settings(librarySettings, macroAnnotationSettings).dependsOn(web, hot, docsMacros, reactrouter, history)
 
 ThisBuild / updateIntellij := {}
