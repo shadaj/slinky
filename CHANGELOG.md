@@ -2,131 +2,137 @@
 
 ## vNEXT
 
-## [v0.7.0](https://slinky.dev)
+## [v0.7.2](https://slinky.dev) (replaced v0.7.1)
+### Bug Fixes :bug:
++ Inline functional component creation to improve stack traces ([PR #551](https://github.com/shadaj/slinky/pull/551))
++ Fix issue with readers not being available in dev mode on Scala 3 ([PR #552](https://github.com/shadaj/slinky/pull/552))
++ Fix CI issues with publishing to Maven Central and JetBrains Marketplace
+
+## [v0.7.0](https://61c10985b5d0ea0008b6d7f6--slinky.netlify.app/)
 ### Highlights :tada:
-+ Added preliminary Scala 3 support [PR #494](https://github.com/shadaj/slinky/pull/494)
++ Added preliminary Scala 3 support ([PR #494](https://github.com/shadaj/slinky/pull/494))
   + no `@react`/`Props`-`apply` sugar
   + expected to require `-source:3.0-migration` and produce warnings
   + may not encode the same props in the same way as Scala 2 version due to different encoder generation mechanism.
 
 ### Breaking Changes :warning:
-+ Dropped Scala.js 0.6 and upgraded 1.x line to 1.6.0 to simplify building with Scala 3 [PR #494](https://github.com/shadaj/slinky/pull/494)
-+ Updated scalajs-dom to v2.0.0 which is cross-published for Scala 3 [PR #511](https://github.com/shadaj/slinky/pull/511)
++ Dropped Scala.js 0.6 and upgraded 1.x line to 1.6.0 to simplify building with Scala 3 ([PR #494](https://github.com/shadaj/slinky/pull/494))
++ Updated scalajs-dom to v2.0.0 which is cross-published for Scala 3 ([PR #511](https://github.com/shadaj/slinky/pull/511))
 
 ### Bug Fixes :bug:
-+ Support returning `js.Function` as the cleanup handler for effect hooks [PR #525](https://github.com/shadaj/slinky/pull/525)
-+ Support using `React.memo` on a component created with `React.forwardRef` [PR #530](https://github.com/shadaj/slinky/pull/530)
-+ Support the dependencies parameter of `useImperativeHandle` [PR #531](https://github.com/shadaj/slinky/pull/531)
++ Support returning `js.Function` as the cleanup handler for effect hooks ([PR #525](https://github.com/shadaj/slinky/pull/525))
++ Support using `React.memo` on a component created with `React.forwardRef` ([PR #530](https://github.com/shadaj/slinky/pull/530))
++ Support the dependencies parameter of `useImperativeHandle` ([PR #531](https://github.com/shadaj/slinky/pull/531))
 
 ## [v0.6.8](https://613d18497c84770008b2dbab--slinky.netlify.app/)
 ### Bug Fixes :bug:
-+ Bring back the missing `dd` and `dt` tags [PR #477](https://github.com/shadaj/slinky/pull/477)
-+ Allow the `Props` type in an `@react` component to have its own annotations [PR #476](https://github.com/shadaj/slinky/pull/476)
-+ Support the `readOnly` attribute on `textarea` elements [PR #492](https://github.com/shadaj/slinky/pull/492)
-+ Remove an extra `println` in an element conversion [PR #507](https://github.com/shadaj/slinky/pull/507)
++ Bring back the missing `dd` and `dt` tags ([PR #477](https://github.com/shadaj/slinky/pull/477))
++ Allow the `Props` type in an `@react` component to have its own annotations ([PR #476](https://github.com/shadaj/slinky/pull/476))
++ Support the `readOnly` attribute on `textarea` elements ([PR #492](https://github.com/shadaj/slinky/pull/492))
++ Remove an extra `println` in an element conversion ([PR #507](https://github.com/shadaj/slinky/pull/507))
 
 ## [v0.6.7](https://601b53d4193ae700074381ec--slinky.netlify.app/)
 ### Highlights :tada:
 + The IntelliJ support plugin has now been extracted into an [independent plugin](https://plugins.jetbrains.com/plugin/15748-slinky-library-support) on the JetBrains Marketplace, making installation much more consistent
-+ Add support for native [`useWindowDimensions`](https://reactnative.dev/docs/0.62/usewindowdimensions) hook [PR #422](https://github.com/shadaj/slinky/pull/422)
++ Add support for native [`useWindowDimensions`](https://reactnative.dev/docs/0.62/usewindowdimensions) hook ([PR #422](https://github.com/shadaj/slinky/pull/422))
 
 ### Bug Fixes :bug:
-+ Add missing inherited props to native `FlatList` component [PR #422](https://github.com/shadaj/slinky/pull/422)
++ Add missing inherited props to native `FlatList` component ([PR #422](https://github.com/shadaj/slinky/pull/422))
 
 ## [v0.6.6](https://5fa89fd323eb8c0008823359--slinky.netlify.app/)
 ### Highlights :tada:
-+ Updated `scalajs-dom` to 1.0.0  [PR #362](https://github.com/shadaj/slinky/pull/362)
-+ Add facades for the `React.Profiler` component [PR #372](https://github.com/shadaj/slinky/pull/372)
-+ Add facades for the `act` funcion in `react-test-renderer` [PR #376](https://github.com/shadaj/slinky/pull/376)
++ Updated `scalajs-dom` to 1.0.0  ([PR #362](https://github.com/shadaj/slinky/pull/362))
++ Add facades for the `React.Profiler` component ([PR #372](https://github.com/shadaj/slinky/pull/372))
++ Add facades for the `act` funcion in `react-test-renderer` ([PR #376](https://github.com/shadaj/slinky/pull/376))
 
 ### Bug Fixes :bug:
-+ Fix compilation errors on Scala 2.13 when `Any` is involved in `Props`/`State` types [PR #388](https://github.com/shadaj/slinky/pull/388)
-+ Allow exporting external component definitions as instances of `ReactComponentClass` [PR #377](https://github.com/shadaj/slinky/pull/377)
-+ Update prop type definitions for the React Native `Image` component to support local images [PR #411](https://github.com/shadaj/slinky/pull/411)
++ Fix compilation errors on Scala 2.13 when `Any` is involved in `Props`/`State` types ([PR #388](https://github.com/shadaj/slinky/pull/388))
++ Allow exporting external component definitions as instances of `ReactComponentClass` ([PR #377](https://github.com/shadaj/slinky/pull/377))
++ Update prop type definitions for the React Native `Image` component to support local images ([PR #411](https://github.com/shadaj/slinky/pull/411))
 
 ### Breaking Changes :warning:
 + Due to the update of scalajs-dom to 1.0.0 a support for `dd` and `dt` tags has been dropped.
 
 ## [v0.6.5](https://5e90c70b95e02b0007c114c0--slinky.netlify.app/)
 ### Highlights :tada:
-+ Add docs for the new Electron app template [PR #339](https://github.com/shadaj/slinky/pull/339)
++ Add docs for the new Electron app template ([PR #339](https://github.com/shadaj/slinky/pull/339))
 
 ### Bug Fixes :bug:
-+ Fix crashes with class components when emitting ES2015 code [PR #335](https://github.com/shadaj/slinky/pull/335)
-+ Support hot reloading when using Scala.js 1.0 [PR #336](https://github.com/shadaj/slinky/pull/336)
-+ Correct props type definition for the React Native `FlatList` component [PR #352](https://github.com/shadaj/slinky/pull/352)
++ Fix crashes with class components when emitting ES2015 code ([PR #335](https://github.com/shadaj/slinky/pull/335))
++ Support hot reloading when using Scala.js 1.0 ([PR #336](https://github.com/shadaj/slinky/pull/336))
++ Correct props type definition for the React Native `FlatList` component ([PR #352](https://github.com/shadaj/slinky/pull/352))
 
 ## [v0.6.4](https://5e5428ea765522000a4acd61--slinky.netlify.com/)
 ### Highlights :tada:
-+ Add support for **Scala.js 1.0.0** [PR #327](https://github.com/shadaj/slinky/pull/327) and [PR #321](https://github.com/shadaj/slinky/pull/321)
-* Add **slinky-react-router** and **slinky-history** as separate subprojects, to provide interfaces to react-router and the html5 history api [PR #305](https://github.com/shadaj/slinky/pull/305)
-+ Add apply method for constructing CustomTag and CustomAttributes [PR #318](https://github.com/shadaj/slinky/pull/318)
-+ Rewrite the class component logic to patch the component definition once to handle JS data instead of on every initialization [PR #321](https://github.com/shadaj/slinky/pull/321)
++ Add support for **Scala.js 1.0.0** ([PR #327](https://github.com/shadaj/slinky/pull/327) and [PR #321](https://github.com/shadaj/slinky/pull/321))
+* Add **slinky-react-router** and **slinky-history** as separate subprojects, to provide interfaces to react-router and the html5 history api ([PR #305](https://github.com/shadaj/slinky/pull/305))
++ Add apply method for constructing CustomTag and CustomAttributes ([PR #318](https://github.com/shadaj/slinky/pull/318))
++ Rewrite the class component logic to patch the component definition once to handle JS data instead of on every initialization ([PR #321](https://github.com/shadaj/slinky/pull/321))
 
 ### Bug Fixes :bug:
-+ Add ARIA role attribute [PR #309](https://github.com/shadaj/slinky/pull/309)
-+ Support className and role attributes for SVG [PR #314](https://github.com/shadaj/slinky/pull/314)
-+ Add novalidate attribute to form [PR #315](https://github.com/shadaj/slinky/pull/315)
-+ Fix types for the useCallback hook and fix its reference equality behavior [PR #302](https://github.com/shadaj/slinky/pull/302)
-+ Use js.Object instead of js.Dynamics on attribute style [PR #322](https://github.com/shadaj/slinky/pull/322)
-+ Add missing inherited props to native ScrollView component [PR #326](https://github.com/shadaj/slinky/pull/326)
++ Add ARIA role attribute ([PR #309](https://github.com/shadaj/slinky/pull/309))
++ Support className and role attributes for SVG ([PR #314](https://github.com/shadaj/slinky/pull/314))
++ Add novalidate attribute to form ([PR #315](https://github.com/shadaj/slinky/pull/315))
++ Fix types for the useCallback hook and fix its reference equality behavior ([PR #302](https://github.com/shadaj/slinky/pull/302))
++ Use js.Object instead of js.Dynamics on attribute style ([PR #322](https://github.com/shadaj/slinky/pull/322))
++ Add missing inherited props to native ScrollView component ([PR #326](https://github.com/shadaj/slinky/pull/326))
 
 ### Internal Infrastructure
-+ Fix project build in Windows OS and add automated testing in Windows to CI workflow. You can now build Slinky and run tests in Windows [PR #308](https://github.com/shadaj/slinky/pull/308)
++ Fix project build in Windows OS and add automated testing in Windows to CI workflow. You can now build Slinky and run tests in Windows ([PR #308](https://github.com/shadaj/slinky/pull/308))
 
 ## [v0.6.3](https://5e28ce624dd0550179b50f20--slinky.netlify.com/)
 ### Highlights :tada:
-+ Improve experience using `ReactElement`s within first-order types such as Map and List [PR #285](https://github.com/shadaj/slinky/pull/285)
-+ Support [React Native's Keyboard API](https://facebook.github.io/react-native/docs/keyboard) [PR #293](https://github.com/shadaj/slinky/pull/293)
++ Improve experience using `ReactElement`s within first-order types such as Map and List ([PR #285](https://github.com/shadaj/slinky/pull/285))
++ Support [React Native's Keyboard API](https://facebook.github.io/react-native/docs/keyboard) ([PR #293](https://github.com/shadaj/slinky/pull/293))
 
 ### Bug Fixes
-+ Fix crashes when calling `setState` on a component with `Props` set to some subtype of `Function1` [PR #295](https://github.com/shadaj/slinky/pull/295)
-+ Support `useCallback` with a function that takes arguments [PR #290](https://github.com/shadaj/slinky/pull/290)
-+ Fix false warnings on `@react` classes if `-Ywarn-value-discard` scalac option was used [PR #296](https://github.com/shadaj/slinky/pull/296)
-+ Update the IntelliJ support plugin to be compatible with IntelliJ 2019.2 [PR #297](https://github.com/shadaj/slinky/pull/297)
++ Fix crashes when calling `setState` on a component with `Props` set to some subtype of `Function1` ([PR #295](https://github.com/shadaj/slinky/pull/295))
++ Support `useCallback` with a function that takes arguments ([PR #290](https://github.com/shadaj/slinky/pull/290))
++ Fix false warnings on `@react` classes if `-Ywarn-value-discard` scalac option was used ([PR #296](https://github.com/shadaj/slinky/pull/296))
++ Update the IntelliJ support plugin to be compatible with IntelliJ 2019.2 ([PR #297](https://github.com/shadaj/slinky/pull/297))
 
 ## [v0.6.2](https://5d1e6bd54bf73a00097195a2--slinky.netlify.com/)
 ### Highlights :tada:
-+ Support **optional attributes**, see [the docs](https://slinky.dev/docs/the-tag-api/) for more details [PR #275](https://github.com/shadaj/slinky/pull/275)
-+ Slinky now has **full support for Scala 2.13** [PR #269](https://github.com/shadaj/slinky/pull/269)
++ Support **optional attributes**, see [the docs](https://slinky.dev/docs/the-tag-api/) for more details ([PR #275](https://github.com/shadaj/slinky/pull/275))
++ Slinky now has **full support for Scala 2.13** ([PR #269](https://github.com/shadaj/slinky/pull/269))
 
 ### Bug Fixes
-+ Improve error messages when an `@react class` extends the wrong supertype [PR #277](https://github.com/shadaj/slinky/pull/277)
-+ Add shortcut `apply` for `@react` functional components to mirror class components [PR #278](https://github.com/shadaj/slinky/pull/278)
++ Improve error messages when an `@react class` extends the wrong supertype ([PR #277](https://github.com/shadaj/slinky/pull/277))
++ Add shortcut `apply` for `@react` functional components to mirror class components ([PR #278](https://github.com/shadaj/slinky/pull/278))
 
 ## [v0.6.1](https://5cb8c7064aba1f00090053e4--slinky.netlify.com/)
 ### Highlights :tada:
-+ Allow `SetStateHookCallback` to be used as plain functions through an implicit conversion [PR #268](https://github.com/shadaj/slinky/pull/268)
-+ Allow `React.memo` to specify a custom compare function [PR #260](https://github.com/shadaj/slinky/pull/260)
-+ New facades for React Native: `SafeAreaView`, `TouchableHighlight`, `TouchableOpacity`, and `Platform` [PR #214](https://github.com/shadaj/slinky/pull/214)
++ Allow `SetStateHookCallback` to be used as plain functions through an implicit conversion ([PR #268](https://github.com/shadaj/slinky/pull/268))
++ Allow `React.memo` to specify a custom compare function ([PR #260](https://github.com/shadaj/slinky/pull/260))
++ New facades for React Native: `SafeAreaView`, `TouchableHighlight`, `TouchableOpacity`, and `Platform` ([PR #214](https://github.com/shadaj/slinky/pull/214))
 
 ### Bug Fixes
-+ Allow `component` defined in a functional component to have any access control [PR #262](https://github.com/shadaj/slinky/pull/262)
-+ Fix incorrect typing of `SyntheticMouseEvent.clientX` [PR #261](https://github.com/shadaj/slinky/pull/261)
++ Allow `component` defined in a functional component to have any access control ([PR #262](https://github.com/shadaj/slinky/pull/262))
++ Fix incorrect typing of `SyntheticMouseEvent.clientX` ([PR #261](https://github.com/shadaj/slinky/pull/261))
 
 ## [v0.6.0](https://5c9e606a26ea4000070d0c7d--slinky.netlify.com/)
 ### Highlights :tada:
-+ Casting the `target` property of event objects is **no longer needed**! Now all event handlers are statically typed based on the tag they are being placed on [PR #243](https://github.com/shadaj/slinky/pull/243)
-+ Support **React Hooks for functional components**, see [the docs](https://slinky.dev/docs/functional-components-and-hooks/) for more details [PR #227](https://github.com/shadaj/slinky/pull/227)
-+ Add support for **writing functional components**, see [the docs](https://slinky.dev/docs/functional-components-and-hooks/) for more details [PR #217](https://github.com/shadaj/slinky/pull/217)
++ Casting the `target` property of event objects is **no longer needed**! Now all event handlers are statically typed based on the tag they are being placed on ([PR #243](https://github.com/shadaj/slinky/pull/243))
++ Support **React Hooks for functional components**, see [the docs](https://slinky.dev/docs/functional-components-and-hooks/) for more details ([PR #227](https://github.com/shadaj/slinky/pull/227))
++ Add support for **writing functional components**, see [the docs](https://slinky.dev/docs/functional-components-and-hooks/) for more details ([PR #217](https://github.com/shadaj/slinky/pull/217))
 + Slinky docs have moved to a new domain, [slinky.dev](https://slinky.dev)!
 
 ### Breaking Changes :warning:
-+ The tags API has seen some major changes, please take a look at the separate section below for more details [PR #243](https://github.com/shadaj/slinky/pull/243)
-+ Half-built components and tags, which have some props provided but have not yet been converted to a `ReactElement`, cannot be reused. Doing this will result in a runtime exception pointing out where the reuse occured [PR #253](https://github.com/shadaj/slinky/pull/253)
-+ Components using the static lifecycle functions `getDerivedStateFromProps` and `getDerivedStateFromError` must now override the functions with a `val` [PR #248](https://github.com/shadaj/slinky/pull/248)
-+ The `React.forwardRef` function now takes a `FunctionalComponentTakingRef`, which can be creating by creating a functional component that takes an additional ref parameter: `FunctionalComponent((props, ref) => ...)` [PR #227](https://github.com/shadaj/slinky/pull/227)
-+ The `ReactRef` type is no longer variant in its type parameters to increase type safety [PR #227](https://github.com/shadaj/slinky/pull/227)
-+ Components will no longer have their `displayName` when built in `fullOptJS` mode, this results in a **~2.5% decrease in bundle size** and matches behavior with JS where names are obfuscated in production builds  [PR #217](https://github.com/shadaj/slinky/pull/217)
-+ The `Option` writer now emits `null` instead of `js.undefined` for a value of `None` [PR #247](https://github.com/shadaj/slinky/pull/247)
++ The tags API has seen some major changes, please take a look at the separate section below for more details ([PR #243](https://github.com/shadaj/slinky/pull/243))
++ Half-built components and tags, which have some props provided but have not yet been converted to a `ReactElement`, cannot be reused. Doing this will result in a runtime exception pointing out where the reuse occured ([PR #253](https://github.com/shadaj/slinky/pull/253))
++ Components using the static lifecycle functions `getDerivedStateFromProps` and `getDerivedStateFromError` must now override the functions with a `val` ([PR #248](https://github.com/shadaj/slinky/pull/248))
++ The `React.forwardRef` function now takes a `FunctionalComponentTakingRef`, which can be creating by creating a functional component that takes an additional ref parameter: `FunctionalComponent((props, ref) => ...)` ([PR #227](https://github.com/shadaj/slinky/pull/227))
++ The `ReactRef` type is no longer variant in its type parameters to increase type safety ([PR #227](https://github.com/shadaj/slinky/pull/227))
++ Components will no longer have their `displayName` when built in `fullOptJS` mode, this results in a **~2.5% decrease in bundle size** and matches behavior with JS where names are obfuscated in production builds  ([PR #217](https://github.com/shadaj/slinky/pull/217))
++ The `Option` writer now emits `null` instead of `js.undefined` for a value of `None` ([PR #247](https://github.com/shadaj/slinky/pull/247))
 
 ### Bug Fixes
-+ Make the static lifecycle functions `getDerivedStateFromProps` and `getDerivedStateFromError` work correctly in `fullOptJS` mode [PR #248](https://github.com/shadaj/slinky/pull/248)
-+ Fix issues around state not updating when setting an `Option` to `None` in hot reloading mode [PR #247](https://github.com/shadaj/slinky/pull/247)
-+ Handle `null` return values in derived state functions to not update the state [PR #249](https://github.com/shadaj/slinky/pull/249)
-+ Fix the `js.|` reader/writer implementations to work correctly in `fullOptJS` mode [PR #248](https://github.com/shadaj/slinky/pull/248)
-+ Support autoComplete attr for input and form elements [PR #225](https://github.com/shadaj/slinky/pull/225)
-+ Fix capitalization of `rowSpan`/`colSpan` attribute (used to be `rowspan`/`colspan`) [PR #224](https://github.com/shadaj/slinky/pull/224)
++ Make the static lifecycle functions `getDerivedStateFromProps` and `getDerivedStateFromError` work correctly in `fullOptJS` mode ([PR #248](https://github.com/shadaj/slinky/pull/248))
++ Fix issues around state not updating when setting an `Option` to `None` in hot reloading mode ([PR #247](https://github.com/shadaj/slinky/pull/247))
++ Handle `null` return values in derived state functions to not update the state ([PR #249](https://github.com/shadaj/slinky/pull/249))
++ Fix the `js.|` reader/writer implementations to work correctly in `fullOptJS` mode ([PR #248](https://github.com/shadaj/slinky/pull/248))
++ Support autoComplete attr for input and form elements ([PR #225](https://github.com/shadaj/slinky/pull/225))
++ Fix capitalization of `rowSpan`/`colSpan` attribute (used to be `rowspan`/`colspan`) ([PR #224](https://github.com/shadaj/slinky/pull/224))
 
 ### Tags API Changes
 This release includes a major rewrite of the tags API that eliminates the need to cast the `target` value of event handlers and improves typesafety by more closely matching the official React API. As a result of these changes, event handlers defined in separate methods or code abstracting over tags may not initially compile with this new version.
@@ -155,70 +161,70 @@ Similarly, in components that previously took in `AttrPair` and `ReactElement` s
 
 ## [v0.5.2](https://5c4f690f534c280008c14654--slinky.netlify.com/)
 ### Highlights :tada:
-+ Slinky support for Scala 2.13 is now built with **2.13.0-M5** [PR #202](https://github.com/shadaj/slinky/pull/202)
-+ Add support for `getDerivedStateFromError` from React 16.6 [PR #206](https://github.com/shadaj/slinky/pull/206)
-+ Add support for the `Suspense` component from React 16.6 [PR #216](https://github.com/shadaj/slinky/pull/216)
-+ Use default parameters to fill in missing props on exported components [PR #221](https://github.com/shadaj/slinky/pull/221)
++ Slinky support for Scala 2.13 is now built with **2.13.0-M5** ([PR #202](https://github.com/shadaj/slinky/pull/202))
++ Add support for `getDerivedStateFromError` from React 16.6 ([PR #206](https://github.com/shadaj/slinky/pull/206))
++ Add support for the `Suspense` component from React 16.6 ([PR #216](https://github.com/shadaj/slinky/pull/216))
++ Use default parameters to fill in missing props on exported components ([PR #221](https://github.com/shadaj/slinky/pull/221))
 
 ### Bug Fixes
-+ Fix compile errors when overriding the `Props` or `State` type [PR #220](https://github.com/shadaj/slinky/pull/219)
-+ Update library injector setup to support IntelliJ 2018.3 and newer [PR #219](https://github.com/shadaj/slinky/pull/219)
-+ Fix runtime crash when `initialState()` is defined with the extra parentheses [PR #218](https://github.com/shadaj/slinky/pull/218)
-+ Fix compilation errors in generating `Reader`/`Writer` when private objects are involved [PR #205](https://github.com/shadaj/slinky/pull/205)
++ Fix compile errors when overriding the `Props` or `State` type ([PR #220](https://github.com/shadaj/slinky/pull/219))
++ Update library injector setup to support IntelliJ 2018.3 and newer ([PR #219](https://github.com/shadaj/slinky/pull/219))
++ Fix runtime crash when `initialState()` is defined with the extra parentheses ([PR #218](https://github.com/shadaj/slinky/pull/218))
++ Fix compilation errors in generating `Reader`/`Writer` when private objects are involved ([PR #205](https://github.com/shadaj/slinky/pull/205))
 
 ## [v0.5.1](https://5bddfe8373f2cf373856d7f7--slinky.netlify.com/)
 ### Highlights :tada:
-+ Support reading and writing `scala.Array` [PR #187](https://github.com/shadaj/slinky/pull/187)
-+ Support the `defaultValue` attribute for specifying a default form value without overriding user inputs [PR #186](https://github.com/shadaj/slinky/pull/186)
++ Support reading and writing `scala.Array` ([PR #187](https://github.com/shadaj/slinky/pull/187))
++ Support the `defaultValue` attribute for specifying a default form value without overriding user inputs ([PR #186](https://github.com/shadaj/slinky/pull/186))
 
 ### Bug Fixes
-+ Prevent crashes with components that store an `Option` of an opaque type in their `State` [PR #198](https://github.com/shadaj/slinky/pull/198)
-+ Fix `ComponentWrapper`s not picking up manually defined Reader/Writers for the `State` type [PR #190](https://github.com/shadaj/slinky/pull/190)
-+ Fix how the IntelliJ extensions handles components that have a `children` prop but no other props [PR #189](https://github.com/shadaj/slinky/pull/189)
-+ Fix errors when using the `@react` macro annotation with `Component`/`StatelessComponent` imported locally [PR #188](https://github.com/shadaj/slinky/pull/188)
-+ Fix the `value` attribute not being available on the `select` and `textarea` tags [PR #177](https://github.com/shadaj/slinky/pull/177)
-+ Bump Scala version to 2.12.7 and SBT/plugin versions as well [PR #176](https://github.com/shadaj/slinky/pull/176)
++ Prevent crashes with components that store an `Option` of an opaque type in their `State` ([PR #198](https://github.com/shadaj/slinky/pull/198))
++ Fix `ComponentWrapper`s not picking up manually defined Reader/Writers for the `State` type ([PR #190](https://github.com/shadaj/slinky/pull/190))
++ Fix how the IntelliJ extensions handles components that have a `children` prop but no other props ([PR #189](https://github.com/shadaj/slinky/pull/189))
++ Fix errors when using the `@react` macro annotation with `Component`/`StatelessComponent` imported locally ([PR #188](https://github.com/shadaj/slinky/pull/188))
++ Fix the `value` attribute not being available on the `select` and `textarea` tags ([PR #177](https://github.com/shadaj/slinky/pull/177))
++ Bump Scala version to 2.12.7 and SBT/plugin versions as well ([PR #176](https://github.com/shadaj/slinky/pull/176))
 
 ## v0.5.0
 ### Highlights :tada:
-+ Slinky now supports **Scala 2.13.0-M4** [PR #153](https://github.com/shadaj/slinky/pull/153)!
-+ Magnolia has been replaced with a custom implementation tuned for Slinky, resulting in smaller bundles and faster compilation [PR #159](https://github.com/shadaj/slinky/pull/159), [PR #159](https://github.com/shadaj/slinky/pull/159) 
-+ Readers and writers for props are no longer needed for hot-reloading components, resulting in **up to 2x drops** in bundle size in `fastOptJS` mode [PR #162](https://github.com/shadaj/slinky/pull/162)
-+ React element construction is now more aggressively inlined, resulting in smaller bundle sizes (5% drop in the docs project) [PR #156](https://github.com/shadaj/slinky/pull/156)
-+ Switch from React VR package to React 360 [PR #141](https://github.com/shadaj/slinky/pull/141)
++ Slinky now supports **Scala 2.13.0-M4** ([PR #153](https://github.com/shadaj/slinky/pull/153))!
++ Magnolia has been replaced with a custom implementation tuned for Slinky, resulting in smaller bundles and faster compilation ([PR #159](https://github.com/shadaj/slinky/pull/159), [PR #159](https://github.com/shadaj/slinky/pull/159)) 
++ Readers and writers for props are no longer needed for hot-reloading components, resulting in **up to 2x drops** in bundle size in `fastOptJS` mode ([PR #162](https://github.com/shadaj/slinky/pull/162))
++ React element construction is now more aggressively inlined, resulting in smaller bundle sizes (5% drop in the docs project) ([PR #156](https://github.com/shadaj/slinky/pull/156))
++ Switch from React VR package to React 360 ([PR #141](https://github.com/shadaj/slinky/pull/141))
 
 ### Breaking Changes
-+ Scalameta is no longer used for the `@react` macro, and Macro Paradise is used instead. See the docs for updated installation instructions for adding the Macro Paradise compiler plugin [PR #132](https://github.com/shadaj/slinky/pull/132)
-+ `@react` components taking a `children` prop now generate an `apply` method with the children moved to a curried parameter to better match JSX [PR #161](https://github.com/shadaj/slinky/pull/161)
-+ React VR components are no longer supported, the `slinky-vr` module now points to React 360 [PR #141](https://github.com/shadaj/slinky/pull/141)
-+ `ReactComponentClass` now takes a type parameter of the `Props` type to improve type safety with higher-order components. Existing uses can be safely replaced with `ReactComponentClass[_]` [PR #157](https://github.com/shadaj/slinky/pull/157)
-+ Interop with Scala.js React now requires using the explicit conversions `.toSlinky` and `.toScalaJSReact` [PR #151](https://github.com/shadaj/slinky/pull/151)
++ Scalameta is no longer used for the `@react` macro, and Macro Paradise is used instead. See the docs for updated installation instructions for adding the Macro Paradise compiler plugin ([PR #132](https://github.com/shadaj/slinky/pull/132))
++ `@react` components taking a `children` prop now generate an `apply` method with the children moved to a curried parameter to better match JSX ([PR #161](https://github.com/shadaj/slinky/pull/161))
++ React VR components are no longer supported, the `slinky-vr` module now points to React 360 ([PR #141](https://github.com/shadaj/slinky/pull/141))
++ `ReactComponentClass` now takes a type parameter of the `Props` type to improve type safety with higher-order components. Existing uses can be safely replaced with `ReactComponentClass[_]` ([PR #157](https://github.com/shadaj/slinky/pull/157))
++ Interop with Scala.js React now requires using the explicit conversions `.toSlinky` and `.toScalaJSReact` ([PR #151](https://github.com/shadaj/slinky/pull/151))
 
 ## v0.4.3
-+ Support pointer events that were added in React 16.4 [PR #149](https://github.com/shadaj/slinky/pull/149)
-+ Bump Scala.js React version for interop to 1.2.0 [PR #148](https://github.com/shadaj/slinky/pull/148)
-+ Fix errors in Reader/Writer provider macros with Scala versions > 2.12.4 [PR #147](https://github.com/shadaj/slinky/pull/147)
-+ Support storing any type as a default context value [PR #136](https://github.com/shadaj/slinky/pull/136)
-+ Set sourcemaps to use GitHub URLs so that they load in other apps [PR #143](https://github.com/shadaj/slinky/pull/143)
++ Support pointer events that were added in React 16.4 ([PR #149](https://github.com/shadaj/slinky/pull/149))
++ Bump Scala.js React version for interop to 1.2.0 ([PR #148](https://github.com/shadaj/slinky/pull/148))
++ Fix errors in Reader/Writer provider macros with Scala versions > 2.12.4 ([PR #147](https://github.com/shadaj/slinky/pull/147))
++ Support storing any type as a default context value ([PR #136](https://github.com/shadaj/slinky/pull/136))
++ Set sourcemaps to use GitHub URLs so that they load in other apps ([PR #143](https://github.com/shadaj/slinky/pull/143))
 
 ## v0.4.2
-+ Fix bug with `shouldComponentUpdate` not being registered correctly on the component [PR #135](https://github.com/shadaj/slinky/pull/135)
++ Fix bug with `shouldComponentUpdate` not being registered correctly on the component ([PR #135](https://github.com/shadaj/slinky/pull/135))
 
 ## v0.4.1
-+ Fix exception when hot-reloading Slinky components [PR #134](https://github.com/shadaj/slinky/pull/134)
++ Fix exception when hot-reloading Slinky components ([PR #134](https://github.com/shadaj/slinky/pull/134))
 
 ## v0.4.0
 ### Highlights :tada:
 + **Slinky now has support for React 16.3 features**
-  + Use the new Context API with a [statically-typed interface](https://slinky.shadaj.me/docs/context/) [PR #125](https://github.com/shadaj/slinky/pull/125)
-  + Use the new Ref API with a [statically-typed interface](https://slinky.shadaj.me/docs/refs/) as well! [PR #126](https://github.com/shadaj/slinky/pull/126)
-  + Transition to the new React lifecycle with support for [getSnapshotBeforeUpdate](https://reactjs.org/docs/react-component.html#getsnapshotbeforeupdate) [PR #129](https://github.com/shadaj/slinky/pull/129)
-  + Use the [getDerivedStateFromProps](https://reactjs.org/docs/react-component.html#static-getderivedstatefromprops) API by defining it inside `ComponentWrapper` or the companion object of an annotated component [PR #130](https://github.com/shadaj/slinky/pull/130)
-  + Use the `React.forwardRef` API to create new components that forward their refs to children [PR #127](https://github.com/shadaj/slinky/pull/127)
-  + Use the `StrictMode` component to enable more runtime checks on your components [PR #128](https://github.com/shadaj/slinky/pull/128)
+  + Use the new Context API with a [statically-typed interface](https://slinky.shadaj.me/docs/context/) ([PR #125](https://github.com/shadaj/slinky/pull/125))
+  + Use the new Ref API with a [statically-typed interface](https://slinky.shadaj.me/docs/refs/) as well! ([PR #126](https://github.com/shadaj/slinky/pull/126))
+  + Transition to the new React lifecycle with support for [getSnapshotBeforeUpdate](https://reactjs.org/docs/react-component.html#getsnapshotbeforeupdate) ([PR #129](https://github.com/shadaj/slinky/pull/129))
+  + Use the [getDerivedStateFromProps](https://reactjs.org/docs/react-component.html#static-getderivedstatefromprops) API by defining it inside `ComponentWrapper` or the companion object of an annotated component ([PR #130](https://github.com/shadaj/slinky/pull/130))
+  + Use the `React.forwardRef` API to create new components that forward their refs to children ([PR #127](https://github.com/shadaj/slinky/pull/127))
+  + Use the `StrictMode` component to enable more runtime checks on your components ([PR #128](https://github.com/shadaj/slinky/pull/128))
 + **Slinky now has support for React Native**, available in the `slinky-native` module. Try it out with [create-react-native-scala-app](https://github.com/shadaj/create-react-native-scala-app.g8)
 + **Slinky now has support for React VR**, available in the `slinky-vr` module. Try it out with [create-react-vr-scala-app](https://github.com/shadaj/create-react-vr-scala-app.g8)
-+ Want to write fancier unit tests for your Slinky app? Slinky now comes with an interface for `react-test-renderer`, available under the `slinky-testrenderer` module. [PR #119](https://github.com/shadaj/slinky/pull/119)
++ Want to write fancier unit tests for your Slinky app? Slinky now comes with an interface for `react-test-renderer`, available under the `slinky-testrenderer` module. ([PR #119](https://github.com/shadaj/slinky/pull/119))
 
 ### Breaking Changes
 + **The `ErrorBoundary` trait has been removed, because it is no longer needed to implement an error boundary component**
@@ -227,18 +233,18 @@ Similarly, in components that previously took in `AttrPair` and `ReactElement` s
 + The `React` object has been refactored to take regular Scala types instead of JS types, so any dependency on the original JS types (`js.FunctionN`) will not work
 
 ### Details
-+ The `@react` macro now produces nicer APIs for external components that have default values for all props parameters. [PR #119](https://github.com/shadaj/slinky/pull/119)
-+ Add more variations for `ExternalComponent` that support providing a statically-typed interface for the component instance: `ExternalComponentWithRefType`, `ExternalComponentWithAttributesWithRefType`, `ExternalComponentNoPropsWithRefType`, `ExternalComponentNoPropsWithAttributesWithRefType` [PR #119](https://github.com/shadaj/slinky/pull/119)
-+ Bring back the `WithRaw` trait, which makes it possible to access the original object of a read value [PR #122](https://github.com/shadaj/slinky/pull/122)
-+ Fix exceptions when declaring custom tags and attributes in a component class [PR #118](https://github.com/shadaj/slinky/pull/118)
-+ Fix exceptions when reading the null-prototype in Node.js [PR #121](https://github.com/shadaj/slinky/pull/121)
++ The `@react` macro now produces nicer APIs for external components that have default values for all props parameters. ([PR #119](https://github.com/shadaj/slinky/pull/119))
++ Add more variations for `ExternalComponent` that support providing a statically-typed interface for the component instance: `ExternalComponentWithRefType`, `ExternalComponentWithAttributesWithRefType`, `ExternalComponentNoPropsWithRefType`, `ExternalComponentNoPropsWithAttributesWithRefType` ([PR #119](https://github.com/shadaj/slinky/pull/119))
++ Bring back the `WithRaw` trait, which makes it possible to access the original object of a read value ([PR #122](https://github.com/shadaj/slinky/pull/122))
++ Fix exceptions when declaring custom tags and attributes in a component class ([PR #118](https://github.com/shadaj/slinky/pull/118))
++ Fix exceptions when reading the null-prototype in Node.js ([PR #121](https://github.com/shadaj/slinky/pull/121))
 
 ## v0.3.2
-+ Improve support for creating custom tags and attributes (see docs for details) [PR #116](https://github.com/shadaj/slinky/pull/116)
++ Improve support for creating custom tags and attributes (see docs for details) ([PR #116](https://github.com/shadaj/slinky/pull/116))
 
 ## v0.3.1
-+ Fix compilation errors when using an `Option` of a component instance in a tag tree [PR #111](https://github.com/shadaj/slinky/pull/111)
-+ Reduce warnings for unused imports when using the `@react` macro annotation [PR #112](https://github.com/shadaj/slinky/pull/112)
++ Fix compilation errors when using an `Option` of a component instance in a tag tree ([PR #111](https://github.com/shadaj/slinky/pull/111))
++ Reduce warnings for unused imports when using the `@react` macro annotation ([PR #112](https://github.com/shadaj/slinky/pull/112))
 
 ## v0.3.0
 ### Highlights
@@ -247,47 +253,47 @@ Similarly, in components that previously took in `AttrPair` and `ReactElement` s
 + The `@react` macro annotation is now compatible with many more use cases, such as pulling values from a companion object, and has improved support in IntelliJ
 
 ### Details
-+ **BREAKING!**: The package `me.shadaj.slinky` has been renamed to `slinky` [PR #103](https://github.com/shadaj/slinky/pull/103)
-+ **BREAKING**: Stateless components that use the `@react` macro annotation must extend the `StatelessComponent` class instead of just `Component` [PR #69](https://github.com/shadaj/slinky/pull/69)
-+ **BREAKING**: Callbacks passed to `setState` are now Scala functions, so there is no need to force implicit conversions [PR #71](https://github.com/shadaj/slinky/pull/71)
-+ **BREAKING**: The tag construction flow now requires attributes to come before children. In addition, an empty list of attributes is no longer allowed. When generating tags with dynamic attributes, you will now need to construct the tag as `tag(attrs.head, attrs.tail: _*)` to satisfy this requirement [PR #73](https://github.com/shadaj/slinky/pull/73)
-+ Add support for portal elements, which were introduced in React 16 [PR #65](https://github.com/shadaj/slinky/pull/65)
-+ Greatly improve IntelliJ support for Slinky with special macro annotation behavior [PR #69](https://github.com/shadaj/slinky/pull/69)
-+ Add an alternative `apply` method to eliminate compiler warnings when using propless components [PR #70](https://github.com/shadaj/slinky/pull/70)
-+ Add better error message when `@react` annotation is used on a component with no `Props` type declaration [PR #72](https://github.com/shadaj/slinky/pull/72)
-+ Better support for converting Slinky types to scalajs-react types when an implicit conversion to `ReactElement` is needed [PR #73](https://github.com/shadaj/slinky/pull/73)
-+ Large performance gains in tag construction, with over 5x improvements for some components! [PR #73](https://github.com/shadaj/slinky/pull/73)
-+ Add missing global HTML attributes: `spellCheck`, `contentEditable`, and `tabIndex` [PR #77](https://github.com/shadaj/slinky/pull/77)
-+ Fix compilation errors when trying to use findDOMNode and passing in an annotated component [PR #78](https://github.com/shadaj/slinky/pull/78)
-+ Add no-callback forceUpdate and make it available in annotated components [PR #78](https://github.com/shadaj/slinky/pull/78)
-+ Fix bugs involving using companion object values from a `@react` annotated component [PR #80](https://github.com/shadaj/slinky/pull/80)
-+ Add a `*` tag for external components that can take any attribute [PR #81](https://github.com/shadaj/slinky/pull/81)
-+ Add support for error boundaries, which were added in React 16 [PR #82](https://github.com/shadaj/slinky/pull/82)
-+ Add support for all `ReactElement` types introduced in React 16, such as numbers and booleans [PR #83](https://github.com/shadaj/slinky/pull/83)
-+ Add remaining methods from ReactDOMServer, including those introduced in React 16 [PR #84](https://github.com/shadaj/slinky/pull/84)
-+ Add the custom `on` attribute for AMP pages, introduced in React 16 [PR #85](https://github.com/shadaj/slinky/pull/85)
-+ Add facade for `React.Children`, including a new type `ReactChildren` for `props.children` [PR #86](https://github.com/shadaj/slinky/pull/86)
-+ Add facade for `ReactDOM.unmountComponentAtNode` [PR #88](https://github.com/shadaj/slinky/pull/88)
-+ Fix mapping of undefined values in a case class. Such values now do not become a property in the written object [PR #95](https://github.com/shadaj/slinky/pull/95)
-+ Add readers for `js.Array[T]` [PR #100](https://github.com/shadaj/slinky/pull/100)
-+ Add common supertype `Tag` for all tag elements to allow abstracting over them [PR #101](https://github.com/shadaj/slinky/pull/101)
-+ Add common supertype `Attr` with the typeclass `supports[Tag]` to allow abstracting over supported attributes (see `TagTest` for example) [PR #101](https://github.com/shadaj/slinky/pull/101)
++ **BREAKING!**: The package `me.shadaj.slinky` has been renamed to `slinky` ([PR #103](https://github.com/shadaj/slinky/pull/103))
++ **BREAKING**: Stateless components that use the `@react` macro annotation must extend the `StatelessComponent` class instead of just `Component` ([PR #69](https://github.com/shadaj/slinky/pull/69))
++ **BREAKING**: Callbacks passed to `setState` are now Scala functions, so there is no need to force implicit conversions ([PR #71](https://github.com/shadaj/slinky/pull/71))
++ **BREAKING**: The tag construction flow now requires attributes to come before children. In addition, an empty list of attributes is no longer allowed. When generating tags with dynamic attributes, you will now need to construct the tag as `tag(attrs.head, attrs.tail: _*)` to satisfy this requirement ([PR #73](https://github.com/shadaj/slinky/pull/73))
++ Add support for portal elements, which were introduced in React 16 ([PR #65](https://github.com/shadaj/slinky/pull/65))
++ Greatly improve IntelliJ support for Slinky with special macro annotation behavior ([PR #69](https://github.com/shadaj/slinky/pull/69))
++ Add an alternative `apply` method to eliminate compiler warnings when using propless components ([PR #70](https://github.com/shadaj/slinky/pull/70))
++ Add better error message when `@react` annotation is used on a component with no `Props` type declaration ([PR #72](https://github.com/shadaj/slinky/pull/72))
++ Better support for converting Slinky types to scalajs-react types when an implicit conversion to `ReactElement` is needed ([PR #73](https://github.com/shadaj/slinky/pull/73))
++ Large performance gains in tag construction, with over 5x improvements for some components! ([PR #73](https://github.com/shadaj/slinky/pull/73))
++ Add missing global HTML attributes: `spellCheck`, `contentEditable`, and `tabIndex` ([PR #77](https://github.com/shadaj/slinky/pull/77))
++ Fix compilation errors when trying to use findDOMNode and passing in an annotated component ([PR #78](https://github.com/shadaj/slinky/pull/78))
++ Add no-callback forceUpdate and make it available in annotated components ([PR #78](https://github.com/shadaj/slinky/pull/78))
++ Fix bugs involving using companion object values from a `@react` annotated component ([PR #80](https://github.com/shadaj/slinky/pull/80))
++ Add a `*` tag for external components that can take any attribute ([PR #81](https://github.com/shadaj/slinky/pull/81))
++ Add support for error boundaries, which were added in React 16 ([PR #82](https://github.com/shadaj/slinky/pull/82))
++ Add support for all `ReactElement` types introduced in React 16, such as numbers and booleans ([PR #83](https://github.com/shadaj/slinky/pull/83))
++ Add remaining methods from ReactDOMServer, including those introduced in React 16 ([PR #84](https://github.com/shadaj/slinky/pull/84))
++ Add the custom `on` attribute for AMP pages, introduced in React 16 ([PR #85](https://github.com/shadaj/slinky/pull/85))
++ Add facade for `React.Children`, including a new type `ReactChildren` for `props.children` ([PR #86](https://github.com/shadaj/slinky/pull/86))
++ Add facade for `ReactDOM.unmountComponentAtNode` ([PR #88](https://github.com/shadaj/slinky/pull/88))
++ Fix mapping of undefined values in a case class. Such values now do not become a property in the written object ([PR #95](https://github.com/shadaj/slinky/pull/95))
++ Add readers for `js.Array[T]` ([PR #100](https://github.com/shadaj/slinky/pull/100))
++ Add common supertype `Tag` for all tag elements to allow abstracting over them ([PR #101](https://github.com/shadaj/slinky/pull/101))
++ Add common supertype `Attr` with the typeclass `supports[Tag]` to allow abstracting over supported attributes (see `TagTest` for example) ([PR #101](https://github.com/shadaj/slinky/pull/101))
 
 ## v0.2.0
 + **BREAKING**: Instead of taking key and refs as additional parameters next to props, they are now taken in through the methods `withKey` and `withRef` (components and external components only)
-+ **BREAKING**: Introduce the experimental macro annotation `@react` to simplify component and external component creation with auto-generated companion object for a component class (or external component object). This is a major change to how applications with Slinky are written, so please see the notes at the end of the changelog [PR #29](https://github.com/shadaj/slinky/pull/29)
++ **BREAKING**: Introduce the experimental macro annotation `@react` to simplify component and external component creation with auto-generated companion object for a component class (or external component object). This is a major change to how applications with Slinky are written, so please see the notes at the end of the changelog ([PR #29](https://github.com/shadaj/slinky/pull/29))
   + **BREAKING**: This change also renames the `Component` class to `ComponentWrapper`. The `Component` class is now used for the `@react` annotation.
-+ **BREAKING**: Rename `ExternalComponentWithTagMods` to `ExternalComponentWithAttributes` and take attributes as a curried parameter instead of an extra parameter after `Props` [PR #26](https://github.com/shadaj/slinky/pull/26)
-+ **BREAKING**: Introduce `ExternalComponentNoProps` and `ExternalComponentNoPropsWithAttributes` for cases where an external component takes no props [PR #58](https://github.com/shadaj/slinky/pull/58)
++ **BREAKING**: Rename `ExternalComponentWithTagMods` to `ExternalComponentWithAttributes` and take attributes as a curried parameter instead of an extra parameter after `Props` ([PR #26](https://github.com/shadaj/slinky/pull/26))
++ **BREAKING**: Introduce `ExternalComponentNoProps` and `ExternalComponentNoPropsWithAttributes` for cases where an external component takes no props ([PR #58](https://github.com/shadaj/slinky/pull/58))
 + **BREAKING**: Slinky now expects that the `-P:scalajs:sjsDefinedByDefault` compiler option is enabled in the `@react` macro annotation []
-+ Have mouse attributes such as `onMouseDown` take a `MouseEvent` instead of just an `Event` [PR #27](https://github.com/shadaj/slinky/pull/27)
-+ Add support for generating `Reader` and `Writer` for sealed traits, value classes, and case objects (through a Magnolia upgrade) [PR #45](https://github.com/shadaj/slinky/pull/45)
-+ Fix bug with hot loading not updating instances of readers and writers [PR #49](https://github.com/shadaj/slinky/pull/49)
-+ Fix bug with hot loading using the wrong proxy component when there are multiple components classes in the tree [PR #50](https://github.com/shadaj/slinky/pull/50)
-+ Add support for reading and writing js.Dynamic (and anything that extends js.Any) [PR #51](https://github.com/shadaj/slinky/pull/51)
-+ Add support for reading and writing union types (js.|) [PR #52](https://github.com/shadaj/slinky/pull/52)
-+ Slinky's implementation of mapping Scala types to JS types is now available as a separate module `slinky-readwrite` [PR #54](https://github.com/shadaj/slinky/pull/54)
-+ Improve type safety of ExternalComponentWithAttributes by restricting the type parameter to tag types [PR #55](https://github.com/shadaj/slinky/pull/55)
++ Have mouse attributes such as `onMouseDown` take a `MouseEvent` instead of just an `Event` ([PR #27](https://github.com/shadaj/slinky/pull/27))
++ Add support for generating `Reader` and `Writer` for sealed traits, value classes, and case objects (through a Magnolia upgrade) ([PR #45](https://github.com/shadaj/slinky/pull/45))
++ Fix bug with hot loading not updating instances of readers and writers ([PR #49](https://github.com/shadaj/slinky/pull/49))
++ Fix bug with hot loading using the wrong proxy component when there are multiple components classes in the tree ([PR #50](https://github.com/shadaj/slinky/pull/50))
++ Add support for reading and writing js.Dynamic (and anything that extends js.Any) ([PR #51](https://github.com/shadaj/slinky/pull/51))
++ Add support for reading and writing union types (js.|) ([PR #52](https://github.com/shadaj/slinky/pull/52))
++ Slinky's implementation of mapping Scala types to JS types is now available as a separate module `slinky-readwrite` ([PR #54](https://github.com/shadaj/slinky/pull/54))
++ Improve type safety of ExternalComponentWithAttributes by restricting the type parameter to tag types ([PR #55](https://github.com/shadaj/slinky/pull/55))
 
 ### `@react` macro annotation (experimental)
 One of Slinky's main goals is to have React components written in Scala look very similar to ES6. In version 0.1.x, Slinky required
@@ -359,10 +365,10 @@ React3(mainCamera = "camera", width = 800, height = 800)
 ```
 
 ## v0.1.1
-+ Have ExternalComponentsWithTagMods take the tag type as a type parameter instead of an abstract type [PR #19](https://github.com/shadaj/slinky/pull/19)
-+ Added support for reading and writing values of type `js.UndefOr[T]` [PR #18](https://github.com/shadaj/slinky/pull/18)
-+ Components and external components with a `Props` type of `Unit` can now be constructed without any parameters, instead of having to pass in `()` as props [PR #12](https://github.com/shadaj/slinky/pull/12)
-+ Boolean attributes, such as `disabled`, can now be used without specifying a value to closer match JSX. For example, a disabled input can now be constructed as `input(disabled)` without providing the `:= true` [PR #14](https://github.com/shadaj/slinky/pull/14)
++ Have ExternalComponentsWithTagMods take the tag type as a type parameter instead of an abstract type ([PR #19](https://github.com/shadaj/slinky/pull/19))
++ Added support for reading and writing values of type `js.UndefOr[T]` ([PR #18](https://github.com/shadaj/slinky/pull/18))
++ Components and external components with a `Props` type of `Unit` can now be constructed without any parameters, instead of having to pass in `()` as props ([PR #12](https://github.com/shadaj/slinky/pull/12))
++ Boolean attributes, such as `disabled`, can now be used without specifying a value to closer match JSX. For example, a disabled input can now be constructed as `input(disabled)` without providing the `:= true` ([PR #14](https://github.com/shadaj/slinky/pull/14))
 
 ## v0.1.0
 + Initial release

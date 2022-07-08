@@ -1,8 +1,8 @@
-<p align="center"><img width="400" src="https://github.com/shadaj/slinky/raw/master/logo.png"/></p>
+<p align="center"><img width="400" src="https://github.com/shadaj/slinky/raw/main/logo.png"/></p>
 <p align="center"><i>Write Scala.js React apps just like you would in ES6</i></p>
 <p align="center">
-  <a href="https://github.com/shadaj/slinky/actions?query=branch%3Amaster">
-    <img src="https://github.com/shadaj/slinky/workflows/Slinky%20CI/badge.svg?branch=master"/>
+  <a href="https://github.com/shadaj/slinky/actions?query=branch%3Amain">
+    <img src="https://github.com/shadaj/slinky/workflows/Slinky%20CI/badge.svg?branch=main"/>
   </a>
   <a href="https://www.scala-js.org">
     <img src="https://www.scala-js.org/assets/badges/scalajs-0.6.17.svg"/>

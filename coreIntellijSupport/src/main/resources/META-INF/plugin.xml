@@ -6,7 +6,7 @@
 
     <description>Typechecking support for the @react macro annotation in the Slinky framework for writing React apps with Scala.</description>
 
-    <idea-version since-build="PATCH" until-build="PATCH"/>
+    <idea-version since-build="PATCH"/>
 
     <depends>org.intellij.scala</depends>
     <depends>com.intellij.modules.java</depends>
