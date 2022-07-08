@@ -1,5 +1,6 @@
 package slinky.core
 
+import scala.scalajs.js
 import org.scalatest.funsuite.AsyncFunSuite
 import org.scalajs.dom.document
 import org.scalajs.dom.Element
@@ -167,6 +168,28 @@ class HooksComponentTest extends AsyncFunSuite {
         () => {
           promise.success(assert(true))
         }
+      }, Seq(props))
+
+      props
+    }
+    
+    ReactDOM.render(component(1), container)
+    ReactDOM.unmountComponentAtNode(container)
+
+    promise.future
+  }
+
+  test("useEffect hook unsubscribe function is called on unmount when it is a js.Function") {
+    val container = document.createElement("div")
+
+    val promise: Promise[Assertion] = Promise()
+    val cleanup: js.Function0[Unit] = () => {
+      promise.success(assert(true))
+    }
+
+    val component = FunctionalComponent[Int] { props =>
+      useEffect(() => {
+        cleanup
       }, Seq(props))
 
       props
@@ -358,6 +381,35 @@ class HooksComponentTest extends AsyncFunSuite {
     assert(refReceiver.current.foo == 123)
   }
 
+  test("useImperativeHandle does not run if dependency does not change") {
+    val container = document.createElement("div")
+
+    trait RefHandle {
+      def foo: Int
+    }
+
+    var memoedValue = 123
+    val component = React.forwardRef(FunctionalComponent { (props: String, ref: ReactRef[RefHandle]) =>
+      useImperativeHandle(ref, () => {
+        val curMemoedValue = memoedValue
+        new RefHandle {
+          def foo = curMemoedValue
+        }
+      }, Seq(props))
+      "": ReactElement // FIXME - implicit conversion from string seems to not trigger in Scala 3
+    })
+
+    val refReceiver = React.createRef[RefHandle]
+    ReactDOM.render(component("first").withRef(refReceiver), container)
+    assert(refReceiver.current.foo == 123)
+
+    memoedValue = 456
+    ReactDOM.render(component("first").withRef(refReceiver), container)
+    assert(refReceiver.current.foo == 123)
+
+    ReactDOM.render(component("second").withRef(refReceiver), container)
+    assert(refReceiver.current.foo == 456)
+  }
 
   test("useLayoutEffect hook fires after mount") {
     val container = document.createElement("div")

@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "react": "16.6.1",
+    "react": "16.6.3",
     "react-native": "0.58.4",
-    "react-test-renderer": "16.6.1",
+    "react-test-renderer": "16.6.3",
     "react-native-mock-render": "0.1.2"
   }
 }
