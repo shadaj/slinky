@@ -14,7 +14,8 @@ module.exports = {
     "path": path.resolve(__dirname, "../../../../build"),
     publicPath: '/',
     "filename": "[name]-bundle.js",
-    libraryTarget: 'umd'
+    libraryTarget: 'umd',
+    globalObject: 'this',
   },
   resolve: {
     alias: {
@@ -60,7 +61,6 @@ module.exports = {
     new StaticSiteGeneratorPlugin({
       crawl: true,
       globals: {
-        window: {},
         ssr: true,
         fs: require('fs'),
         __dirname: __dirname
