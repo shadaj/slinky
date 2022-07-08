@@ -100,10 +100,10 @@ import scala.scalajs.js
             "Resources"
           ),
           a(
-            href := "https://github.com/shadaj/slinky/blob/master/CHANGELOG.md",
+            href := "https://github.com/shadaj/slinky/blob/main/CHANGELOG.md",
             style := smallLinkStyle
           )(
-            "v0.6.8"
+            "v0.7.2"
           ),
           a(
             href := "https://github.com/shadaj/slinky",

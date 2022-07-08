@@ -75,7 +75,7 @@ private[slinky] object ReactRaw extends js.Object {
 
   def createRef[T](): ReactRef[T] = js.native
 
-  def forwardRef[P](fn: js.Object): js.Object = js.native
+  def forwardRef[P](fn: js.Object): js.Function = js.native
 
   def memo(fn: js.Function, compare: js.UndefOr[js.Object]): js.Function = js.native
 
@@ -115,11 +115,11 @@ object React {
   def forwardRef[P, R](component: FunctionalComponentTakingRef[P, R]): FunctionalComponentForwardedRef[P, R] =
     new FunctionalComponentForwardedRef(ReactRaw.forwardRef(component.component))
 
-  def memo[P](component: FunctionalComponent[P]): FunctionalComponent[P] =
-    new FunctionalComponent(ReactRaw.memo(component.component, js.undefined))
+  def memo[P, R, C](component: FunctionalComponentCore[P, R, C]): C =
+    component.makeAnother(ReactRaw.memo(component.component, js.undefined))
 
-  def memo[P](component: FunctionalComponent[P], compare: (P, P) => Boolean): FunctionalComponent[P] =
-    new FunctionalComponent(
+  def memo[P, R, C](component: FunctionalComponentCore[P, R, C], compare: (P, P) => Boolean): C =
+    component.makeAnother(
       ReactRaw.memo(
         component.component,
         ((oldProps: js.Dynamic, newProps: js.Dynamic) => {
@@ -180,7 +180,8 @@ private[slinky] object HooksRaw extends js.Object {
 
   def useRef[T](initialValue: T): ReactRef[T] = js.native
 
-  def useImperativeHandle[R](ref: ReactRef[R], value: js.Function0[R]): Unit = js.native
+  def useImperativeHandle[R](ref: ReactRef[R], value: js.Function0[R]): Unit                         = js.native
+  def useImperativeHandle[R](ref: ReactRef[R], value: js.Function0[R], deps: js.Array[js.Any]): Unit = js.native
 
   def useLayoutEffect(thunk: js.Function0[EffectCallbackReturn]): Unit                                   = js.native
   def useLayoutEffect(thunk: js.Function0[EffectCallbackReturn], watchedObjects: js.Array[js.Any]): Unit = js.native
@@ -195,6 +196,9 @@ trait EffectCallbackReturn extends js.Object
 object EffectCallbackReturn {
   @inline implicit def fromFunction[T](fn: () => T): EffectCallbackReturn =
     (fn: js.Function0[T]).asInstanceOf[EffectCallbackReturn]
+
+  @inline implicit def fromJSFunction[T](fn: js.Function0[T]): EffectCallbackReturn =
+    fn.asInstanceOf[EffectCallbackReturn]
 
   @inline implicit def fromAny[T](value: T): EffectCallbackReturn =
     js.undefined.asInstanceOf[EffectCallbackReturn]
@@ -261,6 +265,9 @@ object Hooks {
 
   @inline def useImperativeHandle[R](ref: ReactRef[R], value: () => R): Unit =
     HooksRaw.useImperativeHandle[R](ref, value)
+
+  @inline def useImperativeHandle[R](ref: ReactRef[R], value: () => R, deps: Iterable[Any]): Unit =
+    HooksRaw.useImperativeHandle[R](ref, value, deps.toJSArray.asInstanceOf[js.Array[js.Any]])
 
   @inline def useLayoutEffect[T](thunk: () => T)(implicit conv: T => EffectCallbackReturn): Unit =
     HooksRaw.useLayoutEffect(() => conv(thunk()))

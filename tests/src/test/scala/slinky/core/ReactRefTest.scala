@@ -50,4 +50,18 @@ class ReactRefTest extends AsyncFunSuite {
 
     assert(divRef.current.innerHTML == "hello")
   }
+
+  test("Can memo a functional component with forwarded ref") {
+    val forwarded = React.memo(React.forwardRef[String, html.Div](FunctionalComponent((props, rf) => {
+      div(ref := rf)(props)
+    })))
+
+    val divRef = React.createRef[html.Div]
+    ReactDOM.render(
+      forwarded("hello").withRef(divRef),
+      dom.document.createElement("div")
+    )
+
+    assert(divRef.current.innerHTML == "hello")
+  }
 }

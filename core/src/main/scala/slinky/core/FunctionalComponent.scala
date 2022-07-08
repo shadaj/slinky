@@ -36,15 +36,25 @@ object KeyAddingStage {
     f.map(stage)(build)
 }
 
-final class FunctionalComponent[P] private[core] (private[core] val component: js.Function) extends AnyVal {
+trait FunctionalComponentCore[P, R, S] extends Any { self: S =>
   type Props  = P
-  type Result = KeyAddingStage
+  type Result = R
+
+  private[core] def component: js.Function
 
   private[core] def componentWithReader(propsReader: Reader[P]) = {
     component.asInstanceOf[js.Dynamic].__propsReader = propsReader.asInstanceOf[js.Object]
     component
   }
 
+  private[core] def makeAnother(underlying: js.Function): S
+
+  @inline def apply(props: P): R
+}
+
+final class FunctionalComponent[P] private[core] (private[core] val component: js.Function)
+    extends AnyVal
+    with FunctionalComponentCore[P, KeyAddingStage, FunctionalComponent[P]] {
   @inline def apply(props: P): KeyAddingStage =
     new KeyAddingStage(
       js.Array(
@@ -54,17 +64,14 @@ final class FunctionalComponent[P] private[core] (private[core] val component: j
         )
       )
     )
+
+  private[core] def makeAnother(underlying: js.Function): FunctionalComponent[P] =
+    new FunctionalComponent[P](underlying)
 }
 
-final class FunctionalComponentTakingRef[P, R] private[core] (private[core] val component: js.Function) extends AnyVal {
-  type Props  = P
-  type Result = KeyAddingStage
-
-  private[core] def componentWithReader(propsReader: Reader[P]) = {
-    component.asInstanceOf[js.Dynamic].__propsReader = propsReader.asInstanceOf[js.Object]
-    component
-  }
-
+final class FunctionalComponentTakingRef[P, R] private[core] (private[core] val component: js.Function)
+    extends AnyVal
+    with FunctionalComponentCore[P, KeyAddingStage, FunctionalComponentTakingRef[P, R]] {
   @inline def apply(props: P): KeyAddingStage =
     new KeyAddingStage(
       js.Array(
@@ -74,17 +81,14 @@ final class FunctionalComponentTakingRef[P, R] private[core] (private[core] val 
         )
       )
     )
+
+  private[core] def makeAnother(underlying: js.Function): FunctionalComponentTakingRef[P, R] =
+    new FunctionalComponentTakingRef[P, R](underlying)
 }
 
-final class FunctionalComponentForwardedRef[P, R] private[core] (private[core] val component: js.Any) extends AnyVal {
-  type Props  = P
-  type Result = KeyAndRefAddingStage[R]
-
-  private[core] def componentWithReader(propsReader: Reader[P]) = {
-    component.asInstanceOf[js.Dynamic].__propsReader = propsReader.asInstanceOf[js.Object]
-    component
-  }
-
+final class FunctionalComponentForwardedRef[P, R] private[core] (private[core] val component: js.Function)
+    extends AnyVal
+    with FunctionalComponentCore[P, KeyAndRefAddingStage[R], FunctionalComponentForwardedRef[P, R]] {
   @inline def apply(props: P): KeyAndRefAddingStage[R] =
     new KeyAndRefAddingStage[R](
       js.Array(
@@ -94,10 +98,13 @@ final class FunctionalComponentForwardedRef[P, R] private[core] (private[core] v
         )
       )
     )
+
+  private[core] def makeAnother(underlying: js.Function): FunctionalComponentForwardedRef[P, R] =
+    new FunctionalComponentForwardedRef[P, R](underlying)
 }
 
 object FunctionalComponent {
-  def apply[P](fn: P => ReactElement)(implicit name: FunctionalComponentName) =
+  @inline def apply[P](fn: P => ReactElement)(implicit name: FunctionalComponentName) =
     new FunctionalComponent[P]({
       var ret: js.Function1[js.Object, ReactElement] = null
       ret = ((obj: js.Object) => {
@@ -115,7 +122,7 @@ object FunctionalComponent {
       ret
     })
 
-  def apply[P, R](fn: (P, ReactRef[R]) => ReactElement)(implicit name: FunctionalComponentName) =
+  @inline def apply[P, R](fn: (P, ReactRef[R]) => ReactElement)(implicit name: FunctionalComponentName) =
     new FunctionalComponentTakingRef[P, R]({
       var ret: js.Function2[js.Object, ReactRef[R], ReactElement] = null
       ret = ((obj: js.Object, ref: ReactRef[R]) => {
