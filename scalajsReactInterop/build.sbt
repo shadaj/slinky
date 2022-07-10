@@ -16,7 +16,7 @@ libraryDependencies ++= {
   }
 }
 
-libraryDependencies += "org.scalatest" %%% "scalatest" % "3.2.12" % Test
+libraryDependencies += "org.scalatest" %%% "scalatest" % "3.2.9" % Test
 
 Test / jsEnv := new org.scalajs.jsenv.jsdomnodejs.JSDOMNodeJSEnv()
 
