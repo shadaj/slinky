@@ -193,7 +193,7 @@ lazy val vr =
 lazy val hot = project.settings(macroAnnotationSettings, librarySettings, crossScalaSettings).dependsOn(core)
 
 val scalaJSVersion =
-  Option(System.getenv("SCALAJS_VERSION")).getOrElse("1.6.0")
+  Option(System.getenv("SCALAJS_VERSION")).getOrElse("1.10.1")
 
 lazy val scalajsReactInterop = project
   .settings(
