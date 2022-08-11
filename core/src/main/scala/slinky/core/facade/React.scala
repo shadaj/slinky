@@ -1,13 +1,5 @@
 package slinky.core.facade
 
-import slinky.core._
-
-import scala.scalajs.js
-import js.|
-import scala.annotation.unchecked.uncheckedVariance
-import scala.scalajs.js.annotation.{JSImport, JSName}
-import scala.scalajs.js.JSConverters._
-
 @js.native
 trait ReactElement extends js.Object with ReactElementMod
 
@@ -60,6 +52,10 @@ trait ReactRef[T] extends js.Object {
   var current: T @uncheckedVariance = js.native
 }
 
+trait LazyResult[P] extends js.Object {
+  val default: FunctionalComponent[P]
+}
+
 @js.native
 @JSImport("react", JSImport.Namespace, "React")
 private[slinky] object ReactRaw extends js.Object {
@@ -78,6 +74,9 @@ private[slinky] object ReactRaw extends js.Object {
   def forwardRef[P](fn: js.Object): js.Function = js.native
 
   def memo(fn: js.Function, compare: js.UndefOr[js.Object]): js.Function = js.native
+
+  final def `lazy`[P](f: js.Function0[js.Promise[LazyResult[P]]]): FunctionalComponent[P] = js.native
+
 
   @js.native
   object Children extends js.Object {
