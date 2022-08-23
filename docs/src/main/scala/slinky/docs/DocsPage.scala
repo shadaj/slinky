@@ -3,14 +3,16 @@ package slinky.docs
 import slinky.core.{FunctionalComponent, ReactComponentClass}
 import slinky.core.annotations.react
 import slinky.core.facade.{Fragment, ReactElement}
-import slinky.core.facade.Hooks._
 import slinky.remarkreact.{ReactRenderer, Remark}
 import slinky.web.html._
-import org.scalajs.dom.raw.XMLHttpRequest
-import slinky.reacthelmet.Helmet
+import slinky.next.Head
+import slinky.next.Router
 
 import scala.scalajs.js
 import js.Dynamic.literal
+import scala.concurrent.Future
+import scala.scalajs.js.JSConverters._
+import js.annotation.JSImport
 
 @react object RemarkCode {
   case class Props(children: Seq[String])
@@ -64,7 +66,7 @@ import js.Dynamic.literal
   val component = FunctionalComponent[Props] { props =>
     Fragment(
       props.children.headOption.map { head =>
-        Helmet(
+        Head(
           title(s"$head | Slinky - Write React apps in Scala just like ES6")
         )
       },
@@ -93,28 +95,28 @@ import js.Dynamic.literal
 object DocsTree {
   val tree: List[(String, List[(String, String)])] = List(
     "Core Concepts" -> List(
-      "Installation" -> "/docs/installation/",
-      "Hello World!" -> "/docs/hello-world/",
-      "Why Slinky?" -> "/docs/why-slinky/",
-      "The Tag API" -> "/docs/the-tag-api/",
-      "Writing Components" -> "/docs/writing-components/",
-      "External Components" -> "/docs/external-components/",
-      "Functional Components and Hooks" -> "/docs/functional-components-and-hooks/",
-      "React Native and VR" -> "/docs/native-and-vr/",
-      "Electron" -> "/docs/electron/",
+      "Installation" -> "installation",
+      "Hello World!" -> "hello-world",
+      "Why Slinky?" -> "why-slinky",
+      "The Tag API" -> "the-tag-api",
+      "Writing Components" -> "writing-components",
+      "External Components" -> "external-components",
+      "Functional Components and Hooks" -> "functional-components-and-hooks",
+      "React Native and VR" -> "native-and-vr",
+      "Electron" -> "electron",
     ),
     "Advanced Guides" -> List(
-      "Technical Overview" -> "/docs/technical-overview/",
-      "Custom Tags and Attributes" -> "/docs/custom-tags-and-attributes/",
-      "Fragments and Portals" -> "/docs/fragments-and-portals/",
-      "Context" -> "/docs/context/",
-      "Refs" -> "/docs/refs/",
-      "Error Boundaries" -> "/docs/error-boundaries/",
-      "Exporting Components" -> "/docs/exporting-components/",
-      "Scala.js React Interop" -> "/docs/scalajs-react-interop/",
-      "Abstracting Over Tags" -> "/docs/abstracting-over-tags/",
+      "Technical Overview" -> "technical-overview",
+      "Custom Tags and Attributes" -> "custom-tags-and-attributes",
+      "Fragments and Portals" -> "fragments-and-portals",
+      "Context" -> "context",
+      "Refs" -> "refs",
+      "Error Boundaries" -> "error-boundaries",
+      "Exporting Components" -> "exporting-components",
+      "Scala.js React Interop" -> "scalajs-react-interop",
+      "Abstracting Over Tags" -> "abstracting-over-tags",
     ),"" -> List(
-      "Resources" -> "/docs/resources/",
+      "Resources" -> "resources",
     )
   )
 }
@@ -131,88 +133,128 @@ object TrackSSRDocs {
 }
 
 @react object DocsPage {
-  def docsFilePath(props: js.Dynamic) = {
-    val matchString = props.selectDynamic("match").params.selectDynamic("0").toString
+  def docsFilePath(query: js.Dynamic) = {
+    val matchString = query.id.toString//props.selectDynamic("match").params.selectDynamic("0").toString
     s"/docs/${matchString.reverse.dropWhile(_ == '/').reverse}.md"
   }
 
-  val component = FunctionalComponent[js.Dynamic] { props =>
-    val matchString = props.selectDynamic("match").params.selectDynamic("0").toString
-    val selectedGroup = DocsTree.tree.find(_._2.exists(_._2 == s"/docs/$matchString")).get._1
-    val (document, setDocument) = useState(() =>{
-        if (Main.isSSR) {
-        Some(TrackSSRDocs.getPublic(docsFilePath(props)))
-      } else if (js.typeOf(js.Dynamic.global.window.publicSSR) != "undefined") {
-        js.Dynamic.global.window.publicSSR.asInstanceOf[js.Dictionary[String]].get(docsFilePath(props))
-      } else None
-    })
+  case class Props(document: String)
 
-    useEffect(() => {
-      val xhr = new XMLHttpRequest
-      xhr.onload = _ => {
-        setDocument(Some(xhr.responseText))
-      }
+  val component = FunctionalComponent[Props] { props =>
+    val query = Router.useRouter().query
+    val matchString = query.id.toString
 
-      xhr.open("GET", docsFilePath(props))
-      xhr.send()
-    }, Seq(docsFilePath(props)))
+    val document = props.document
 
-    div(className := "article fill-right", style := literal(
-      marginTop = "40px",
-      paddingLeft = "15px",
-      boxSizing = "border-box"
-    ))(
-      div(style := literal(
-        display = "flex",
-        flexDirection = "row"
-      ), className := "docs-page")(
+    DocsTree.tree.find(_._2.exists(_._2 == matchString)).map { case (selectedGroup, _) =>
+      div(className := "article fill-right", style := literal(
+        marginTop = "40px",
+        paddingLeft = "15px",
+        boxSizing = "border-box"
+      ))(
         div(style := literal(
-          width = "calc(100% - 300px)"
-        ), className := "docs-content")(
-          div(style := literal(maxWidth = "1400px"))(
-            document.map { t =>
+          display = "flex",
+          flexDirection = "row"
+        ), className := "docs-page")(
+          div(style := literal(
+            width = "calc(100% - 300px)"
+          ), className := "docs-content")(
+            div(style := literal(maxWidth = "1400px"))(
               Remark().use(ReactRenderer, literal(
                 remarkReactComponents = literal(
                   h1 = RemarkH1.component: ReactComponentClass[_],
                   h2 = RemarkH2.component: ReactComponentClass[_],
                   code = RemarkCode.component: ReactComponentClass[_]
                 )
-              )).processSync(t).result
-            }
-          )
-        ),
-        div(style := literal(
-          width = "300px",
-          marginLeft = "20px"
-        ), className := "docs-sidebar")(
-          div(
-            style := literal(
-              position = "fixed",
-              top = "60px",
-              height = "calc(100vh - 60px)",
-              backgroundColor = "#f7f7f7",
-              borderLeft = "1px solid #ececec",
-              paddingTop = "40px",
-              paddingRight = "1000px",
-              boxSizing = "border-box"
-            ),
-            className := "docs-sidebar-content"
-          )(
-            nav(style := literal(
-              position = "relative",
-              paddingLeft = "20px",
-              width = "300px"
-            ))(
-              DocsTree.tree.map { case (group, value) =>
-                DocsGroup(
-                  name = group,
-                  isOpen = group == selectedGroup
-                )(value).withKey(group)
-              }
+              )).processSync(document).result
+            )
+          ),
+          div(style := literal(
+            width = "300px",
+            marginLeft = "20px"
+          ), className := "docs-sidebar")(
+            div(
+              style := literal(
+                position = "fixed",
+                top = "60px",
+                height = "calc(100vh - 60px)",
+                backgroundColor = "#f7f7f7",
+                borderLeft = "1px solid #ececec",
+                paddingTop = "40px",
+                paddingRight = "1000px",
+                boxSizing = "border-box"
+              ),
+              className := "docs-sidebar-content"
+            )(
+              nav(style := literal(
+                position = "relative",
+                paddingLeft = "20px",
+                width = "300px"
+              ))(
+                DocsTree.tree.map { case (group, value) =>
+                  DocsGroup(
+                    name = group,
+                    curId = matchString,
+                    isOpen = group == selectedGroup
+                  )(value).withKey(group)
+                }
+              )
             )
           )
         )
       )
-    )
+    }
+  }
+
+  object Next {
+    import slinky.core.ReactComponentClass
+    import scala.scalajs.js.annotation.JSExportTopLevel
+
+    @JSExportTopLevel(name = "default", moduleID = "docs-id")
+    val component: ReactComponentClass[_] = DocsPage.component
+  }
+
+  object NextServer {
+    import scala.scalajs.js.annotation.JSExportTopLevel
+
+    implicit val ec: scala.concurrent.ExecutionContext = scala.concurrent.ExecutionContext.global
+
+    @JSExportTopLevel(name = "getStaticPaths", moduleID = "docs-id-server")
+    def getStaticPaths(): js.Promise[js.Object] = {
+      Future(
+        js.Dynamic.literal(
+          paths = DocsTree.tree.flatMap { case (group, value) =>
+            value.map { case (name, id) =>
+              js.Dynamic.literal(
+                params = js.Dynamic.literal(
+                  id = id
+                )
+              )
+            }
+          }.toJSArray,
+          fallback = false
+        )
+      ).toJSPromise
+    }
+
+    @JSExportTopLevel(name = "getStaticProps", moduleID = "docs-id-server")
+    def getStaticProps(props: js.Dynamic): js.Promise[js.Object] = {
+      fs.promises.readFile(s"public/docs/${props.params.id}.md", "UTF-8").toFuture.map { t =>
+        js.Dynamic.literal(
+          props = js.Dynamic.literal(
+            document = t
+          )
+        )
+      }.toJSPromise
+    }
+  }
+}
+
+@js.native
+@JSImport("fs", JSImport.Namespace)
+object fs extends js.Object {
+  @js.native
+  object promises extends js.Object {
+    def readFile(path: String, encoding: String): js.Promise[String] = js.native
   }
 }

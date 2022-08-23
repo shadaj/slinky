@@ -208,9 +208,6 @@ lazy val docsMacros = project.settings(macroAnnotationSettings).dependsOn(web, h
 lazy val docs =
   project.settings(librarySettings, macroAnnotationSettings).dependsOn(web, hot, docsMacros, reactrouter, history)
 
-lazy val docsNext =
-  project.settings(librarySettings, macroAnnotationSettings).dependsOn(web, hot, docsMacros, reactrouter, history)
-
 ThisBuild / updateIntellij := {}
 val intelliJVersion = "203.6682.168" // 2020.3
 

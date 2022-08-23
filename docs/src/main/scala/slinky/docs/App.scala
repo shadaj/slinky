@@ -1,33 +1,27 @@
 package slinky.docs
 
-import slinky.core.StatelessComponent
 import slinky.core.annotations.react
-import slinky.docs.MainPageContent
 import slinky.web.html._
 
 import scala.scalajs.js
-import scala.scalajs.js.Dynamic.literal
-import scala.scalajs.js.annotation.JSImport
 
-import org.scalajs.dom
 import slinky.core.FunctionalComponent
 import slinky.core.ReactComponentClass
 import slinky.core.facade.Fragment
-import slinky.core.ExternalComponentNoProps
 import slinky.core.CustomAttribute
 
 import slinky.next.Head
 
-@JSImport("resources/index.module.css", JSImport.Default)
-@js.native
-object AppCSS extends js.Object
+// @JSImport("resources/index.module.css", JSImport.Default)
+// @js.native
+// object AppCSS extends js.Object
 
 @react object App {
-  val css = AppCSS
+  // val css = AppCSS
 
   val charSet = CustomAttribute[String]("charSet")
 
-  case class Props(Component: ReactComponentClass[Unit])
+  case class Props(Component: ReactComponentClass[js.Object], pageProps: js.Object)
   val component = FunctionalComponent[Props] { props =>
     Fragment(
       Head(
@@ -100,7 +94,7 @@ object AppCSS extends js.Object
       div(style := js.Dynamic.literal(
         marginTop = "60px"
       ))(
-        // props.Component(())
+        props.Component(props.pageProps)
       )
     )
   }

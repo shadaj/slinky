@@ -4,8 +4,10 @@ import slinky.core.FunctionalComponent
 import slinky.core.annotations.react
 import slinky.reactrouter.Link
 import slinky.web.html._
+import slinky.next.Image
 
 import scala.scalajs.js.Dynamic.literal
+import slinky.core.ReactComponentClass
 
 @react object Jumbotron {
   val component = FunctionalComponent[Unit](_ => {
@@ -18,15 +20,14 @@ import scala.scalajs.js.Dynamic.literal
       display = "flex",
       flexDirection = "column"
     ))(
-      img(
+      Image(src = SlinkyLogo, layout = "raw", priority = true)(
         style := literal(
           maxWidth = "100%",
           maxHeight = "45vh",
           display = "block",
           marginLeft = "auto",
           marginRight = "auto"
-        ),
-        src := SlinkyLogo.asInstanceOf[String]
+        )
       ),
       h2(
         style := literal(
@@ -43,14 +44,14 @@ import scala.scalajs.js.Dynamic.literal
         flexDirection = "row",
         alignSelf = "center"
       ))(
-        Link(to = "/docs/installation/")(style := literal(
-          padding = "15px",
-          backgroundColor = "#DC322F",
-          color = "white",
-          fontSize = "30px"
-        ))(
-          "Get Started"
-        )
+        // Link(to = "/docs/installation/")(style := literal(
+        //   padding = "15px",
+        //   backgroundColor = "#DC322F",
+        //   color = "white",
+        //   fontSize = "30px"
+        // ))(
+        //   "Get Started"
+        // )
       )
     )
   })
