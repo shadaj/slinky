@@ -5,16 +5,14 @@ import slinky.readwrite.Reader
 import scala.scalajs.js
 import scala.scalajs.js.ConstructorTag
 import slinky.readwrite.Writer
-import slinky.core.facade.React
-import slinky.core.facade.ReactElement
 
 @js.native
 trait ReactComponentClass[P] extends js.Object
 
 object ReactComponentClass {
   implicit class RichReactComponentClass[P: Writer](val c: ReactComponentClass[P]) {
-    @inline def apply(props: P): ReactElement =
-      React.createElement(c, implicitly[Writer[P]].write(props).asInstanceOf[js.Dictionary[js.Any]])
+    @inline def apply(props: P): BuildingComponent[Nothing, js.Object] =
+      new BuildingComponent(js.Array(c.asInstanceOf[js.Any], implicitly[Writer[P]].write(props).asInstanceOf[js.Dictionary[js.Any]]))
   }
 
   implicit def wrapperToClass[T <: BaseComponentWrapper](wrapper: T)(

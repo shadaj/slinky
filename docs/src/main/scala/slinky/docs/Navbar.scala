@@ -7,7 +7,6 @@ import slinky.next.{Image, Link}
 import slinky.web.html._
 
 import scala.scalajs.js
-import slinky.web.svg.overflow
 
 @react object Navbar {
   val linkStyle = js.Dynamic.literal(
