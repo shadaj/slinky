@@ -1,5 +1,5 @@
 {
-  "private": true,,
+  "private": true,
   "dependencies": {
     "jsdom": "^9.12.0"
   }

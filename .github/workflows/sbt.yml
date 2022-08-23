@@ -56,7 +56,7 @@ jobs:
     - name: Build Docs Site
       run: sbt docs/fullLinkJS
     - name: Export Next.js
-      run: cd docs && npm run export
+      run: cd docs && npm install && npm run export
   build-intellij-plugin:
     runs-on: ubuntu-latest
     steps:
