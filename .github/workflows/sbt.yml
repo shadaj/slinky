@@ -54,11 +54,9 @@ jobs:
     - name: Install NPM Dependencies
       run: npm install
     - name: Build Docs Site
-      run: sbt docs/fullOptJS::webpack
-    - name: Report Bundle Size
-      run: export BUNDLESIZE_GITHUB_TOKEN=`echo $BUNDLESIZE_TOKEN | base64 --decode`; npx bundlesize
-      env:
-        BUNDLESIZE_TOKEN: N2JjZDIxYjA1OGU1YzkwOWVkZWYzOWQ5MWYyZjRhYTgyMzE3MzY3Mgo=
+      run: sbt docs/fullLinkJS
+    - name: Export Next.js
+      run: cd docs && npm run export
   build-intellij-plugin:
     runs-on: ubuntu-latest
     steps:
