@@ -60,7 +60,7 @@ import slinky.web.svg.overflow
             a(style := js.Dynamic.literal(
               marginRight = "50px"
             ))(
-              Image(src = SlinkyHorizontalLogo, layout = "raw", priority = true)(
+              Image(src = SlinkyHorizontalLogo, layout = "raw", priority = true, loader = (a: js.Dynamic) => a.src)(
                 style := js.Dynamic.literal(
                   height = "50px",
                   width = "auto"

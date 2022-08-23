@@ -2,12 +2,11 @@ package slinky.docs.homepage
 
 import slinky.core.FunctionalComponent
 import slinky.core.annotations.react
-import slinky.reactrouter.Link
 import slinky.web.html._
 import slinky.next.Image
 
+import scala.scalajs.js
 import scala.scalajs.js.Dynamic.literal
-import slinky.core.ReactComponentClass
 
 @react object Jumbotron {
   val component = FunctionalComponent[Unit](_ => {
@@ -20,7 +19,7 @@ import slinky.core.ReactComponentClass
       display = "flex",
       flexDirection = "column"
     ))(
-      Image(src = SlinkyLogo, layout = "raw", priority = true)(
+      Image(src = SlinkyLogo, layout = "raw", priority = true, loader = (a: js.Dynamic) => a.src)(
         style := literal(
           maxWidth = "100%",
           maxHeight = "45vh",
