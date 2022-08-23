@@ -7,6 +7,7 @@ import slinky.next.Image
 
 import scala.scalajs.js
 import scala.scalajs.js.Dynamic.literal
+import slinky.next.Link
 
 @react object Jumbotron {
   val component = FunctionalComponent[Unit](_ => {
@@ -43,15 +44,15 @@ import scala.scalajs.js.Dynamic.literal
         flexDirection = "row",
         alignSelf = "center"
       ))(
-        // Link(to = "/docs/installation/")(style := literal(
-        //   padding = "15px",
-        //   backgroundColor = "#DC322F",
-        //   color = "white",
-        //   fontSize = "30px"
-        // ))(
-        //   "Get Started"
-        // )
-      )
+        Link(href = "/docs/installation/")(a(style := literal(
+          padding = "15px",
+          backgroundColor = "#DC322F",
+          color = "white",
+          fontSize = "30px"
+        ))(
+          "Get Started"
+        )
+      ))
     )
   })
 }
