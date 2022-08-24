@@ -90,7 +90,7 @@ object Homepage {
     import slinky.core.ReactComponentClass
     import scala.scalajs.js.annotation.JSExportTopLevel
 
-    @JSExportTopLevel(name = "default", moduleID = "index")
-    val component: ReactComponentClass[_] = Homepage
+    @JSExportTopLevel(name = "component", moduleID = "index")
+    def component(): ReactComponentClass[_] = Homepage
   }
 }

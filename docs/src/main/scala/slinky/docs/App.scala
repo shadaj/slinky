@@ -45,7 +45,7 @@ import slinky.next.Head
     import slinky.core.ReactComponentClass
     import scala.scalajs.js.annotation.JSExportTopLevel
 
-    @JSExportTopLevel(name = "default", moduleID = "_app")
-    val component: ReactComponentClass[_] = App.component
+    @JSExportTopLevel(name = "component", moduleID = "_app")
+    def component(): ReactComponentClass[_] = App.component
   }
 }

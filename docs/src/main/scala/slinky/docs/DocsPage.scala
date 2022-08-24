@@ -210,8 +210,8 @@ object TrackSSRDocs {
     import slinky.core.ReactComponentClass
     import scala.scalajs.js.annotation.JSExportTopLevel
 
-    @JSExportTopLevel(name = "default", moduleID = "docs-id")
-    val component: ReactComponentClass[_] = DocsPage.component
+    @JSExportTopLevel(name = "component", moduleID = "docs-id")
+    def component(): ReactComponentClass[_] = DocsPage.component
   }
 
   object NextServer {

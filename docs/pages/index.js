@@ -1,3 +1,3 @@
-import { default as Component } from 'scala/index'
+import { component } from 'scala/index'
 
-export default Component;
+export default component();

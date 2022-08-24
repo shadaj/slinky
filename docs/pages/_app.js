@@ -1,6 +1,6 @@
 import "resources/globals.css"
 import "resources/index.css"
 
-import { default as Component } from 'scala/_app'
+import { component } from 'scala/_app'
 
-export default Component;
+export default component();

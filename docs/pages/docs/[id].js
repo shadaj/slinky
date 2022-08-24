@@ -1,5 +1,5 @@
-import { default as Component } from 'scala/docs-id'
+import { component } from 'scala/docs-id'
 
-export default Component;
+export default component();
 
 export { getStaticProps, getStaticPaths } from 'scala/docs-id-server';
