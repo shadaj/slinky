@@ -84,3 +84,13 @@ object SlinkyLogo extends js.Object
     )
   }
 }
+
+object Homepage {
+  object Next {
+    import slinky.core.ReactComponentClass
+    import scala.scalajs.js.annotation.JSExportTopLevel
+
+    @JSExportTopLevel(name = "component", moduleID = "index")
+    def component(): ReactComponentClass[_] = Homepage
+  }
+}
