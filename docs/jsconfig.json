@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "resources/*": ["src/main/resources/*"],
+      "scala/*": ["target/next-modules/*"]
+    }
+  }
+}

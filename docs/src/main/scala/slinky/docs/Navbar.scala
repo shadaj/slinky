@@ -3,7 +3,7 @@ package slinky.docs
 import slinky.core.FunctionalComponent
 import slinky.core.annotations.react
 import slinky.docs.homepage.SlinkyHorizontalLogo
-import slinky.reactrouter.Link
+import slinky.next.{Image, Link}
 import slinky.web.html._
 
 import scala.scalajs.js
@@ -21,7 +21,7 @@ import scala.scalajs.js
   val smallLinkStyle = js.Dynamic.literal(
     color = "white",
     fontSize = "15px",
-    fontWeight = 100,
+    fontWeight = 200,
     marginLeft = "30px",
     textDecoration = "none"
   )
@@ -37,13 +37,14 @@ import scala.scalajs.js
       div(
         style := js.Dynamic.literal(
           display = "flex",
-          height = "60px",
+          minHeight = "60px",
           flexDirection = "row",
           alignItems = "center",
           justifyContent = "space-between",
-          maxWidth = "1400px",
+          maxWidth = "calc(min(1400px, 100vw - 80px))",
           marginLeft = "auto",
-          marginRight = "auto"
+          marginRight = "auto",
+          overflowX = "auto"
         )
       )(
         div(
@@ -51,17 +52,19 @@ import scala.scalajs.js
             display = "flex",
             height = "100%",
             alignItems = "center",
-            minWidth = "150px"
+            minWidth = "150px",
           )
         )(
-          Link(to = "/")(
-            style := js.Dynamic.literal(
+          Link(href = "/")(
+            a(style := js.Dynamic.literal(
               marginRight = "50px"
-            )
-          )(
-            img(
-              height := "50",
-              src := SlinkyHorizontalLogo.asInstanceOf[String]
+            ))(
+              Image(src = SlinkyHorizontalLogo, layout = "raw", priority = true, loader = (a: js.Dynamic) => a.src)(
+                style := js.Dynamic.literal(
+                  height = "50px",
+                  width = "auto"
+                )
+              )
             )
           )
         ),
@@ -73,9 +76,9 @@ import scala.scalajs.js
             marginRight = "auto"
           )
         )(
-          Link(to = "/docs/installation/")(style := linkStyle)(
+          Link(href = "/docs/installation/")(a(style := linkStyle)(
             "Docs"
-          )
+          ))
         ),
         div(
           style := js.Dynamic.literal(
@@ -93,12 +96,10 @@ import scala.scalajs.js
             "Community"
           ),
           Link(
-            to = "/docs/resources/"
-          )(
-            style := smallLinkStyle
-          )(
+            href = "/docs/resources/"
+          )(a(style := smallLinkStyle)(
             "Resources"
-          ),
+          )),
           a(
             href := "https://github.com/shadaj/slinky/blob/main/CHANGELOG.md",
             style := smallLinkStyle
