@@ -1,6 +1,14 @@
 # Changelog
 
 ## vNEXT
+### Highlights :tada:
++ Includes the core set of changes required to make Slinky work well with Next.js (including module splitting). The [Slinky docs site](https://slinky.dev) now is built with Next.js! [PR #588](https://github.com/shadaj/slinky/pull/588)
+
+### Breaking Changes :warning:
++ Slinky now requires Scala.js 1.9.0 or higher, but libraries published against older versions of Slinky should continue to work [PR #588](https://github.com/shadaj/slinky/pull/588)
+
+### Bug Fixes :bug:
++ Fix stale version of components being rendered when hot reloading is used with module splitting [PR #588](https://github.com/shadaj/slinky/pull/588)
 
 ## [v0.7.2](https://slinky.dev) (replaced v0.7.1)
 ### Bug Fixes :bug:

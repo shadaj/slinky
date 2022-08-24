@@ -1,0 +1,24 @@
+{
+  "name": "docs-next",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "export": "next build && next export",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "next": "12.1.6",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-syntax-highlighter": "^15.5.0",
+    "remark": "^12.0.1",
+    "remark-react": "^7.0.1"
+  },
+  "devDependencies": {
+    "eslint": "8.18.0",
+    "eslint-config-next": "12.1.6"
+  }
+}
