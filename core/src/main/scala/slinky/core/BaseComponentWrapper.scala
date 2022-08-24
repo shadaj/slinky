@@ -222,12 +222,19 @@ abstract class BaseComponentWrapper(sr: StateReaderProvider, sw: StateWriterProv
     patchedConstructor
   }
 
+  private var lastConstructorTag: ConstructorTag[Def] = null.asInstanceOf[ConstructorTag[Def]]
+
   def componentConstructor(
     implicit propsReader: Reader[Props],
     stateWriter: Writer[State],
     stateReader: Reader[State],
     constructorTag: ConstructorTag[Def]
   ): js.Object = {
+    if (lastConstructorTag != constructorTag) {
+      this.patchedConstructor = null
+      lastConstructorTag = constructorTag
+    }
+
     // we only receive non-null reader/writers here when we generate a full typeclass; otherwise we don't set
     // the reader/writer values since we can just use the fallback ones
     // also, we don't overwrite the reader if we already have one since we may have already exported
@@ -245,6 +252,10 @@ abstract class BaseComponentWrapper(sr: StateReaderProvider, sw: StateWriterProv
 
   def apply(p: Props)(implicit constructorTag: ConstructorTag[Def]): KeyAndRefAddingStage[Def] = {
     val propsObj = js.Dictionary("__" -> p.asInstanceOf[js.Any])
+
+    if (lastConstructorTag != constructorTag) {
+      this.componentConstructorInstance = null
+    }
 
     if (componentConstructorInstance == null) {
       componentConstructorInstance = componentConstructor(
