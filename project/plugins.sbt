@@ -15,7 +15,7 @@ libraryDependencies ++= {
 
 {
   if (scalaJSVersion.startsWith("0.6.")) addSbtPlugin("ch.epfl.scala" % "sbt-scalajs-bundler-sjs06" % "0.19.0")
-  else Seq(addSbtPlugin("ch.epfl.scala" % "sbt-scalajs-bundler" % "0.20.0"))
+  else Seq(addSbtPlugin("ch.epfl.scala" % "sbt-scalajs-bundler" % "0.21.0"))
 }
 
 libraryDependencies ++= {
