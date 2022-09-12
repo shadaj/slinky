@@ -21,9 +21,10 @@ object ReactDOM extends js.Object {
     * React 16 only
     * @param child the React node to render inside the selected container
     * @param container the DOM node to render the child node inside
+    * @param key an optional key to distinguish this from other elements
     * @return a portal React element
     */
-  def createPortal(child: ReactElement, container: Element): ReactElement = js.native
+  def createPortal(child: ReactElement, container: Element, key: js.UndefOr[String] = js.undefined): ReactElement = js.native
 }
 
 @js.native
