@@ -24,7 +24,8 @@ object ReactDOM extends js.Object {
     * @param key an optional key to distinguish this from other elements
     * @return a portal React element
     */
-  def createPortal(child: ReactElement, container: Element, key: js.UndefOr[String] = js.undefined): ReactElement = js.native
+  def createPortal(child: ReactElement, container: Element, key: js.UndefOr[String] = js.undefined): ReactElement =
+    js.native
 }
 
 @js.native
