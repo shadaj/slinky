@@ -13,11 +13,6 @@ libraryDependencies ++= {
   else Seq("org.scala-js" %% "scalajs-env-jsdom-nodejs" % "1.0.0")
 }
 
-{
-  if (scalaJSVersion.startsWith("0.6.")) addSbtPlugin("ch.epfl.scala" % "sbt-scalajs-bundler-sjs06" % "0.19.0")
-  else Seq(addSbtPlugin("ch.epfl.scala" % "sbt-scalajs-bundler" % "0.20.0"))
-}
-
 libraryDependencies ++= {
   if (scalaJSVersion.startsWith("0.6.")) Nil
   else Seq("org.scala-js" %% "scalajs-linker" % "1.0.1")
