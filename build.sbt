@@ -1,15 +1,12 @@
 ThisBuild / organization := "me.shadaj"
 
-Global / onChangedBuildSource := ReloadOnSourceChanges
-turbo := true
-
 addCommandAlias("style", "compile:scalafix; test:scalafix; compile:scalafmt; test:scalafmt; scalafmtSbt")
 addCommandAlias(
   "styleCheck",
   "compile:scalafix --check; test:scalafix --check; compile:scalafmtCheck; test:scalafmtCheck; scalafmtSbtCheck"
 )
 
-val scala212 = "2.12.14"
+val scala212 = "2.12.16"
 val scala213 = "2.13.6"
 val scala3   = "3.0.1"
 
@@ -209,7 +206,7 @@ lazy val tests =
 lazy val docsMacros = project.settings(macroAnnotationSettings).dependsOn(web, hot)
 
 lazy val docs =
-  project.settings(librarySettings, macroAnnotationSettings).dependsOn(web, hot, docsMacros, reactrouter, history)
+  project.settings(librarySettings, macroAnnotationSettings).dependsOn(web, hot, docsMacros, history)
 
 ThisBuild / updateIntellij := {}
 val intelliJVersion = "203.6682.168" // 2020.3

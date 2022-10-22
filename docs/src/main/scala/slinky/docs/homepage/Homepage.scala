@@ -67,20 +67,17 @@ object SlinkyLogo extends js.Object
           marginTop = "40px"
         )),
         Examples(())
-      )),
-      div(style := literal(
-        width = "100%",
-        backgroundColor = "#282c34",
-        padding = "30px",
-        boxSizing = "border-box",
-        display = "flex",
-        flexDirection = "column",
-        alignItems = "center"
-      ))(
-        a(href := "https://www.netlify.com")(
-          img(src := "https://www.netlify.com/img/global/badges/netlify-color-bg.svg")
-        )
-      )
+      ))
     )
+  }
+}
+
+object Homepage {
+  object Next {
+    import slinky.core.ReactComponentClass
+    import scala.scalajs.js.annotation.JSExportTopLevel
+
+    @JSExportTopLevel(name = "component", moduleID = "index")
+    def component(): ReactComponentClass[_] = Homepage
   }
 }
