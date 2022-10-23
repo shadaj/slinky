@@ -13,11 +13,6 @@ libraryDependencies ++= {
   else Seq("org.scala-js" %% "scalajs-env-jsdom-nodejs" % "1.0.0")
 }
 
-{
-  if (scalaJSVersion.startsWith("0.6.")) addSbtPlugin("ch.epfl.scala" % "sbt-scalajs-bundler-sjs06" % "0.19.0")
-  else Seq(addSbtPlugin("ch.epfl.scala" % "sbt-scalajs-bundler" % "0.20.0"))
-}
-
 libraryDependencies ++= {
   if (scalaJSVersion.startsWith("0.6.")) Nil
   else Seq("org.scala-js" %% "scalajs-linker" % "1.0.1")
@@ -26,6 +21,6 @@ libraryDependencies ++= {
 addSbtPlugin("com.jsuereth"   % "sbt-pgp"         % "2.1.1")
 addSbtPlugin("org.xerial.sbt" % "sbt-sonatype"    % "3.9.13")
 addSbtPlugin("com.dwijnand"   % "sbt-dynver"      % "4.1.1")
-addSbtPlugin("org.jetbrains"  % "sbt-idea-plugin" % "3.15.3")
+addSbtPlugin("org.jetbrains"  % "sbt-idea-plugin" % "3.17.9")
 addSbtPlugin("org.scalameta"  % "sbt-scalafmt"    % "2.4.5")
-addSbtPlugin("ch.epfl.scala"  % "sbt-scalafix"    % "0.10.2")
+addSbtPlugin("ch.epfl.scala"  % "sbt-scalafix"    % "0.10.4")
