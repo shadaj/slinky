@@ -11,6 +11,7 @@
 ### Bug Fixes :bug:
 + Fix stale version of components being rendered when hot reloading is used with module splitting ([PR #588](https://github.com/shadaj/slinky/pull/588))
 + Add support for the `key` parameter of `createPortal` ([PR #594](https://github.com/shadaj/slinky/pull/594))
++ Allow the `cx` and `cy` SVG attributes to be assigned to `String`s instead of just `Double` ([PR #617](https://github.com/shadaj/slinky/pull/617))
 
 ## [v0.7.2](https://slinky.dev) (replaced v0.7.1)
 ### Bug Fixes :bug:
