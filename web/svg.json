@@ -619,7 +619,7 @@
     },
     {
       "attributeName" : "cx",
-      "attributeType" : "Double",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
@@ -627,7 +627,7 @@
     },
     {
       "attributeName" : "cy",
-      "attributeType" : "Double",
+      "attributeType" : "scala.scalajs.js.Any",
       "docLines" : [
       ],
       "compatibleTags" : null,
