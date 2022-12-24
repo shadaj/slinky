@@ -1,8 +1,10 @@
 # Changelog
 
 ## vNEXT
+
+## [v0.7.3](https://slinky.dev)
 ### Highlights :tada:
-+ Includes the core set of changes required to make Slinky work well with Next.js (including module splitting). The [Slinky docs site](https://slinky.dev) now is built with Next.js! [PR #588](https://github.com/shadaj/slinky/pull/588)
++ Includes the core set of changes required to make Slinky work well with Next.js (including module splitting). The [Slinky docs site](https://slinky.dev) now is built with Next.js! ([PR #588](https://github.com/shadaj/slinky/pull/588))
 
 ### Breaking Changes :warning:
 + Slinky now requires Scala.js 1.9.0 or higher, but libraries published against older versions of Slinky should continue to work ([PR #588](https://github.com/shadaj/slinky/pull/588))
@@ -13,7 +15,7 @@
 + Add support for the `key` parameter of `createPortal` ([PR #594](https://github.com/shadaj/slinky/pull/594))
 + Allow the `cx` and `cy` SVG attributes to be assigned to `String`s instead of just `Double` ([PR #617](https://github.com/shadaj/slinky/pull/617))
 
-## [v0.7.2](https://slinky.dev) (replaced v0.7.1)
+## [v0.7.2](https://9448dfef.slinky.pages.dev/) (replaced v0.7.1)
 ### Bug Fixes :bug:
 + Inline functional component creation to improve stack traces ([PR #551](https://github.com/shadaj/slinky/pull/551))
 + Fix issue with readers not being available in dev mode on Scala 3 ([PR #552](https://github.com/shadaj/slinky/pull/552))
