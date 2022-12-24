@@ -19,7 +19,7 @@ libraryDependencies ++= {
 }
 
 addSbtPlugin("com.jsuereth"   % "sbt-pgp"         % "2.1.1")
-addSbtPlugin("org.xerial.sbt" % "sbt-sonatype"    % "3.9.13")
+addSbtPlugin("org.xerial.sbt" % "sbt-sonatype"    % "3.9.15")
 addSbtPlugin("com.dwijnand"   % "sbt-dynver"      % "4.1.1")
 addSbtPlugin("org.jetbrains"  % "sbt-idea-plugin" % "3.17.9")
 addSbtPlugin("org.scalameta"  % "sbt-scalafmt"    % "2.4.5")
