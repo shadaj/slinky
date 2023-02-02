@@ -42,6 +42,7 @@ Title | Author | Released | Slinky Version
 --- | --- | --- | --- 
 [Cazadescuentos App (pwa)](https://github.com/wiringbits/cazadescuentos/tree/master/pwa) | https://wiringbits.net | Active | 0.6.6
 [wiringbits scala-webapp-template](https://github.com/wiringbits/scala-webapp-template) | https://wiringbits.net | Active | 0.6.7
+[React / Binding.scala / html.scala Interoperability](https://github.com/Atry/ReactToBindingHtml.scala) | Bo Yang | Active | 0.6.8 (for Scala.js 0.6) / 0.7.3 (for Scala.js 1)
 
 ## Other
 Please add here stuff that does not fit any section of above. For example Cheat Sheets, Books etc.
