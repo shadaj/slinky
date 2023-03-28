@@ -15,7 +15,7 @@ libraryDependencies ++= {
 
 libraryDependencies ++= {
   if (scalaJSVersion.startsWith("0.6.")) Nil
-  else Seq("org.scala-js" %% "scalajs-linker" % "1.0.1")
+  else Seq("org.scala-js" %% "scalajs-linker" % "1.13.0")
 }
 
 addSbtPlugin("com.jsuereth"   % "sbt-pgp"         % "2.1.1")
