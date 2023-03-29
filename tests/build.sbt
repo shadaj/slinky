@@ -25,3 +25,5 @@ jsDependencies ++= Seq(
 )
 
 tpolecatOptionsMode := CiMode
+
+scalacOptions += "-P:scalajs:nowarnGlobalExecutionContext"

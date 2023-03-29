@@ -1,11 +1,12 @@
 package slinky.core
 
-import slinky.readwrite.{Reader, WithRaw, Writer, ObjectOrWritten}
+import slinky.readwrite.{ObjectOrWritten, Reader, WithRaw, Writer}
 
 import scala.scalajs.js
 import scala.scalajs.js.|
-
 import org.scalatest.funsuite.AnyFunSuite
+
+import scala.annotation.unused
 
 // cannot be a local class
 class ValueClass(val int: Int) extends AnyVal
@@ -184,12 +185,12 @@ class ReaderWriterTest extends AnyFunSuite {
   }
 
   test("Read/write - opaque class") {
-    class OpaqueClass(int: Int)
+    class OpaqueClass(@unused int: Int)
     readWrittenSame(new OpaqueClass(1), true)
   }
 
   test("Read/write - option of opaque class") {
-    class OpaqueClass(int: Int)
+    class OpaqueClass(@unused int: Int)
     assert(implicitly[Reader[Option[OpaqueClass]]].read(
       implicitly[Writer[Option[OpaqueClass]]].write(Some(new OpaqueClass(1)))
     ).get != null)
@@ -228,11 +229,11 @@ class ReaderWriterTest extends AnyFunSuite {
   }
 
   // compilation test: can use derivation macro with type parameter when typeclass is available
-  def deriveReaderTypeclass[T: Reader]: Reader[T] = {
+  def deriveReaderTypeclass[T](implicit @unused reader: Reader[T]): Reader[T] = {
     Reader.deriveReader[T]
   }
 
-  def deriveWriterTypeclass[T: Writer]: Writer[T] = {
+  def deriveWriterTypeclass[T](implicit @unused writer: Writer[T]): Writer[T] = {
     Writer.deriveWriter[T]
   }
 }
