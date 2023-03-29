@@ -1,3 +1,5 @@
+import _root_.io.github.davidgregory084._
+
 enablePlugins(ScalaJSPlugin)
 enablePlugins(JSDependenciesPlugin)
 
@@ -21,3 +23,5 @@ jsDependencies ++= Seq(
   (ProvidedJS / "react-dom/umd/react-dom-server.browser.development.js"
     minified "react-dom/umd/react-dom-server.browser.production.min.js" dependsOn "react-dom/umd/react-dom.development.js" commonJSName "ReactDOMServer") % Test
 )
+
+tpolecatOptionsMode := CiMode

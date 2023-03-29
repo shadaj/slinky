@@ -1,3 +1,5 @@
+import _root_.io.github.davidgregory084._
+
 ThisBuild / organization := "me.shadaj"
 
 addCommandAlias("style", "compile:scalafix; test:scalafix; compile:scalafmt; test:scalafmt; scalafmtSbt")
@@ -12,6 +14,8 @@ val scala3   = "3.0.1"
 
 ThisBuild / scalaVersion := scala213
 ThisBuild / semanticdbEnabled := true
+
+ThisBuild / tpolecatDefaultOptionsMode := DevMode
 
 lazy val slinky = project
   .in(file("."))
