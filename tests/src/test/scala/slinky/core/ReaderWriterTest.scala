@@ -6,7 +6,7 @@ import scala.scalajs.js
 import scala.scalajs.js.|
 import org.scalatest.funsuite.AnyFunSuite
 
-import scala.annotation.unused
+import scala.annotation.nowarn
 
 // cannot be a local class
 class ValueClass(val int: Int) extends AnyVal
@@ -185,12 +185,12 @@ class ReaderWriterTest extends AnyFunSuite {
   }
 
   test("Read/write - opaque class") {
-    class OpaqueClass(@unused int: Int)
+    class OpaqueClass(@nowarn int: Int)
     readWrittenSame(new OpaqueClass(1), true)
   }
 
   test("Read/write - option of opaque class") {
-    class OpaqueClass(@unused int: Int)
+    class OpaqueClass(@nowarn int: Int)
     assert(implicitly[Reader[Option[OpaqueClass]]].read(
       implicitly[Writer[Option[OpaqueClass]]].write(Some(new OpaqueClass(1)))
     ).get != null)
@@ -229,11 +229,11 @@ class ReaderWriterTest extends AnyFunSuite {
   }
 
   // compilation test: can use derivation macro with type parameter when typeclass is available
-  def deriveReaderTypeclass[T](implicit @unused reader: Reader[T]): Reader[T] = {
+  def deriveReaderTypeclass[T](implicit @nowarn reader: Reader[T]): Reader[T] = {
     Reader.deriveReader[T]
   }
 
-  def deriveWriterTypeclass[T](implicit @unused writer: Writer[T]): Writer[T] = {
+  def deriveWriterTypeclass[T](implicit @nowarn writer: Writer[T]): Writer[T] = {
     Writer.deriveWriter[T]
   }
 }
