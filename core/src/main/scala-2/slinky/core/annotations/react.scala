@@ -101,9 +101,9 @@ object ReactMacrosImpl {
       q"""class $clazz(jsProps: _root_.scala.scalajs.js.Object) extends ${clazz.toTermName}.Definition(jsProps) {
               import $companion.{Props, State, Snapshot}
               _root_.slinky.core.annotations.react.bump({
-                null.asInstanceOf[Props]
-                null.asInstanceOf[State]
-                null.asInstanceOf[Snapshot]
+                null.asInstanceOf[Props]: Unit
+                null.asInstanceOf[State]: Unit
+                null.asInstanceOf[Snapshot]: Unit
                 ()
               })
               ..${stats.filterNot(s =>
@@ -113,7 +113,7 @@ object ReactMacrosImpl {
 
     (
       newClazz,
-      ((q"null.asInstanceOf[${parents.head}]" +:
+      ((q"null.asInstanceOf[${parents.head}]: Unit" +:
         propsDefinition +:
         stateDefinition.toList) ++
         snapshotDefinition.toList ++

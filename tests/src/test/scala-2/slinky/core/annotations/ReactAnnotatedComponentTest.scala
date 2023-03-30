@@ -1,12 +1,11 @@
 package slinky.core.annotations
 
-import slinky.core.facade.{ReactElement}
+import slinky.core.facade.ReactElement
 import slinky.web.ReactDOM
 import org.scalajs.dom
 
-import scala.concurrent.{Future, Promise}
+import scala.concurrent.Promise
 import scala.scalajs.js
-import scala.util.Try
 
 import org.scalatest.Assertion
 import org.scalatest.funsuite.AsyncFunSuite
