@@ -34,3 +34,7 @@ scalacOptions ++= (CrossVersion.partialVersion(scalaVersion.value) match {
   case _ =>
     Seq.empty
 })
+
+// Unit statements are prevalent in the tests. There is no way to suppress them:
+// See https://github.com/typelevel/sbt-tpolecat/issues/134.
+Test / tpolecatExcludeOptions += ScalacOptions.warnNonUnitStatement
