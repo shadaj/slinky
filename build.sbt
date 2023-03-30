@@ -80,23 +80,13 @@ lazy val librarySettings = Seq(
     val opt = if (scalaVersion.value == scala3) "-scalajs-mapSourceURI" else "-P:scalajs:mapSourceURI"
     s"$opt:$a->$g/$githubVersion/${baseDirectory.value.getName}/"
   },
-  scalacOptions ++= Seq(
-    "-encoding",
-    "UTF-8",
-    "-feature",
-    "-language:implicitConversions"
-  ) ++ (CrossVersion.partialVersion(scalaVersion.value) match {
+  scalacOptions ++= (CrossVersion.partialVersion(scalaVersion.value) match {
     case Some((3, _)) =>
       Seq(
-        "-unchecked",
         "-source:3.0-migration"
       )
     case _ =>
-      Seq(
-        "-deprecation",
-        "-language:higherKinds",
-        "-Ywarn-unused:imports,privates,locals"
-      )
+      Seq.empty
   })
 )
 

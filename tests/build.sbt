@@ -26,4 +26,11 @@ jsDependencies ++= Seq(
 
 tpolecatOptionsMode := CiMode
 
-scalacOptions += "-P:scalajs:nowarnGlobalExecutionContext"
+scalacOptions ++= (CrossVersion.partialVersion(scalaVersion.value) match {
+  case Some((2, _)) =>
+    Seq(
+      "-P:scalajs:nowarnGlobalExecutionContext"
+    )
+  case _ =>
+    Seq.empty
+})
