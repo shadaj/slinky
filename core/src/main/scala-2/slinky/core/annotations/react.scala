@@ -3,7 +3,6 @@ package slinky.core.annotations
 import slinky.core._
 
 import scala.annotation.compileTimeOnly
-import scala.language.experimental.macros
 import scala.reflect.macros.whitebox
 import scala.scalajs.js
 
@@ -210,7 +209,7 @@ object ReactMacrosImpl {
 
       case Seq(
           cls @ q"..$_ class $className extends ..$parents { $_ => ..$_}",
-          obj @ q"..$_ object $_ extends ..$_ { $_ => ..$objStats }"
+          q"..$_ object $_ extends ..$_ { $_ => ..$objStats }"
           )
           if parentsContainsType(c)(parents, typeOf[Component]) ||
             parentsContainsType(c)(parents, typeOf[StatelessComponent]) =>
@@ -231,12 +230,12 @@ object ReactMacrosImpl {
           q"object $objName extends _root_.slinky.core.ExternalComponentWithAttributesWithRefType[$elementType, $refType] { ..${objStats ++ companionStats} }"
         )
 
-      case Seq(obj @ q"$pre object $objName extends ..$parents { $self => ..$objStats }") if (objStats.exists {
+      case Seq(q"$pre object $objName extends ..$parents { $self => ..$objStats }") if (objStats.exists {
             case q"$_ val component: $_ = $_" => true
             case _                            => false
           }) =>
         val applyMethods = objStats.flatMap {
-          case defn @ q"$pre class Props[..$tparams](...${caseClassparamssRaw}) extends ..$_ { $_ => ..$_ }"
+          case q"$pre class Props[..$tparams](...${caseClassparamssRaw}) extends ..$_ { $_ => ..$_ }"
               if pre.hasFlag(Flag.CASE) =>
             val caseClassparamss = caseClassparamssRaw.asInstanceOf[Seq[Seq[ValDef]]]
             val childrenParam    = caseClassparamss.flatten.find(_.name.toString == "children")
@@ -286,7 +285,7 @@ object ReactMacrosImpl {
 
         List(q"$pre object $objName extends ..$parents { $self => ..${objStats ++ applyMethods} }")
 
-      case defn =>
+      case _ =>
         c.abort(
           c.enclosingPosition,
           """@react must annotate:
