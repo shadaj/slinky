@@ -61,6 +61,12 @@ lazy val crossScalaSettings = Seq(
       case Some((2, n)) if n >= 13 => Seq(sourceDir / "scala-2.13+")
       case _                       => Seq(sourceDir / "scala-2.13-")
     }
+  },
+  scalafixConfig := {
+    CrossVersion.partialVersion(scalaVersion.value) match {
+      case Some((3, _)) => Some(file(".scalafix-scala3.conf"))
+      case _ => None
+    }
   }
 )
 
