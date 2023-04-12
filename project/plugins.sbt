@@ -1,5 +1,5 @@
 val scalaJSVersion =
-  Option(System.getenv("SCALAJS_VERSION")).getOrElse("1.9.0")
+  Option(System.getenv("SCALAJS_VERSION")).getOrElse("1.13.1")
 
 addSbtPlugin("org.scala-js" % "sbt-scalajs" % scalaJSVersion)
 
@@ -15,7 +15,7 @@ libraryDependencies ++= {
 
 libraryDependencies ++= {
   if (scalaJSVersion.startsWith("0.6.")) Nil
-  else Seq("org.scala-js" %% "scalajs-linker" % "1.0.1")
+  else Seq("org.scala-js" %% "scalajs-linker" % "1.13.1")
 }
 
 addSbtPlugin("com.jsuereth"   % "sbt-pgp"         % "2.1.1")
