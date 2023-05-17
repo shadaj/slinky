@@ -4,6 +4,7 @@ enablePlugins(ScalaJSPlugin)
 enablePlugins(JSDependenciesPlugin)
 
 libraryDependencies += "org.scalatest" %%% "scalatest" % "3.2.9" % Test
+libraryDependencies += ("org.scala-js" %%% "scalajs-fake-insecure-java-securerandom" % "1.0.0").cross(CrossVersion.for3Use2_13)
 
 Test / jsEnv := new org.scalajs.jsenv.jsdomnodejs.JSDOMNodeJSEnv()
 
