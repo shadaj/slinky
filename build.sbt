@@ -6,12 +6,13 @@ addCommandAlias(
   "compile:scalafix --check; test:scalafix --check; compile:scalafmtCheck; test:scalafmtCheck; scalafmtSbtCheck"
 )
 
-val scala212 = "2.12.16"
-val scala213 = "2.13.6"
-val scala3   = "3.0.1"
+val scala212 = "2.12.17"
+val scala213 = "2.13.10"
+val scala3   = "3.2.2"
 
 ThisBuild / scalaVersion := scala213
 ThisBuild / semanticdbEnabled := true
+ThisBuild / semanticdbVersion := "4.7.6"
 
 lazy val slinky = project
   .in(file("."))
@@ -209,7 +210,7 @@ lazy val docs =
   project.settings(librarySettings, macroAnnotationSettings).dependsOn(web, hot, docsMacros, history)
 
 ThisBuild / updateIntellij := {}
-val intelliJVersion = "203.6682.168" // 2020.3
+val intelliJVersion = "231.8109.175" // 2023.1
 
 lazy val coreIntellijSupport = project.settings(
   org.jetbrains.sbtidea.Keys.buildSettings :+ (
