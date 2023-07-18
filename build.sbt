@@ -1,3 +1,5 @@
+import _root_.io.github.davidgregory084._
+
 ThisBuild / organization := "me.shadaj"
 
 addCommandAlias("style", "compile:scalafix; test:scalafix; compile:scalafmt; test:scalafmt; scalafmtSbt")
@@ -13,6 +15,8 @@ val scala3   = "3.2.2"
 ThisBuild / scalaVersion := scala213
 ThisBuild / semanticdbEnabled := true
 ThisBuild / semanticdbVersion := "4.7.6"
+
+ThisBuild / tpolecatDefaultOptionsMode := DevMode
 
 lazy val slinky = project
   .in(file("."))
@@ -57,6 +61,12 @@ lazy val crossScalaSettings = Seq(
       case Some((2, n)) if n >= 13 => Seq(sourceDir / "scala-2.13+")
       case _                       => Seq(sourceDir / "scala-2.13-")
     }
+  },
+  scalafixConfig := {
+    CrossVersion.partialVersion(scalaVersion.value) match {
+      case Some((3, _)) => Some(file(".scalafix-scala3.conf"))
+      case _            => None
+    }
   }
 )
 
@@ -77,23 +87,13 @@ lazy val librarySettings = Seq(
     val opt = if (scalaVersion.value == scala3) "-scalajs-mapSourceURI" else "-P:scalajs:mapSourceURI"
     s"$opt:$a->$g/$githubVersion/${baseDirectory.value.getName}/"
   },
-  scalacOptions ++= Seq(
-    "-encoding",
-    "UTF-8",
-    "-feature",
-    "-language:implicitConversions"
-  ) ++ (CrossVersion.partialVersion(scalaVersion.value) match {
+  scalacOptions ++= (CrossVersion.partialVersion(scalaVersion.value) match {
     case Some((3, _)) =>
       Seq(
-        "-unchecked",
         "-source:3.0-migration"
       )
     case _ =>
-      Seq(
-        "-deprecation",
-        "-language:higherKinds",
-        "-Ywarn-unused:imports,privates,locals"
-      )
+      Seq.empty
   })
 )
 
