@@ -21,7 +21,7 @@ class HooksComponentTest extends AsyncFunSuite {
   test("Can render a functional component with useState hook") {
     val container = document.createElement("div")
     val component = FunctionalComponent[Int] { props =>
-      val (state, setState) = useState("hello")
+      val (state, _) = useState("hello")
       state + props
     }
     
@@ -222,7 +222,7 @@ class HooksComponentTest extends AsyncFunSuite {
     var doDispatch: Int => Unit = null
     val promise: Promise[Assertion] = Promise()
 
-    val component = FunctionalComponent[Unit] { props =>
+    val component = FunctionalComponent[Unit] { _ =>
       val (state, dispatch) = useReducer((_: String, a: Int) => {
         a.toString
       }, "")
@@ -249,8 +249,8 @@ class HooksComponentTest extends AsyncFunSuite {
   test("useReducer can have lazy init") {
     val container = document.createElement("div")
 
-    val component = FunctionalComponent[Unit] { props =>
-      val (state, dispatch) = useReducer((s: String, a: Int) => {
+    val component = FunctionalComponent[Unit] { _ =>
+      val (state, _) = useReducer((_: String, a: Int) => {
         a.toString
       }, 123, (init: Int) => init.toString)
 
@@ -300,7 +300,7 @@ class HooksComponentTest extends AsyncFunSuite {
     var callbackRef: Boolean => String = null
     
     val component = FunctionalComponent[(Int, String)] { props =>
-      val callback = useCallback((value: Boolean) => {
+      val callback = useCallback((_: Boolean) => {
         props._2 // purposefully wrong (so that we can assert that untracked dependency retains old value)
       }, Seq(props._1))
 
@@ -367,7 +367,7 @@ class HooksComponentTest extends AsyncFunSuite {
       def foo: Int
     }
 
-    val component = React.forwardRef(FunctionalComponent { (props: String, ref: ReactRef[RefHandle]) =>
+    val component = React.forwardRef(FunctionalComponent { (_: String, ref: ReactRef[RefHandle]) =>
       useImperativeHandle(ref, () => {
         new RefHandle {
           def foo = 123
@@ -415,7 +415,7 @@ class HooksComponentTest extends AsyncFunSuite {
     val container = document.createElement("div")
 
     val promise: Promise[Assertion] = Promise()
-    val component = FunctionalComponent[Int] { props =>
+    val component = FunctionalComponent[Int] { _ =>
       val divRef = useRef[Element](null)
       useLayoutEffect(() => {
         promise.success(assert(divRef.current.innerHTML == "hello"))
