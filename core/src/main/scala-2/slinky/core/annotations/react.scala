@@ -3,7 +3,6 @@ package slinky.core.annotations
 import slinky.core._
 
 import scala.annotation.compileTimeOnly
-import scala.language.experimental.macros
 import scala.reflect.macros.whitebox
 import scala.scalajs.js
 
@@ -12,7 +11,9 @@ class react extends scala.annotation.StaticAnnotation {
   def macroTransform(annottees: Any*): Any = macro ReactMacrosImpl.reactImpl
 }
 
+@deprecated(since = "0.7.4")
 object react {
+  @deprecated(since = "0.7.4")
   @inline def bump(thunk: => Unit): Unit = {}
 }
 
@@ -35,7 +36,7 @@ object ReactMacrosImpl {
     val q"..$_ class ${className: Name} extends ..$parents { $self => ..$stats}" = cls // scalafix:ok
     val (propsDefinition, applyMethods) = stats.flatMap {
       case defn @ q"..$_ type Props = ${_}" =>
-        Some((defn, Seq()))
+        Some((defn, Nil))
 
       case defn @ q"case class Props[..$tparams](...${caseClassparamssRaw}) extends ..$_ { $_ => ..$_ }" =>
         val caseClassparamss = caseClassparamssRaw.asInstanceOf[Seq[Seq[ValDef]]]
@@ -70,7 +71,7 @@ object ReactMacrosImpl {
                 this.apply(Props.apply[..$tparams](...$applyValues))"""
         }
 
-        Some((defn, Seq(caseClassApply)))
+        Some((defn, List(caseClassApply)))
 
       case _ => None
     }.headOption
@@ -97,15 +98,34 @@ object ReactMacrosImpl {
 
     val definitionClass = q"type Def = $clazz"
 
+    // Props, State and Snapshot get moved to the companion object but they are likely to be referenced from within the
+    // class. We have to import them from the companion object since their usage will be unqualified. We also need to
+    // ensure that they are used so that there are no unused import warnings and do so in a way that does not produce
+    // discarded non-unit value warnings.
+
+    // Unfortunately adding a Unit type ascription here does not work as it inserts another unit value and so the null
+    // value ends up being discarded.
+    def use(name: TypeName) =
+      q"""
+        locally {
+          val _ = null.asInstanceOf[$name]
+        }
+       """
+
+    // Add if (false) to ensure it is dead code and gets eliminated.
+    val imports =
+      q"""
+         import $companion.{Props, State, Snapshot}
+         if (false) {
+           ${use(TypeName("Props"))}
+           ${use(TypeName("State"))}
+           ${use(TypeName("Snapshot"))}
+         }
+       """
+
     val newClazz =
       q"""class $clazz(jsProps: _root_.scala.scalajs.js.Object) extends ${clazz.toTermName}.Definition(jsProps) {
-              import $companion.{Props, State, Snapshot}
-              _root_.slinky.core.annotations.react.bump({
-                null.asInstanceOf[Props]
-                null.asInstanceOf[State]
-                null.asInstanceOf[Snapshot]
-                ()
-              })
+              ..$imports
               ..${stats.filterNot(s =>
         s == propsDefinition || s == stateDefinition.orNull || s == snapshotDefinition.orNull
       )}
@@ -113,11 +133,11 @@ object ReactMacrosImpl {
 
     (
       newClazz,
-      ((q"null.asInstanceOf[${parents.head}]" +:
-        propsDefinition +:
-        stateDefinition.toList) ++
-        snapshotDefinition.toList ++
-        (definitionClass +: applyMethods)).asInstanceOf[List[c.Tree]]
+      propsDefinition +:
+        stateDefinition.toList ++:
+        snapshotDefinition.toList ++:
+        definitionClass +:
+        applyMethods
     )
   }
 
@@ -210,7 +230,7 @@ object ReactMacrosImpl {
 
       case Seq(
           cls @ q"..$_ class $className extends ..$parents { $_ => ..$_}",
-          obj @ q"..$_ object $_ extends ..$_ { $_ => ..$objStats }"
+          q"..$_ object $_ extends ..$_ { $_ => ..$objStats }"
           )
           if parentsContainsType(c)(parents, typeOf[Component]) ||
             parentsContainsType(c)(parents, typeOf[StatelessComponent]) =>
@@ -231,12 +251,12 @@ object ReactMacrosImpl {
           q"object $objName extends _root_.slinky.core.ExternalComponentWithAttributesWithRefType[$elementType, $refType] { ..${objStats ++ companionStats} }"
         )
 
-      case Seq(obj @ q"$pre object $objName extends ..$parents { $self => ..$objStats }") if (objStats.exists {
+      case Seq(q"$pre object $objName extends ..$parents { $self => ..$objStats }") if (objStats.exists {
             case q"$_ val component: $_ = $_" => true
             case _                            => false
           }) =>
         val applyMethods = objStats.flatMap {
-          case defn @ q"$pre class Props[..$tparams](...${caseClassparamssRaw}) extends ..$_ { $_ => ..$_ }"
+          case q"$pre class Props[..$tparams](...${caseClassparamssRaw}) extends ..$_ { $_ => ..$_ }"
               if pre.hasFlag(Flag.CASE) =>
             val caseClassparamss = caseClassparamssRaw.asInstanceOf[Seq[Seq[ValDef]]]
             val childrenParam    = caseClassparamss.flatten.find(_.name.toString == "children")
@@ -286,7 +306,7 @@ object ReactMacrosImpl {
 
         List(q"$pre object $objName extends ..$parents { $self => ..${objStats ++ applyMethods} }")
 
-      case defn =>
+      case _ =>
         c.abort(
           c.enclosingPosition,
           """@react must annotate:

@@ -188,7 +188,7 @@ object TakeValuesFromCompanionObject {
 }
 
 object DerivedStateComponent {
-  override val getDerivedStateFromProps = (nextProps: Props, prevState: State) => {
+  override val getDerivedStateFromProps = (nextProps: Props, _: State) => {
     nextProps.num
   }
 }
@@ -312,7 +312,7 @@ class ReactAnnotatedComponentTest extends AsyncFunSuite {
   }
 
   test("Can construct a component taking Unit props with refs and key") {
-    val element: ReactElement = NoPropsComponent.withKey("hi").withRef((r: js.Object) => {})
+    val element: ReactElement = NoPropsComponent.withKey("hi").withRef((_: js.Object) => {})
     assert(element.asInstanceOf[js.Dynamic].key.toString == "hi")
     assert(!js.isUndefined(element.asInstanceOf[js.Dynamic].ref))
   }
@@ -334,7 +334,7 @@ class ReactAnnotatedComponentTest extends AsyncFunSuite {
     val promise: Promise[Assertion] = Promise()
 
     ReactDOM.render(
-      ErrorBoundaryComponent(true, (error, info) => {
+      ErrorBoundaryComponent(true, (_, _) => {
         promise.success(assert(true))
       }),
       dom.document.createElement("div")
@@ -347,7 +347,7 @@ class ReactAnnotatedComponentTest extends AsyncFunSuite {
     var sawError = false
 
     ReactDOM.render(
-      ErrorBoundaryComponent(false, (error, info) => {
+      ErrorBoundaryComponent(false, (_, _) => {
         sawError = true
       }),
       dom.document.createElement("div")
