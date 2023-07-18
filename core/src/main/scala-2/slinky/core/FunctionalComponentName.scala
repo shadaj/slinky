@@ -1,6 +1,5 @@
 package slinky.core
 
-import scala.language.experimental.macros
 import scala.reflect.macros.whitebox
 
 final class FunctionalComponentName(val name: String) extends AnyVal
