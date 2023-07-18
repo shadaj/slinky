@@ -341,7 +341,7 @@ class ComponentTest extends AsyncFunSuite {
   }
 
   test("Can construct a component taking Unit props with refs and key") {
-    val element: ReactElement = NoPropsComponent.withKey("hi").withRef((r: js.Object) => {})
+    val element: ReactElement = NoPropsComponent.withKey("hi").withRef((_: js.Object) => {})
     assert(element.asInstanceOf[js.Dynamic].key.toString == "hi")
     assert(!js.isUndefined(element.asInstanceOf[js.Dynamic].ref))
   }

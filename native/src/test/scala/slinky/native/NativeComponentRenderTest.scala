@@ -199,7 +199,7 @@ class NativeComponentRenderTest extends AnyFunSuite {
           FlatList[Int](
             data = Seq(1, 2),
             renderItem = {
-              case RenderItemInfo(d, index, _) =>
+              case RenderItemInfo(d, _, _) =>
                 Text(d.toString)
             }
           )
