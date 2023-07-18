@@ -2,7 +2,6 @@ package slinky.core
 
 import scala.scalajs.js
 
-import scala.language.experimental.macros
 import scala.reflect.macros.whitebox
 
 // same as PropsWriterProvider except it always returns the typeclass instead of nulling it out in fullOpt mode

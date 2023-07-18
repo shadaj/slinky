@@ -1,6 +1,5 @@
 package slinky.readwrite
 
-import scala.language.experimental.macros
 import scala.reflect.macros.whitebox
 
 trait MacroWriters {
