@@ -2,7 +2,12 @@
 
 ## vNEXT
 
-## [v0.7.3](https://slinky.dev)
+## [v0.7.4](https://slinky.dev)
+### Highlights :tada:
++ Improve compatibility when using `sbt-tpolecat` ([PR #630](https://github.com/shadaj/slinky/pull/630))
++ Support IntelliJ 2023.1 ([PR #638](https://github.com/shadaj/slinky/pull/638))
+
+## [v0.7.3](https://6009b0f6.slinky.pages.dev/)
 ### Highlights :tada:
 + Includes the core set of changes required to make Slinky work well with Next.js (including module splitting). The [Slinky docs site](https://slinky.dev) now is built with Next.js! ([PR #588](https://github.com/shadaj/slinky/pull/588))
 
