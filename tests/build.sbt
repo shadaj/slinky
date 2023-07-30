@@ -3,7 +3,7 @@ import _root_.io.github.davidgregory084._
 enablePlugins(ScalaJSPlugin)
 enablePlugins(JSDependenciesPlugin)
 
-libraryDependencies += "org.scalatest" %%% "scalatest" % "3.2.16" % Test
+libraryDependencies += "org.scalatest" %%% "scalatest" % "3.2.9" % Test
 libraryDependencies += ("org.scala-js" %%% "scalajs-fake-insecure-java-securerandom" % "1.0.0")
   .cross(CrossVersion.for3Use2_13)
 
