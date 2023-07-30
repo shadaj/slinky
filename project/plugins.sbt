@@ -18,7 +18,7 @@ libraryDependencies ++= {
   else Seq("org.scala-js" %% "scalajs-linker" % "1.0.1")
 }
 
-addSbtPlugin("ch.epfl.scala"             % "sbt-scalafix"    % "0.11.0")
+addSbtPlugin("ch.epfl.scala"             % "sbt-scalafix"    % "0.10.4")
 addSbtPlugin("com.dwijnand"              % "sbt-dynver"      % "4.1.1")
 addSbtPlugin("com.jsuereth"              % "sbt-pgp"         % "2.1.1")
 addSbtPlugin("io.github.davidgregory084" % "sbt-tpolecat"    % "0.4.4")
