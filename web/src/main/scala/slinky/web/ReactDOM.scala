@@ -5,6 +5,7 @@ import org.scalajs.dom.Element
 
 import scala.scalajs.js
 import scala.scalajs.js.annotation.JSImport
+import org.scalajs.dom.Element
 
 @js.native
 @JSImport("react-dom", JSImport.Namespace, "ReactDOM")
@@ -36,4 +37,14 @@ object ReactDOMServer extends js.Object {
 
   def renderToNodeStream(element: ReactElement): js.Object       = js.native
   def renderToStaticNodeStream(element: ReactElement): js.Object = js.native
+}
+
+trait ReactRoot extends js.Object {
+  def render(component: ReactElement): ReactInstance
+}
+
+@js.native
+@JSImport("react-dom/client", JSImport.Namespace, "ReactDOM")
+object ReactDOMClient extends js.Object {
+  def createRoot(target: Element): ReactRoot = js.native
 }
