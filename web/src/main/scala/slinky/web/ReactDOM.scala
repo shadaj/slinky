@@ -13,6 +13,8 @@ object ReactDOM extends js.Object {
   def hydrate(component: ReactElement, target: Element): ReactInstance = js.native
   def findDOMNode(instance: React.Component): Element                  = js.native
 
+  def flushSync[T](callback: js.Function0[T]): T = js.native
+
   def unmountComponentAtNode(container: Element): Unit = js.native
 
   /**
@@ -36,4 +38,16 @@ object ReactDOMServer extends js.Object {
 
   def renderToNodeStream(element: ReactElement): js.Object       = js.native
   def renderToStaticNodeStream(element: ReactElement): js.Object = js.native
+}
+
+trait ReactRoot extends js.Object {
+  def render(component: ReactElement): ReactInstance
+  def unmount(): Unit
+}
+
+@js.native
+@JSImport("react-dom/client", JSImport.Namespace, "ReactDOM")
+object ReactDOMClient extends js.Object {
+  def createRoot(target: Element): ReactRoot                       = js.native
+  def hydrate(component: ReactElement, target: Element): ReactRoot = js.native
 }
