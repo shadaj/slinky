@@ -23,8 +23,12 @@ Test / jsEnv := new org.scalajs.jsenv.jsdomnodejs.JSDOMNodeJSEnv()
 Test / unmanagedResourceDirectories += baseDirectory.value / "node_modules"
 
 jsDependencies ++= Seq(
+  ((ProvidedJS / "text-enc/lib/encoding.js")
+    .minified("text-enc/lib/encoding.js")
+    .commonJSName("TextEnc")) % Test,
   ((ProvidedJS / "react/umd/react.development.js")
     .minified("react/umd/react.production.min.js")
+    .dependsOn("text-enc/lib/encoding.js")
     .commonJSName("React")) % Test,
   ((ProvidedJS / "react-dom/umd/react-dom.development.js")
     .minified("react-dom/umd/react-dom.production.min.js")
