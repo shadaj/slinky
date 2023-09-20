@@ -2,7 +2,7 @@ enablePlugins(ScalaJSPlugin)
 
 name := "slinky-web"
 
-libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "2.6.0"
+libraryDependencies += "org.scala-js" %%% "scalajs-dom" % "2.7.0"
 
 tpolecatDevModeOptions ~= { opts =>
   opts.filterNot(
