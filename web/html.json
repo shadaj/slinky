@@ -2067,6 +2067,15 @@
       "withDash" : false
     },
     {
+      "attributeName" : "onCopyCapture",
+      "attributeType" : "ClipboardEventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
       "attributeName" : "onCut",
       "attributeType" : "ClipboardEventHandler",
       "docLines" : [
@@ -2076,7 +2085,25 @@
       "withDash" : false
     },
     {
+      "attributeName" : "onCutCapture",
+      "attributeType" : "ClipboardEventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
       "attributeName" : "onPaste",
+      "attributeType" : "ClipboardEventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onPasteCapture",
       "attributeType" : "ClipboardEventHandler",
       "docLines" : [
         ""
@@ -2096,6 +2123,15 @@
       "withDash" : false
     },
     {
+      "attributeName" : "onCompositionEndCapture",
+      "attributeType" : "CompositionEventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
       "attributeName" : "onCompositionStart",
       "attributeType" : "CompositionEventHandler",
       "docLines" : [
@@ -2105,7 +2141,25 @@
       "withDash" : false
     },
     {
+      "attributeName" : "onCompositionStartCapture",
+      "attributeType" : "CompositionEventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
       "attributeName" : "onCompositionUpdate",
+      "attributeType" : "CompositionEventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onCompositionUpdateCapture",
       "attributeType" : "CompositionEventHandler",
       "docLines" : [
         ""
@@ -2142,7 +2196,33 @@
       "compatibleTags" : null,
       "withDash" : false
     },
-
+    {
+      "attributeName" : "onKeyDownCapture",
+      "attributeType" : "KeyboardEventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onKeyPressCapture",
+      "attributeType" : "KeyboardEventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onKeyUpCapture",
+      "attributeType" : "KeyboardEventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
     // Focus Events
     {
       "attributeName" : "onFocus",
@@ -2154,7 +2234,25 @@
       "withDash" : false
     },
     {
+      "attributeName" : "onFocusCapture",
+      "attributeType" : "FocusEventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
       "attributeName" : "onBlur",
+      "attributeType" : "FocusEventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onBlurCapture",
       "attributeType" : "FocusEventHandler",
       "docLines" : [
         ""
@@ -2200,10 +2298,28 @@
       "compatibleTags" : null,
       "withDash" : false
     },
+    {
+      "attributeName" : "onSubmitCapture",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
 
     // Mouse Events
     {
       "attributeName" : "onClick",
+      "attributeType" : "MouseEventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onClickCapture",
       "attributeType" : "MouseEventHandler",
       "docLines" : [
         ""
@@ -2221,7 +2337,25 @@
       "withDash" : false
     },
     {
+      "attributeName" : "onContextMenuCapture",
+      "attributeType" : "MouseEventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
       "attributeName" : "onDoubleClick",
+      "attributeType" : "MouseEventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onDoubleClickCapture",
       "attributeType" : "MouseEventHandler",
       "docLines" : [
         ""
@@ -2239,6 +2373,15 @@
       "withDash" : false
     },
     {
+      "attributeName" : "onDragCapture",
+      "attributeType" : "MouseEventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
       "attributeName" : "onDragEnd",
       "attributeType" : "MouseEventHandler",
       "docLines" : [
@@ -2248,7 +2391,25 @@
       "withDash" : false
     },
     {
+      "attributeName" : "onDragEndCapture",
+      "attributeType" : "MouseEventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
       "attributeName" : "onDragEnter",
+      "attributeType" : "MouseEventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onDragEnterCapture",
       "attributeType" : "MouseEventHandler",
       "docLines" : [
         ""
@@ -2284,7 +2445,25 @@
       "withDash" : false
     },
     {
+      "attributeName" : "onDragOverCapture",
+      "attributeType" : "MouseEventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
       "attributeName" : "onDragStart",
+      "attributeType" : "MouseEventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onDragStartCapture",
       "attributeType" : "MouseEventHandler",
       "docLines" : [
         ""
@@ -2302,7 +2481,25 @@
       "withDash" : false
     },
     {
+      "attributeName" : "onDropCapture",
+      "attributeType" : "MouseEventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
       "attributeName" : "onMouseDown",
+      "attributeType" : "MouseEventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onMouseDownCapture",
       "attributeType" : "MouseEventHandler",
       "docLines" : [
         ""
@@ -2347,6 +2544,15 @@
       "withDash" : false
     },
     {
+      "attributeName" : "onMouseOutCapture",
+      "attributeType" : "MouseEventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
       "attributeName" : "onMouseOver",
       "attributeType" : "MouseEventHandler",
       "docLines" : [
@@ -2364,10 +2570,28 @@
       "compatibleTags" : null,
       "withDash" : false
     },
+    {
+      "attributeName" : "onMouseUpCapture",
+      "attributeType" : "MouseEventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
 
     // Pointer Events
     {
       "attributeName" : "onPointerDown",
+      "attributeType" : "PointerEventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onPointerDownCapture",
       "attributeType" : "PointerEventHandler",
       "docLines" : [
         ""
@@ -2394,7 +2618,25 @@
       "withDash" : false
     },
     {
+      "attributeName" : "onPointerUpCapture",
+      "attributeType" : "PointerEventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
       "attributeName" : "onPointerCancel",
+      "attributeType" : "PointerEventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onPointerCancelCapture",
       "attributeType" : "PointerEventHandler",
       "docLines" : [
         ""
@@ -2456,10 +2698,28 @@
       "compatibleTags" : null,
       "withDash" : false
     },
+    {
+      "attributeName" : "onPointerOutCapture",
+      "attributeType" : "PointerEventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
 
     // Selection Events
     {
       "attributeName" : "onSelect",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onSelectCapture",
       "attributeType" : "EventHandler",
       "docLines" : [
         ""
@@ -2479,7 +2739,25 @@
       "withDash" : false
     },
     {
+      "attributeName" : "onTouchCancelCapture",
+      "attributeType" : "TouchEventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
       "attributeName" : "onTouchEnd",
+      "attributeType" : "TouchEventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onTouchEndCapture",
       "attributeType" : "TouchEventHandler",
       "docLines" : [
         ""
@@ -2497,7 +2775,25 @@
       "withDash" : false
     },
     {
+      "attributeName" : "onTouchMoveCapture",
+      "attributeType" : "TouchEventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
       "attributeName" : "onTouchStart",
+      "attributeType" : "TouchEventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onTouchStartCapture",
       "attributeType" : "TouchEventHandler",
       "docLines" : [
         ""
@@ -2516,10 +2812,28 @@
       "compatibleTags" : null,
       "withDash" : false
     },
+    {
+      "attributeName" : "onScrollCapture",
+      "attributeType" : "UIEventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
 
     // Wheel Events
     {
       "attributeName" : "onWheel",
+      "attributeType" : "WheelEventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onWheelCapture",
       "attributeType" : "WheelEventHandler",
       "docLines" : [
         ""
@@ -2539,7 +2853,25 @@
       "withDash" : false
     },
     {
+      "attributeName" : "onAbortCapture",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
       "attributeName" : "onCanPlay",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onCanPlayCapture",
       "attributeType" : "EventHandler",
       "docLines" : [
         ""
@@ -2557,7 +2889,25 @@
       "withDash" : false
     },
     {
+      "attributeName" : "onCanPlayThroughCapture",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
       "attributeName" : "onDurationChange",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onDurationChangeCapture",
       "attributeType" : "EventHandler",
       "docLines" : [
         ""
@@ -2575,7 +2925,25 @@
       "withDash" : false
     },
     {
+      "attributeName" : "onEmptiedCapture",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
       "attributeName" : "onEncrypted",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onEncryptedCapture",
       "attributeType" : "EventHandler",
       "docLines" : [
         ""
@@ -2593,7 +2961,25 @@
       "withDash" : false
     },
     {
+      "attributeName" : "onEndedCapture",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
       "attributeName" : "onError",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onErrorCapture",
       "attributeType" : "EventHandler",
       "docLines" : [
         ""
@@ -2611,7 +2997,25 @@
       "withDash" : false
     },
     {
+      "attributeName" : "onLoadedDataCapture",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
       "attributeName" : "onLoadedMetadata",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onLoadedMetadataCapture",
       "attributeType" : "EventHandler",
       "docLines" : [
         ""
@@ -2629,7 +3033,25 @@
       "withDash" : false
     },
     {
+      "attributeName" : "onLoadStartCapture",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
       "attributeName" : "onPause",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onPauseCapture",
       "attributeType" : "EventHandler",
       "docLines" : [
         ""
@@ -2647,7 +3069,25 @@
       "withDash" : false
     },
     {
+      "attributeName" : "onPlayCapture",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
       "attributeName" : "onPlaying",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onPlayingCapture",
       "attributeType" : "EventHandler",
       "docLines" : [
         ""
@@ -2665,7 +3105,25 @@
       "withDash" : false
     },
     {
+      "attributeName" : "onProgressCapture",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
       "attributeName" : "onRateChange",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onRateChangeCapture",
       "attributeType" : "EventHandler",
       "docLines" : [
         ""
@@ -2683,7 +3141,25 @@
       "withDash" : false
     },
     {
+      "attributeName" : "onSeekedCapture",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
       "attributeName" : "onSeeking",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onSeekingCapture",
       "attributeType" : "EventHandler",
       "docLines" : [
         ""
@@ -2701,7 +3177,25 @@
       "withDash" : false
     },
     {
+      "attributeName" : "onStalledCapture",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
       "attributeName" : "onSuspend",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onSuspendCapture",
       "attributeType" : "EventHandler",
       "docLines" : [
         ""
@@ -2719,7 +3213,25 @@
       "withDash" : false
     },
     {
+      "attributeName" : "onTimeUpdateCapture",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
       "attributeName" : "onVolumeChange",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onVolumeChangeCapture",
       "attributeType" : "EventHandler",
       "docLines" : [
         ""
@@ -2736,10 +3248,28 @@
       "compatibleTags" : null,
       "withDash" : false
     },
+    {
+      "attributeName" : "onWaitingCapture",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
 
     // Image Events (includes onError but that's handled before)
     {
       "attributeName" : "onLoad",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onLoadCapture",
       "attributeType" : "EventHandler",
       "docLines" : [
         ""
@@ -2759,6 +3289,15 @@
       "withDash" : false
     },
     {
+      "attributeName" : "onAnimationStartCapture",
+      "attributeType" : "AnimationEventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
       "attributeName" : "onAnimationEnd",
       "attributeType" : "AnimationEventHandler",
       "docLines" : [
@@ -2768,7 +3307,25 @@
       "withDash" : false
     },
     {
+      "attributeName" : "onAnimationEndCapture",
+      "attributeType" : "AnimationEventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
       "attributeName" : "onAnimationIteration",
+      "attributeType" : "AnimationEventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onAnimationIterationCapture",
       "attributeType" : "AnimationEventHandler",
       "docLines" : [
         ""
@@ -2798,6 +3355,15 @@
       "compatibleTags" : null,
       "withDash" : false
     },
+    {
+      "attributeName" : "onToggleCapture",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
 
     // Not in the list but supported dialog events
     {
@@ -2811,6 +3377,15 @@
     },
     {
       "attributeName" : "onClose",
+      "attributeType" : "EventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false
+    },
+    {
+      "attributeName" : "onCloseCapture",
       "attributeType" : "EventHandler",
       "docLines" : [
         ""
