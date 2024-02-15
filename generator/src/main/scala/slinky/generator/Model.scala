@@ -18,4 +18,5 @@ case class Attribute(attributeName: String,
                      attributeType: String,
                      docLines: Seq[String],
                      compatibleTags: Option[Seq[String]],
-                     withDash: Boolean) /* tag, identifier, doc */
+                     withDash: Boolean,
+                     hasCaptureVariant: Boolean) /* tag, identifier, doc */

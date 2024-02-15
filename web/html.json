@@ -797,7 +797,8 @@
         "audio",
         "video"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "download",
@@ -810,7 +811,8 @@
         "a",
         "area"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "src",
@@ -837,7 +839,8 @@
         "track",
         "video"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "action",
@@ -848,7 +851,8 @@
       "compatibleTags" : [
         "form"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "noValidate",
@@ -859,7 +863,8 @@
       "compatibleTags" : [
         "form"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "poster",
@@ -870,7 +875,8 @@
       "compatibleTags" : [
         "video"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "step",
@@ -881,7 +887,8 @@
       "compatibleTags" : [
         "input"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "default",
@@ -894,7 +901,8 @@
         "menuitem",
         "track"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "type",
@@ -935,7 +943,8 @@
         "style",
         "ul"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "draggable",
@@ -944,7 +953,8 @@
         "Is an enumerated attribute indicating whether the element can be dragged, using the \n<a href=\"/en-us/docs/DragDrop/Drag_and_Drop\">Drag and Drop API</a>. It can have the following values: \n<ul> \n <li><code>true</code>, which indicates that the element may be dragged</li> \n <li><code>false</code>, which indicates that the element may not be dragged.</li> \n</ul>"
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "max",
@@ -959,7 +969,8 @@
         "meter",
         "progress"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "value",
@@ -986,7 +997,8 @@
         "select",
         "textarea"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "headers",
@@ -999,7 +1011,8 @@
         "td",
         "th"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "alt",
@@ -1012,7 +1025,8 @@
         "area",
         "img"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "method",
@@ -1023,7 +1037,8 @@
       "compatibleTags" : [
         "form"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "dangerouslySetInnerHTML",
@@ -1032,7 +1047,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "title",
@@ -1043,7 +1059,8 @@
         "link - The <code>title</code> attribute has special semantics on the <code>&lt;link&gt;</code> element. When used on a <code>&lt;link rel=\"stylesheet\"&gt;</code> it defines a <a href=\"/en-US/docs/Web/CSS/Alternative_style_sheets\">preferred or an alternate stylesheet</a>. Incorrectly using it may <a href=\"/en-US/docs/Correctly_Using_Titles_With_External_Stylesheets\">cause the stylesheet to be ignored</a>."
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "optimum",
@@ -1054,7 +1071,8 @@
       "compatibleTags" : [
         "meter"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "pattern",
@@ -1065,7 +1083,8 @@
       "compatibleTags" : [
         "input"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "rel",
@@ -1080,7 +1099,8 @@
         "area",
         "link"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "hidden",
@@ -1089,7 +1109,8 @@
         "Is a Boolean attribute indicates that the element is not yet, or is no longer, \n<em>relevant</em>. For example, it can be used to hide elements of the page that can't be used until the login process has been completed. The browser won't render such elements. This attribute must not be used to hide content that could legitimately be shown."
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "lang",
@@ -1098,7 +1119,8 @@
         "Participates in defining the language of the element, the language that non-editable elements are written in or the language that editable elements should be written in. The tag contains one single entry value in the format defined&nbsp;in the \n<a class=\"external\" href=\"https://www.ietf.org/rfc/bcp/bcp47.txt\"><em>Tags for Identifying Languages (BCP47)</em></a> IETF document. \n<a href=\"#attr-xml:lang\"><strong>xml:lang</strong></a> has priority over it."
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "shape",
@@ -1111,7 +1133,8 @@
         "a",
         "area"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "summary",
@@ -1122,7 +1145,8 @@
       "compatibleTags" : [
         "table"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "content",
@@ -1133,7 +1157,8 @@
       "compatibleTags" : [
         "meta"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "cite",
@@ -1150,7 +1175,8 @@
         "ins",
         "q"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "name",
@@ -1190,7 +1216,8 @@
         "select",
         "textarea"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "style",
@@ -1199,7 +1226,8 @@
         "Contains \n<a href=\"/en-US/docs/Web/CSS\">CSS</a> styling declarations to be applied to the element. Note that it is recommended for styles to be defined in a separate file or files. This attribute and the \n<a title=\"The HTML <style> element contains style information for a document, or part of a document. By default, the style instructions written inside that element are expected to be CSS.\" href=\"/en-US/docs/Web/HTML/Element/style\"><code>&lt;style&gt;</code></a> element have mainly the purpose of allowing for quick styling, for example for testing purposes."
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "open",
@@ -1212,7 +1240,8 @@
         "details",
         "dialog"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "coords",
@@ -1225,7 +1254,8 @@
         "a",
         "area"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "low",
@@ -1236,7 +1266,8 @@
       "compatibleTags" : [
         "meter"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "checked",
@@ -1249,7 +1280,8 @@
         "input",
         "menuitem"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "ref",
@@ -1258,7 +1290,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "list",
@@ -1269,7 +1302,8 @@
       "compatibleTags" : [
         "input"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "scoped",
@@ -1280,7 +1314,8 @@
       "compatibleTags" : [
         "style"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "integrity",
@@ -1293,7 +1328,8 @@
         "link",
         "script"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "icon",
@@ -1304,7 +1340,8 @@
       "compatibleTags" : [
         "menuitem"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "controls",
@@ -1317,7 +1354,8 @@
         "audio",
         "video"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "wrap",
@@ -1330,7 +1368,8 @@
         "pre",
         "textarea"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "capture",
@@ -1341,7 +1380,8 @@
       "compatibleTags" : [
         "input"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "scrolling",
@@ -1352,7 +1392,8 @@
       "compatibleTags" : [
         "iframe"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "disabled",
@@ -1381,7 +1422,8 @@
         "select",
         "textarea"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "async",
@@ -1392,7 +1434,8 @@
       "compatibleTags" : [
         "script"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "muted",
@@ -1405,7 +1448,8 @@
         "audio",
         "video"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "placeholder",
@@ -1418,7 +1462,8 @@
         "input",
         "textarea"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "selected",
@@ -1429,7 +1474,8 @@
       "compatibleTags" : [
         "option"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "className",
@@ -1438,7 +1484,8 @@
         "Is a space-separated list of the classes of the element. Classes allows CSS and JavaScript to select and access specific elements via the \n<a href=\"/en-US/docs/Web/CSS/Class_selectors\">class selectors</a> or functions like the method \n<a title=\"Returns an array-like object of all child elements which have all of the given class names. When called on the document object, the complete document is searched, including the root node. You may also call getElementsByClassName() on any element; it will return only elements which are descendants of the specified root element with the given class names.\" href=\"/en-US/docs/Web/API/Document/getElementsByClassName\"><code>Document.getElementsByClassName()</code></a>."
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "defer",
@@ -1449,7 +1496,8 @@
       "compatibleTags" : [
         "script"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "htmlFor",
@@ -1462,7 +1510,8 @@
         "label",
         "output"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "nonce",
@@ -1475,7 +1524,8 @@
         "script",
         "style"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "span",
@@ -1488,7 +1538,8 @@
         "col",
         "colgroup"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "colSpan",
@@ -1501,7 +1552,8 @@
         "td",
         "th"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "rowSpan",
@@ -1514,7 +1566,8 @@
         "td",
         "th"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "href",
@@ -1531,7 +1584,8 @@
         "base",
         "link"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "autoComplete",
@@ -1543,7 +1597,8 @@
         "input",
         "form"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "defaultChecked",
@@ -1554,7 +1609,8 @@
       "compatibleTags" : [
         "input"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "defaultValue",
@@ -1567,7 +1623,8 @@
         "select",
         "textarea"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "required",
@@ -1582,7 +1639,8 @@
         "select",
         "textarea"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "target",
@@ -1601,7 +1659,8 @@
         "form",
         "link"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "reversed",
@@ -1612,7 +1671,8 @@
       "compatibleTags" : [
         "ol"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "media",
@@ -1629,7 +1689,8 @@
         "source",
         "style"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "start",
@@ -1640,7 +1701,8 @@
       "compatibleTags" : [
         "ol"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "profile",
@@ -1651,7 +1713,8 @@
       "compatibleTags" : [
         "head"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "label",
@@ -1670,7 +1733,8 @@
         "option",
         "track"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "sandbox",
@@ -1681,7 +1745,8 @@
       "compatibleTags" : [
         "iframe"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "width",
@@ -1717,7 +1782,8 @@
         "th",
         "video"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "id",
@@ -1726,7 +1792,8 @@
         "Defines a unique identifier (ID) which must be unique in the whole document. Its purpose is to identify the element when linking (using a fragment identifier), scripting, or styling (with CSS)."
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "accept",
@@ -1739,7 +1806,8 @@
         "form",
         "input"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "multiple",
@@ -1752,7 +1820,8 @@
         "input",
         "select"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "key",
@@ -1761,7 +1830,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "loop",
@@ -1774,7 +1844,8 @@
         "audio",
         "video"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "size",
@@ -1789,7 +1860,8 @@
         "input",
         "select"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "dir",
@@ -1799,7 +1871,8 @@
         "a, abbr, address, area, article, aside, audio, b, base, bdi, bdo, big, blockquote, body, br, button, canvas, caption, cite, code, col, colgroup, data, datalist, dd, del, details, dfn, dialog, div, dl, dt, em, embed, fieldset, figcaption, figure, footer, form, h1, h2, h3, h4, h5, h6, head, header, hr, html, i, iframe, img, input, ins, kbd, keygen, label, legend, li, link, main, map, mark, menu, menuitem, meta, meter, nav, noscript, object, ol, optgroup, option, output, p, param, picture, pre, progress, q, rp, rt, ruby, s, samp, script, section, select, small, source, span, strong, style, sub, summary, sup, table, tbody, td, textarea, tfoot, th, thead, time, title, tr, track, u, ul, var, video, wbr - Is an enumerated attribute indicating the directionality of the element's text. It can have the following values: \n<ul> \n <li><code>ltr</code>, which means <em>left to right </em>and is to be used for languages that are written from the left to the right (like English);</li> \n <li><code>rtl</code>, which means <em>right to left</em> and is to be used for languages that are written from the right to the left (like Arabic);</li> \n <li><code>auto</code>, which let the user agent decides. It uses a basic algorithm as it parses the characters inside the element until it finds a character with a strong directionality, then apply that directionality to the whole element.</li> \n</ul>"
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "height",
@@ -1822,7 +1895,8 @@
         "object",
         "video"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "high",
@@ -1833,7 +1907,8 @@
       "compatibleTags" : [
         "meter"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "scope",
@@ -1846,7 +1921,8 @@
         "td",
         "th"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "kind",
@@ -1857,7 +1933,8 @@
       "compatibleTags" : [
         "track"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "aria",
@@ -1866,7 +1943,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : true
+      "withDash" : true,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "role",
@@ -1875,7 +1953,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "min",
@@ -1888,7 +1967,8 @@
         "input",
         "meter"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "manifest",
@@ -1899,7 +1979,8 @@
       "compatibleTags" : [
         "html"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "data",
@@ -1909,7 +1990,8 @@
         "a, abbr, address, area, article, aside, audio, b, base, bdi, bdo, big, blockquote, body, br, button, canvas, caption, cite, code, col, colgroup, data, datalist, dd, del, details, dfn, dialog, div, dl, dt, em, embed, fieldset, figcaption, figure, footer, form, h1, h2, h3, h4, h5, h6, head, header, hr, html, i, iframe, img, input, ins, kbd, keygen, label, legend, li, link, main, map, mark, menu, menuitem, meta, meter, nav, noscript, object, ol, optgroup, option, output, p, param, picture, pre, progress, q, rp, rt, ruby, s, samp, script, section, select, small, source, span, strong, style, sub, summary, sup, table, tbody, td, textarea, tfoot, th, thead, time, title, tr, track, u, ul, var, video, wbr - Forms a class of attributes, called custom data attributes, that allow proprietary information to be exchanged between the \n<a href=\"/en-US/docs/Web/HTML\">HTML</a> and its \n<a href=\"/en-US/docs/Glossary/DOM\">DOM</a> representation that may be used by scripts. All such custom data are available via the \n<a title=\"The HTMLElement interface represents any HTML element. Some elements directly implement this interface, others implement it via an interface that inherits it.\" href=\"/en-US/docs/Web/API/HTMLElement\"><code>HTMLElement</code></a> interface of the element the attribute is set on. The \n<a title=\"The HTMLElement.dataset property allows access, both in reading and writing mode, to all the custom data attributes (data-*) set on the element, either in HTML or in the DOM. &nbsp;It is a map of DOMString, one entry for each custom data attribute. &nbsp;Note that the&nbsp;dataset&nbsp;property itself can be read, but not&nbsp;directly written. &nbsp;Instead, all writes must be&nbsp;to its &quot;properties&quot;, which in turn represent the data attributes. &nbsp; Note also that an HTML data-attribute&nbsp;and its&nbsp;corresponding DOM&nbsp;dataset.property&nbsp;do not share the same name, but they are always similar:\" href=\"/en-US/docs/Web/API/HTMLElement/dataset\"><code>HTMLElement.dataset</code></a> property gives access to them."
       ],
       "compatibleTags" : null,
-      "withDash" : true
+      "withDash" : true,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "sizes",
@@ -1924,7 +2006,8 @@
         "link",
         "source"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "rows",
@@ -1935,7 +2018,8 @@
       "compatibleTags" : [
         "textarea"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "challenge",
@@ -1946,7 +2030,8 @@
       "compatibleTags" : [
         "keygen"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "form",
@@ -1975,7 +2060,8 @@
         "select",
         "textarea"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "suppressContentEditableWarning",
@@ -1984,7 +2070,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "cols",
@@ -1997,7 +2084,8 @@
         "pre",
         "textarea"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName": "spellCheck",
@@ -2005,7 +2093,8 @@
       "scalaJSType": "org.scalajs.dom.Element",
       "docLines": [],
       "compatibleTags": null,
-      "withDash": false
+      "withDash": false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName": "contentEditable",
@@ -2013,7 +2102,8 @@
       "scalaJSType": "org.scalajs.dom.Element",
       "docLines": [],
       "compatibleTags": null,
-      "withDash": false
+      "withDash": false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName": "tabIndex",
@@ -2021,7 +2111,8 @@
       "scalaJSType": "org.scalajs.dom.Element",
       "docLines": [],
       "compatibleTags": null,
-      "withDash": false
+      "withDash": false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName": "readOnly",
@@ -2032,7 +2123,8 @@
         "input",
         "textarea"
       ],
-      "withDash": false
+      "withDash": false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName": "on",
@@ -2040,7 +2132,8 @@
       "scalaJSType": "org.scalajs.dom.Element",
       "docLines": [],
       "compatibleTags": null,
-      "withDash": false
+      "withDash": false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "autoFocus",
@@ -2051,7 +2144,8 @@
       "compatibleTags" : [
         "input"
       ],
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
 
     // Officially supported React events
@@ -2064,16 +2158,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
-    },
-    {
-      "attributeName" : "onCopyCapture",
-      "attributeType" : "ClipboardEventHandler",
-      "docLines" : [
-        ""
-      ],
-      "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : true
     },
     {
       "attributeName" : "onCut",
@@ -2082,16 +2168,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
-    },
-    {
-      "attributeName" : "onCutCapture",
-      "attributeType" : "ClipboardEventHandler",
-      "docLines" : [
-        ""
-      ],
-      "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : true
     },
     {
       "attributeName" : "onPaste",
@@ -2100,16 +2178,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
-    },
-    {
-      "attributeName" : "onPasteCapture",
-      "attributeType" : "ClipboardEventHandler",
-      "docLines" : [
-        ""
-      ],
-      "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : true
     },
 
     // Composition Events
@@ -2120,16 +2190,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
-    },
-    {
-      "attributeName" : "onCompositionEndCapture",
-      "attributeType" : "CompositionEventHandler",
-      "docLines" : [
-        ""
-      ],
-      "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : true
     },
     {
       "attributeName" : "onCompositionStart",
@@ -2138,16 +2200,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
-    },
-    {
-      "attributeName" : "onCompositionStartCapture",
-      "attributeType" : "CompositionEventHandler",
-      "docLines" : [
-        ""
-      ],
-      "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : true
     },
     {
       "attributeName" : "onCompositionUpdate",
@@ -2156,16 +2210,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
-    },
-    {
-      "attributeName" : "onCompositionUpdateCapture",
-      "attributeType" : "CompositionEventHandler",
-      "docLines" : [
-        ""
-      ],
-      "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : true
     },
 
     // Keyboard Events
@@ -2176,7 +2222,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : true
     },
     {
       "attributeName" : "onKeyPress",
@@ -2185,7 +2232,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : true
     },
     {
       "attributeName" : "onKeyUp",
@@ -2194,35 +2242,10 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : true
     },
-    {
-      "attributeName" : "onKeyDownCapture",
-      "attributeType" : "KeyboardEventHandler",
-      "docLines" : [
-        ""
-      ],
-      "compatibleTags" : null,
-      "withDash" : false
-    },
-    {
-      "attributeName" : "onKeyPressCapture",
-      "attributeType" : "KeyboardEventHandler",
-      "docLines" : [
-        ""
-      ],
-      "compatibleTags" : null,
-      "withDash" : false
-    },
-    {
-      "attributeName" : "onKeyUpCapture",
-      "attributeType" : "KeyboardEventHandler",
-      "docLines" : [
-        ""
-      ],
-      "compatibleTags" : null,
-      "withDash" : false
-    },
+
     // Focus Events
     {
       "attributeName" : "onFocus",
@@ -2231,16 +2254,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
-    },
-    {
-      "attributeName" : "onFocusCapture",
-      "attributeType" : "FocusEventHandler",
-      "docLines" : [
-        ""
-      ],
-      "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : true
     },
     {
       "attributeName" : "onBlur",
@@ -2249,16 +2264,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
-    },
-    {
-      "attributeName" : "onBlurCapture",
-      "attributeType" : "FocusEventHandler",
-      "docLines" : [
-        ""
-      ],
-      "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : true
     },
 
     // Form Events
@@ -2269,7 +2276,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "onInput",
@@ -2278,7 +2286,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "onInvalid",
@@ -2287,7 +2296,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "onSubmit",
@@ -2296,16 +2306,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
-    },
-    {
-      "attributeName" : "onSubmitCapture",
-      "attributeType" : "EventHandler",
-      "docLines" : [
-        ""
-      ],
-      "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : true
     },
 
     // Mouse Events
@@ -2316,16 +2318,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
-    },
-    {
-      "attributeName" : "onClickCapture",
-      "attributeType" : "MouseEventHandler",
-      "docLines" : [
-        ""
-      ],
-      "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : true
     },
     {
       "attributeName" : "onContextMenu",
@@ -2334,16 +2328,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
-    },
-    {
-      "attributeName" : "onContextMenuCapture",
-      "attributeType" : "MouseEventHandler",
-      "docLines" : [
-        ""
-      ],
-      "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : true
     },
     {
       "attributeName" : "onDoubleClick",
@@ -2352,16 +2338,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
-    },
-    {
-      "attributeName" : "onDoubleClickCapture",
-      "attributeType" : "MouseEventHandler",
-      "docLines" : [
-        ""
-      ],
-      "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : true
     },
     {
       "attributeName" : "onDrag",
@@ -2370,16 +2348,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
-    },
-    {
-      "attributeName" : "onDragCapture",
-      "attributeType" : "MouseEventHandler",
-      "docLines" : [
-        ""
-      ],
-      "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : true
     },
     {
       "attributeName" : "onDragEnd",
@@ -2388,16 +2358,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
-    },
-    {
-      "attributeName" : "onDragEndCapture",
-      "attributeType" : "MouseEventHandler",
-      "docLines" : [
-        ""
-      ],
-      "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : true
     },
     {
       "attributeName" : "onDragEnter",
@@ -2406,16 +2368,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
-    },
-    {
-      "attributeName" : "onDragEnterCapture",
-      "attributeType" : "MouseEventHandler",
-      "docLines" : [
-        ""
-      ],
-      "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : true
     },
     {
       "attributeName" : "onDragExit",
@@ -2424,7 +2378,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "onDragLeave",
@@ -2433,7 +2388,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "onDragOver",
@@ -2442,16 +2398,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
-    },
-    {
-      "attributeName" : "onDragOverCapture",
-      "attributeType" : "MouseEventHandler",
-      "docLines" : [
-        ""
-      ],
-      "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : true
     },
     {
       "attributeName" : "onDragStart",
@@ -2460,16 +2408,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
-    },
-    {
-      "attributeName" : "onDragStartCapture",
-      "attributeType" : "MouseEventHandler",
-      "docLines" : [
-        ""
-      ],
-      "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : true
     },
     {
       "attributeName" : "onDrop",
@@ -2478,16 +2418,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
-    },
-    {
-      "attributeName" : "onDropCapture",
-      "attributeType" : "MouseEventHandler",
-      "docLines" : [
-        ""
-      ],
-      "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : true
     },
     {
       "attributeName" : "onMouseDown",
@@ -2496,16 +2428,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
-    },
-    {
-      "attributeName" : "onMouseDownCapture",
-      "attributeType" : "MouseEventHandler",
-      "docLines" : [
-        ""
-      ],
-      "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : true
     },
     {
       "attributeName" : "onMouseEnter",
@@ -2514,7 +2438,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "onMouseLeave",
@@ -2523,7 +2448,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "onMouseMove",
@@ -2532,7 +2458,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "onMouseOut",
@@ -2541,16 +2468,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
-    },
-    {
-      "attributeName" : "onMouseOutCapture",
-      "attributeType" : "MouseEventHandler",
-      "docLines" : [
-        ""
-      ],
-      "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : true
     },
     {
       "attributeName" : "onMouseOver",
@@ -2559,7 +2478,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "onMouseUp",
@@ -2568,16 +2488,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
-    },
-    {
-      "attributeName" : "onMouseUpCapture",
-      "attributeType" : "MouseEventHandler",
-      "docLines" : [
-        ""
-      ],
-      "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : true
     },
 
     // Pointer Events
@@ -2588,16 +2500,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
-    },
-    {
-      "attributeName" : "onPointerDownCapture",
-      "attributeType" : "PointerEventHandler",
-      "docLines" : [
-        ""
-      ],
-      "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : true
     },
     {
       "attributeName" : "onPointerMove",
@@ -2606,7 +2510,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "onPointerUp",
@@ -2615,16 +2520,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
-    },
-    {
-      "attributeName" : "onPointerUpCapture",
-      "attributeType" : "PointerEventHandler",
-      "docLines" : [
-        ""
-      ],
-      "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : true
     },
     {
       "attributeName" : "onPointerCancel",
@@ -2633,16 +2530,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
-    },
-    {
-      "attributeName" : "onPointerCancelCapture",
-      "attributeType" : "PointerEventHandler",
-      "docLines" : [
-        ""
-      ],
-      "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : true
     },
     {
       "attributeName" : "onGotPointerCapture",
@@ -2651,7 +2540,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "onLostPointerCapture",
@@ -2660,7 +2550,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "onPointerEnter",
@@ -2669,7 +2560,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "onPointerLeave",
@@ -2678,7 +2570,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "onPointerOver",
@@ -2687,7 +2580,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "onPointerOut",
@@ -2696,16 +2590,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
-    },
-    {
-      "attributeName" : "onPointerOutCapture",
-      "attributeType" : "PointerEventHandler",
-      "docLines" : [
-        ""
-      ],
-      "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : true
     },
 
     // Selection Events
@@ -2716,16 +2602,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
-    },
-    {
-      "attributeName" : "onSelectCapture",
-      "attributeType" : "EventHandler",
-      "docLines" : [
-        ""
-      ],
-      "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : true
     },
 
     // Touch Events
@@ -2736,16 +2614,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
-    },
-    {
-      "attributeName" : "onTouchCancelCapture",
-      "attributeType" : "TouchEventHandler",
-      "docLines" : [
-        ""
-      ],
-      "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : true
     },
     {
       "attributeName" : "onTouchEnd",
@@ -2754,16 +2624,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
-    },
-    {
-      "attributeName" : "onTouchEndCapture",
-      "attributeType" : "TouchEventHandler",
-      "docLines" : [
-        ""
-      ],
-      "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : true
     },
     {
       "attributeName" : "onTouchMove",
@@ -2772,16 +2634,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
-    },
-    {
-      "attributeName" : "onTouchMoveCapture",
-      "attributeType" : "TouchEventHandler",
-      "docLines" : [
-        ""
-      ],
-      "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : true
     },
     {
       "attributeName" : "onTouchStart",
@@ -2790,16 +2644,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
-    },
-    {
-      "attributeName" : "onTouchStartCapture",
-      "attributeType" : "TouchEventHandler",
-      "docLines" : [
-        ""
-      ],
-      "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : true
     },
 
     // UI Events
@@ -2810,16 +2656,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
-    },
-    {
-      "attributeName" : "onScrollCapture",
-      "attributeType" : "UIEventHandler",
-      "docLines" : [
-        ""
-      ],
-      "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : true
     },
 
     // Wheel Events
@@ -2830,16 +2668,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
-    },
-    {
-      "attributeName" : "onWheelCapture",
-      "attributeType" : "WheelEventHandler",
-      "docLines" : [
-        ""
-      ],
-      "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : true
     },
 
     // Media Events
@@ -2850,16 +2680,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
-    },
-    {
-      "attributeName" : "onAbortCapture",
-      "attributeType" : "EventHandler",
-      "docLines" : [
-        ""
-      ],
-      "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : true
     },
     {
       "attributeName" : "onCanPlay",
@@ -2868,16 +2690,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
-    },
-    {
-      "attributeName" : "onCanPlayCapture",
-      "attributeType" : "EventHandler",
-      "docLines" : [
-        ""
-      ],
-      "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : true
     },
     {
       "attributeName" : "onCanPlayThrough",
@@ -2886,16 +2700,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
-    },
-    {
-      "attributeName" : "onCanPlayThroughCapture",
-      "attributeType" : "EventHandler",
-      "docLines" : [
-        ""
-      ],
-      "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : true
     },
     {
       "attributeName" : "onDurationChange",
@@ -2904,16 +2710,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
-    },
-    {
-      "attributeName" : "onDurationChangeCapture",
-      "attributeType" : "EventHandler",
-      "docLines" : [
-        ""
-      ],
-      "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : true
     },
     {
       "attributeName" : "onEmptied",
@@ -2922,16 +2720,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
-    },
-    {
-      "attributeName" : "onEmptiedCapture",
-      "attributeType" : "EventHandler",
-      "docLines" : [
-        ""
-      ],
-      "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : true
     },
     {
       "attributeName" : "onEncrypted",
@@ -2940,16 +2730,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
-    },
-    {
-      "attributeName" : "onEncryptedCapture",
-      "attributeType" : "EventHandler",
-      "docLines" : [
-        ""
-      ],
-      "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : true
     },
     {
       "attributeName" : "onEnded",
@@ -2958,16 +2740,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
-    },
-    {
-      "attributeName" : "onEndedCapture",
-      "attributeType" : "EventHandler",
-      "docLines" : [
-        ""
-      ],
-      "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : true
     },
     {
       "attributeName" : "onError",
@@ -2976,16 +2750,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
-    },
-    {
-      "attributeName" : "onErrorCapture",
-      "attributeType" : "EventHandler",
-      "docLines" : [
-        ""
-      ],
-      "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : true
     },
     {
       "attributeName" : "onLoadedData",
@@ -2994,16 +2760,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
-    },
-    {
-      "attributeName" : "onLoadedDataCapture",
-      "attributeType" : "EventHandler",
-      "docLines" : [
-        ""
-      ],
-      "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : true
     },
     {
       "attributeName" : "onLoadedMetadata",
@@ -3012,16 +2770,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
-    },
-    {
-      "attributeName" : "onLoadedMetadataCapture",
-      "attributeType" : "EventHandler",
-      "docLines" : [
-        ""
-      ],
-      "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : true
     },
     {
       "attributeName" : "onLoadStart",
@@ -3030,16 +2780,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
-    },
-    {
-      "attributeName" : "onLoadStartCapture",
-      "attributeType" : "EventHandler",
-      "docLines" : [
-        ""
-      ],
-      "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : true
     },
     {
       "attributeName" : "onPause",
@@ -3048,16 +2790,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
-    },
-    {
-      "attributeName" : "onPauseCapture",
-      "attributeType" : "EventHandler",
-      "docLines" : [
-        ""
-      ],
-      "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : true
     },
     {
       "attributeName" : "onPlay",
@@ -3066,16 +2800,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
-    },
-    {
-      "attributeName" : "onPlayCapture",
-      "attributeType" : "EventHandler",
-      "docLines" : [
-        ""
-      ],
-      "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : true
     },
     {
       "attributeName" : "onPlaying",
@@ -3084,16 +2810,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
-    },
-    {
-      "attributeName" : "onPlayingCapture",
-      "attributeType" : "EventHandler",
-      "docLines" : [
-        ""
-      ],
-      "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : true
     },
     {
       "attributeName" : "onProgress",
@@ -3102,16 +2820,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
-    },
-    {
-      "attributeName" : "onProgressCapture",
-      "attributeType" : "EventHandler",
-      "docLines" : [
-        ""
-      ],
-      "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : true
     },
     {
       "attributeName" : "onRateChange",
@@ -3120,16 +2830,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
-    },
-    {
-      "attributeName" : "onRateChangeCapture",
-      "attributeType" : "EventHandler",
-      "docLines" : [
-        ""
-      ],
-      "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : true
     },
     {
       "attributeName" : "onSeeked",
@@ -3138,16 +2840,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
-    },
-    {
-      "attributeName" : "onSeekedCapture",
-      "attributeType" : "EventHandler",
-      "docLines" : [
-        ""
-      ],
-      "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : true
     },
     {
       "attributeName" : "onSeeking",
@@ -3156,16 +2850,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
-    },
-    {
-      "attributeName" : "onSeekingCapture",
-      "attributeType" : "EventHandler",
-      "docLines" : [
-        ""
-      ],
-      "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : true
     },
     {
       "attributeName" : "onStalled",
@@ -3174,16 +2860,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
-    },
-    {
-      "attributeName" : "onStalledCapture",
-      "attributeType" : "EventHandler",
-      "docLines" : [
-        ""
-      ],
-      "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : true
     },
     {
       "attributeName" : "onSuspend",
@@ -3192,16 +2870,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
-    },
-    {
-      "attributeName" : "onSuspendCapture",
-      "attributeType" : "EventHandler",
-      "docLines" : [
-        ""
-      ],
-      "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : true
     },
     {
       "attributeName" : "onTimeUpdate",
@@ -3210,16 +2880,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
-    },
-    {
-      "attributeName" : "onTimeUpdateCapture",
-      "attributeType" : "EventHandler",
-      "docLines" : [
-        ""
-      ],
-      "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : true
     },
     {
       "attributeName" : "onVolumeChange",
@@ -3228,16 +2890,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
-    },
-    {
-      "attributeName" : "onVolumeChangeCapture",
-      "attributeType" : "EventHandler",
-      "docLines" : [
-        ""
-      ],
-      "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : true
     },
     {
       "attributeName" : "onWaiting",
@@ -3246,16 +2900,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
-    },
-    {
-      "attributeName" : "onWaitingCapture",
-      "attributeType" : "EventHandler",
-      "docLines" : [
-        ""
-      ],
-      "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : true
     },
 
     // Image Events (includes onError but that's handled before)
@@ -3266,16 +2912,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
-    },
-    {
-      "attributeName" : "onLoadCapture",
-      "attributeType" : "EventHandler",
-      "docLines" : [
-        ""
-      ],
-      "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : true
     },
 
     // Animation Events
@@ -3286,16 +2924,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
-    },
-    {
-      "attributeName" : "onAnimationStartCapture",
-      "attributeType" : "AnimationEventHandler",
-      "docLines" : [
-        ""
-      ],
-      "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : true
     },
     {
       "attributeName" : "onAnimationEnd",
@@ -3304,16 +2934,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
-    },
-    {
-      "attributeName" : "onAnimationEndCapture",
-      "attributeType" : "AnimationEventHandler",
-      "docLines" : [
-        ""
-      ],
-      "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : true
     },
     {
       "attributeName" : "onAnimationIteration",
@@ -3322,16 +2944,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
-    },
-    {
-      "attributeName" : "onAnimationIterationCapture",
-      "attributeType" : "AnimationEventHandler",
-      "docLines" : [
-        ""
-      ],
-      "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : true
     },
 
     // Transition Events
@@ -3342,7 +2956,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
 
     // Other Events
@@ -3353,16 +2968,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
-    },
-    {
-      "attributeName" : "onToggleCapture",
-      "attributeType" : "EventHandler",
-      "docLines" : [
-        ""
-      ],
-      "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : true
     },
 
     // Not in the list but supported dialog events
@@ -3373,7 +2980,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : false
     },
     {
       "attributeName" : "onClose",
@@ -3382,16 +2990,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
-    },
-    {
-      "attributeName" : "onCloseCapture",
-      "attributeType" : "EventHandler",
-      "docLines" : [
-        ""
-      ],
-      "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant" : true
     }
   ]
 }

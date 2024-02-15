@@ -195,7 +195,8 @@ object MDN extends TagsProvider {
           }
         },
         if (instances.map(_._1.tagName).distinct.size == tags.size) None else Some(instances.map(_._1.tagName)),
-        attr.name == "data" || attr.name == "aria"
+        attr.name == "data" || attr.name == "aria",
+        false
       )
     }.toSeq
 

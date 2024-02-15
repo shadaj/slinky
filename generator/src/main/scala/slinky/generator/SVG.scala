@@ -84,9 +84,9 @@ object SVG extends TagsProvider {
 
     val attributes = allAttributes.map(SVGToJSMapping.convert).flatMap { converted =>
       if (supportedAttributes.contains(converted.name)) {
-        Some(Attribute(converted.name, converted.valueType, Seq.empty, None, false))
+        Some(Attribute(converted.name, converted.valueType, Seq.empty, None, false, false))
       } else None
-    } ++ extraAttributes.map(e => Attribute(e._1.name, e._1.valueType, Seq.empty, None, false))
+    } ++ extraAttributes.map(e => Attribute(e._1.name, e._1.valueType, Seq.empty, None, false, false))
 
     (allTags.toSeq, attributes.toSeq)
   }
