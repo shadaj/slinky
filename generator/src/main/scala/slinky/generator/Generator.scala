@@ -63,26 +63,26 @@ object Generator {
              |}"""
         }
 
-        val attrsGen = attrs.toList.flatMap { a =>
+        def attrsGen(nameSuffix: String = "") = attrs.toList.flatMap { a =>
           val base = (if (eventToSynthetic.contains(a.attributeType)) {
             val eventTypeForTagType = eventToSynthetic(a.attributeType)
             s"""import slinky.core.OptionalAttrPair.optionToJsOption
                |
                |@inline def :=[T <: slinky.core.TagElement](v: ${eventTypeForTagType("T#RefType")} => Unit) =
-               |  new slinky.core.AttrPair[T]("${a.attributeName}", v)
-               |@inline def :=(v: () => Unit) = new slinky.core.AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)
-               |@inline def :=(v: Option[() => Unit]) = new slinky.core.OptionalAttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", optionToJsOption(v))""".stripMargin
+               |  new slinky.core.AttrPair[T]("${a.attributeName + nameSuffix}", v)
+               |@inline def :=(v: () => Unit) = new slinky.core.AttrPair[_${symbolWithoutEscape + nameSuffix}_attr.type]("${a.attributeName + nameSuffix}", v)
+               |@inline def :=(v: Option[() => Unit]) = new slinky.core.OptionalAttrPair[_${symbolWithoutEscape + nameSuffix}_attr.type]("${a.attributeName + nameSuffix}", optionToJsOption(v))""".stripMargin
           } else if (a.attributeType == "RefType") {
             s"""@inline def :=[T <: slinky.core.TagElement](v: T#RefType => Unit) =
-               |  new slinky.core.AttrPair[T]("${a.attributeName}", v)
+               |  new slinky.core.AttrPair[T]("${a.attributeName + nameSuffix}", v)
                |@inline def :=[T <: slinky.core.TagElement, E <: T#RefType](v: slinky.core.RefAttr[E]) =
-               |  new slinky.core.AttrPair[T]("${a.attributeName}", v)""".stripMargin
+               |  new slinky.core.AttrPair[T]("${a.attributeName + nameSuffix}", v)""".stripMargin
           } else {
             s"""import slinky.core.OptionalAttrPair.optionToJsOption
                |
-               |@inline def :=(v: ${a.attributeType}) = new slinky.core.AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", v)
-               |@inline def :=(v: Option[${a.attributeType}]) = new slinky.core.OptionalAttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}", optionToJsOption(v))""".stripMargin
-          }) + s"\ntype attrType = _${symbolWithoutEscape}_attr.type"
+               |@inline def :=(v: ${a.attributeType}) = new slinky.core.AttrPair[_${symbolWithoutEscape + nameSuffix}_attr.type]("${a.attributeName + nameSuffix}", v)
+               |@inline def :=(v: Option[${a.attributeType}]) = new slinky.core.OptionalAttrPair[_${symbolWithoutEscape + nameSuffix}_attr.type]("${a.attributeName + nameSuffix}", optionToJsOption(v))""".stripMargin
+          }) + s"\ntype attrType = _${symbolWithoutEscape + nameSuffix}_attr.type"
 
           if (a.withDash) {
             Seq(
@@ -90,29 +90,30 @@ object Generator {
               s"""import slinky.core.OptionalAttrPair.optionToJsOption
                  |
                  |final class WithDash(@inline private val sub: String) extends AnyVal {
-                 |@inline def :=(v: ${a.attributeType}) = new slinky.core.AttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}-" + sub, v)
-                 |@inline def :=(v: Option[${a.attributeType}]) = new slinky.core.OptionalAttrPair[_${symbolWithoutEscape}_attr.type]("${a.attributeName}-" + sub, optionToJsOption(v)) }
+                 |@inline def :=(v: ${a.attributeType}) = new slinky.core.AttrPair[_${symbolWithoutEscape + nameSuffix}_attr.type]("${a.attributeName + nameSuffix}-" + sub, v)
+                 |@inline def :=(v: Option[${a.attributeType}]) = new slinky.core.OptionalAttrPair[_${symbolWithoutEscape + nameSuffix}_attr.type]("${a.attributeName + nameSuffix}-" + sub, optionToJsOption(v)) }
                  |@inline def -(sub: String) = new WithDash(sub)""".stripMargin
             )
           } else Seq(base)
+
         }
 
-        val attrToTagImplicits = attrs.toList.flatMap { a =>
+        def attrToTagImplicits(nameSuffix: String = "") = attrs.toList.flatMap { a =>
           a.compatibleTags.getOrElse(extracted.tags.map(_.tagName)).flatMap { t =>
             val fixedT = if (t == "*") "star" else t
             Seq(
-              s"""@inline implicit def to${fixedT}Applied(pair: slinky.core.AttrPair[_${symbolWithoutEscape}_attr.type]): slinky.core.AttrPair[${Utils.identifierFor(t)}.tag.type] = pair.asInstanceOf[slinky.core.AttrPair[${Utils.identifierFor(t)}.tag.type]]
-                 |@inline implicit def to${fixedT}OptionalApplied(pair: slinky.core.OptionalAttrPair[_${symbolWithoutEscape}_attr.type]): slinky.core.OptionalAttrPair[${Utils.identifierFor(t)}.tag.type] = pair.asInstanceOf[slinky.core.OptionalAttrPair[${Utils.identifierFor(t)}.tag.type]]
+              s"""@inline implicit def to${fixedT}Applied(pair: slinky.core.AttrPair[_${symbolWithoutEscape + nameSuffix}_attr.type]): slinky.core.AttrPair[${Utils.identifierFor(t)}.tag.type] = pair.asInstanceOf[slinky.core.AttrPair[${Utils.identifierFor(t)}.tag.type]]
+                 |@inline implicit def to${fixedT}OptionalApplied(pair: slinky.core.OptionalAttrPair[_${symbolWithoutEscape + nameSuffix}_attr.type]): slinky.core.OptionalAttrPair[${Utils.identifierFor(t)}.tag.type] = pair.asInstanceOf[slinky.core.OptionalAttrPair[${Utils.identifierFor(t)}.tag.type]]
                """.stripMargin
             )
           }
         }
 
-        val booleanImplicits = attrs.toList.flatMap { a =>
+        def booleanImplicits(nameSuffix: String = "") = attrs.toList.flatMap { a =>
           a.compatibleTags.getOrElse(extracted.tags.map(_.tagName)).flatMap { t =>
             val fixedT = if (t == "*") "star" else t
             if (attrs.isDefined && attrs.get.attributeType == "Boolean") {
-              Seq(s"""@inline implicit def boolToPair${fixedT}Applied(attrObj: this.type): slinky.core.AttrPair[${Utils.identifierFor(t)}.tag.type] = new slinky.core.AttrPair[${Utils.identifierFor(t)}.tag.type]("${attrs.get.attributeName}", true)""")
+              Seq(s"""@inline implicit def boolToPair${fixedT}Applied(attrObj: this.type): slinky.core.AttrPair[${Utils.identifierFor(t)}.tag.type] = new slinky.core.AttrPair[${Utils.identifierFor(t)}.tag.type]("${attrs.get.attributeName + nameSuffix}", true)""")
             } else Seq.empty
           }
         }
@@ -123,31 +124,42 @@ object Generator {
 
         val symbolExtends = if (symbolExtendsList.isEmpty) "" else symbolExtendsList.mkString("extends ", " with ", "")
 
-        // Character "*" is not allowed in file names in Windows filesystem
-        val symbolFixed = if (symbol == "*") "star" else symbol
-        val out = new PrintWriter(new File(outFolder.getAbsolutePath + "/" + symbolFixed + ".scala"))
+        def fileGen(symbol: String, nameSuffix: String = "") = {
+          // Character "*" is not allowed in file names in Windows filesystem
+          val symbolFixed = if (symbol == "*") "star" else symbol
+          val out = new PrintWriter(new File(outFolder.getAbsolutePath + "/" + symbolFixed + nameSuffix + ".scala"))
 
-        out.println(
-          s"""package $pkg
-             |
-             |/**
-             | * ${(tags.map(_.docLines) ++ attrs.map(_.docLines)).flatten.map(_.replace("*", "&#47;")).mkString("\n * ")}
-             | */
-             |object $symbol $symbolExtends {
-             |implicit object tag extends slinky.core.TagElement {
-             |  type RefType = ${tags.headOption.map(_.scalaJSType).getOrElse("Nothing")}
-             |}
-             |${tagsGen.mkString("\n")}
-             |${attrsGen.mkString("\n")}
-             |${booleanImplicits.mkString("\n")}
-             |}
-             |
-             |object _${symbolWithoutEscapeFixed}_attr {
-             |${attrToTagImplicits.mkString("\n")}
-             |}""".stripMargin
-        )
+          out.println(
+            s"""package $pkg
+               |
+               |/**
+               | * ${(tags.map(_.docLines) ++ attrs.map(_.docLines)).flatten.map(_.replace("*", "&#47;")).mkString("\n * ")}
+               | */
+               |object ${symbol + nameSuffix} $symbolExtends {
+               |implicit object tag extends slinky.core.TagElement {
+               |  type RefType = ${tags.headOption.map(_.scalaJSType).getOrElse("Nothing")}
+               |}
+               |${tagsGen.mkString("\n")}
+               |${attrsGen(nameSuffix).mkString("\n")}
+               |${booleanImplicits(nameSuffix).mkString("\n")}
+               |}
+               |
+               |object _${symbolWithoutEscapeFixed + nameSuffix}_attr {
+               |${attrToTagImplicits(nameSuffix).mkString("\n")}
+               |}""".stripMargin
+          )
 
-        out.close()
+          out.close()
+        }
+
+        attrs match {
+          case Some(attr) if attr.hasCaptureVariant => {
+            fileGen(symbol)
+            fileGen(symbol, "Capture") // generate version with 'Capture' suffix
+          }
+          case _ => fileGen(symbol)
+        }
+
       }
     }
   }

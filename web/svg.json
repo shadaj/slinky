@@ -446,7 +446,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "accumulate",
@@ -454,7 +455,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "additive",
@@ -462,7 +464,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "alphabetic",
@@ -470,7 +473,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "amplitude",
@@ -478,7 +482,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "arabicForm",
@@ -486,7 +491,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "ascent",
@@ -494,7 +500,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "attributeName",
@@ -502,7 +509,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "attributeType",
@@ -510,7 +518,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "azimuth",
@@ -518,7 +527,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "baseFrequency",
@@ -526,7 +536,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "baseProfile",
@@ -534,7 +545,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "bbox",
@@ -542,7 +554,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "begin",
@@ -550,7 +563,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "bias",
@@ -558,7 +572,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "by",
@@ -566,7 +581,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "calcMode",
@@ -574,7 +590,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "capHeight",
@@ -582,7 +599,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "className",
@@ -591,7 +609,8 @@
         "Is a space-separated list of the classes of the element. Classes allows CSS and JavaScript to select and access specific elements via the \n<a href=\"/en-US/docs/Web/CSS/Class_selectors\">class selectors</a> or functions like the method \n<a title=\"Returns an array-like object of all child elements which have all of the given class names. When called on the document object, the complete document is searched, including the root node. You may also call getElementsByClassName() on any element; it will return only elements which are descendants of the specified root element with the given class names.\" href=\"/en-US/docs/Web/API/Document/getElementsByClassName\"><code>Document.getElementsByClassName()</code></a>."
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "clipPathUnits",
@@ -599,7 +618,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "contentScriptType",
@@ -607,7 +627,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "contentStyleType",
@@ -615,7 +636,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "cx",
@@ -623,7 +645,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "cy",
@@ -631,7 +654,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "d",
@@ -639,7 +663,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "descent",
@@ -647,7 +672,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "diffuseConstant",
@@ -655,7 +681,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "divisor",
@@ -663,7 +690,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "dur",
@@ -671,7 +699,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "dx",
@@ -679,7 +708,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "dy",
@@ -687,7 +717,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "edgeMode",
@@ -695,7 +726,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "elevation",
@@ -703,7 +735,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "end",
@@ -711,7 +744,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "exponent",
@@ -719,7 +753,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "externalResourcesRequired",
@@ -727,7 +762,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "fill",
@@ -735,7 +771,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "filterRes",
@@ -743,7 +780,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "filterUnits",
@@ -751,7 +789,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "fontFamily",
@@ -759,7 +798,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "fontSize",
@@ -767,7 +807,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "fontStretch",
@@ -775,7 +816,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "fontStyle",
@@ -783,7 +825,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "format",
@@ -791,7 +834,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "from",
@@ -799,7 +843,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "fx",
@@ -807,7 +852,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "fy",
@@ -815,7 +861,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "g1",
@@ -823,7 +870,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "g2",
@@ -831,7 +879,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "glyphName",
@@ -839,7 +888,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "glyphRef",
@@ -847,7 +897,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "gradientTransform",
@@ -855,7 +906,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "gradientUnits",
@@ -863,7 +915,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "hanging",
@@ -871,7 +924,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "height",
@@ -879,7 +933,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "horizAdvX",
@@ -887,7 +942,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "horizOriginX",
@@ -895,7 +951,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "id",
@@ -903,7 +960,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "ideographic",
@@ -911,7 +969,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "in",
@@ -919,7 +978,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "in2",
@@ -927,7 +987,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "intercept",
@@ -935,7 +996,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "k",
@@ -943,7 +1005,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "k1",
@@ -951,7 +1014,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "k2",
@@ -959,7 +1023,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "k3",
@@ -967,7 +1032,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "k4",
@@ -975,7 +1041,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "kernelMatrix",
@@ -983,7 +1050,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "kernelUnitLength",
@@ -991,7 +1059,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "keyPoints",
@@ -999,7 +1068,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "keySplines",
@@ -1007,7 +1077,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "keyTimes",
@@ -1015,7 +1086,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "lang",
@@ -1023,7 +1095,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "lengthAdjust",
@@ -1031,7 +1104,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "limitingConeAngle",
@@ -1039,7 +1113,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "local",
@@ -1047,7 +1122,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "markerHeight",
@@ -1055,7 +1131,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "markerUnits",
@@ -1063,7 +1140,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "markerWidth",
@@ -1071,7 +1149,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "maskContentUnits",
@@ -1079,7 +1158,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "maskUnits",
@@ -1087,7 +1167,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "mathematical",
@@ -1095,7 +1176,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "max",
@@ -1103,7 +1185,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "media",
@@ -1111,7 +1194,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "method",
@@ -1119,7 +1203,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "min",
@@ -1127,7 +1212,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "mode",
@@ -1135,7 +1221,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "name",
@@ -1143,7 +1230,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "numOctaves",
@@ -1151,7 +1239,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "offset",
@@ -1159,7 +1248,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "operator",
@@ -1167,7 +1257,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "order",
@@ -1175,7 +1266,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "orient",
@@ -1183,7 +1275,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "orientation",
@@ -1191,7 +1284,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "origin",
@@ -1199,7 +1293,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "overlinePosition",
@@ -1207,7 +1302,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "overlineThickness",
@@ -1215,7 +1311,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "panose1",
@@ -1223,7 +1320,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "pathLength",
@@ -1231,7 +1329,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "patternContentUnits",
@@ -1239,7 +1338,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "patternTransform",
@@ -1247,7 +1347,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "patternUnits",
@@ -1255,7 +1356,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "points",
@@ -1263,7 +1365,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "pointsAtX",
@@ -1271,7 +1374,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "pointsAtY",
@@ -1279,7 +1383,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "pointsAtZ",
@@ -1287,7 +1392,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "preserveAlpha",
@@ -1295,7 +1401,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "preserveAspectRatio",
@@ -1303,7 +1410,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "primitiveUnits",
@@ -1311,7 +1419,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "r",
@@ -1319,7 +1428,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "radius",
@@ -1327,7 +1437,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "refX",
@@ -1335,7 +1446,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "refY",
@@ -1343,7 +1455,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "renderingIntent",
@@ -1351,7 +1464,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "repeatCount",
@@ -1359,7 +1473,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "repeatDur",
@@ -1367,7 +1482,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "requiredExtensions",
@@ -1375,7 +1491,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "requiredFeatures",
@@ -1383,7 +1500,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "restart",
@@ -1391,7 +1509,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "result",
@@ -1399,7 +1518,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "role",
@@ -1408,7 +1528,8 @@
         ""
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "rotate",
@@ -1416,7 +1537,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "rx",
@@ -1424,7 +1546,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "ry",
@@ -1432,7 +1555,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "scale",
@@ -1440,7 +1564,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "seed",
@@ -1448,7 +1573,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "slope",
@@ -1456,7 +1582,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "spacing",
@@ -1464,7 +1591,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "specularConstant",
@@ -1472,7 +1600,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "specularExponent",
@@ -1480,7 +1609,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "spreadMethod",
@@ -1488,7 +1618,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "startOffset",
@@ -1496,7 +1627,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "stdDeviation",
@@ -1504,7 +1636,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "stemh",
@@ -1512,7 +1645,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "stemv",
@@ -1520,7 +1654,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "stitchTiles",
@@ -1528,7 +1663,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "strikethroughPosition",
@@ -1536,7 +1672,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "strikethroughThickness",
@@ -1544,7 +1681,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "string",
@@ -1552,7 +1690,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "style",
@@ -1560,7 +1699,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "surfaceScale",
@@ -1568,7 +1708,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "systemLanguage",
@@ -1576,7 +1717,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "tableValues",
@@ -1584,7 +1726,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "target",
@@ -1592,7 +1735,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "targetX",
@@ -1600,7 +1744,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "targetY",
@@ -1608,7 +1753,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "textLength",
@@ -1616,7 +1762,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "title",
@@ -1624,7 +1771,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "to",
@@ -1632,7 +1780,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "transform",
@@ -1640,7 +1789,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "type",
@@ -1648,7 +1798,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "u1",
@@ -1656,7 +1807,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "u2",
@@ -1664,7 +1816,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "underlinePosition",
@@ -1672,7 +1825,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "underlineThickness",
@@ -1680,7 +1834,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "unicode",
@@ -1688,7 +1843,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "unicodeRange",
@@ -1696,7 +1852,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "unitsPerEm",
@@ -1704,7 +1861,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "vAlphabetic",
@@ -1712,7 +1870,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "vHanging",
@@ -1720,7 +1879,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "vIdeographic",
@@ -1728,7 +1888,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "vMathematical",
@@ -1736,7 +1897,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "values",
@@ -1744,7 +1906,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "version",
@@ -1752,7 +1915,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "vertAdvY",
@@ -1760,7 +1924,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "vertOriginX",
@@ -1768,7 +1933,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "vertOriginY",
@@ -1776,7 +1942,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "viewBox",
@@ -1784,7 +1951,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "viewTarget",
@@ -1792,7 +1960,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "width",
@@ -1800,7 +1969,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "widths",
@@ -1808,7 +1978,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "x",
@@ -1816,7 +1987,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "xHeight",
@@ -1824,7 +1996,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "x1",
@@ -1832,7 +2005,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "x2",
@@ -1840,7 +2014,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "xChannelSelector",
@@ -1848,7 +2023,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "y",
@@ -1856,7 +2032,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "y1",
@@ -1864,7 +2041,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "y2",
@@ -1872,7 +2050,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "yChannelSelector",
@@ -1880,7 +2059,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "z",
@@ -1888,7 +2068,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "zoomAndPan",
@@ -1896,7 +2077,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "alignmentBaseline",
@@ -1904,7 +2086,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "baselineShift",
@@ -1912,7 +2095,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "clipPath",
@@ -1920,7 +2104,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "clipRule",
@@ -1928,7 +2113,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "clip",
@@ -1936,7 +2122,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "colorInterpolationFilters",
@@ -1944,7 +2131,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "colorInterpolation",
@@ -1952,7 +2140,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "colorProfile",
@@ -1960,7 +2149,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "colorRendering",
@@ -1968,7 +2158,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "cursor",
@@ -1976,7 +2167,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "direction",
@@ -1984,7 +2176,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "display",
@@ -1992,7 +2185,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "dominantBaseline",
@@ -2000,7 +2194,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "enableBackground",
@@ -2008,7 +2203,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "fillOpacity",
@@ -2016,7 +2212,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "fillRule",
@@ -2024,7 +2221,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "filter",
@@ -2032,7 +2230,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "floodColor",
@@ -2040,7 +2239,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "floodOpacity",
@@ -2048,7 +2248,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "fontSizeAdjust",
@@ -2056,7 +2257,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "fontVariant",
@@ -2064,7 +2266,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "fontWeight",
@@ -2072,7 +2275,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "glyphOrientationHorizontal",
@@ -2080,7 +2284,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "glyphOrientationVertical",
@@ -2088,7 +2293,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "imageRendering",
@@ -2096,7 +2302,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "kerning",
@@ -2104,7 +2311,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "letterSpacing",
@@ -2112,7 +2320,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "lightingColor",
@@ -2120,7 +2329,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "markerEnd",
@@ -2128,7 +2338,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "markerMid",
@@ -2136,7 +2347,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "markerStart",
@@ -2144,7 +2356,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "mask",
@@ -2152,7 +2365,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "opacity",
@@ -2160,7 +2374,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "overflow",
@@ -2168,7 +2383,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "pointerEvents",
@@ -2176,7 +2392,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "shapeRendering",
@@ -2184,7 +2401,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "stopColor",
@@ -2192,7 +2410,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "stopOpacity",
@@ -2200,7 +2419,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "strokeDasharray",
@@ -2208,7 +2428,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "strokeDashoffset",
@@ -2216,7 +2437,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "strokeLinecap",
@@ -2224,7 +2446,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "strokeLinejoin",
@@ -2232,7 +2455,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "strokeMiterlimit",
@@ -2240,7 +2464,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "strokeOpacity",
@@ -2248,7 +2473,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "strokeWidth",
@@ -2256,7 +2482,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "stroke",
@@ -2264,7 +2491,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "textAnchor",
@@ -2272,7 +2500,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "textDecoration",
@@ -2280,7 +2509,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "textRendering",
@@ -2288,7 +2518,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "unicodeBidi",
@@ -2296,7 +2527,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "visibility",
@@ -2304,7 +2536,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "wordSpacing",
@@ -2312,7 +2545,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "writingMode",
@@ -2320,7 +2554,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "key",
@@ -2328,7 +2563,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "ref",
@@ -2336,7 +2572,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "dangerouslySetInnerHTML",
@@ -2344,7 +2581,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "suppressContentEditableWarning",
@@ -2352,7 +2590,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "defaultChecked",
@@ -2360,7 +2599,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "aria",
@@ -2368,7 +2608,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : true
+      "withDash" : true,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "onAbort",
@@ -2376,7 +2617,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "onAutoComplete",
@@ -2384,7 +2626,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "onAutoCompleteError",
@@ -2392,7 +2635,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "onBlur",
@@ -2400,7 +2644,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "onCancel",
@@ -2408,7 +2653,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "onCanPlay",
@@ -2416,7 +2662,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "onCanPlayThrough",
@@ -2424,7 +2671,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "onChange",
@@ -2432,7 +2680,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "onClick",
@@ -2440,7 +2689,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "onClose",
@@ -2448,7 +2698,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "onContextMenu",
@@ -2456,7 +2707,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "onCueChange",
@@ -2464,7 +2716,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "onDoubleClick",
@@ -2472,7 +2725,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "onDrag",
@@ -2480,7 +2734,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "onDragEnd",
@@ -2488,7 +2743,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "onDragEnter",
@@ -2496,7 +2752,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "onDragExit",
@@ -2504,7 +2761,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "onDragLeave",
@@ -2512,7 +2770,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "onDragOver",
@@ -2520,7 +2779,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "onDragStart",
@@ -2528,7 +2788,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "onDrop",
@@ -2536,7 +2797,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "onDurationChange",
@@ -2544,7 +2806,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "onEmptied",
@@ -2552,7 +2815,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "onEnded",
@@ -2560,7 +2824,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "onError",
@@ -2568,7 +2833,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "onFocus",
@@ -2576,7 +2842,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "onInput",
@@ -2584,7 +2851,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "onInvalid",
@@ -2592,7 +2860,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "onKeyDown",
@@ -2600,7 +2869,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "onKeyPress",
@@ -2608,7 +2878,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "onKeyUp",
@@ -2616,7 +2887,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "onLoad",
@@ -2624,7 +2896,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "onLoadedData",
@@ -2632,7 +2905,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "onLoadedMetadata",
@@ -2640,7 +2914,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "onLoadStart",
@@ -2648,7 +2923,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "onMouseDown",
@@ -2656,7 +2932,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "onMouseEnter",
@@ -2664,7 +2941,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "onMouseLeave",
@@ -2672,7 +2950,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "onMouseMove",
@@ -2680,7 +2959,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "onMouseOut",
@@ -2688,7 +2968,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "onMouseOver",
@@ -2696,7 +2977,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "onMouseUp",
@@ -2704,7 +2986,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "onMouseWheel",
@@ -2712,7 +2995,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "onPause",
@@ -2720,7 +3004,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "onPlay",
@@ -2728,7 +3013,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "onPlaying",
@@ -2736,7 +3022,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "onProgress",
@@ -2744,7 +3031,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "onRateChange",
@@ -2752,7 +3040,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "onReset",
@@ -2760,7 +3049,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "onResize",
@@ -2768,7 +3058,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "onScroll",
@@ -2776,7 +3067,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "onSeeked",
@@ -2784,7 +3076,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "onSeeking",
@@ -2792,7 +3085,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "onSelect",
@@ -2800,7 +3094,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "onShow",
@@ -2808,7 +3103,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "onSort",
@@ -2816,7 +3112,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "onStalled",
@@ -2824,7 +3121,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "onSubmit",
@@ -2832,7 +3130,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "onSuspend",
@@ -2840,7 +3139,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "onTimeUpdate",
@@ -2848,7 +3148,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "onToggle",
@@ -2856,7 +3157,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "onVolumeChange",
@@ -2864,7 +3166,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     },
     {
       "attributeName" : "onWaiting",
@@ -2872,7 +3175,8 @@
       "docLines" : [
       ],
       "compatibleTags" : null,
-      "withDash" : false
+      "withDash" : false,
+      "hasCaptureVariant": false
     }
   ]
 }
