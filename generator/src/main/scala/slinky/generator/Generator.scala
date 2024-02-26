@@ -14,6 +14,7 @@ object Generator {
 
     val eventToSynthetic = Map[String, String => String](
       "EventHandler" -> (t => s"slinky.core.SyntheticEvent[$t, org.scalajs.dom.Event]"),
+      "InputEventHandler" -> (t => s"slinky.web.SyntheticInputEvent[$t]"),
       "ClipboardEventHandler" -> (t => s"slinky.web.SyntheticClipboardEvent[$t]"),
       "CompositionEventHandler" -> (t => s"slinky.web.SyntheticCompositionEvent[$t]"),
       "KeyboardEventHandler" -> (t => s"slinky.web.SyntheticKeyboardEvent[$t]"),

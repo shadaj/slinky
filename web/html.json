@@ -2214,6 +2214,18 @@
       "hasCaptureVariant" : true
     },
 
+    // Input Events
+    {
+      "attributeName" : "onBeforeInput",
+      "attributeType" : "InputEventHandler",
+      "docLines" : [
+        ""
+      ],
+      "compatibleTags" : null,
+      "withDash" : false,
+      "hasCaptureVariant" : true
+    },
+
     // Keyboard Events
     {
       "attributeName" : "onKeyDown",
