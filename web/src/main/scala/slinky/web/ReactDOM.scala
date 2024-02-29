@@ -17,8 +17,7 @@ object ReactDOM extends js.Object {
 
   def unmountComponentAtNode(container: Element): Unit = js.native
 
-  /**
-    * React Docs - Creates a portal. Portals provide a way to render children into a DOM node that exists outside the hierarchy of the DOM component.
+  /** React Docs - Creates a portal. Portals provide a way to render children into a DOM node that exists outside the hierarchy of the DOM component.
     *
     * React 16 only
     * @param child the React node to render inside the selected container

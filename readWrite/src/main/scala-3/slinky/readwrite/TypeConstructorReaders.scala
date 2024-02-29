@@ -24,8 +24,8 @@ trait TypeConstructorReaders {
     }
   }
 
-  implicit def collectionReader[T, C[A] <: Iterable[A]](
-    implicit reader: => Reader[T],
+  implicit def collectionReader[T, C[A] <: Iterable[A]](implicit
+    reader: => Reader[T],
     bf: Factory[T, C[T]]
   ): Reader[C[T]] =
     c => bf.fromSpecific(c.asInstanceOf[js.Array[js.Object]].map(o => reader.read(o)))
@@ -37,7 +37,7 @@ trait TypeConstructorReaders {
   implicit def mapReader[A, B](implicit abReader: => Reader[(A, B)]): Reader[Map[A, B]] = o => {
     collectionReader[(A, B), Iterable].read(o).toMap
   }
-  
+
   implicit def futureReader[O](implicit oReader: => Reader[O]): Reader[Future[O]] =
     _.asInstanceOf[js.Promise[js.Object]].toFuture.map(v => oReader.read(v))
 }

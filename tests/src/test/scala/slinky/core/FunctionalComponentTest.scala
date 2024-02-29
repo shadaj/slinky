@@ -16,7 +16,7 @@ class FunctionalComponentTest extends AnyFunSuite {
   }
 
   test("Re-rendering a memoed component with same props works") {
-    val container = document.createElement("div")
+    val container   = document.createElement("div")
     var renderCount = 0
     case class Props(a: Int)
     val component = React.memo(FunctionalComponent[Props] { props =>
@@ -35,7 +35,7 @@ class FunctionalComponentTest extends AnyFunSuite {
   }
 
   test("Re-rendering a memoed component with different props works") {
-    val container = document.createElement("div")
+    val container   = document.createElement("div")
     var renderCount = 0
     case class Props(a: Int)
     val component = React.memo(FunctionalComponent[Props] { props =>
@@ -54,13 +54,16 @@ class FunctionalComponentTest extends AnyFunSuite {
   }
 
   test("Re-rendering a memoed component with matching comparison works") {
-    val container = document.createElement("div")
+    val container   = document.createElement("div")
     var renderCount = 0
     case class Props(a: Int, ignore: Int)
-    val component = React.memo(FunctionalComponent[Props] { props =>
-      renderCount += 1
-      props.a.toString
-    }, (oldProps: Props, newProps: Props) => oldProps.a == newProps.a)
+    val component = React.memo(
+      FunctionalComponent[Props] { props =>
+        renderCount += 1
+        props.a.toString
+      },
+      (oldProps: Props, newProps: Props) => oldProps.a == newProps.a
+    )
 
     val inProps = Props(1, 2)
     ReactDOM.render(component(inProps), container)
@@ -73,13 +76,16 @@ class FunctionalComponentTest extends AnyFunSuite {
   }
 
   test("Re-rendering a memoed component with non-matching comparison works") {
-    val container = document.createElement("div")
+    val container   = document.createElement("div")
     var renderCount = 0
     case class Props(a: Int)
-    val component = React.memo(FunctionalComponent[Props] { props =>
-      renderCount += 1
-      props.a.toString
-    }, (oldProps: Props, newProps: Props) => oldProps.a == newProps.a)
+    val component = React.memo(
+      FunctionalComponent[Props] { props =>
+        renderCount += 1
+        props.a.toString
+      },
+      (oldProps: Props, newProps: Props) => oldProps.a == newProps.a
+    )
 
     val inProps = Props(1)
     ReactDOM.render(component(inProps), container)

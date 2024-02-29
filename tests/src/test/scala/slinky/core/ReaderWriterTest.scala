@@ -12,9 +12,9 @@ import scala.annotation.nowarn
 class ValueClass(val int: Int) extends AnyVal
 
 sealed trait MySealedTrait
-case class SubTypeA(int: Int) extends MySealedTrait
+case class SubTypeA(int: Int)         extends MySealedTrait
 case class SubTypeB(boolean: Boolean) extends MySealedTrait
-case object SubTypeC extends MySealedTrait
+case object SubTypeC                  extends MySealedTrait
 
 case class ClassWithVararg(a: Int, bs: String*)
 
@@ -28,11 +28,12 @@ object ContainingPrivateType {
 }
 
 class ReaderWriterTest extends AnyFunSuite {
-  private def readWrittenSame[T](v: T,
-                                 isOpaque: Boolean = false,
-                                 beSame: Boolean = true,
-                                 equality: (T, T) => Boolean = ((a: T, b: T) => a == b))
-                                (implicit reader: Reader[T], writer: Writer[T]) = {
+  private def readWrittenSame[T](
+    v: T,
+    isOpaque: Boolean = false,
+    beSame: Boolean = true,
+    equality: (T, T) => Boolean = ((a: T, b: T) => a == b)
+  )(implicit reader: Reader[T], writer: Writer[T]) = {
     val written = writer.write(v)
     if (!isOpaque) {
       assert(js.isUndefined(written) || (written == null) || js.isUndefined(written.asInstanceOf[js.Dynamic].__))
@@ -66,11 +67,11 @@ class ReaderWriterTest extends AnyFunSuite {
   }
 
   test("Read/write - float") {
-    readWrittenSame(1F)
+    readWrittenSame(1f)
   }
 
   test("Read/write - double") {
-    readWrittenSame(1D)
+    readWrittenSame(1d)
   }
 
   test("Read/write - js.Dynamic") {
@@ -135,7 +136,7 @@ class ReaderWriterTest extends AnyFunSuite {
   test("Read/write - case class with raw") {
     case class CaseClassWithRaw(int: Int, boolean: Boolean) extends WithRaw
     val inObj = js.Dynamic.literal(int = 1, boolean = true)
-    val read = implicitly[Reader[CaseClassWithRaw]].read(inObj)
+    val read  = implicitly[Reader[CaseClassWithRaw]].read(inObj)
     assert(read == CaseClassWithRaw(1, true) && read.raw == inObj)
   }
 
@@ -155,7 +156,6 @@ class ReaderWriterTest extends AnyFunSuite {
   test("Read/write - case class with varargs") {
     readWrittenSame(ClassWithVararg(1, "hi", "hi", "bye"))
   }
-
 
   test("Read/write - value class") {
     readWrittenSame(new ValueClass(1))
@@ -191,9 +191,13 @@ class ReaderWriterTest extends AnyFunSuite {
 
   test("Read/write - option of opaque class") {
     class OpaqueClass(@nowarn int: Int)
-    assert(implicitly[Reader[Option[OpaqueClass]]].read(
-      implicitly[Writer[Option[OpaqueClass]]].write(Some(new OpaqueClass(1)))
-    ).get != null)
+    assert(
+      implicitly[Reader[Option[OpaqueClass]]]
+        .read(
+          implicitly[Writer[Option[OpaqueClass]]].write(Some(new OpaqueClass(1)))
+        )
+        .get != null
+    )
   }
 
   test("Read/write - private type defaults to opaque") {
@@ -209,31 +213,45 @@ class ReaderWriterTest extends AnyFunSuite {
   }
 
   test("Can convert Scala instance into ObjectOrWritten") {
-    assert((SubTypeA(int = 123): ObjectOrWritten[SubTypeA])
-      .asInstanceOf[js.Dynamic].int.asInstanceOf[Int] == 123)
+    assert(
+      (SubTypeA(int = 123): ObjectOrWritten[SubTypeA])
+        .asInstanceOf[js.Dynamic]
+        .int
+        .asInstanceOf[Int] == 123
+    )
   }
 
   test("Can convert Scala instance into js.UndefOr[ObjectOrWritten]") {
-    assert((SubTypeA(int = 123): js.UndefOr[ObjectOrWritten[SubTypeA]])
-      .asInstanceOf[js.Dynamic].int.asInstanceOf[Int] == 123)
+    assert(
+      (SubTypeA(int = 123): js.UndefOr[ObjectOrWritten[SubTypeA]])
+        .asInstanceOf[js.Dynamic]
+        .int
+        .asInstanceOf[Int] == 123
+    )
   }
 
   test("Can convert js.Object into ObjectOrWritten") {
-    assert((js.Dynamic.literal(int = 123): ObjectOrWritten[SubTypeA])
-      .asInstanceOf[js.Dynamic].int.asInstanceOf[Int] == 123)
+    assert(
+      (js.Dynamic.literal(int = 123): ObjectOrWritten[SubTypeA])
+        .asInstanceOf[js.Dynamic]
+        .int
+        .asInstanceOf[Int] == 123
+    )
   }
 
   test("Can convert js.Object into js.UndefOr[ObjectOrWritten]") {
-    assert((js.Dynamic.literal(int = 123): js.UndefOr[ObjectOrWritten[SubTypeA]])
-      .asInstanceOf[js.Dynamic].int.asInstanceOf[Int] == 123)
+    assert(
+      (js.Dynamic.literal(int = 123): js.UndefOr[ObjectOrWritten[SubTypeA]])
+        .asInstanceOf[js.Dynamic]
+        .int
+        .asInstanceOf[Int] == 123
+    )
   }
 
   // compilation test: can use derivation macro with type parameter when typeclass is available
-  def deriveReaderTypeclass[T](implicit @nowarn reader: Reader[T]): Reader[T] = {
+  def deriveReaderTypeclass[T](implicit @nowarn reader: Reader[T]): Reader[T] =
     Reader.deriveReader[T]
-  }
 
-  def deriveWriterTypeclass[T](implicit @nowarn writer: Writer[T]): Writer[T] = {
+  def deriveWriterTypeclass[T](implicit @nowarn writer: Writer[T]): Writer[T] =
     Writer.deriveWriter[T]
-  }
 }

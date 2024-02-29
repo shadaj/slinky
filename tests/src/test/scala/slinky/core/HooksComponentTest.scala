@@ -5,7 +5,7 @@ import org.scalatest.funsuite.AsyncFunSuite
 import org.scalajs.dom.document
 import org.scalajs.dom.Element
 
-import slinky.core.facade.{React, SetStateHookCallback, ReactRef, ReactElement}
+import slinky.core.facade.{React, ReactElement, ReactRef, SetStateHookCallback}
 
 import slinky.core.facade.Hooks._
 import slinky.web.ReactDOM
@@ -24,14 +24,14 @@ class HooksComponentTest extends AsyncFunSuite {
       val (state, _) = useState("hello")
       state + props
     }
-    
+
     ReactDOM.render(component(1), container)
 
     assert(container.innerHTML == "hello1")
   }
 
   test("Can call setState with direct value on a functional component with useState hook") {
-    val container = document.createElement("div")
+    val container                                         = document.createElement("div")
     var stateSetter: Option[SetStateHookCallback[String]] = None
 
     val promise: Promise[Assertion] = Promise()
@@ -45,7 +45,7 @@ class HooksComponentTest extends AsyncFunSuite {
 
       state + props
     }
-    
+
     ReactDOM.render(component(1), container)
     stateSetter.get.apply("bye")
 
@@ -53,7 +53,7 @@ class HooksComponentTest extends AsyncFunSuite {
   }
 
   test("Can call setState with transformed value on a functional component with useState hook") {
-    val container = document.createElement("div")
+    val container                                         = document.createElement("div")
     var stateSetter: Option[SetStateHookCallback[String]] = None
 
     val promise: Promise[Assertion] = Promise()
@@ -67,7 +67,7 @@ class HooksComponentTest extends AsyncFunSuite {
 
       state + props
     }
-    
+
     ReactDOM.render(component(1), container)
     stateSetter.get.apply(_.reverse)
 
@@ -75,7 +75,7 @@ class HooksComponentTest extends AsyncFunSuite {
   }
 
   test("Can use callback returned by setState as a plain function") {
-    val container = document.createElement("div")
+    val container                           = document.createElement("div")
     var stateSetter: Option[String => Unit] = None
 
     val promise: Promise[Assertion] = Promise()
@@ -97,7 +97,7 @@ class HooksComponentTest extends AsyncFunSuite {
   }
 
   test("Can use callback returned by setState as a plain transform function") {
-    val container = document.createElement("div")
+    val container                                       = document.createElement("div")
     var stateSetter: Option[(String => String) => Unit] = None
 
     val promise: Promise[Assertion] = Promise()
@@ -123,13 +123,13 @@ class HooksComponentTest extends AsyncFunSuite {
 
     val promise: Promise[Assertion] = Promise()
     val component = FunctionalComponent[Int] { props =>
-      useEffect(() => {
+      useEffect { () =>
         promise.success(assert(true))
-      })
+      }
 
       props
     }
-    
+
     ReactDOM.render(component(1), container)
 
     promise.future
@@ -139,19 +139,22 @@ class HooksComponentTest extends AsyncFunSuite {
     val container = document.createElement("div")
 
     val promise: Promise[Assertion] = Promise()
-    var firstEffectOccured = false
+    var firstEffectOccured          = false
     val component = FunctionalComponent[Int] { props =>
-      useEffect(() => {
-        if (firstEffectOccured) {
-          promise.complete(Try(assert(props == 2)))
-        }
+      useEffect(
+        () => {
+          if (firstEffectOccured) {
+            promise.complete(Try(assert(props == 2)))
+          }
 
-        firstEffectOccured = true
-      }, Seq(props))
+          firstEffectOccured = true
+        },
+        Seq(props)
+      )
 
       props
     }
-    
+
     ReactDOM.render(component(1), container)
     ReactDOM.render(component(1), container)
     ReactDOM.render(component(2), container)
@@ -164,15 +167,11 @@ class HooksComponentTest extends AsyncFunSuite {
 
     val promise: Promise[Assertion] = Promise()
     val component = FunctionalComponent[Int] { props =>
-      useEffect(() => {
-        () => {
-          promise.success(assert(true))
-        }
-      }, Seq(props))
+      useEffect(() => () => promise.success(assert(true)), Seq(props))
 
       props
     }
-    
+
     ReactDOM.render(component(1), container)
     ReactDOM.unmountComponentAtNode(container)
 
@@ -188,13 +187,11 @@ class HooksComponentTest extends AsyncFunSuite {
     }
 
     val component = FunctionalComponent[Int] { props =>
-      useEffect(() => {
-        cleanup
-      }, Seq(props))
+      useEffect(() => cleanup, Seq(props))
 
       props
     }
-    
+
     ReactDOM.render(component(1), container)
     ReactDOM.unmountComponentAtNode(container)
 
@@ -203,7 +200,7 @@ class HooksComponentTest extends AsyncFunSuite {
 
   test("useContext hook gets context value") {
     val container = document.createElement("div")
-    val context = React.createContext("")
+    val context   = React.createContext("")
     val component = FunctionalComponent[Unit] { _ =>
       val ctx = useContext(context)
       ctx
@@ -218,14 +215,12 @@ class HooksComponentTest extends AsyncFunSuite {
   }
 
   test("useReducer gets reducer value and dispatch works") {
-    val container = document.createElement("div")
-    var doDispatch: Int => Unit = null
+    val container                   = document.createElement("div")
+    var doDispatch: Int => Unit     = null
     val promise: Promise[Assertion] = Promise()
 
     val component = FunctionalComponent[Unit] { _ =>
-      val (state, dispatch) = useReducer((_: String, a: Int) => {
-        a.toString
-      }, "")
+      val (state, dispatch) = useReducer((_: String, a: Int) => a.toString, "")
 
       doDispatch = dispatch
 
@@ -240,7 +235,7 @@ class HooksComponentTest extends AsyncFunSuite {
       component(()),
       container
     )
-    
+
     doDispatch(123)
 
     promise.future
@@ -250,9 +245,7 @@ class HooksComponentTest extends AsyncFunSuite {
     val container = document.createElement("div")
 
     val component = FunctionalComponent[Unit] { _ =>
-      val (state, _) = useReducer((_: String, a: Int) => {
-        a.toString
-      }, 123, (init: Int) => init.toString)
+      val (state, _) = useReducer((_: String, a: Int) => a.toString, 123, (init: Int) => init.toString)
 
       state
     }
@@ -271,9 +264,11 @@ class HooksComponentTest extends AsyncFunSuite {
     var callbackRef: () => String = null
 
     val component = FunctionalComponent[(Int, String)] { props =>
-      val callback = useCallback(() => {
-        props._2 // purposefully wrong (so that we can assert that untracked dependency retains old value)
-      }, Seq(props._1))
+      val callback = useCallback(
+        () => props._2 // purposefully wrong (so that we can assert that untracked dependency retains old value)
+        ,
+        Seq(props._1)
+      )
 
       callbackRef = callback
       callback()
@@ -298,11 +293,14 @@ class HooksComponentTest extends AsyncFunSuite {
     val container = document.createElement("div")
 
     var callbackRef: Boolean => String = null
-    
+
     val component = FunctionalComponent[(Int, String)] { props =>
-      val callback = useCallback((_: Boolean) => {
-        props._2 // purposefully wrong (so that we can assert that untracked dependency retains old value)
-      }, Seq(props._1))
+      val callback = useCallback(
+        (_: Boolean) =>
+          props._2 // purposefully wrong (so that we can assert that untracked dependency retains old value)
+        ,
+        Seq(props._1)
+      )
 
       callbackRef = callback
       callback(true)
@@ -328,11 +326,9 @@ class HooksComponentTest extends AsyncFunSuite {
 
     var memoedValue = "first"
     val component = FunctionalComponent[Int] { props =>
-      useMemo(() => {
-        memoedValue
-      }, Seq(props))
+      useMemo(() => memoedValue, Seq(props))
     }
-    
+
     ReactDOM.render(component(1), container)
     assert(container.innerHTML == "first")
 
@@ -352,7 +348,7 @@ class HooksComponentTest extends AsyncFunSuite {
       if (ref.current == "") ref.current = props
       ref.current
     }
-    
+
     ReactDOM.render(component("first"), container)
     assert(container.innerHTML == "first")
 
@@ -368,11 +364,13 @@ class HooksComponentTest extends AsyncFunSuite {
     }
 
     val component = React.forwardRef(FunctionalComponent { (_: String, ref: ReactRef[RefHandle]) =>
-      useImperativeHandle(ref, () => {
-        new RefHandle {
-          def foo = 123
-        }
-      })
+      useImperativeHandle(
+        ref,
+        () =>
+          new RefHandle {
+            def foo = 123
+          }
+      )
       "": ReactElement // FIXME - implicit conversion from string seems to not trigger in Scala 3
     })
 
@@ -390,12 +388,16 @@ class HooksComponentTest extends AsyncFunSuite {
 
     var memoedValue = 123
     val component = React.forwardRef(FunctionalComponent { (props: String, ref: ReactRef[RefHandle]) =>
-      useImperativeHandle(ref, () => {
-        val curMemoedValue = memoedValue
-        new RefHandle {
-          def foo = curMemoedValue
-        }
-      }, Seq(props))
+      useImperativeHandle(
+        ref,
+        () => {
+          val curMemoedValue = memoedValue
+          new RefHandle {
+            def foo = curMemoedValue
+          }
+        },
+        Seq(props)
+      )
       "": ReactElement // FIXME - implicit conversion from string seems to not trigger in Scala 3
     })
 
@@ -417,13 +419,13 @@ class HooksComponentTest extends AsyncFunSuite {
     val promise: Promise[Assertion] = Promise()
     val component = FunctionalComponent[Int] { _ =>
       val divRef = useRef[Element](null)
-      useLayoutEffect(() => {
+      useLayoutEffect { () =>
         promise.success(assert(divRef.current.innerHTML == "hello"))
-      })
+      }
 
       div(ref := divRef)("hello")
     }
-    
+
     ReactDOM.render(component(1), container)
 
     promise.future

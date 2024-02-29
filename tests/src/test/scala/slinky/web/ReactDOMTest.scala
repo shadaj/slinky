@@ -3,7 +3,7 @@ package slinky.web
 import slinky.core.ComponentWrapper
 import slinky.core.facade.ReactElement
 import slinky.web.ReactDOMClient.createRoot
-import org.scalajs.dom.{Element, document}
+import org.scalajs.dom.{document, Element}
 
 import scala.scalajs.js
 import html._
@@ -17,9 +17,8 @@ object TestComponent extends ComponentWrapper {
   class Def(jsProps: js.Object) extends Definition(jsProps) {
     override def initialState: Unit = ()
 
-    override def render(): ReactElement = {
+    override def render(): ReactElement =
       a()
-    }
   }
 }
 
@@ -43,17 +42,19 @@ class ReactDOMTest extends AnyFunSuite {
 
   test("Finds a dom node for a component") {
     val comp: ReactElement = TestComponent(())
-    val target = document.createElement("div")
-    val instance = ReactDOM.render(
-      comp,
-      target
-    ).asInstanceOf[TestComponent.Def]
+    val target             = document.createElement("div")
+    val instance = ReactDOM
+      .render(
+        comp,
+        target
+      )
+      .asInstanceOf[TestComponent.Def]
 
     assert(target.childNodes(0).asInstanceOf[Element] == ReactDOM.findDOMNode(instance))
   }
 
   test("Renders portals to the appropriate container DOM node") {
-    val target = document.createElement("div")
+    val target    = document.createElement("div")
     val container = document.createElement("div")
     ReactDOM.render(
       div(
@@ -68,7 +69,7 @@ class ReactDOMTest extends AnyFunSuite {
 
   test("unmount clears out the container") {
     val container = document.createElement("div")
-    val root = createRoot(container)
+    val root      = createRoot(container)
 
     ReactDOM.flushSync(() => root.render(div("hello")))
 

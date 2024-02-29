@@ -9,7 +9,7 @@ import org.scalatest.funsuite.AnyFunSuite
 
 class ComponentReturnTypeTests extends AnyFunSuite {
   def testElement(elem: ReactElement): Unit = {
-    assert((div(elem): ReactElement) != null) // test use in another element
+    assert((div(elem): ReactElement) != null)                     // test use in another element
     ReactDOM.render(div(elem), dom.document.createElement("div")) // test rendering to DOM
     ()
   }
@@ -24,8 +24,8 @@ class ComponentReturnTypeTests extends AnyFunSuite {
 
   test("Components can return - numbers") {
     testElement(1)
-    testElement(1D)
-    testElement(1F)
+    testElement(1d)
+    testElement(1f)
   }
 
   test("Components can return - portals") {

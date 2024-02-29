@@ -9,7 +9,7 @@ import org.scalatest.funsuite.AnyFunSuite
 
 class ContextTest extends AnyFunSuite {
   test("Can provide and read a simple context value") {
-    val context = React.createContext(-1)
+    val context  = React.createContext(-1)
     var gotValue = 0
 
     ReactDOM.render(
@@ -27,7 +27,7 @@ class ContextTest extends AnyFunSuite {
 
   test("Can provide and read a case class context value") {
     case class Data(foo: Int)
-    val context = React.createContext(Data(-1))
+    val context  = React.createContext(Data(-1))
     var gotValue = 0
 
     ReactDOM.render(
@@ -45,7 +45,7 @@ class ContextTest extends AnyFunSuite {
 
   test("Read a case class context value from default") {
     case class Data(foo: Int)
-    val context = React.createContext(Data(3))
+    val context  = React.createContext(Data(3))
     var gotValue = 0
 
     ReactDOM.render(

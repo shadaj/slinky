@@ -16,7 +16,7 @@ trait RemarkRenderer[T] extends js.Object
 
 @js.native
 trait RemarkInstance extends js.Object {
-  def use[T](renderer: RemarkRenderer[T]): RemarkInstanceWithRenderer[T] = js.native
+  def use[T](renderer: RemarkRenderer[T]): RemarkInstanceWithRenderer[T]                     = js.native
   def use[T](renderer: RemarkRenderer[T], options: js.Object): RemarkInstanceWithRenderer[T] = js.native
 }
 

@@ -125,13 +125,18 @@ object FunctionalComponent {
   @inline def apply[P, R](fn: (P, ReactRef[R]) => ReactElement)(implicit name: FunctionalComponentName) =
     new FunctionalComponentTakingRef[P, R]({
       var ret: js.Function2[js.Object, ReactRef[R], ReactElement] = null
-      ret = ((obj: js.Object, ref: ReactRef[R]) => {
-        if (obj.hasOwnProperty("__")) {
-          fn(obj.asInstanceOf[js.Dynamic].__.asInstanceOf[P], ref)
-        } else {
-          fn(ret.asInstanceOf[js.Dynamic].__propsReader.asInstanceOf[Reader[P]].read(obj), ref)
+      ret = (
+        (
+          obj: js.Object,
+          ref: ReactRef[R]
+        ) => {
+          if (obj.hasOwnProperty("__")) {
+            fn(obj.asInstanceOf[js.Dynamic].__.asInstanceOf[P], ref)
+          } else {
+            fn(ret.asInstanceOf[js.Dynamic].__propsReader.asInstanceOf[Reader[P]].read(obj), ref)
+          }
         }
-      })
+      )
 
       if (!scala.scalajs.LinkingInfo.productionMode) {
         ret.asInstanceOf[js.Dynamic].displayName = name.name
