@@ -1,9 +1,9 @@
 package slinky.docs.homepage //nodisplay
 
-import slinky.core.{Component, StatelessComponent, SyntheticEvent}  //nodisplay
-import slinky.core.annotations.react //nodisplay
-import slinky.web.html._ //nodisplay
-import org.scalajs.dom.{html, Event} //nodisplay
+import slinky.core.{Component, StatelessComponent, SyntheticEvent} //nodisplay
+import slinky.core.annotations.react                               //nodisplay
+import slinky.web.html._                                           //nodisplay
+import org.scalajs.dom.{html, Event}                               //nodisplay
 
 import scala.scalajs.js.Date //nodisplay
 
@@ -29,16 +29,16 @@ case class TodoItem(text: String, id: Long)
         id = Date.now().toLong
       )
 
-      setState(prevState => {
+      setState { prevState =>
         State(
           items = prevState.items :+ newItem,
           text = ""
         )
-      })
+      }
     }
   }
 
-  override def render() = {
+  override def render() =
     div(
       h3("TODO"),
       TodoList(items = state.items),
@@ -50,19 +50,17 @@ case class TodoItem(text: String, id: Long)
         button(s"Add #${state.items.size + 1}")
       )
     )
-  }
 }
 
 @react class TodoList extends StatelessComponent {
   case class Props(items: Seq[TodoItem])
 
-  override def render() = {
+  override def render() =
     ul(
       props.items.map { item =>
         li(key := item.id.toString)(item.text)
       }
     )
-  }
 }
 
 //display:ReactDOM.render(TodoApp(), mountNode)

@@ -41,7 +41,7 @@ final class BuildingComponent[E, R <: js.Object](private val args: js.Array[js.A
     newRef match {
       case f: (R => Unit) =>
         args(1).asInstanceOf[js.Dictionary[js.Any]]("ref") = (f: js.Function1[R, Unit])
-      case _ =>  
+      case _ =>
         args(1).asInstanceOf[js.Dictionary[js.Any]]("ref") = newRef.asInstanceOf[ReactRef[R]]
     }
     this
@@ -66,8 +66,8 @@ object BuildingComponent {
 
 // TODO: providers need to be by-name because implicit will reference the type inside the object being initialized
 //       maybe it could be fixed with a better instance macro for those
-abstract class ExternalComponentWithAttributesWithRefType[E <: TagElement, R <: js.Object](
-  implicit pw: => ExternalPropsWriterProvider
+abstract class ExternalComponentWithAttributesWithRefType[E <: TagElement, R <: js.Object](implicit
+  pw: => ExternalPropsWriterProvider
 ) {
   type Props
   type Element = E

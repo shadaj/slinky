@@ -68,8 +68,8 @@ object BuildingComponent {
   }
 }
 
-abstract class ExternalComponentWithAttributesWithRefType[E <: TagElement, R <: js.Object](
-  implicit pw: ExternalPropsWriterProvider
+abstract class ExternalComponentWithAttributesWithRefType[E <: TagElement, R <: js.Object](implicit
+  pw: ExternalPropsWriterProvider
 ) {
   type Props
   type Element = E

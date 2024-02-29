@@ -21,9 +21,8 @@ object ReactMacrosImpl {
   private def parentsContainsType(c: whitebox.Context)(parents: Seq[c.Tree], tpe: c.Type) = {
     import scala.reflect.macros.TypecheckException
     parents.exists { p =>
-      try {
-        c.typecheck(p, mode = c.TYPEmode).tpe.typeSymbol == tpe.typeSymbol
-      } catch {
+      try c.typecheck(p, mode = c.TYPEmode).tpe.typeSymbol == tpe.typeSymbol
+      catch {
         case _: TypecheckException =>
           // with local imports, typechecking fails so we just fall back and skip the check
           true
@@ -153,10 +152,12 @@ object ReactMacrosImpl {
       typeOf[js.Object]
     } else if (parentsContainsType(c)(parents.asInstanceOf[Seq[c.Tree]], typeOf[ExternalComponentWithRefType[_]])) {
       typecheckedParent.tpe.typeArgs.head
-    } else if (parentsContainsType(c)(
-                 parents.asInstanceOf[Seq[c.Tree]],
-                 typeOf[ExternalComponentWithAttributesWithRefType[_, _]]
-               )) {
+    } else if (
+      parentsContainsType(c)(
+        parents.asInstanceOf[Seq[c.Tree]],
+        typeOf[ExternalComponentWithAttributesWithRefType[_, _]]
+      )
+    ) {
       typecheckedParent.tpe.typeArgs(1)
     } else {
       null
@@ -168,10 +169,12 @@ object ReactMacrosImpl {
       typecheckedParent.tpe.typeArgs.head
     } else if (parentsContainsType(c)(parents.asInstanceOf[Seq[c.Tree]], typeOf[ExternalComponentWithRefType[_]])) {
       typeOf[Nothing]
-    } else if (parentsContainsType(c)(
-                 parents.asInstanceOf[Seq[c.Tree]],
-                 typeOf[ExternalComponentWithAttributesWithRefType[_, _]]
-               )) {
+    } else if (
+      parentsContainsType(c)(
+        parents.asInstanceOf[Seq[c.Tree]],
+        typeOf[ExternalComponentWithAttributesWithRefType[_, _]]
+      )
+    ) {
       typecheckedParent.tpe.typeArgs.head
     } else {
       null
@@ -229,8 +232,8 @@ object ReactMacrosImpl {
         List(newCls, q"object ${TermName(className.decodedName.toString)} extends $parent { ..$companionStats }")
 
       case Seq(
-          cls @ q"..$_ class $className extends ..$parents { $_ => ..$_}",
-          q"..$_ object $_ extends ..$_ { $_ => ..$objStats }"
+            cls @ q"..$_ class $className extends ..$parents { $_ => ..$_}",
+            q"..$_ object $_ extends ..$_ { $_ => ..$objStats }"
           )
           if parentsContainsType(c)(parents, typeOf[Component]) ||
             parentsContainsType(c)(parents, typeOf[StatelessComponent]) =>
@@ -251,10 +254,10 @@ object ReactMacrosImpl {
           q"object $objName extends _root_.slinky.core.ExternalComponentWithAttributesWithRefType[$elementType, $refType] { ..${objStats ++ companionStats} }"
         )
 
-      case Seq(q"$pre object $objName extends ..$parents { $self => ..$objStats }") if (objStats.exists {
+      case Seq(q"$pre object $objName extends ..$parents { $self => ..$objStats }") if objStats.exists {
             case q"$_ val component: $_ = $_" => true
             case _                            => false
-          }) =>
+          } =>
         val applyMethods = objStats.flatMap {
           case q"$pre class Props[..$tparams](...${caseClassparamssRaw}) extends ..$_ { $_ => ..$_ }"
               if pre.hasFlag(Flag.CASE) =>

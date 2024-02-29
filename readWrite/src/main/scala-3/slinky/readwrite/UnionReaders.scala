@@ -1,5 +1,3 @@
 package slinky.readwrite
 
-trait UnionReaders {
-
-}
+trait UnionReaders {}

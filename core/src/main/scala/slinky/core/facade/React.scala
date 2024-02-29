@@ -122,9 +122,14 @@ object React {
     component.makeAnother(
       ReactRaw.memo(
         component.component,
-        ((oldProps: js.Dynamic, newProps: js.Dynamic) => {
-          compare(oldProps.__.asInstanceOf[P], newProps.__.asInstanceOf[P])
-        }): js.Function2[js.Dynamic, js.Dynamic, Boolean]
+        (
+          (
+            oldProps: js.Dynamic,
+            newProps: js.Dynamic
+          ) => {
+            compare(oldProps.__.asInstanceOf[P], newProps.__.asInstanceOf[P])
+          }
+        ): js.Function2[js.Dynamic, js.Dynamic, Boolean]
       )
     )
 
@@ -232,8 +237,8 @@ object Hooks {
   @inline def useEffect[T](thunk: () => T)(implicit conv: T => EffectCallbackReturn): Unit =
     HooksRaw.useEffect(() => conv(thunk()))
 
-  @inline def useEffect[T](thunk: () => T, watchedObjects: Iterable[Any])(
-    implicit conv: T => EffectCallbackReturn
+  @inline def useEffect[T](thunk: () => T, watchedObjects: Iterable[Any])(implicit
+    conv: T => EffectCallbackReturn
   ): Unit =
     HooksRaw.useEffect(
       () => conv(thunk()),
@@ -272,8 +277,8 @@ object Hooks {
   @inline def useLayoutEffect[T](thunk: () => T)(implicit conv: T => EffectCallbackReturn): Unit =
     HooksRaw.useLayoutEffect(() => conv(thunk()))
 
-  @inline def useLayoutEffect[T](thunk: () => T, watchedObjects: Iterable[Any])(
-    implicit conv: T => EffectCallbackReturn
+  @inline def useLayoutEffect[T](thunk: () => T, watchedObjects: Iterable[Any])(implicit
+    conv: T => EffectCallbackReturn
   ): Unit =
     HooksRaw.useLayoutEffect(
       () => conv(thunk()),

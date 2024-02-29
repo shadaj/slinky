@@ -11,9 +11,8 @@ trait UnionWriters {
       } else if (implicitly[ClassTag[B]].runtimeClass == v.getClass) {
         bWriter.write(v.asInstanceOf[B])
       } else {
-        try {
-          aWriter.write(v.asInstanceOf[A])
-        } catch {
+        try aWriter.write(v.asInstanceOf[A])
+        catch {
           case _: Throwable =>
             bWriter.write(v.asInstanceOf[B])
         }

@@ -18,19 +18,16 @@ object TestComponent extends ComponentWrapper {
   class Def(jsProps: js.Object) extends Definition(jsProps) {
     override def initialState: Int = 0
 
-    override def componentWillUpdate(nextProps: Props, nextState: Int): Unit = {
+    override def componentWillUpdate(nextProps: Props, nextState: Int): Unit =
       props.apply(nextState)
-    }
 
-    override def componentDidMount(): Unit = {
-      setState((s, _) => {
+    override def componentDidMount(): Unit =
+      setState { (s, _) =>
         s + 1
-      })
-    }
+      }
 
-    override def render(): ReactElement = {
+    override def render(): ReactElement =
       null
-    }
   }
 }
 
@@ -41,19 +38,16 @@ object TestComponentExtraApply extends ComponentWrapper {
   class Def(jsProps: js.Object) extends Definition(jsProps) {
     override def initialState: Int = 0
 
-    override def componentWillUpdate(nextProps: Props, nextState: Int): Unit = {
+    override def componentWillUpdate(nextProps: Props, nextState: Int): Unit =
       props.apply(nextState)
-    }
 
-    override def componentDidMount(): Unit = {
-      setState((s, _) => {
+    override def componentDidMount(): Unit =
+      setState { (s, _) =>
         s + 1
-      })
-    }
+      }
 
-    override def render(): ReactElement = {
+    override def render(): ReactElement =
       null
-    }
   }
 }
 
@@ -64,15 +58,14 @@ object TestComponentForSeqState extends ComponentWrapper {
   class Def(jsProps: js.Object) extends Definition(jsProps) {
     override def initialState = Seq.empty
 
-    override def componentDidMount(): Unit = {
+    override def componentDidMount(): Unit =
       setState(state :+ "hello")
-    }
 
     override def render() = {
       if (state.nonEmpty) {
         props.apply()
       }
-      
+
       null
     }
   }
@@ -85,23 +78,20 @@ object TestComponentForShouldComponentUpdate extends ComponentWrapper {
   class Def(jsProps: js.Object) extends Definition(jsProps) {
     override def initialState: Int = 0
 
-    override def shouldComponentUpdate(nextProps: Props, nextState: State) = {
+    override def shouldComponentUpdate(nextProps: Props, nextState: State) =
       nextState == 123
-    }
 
-    override def componentDidUpdate(prevProps: Props, prevState: State) = {
+    override def componentDidUpdate(prevProps: Props, prevState: State) =
       prevProps.apply()
-    }
 
-    override def render(): ReactElement = {
+    override def render(): ReactElement =
       null
-    }
   }
 }
 
 object TestComponentForSnapshot extends ComponentWrapper {
-  type Props = Int => Unit
-  type State = Int
+  type Props    = Int => Unit
+  type State    = Int
   type Snapshot = Int
 
   class Def(jsProps: js.Object) extends Definition(jsProps) {
@@ -109,17 +99,14 @@ object TestComponentForSnapshot extends ComponentWrapper {
 
     override def componentDidMount(): Unit = forceUpdate()
 
-    override def getSnapshotBeforeUpdate(prevProps: Int => Unit, prevState: Int): Snapshot = {
+    override def getSnapshotBeforeUpdate(prevProps: Int => Unit, prevState: Int): Snapshot =
       123
-    }
 
-    override def componentDidUpdate(prevProps: Int => Unit, prevState: Int, snapshot: Snapshot): Unit = {
+    override def componentDidUpdate(prevProps: Int => Unit, prevState: Int, snapshot: Snapshot): Unit =
       props(snapshot)
-    }
 
-    override def render(): ReactElement = {
+    override def render(): ReactElement =
       null
-    }
   }
 }
 
@@ -130,9 +117,8 @@ object NoPropsComponent extends ComponentWrapper {
   class Def(jsProps: js.Object) extends Definition(jsProps) {
     override def initialState: Int = 0
 
-    override def render(): ReactElement = {
+    override def render(): ReactElement =
       null
-    }
   }
 }
 
@@ -141,15 +127,13 @@ object TestForceUpdateComponent extends ComponentWrapper {
   type State = Int
 
   class Def(jsProps: js.Object) extends Definition(jsProps) {
-    override def componentDidUpdate(prevProps: Props, prevState: State): Unit = {
+    override def componentDidUpdate(prevProps: Props, prevState: State): Unit =
       props.apply()
-    }
 
     override def initialState: Int = 0
 
-    override def render(): ReactElement = {
+    override def render(): ReactElement =
       null
-    }
   }
 }
 
@@ -157,9 +141,8 @@ object BadComponent extends StatelessComponentWrapper {
   type Props = Unit
 
   class Def(jsProps: js.Object) extends Definition(jsProps) {
-    override def render(): ReactElement = {
+    override def render(): ReactElement =
       throw new Exception("BOO")
-    }
   }
 }
 
@@ -167,17 +150,15 @@ object ErrorBoundaryComponent extends StatelessComponentWrapper {
   case class Props(bad: Boolean, handler: (js.Error, ErrorBoundaryInfo) => Unit)
 
   class Def(jsProps: js.Object) extends Definition(jsProps) {
-    override def componentDidCatch(error: js.Error, info: ErrorBoundaryInfo): Unit = {
+    override def componentDidCatch(error: js.Error, info: ErrorBoundaryInfo): Unit =
       props.handler.apply(error, info)
-    }
 
-    override def render(): ReactElement = {
+    override def render(): ReactElement =
       if (props.bad) {
         BadComponent()
       } else {
         null
       }
-    }
   }
 }
 
@@ -213,9 +194,8 @@ object DerivedStateReturnNullComponent extends ComponentWrapper {
   class Def(jsProps: js.Object) extends Definition(jsProps) {
     override def initialState = State(0)
 
-    override def render(): ReactElement = {
+    override def render(): ReactElement =
       state.value.toString
-    }
   }
 }
 
@@ -228,20 +208,19 @@ object DerivedStateFromErrorComponent extends ComponentWrapper {
   class Def(jsProps: js.Object) extends Definition(jsProps) {
     override def initialState: Int = 0
 
-    override def render(): ReactElement = {
+    override def render(): ReactElement =
       if (state != 0) {
         props.onValue(state)
         null
       } else {
         BadComponent()
       }
-    }
   }
 }
 
 // compilation test: state providers for underivable type
 object TestUnderivable {
-  case class UnDerivable private(private val a: Int)
+  case class UnDerivable private (private val a: Int)
 
   object UnDerivableReaderWriter {
     implicit val unDerivableReader: Reader[UnDerivable] = null
@@ -263,9 +242,8 @@ object DefaultStateParamsComponent extends ComponentWrapper {
   class Def(jsProps: js.Object) extends Definition(jsProps) {
     override def initialState = null
 
-    override def render(): ReactElement = {
+    override def render(): ReactElement =
       null
-    }
   }
 }
 
@@ -279,9 +257,8 @@ object TypeParamsComponent extends ComponentWrapper {
   class Def(jsProps: js.Object) extends Definition(jsProps) {
     override def initialState = TypedState(props.abc)
 
-    override def render(): ReactElement = {
+    override def render(): ReactElement =
       state.abc.toString
-    }
   }
 }
 
@@ -341,7 +318,7 @@ class ComponentTest extends AsyncFunSuite {
   }
 
   test("Can construct a component taking Unit props with refs and key") {
-    val element: ReactElement = NoPropsComponent.withKey("hi").withRef((_: js.Object) => {})
+    val element: ReactElement = NoPropsComponent.withKey("hi").withRef { (_: js.Object) => }
     assert(element.asInstanceOf[js.Dynamic].key.toString == "hi")
     assert(!js.isUndefined(element.asInstanceOf[js.Dynamic].ref))
   }
@@ -356,13 +333,13 @@ class ComponentTest extends AsyncFunSuite {
   }
 
   test("shouldComponentUpdate controls when component is updated") {
-    var called = false
+    var called                                         = false
     var ref: TestComponentForShouldComponentUpdate.Def = null
 
     ReactDOM.render(
-      TestComponentForShouldComponentUpdate(() => {
+      TestComponentForShouldComponentUpdate { () =>
         called = true
-      }).withRef(r => ref = r),
+      }.withRef(r => ref = r),
       dom.document.createElement("div")
     )
 
@@ -378,9 +355,9 @@ class ComponentTest extends AsyncFunSuite {
     val promise: Promise[Assertion] = Promise()
 
     ReactDOM.render(
-      TestForceUpdateComponent(() => promise.success(assert(true))).withRef(ref => {
+      TestForceUpdateComponent(() => promise.success(assert(true))).withRef { ref =>
         ref.forceUpdate()
-      }),
+      },
       dom.document.createElement("div")
     )
 
@@ -391,9 +368,7 @@ class ComponentTest extends AsyncFunSuite {
     val promise: Promise[Assertion] = Promise()
 
     ReactDOM.render(
-      ErrorBoundaryComponent(ErrorBoundaryComponent.Props(true, { (_, _) =>
-        promise.success(assert(true))
-      })),
+      ErrorBoundaryComponent(ErrorBoundaryComponent.Props(true, (_, _) => promise.success(assert(true)))),
       dom.document.createElement("div")
     )
 
@@ -404,9 +379,7 @@ class ComponentTest extends AsyncFunSuite {
     var sawError = false
 
     ReactDOM.render(
-      ErrorBoundaryComponent(ErrorBoundaryComponent.Props(false, { (_, _) =>
-        sawError = true
-      })),
+      ErrorBoundaryComponent(ErrorBoundaryComponent.Props(false, (_, _) => sawError = true)),
       dom.document.createElement("div")
     )
 
@@ -428,9 +401,12 @@ class ComponentTest extends AsyncFunSuite {
     val promise: Promise[Assertion] = Promise()
 
     ReactDOM.render(
-      DerivedStateComponent(DerivedStateComponent.Props(
-        123, i => promise.success(assert(i == 123))
-      )),
+      DerivedStateComponent(
+        DerivedStateComponent.Props(
+          123,
+          i => promise.success(assert(i == 123))
+        )
+      ),
       dom.document.createElement("div")
     )
 

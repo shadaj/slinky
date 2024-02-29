@@ -198,9 +198,8 @@ class NativeComponentRenderTest extends AnyFunSuite {
         TestRenderer.create(
           FlatList[Int](
             data = Seq(1, 2),
-            renderItem = {
-              case RenderItemInfo(d, _, _) =>
-                Text(d.toString)
+            renderItem = { case RenderItemInfo(d, _, _) =>
+              Text(d.toString)
             }
           )
         )

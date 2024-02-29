@@ -25,7 +25,7 @@ class ReactRefTest extends AsyncFunSuite {
 
   test("Can pass in a ref object to a Slinky component and use it") {
     val promise: Promise[Assertion] = Promise()
-    val ref = React.createRef[TestForceUpdateComponent.Def]
+    val ref                         = React.createRef[TestForceUpdateComponent.Def]
 
     ReactDOM.render(
       TestForceUpdateComponent(() => promise.success(assert(true))).withRef(ref),
@@ -38,9 +38,9 @@ class ReactRefTest extends AsyncFunSuite {
   }
 
   test("Can use forwardRef to pass down a ref to a lower element") {
-    val forwarded = React.forwardRef[String, html.Div](FunctionalComponent((props, rf) => {
+    val forwarded = React.forwardRef[String, html.Div](FunctionalComponent { (props, rf) =>
       div(ref := rf)(props)
-    }))
+    })
 
     val divRef = React.createRef[html.Div]
     ReactDOM.render(
@@ -52,9 +52,9 @@ class ReactRefTest extends AsyncFunSuite {
   }
 
   test("Can memo a functional component with forwarded ref") {
-    val forwarded = React.memo(React.forwardRef[String, html.Div](FunctionalComponent((props, rf) => {
+    val forwarded = React.memo(React.forwardRef[String, html.Div](FunctionalComponent { (props, rf) =>
       div(ref := rf)(props)
-    })))
+    }))
 
     val divRef = React.createRef[html.Div]
     ReactDOM.render(

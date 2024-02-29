@@ -6,13 +6,13 @@ import slinky.web.html._
 
 import scala.scalajs.js
 import org.scalajs.dom
-import org.scalajs.dom.{Element, html}
+import org.scalajs.dom.{html, Element}
 
 import org.scalatest.funsuite.AnyFunSuite
 
 class InnerClassCustom extends js.Object {
-  val customTag = CustomTag("custom-element")
-  val customClass = CustomAttribute[String]("class")
+  val customTag       = CustomTag("custom-element")
+  val customClass     = CustomAttribute[String]("class")
   val customColorAttr = CustomAttribute[String]("color")
 
   def run(): Unit = {
@@ -76,7 +76,7 @@ class TagTest extends AnyFunSuite {
   }
 
   test("Can construct tag with abstraction over element type") {
-    def constructTag[T <: Tag: className.supports](tag: T): ReactElement = {
+    def constructTag[T <: Tag: className.supports](tag: T): ReactElement =
       tag.apply(
         className := "foo",
         onClick := { e =>
@@ -85,7 +85,6 @@ class TagTest extends AnyFunSuite {
         },
         ref := (_ => {})
       )("hello!")
-    }
 
     val divContainer = dom.document.createElement("div")
     ReactDOM.render(constructTag(div), divContainer)
@@ -101,8 +100,8 @@ class TagTest extends AnyFunSuite {
   }
 
   test("Can construct a custom tag with custom attributes") {
-    val customTag = CustomTag("custom-element")
-    val customClass = CustomAttribute[String]("class")
+    val customTag       = CustomTag("custom-element")
+    val customClass     = CustomAttribute[String]("class")
     val customColorAttr = CustomAttribute[String]("color")
 
     val divContainer = dom.document.createElement("div")
@@ -111,13 +110,16 @@ class TagTest extends AnyFunSuite {
   }
 
   test("Can construct a custom tag with optional attributes") {
-    val customTag = CustomTag("custom-element")
-    val customClass = CustomAttribute[String]("class")
+    val customTag      = CustomTag("custom-element")
+    val customClass    = CustomAttribute[String]("class")
     val customNoneAttr = CustomAttribute[String]("none")
     val customSomeAttr = CustomAttribute[String]("some")
 
     val divContainer = dom.document.createElement("div")
-    ReactDOM.render(customTag(customClass := "foo", customNoneAttr := None, customSomeAttr := Some("bar"))("hello!"), divContainer)
+    ReactDOM.render(
+      customTag(customClass := "foo", customNoneAttr := None, customSomeAttr := Some("bar"))("hello!"),
+      divContainer
+    )
     assert(divContainer.innerHTML == """<custom-element class="foo" some="bar">hello!</custom-element>""")
   }
 

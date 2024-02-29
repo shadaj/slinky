@@ -157,7 +157,7 @@ object FlatList extends ExternalComponentWithRefType[FlatListInstance[Any]] {
             onEndReachedThreshold = onEndReachedThreshold,
             onRefresh = onRefresh,
             onViewableItemsChanged =
-              onViewableItemsChanged.map(f => (e) => f(e.asInstanceOf[ViewableItemsChangedEvent[T]])),
+              onViewableItemsChanged.map(f => e => f(e.asInstanceOf[ViewableItemsChangedEvent[T]])),
             progressViewOffset = progressViewOffset,
             legacyImplementation = legacyImplementation,
             refreshing = refreshing,

@@ -16,10 +16,11 @@ trait HelmetStatic extends js.Object {
   def renderStatic(): HelmetRendered = js.native
 }
 
-@js.native trait HelmetRendered extends js.Object {
+@js.native
+trait HelmetRendered extends js.Object {
   val title: js.Object = js.native
-  val meta: js.Object = js.native
-  val link: js.Object = js.native
+  val meta: js.Object  = js.native
+  val link: js.Object  = js.native
   val style: js.Object = js.native
 }
 
