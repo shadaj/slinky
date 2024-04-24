@@ -6,6 +6,8 @@ ThisBuild / Test / publishArtifact := false
 
 ThisBuild / publishTo := sonatypePublishToBundle.value
 
+ThisBuild / sonatypeProfileName := "me.shadaj"
+
 ThisBuild / sonatypeCredentialHost := "s01.oss.sonatype.org"
 
 ThisBuild / pomExtra :=
