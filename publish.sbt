@@ -28,3 +28,5 @@ ThisBuild / pomExtra :=
     </developers>
 
 Global / useGpgPinentry := true
+
+Global / pgpSigningKey := Some("slinky-publishing-bot")
