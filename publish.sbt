@@ -6,6 +6,8 @@ ThisBuild / Test / publishArtifact := false
 
 ThisBuild / publishTo := sonatypePublishToBundle.value
 
+ThisBuild / sonatypeCredentialHost := "s01.oss.sonatype.org"
+
 ThisBuild / pomExtra :=
   <url>https://github.com/shadaj/slinky</url>
     <licenses>
