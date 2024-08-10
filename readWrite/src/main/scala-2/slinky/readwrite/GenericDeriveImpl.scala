@@ -148,11 +148,19 @@ abstract class GenericDeriveImpl(val c: whitebox.Context) { self =>
             createSealedTraitTypeclass(tTag.tpe, getSubclasses(symbol.asClass).toSeq)
           }
         } else {
+          val debugEnabled = Option(System.getProperty("slinky.derivation.debug"))
+            .filterNot(_.isEmpty)
+            .map(_.toLowerCase)
+            .map(v => "true".equals(v) || v.substring(0, 1) == "y")
+            .getOrElse(false)
+
           memoTree(tTag.tpe) {
-            c.echo(
-              c.enclosingPosition,
-              s"Using fallback derivation for type ${tTag.tpe} (derivation: ${getClass.getSimpleName})"
-            )
+            if (debugEnabled) {
+              c.echo(
+                c.enclosingPosition,
+                s"Using fallback derivation for type ${tTag.tpe} (derivation: ${getClass.getSimpleName})"
+              )
+            }
             createFallback(tTag.tpe)
           }
         }

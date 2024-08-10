@@ -8,13 +8,13 @@ addCommandAlias(
   "compile:scalafix --check; test:scalafix --check; compile:scalafmtCheck; test:scalafmtCheck; scalafmtSbtCheck"
 )
 
-val scala212 = "2.12.17"
-val scala213 = "2.13.10"
-val scala3   = "3.2.2"
+val scala212 = "2.12.19"
+val scala213 = "2.13.14"
+val scala3   = "3.3.3"
 
 ThisBuild / scalaVersion := scala213
 ThisBuild / semanticdbEnabled := true
-ThisBuild / semanticdbVersion := "4.7.6"
+ThisBuild / semanticdbVersion := "4.9.9"
 
 ThisBuild / tpolecatDefaultOptionsMode := DevMode
 
@@ -46,6 +46,7 @@ addCommandAlias(
 
 lazy val crossScalaSettings = Seq(
   crossScalaVersions := Seq(scala212, scala213, scala3),
+  scalacOptions += "-Wconf:cat=unused-nowarn:s",
   Compile / unmanagedSourceDirectories ++= {
     val sourceDir = (Compile / sourceDirectory).value
     CrossVersion.partialVersion(scalaVersion.value) match {
