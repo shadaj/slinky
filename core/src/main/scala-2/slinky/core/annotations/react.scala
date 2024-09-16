@@ -64,7 +64,19 @@ object ReactMacrosImpl {
               q"this.apply(Props.apply[..$tparams](...$applyValues))"
           }
 
-          q"""def apply[..$tparams](...$paramssWithoutChildren)(${childrenParam.get}): _root_.slinky.core.KeyAndRefAddingStage[Def] =
+          val children = {
+            val tpe = childrenParam.get.tpe
+            if (tpe != null && (tpe =:= typeOf[Seq[_root_.slinky.core.facade.ReactElement]] ||
+                tpe =:= typeOf[List[_root_.slinky.core.facade.ReactElement]] ||
+                (tpe.typeSymbol == definitions.RepeatedParamClass &&
+                tpe.typeArgs.headOption.exists(_ =:= typeOf[_root_.slinky.core.facade.ReactElement])))) {
+              q"${childrenParam.get.name}: _root_.slinky.core.facade.ReactElement_*"
+            } else {
+              q"${childrenParam.get}"
+            }
+          }
+
+          q"""def apply[..$tparams](...$paramssWithoutChildren)($children): _root_.slinky.core.KeyAndRefAddingStage[Def] =
                 $body"""
         } else {
           q"""def apply[..$tparams](...$paramssWithoutChildren): _root_.slinky.core.KeyAndRefAddingStage[Def] =
