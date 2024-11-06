@@ -12,11 +12,11 @@ import slinky.web.ReactDOM
 import slinky.web.html._
 
 import org.scalatest.Assertion
-import scala.concurrent.Promise
+import scala.concurrent.{ExecutionContext, Promise}
 import scala.util.Try
 
 class HooksComponentTest extends AsyncFunSuite {
-  implicit override def executionContext = scala.concurrent.ExecutionContext.Implicits.global
+  implicit override def executionContext: ExecutionContext = scala.concurrent.ExecutionContext.Implicits.global
 
   test("Can render a functional component with useState hook") {
     val container = document.createElement("div")
