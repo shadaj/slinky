@@ -47,20 +47,17 @@ abstract class GenericDeriveImpl(val c: whitebox.Context) { self =>
   def getTypeclass(forType: Type): Tree =
     c.inferImplicitValue(appliedType(typeclassSymbol, forType))
 
-  private val currentMemo = {
+  private val currentMemo =
     GenericDeriveImpl.derivationMemo.get()
-  }
 
-  private val currentOrder = {
+  private val currentOrder =
     GenericDeriveImpl.derivationOrder.get()
-  }
 
   private def withMemoNone[T](tpe: Type)(thunk: => T): T = {
     val orig = currentMemo.get((getClass.getSimpleName, tpe.toString))
     currentMemo((getClass.getSimpleName, tpe.toString)) = None
-    try {
-      thunk
-    } finally {
+    try thunk
+    finally {
       if (orig.isDefined) {
         currentMemo((getClass.getSimpleName, tpe.toString)) = orig.get
       } else {
@@ -102,11 +99,15 @@ abstract class GenericDeriveImpl(val c: whitebox.Context) { self =>
       val deriveTree = if (regularImplicit.isEmpty) {
         if (symbol.isParameter) {
           c.abort(c.enclosingPosition, "Cannot derive a typeclass for a type parameter")
-        } else if (symbol.isModuleClass && c
-                     .typecheck(c.parse(symbol.asClass.module.fullName), silent = true)
-                     .nonEmpty) {
+        } else if (
+          symbol.isModuleClass && c
+            .typecheck(c.parse(symbol.asClass.module.fullName), silent = true)
+            .nonEmpty
+        ) {
           createModuleTypeclass(tTag.tpe, c.parse(symbol.asClass.module.fullName))
-        } else if (symbol.isClass && symbol.asClass.isCaseClass && symbol.asType.typeParams.size == tTag.tpe.typeArgs.size) {
+        } else if (
+          symbol.isClass && symbol.asClass.isCaseClass && symbol.asType.typeParams.size == tTag.tpe.typeArgs.size
+        ) {
           val constructor = symbol.asClass.primaryConstructor
           val companion   = symbol.asClass.companion
           if (companion != NoSymbol) {
@@ -115,17 +116,16 @@ abstract class GenericDeriveImpl(val c: whitebox.Context) { self =>
 
           val paramsLists = constructor.asMethod.paramLists
           memoTree(tTag.tpe) {
-            val params: Seq[Seq[Param]] = paramsLists.map(_.zipWithIndex.map {
-              case (p, i) =>
-                val transformedValueType = p.typeSignatureIn(tTag.tpe).resultType
-                Param(
-                  p.name,
-                  transformedValueType.substituteTypes(symbol.asType.typeParams, tTag.tpe.typeArgs),
-                  if (p.asTerm.isParamWithDefault && companion != NoSymbol) {
-                    val defaultTermName = "apply$default$" + (i + 1)
-                    Some(q"$companion.${TermName(defaultTermName)}")
-                  } else None
-                )
+            val params: Seq[Seq[Param]] = paramsLists.map(_.zipWithIndex.map { case (p, i) =>
+              val transformedValueType = p.typeSignatureIn(tTag.tpe).resultType
+              Param(
+                p.name,
+                transformedValueType.substituteTypes(symbol.asType.typeParams, tTag.tpe.typeArgs),
+                if (p.asTerm.isParamWithDefault && companion != NoSymbol) {
+                  val defaultTermName = "apply$default$" + (i + 1)
+                  Some(q"$companion.${TermName(defaultTermName)}")
+                } else None
+              )
             })
 
             createCaseClassTypeclass(tTag.tpe, params)
@@ -178,24 +178,23 @@ abstract class GenericDeriveImpl(val c: whitebox.Context) { self =>
               .asInstanceOf[Tree]
           }
 
-        val unwrappedOrder = currentOrder.dequeueAll(_ => true).map {
-          case (impl, name, tpe, t) =>
-            seenImpls.add(impl)
-            val typeclassTree = c.untypecheck(replaceDeferredAllTypeclasses(t.asInstanceOf[Tree]))
+        val unwrappedOrder = currentOrder.dequeueAll(_ => true).map { case (impl, name, tpe, t) =>
+          seenImpls.add(impl)
+          val typeclassTree = c.untypecheck(replaceDeferredAllTypeclasses(t.asInstanceOf[Tree]))
 
-            if (saveReferences.contains(name)) {
-              (
-                Some(
-                  q"var ${TermName(name)}: ${appliedType(impl.typeclassSymbol.asInstanceOf[Symbol], tpe.asInstanceOf[Type])} = null"
-                ),
-                q"${TermName(name)} = $typeclassTree"
-              )
-            } else {
-              (
-                None,
-                q"val ${TermName(name)}: ${appliedType(impl.typeclassSymbol.asInstanceOf[Symbol], tpe.asInstanceOf[Type])} = $typeclassTree"
-              )
-            }
+          if (saveReferences.contains(name)) {
+            (
+              Some(
+                q"var ${TermName(name)}: ${appliedType(impl.typeclassSymbol.asInstanceOf[Symbol], tpe.asInstanceOf[Type])} = null"
+              ),
+              q"${TermName(name)} = $typeclassTree"
+            )
+          } else {
+            (
+              None,
+              q"val ${TermName(name)}: ${appliedType(impl.typeclassSymbol.asInstanceOf[Symbol], tpe.asInstanceOf[Type])} = $typeclassTree"
+            )
+          }
         }
 
         currentMemo.clear()
@@ -209,15 +208,13 @@ abstract class GenericDeriveImpl(val c: whitebox.Context) { self =>
 }
 
 object GenericDeriveImpl {
-  private[GenericDeriveImpl] val derivationMemo = {
+  private[GenericDeriveImpl] val derivationMemo =
     new ThreadLocal[mutable.Map[(String, String), Option[String]]] {
       override def initialValue() = mutable.Map.empty
     }
-  }
 
-  private[GenericDeriveImpl] val derivationOrder = {
+  private[GenericDeriveImpl] val derivationOrder =
     new ThreadLocal[mutable.Queue[(GenericDeriveImpl, String, whitebox.Context#Type, whitebox.Context#Tree)]] {
       override def initialValue() = mutable.Queue.empty
     }
-  }
 }
