@@ -15,7 +15,7 @@ libraryDependencies ++= {
 
 libraryDependencies ++= {
   if (scalaJSVersion.startsWith("0.6.")) Nil
-  else Seq("org.scala-js" %% "scalajs-linker" % "1.0.1")
+  else Seq("org.scala-js" %% "scalajs-linker" % "1.17.0")
 }
 
 addSbtPlugin("ch.epfl.scala"             % "sbt-scalafix"    % "0.12.0")
