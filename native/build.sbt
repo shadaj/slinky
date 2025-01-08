@@ -1,4 +1,5 @@
 enablePlugins(ScalaJSPlugin)
+enablePlugins(SlinkyPlugin)
 
 import org.scalajs.jsenv.nodejs.NodeJSEnv
 

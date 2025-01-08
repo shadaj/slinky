@@ -1,4 +1,5 @@
 enablePlugins(ScalaJSPlugin)
+enablePlugins(SlinkyPlugin)
 
 name := "slinky-vr"
 
