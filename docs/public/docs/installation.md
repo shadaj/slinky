@@ -16,11 +16,11 @@ Since Slinky is distributed just like any other Scala.js library, it's very easy
 
 Add the dependencies that match your application as well as required Scala.js compiler options:
 ```scala
-libraryDependencies += "me.shadaj" %%% "slinky-core" % "0.7.4" // core React functionality, no React DOM
-libraryDependencies += "me.shadaj" %%% "slinky-web" % "0.7.4" // React DOM, HTML and SVG tags
-libraryDependencies += "me.shadaj" %%% "slinky-native" % "0.7.4" // React Native components
-libraryDependencies += "me.shadaj" %%% "slinky-hot" % "0.7.4" // Hot loading, requires react-proxy package
-libraryDependencies += "me.shadaj" %%% "slinky-scalajsreact-interop" % "0.7.4" // Interop with japgolly/scalajs-react
+libraryDependencies += "me.shadaj" %%% "slinky-core" % "0.7.5" // core React functionality, no React DOM
+libraryDependencies += "me.shadaj" %%% "slinky-web" % "0.7.5" // React DOM, HTML and SVG tags
+libraryDependencies += "me.shadaj" %%% "slinky-native" % "0.7.5" // React Native components
+libraryDependencies += "me.shadaj" %%% "slinky-hot" % "0.7.5" // Hot loading, requires react-proxy package
+libraryDependencies += "me.shadaj" %%% "slinky-scalajsreact-interop" % "0.7.5" // Interop with japgolly/scalajs-react
 
 // optional, but recommended; enables the @react macro annotation API
 addCompilerPlugin("org.scalamacros" % "paradise" % "2.1.1" cross CrossVersion.full)
@@ -62,6 +62,6 @@ jsDependencies ++= Seq(
 Starting with Slinky 0.5.0, the `@react` macro annotation is implemented with Macro Paradise to ensure compatibility with future versions of Scala, so a small plugin is required to enable IDE support in IntelliJ (version 2018.3 or higher is required). To install the plugin, head over to the [JetBrains Marketplace page](https://plugins.jetbrains.com/plugin/15748-slinky-library-support) or search for "Slinky Library Support" from inside IntelliJ.
 
 ## Credits
-Much credit goes to existing Scala.js libraries for React, such as [scalajs-react](https://github.com/japgolly/scalajs-react), which provided a lot of inspiration for Slinky's design. Credit also goes to [scala-js-preact](https://github.com/LMnet/scala-js-preact), which provided the inspiration for the `@react` macro annotation. 
+Much credit goes to existing Scala.js libraries for React, such as [scalajs-react](https://github.com/japgolly/scalajs-react), which provided a lot of inspiration for Slinky's design. Credit also goes to [scala-js-preact](https://github.com/LMnet/scala-js-preact), which provided the inspiration for the `@react` macro annotation.
 
 Slinky logo is based on [https://thenounproject.com/dianatomic/uploads/?i=40452](https://thenounproject.com/dianatomic/uploads/?i=40452)

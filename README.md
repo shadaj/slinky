@@ -5,7 +5,7 @@
     <img src="https://github.com/shadaj/slinky/actions/workflows/sbt.yml/badge.svg?branch=main"/>
   </a>
   <a href="https://www.scala-js.org">
-    <img src="https://www.scala-js.org/assets/badges/scalajs-0.6.17.svg"/>
+    <img src="https://www.scala-js.org/assets/badges/scalajs-1.16.0.svg"/>
   </a>
   <a href="https://mvnrepository.com/artifact/me.shadaj/slinky-core">
     <img src="https://img.shields.io/maven-central/v/me.shadaj/slinky-core_sjs1_2.13"/>
