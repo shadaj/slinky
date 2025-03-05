@@ -26,14 +26,16 @@ import scala.scalajs.js
     textDecoration = "none"
   )
 
-  val component = FunctionalComponent[Unit](_ => {
-    header(style := js.Dynamic.literal(
-      width = "100%",
-      position = "fixed",
-      top = 0,
-      left = 0,
-      backgroundColor = "#20232a"
-    ))(
+  val component = FunctionalComponent[Unit] { _ =>
+    header(
+      style := js.Dynamic.literal(
+        width = "100%",
+        position = "fixed",
+        top = 0,
+        left = 0,
+        backgroundColor = "#20232a"
+      )
+    )(
       div(
         style := js.Dynamic.literal(
           display = "flex",
@@ -52,13 +54,15 @@ import scala.scalajs.js
             display = "flex",
             height = "100%",
             alignItems = "center",
-            minWidth = "150px",
+            minWidth = "150px"
           )
         )(
           Link(href = "/")(
-            a(style := js.Dynamic.literal(
-              marginRight = "50px"
-            ))(
+            a(
+              style := js.Dynamic.literal(
+                marginRight = "50px"
+              )
+            )(
               Image(src = SlinkyHorizontalLogo, layout = "raw", priority = true, loader = (a: js.Dynamic) => a.src)(
                 style := js.Dynamic.literal(
                   height = "50px",
@@ -76,9 +80,11 @@ import scala.scalajs.js
             marginRight = "auto"
           )
         )(
-          Link(href = "/docs/installation/")(a(style := linkStyle)(
-            "Docs"
-          ))
+          Link(href = "/docs/installation/")(
+            a(style := linkStyle)(
+              "Docs"
+            )
+          )
         ),
         div(
           style := js.Dynamic.literal(
@@ -97,9 +103,11 @@ import scala.scalajs.js
           ),
           Link(
             href = "/docs/resources/"
-          )(a(style := smallLinkStyle)(
-            "Resources"
-          )),
+          )(
+            a(style := smallLinkStyle)(
+              "Resources"
+            )
+          ),
           a(
             href := "https://github.com/shadaj/slinky/blob/main/CHANGELOG.md",
             style := smallLinkStyle
@@ -115,5 +123,5 @@ import scala.scalajs.js
         )
       )
     )
-  })
+  }
 }

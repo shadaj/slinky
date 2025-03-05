@@ -2,7 +2,7 @@ package slinky.generator
 
 object SVG extends TagsProvider {
   val extraAttributes = MDN.extraAttributes
-  
+
   val allAttributes =
     """accent-height accumulate additive alphabetic amplitude arabic-form ascent attributeName
       |attributeType azimuth baseFrequency baseProfile bbox begin bias by calcMode cap-height
@@ -29,8 +29,9 @@ object SVG extends TagsProvider {
       |kerning letter-spacing lighting-color marker-end marker-mid marker-start mask opacity overflow
       |pointer-events shape-rendering stop-color stop-opacity stroke-dasharray stroke-dashoffset
       |stroke-linecap stroke-linejoin stroke-miterlimit stroke-opacity stroke-width stroke text-anchor
-      |text-decoration text-rendering unicode-bidi visibility word-spacing writing-mode"""
-      .stripMargin.split('\n').flatMap(_.split(' '))
+      |text-decoration text-rendering unicode-bidi visibility word-spacing writing-mode""".stripMargin
+      .split('\n')
+      .flatMap(_.split(' '))
 
   val supportedTags =
     """a altGlyph altGlyphDef altGlyphItem animate animateColor animateMotion animateTransform
@@ -76,8 +77,10 @@ object SVG extends TagsProvider {
       |vertOriginX vertOriginY viewBox viewTarget visibility widths wordSpacing
       |writingMode x x1 x2 xChannelSelector xHeight xlinkActuate xlinkArcrole
       |xlinkHref xlinkRole xlinkShow xlinkTitle xlinkType xmlns xmlnsXlink xmlBase
-      |xmlLang xmlSpace y y1 y2 yChannelSelector z zoomAndPan"""
-      .stripMargin.split('\n').flatMap(_.split(' ')).toSet ++ MDN.supportedAttributes
+      |xmlLang xmlSpace y y1 y2 yChannelSelector z zoomAndPan""".stripMargin
+      .split('\n')
+      .flatMap(_.split(' '))
+      .toSet ++ MDN.supportedAttributes
 
   def extract: (Seq[Tag], Seq[Attribute]) = {
     val allTags = supportedTags.map(t => Tag(t, "Any", Seq.empty))

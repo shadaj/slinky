@@ -6,8 +6,7 @@ object CompatUtil {
 
   implicit class FactoryOps[-A, +C](private val factory: Factory[A, C]) {
 
-    /**
-      * @return A collection of type `C` containing the same elements
+    /** @return A collection of type `C` containing the same elements
       *         as the source collection `it`.
       * @param it Source collection
       */

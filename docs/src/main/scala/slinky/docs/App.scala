@@ -33,9 +33,11 @@ import slinky.next.Head
         title(s"Slinky - Write React apps in Scala just like ES6")
       ),
       Navbar(()),
-      div(style := js.Dynamic.literal(
-        marginTop = "60px"
-      ))(
+      div(
+        style := js.Dynamic.literal(
+          marginTop = "60px"
+        )
+      )(
         props.Component(props.pageProps)
       )
     )

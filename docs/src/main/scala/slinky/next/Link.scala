@@ -12,6 +12,6 @@ import slinky.core.ExternalComponent
   @JSImport("next/link", JSImport.Default)
   @js.native
   object Component extends js.Object
-  
+
   val component = Component
 }

@@ -10,16 +10,18 @@ import scala.scalajs.js.Dynamic.literal
 import slinky.next.Link
 
 @react object Jumbotron {
-  val component = FunctionalComponent[Unit](_ => {
-    div(style := literal(
-      marginTop = "60px",
-      width = "100%",
-      backgroundColor = "#282c34",
-      padding = "30px",
-      boxSizing = "border-box",
-      display = "flex",
-      flexDirection = "column"
-    ))(
+  val component = FunctionalComponent[Unit] { _ =>
+    div(
+      style := literal(
+        marginTop = "60px",
+        width = "100%",
+        backgroundColor = "#282c34",
+        padding = "30px",
+        boxSizing = "border-box",
+        display = "flex",
+        flexDirection = "column"
+      )
+    )(
       Image(src = SlinkyLogo, layout = "raw", priority = true, loader = (a: js.Dynamic) => a.src)(
         style := literal(
           maxWidth = "100%",
@@ -38,21 +40,27 @@ import slinky.next.Link
           marginTop = "0px"
         )
       )("Write React apps in Scala just like you would in ES6"),
-      div(style := literal(
-        display = "flex",
-        alignItems = "center",
-        flexDirection = "row",
-        alignSelf = "center"
-      ))(
-        Link(href = "/docs/installation/")(a(style := literal(
-          padding = "15px",
-          backgroundColor = "#DC322F",
-          color = "white",
-          fontSize = "30px"
-        ))(
-          "Get Started"
+      div(
+        style := literal(
+          display = "flex",
+          alignItems = "center",
+          flexDirection = "row",
+          alignSelf = "center"
         )
-      ))
+      )(
+        Link(href = "/docs/installation/")(
+          a(
+            style := literal(
+              padding = "15px",
+              backgroundColor = "#DC322F",
+              color = "white",
+              fontSize = "30px"
+            )
+          )(
+            "Get Started"
+          )
+        )
+      )
     )
-  })
+  }
 }

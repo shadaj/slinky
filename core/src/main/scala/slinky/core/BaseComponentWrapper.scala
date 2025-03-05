@@ -91,51 +91,74 @@ abstract class BaseComponentWrapper(sr: StateReaderProvider, sw: StateWriterProv
 
       if (componentPrototype.componentWillReceiveProps != DefinitionBase.defaultBase.componentWillReceiveProps) {
         val orig = componentPrototype.componentWillReceiveProps.asInstanceOf[js.ThisFunction1[Def, Props, Unit]]
-        componentPrototype.componentWillReceiveProps = ((self: Def, props: js.Object) => {
-          orig(
-            self,
-            self.asInstanceOf[DefinitionBase[Props, _, _]].readPropsValue(props)
-          )
-        }): js.ThisFunction1[Def, js.Object, Unit]
+        componentPrototype.componentWillReceiveProps = (
+          (
+            self: Def,
+            props: js.Object
+          ) => {
+            orig(
+              self,
+              self.asInstanceOf[DefinitionBase[Props, _, _]].readPropsValue(props)
+            )
+          }
+        ): js.ThisFunction1[Def, js.Object, Unit]
       } else {
         componentPrototype.componentWillReceiveProps = js.undefined
       }
 
       if (componentPrototype.shouldComponentUpdate != DefinitionBase.defaultBase.shouldComponentUpdate) {
         val orig = componentPrototype.shouldComponentUpdate.asInstanceOf[js.ThisFunction2[Def, Props, State, Boolean]]
-        componentPrototype.shouldComponentUpdate = ((self: Def, nextProps: js.Object, nextState: js.Object) => {
-          orig(
-            self,
-            self.asInstanceOf[DefinitionBase[Props, _, _]].readPropsValue(nextProps),
-            self.asInstanceOf[DefinitionBase[_, State, _]].readStateValue(nextState)
-          )
-        }): js.ThisFunction2[Def, js.Object, js.Object, Boolean]
+        componentPrototype.shouldComponentUpdate = (
+          (
+            self: Def,
+            nextProps: js.Object,
+            nextState: js.Object
+          ) => {
+            orig(
+              self,
+              self.asInstanceOf[DefinitionBase[Props, _, _]].readPropsValue(nextProps),
+              self.asInstanceOf[DefinitionBase[_, State, _]].readStateValue(nextState)
+            )
+          }
+        ): js.ThisFunction2[Def, js.Object, js.Object, Boolean]
       } else {
         componentPrototype.shouldComponentUpdate = js.undefined
       }
 
       if (componentPrototype.componentWillUpdate != DefinitionBase.defaultBase.componentWillUpdate) {
         val orig = componentPrototype.componentWillUpdate.asInstanceOf[js.ThisFunction2[Def, Props, State, Unit]]
-        componentPrototype.componentWillUpdate = ((self: Def, nextProps: js.Object, nextState: js.Object) => {
-          orig(
-            self,
-            self.asInstanceOf[DefinitionBase[Props, _, _]].readPropsValue(nextProps),
-            self.asInstanceOf[DefinitionBase[_, State, _]].readStateValue(nextState)
-          )
-        }): js.ThisFunction2[Def, js.Object, js.Object, Unit]
+        componentPrototype.componentWillUpdate = (
+          (
+            self: Def,
+            nextProps: js.Object,
+            nextState: js.Object
+          ) => {
+            orig(
+              self,
+              self.asInstanceOf[DefinitionBase[Props, _, _]].readPropsValue(nextProps),
+              self.asInstanceOf[DefinitionBase[_, State, _]].readStateValue(nextState)
+            )
+          }
+        ): js.ThisFunction2[Def, js.Object, js.Object, Unit]
       } else {
         componentPrototype.componentWillUpdate = js.undefined
       }
 
       if (componentPrototype.getSnapshotBeforeUpdate != DefinitionBase.defaultBase.getSnapshotBeforeUpdate) {
         val orig = componentPrototype.getSnapshotBeforeUpdate.asInstanceOf[js.ThisFunction2[Def, Props, State, Any]]
-        componentPrototype.getSnapshotBeforeUpdate = ((self: Def, prevProps: js.Object, prevState: js.Object) => {
-          orig(
-            self,
-            self.asInstanceOf[DefinitionBase[Props, _, _]].readPropsValue(prevProps),
-            self.asInstanceOf[DefinitionBase[_, State, _]].readStateValue(prevState)
-          )
-        }): js.ThisFunction2[Def, js.Object, js.Object, Any]
+        componentPrototype.getSnapshotBeforeUpdate = (
+          (
+            self: Def,
+            prevProps: js.Object,
+            prevState: js.Object
+          ) => {
+            orig(
+              self,
+              self.asInstanceOf[DefinitionBase[Props, _, _]].readPropsValue(prevProps),
+              self.asInstanceOf[DefinitionBase[_, State, _]].readStateValue(prevState)
+            )
+          }
+        ): js.ThisFunction2[Def, js.Object, js.Object, Any]
       } else {
         componentPrototype.getSnapshotBeforeUpdate = js.undefined
       }
@@ -143,8 +166,13 @@ abstract class BaseComponentWrapper(sr: StateReaderProvider, sw: StateWriterProv
       if (componentPrototype.componentDidUpdate != DefinitionBase.defaultBase.componentDidUpdate) {
         val orig = componentPrototype.componentDidUpdate
         componentPrototype.componentDidUpdateScala = orig
-        componentPrototype.componentDidUpdate =
-          ((self: Def, prevProps: js.Object, prevState: js.Object, snapshot: js.Any) => {
+        componentPrototype.componentDidUpdate = (
+          (
+            self: Def,
+            prevProps: js.Object,
+            prevState: js.Object,
+            snapshot: js.Any
+          ) => {
             orig
               .asInstanceOf[js.ThisFunction]
               .call(
@@ -154,7 +182,8 @@ abstract class BaseComponentWrapper(sr: StateReaderProvider, sw: StateWriterProv
                 snapshot.asInstanceOf[js.Any]
               )
               .asInstanceOf[Unit]
-          }): js.ThisFunction3[Def, js.Object, js.Object, js.Any, Unit]
+          }
+        ): js.ThisFunction3[Def, js.Object, js.Object, js.Any, Unit]
       } else {
         componentPrototype.componentDidUpdate = js.undefined
       }
@@ -178,25 +207,30 @@ abstract class BaseComponentWrapper(sr: StateReaderProvider, sw: StateWriterProv
       }
 
       if (this.getDerivedStateFromProps != null) {
-        constructor.getDerivedStateFromProps = ((props: js.Object, state: js.Object) => {
-          val propsScala =
-            DefinitionBase.readValue(props, this.asInstanceOf[js.Dynamic]._propsReader.asInstanceOf[Reader[Props]])
-          val stateScala =
-            DefinitionBase.readValue(state, this.asInstanceOf[js.Dynamic]._stateReader.asInstanceOf[Reader[State]])
+        constructor.getDerivedStateFromProps = (
+          (
+            props: js.Object,
+            state: js.Object
+          ) => {
+            val propsScala =
+              DefinitionBase.readValue(props, this.asInstanceOf[js.Dynamic]._propsReader.asInstanceOf[Reader[Props]])
+            val stateScala =
+              DefinitionBase.readValue(state, this.asInstanceOf[js.Dynamic]._stateReader.asInstanceOf[Reader[State]])
 
-          val newState = getDerivedStateFromProps(propsScala, stateScala)
+            val newState = getDerivedStateFromProps(propsScala, stateScala)
 
-          if (newState == null) null
-          else {
-            if (BaseComponentWrapper.scalaComponentWritingEnabled) {
-              DefinitionBase.writeWithWrappingAdjustment(
-                this.asInstanceOf[js.Dynamic]._stateWriter.asInstanceOf[Writer[State]]
-              )(newState)
-            } else {
-              js.Dynamic.literal(__ = newState.asInstanceOf[js.Any])
+            if (newState == null) null
+            else {
+              if (BaseComponentWrapper.scalaComponentWritingEnabled) {
+                DefinitionBase.writeWithWrappingAdjustment(
+                  this.asInstanceOf[js.Dynamic]._stateWriter.asInstanceOf[Writer[State]]
+                )(newState)
+              } else {
+                js.Dynamic.literal(__ = newState.asInstanceOf[js.Any])
+              }
             }
           }
-        }): js.Function2[js.Object, js.Object, js.Object]
+        ): js.Function2[js.Object, js.Object, js.Object]
       }
 
       if (this.getDerivedStateFromError != null) {
@@ -224,8 +258,8 @@ abstract class BaseComponentWrapper(sr: StateReaderProvider, sw: StateWriterProv
 
   private var lastConstructorTag: ConstructorTag[Def] = null.asInstanceOf[ConstructorTag[Def]]
 
-  def componentConstructor(
-    implicit propsReader: Reader[Props],
+  def componentConstructor(implicit
+    propsReader: Reader[Props],
     stateWriter: Writer[State],
     stateReader: Reader[State],
     constructorTag: ConstructorTag[Def]
@@ -290,8 +324,7 @@ object BaseComponentWrapper {
 
   private[core] var scalaComponentWritingEnabled = false
 
-  /**
-    * Enables writing props and state for Scala defined components. This is
+  /** Enables writing props and state for Scala defined components. This is
     * needed for hot loading, where data must be written to a JS object and
     * then read when the application is reloaded.
     */
@@ -302,8 +335,7 @@ object BaseComponentWrapper {
       scalaComponentWritingEnabled = true
     }
 
-  /**
-    * Inserts a component constructor middleware function, which transforms a component constructor
+  /** Inserts a component constructor middleware function, which transforms a component constructor
     * given the original constructor and the outer component object (for state tracking)
     *
     * This is used for hot-loading, which wraps the component constructor inside a proxy component

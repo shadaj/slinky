@@ -30,11 +30,11 @@ Compile / sourceGenerators += Def.task {
   val gens = (0 to 22).map { n =>
     s"""implicit def function$n[${(0 until n).map(i => s"I$i, ").mkString} O]
        |              (implicit ${(0 until n)
-         .map(i => s"i${i}Reader: Reader[I$i], ")
-         .mkString} oWriter: Writer[O]): Writer[(${(0 until n).map(i => s"I$i").mkString(", ")}) => O] = s => {
+      .map(i => s"i${i}Reader: Reader[I$i], ")
+      .mkString} oWriter: Writer[O]): Writer[(${(0 until n).map(i => s"I$i").mkString(", ")}) => O] = s => {
        |  val fn: js.Function$n[${(0 until n)
-         .map(_ => "js.Object, ")
-         .mkString} js.Object] = (${(0 until n).map(i => s"i$i: js.Object").mkString(", ")}) => {
+      .map(_ => "js.Object, ")
+      .mkString} js.Object] = (${(0 until n).map(i => s"i$i: js.Object").mkString(", ")}) => {
        |    oWriter.write(s(${(0 until n).map(i => s"i${i}Reader.read(i$i)").mkString(", ")}))
        |  }
        |
@@ -68,8 +68,8 @@ Compile / sourceGenerators += Def.task {
   val gens = (0 to 22).map { n =>
     s"""implicit def function$n[${(0 until n).map(i => s"I$i, ").mkString} O]
        |              (implicit ${(0 until n)
-         .map(i => s"i${i}Writer: Writer[I$i], ")
-         .mkString} oReader: Reader[O]): Reader[(${(0 until n).map(i => s"I$i").mkString(", ")}) => O] = s => {
+      .map(i => s"i${i}Writer: Writer[I$i], ")
+      .mkString} oReader: Reader[O]): Reader[(${(0 until n).map(i => s"I$i").mkString(", ")}) => O] = s => {
        |  val fn = s.asInstanceOf[js.Function$n[${(0 until n).map(_ => "js.Object, ").mkString} js.Object]]
        |  (${(0 until n).map(i => s"i$i: I$i").mkString(", ")}) => {
        |    oReader.read(fn(${(0 until n).map(i => s"i${i}Writer.write(i$i)").mkString(", ")}))
