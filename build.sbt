@@ -13,8 +13,6 @@ val scala213 = "2.13.14"
 val scala3   = "3.3.3"
 
 ThisBuild / scalaVersion := scala213
-ThisBuild / semanticdbEnabled := true
-ThisBuild / semanticdbVersion := "4.9.9"
 
 ThisBuild / tpolecatDefaultOptionsMode := DevMode
 
