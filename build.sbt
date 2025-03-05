@@ -13,8 +13,11 @@ val scala213 = "2.13.14"
 val scala3   = "3.3.3"
 
 ThisBuild / scalaVersion := scala213
+ThisBuild / semanticdbEnabled := true
+ThisBuild / semanticdbVersion := scalafixSemanticdb.revision
 
 ThisBuild / tpolecatDefaultOptionsMode := DevMode
+ThisBuild / tpolecatExcludeOptions += ScalacOptions.warnDeadCode
 
 lazy val slinky = project
   .in(file("."))

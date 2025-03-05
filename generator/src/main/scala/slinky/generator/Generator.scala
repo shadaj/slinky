@@ -114,7 +114,7 @@ object Generator {
           a.compatibleTags.getOrElse(extracted.tags.map(_.tagName)).flatMap { t =>
             val fixedT = if (t == "*") "star" else t
             if (attrs.isDefined && attrs.get.attributeType == "Boolean") {
-              Seq(s"""@inline implicit def boolToPair${fixedT}Applied(attrObj: this.type): slinky.core.AttrPair[${Utils.identifierFor(t)}.tag.type] = new slinky.core.AttrPair[${Utils.identifierFor(t)}.tag.type]("${attrs.get.attributeName + nameSuffix}", true)""")
+              Seq(s"""@inline implicit def boolToPair${fixedT}Applied(@scala.annotation.nowarn attrObj: this.type): slinky.core.AttrPair[${Utils.identifierFor(t)}.tag.type] = new slinky.core.AttrPair[${Utils.identifierFor(t)}.tag.type]("${attrs.get.attributeName + nameSuffix}", true)""")
             } else Seq.empty
           }
         }
