@@ -6,7 +6,7 @@ import scala.util.Properties
 
 name := "slinky-native"
 
-libraryDependencies += "org.scalatest" %%% "scalatest" % "3.2.18" % Test
+libraryDependencies += "org.scalatest" %%% "scalatest" % "3.2.19" % Test
 
 scalaJSLinkerConfig ~= { _.withModuleKind(ModuleKind.CommonJSModule) }
 Test / scalaJSLinkerConfig ~= { _.withESFeatures(_.withUseECMAScript2015(false)) }
