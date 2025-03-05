@@ -2,16 +2,13 @@
 <p align="center"><i>Write Scala.js React apps just like you would in ES6</i></p>
 <p align="center">
   <a href="https://github.com/shadaj/slinky/actions?query=branch%3Amain">
-    <img src="https://github.com/shadaj/slinky/workflows/Slinky%20CI/badge.svg?branch=main"/>
+    <img src="https://github.com/shadaj/slinky/actions/workflows/sbt.yml/badge.svg?branch=main"/>
   </a>
   <a href="https://www.scala-js.org">
     <img src="https://www.scala-js.org/assets/badges/scalajs-0.6.17.svg"/>
   </a>
   <a href="https://mvnrepository.com/artifact/me.shadaj/slinky-core">
     <img src="https://img.shields.io/maven-central/v/me.shadaj/slinky-core_sjs1_2.13"/>
-  </a>
-  <a href="https://gitter.im/shadaj/slinky?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge">
-    <img src="https://badges.gitter.im/shadaj/slinky.svg"/>
   </a>
 </p>
 
