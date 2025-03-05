@@ -8,10 +8,9 @@ tar xvf secrets.tar
 
 echo $PGP_PASSPHRASE | gpg --passphrase-fd 0 --batch --yes --import publishing-setup/private.key
 
-export GPG_TTY=$(tty)
+export GPG_TTY=/dev/ttys001
 
 cp publishing-setup/credentials.sbt credentials.sbt
 
-sbt publishSignedAll
+sbt publishSignedAll sonatypeBundleRelease
 
-sbt sonatypeBundleRelease
