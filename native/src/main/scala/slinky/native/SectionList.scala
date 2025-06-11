@@ -93,7 +93,7 @@ object SectionList extends ExternalComponentWithRefType[SectionListInstance[js.A
     stickySectionHeadersEnabled: js.UndefOr[Boolean] = js.undefined,
     getItemLayout: js.UndefOr[(T, Int) => ItemLayout] = js.undefined
   ): BuildingComponent[Nothing, SectionListInstance[T]] =
-    apply(
+    applyProps(
       Props(
         sections = sections.asInstanceOf[Seq[Section[js.Any]]],
         initialNumToRender = initialNumToRender,

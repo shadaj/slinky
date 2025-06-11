@@ -77,7 +77,7 @@ abstract class ExternalComponentWithAttributesWithRefType[E <: TagElement, R <: 
 
   val component: String | js.Object
 
-  def apply(p: Props): BuildingComponent[E, R] =
+  def applyProps(p: Props): BuildingComponent[E, R] =
     // no need to take key or ref here because those can be passed in through attributes
     new BuildingComponent(js.Array(component.asInstanceOf[js.Any], writer.write(p)))
 }
@@ -95,7 +95,7 @@ abstract class ExternalComponentNoPropsWithAttributesWithRefType[E <: TagElement
   val component: String | js.Object
 
   def apply(mods: TagMod[E]*): BuildingComponent[E, R] =
-    new BuildingComponent(js.Array(component.asInstanceOf[js.Any], js.Dictionary.empty)).apply(mods: _*)
+    new BuildingComponent(js.Array(component.asInstanceOf[js.Any], js.Dictionary.empty)).apply(mods*)
 
   def withKey(key: String): BuildingComponent[E, R] =
     new BuildingComponent(js.Array(component.asInstanceOf[js.Any], js.Dictionary.empty)).withKey(key)

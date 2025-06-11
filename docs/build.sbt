@@ -1,4 +1,5 @@
 enablePlugins(ScalaJSPlugin)
+enablePlugins(SlinkyPlugin)
 
 import org.scalajs.linker.interface.ModuleSplitStyle
 

@@ -1,6 +1,7 @@
 import java.io.PrintWriter
 
 enablePlugins(ScalaJSPlugin)
+enablePlugins(SlinkyPlugin)
 
 name := "slinky-readwrite"
 

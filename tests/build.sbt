@@ -1,11 +1,18 @@
-import _root_.io.github.davidgregory084._
+import org.typelevel.scalacoptions.ScalacOptions
+import org.typelevel.sbt.tpolecat.{CiMode, DevMode}
 
+enablePlugins(ScalafixPlugin)
 enablePlugins(ScalaJSPlugin)
 enablePlugins(JSDependenciesPlugin)
+enablePlugins(SlinkyPlugin)
 
 libraryDependencies += "org.scalatest" %%% "scalatest" % "3.2.19" % Test
 libraryDependencies += ("org.scala-js" %%% "scalajs-fake-insecure-java-securerandom" % "1.0.0")
   .cross(CrossVersion.for3Use2_13)
+libraryDependencies += ("ch.epfl.scala" %% "scalafix-core" % _root_.scalafix.sbt.BuildInfo.scalafixVersion % ScalafixConfig)
+  .cross(CrossVersion.for3Use2_13)
+
+Test / scalafixOnCompile := false
 
 Test / jsEnv := new org.scalajs.jsenv.jsdomnodejs.JSDOMNodeJSEnv()
 

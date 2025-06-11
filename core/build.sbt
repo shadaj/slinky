@@ -2,6 +2,7 @@ enablePlugins(ScalaJSPlugin)
 
 name := "slinky-core"
 
+libraryDependencies += "org.scala-js" %%% "scala-js-macrotask-executor" % "1.1.1"
 libraryDependencies ++= {
   CrossVersion.partialVersion(scalaVersion.value) match {
     case Some((2, _)) =>

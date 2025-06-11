@@ -3,7 +3,8 @@ package slinky.readwrite
 import scala.reflect.macros.whitebox
 
 trait MacroReaders {
-  implicit def deriveReader[T]: Reader[T] = macro MacroReadersImpl.derive[T]
+  implicit def deriveReader[T]:
+  Reader[T] = macro MacroReadersImpl.derive[T]
 }
 
 class MacroReadersImpl(_c: whitebox.Context) extends GenericDeriveImpl(_c) {

@@ -21,17 +21,17 @@ object ExternalSimpleWithWildcardAttributes extends ExternalComponentNoPropsWith
   override val component = "div"
 }
 
-object ExternalSimpleWithProps extends ExternalComponent {
+object ExternalSimpleapplyProps extends ExternalComponent {
   case class Props(a: Int)
   override val component = "div"
 }
 
-object ExternalDivWithPropsAndAttributes extends ExternalComponentWithAttributes[div.tag.type] {
+object ExternalDivapplyPropsAndAttributes extends ExternalComponentWithAttributes[div.tag.type] {
   case class Props(id: String)
   override val component = "div"
 }
 
-object ExternalDivWithProps extends ExternalComponent {
+object ExternalDivapplyProps extends ExternalComponent {
   case class Props(id: String)
   override val component = "div"
 }
@@ -44,7 +44,7 @@ object ExternalDivWithAllDefaulted extends ExternalComponent {
 class ExternalComponentTest extends AnyFunSuite {
   test("Rendering an external component results in appropriate props") {
     val rendered = ReactDOM.render(
-      ExternalDivWithProps(ExternalDivWithProps.Props(id = "test")),
+      ExternalDivapplyProps(ExternalDivapplyProps.Props(id = "test")),
       dom.document.createElement("div")
     )
 
@@ -54,7 +54,7 @@ class ExternalComponentTest extends AnyFunSuite {
   test("Can use a ref with an macro-based external component") {
     val ref = React.createRef[js.Object]
     ReactDOM.render(
-      ExternalDivWithProps(ExternalDivWithProps.Props(id = "test")).withRef(ref),
+      ExternalDivapplyProps(ExternalDivapplyProps.Props(id = "test")).withRef(ref),
       dom.document.createElement("div")
     )
 
@@ -62,7 +62,7 @@ class ExternalComponentTest extends AnyFunSuite {
   }
 
   test("Cannot reuse half-built external component") {
-    val halfBuilt = ExternalDivWithProps(ExternalDivWithProps.Props(id = "test"))
+    val halfBuilt = ExternalDivapplyProps(ExternalDivapplyProps.Props(id = "test"))
     halfBuilt.withKey("abc"): ReactElement
 
     assertThrows[IllegalStateException] {

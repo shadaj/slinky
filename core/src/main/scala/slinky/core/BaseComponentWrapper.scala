@@ -250,7 +250,7 @@ abstract class BaseComponentWrapper(sr: StateReaderProvider, sw: StateWriterProv
 
   private var componentConstructorInstance: js.Object = null
 
-  def apply(p: Props)(implicit constructorTag: ConstructorTag[Def]): KeyAndRefAddingStage[Def] = {
+  def applyProps(p: Props)(implicit constructorTag: ConstructorTag[Def]): KeyAndRefAddingStage[Def] = {
     val propsObj = js.Dictionary("__" -> p.asInstanceOf[js.Any])
 
     if (lastConstructorTag != constructorTag) {
@@ -275,14 +275,14 @@ abstract class BaseComponentWrapper(sr: StateReaderProvider, sw: StateWriterProv
   }
 
   def apply()(implicit ev: Unit =:= Props, constructorTag: ConstructorTag[Def]): KeyAndRefAddingStage[Def] =
-    apply(())(constructorTag)
+    applyProps(())(constructorTag)
 }
 
 object BaseComponentWrapper {
   implicit def proplessKeyAndRef[C <: BaseComponentWrapper { type Props = Unit }](
     c: C
   )(implicit constructorTag: ConstructorTag[c.Def]): KeyAndRefAddingStage[c.Def] =
-    c.apply(())
+    c.applyProps(())
 
   private var componentConstructorMiddleware = (constructor: js.Object, _: js.Object) => {
     constructor

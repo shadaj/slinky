@@ -1,3 +1,5 @@
+import org.typelevel.scalacoptions.ScalacOptions
+
 enablePlugins(ScalaJSPlugin)
 
 name := "slinky-web"

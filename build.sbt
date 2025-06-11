@@ -1,20 +1,21 @@
-import _root_.io.github.davidgregory084._
+import org.typelevel.scalacoptions.ScalacOptions
+import org.typelevel.sbt.tpolecat.DevMode
 
 ThisBuild / organization := "me.shadaj"
 
-addCommandAlias("style", "compile:scalafix; test:scalafix; compile:scalafmt; test:scalafmt; scalafmtSbt")
+addCommandAlias("style", "compile:scalafmt; test:scalafmt; scalafmtSbt")
 addCommandAlias(
   "styleCheck",
-  "compile:scalafix --check; test:scalafix --check; compile:scalafmtCheck; test:scalafmtCheck; scalafmtSbtCheck"
+  "compile:scalafmtCheck; test:scalafmtCheck; scalafmtSbtCheck"
 )
 
-val scala212 = "2.12.19"
+val scala212 = "2.12.20"
 val scala213 = "2.13.16"
-val scala3   = "3.3.3"
+val scala3   = "3.3.6"
 
 ThisBuild / scalaVersion := scala213
 ThisBuild / semanticdbEnabled := true
-ThisBuild / semanticdbVersion := scalafixSemanticdb.revision
+ThisBuild / semanticdbVersion := "4.13.6"
 
 ThisBuild / tpolecatDefaultOptionsMode := DevMode
 ThisBuild / tpolecatExcludeOptions += ScalacOptions.warnDeadCode
@@ -47,7 +48,6 @@ addCommandAlias(
 
 lazy val crossScalaSettings = Seq(
   crossScalaVersions := Seq(scala212, scala213, scala3),
-  scalacOptions += "-Wconf:cat=unused-nowarn:s",
   Compile / unmanagedSourceDirectories ++= {
     val sourceDir = (Compile / sourceDirectory).value
     CrossVersion.partialVersion(scalaVersion.value) match {
@@ -92,10 +92,20 @@ lazy val librarySettings = Seq(
   scalacOptions ++= (CrossVersion.partialVersion(scalaVersion.value) match {
     case Some((3, _)) =>
       Seq(
-        "-source:3.0-migration"
+        "-source:3.0-migration",
+        "-Wconf:src=src_managed/.*:silent",
+        "-Ysemanticdb"
+      )
+    case Some((2, n)) if n >= 13 =>
+      Seq(
+        "-Wconf:cat=unused-nowarn:s",
+        "-Ytasty-reader"
       )
     case _ =>
-      Seq.empty
+      Seq(
+        "-Wconf:cat=unused-nowarn:s",
+        "-Yrangepos"
+      )
   })
 )
 
@@ -125,7 +135,7 @@ lazy val core = project
       IO.write(
         rootFolder / "intellij-compat.json",
         s"""{
-           |  "artifact": "me.shadaj % slinky-core-ijext_2.12 % ${version.value}"
+           |  "artifact": "me.shadaj % slinky-core-ijext_2.13 % ${version.value}"
            |}""".stripMargin
       )
 
@@ -193,7 +203,7 @@ lazy val vr =
 lazy val hot = project.settings(macroAnnotationSettings, librarySettings, crossScalaSettings).dependsOn(core)
 
 val scalaJSVersion =
-  Option(System.getenv("SCALAJS_VERSION")).getOrElse("1.6.0")
+  Option(System.getenv("SCALAJS_VERSION")).getOrElse("1.19.0")
 
 lazy val scalajsReactInterop = project
   .settings(

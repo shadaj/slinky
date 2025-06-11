@@ -28,7 +28,7 @@ class ContextProvider[T](orig: ReactContext[T]) {
     override val component: |[String, js.Object] = orig.asInstanceOf[ReactContextRaw].Provider
   }
 
-  def apply(value: T): BuildingComponent[Nothing, js.Object] = External(ContextProviderProps(value))
+  def apply(value: T): BuildingComponent[Nothing, js.Object] = External.applyProps(ContextProviderProps(value))
 }
 
 case class ContextConsumerProps[T](children: T => ReactElement)
@@ -53,7 +53,7 @@ class ContextConsumer[T](orig: ReactContext[T]) {
   }
 
   def apply(children: T => ReactElement): BuildingComponent[Nothing, js.Object] =
-    External(ContextConsumerProps(children))
+    External.applyProps(ContextConsumerProps(children))
 }
 
 @js.native

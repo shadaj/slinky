@@ -118,7 +118,7 @@ object ExoticTypes {
 
       '{
         new DefaultConstructorParameters[T] {
-          val values: Array[Option[Any]] = Array(${Varargs(args)}: _*)
+          val values: Array[Option[Any]] = Array(${Varargs(args)}*)
         }
       }
     }

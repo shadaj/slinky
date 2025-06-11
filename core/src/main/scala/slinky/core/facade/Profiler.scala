@@ -20,5 +20,5 @@ object Profiler
   def apply(
     id: String,
     onRender: (String, String, Double, Double, Double, Double, js.Object) => Unit
-  ): BuildingComponent[Nothing, js.Object] = apply(Props(id, onRender))
+  ): BuildingComponent[Nothing, js.Object] = applyProps(Props(id, onRender))
 }

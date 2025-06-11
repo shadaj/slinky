@@ -14,5 +14,5 @@ object Suspense
   case class Props(fallback: ReactElement)
   override val component: |[String, js.Object] = ReactRaw.Suspense
 
-  def apply(fallback: ReactElement): BuildingComponent[Nothing, js.Object] = apply(Props(fallback))
+  def apply(fallback: ReactElement): BuildingComponent[Nothing, js.Object] = applyProps(Props(fallback))
 }
