@@ -8,7 +8,7 @@ addCommandAlias(
   "compile:scalafix --check; test:scalafix --check; compile:scalafmtCheck; test:scalafmtCheck; scalafmtSbtCheck"
 )
 
-val scala212 = "2.12.19"
+val scala212 = "2.12.21"
 val scala213 = "2.13.16"
 val scala3   = "3.3.3"
 
